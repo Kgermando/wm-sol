@@ -48,8 +48,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                 child: SingleChildScrollView(
                   controller: ScrollController(),
                   physics: const ScrollPhysics(),
-                  child: controller.obx(
-                    (state) => Container(
+                  child: Container(
                       margin: const EdgeInsets.only(
                           top: p20, bottom: p8, right: p20, left: p20),
                       decoration: const BoxDecoration(
@@ -87,7 +86,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                 ResponsiveChildWidget(
                                     child1: emailWidget(controller),
                                     child2: telephoneWidget(controller)),
-                                departmentWidget(controller, state),
+                                departmentWidget(controller),
                                 servicesAffectationWidget(controller),
                                 ResponsiveChildWidget(
                                     child1: matriculeWidget(controller),
@@ -114,8 +113,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    ), 
                 )),
           ],
         ));
@@ -515,7 +513,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
   }
 
   Widget departmentWidget(
-      PersonnelsController controller, List<AgentModel>? state) {
+      PersonnelsController controller) {
     double width = 100;
     if (MediaQuery.of(context).size.width >= 1100) {
       width = 300;

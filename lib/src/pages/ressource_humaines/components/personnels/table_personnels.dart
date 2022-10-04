@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agents_xlsx.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/class_implemented.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TablePersonnels extends StatefulWidget {
-  const TablePersonnels({Key? key, required this.personnelList})
+  const TablePersonnels(
+      {Key? key, required this.personnelList, required this.controller})
       : super(key: key);
-  final List<AgentModel> personnelList; 
+  final List<AgentModel> personnelList;
+  final PersonnelsController controller;
 
   @override
   State<TablePersonnels> createState() => _TablePersonnelsState();
@@ -34,13 +39,14 @@ class _TablePersonnelsState extends State<TablePersonnels> {
     return PlutoGrid(
       columns: columns,
       rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) {
+      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
         final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.elementAt(0);
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => AgentPage(id: idPlutoRow.value)));
-        // Navigator.pushNamed(context, RhRoutes.rhAgentPage,
-        //     arguments: idPlutoRow.value);
+        final idPlutoRow = dataId.elementAt(0); 
+
+        final AgentModel personne =
+            await widget.controller.detailView(idPlutoRow.value);
+    
+        Get.toNamed(RhRoutes.rhPersonnelsDetail, arguments: personne);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -117,17 +123,15 @@ class _TablePersonnelsState extends State<TablePersonnels> {
       },
     );
   }
- 
+
   Future agentsRow() async {
     var i = widget.personnelList.length;
     for (var item in widget.personnelList) {
-      
       rows.add(PlutoRow(cells: {
         // for (var i = 1; i < widget.personnelList.length; i++)
         'id': PlutoCell(value: i--),
         'statutAgent': PlutoCell(
-            value:
-                (item.statutAgent == "true") ? 'Actif' : 'Inactif'),
+            value: (item.statutAgent == "true") ? 'Actif' : 'Inactif'),
         'nom': PlutoCell(value: item.nom),
         'postNom': PlutoCell(value: item.postNom),
         'prenom': PlutoCell(value: item.prenom),

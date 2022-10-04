@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/performence_api.dart';
 import 'package:wm_solution/src/api/rh/personnels_api.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
-import 'package:wm_solution/src/models/rh/perfomence_model.dart'; 
+import 'package:wm_solution/src/models/rh/perfomence_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/country.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
@@ -21,6 +21,35 @@ class PersonnelsController extends GetxController
   PersonnelsApi personnelsApi = PersonnelsApi();
   PerformenceApi performenceApi = PerformenceApi();
   final ProfilController profilController = Get.find();
+
+  final _personne = AgentModel(
+          nom: '-',
+          postNom: '-',
+          prenom: '-',
+          email: '-',
+          telephone: '-',
+          adresse: '-',
+          sexe: '-',
+          role: '-',
+          matricule: '-',
+          numeroSecuriteSociale: '-',
+          dateNaissance: DateTime.now(),
+          lieuNaissance: '-',
+          nationalite: '-',
+          typeContrat: '-',
+          departement: '-',
+          servicesAffectation: '-',
+          dateDebutContrat: DateTime.now(),
+          dateFinContrat: DateTime.now(),
+          fonctionOccupe: '-',
+          statutAgent: '-',
+          createdAt: DateTime.now(),
+          salaire: '-',
+          signature: '-',
+          created: DateTime.now())
+      .obs;
+
+  AgentModel get personne => _personne.value;
 
   List<String> departementList = Dropdown().departement;
   List<String> typeContratList = Dropdown().typeContrat;
@@ -65,10 +94,8 @@ class PersonnelsController extends GetxController
       TextEditingController();
   TextEditingController dateNaissanceController = TextEditingController();
   TextEditingController lieuNaissanceController = TextEditingController();
-  TextEditingController dateDebutContratController =
-      TextEditingController();
-  TextEditingController dateFinContratController =
-      TextEditingController();
+  TextEditingController dateDebutContratController = TextEditingController();
+  TextEditingController dateFinContratController = TextEditingController();
   TextEditingController competanceController = TextEditingController();
 
   TextEditingController experienceController = TextEditingController();
@@ -118,7 +145,7 @@ class PersonnelsController extends GetxController
       print('upload: $profile');
       print('done');
     }
-  } 
+  }
 
   @override
   void onInit() {
@@ -127,7 +154,7 @@ class PersonnelsController extends GetxController
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
-    }); 
+    });
   }
 
   @override
@@ -148,8 +175,7 @@ class PersonnelsController extends GetxController
     salaireController.dispose();
 
     super.dispose();
-  } 
-
+  }
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
@@ -157,64 +183,70 @@ class PersonnelsController extends GetxController
     if (form.validate()) {
       try {
         final agentModel = AgentModel(
-          nom: (nomController.text == '') ? '-' : nomController.text,
-          postNom: (postNomController.text == '') ? '-' : postNomController.text,
-          prenom: (prenomController.text == '') ? '-' : prenomController.text,
-          email: (emailController.text == '') ? '-' : emailController.text,
-          telephone:
-              (telephoneController.text == '') ? '-' : telephoneController.text,
-          adresse: (adresseController.text == '') ? '-' : adresseController.text,
-          sexe: (sexe.toString() == '') ? '-' : sexe.toString(),
-          role: (role.toString() == '') ? '-' : role.toString(),
-          matricule: (matricule == '') ? '-' : matricule,
-          numeroSecuriteSociale: (numeroSecuriteSocialeController.text == "")
-              ? "-"
-              : numeroSecuriteSocialeController.text,
-          dateNaissance: (dateNaissanceController.text == '')
-              ? DateTime.now()
-              : DateTime.parse(dateNaissanceController.text),
-          lieuNaissance: (lieuNaissanceController.text == '')
-              ? '-'
-              : lieuNaissanceController.text,
-          nationalite:
-              (nationalite.toString() == '') ? '-' : nationalite.toString(),
-          typeContrat:
-              (typeContrat.toString() == '') ? '-' : typeContrat.toString(),
-          departement: departement,
-          servicesAffectation: (servicesAffectation.toString() == '')
-              ? '-'
-              : servicesAffectation.toString(),
-          dateDebutContrat: (dateDebutContratController.text == '')
-              ? DateTime.now()
-              : DateTime.parse(dateDebutContratController.text),
-          dateFinContrat: DateTime.parse((dateFinContratController.text == "")
-              ? "2099-12-31 00:00:00"
-              : dateFinContratController.text),
-          fonctionOccupe:
-              (fonctionOccupe.toString() == '') ? '-' : fonctionOccupe.toString(),
-          competance:
-              (competanceController.text == '') ? '-' : competanceController.text,
-          experience:
-              (experienceController.text == '') ? '-' : experienceController.text,
-          statutAgent: 'false',
-          createdAt: DateTime.now(),
-          photo: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-          salaire: (salaireController.text == '') ? '-' : salaireController.text,
-          signature: profilController.user.matricule,
-          created: DateTime.now()
-        );
+            nom: (nomController.text == '') ? '-' : nomController.text,
+            postNom:
+                (postNomController.text == '') ? '-' : postNomController.text,
+            prenom: (prenomController.text == '') ? '-' : prenomController.text,
+            email: (emailController.text == '') ? '-' : emailController.text,
+            telephone: (telephoneController.text == '')
+                ? '-'
+                : telephoneController.text,
+            adresse:
+                (adresseController.text == '') ? '-' : adresseController.text,
+            sexe: (sexe.toString() == '') ? '-' : sexe.toString(),
+            role: (role.toString() == '') ? '-' : role.toString(),
+            matricule: (matricule == '') ? '-' : matricule,
+            numeroSecuriteSociale: (numeroSecuriteSocialeController.text == "")
+                ? "-"
+                : numeroSecuriteSocialeController.text,
+            dateNaissance: (dateNaissanceController.text == '')
+                ? DateTime.now()
+                : DateTime.parse(dateNaissanceController.text),
+            lieuNaissance: (lieuNaissanceController.text == '')
+                ? '-'
+                : lieuNaissanceController.text,
+            nationalite:
+                (nationalite.toString() == '') ? '-' : nationalite.toString(),
+            typeContrat:
+                (typeContrat.toString() == '') ? '-' : typeContrat.toString(),
+            departement: departement,
+            servicesAffectation: (servicesAffectation.toString() == '')
+                ? '-'
+                : servicesAffectation.toString(),
+            dateDebutContrat: (dateDebutContratController.text == '')
+                ? DateTime.now()
+                : DateTime.parse(dateDebutContratController.text),
+            dateFinContrat: DateTime.parse((dateFinContratController.text == "")
+                ? "2099-12-31 00:00:00"
+                : dateFinContratController.text),
+            fonctionOccupe: (fonctionOccupe.toString() == '')
+                ? '-'
+                : fonctionOccupe.toString(),
+            competance: (competanceController.text == '')
+                ? '-'
+                : competanceController.text,
+            experience: (experienceController.text == '')
+                ? '-'
+                : experienceController.text,
+            statutAgent: 'false',
+            createdAt: DateTime.now(),
+            photo: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+            salaire:
+                (salaireController.text == '') ? '-' : salaireController.text,
+            signature: profilController.user.matricule,
+            created: DateTime.now());
         await personnelsApi.insertData(agentModel).then((value) async {
           await submitPerformence();
         });
       } catch (e) {
-       _isLoading.value = false;
+        _isLoading.value = false;
         Get.snackbar(
           "Erreur s'est produite",
           "$e",
           backgroundColor: Colors.red,
         );
       }
-    } 
+    }
   }
 
   Future submitPerformence() async {
@@ -229,21 +261,19 @@ class PersonnelsController extends GetxController
         created: DateTime.now());
     await performenceApi.insertData(performenceModel).then((value) {
       Get.back();
-      Get.snackbar("Enregistrement effectué!", "Le document a bien été sauvegader",
+      Get.snackbar(
+          "Enregistrement effectué!", "Le document a bien été sauvegader",
           backgroundColor: Colors.green,
           icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP); 
+          snackPosition: SnackPosition.TOP);
     });
   }
-
 
   Future submitUpdate(AgentModel personne) async {
     var departement = jsonEncode(departementSelectedList);
     final agentModel = AgentModel(
         id: personne.id,
-        nom: (nomController.text == '')
-            ? personne.nom
-            : nomController.text,
+        nom: (nomController.text == '') ? personne.nom : nomController.text,
         postNom: (postNomController.text == '')
             ? personne.postNom
             : postNomController.text,
@@ -259,10 +289,8 @@ class PersonnelsController extends GetxController
         adresse: (adresseController.text == '')
             ? personne.adresse
             : adresseController.text,
-        sexe:
-            (sexe.toString() == '') ? personne.sexe : sexe.toString(),
-        role:
-            (role.toString() == '') ? personne.role : role.toString(),
+        sexe: (sexe.toString() == '') ? personne.sexe : sexe.toString(),
+        role: (role.toString() == '') ? personne.role : role.toString(),
         matricule: personne.matricule,
         numeroSecuriteSociale: (numeroSecuriteSocialeController.text == "")
             ? personne.numeroSecuriteSociale
@@ -318,5 +346,13 @@ class PersonnelsController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     });
+  }
+
+   detailView(int id) async {
+    final data = await personnelsApi.getOneData(id);
+    _personne.value = data;
+    // print("_personne ${_personne.value} ");
+    // print("personne $personne ");
+    return data;
   }
 }

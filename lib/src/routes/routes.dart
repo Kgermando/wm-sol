@@ -45,11 +45,12 @@ class AdminRoutes {
 
 class RhRoutes { 
   static const rhDashboard = "/rh-dashboard"; 
-  static const rhPersonnelsPage = "/rh-Personnels-page"; 
+  static const rhPersonnelsPage = "/rh-personnels-page";  
+  static const rhPersonnelsAdd = "/rh-personnelss-add";
+  static const rhPersonnelsDetail = "/rh-personnelss-detail";
+  static const rhPersonnelsUpdate = "/rh-personnelss-update";
   static const rhdetailUser = "/rh-detail-user";  
-  static const rhPersonnelsPageUser = "/rh-Personnelss-page-user";
-  static const rhPersonnelsAdd = "/rh-Personnelss-add";
-  static const rhPersonnelsUpdate = "/rh-Personnelss-update";
+  static const rhPersonnelsPageUser = "/rh-personnelss-page-user";
   static const rhPaiement = "/rh-paiements";
   static const rhPaiementAdd = "/rh-paiements-add";
   static const rhPaiementBulletin = "/rh-paiements-bulletin";

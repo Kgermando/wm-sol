@@ -34,7 +34,7 @@ class _ProfileAuthState extends State<ProfileAuth> {
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: headerBar(context, scaffoldKey, title, controller.user.prenom),
+      appBar: headerBar(context, scaffoldKey, title, "${controller.user.prenom} ${controller.user.nom}"),
       drawer: const DrawerMenu(),
       body: Row(
         children: [
