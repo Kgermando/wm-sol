@@ -1,0 +1,904 @@
+import 'dart:io';
+ 
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/models/rh/agent_model.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
+import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
+import 'package:wm_solution/src/utils/dropdown.dart';
+import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:wm_solution/src/utils/regex.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+
+class AddPersonnel extends StatefulWidget {
+  const AddPersonnel({super.key, required this.personnelList});
+  final List<AgentModel> personnelList;
+
+  @override
+  State<AddPersonnel> createState() => _AddPersonnelState();
+}
+
+class _AddPersonnelState extends State<AddPersonnel> {
+  @override
+  Widget build(BuildContext context) {
+    final PersonnelsController controller = Get.find();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+    String title = "Ressources Humaines";
+    String subTitle = "Add profil";
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, subTitle),
+        drawer: const DrawerMenu(),
+        body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: controller.obx(
+                    (state) => Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          // border: Border.all(
+                          //   // color: Colors.red,
+                          // ),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: Card(
+                        elevation: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(p20),
+                          child: Form(
+                            key: controller.formKey,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    fichierWidget(controller),
+                                  ],
+                                ),
+                                const SizedBox(height: p20),
+                                ResponsiveChildWidget(
+                                    child1: nomWidget(controller),
+                                    child2: postNomWidget(controller)),
+                                ResponsiveChildWidget(
+                                    child1: prenomWidget(controller),
+                                    child2: sexeWidget(controller)),
+                                ResponsiveChildWidget(
+                                    child1: dateNaissanceWidget(controller),
+                                    child2: lieuNaissanceWidget(controller)),
+                                ResponsiveChildWidget(
+                                    child1: nationaliteWidget(controller),
+                                    child2: adresseWidget(controller)),
+                                ResponsiveChildWidget(
+                                    child1: emailWidget(controller),
+                                    child2: telephoneWidget(controller)),
+                                departmentWidget(controller, state),
+                                servicesAffectationWidget(controller),
+                                ResponsiveChildWidget(
+                                    child1: matriculeWidget(controller),
+                                    child2: numeroSecuriteSocialeWidget(
+                                        controller)),
+                                ResponsiveChildWidget(
+                                    child1: fonctionOccupeWidget(controller),
+                                    child2: roleWidget(controller)),
+                                ResponsiveChildWidget(
+                                    child1: typeContratWidget(controller),
+                                    child2: salaireWidget(controller)),
+                                ResponsiveChildWidget(
+                                    child1: dateDebutContratWidget(controller),
+                                    child2: (controller.typeContrat == 'CDD')
+                                        ? dateFinContratWidget(controller)
+                                        : Container()),
+                                const SizedBox(height: p20),
+                                BtnWidget(
+                                    title: 'Soumettre',
+                                    isLoading: controller.isLoading,
+                                    press: controller.submit)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )),
+          ],
+        ));
+  }
+
+  Widget fichierWidget(PersonnelsController controller) {
+    return Container(
+        padding: const EdgeInsets.all(2),
+        margin: const EdgeInsets.all(2),
+        child: controller.isUploading
+            ? const SizedBox(
+                height: 50.0, width: 50.0, child: LinearProgressIndicator())
+            : SizedBox(
+                height: 100.0,
+                width: 100.0,
+                child: CircleAvatar(
+                  child: TextButton.icon(
+                      onPressed: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['png', 'jpg'],
+                        );
+                        if (result != null) {
+                          File file = File(result.files.single.path!);
+                          controller.photeUpload(file);
+                        } else {
+                          const Text("Le fichier n'existe pas");
+                        }
+                      },
+                      icon: controller.isUploadingDone
+                          ? Icon(Icons.check_circle_outline,
+                              color: Colors.green.shade700)
+                          : const Icon(Icons.person),
+                      label: controller.isUploadingDone
+                          ? Text("Téléchargement terminé",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(color: Colors.green.shade700))
+                          : Text("Photo",
+                              style: Theme.of(context).textTheme.bodyLarge)),
+                ),
+              ));
+  }
+
+  Widget nomWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.nomController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Nom',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget postNomWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.postNomController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Post-Nom',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget prenomWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.prenomController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Prénom',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget emailWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.emailController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Email',
+          ),
+          keyboardType: TextInputType.emailAddress,
+          style: const TextStyle(),
+          validator: (value) => RegExpIsValide().validateEmail(value),
+        ));
+  }
+
+  Widget telephoneWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.telephoneController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Téléphone',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget adresseWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.adresseController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Adresse',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget sexeWidget(PersonnelsController controller) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Sexe',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.sexe,
+        isExpanded: true,
+        items: controller.sexeList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select Sexe" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.sexe = value!;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget roleWidget(PersonnelsController controller) {
+    final ProfilController profilController = Get.find();
+    List<String> roleList = [];
+    if (int.parse(profilController.user.role) == 0) {
+      roleList = Dropdown().roleAdmin;
+    } else if (int.parse(profilController.user.role) <= 3) {
+      roleList = Dropdown().roleSuperieur;
+    } else if (int.parse(profilController.user.role) > 3) {
+      roleList = Dropdown().roleAgent;
+    }
+
+    print("role user ${profilController.user.role}");
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 5,
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Niveau d\'accréditation',
+                labelStyle: const TextStyle(),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+                contentPadding: const EdgeInsets.only(left: 5.0),
+              ),
+              value: controller.role,
+              isExpanded: true,
+              items: roleList.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              validator: (value) =>
+                  value == null ? "Select accréditation" : null,
+              onChanged: (value) {
+                setState(() {
+                  controller.role = value!;
+                });
+              },
+            ),
+          ),
+          Expanded(
+              flex: 1,
+              child: IconButton(
+                  tooltip: "Besoin d'aide ?",
+                  color: Colors.red.shade700,
+                  onPressed: () {
+                    helpDialog(controller);
+                  },
+                  icon: const Icon(Icons.help)))
+        ],
+      ),
+    );
+  }
+
+  Widget matriculeWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          readOnly: true,
+          initialValue: controller.matricule,
+          decoration: InputDecoration(
+            labelStyle: const TextStyle(color: Colors.red),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: controller.matricule,
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+        ));
+  }
+
+  Widget numeroSecuriteSocialeWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.numeroSecuriteSocialeController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Numero Sécurité Sociale',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          // validator: (value) {
+          //   if (value != null && value.isEmpty) {
+          //     return 'Ce champs est obligatoire';
+          //   } else {
+          //     return null;
+          //   }
+          // },
+        ));
+  }
+
+  Widget dateNaissanceWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: DateTimePicker(
+          initialEntryMode: DatePickerEntryMode.input,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.date_range),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Date de naissance',
+          ),
+          controller: controller.dateNaissanceController,
+          firstDate: DateTime(1930),
+          lastDate: DateTime(2100),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget lieuNaissanceWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.lieuNaissanceController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Lieu de naissance',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget nationaliteWidget(PersonnelsController controller) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Nationalite',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.nationalite,
+        isExpanded: true,
+        items: controller.world.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select Nationalite" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.nationalite = value!;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget typeContratWidget(PersonnelsController controller) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Type de contrat',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.typeContrat,
+        isExpanded: true,
+        items: controller.typeContratList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select contrat" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.typeContrat = value!;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget departmentWidget(
+      PersonnelsController controller, List<AgentModel>? state) {
+    double width = 100;
+    if (MediaQuery.of(context).size.width >= 1100) {
+      width = 300;
+    } else if (MediaQuery.of(context).size.width < 1100 &&
+        MediaQuery.of(context).size.width >= 650) {
+      width = 200;
+    } else if (MediaQuery.of(context).size.width < 650) {
+      width = 500;
+    }
+
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: Card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Département",
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ],
+              ),
+              Wrap(
+                children:
+                    List.generate(controller.departementList.length, (index) {
+                  var depName = controller.departementList[index];
+                  return SizedBox(
+                    width: width,
+                    child: ListTile(
+                      leading: Checkbox(
+                        fillColor: MaterialStateProperty.resolveWith(getColor),
+                        value: controller.departementSelectedList
+                            .contains(depName),
+                        onChanged: (bool? value) {
+                          setState(() {
+                            onSelectedDep(controller, value!, depName);
+                          });
+                        },
+                      ),
+                      title: Text(depName),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  void onSelectedDep(PersonnelsController controller, bool selected,
+      String dataName) {
+    if (selected == true) {
+      setState(() {
+        controller.departementSelectedList.add(dataName);
+        String prefix = InfoSystem().prefix();
+        final date = DateFormat("yy").format(DateTime.now());
+
+        if (controller.departementSelectedList.first == 'Actionnaire') {
+          controller.matricule = "${prefix}ACT$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionActionnaireList;
+          controller.servAffectList = controller.serviceAffectationActionnaire;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationActionnaire.first;
+        } else if (controller.departementSelectedList.first ==
+            'Administration') {
+          controller.matricule = "${prefix}ADM$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionAdminList;
+          controller.servAffectList = controller.serviceAffectationAdmin;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationAdmin.first;
+        } else if (controller.departementSelectedList.first == 'Finances') {
+          controller.matricule = "${prefix}FIN$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionfinList;
+          controller.servAffectList = controller.serviceAffectationFin;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationFin.first;
+        } else if (controller.departementSelectedList.first ==
+            'Comptabilites') {
+          controller.matricule = "${prefix}CPT$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctioncompteList;
+          controller.servAffectList = controller.serviceAffectationCompt;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationCompt.first;
+        } else if (controller.departementSelectedList.first == 'Budgets') {
+          controller.matricule = "${prefix}BUD$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionbudList;
+          controller.servAffectList = controller.serviceAffectationBud;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationBud.first;
+        } else if (controller.departementSelectedList.first ==
+            'Ressources Humaines') {
+          controller.matricule = "${prefix}RH$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionrhList;
+          controller.servAffectList = controller.serviceAffectationRH;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationRH.first;
+        } else if (controller.departementSelectedList.first ==
+            'Exploitations') {
+          controller.matricule = "${prefix}EXP$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionexpList;
+          controller.servAffectList = controller.serviceAffectationEXp;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationEXp.first;
+        } else if (controller.departementSelectedList.first ==
+            'Commercial et Marketing') {
+          controller.matricule = "${prefix}COM$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctioncommList;
+          controller.servAffectList = controller.serviceAffectationComm;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationComm.first;
+        } else if (controller.departementSelectedList.first == 'Logistique') {
+          controller.matricule = "${prefix}LOG$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctionlogList;
+          controller.servAffectList = controller.serviceAffectationLog;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationLog.first;
+        }
+      });
+    } else {
+      setState(() {
+        controller.departementSelectedList.remove(dataName);
+      });
+    }
+  }
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Widget servicesAffectationWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            labelText: 'Service d\'affectation',
+            labelStyle: const TextStyle(),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            contentPadding: const EdgeInsets.only(left: 5.0),
+          ),
+          value: controller.servicesAffectation,
+          isExpanded: true,
+          items: controller.servAffectList
+              .map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              })
+              .toSet()
+              .toList(),
+          validator: (value) => value == null ? "Select Service" : null,
+          onChanged: (value) {
+            setState(() {
+              controller.servicesAffectation = value;
+            });
+          },
+        ));
+  }
+
+  Widget dateDebutContratWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: DateTimePicker(
+          initialEntryMode: DatePickerEntryMode.input,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.date_range),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Date de début du Contrat',
+          ),
+          controller: controller.dateDebutContratController,
+          firstDate: DateTime(1930),
+          lastDate: DateTime(2100),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget dateFinContratWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: DateTimePicker(
+          initialEntryMode: DatePickerEntryMode.input,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.date_range),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Date de Fin du Contrat',
+          ),
+          controller: controller.dateFinContratController,
+          firstDate: DateTime(1930),
+          lastDate: DateTime(2100),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget fonctionOccupeWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            labelText: 'Fonction occupée',
+            labelStyle: const TextStyle(),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            contentPadding: const EdgeInsets.only(left: 5.0),
+          ),
+          value: controller.fonctionOccupe,
+          isExpanded: true,
+          items: controller.fonctionList
+              .map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              })
+              .toSet()
+              .toList(),
+          validator: (value) => value == null ? "Select Fonction" : null,
+          onChanged: (value) {
+            setState(() {
+              controller.fonctionOccupe = value;
+            });
+          },
+        ));
+  }
+
+  Widget competanceWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          keyboardType: TextInputType.multiline,
+          minLines: 5,
+          maxLines: 100,
+          controller: controller.competanceController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Formation',
+          ),
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget experienceWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          keyboardType: TextInputType.multiline,
+          minLines: 5,
+          maxLines: 100,
+          controller: controller.experienceController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Experience',
+          ),
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget salaireWidget(PersonnelsController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                controller: controller.salaireController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Salaire',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                ],
+                style: const TextStyle(),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Ce champs est obligatoire';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+            const SizedBox(width: p20),
+            Expanded(
+                flex: 1,
+                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+          ],
+        ));
+  }
+
+  helpDialog(PersonnelsController controller) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return AlertDialog(
+              title: const Text('Accreditation'),
+              content: SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Niveau 1: Directeur général, PCA, Président ...",
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      const SizedBox(height: p8),
+                      Text("Niveau 2: Directeur département",
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      const SizedBox(height: p8),
+                      Text("Niveau 3: Chef de service",
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      const SizedBox(height: p8),
+                      Text("Niveau 4: Personnel travailleur (perosne)",
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      const SizedBox(height: p8),
+                      Text("Niveau 5: Stagiaire, Expert, Consultant, ...",
+                          style: Theme.of(context).textTheme.bodyLarge),
+                    ],
+                  )),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          });
+        });
+  }
+}

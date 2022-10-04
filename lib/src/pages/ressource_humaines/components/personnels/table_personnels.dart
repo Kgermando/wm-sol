@@ -1,0 +1,316 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/models/rh/agent_model.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agents_xlsx.dart';
+import 'package:wm_solution/src/utils/class_implemented.dart';
+import 'package:wm_solution/src/widgets/print_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
+
+class TablePersonnels extends StatefulWidget {
+  const TablePersonnels({Key? key, required this.personnelList})
+      : super(key: key);
+  final List<AgentModel> personnelList; 
+
+  @override
+  State<TablePersonnels> createState() => _TablePersonnelsState();
+}
+
+class _TablePersonnelsState extends State<TablePersonnels> {
+  List<PlutoColumn> columns = [];
+  List<PlutoRow> rows = [];
+  PlutoGridStateManager? stateManager;
+  PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
+
+  @override
+  initState() {
+    agentsColumn();
+    agentsRow();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PlutoGrid(
+      columns: columns,
+      rows: rows,
+      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) {
+        final dataId = tapEvent.row!.cells.values;
+        final idPlutoRow = dataId.elementAt(0);
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => AgentPage(id: idPlutoRow.value)));
+        // Navigator.pushNamed(context, RhRoutes.rhAgentPage,
+        //     arguments: idPlutoRow.value);
+      },
+      onLoaded: (PlutoGridOnLoadedEvent event) {
+        stateManager = event.stateManager;
+        stateManager!.setShowColumnFilter(true);
+        stateManager!.notifyListeners();
+      },
+      createHeader: (PlutoGridStateManager header) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const TitleWidget(title: "Personnels"),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      // Navigator.pushNamed(context, RhRoutes.rhAgent);
+                    },
+                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                PrintWidget(onPressed: () {
+                  AgentXlsx().exportToExcel(widget.personnelList);
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const Text("Exportation effectué!"),
+                    backgroundColor: Colors.green[700],
+                  ));
+                })
+              ],
+            ),
+          ],
+        );
+      },
+      configuration: PlutoGridConfiguration(
+        columnFilter: PlutoGridColumnFilterConfig(
+          filters: const [
+            ...FilterHelper.defaultFilters,
+            // custom filter
+            ClassFilterImplemented(),
+          ],
+          resolveDefaultColumnFilter: (column, resolver) {
+            if (column.field == 'id') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'statutAgent') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'nom') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'postNom') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'prenom') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'email') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'telephone') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'sexe') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'role') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'matricule') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'dateNaissance') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'departement') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'servicesAffectation') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            }
+            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+          },
+        ),
+      ),
+      createFooter: (stateManager) {
+        stateManager.setPageSize(20, notify: false); // default 40
+        return PlutoPagination(stateManager);
+      },
+    );
+  }
+ 
+  Future agentsRow() async {
+    var i = widget.personnelList.length;
+    for (var item in widget.personnelList) {
+      
+      rows.add(PlutoRow(cells: {
+        // for (var i = 1; i < widget.personnelList.length; i++)
+        'id': PlutoCell(value: i--),
+        'statutAgent': PlutoCell(
+            value:
+                (item.statutAgent == "true") ? 'Actif' : 'Inactif'),
+        'nom': PlutoCell(value: item.nom),
+        'postNom': PlutoCell(value: item.postNom),
+        'prenom': PlutoCell(value: item.prenom),
+        'email': PlutoCell(value: item.email),
+        'telephone': PlutoCell(value: item.telephone),
+        'sexe': PlutoCell(value: item.sexe),
+        'role': PlutoCell(value: "Niveau ${item.role}"),
+        'matricule': PlutoCell(value: item.matricule),
+        'dateNaissance':
+            PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
+        'departement': PlutoCell(value: item.departement),
+        'servicesAffectation': PlutoCell(value: item.servicesAffectation)
+      }));
+    }
+  }
+
+  void agentsColumn() {
+    columns = [
+      PlutoColumn(
+        readOnly: true,
+        title: 'Id',
+        field: 'id',
+        type: PlutoColumnType.number(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 100,
+        minWidth: 80,
+      ),
+      PlutoColumn(
+        title: 'Statut Agent',
+        field: 'statutAgent',
+        minWidth: 150,
+        type: PlutoColumnType.text(),
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Actif') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Inactif') {
+            textColor = Colors.red;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Nom',
+        field: 'nom',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Post-Nom',
+        field: 'postNom',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Prénom',
+        field: 'prenom',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Email',
+        field: 'email',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Télephone',
+        field: 'telephone',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 150,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Sexe',
+        field: 'sexe',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 150,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Acréditation',
+        field: 'role',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Matricule',
+        field: 'matricule',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Date de naissance',
+        field: 'dateNaissance',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Département',
+        field: 'departement',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 250,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Services d\'affectation',
+        field: 'servicesAffectation',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 150,
+      ),
+    ];
+  }
+}
