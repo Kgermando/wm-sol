@@ -11,6 +11,7 @@ class PrintWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
+          color: Colors.purple,
           tooltip: 'Imprimer le document',
           onPressed: onPressed, 
           icon: const Icon(Icons.print)

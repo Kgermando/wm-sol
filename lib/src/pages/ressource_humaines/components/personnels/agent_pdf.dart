@@ -79,7 +79,7 @@ class AgentPdf {
           child: pw.Image(image),
         ),
         pw.Text(InfoSystem().namelong()),
-        pw.Text("FOKAD SA",
+        pw.Text(InfoSystem().name(),
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
       ],
     );
@@ -315,17 +315,17 @@ class AgentPdf {
   }
 
   static Widget buildFooter(UserModel user) => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Divider(),
-          SizedBox(height: 2 * PdfPageFormat.mm),
-          // buildSimpleText(title: 'Address', value: invoice.supplier.address),
-          // SizedBox(height: 1 * PdfPageFormat.mm),
-          // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-          pw.Text('Fonds Kasaiens de développement.',
-              style: const pw.TextStyle(fontSize: 10))
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Divider(),
+      SizedBox(height: 2 * PdfPageFormat.mm),
+      // buildSimpleText(title: 'Address', value: invoice.supplier.address),
+      // SizedBox(height: 1 * PdfPageFormat.mm),
+      // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
+      pw.Text(InfoSystem().namelong(),
+          style: const pw.TextStyle(fontSize: 10))
+    ],
+  );
 
   static buildSimpleText({
     required String title,

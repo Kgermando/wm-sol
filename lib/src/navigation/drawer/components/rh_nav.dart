@@ -34,7 +34,7 @@ class _RhNavState extends State<RhNav> {
       children: [
         DrawerWidget(
           selected: widget.currentRoute == RhRoutes.rhDashboard,
-          icon: Icons.group,
+          icon: Icons.dashboard,
           sizeIcon: 20.0,
           title: 'Dashboard',
           style: bodyText1!,
@@ -52,6 +52,26 @@ class _RhNavState extends State<RhNav> {
             Get.toNamed(RhRoutes.rhPersonnelsPage);
             // Navigator.of(context).pop();
           }),
+        DrawerWidget(
+          selected: widget.currentRoute == RhRoutes.rhPaiement,
+          icon: Icons.real_estate_agent_sharp,
+          sizeIcon: 20.0,
+          title: 'Salaires',
+          style: bodyText1,
+          onTap: () {
+            Get.toNamed(RhRoutes.rhPaiement);
+            // Navigator.of(context).pop();
+          }),
+        DrawerWidget(
+            selected: widget.currentRoute == RhRoutes.rhTransportRest,
+            icon: Icons.restaurant,
+            sizeIcon: 20.0,
+            title: 'Transport & restauration | Autres frais',
+            style: bodyText1,
+            onTap: () {
+              Get.toNamed(RhRoutes.rhTransportRest);
+              // Navigator.of(context).pop();
+            }),
       ],
     );
   }

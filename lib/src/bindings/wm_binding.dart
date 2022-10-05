@@ -4,6 +4,8 @@ import 'package:wm_solution/src/pages/auth/controller/change_password_controller
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest_person_controller.dart'; 
 
 class WMBindings extends Bindings {
   @override
@@ -18,5 +20,8 @@ class WMBindings extends Bindings {
 
     // RH
     Get.lazyPut<PersonnelsController>(() => PersonnelsController());
+    Get.lazyPut<SalaireController>(() => SalaireController());
+    Get.lazyPut<TransportRestPersonnelsController>(() => TransportRestPersonnelsController());
+    
   }
 }

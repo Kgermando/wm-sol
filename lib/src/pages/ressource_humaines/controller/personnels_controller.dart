@@ -22,6 +22,11 @@ class PersonnelsController extends GetxController
   PerformenceApi performenceApi = PerformenceApi();
   final ProfilController profilController = Get.find();
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
+
+
   final _personne = AgentModel(
           nom: '-',
           postNom: '-',
@@ -80,9 +85,7 @@ class PersonnelsController extends GetxController
   List<String> serviceAffectationComm = ServiceAffectation().commDropdown;
   List<String> serviceAffectationLog = ServiceAffectation().logDropdown;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final _isLoading = false.obs;
-  bool get isLoading => _isLoading.value;
+
 
   TextEditingController nomController = TextEditingController();
   TextEditingController postNomController = TextEditingController();
@@ -177,11 +180,18 @@ class PersonnelsController extends GetxController
     super.dispose();
   }
 
+  detailView(int id) async {
+    final data = await personnelsApi.getOneData(id);
+    _personne.value = data; 
+    return data;
+  }
+
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
     final form = formKey.currentState!;
     if (form.validate()) {
       try {
+        _isLoading.value = true;
         final agentModel = AgentModel(
             nom: (nomController.text == '') ? '-' : nomController.text,
             postNom:
@@ -238,6 +248,7 @@ class PersonnelsController extends GetxController
         await personnelsApi.insertData(agentModel).then((value) async {
           await submitPerformence();
         });
+        _isLoading.value = false;
       } catch (e) {
         _isLoading.value = false;
         Get.snackbar(
@@ -341,18 +352,12 @@ class PersonnelsController extends GetxController
     await personnelsApi.updateData(agentModel).then((value) {
       Get.back();
       Get.snackbar(
-          "MOdification effectué!", "Le document a bien été sauvegader",
+          "Modification effectué!", "Le document a bien été sauvegader",
           backgroundColor: Colors.green,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     });
   }
 
-   detailView(int id) async {
-    final data = await personnelsApi.getOneData(id);
-    _personne.value = data;
-    // print("_personne ${_personne.value} ");
-    // print("personne $personne ");
-    return data;
-  }
+
 }

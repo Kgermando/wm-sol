@@ -28,7 +28,7 @@ class _PersonnelsPageState extends State<PersonnelsPage> {
     return SafeArea(
       child: controller.obx(
         onLoading: loading(),
-        onEmpty: const Text('Pas aucune donnée'),
+        onEmpty: const Text('Aucune donnée'),
         onError: (error) => Text("Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
         (data) => Scaffold(
           key: scaffoldKey,

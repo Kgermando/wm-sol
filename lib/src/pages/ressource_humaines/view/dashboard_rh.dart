@@ -44,7 +44,8 @@ class _DashboardRHState extends State<DashboardRH> {
                         borderRadius:
                             BorderRadius.all(Radius.circular(20))),
                     child: Padding(
-                      padding: const EdgeInsets.all(p20),
+                      padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

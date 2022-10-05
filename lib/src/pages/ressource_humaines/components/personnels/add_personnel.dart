@@ -16,8 +16,9 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_c
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/regex.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class AddPersonnel extends StatefulWidget {
   const AddPersonnel({super.key, required this.personnelList});
@@ -28,12 +29,13 @@ class AddPersonnel extends StatefulWidget {
 }
 
 class _AddPersonnelState extends State<AddPersonnel> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  String title = "Ressources Humaines";
+  String subTitle = "Add profil";
+  
   @override
   Widget build(BuildContext context) {
-    final PersonnelsController controller = Get.find();
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-    String title = "Ressources Humaines";
-    String subTitle = "Add profil";
+    final PersonnelsController controller = Get.find(); 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -59,11 +61,12 @@ class _AddPersonnelState extends State<AddPersonnel> {
                       child: Card(
                         elevation: 3,
                         child: Padding(
-                          padding: const EdgeInsets.all(p20),
+                          padding: const EdgeInsets.symmetric(horizontal: p20),
                           child: Form(
                             key: controller.formKey,
                             child: Column(
                               children: [
+                                const TitleWidget(title: "Nouveau profil"),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -873,7 +876,10 @@ class _AddPersonnelState extends State<AddPersonnel> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Niveau 1: Directeur général, PCA, Président ...",
+                      Text("Niveau 0: PCA, Président",
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      const SizedBox(height: p8),
+                      Text("Niveau 1: Directeur général",
                           style: Theme.of(context).textTheme.bodyLarge),
                       const SizedBox(height: p8),
                       Text("Niveau 2: Directeur département",

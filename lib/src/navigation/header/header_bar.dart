@@ -25,31 +25,39 @@ AppBar headerBar(
   final String firstLettter = userController.user.prenom[0];
   final String firstLettter2 = userController.user.nom[0];
   return AppBar(
+    leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
         ? Image.asset(InfoSystem().logoSansFond(), width: 20, height: 20,)
-        : IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              scaffoldKey.currentState!.openDrawer();
-            }), 
-      title: Visibility(
-        visible: !Responsive.isMobile(context),
-        child: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: BreadCrumb(
-            overflow: ScrollableOverflow(
+        : Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  scaffoldKey.currentState!.openDrawer();
+                }),
+            IconButton(onPressed: () {
+                  Get.back();
+                }, icon: const Icon(Icons.arrow_back)
+            )
+          ],
+        ), 
+      title: Responsive.isMobile(context) ? Container() : InkWell(
+        onTap: () {
+          Get.back();
+        },
+        child: BreadCrumb(
+          overflow: ScrollableOverflow(
 		keepLastDivider: false,
 		reverse: false,
 		direction: Axis.horizontal),
-            items: <BreadCrumbItem>[
-              BreadCrumbItem(content: BreadCrumbWidget(title: title)),
-              BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
-            ],
-            divider: const Icon(Icons.chevron_right),
-          ),
-      )),
+          items: <BreadCrumbItem>[
+            BreadCrumbItem(content: BreadCrumbWidget(title: title)),
+            BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
+          ],
+          divider: const Icon(Icons.chevron_right),
+        ),
+      ),
     actions: [
       IconButton(
           tooltip: 'Panier',

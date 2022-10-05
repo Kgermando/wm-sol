@@ -1,0 +1,305 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wm_solution/src/api/rh/paiement_salaire_api.dart';
+import 'package:wm_solution/src/models/rh/agent_model.dart';
+import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/utils/salaire_dropsown.dart';
+
+class SalaireController extends GetxController
+    with StateMixin<List<PaiementSalaireModel>> {
+  final PaiementSalaireApi paiementSalaireApi = PaiementSalaireApi();
+  final ProfilController profilController = Get.find();
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
+
+  final List<String> tauxJourHeureMoisSalaireList =
+      SalaireDropdown().tauxJourHeureMoisSalaireDropdown;
+
+
+  final TextEditingController joursHeuresPayeA100PourecentSalaireController =
+      TextEditingController();
+  final TextEditingController totalDuSalaireController =
+      TextEditingController();
+  final TextEditingController nombreHeureSupplementairesController =
+      TextEditingController();
+  final TextEditingController tauxHeureSupplementairesController =
+      TextEditingController();
+  final TextEditingController totalDuHeureSupplementairesController =
+      TextEditingController();
+  final TextEditingController
+      supplementTravailSamediDimancheJoursFerieController =
+      TextEditingController();
+  final TextEditingController primeController = TextEditingController();
+  final TextEditingController diversController = TextEditingController();
+  final TextEditingController joursCongesPayeController =
+      TextEditingController();
+  final TextEditingController tauxCongesPayeController =
+      TextEditingController();
+  final TextEditingController totalDuCongePayeController =
+      TextEditingController();
+  final TextEditingController jourPayeMaladieAccidentController =
+      TextEditingController();
+  final TextEditingController tauxJournalierMaladieAccidentController =
+      TextEditingController();
+  final TextEditingController totalDuMaladieAccidentController =
+      TextEditingController();
+  final TextEditingController pensionDeductionController =
+      TextEditingController();
+  final TextEditingController indemniteCompensatricesDeductionController =
+      TextEditingController();
+  final TextEditingController avancesDeductionController =
+      TextEditingController();
+  final TextEditingController diversDeductionController =
+      TextEditingController();
+  final TextEditingController retenuesFiscalesDeductionController =
+      TextEditingController();
+  final TextEditingController
+      nombreEnfantBeneficaireAllocationsFamilialesController =
+      TextEditingController();
+  final TextEditingController nombreDeJoursAllocationsFamilialesController =
+      TextEditingController();
+  final TextEditingController tauxJoursAllocationsFamilialesController =
+      TextEditingController();
+  final TextEditingController totalAPayerAllocationsFamilialesController =
+      TextEditingController();
+  final TextEditingController netAPayerController = TextEditingController();
+  final TextEditingController
+      montantPrisConsiderationCalculCotisationsINSSController =
+      TextEditingController();
+  final TextEditingController totalDuBrutController = TextEditingController();
+
+  String? tauxJourHeureMoisSalaire;
+ 
+
+  @override
+  void onInit() {
+    super.onInit();
+    paiementSalaireApi.getAllData().then((response) {
+      change(response, status: RxStatus.success());
+    }, onError: (err) {
+      change(null, status: RxStatus.error(err.toString()));
+    });
+  }
+
+  @override
+  void dispose() {
+    joursHeuresPayeA100PourecentSalaireController.dispose();
+    totalDuSalaireController.dispose();
+    nombreHeureSupplementairesController.dispose();
+    tauxHeureSupplementairesController.dispose();
+    totalDuHeureSupplementairesController.dispose();
+    supplementTravailSamediDimancheJoursFerieController.dispose();
+    primeController.dispose();
+    diversController.dispose();
+    joursCongesPayeController.dispose();
+    tauxCongesPayeController.dispose();
+    totalDuCongePayeController.dispose();
+    jourPayeMaladieAccidentController.dispose();
+    tauxJournalierMaladieAccidentController.dispose();
+    totalDuMaladieAccidentController.dispose();
+    pensionDeductionController.dispose();
+    indemniteCompensatricesDeductionController.dispose();
+    retenuesFiscalesDeductionController.dispose();
+    nombreEnfantBeneficaireAllocationsFamilialesController.dispose();
+    nombreDeJoursAllocationsFamilialesController.dispose();
+    tauxJoursAllocationsFamilialesController.dispose();
+    totalAPayerAllocationsFamilialesController.dispose();
+    netAPayerController.dispose();
+    montantPrisConsiderationCalculCotisationsINSSController.dispose();
+    totalDuBrutController.dispose();
+    super.dispose();
+  }
+
+  detailView(int id) async {
+    final data = await paiementSalaireApi.getOneData(id);
+    return data;
+  }
+
+  Future submit(AgentModel agentModel) async {
+    final form = formKey.currentState!;
+    if (form.validate()) {
+      try {
+        _isLoading.value = true;
+        final paiementSalaireModel = PaiementSalaireModel(
+            nom: agentModel.nom,
+            postNom: agentModel.postNom,
+            prenom: agentModel.prenom,
+            email: agentModel.email,
+            telephone: agentModel.telephone,
+            adresse: agentModel.adresse,
+            departement: agentModel.departement,
+            numeroSecuriteSociale: agentModel.numeroSecuriteSociale,
+            matricule: agentModel.matricule,
+            servicesAffectation: agentModel.servicesAffectation,
+            salaire: agentModel.salaire,
+            observation: 'false', // Finance
+            modePaiement: '-',
+            createdAt: DateTime.now(),
+            tauxJourHeureMoisSalaire:
+                (tauxJourHeureMoisSalaire == '' || tauxJourHeureMoisSalaire == null)
+                    ? '-'
+                    : tauxJourHeureMoisSalaire.toString(),
+            joursHeuresPayeA100PourecentSalaire:
+                (joursHeuresPayeA100PourecentSalaireController.text == '')
+                    ? '-'
+                    : joursHeuresPayeA100PourecentSalaireController.text,
+            totalDuSalaire: (totalDuSalaireController.text == '')
+                ? '-'
+                : totalDuSalaireController.text,
+            nombreHeureSupplementaires: (nombreHeureSupplementairesController.text == '')
+                ? '-'
+                : nombreHeureSupplementairesController.text,
+            tauxHeureSupplementaires: (tauxHeureSupplementairesController.text == '')
+                ? '-'
+                : tauxHeureSupplementairesController.text,
+            totalDuHeureSupplementaires:
+                (totalDuHeureSupplementairesController.text == '')
+                    ? '-'
+                    : totalDuHeureSupplementairesController.text,
+            supplementTravailSamediDimancheJoursFerie:
+                (supplementTravailSamediDimancheJoursFerieController.text == '')
+                    ? '-'
+                    : supplementTravailSamediDimancheJoursFerieController.text,
+            prime: (primeController.text == '') ? '-' : primeController.text,
+            divers: (diversController.text == '') ? '-' : diversController.text,
+            joursCongesPaye: (joursCongesPayeController.text == '')
+                ? '-'
+                : joursCongesPayeController.text,
+            tauxCongesPaye: (tauxCongesPayeController.text == '')
+                ? '-'
+                : tauxCongesPayeController.text,
+            totalDuCongePaye: (totalDuCongePayeController.text == '') ? '-' : totalDuCongePayeController.text,
+            jourPayeMaladieAccident: (jourPayeMaladieAccidentController.text == '') ? '-' : jourPayeMaladieAccidentController.text,
+            tauxJournalierMaladieAccident: (tauxJournalierMaladieAccidentController.text == '') ? '-' : tauxJournalierMaladieAccidentController.text,
+            totalDuMaladieAccident: (totalDuMaladieAccidentController.text == '') ? '-' : totalDuMaladieAccidentController.text,
+            pensionDeduction: (pensionDeductionController.text == '') ? '-' : pensionDeductionController.text,
+            indemniteCompensatricesDeduction: (indemniteCompensatricesDeductionController.text == '') ? '-' : indemniteCompensatricesDeductionController.text,
+            avancesDeduction: (avancesDeductionController.text == '') ? '-' : avancesDeductionController.text,
+            diversDeduction: (diversDeductionController.text == '') ? '-' : diversDeductionController.text,
+            retenuesFiscalesDeduction: (retenuesFiscalesDeductionController.text == '') ? '-' : retenuesFiscalesDeductionController.text,
+            nombreEnfantBeneficaireAllocationsFamiliales: (nombreEnfantBeneficaireAllocationsFamilialesController.text == '') ? '-' : retenuesFiscalesDeductionController.text,
+            nombreDeJoursAllocationsFamiliales: (nombreDeJoursAllocationsFamilialesController.text == '') ? '-' : nombreDeJoursAllocationsFamilialesController.text,
+            tauxJoursAllocationsFamiliales: (tauxJoursAllocationsFamilialesController.text == '') ? '-' : tauxJoursAllocationsFamilialesController.text,
+            totalAPayerAllocationsFamiliales: (totalAPayerAllocationsFamilialesController.text == '') ? '-' : totalAPayerAllocationsFamilialesController.text,
+            netAPayer: (netAPayerController.text == '') ? '-' : netAPayerController.text,
+            montantPrisConsiderationCalculCotisationsINSS: (montantPrisConsiderationCalculCotisationsINSSController.text == '') ? '-' : montantPrisConsiderationCalculCotisationsINSSController.text,
+            totalDuBrut: (totalDuBrutController.text == '') ? '-' : totalDuBrutController.text,
+            signature: profilController.user.matricule,
+            approbationBudget: '-',
+            motifBudget: '-',
+            signatureBudget: '-',
+            approbationFin: '-',
+            motifFin: '-',
+            signatureFin: '-',
+            approbationDD: '-',
+            motifDD: '-',
+            signatureDD: '-',
+            ligneBudgetaire: '-',
+            ressource: '-');
+        await paiementSalaireApi
+            .insertData(paiementSalaireModel)
+            .then((value) {
+          Get.back();
+          Get.snackbar(
+              "Soumission effectuée avec succès!", "Le document a bien été sauvegader",
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+          _isLoading.value = false;
+        });
+        
+      } catch (e) {
+        Get.snackbar(
+          "Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+      }
+    }
+  }
+
+
+  void submitObservation(PaiementSalaireModel data) async {
+    try {
+       _isLoading.value = true;
+      final paiementSalaireModel = PaiementSalaireModel(
+        id: data.id,
+        nom: data.nom,
+        postNom: data.postNom,
+        prenom: data.prenom,
+        email: data.email,
+        telephone: data.telephone,
+        adresse: data.adresse,
+        departement: data.departement,
+        numeroSecuriteSociale: data.numeroSecuriteSociale,
+        matricule: data.matricule,
+        servicesAffectation: data.servicesAffectation,
+        salaire: data.salaire,
+        observation: 'true',
+        modePaiement: data.modePaiement,
+        createdAt: data.createdAt,
+        tauxJourHeureMoisSalaire: data.tauxJourHeureMoisSalaire,
+        joursHeuresPayeA100PourecentSalaire:
+            data.joursHeuresPayeA100PourecentSalaire,
+        totalDuSalaire: data.totalDuSalaire,
+        nombreHeureSupplementaires: data.nombreHeureSupplementaires,
+        tauxHeureSupplementaires: data.tauxHeureSupplementaires,
+        totalDuHeureSupplementaires: data.totalDuHeureSupplementaires,
+        supplementTravailSamediDimancheJoursFerie:
+            data.supplementTravailSamediDimancheJoursFerie,
+        prime: data.prime,
+        divers: data.divers,
+        joursCongesPaye: data.joursCongesPaye,
+        tauxCongesPaye: data.tauxCongesPaye,
+        totalDuCongePaye: data.totalDuCongePaye,
+        jourPayeMaladieAccident: data.jourPayeMaladieAccident,
+        tauxJournalierMaladieAccident: data.tauxJournalierMaladieAccident,
+        totalDuMaladieAccident: data.totalDuMaladieAccident,
+        pensionDeduction: data.pensionDeduction,
+        indemniteCompensatricesDeduction: data.indemniteCompensatricesDeduction,
+        avancesDeduction: data.avancesDeduction,
+        diversDeduction: data.diversDeduction,
+        retenuesFiscalesDeduction: data.retenuesFiscalesDeduction,
+        nombreEnfantBeneficaireAllocationsFamiliales:
+            data.nombreEnfantBeneficaireAllocationsFamiliales,
+        nombreDeJoursAllocationsFamiliales:
+            data.nombreDeJoursAllocationsFamiliales,
+        tauxJoursAllocationsFamiliales: data.tauxJoursAllocationsFamiliales,
+        totalAPayerAllocationsFamiliales: data.totalAPayerAllocationsFamiliales,
+        netAPayer: data.netAPayer,
+        montantPrisConsiderationCalculCotisationsINSS:
+            data.montantPrisConsiderationCalculCotisationsINSS,
+        totalDuBrut: data.totalDuBrut,
+        signature: data.signature,
+        approbationBudget: data.approbationBudget,
+        motifBudget: data.motifBudget,
+        signatureBudget: data.signatureBudget,
+        approbationFin: data.approbationFin,
+        motifFin: data.motifFin,
+        signatureFin: data.signatureFin,
+        approbationDD: data.approbationDD,
+        motifDD: data.motifDD,
+        signatureDD: data.signatureDD,
+        ligneBudgetaire: data.ligneBudgetaire,
+        ressource: data.ressource);
+    await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+      Get.back();
+      Get.snackbar("Observation effectuée avec succès!",
+          "Le document a bien été sauvegader",
+          backgroundColor: Colors.green,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+      _isLoading.value = false;
+    }); 
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+    
+  }
+}
