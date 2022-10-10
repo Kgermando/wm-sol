@@ -54,14 +54,17 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
               appBar: headerBar(context, scaffoldKey, title,
                   widget.transportRestaurationModel.title),
               drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
-                onPressed: () {
-                  detailAgentDialog(controller, controllerAgent);
-                },
-              ),
+              floatingActionButton:
+                (widget.transportRestaurationModel.isSubmit == "true")
+                  ? Container()
+                  : FloatingActionButton.extended(
+                      label: const Text("Ajouter une personne"),
+                      tooltip: "Ajout personne à la liste",
+                      icon: const Icon(Icons.person_add),
+                      onPressed: () {
+                        detailAgentDialog(controller, controllerAgent);
+                      },
+                    ),
               body: Row(
                 children: [
                   Visibility(
@@ -80,57 +83,75 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                     BorderRadius.all(Radius.circular(20))),
                             child: Column(
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: p20),
+                            child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if (Responsive.isDesktop(context))
+                                        TitleWidget(
+                                            title: widget
+                                                .transportRestaurationModel
+                                                .title),
+                                      if (!Responsive.isDesktop(
+                                          context))
+                                        Container(),
+                                      Column(
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              if (Responsive.isDesktop(context))
-                                                TitleWidget(
-                                                    title: widget
-                                                        .transportRestaurationModel
-                                                        .title),
-                                              if (!Responsive.isDesktop(
-                                                  context))
-                                                Container(),
-                                              Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          color: Colors
-                                                              .green.shade700,
-                                                          onPressed: () {
-                                                            controller.sendDD(widget
-                                                                .transportRestaurationModel);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.send)),
-                                                      PrintWidget(
-                                                          onPressed: () async {
-                                                        await TransRestPdf.generate(
-                                                            state!,
-                                                            widget
-                                                                .transportRestaurationModel);
-                                                      }),
-                                                    ],
-                                                  ),
-                                                  SelectableText(
-                                                      DateFormat(
-                                                              "dd-MM-yyyy HH:mm")
-                                                          .format(widget
-                                                              .transportRestaurationModel
-                                                              .created),
-                                                      textAlign:
-                                                          TextAlign.start),
+                                              if (widget
+                                                      .transportRestaurationModel
+                                                      .isSubmit ==
+                                                  "false")
+                                              IconButton(
+                                                  color: Colors
+                                                      .green.shade700,
+                                                  onPressed: () {
+                                                    controller.sendDD(widget
+                                                        .transportRestaurationModel);
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.send)),
+                                              if (widget
+                                                      .transportRestaurationModel
+                                                      .isSubmit ==
+                                                  "false")
+                                                IconButton(
+                                                    color: Colors
+                                                        .red.shade700,
+                                                    onPressed: () {
+                                                      controller.deleteData(
+                                                          widget
+                                                        .transportRestaurationModel.id!);
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.delete)),
+                                              PrintWidget(
+                                                  onPressed: () async {
+                                                await TransRestPdf.generate(
+                                                    state!,
+                                                    widget
+                                                        .transportRestaurationModel);
+                                              }),
+                                            ],
+                                          ),
+                                          SelectableText(
+                                              DateFormat(
+                                                      "dd-MM-yyyy HH:mm")
+                                                  .format(widget
+                                                      .transportRestaurationModel
+                                                      .created),
+                                              textAlign:
+                                                  TextAlign.start),
                                                 ],
                                               )
                                             ],
@@ -343,8 +364,13 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
       Container(
         padding: const EdgeInsets.all(p10),
         width: 200,
-        child: (widget.transportRestaurationModel.approbationDD == "Approved")
-            ? Icon(Icons.check_box, color: Colors.green.shade700)
+        child: (widget.transportRestaurationModel.isSubmit == "true")
+            ? IconButton(
+                color: Colors.green.shade700,
+                onPressed: () {
+                  
+                },
+                icon: const Icon(Icons.check_box)) 
             : IconButton(
                 color: Colors.red.shade700,
                 onPressed: () {
@@ -353,6 +379,31 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                 icon: const Icon(Icons.delete)),
       ),
     ]);
+  }
+
+ 
+  checkboxAgentPaye(TransportRestPersonnelsController controllerAgent,
+      TransRestAgentsModel item) {
+    bool isCheckedItem = false;
+    if (item.observation == 'true') {
+      isCheckedItem = true;
+    } else if (item.observation == 'false') {
+      isCheckedItem = false;
+    }
+    return ListTile(
+      leading: Checkbox(
+        checkColor: Colors.white,
+        fillColor: MaterialStateProperty.resolveWith(getColor),
+        value: isCheckedItem,
+        onChanged: (bool? value) {
+          setState(() {
+            isCheckedItem = value!;
+            controllerAgent.updateTransRestAgents(item);
+          });
+        },
+      ),
+      title: const Text("Confirmation de Paiement"),
+    );
   }
 
   detailAgentDialog(TransportRestController controller,

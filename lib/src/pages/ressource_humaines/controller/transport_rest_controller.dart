@@ -61,6 +61,27 @@ class TransportRestController extends GetxController
   detailView(int id) async {
     final data = await transportRestaurationApi.getOneData(id);
     return data;
+  } 
+
+  void deleteData(int id) async {
+    try {
+      _isLoading.value = true;
+      await transportRestaurationApi.deleteData(id).then((value) {
+        transportRestaurationList.clear();
+        getList();
+        // Get.back();
+        Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
   }
 
   void submit() async {
@@ -112,7 +133,7 @@ class TransportRestController extends GetxController
       final transRest = TransportRestaurationModel(
           id: data.id!,
           title: data.title,
-          observation: 'true',
+          observation: data.observation,
           signature: data.signature,
           createdRef: data.createdRef,
           created: DateTime.now(),

@@ -60,7 +60,8 @@ class TransportRestPersonnelsController extends GetxController
             nom: nomController.text,
             prenom: prenomController.text,
             matricule: matriculeController.text,
-            montant: montantController.text);
+            montant: montantController.text,
+            observation: "false");
         await transRestAgentsApi.insertData(transRest).then((value) {
           transRestAgentList.clear();
           getList();
@@ -83,6 +84,43 @@ class TransportRestPersonnelsController extends GetxController
     }
   }
 
+  void updateTransRestAgents(TransRestAgentsModel data) async {
+    try {
+      final form = formKey.currentState!;
+      if (form.validate()) {
+        _isLoading.value = true;
+        final transRest = TransRestAgentsModel(
+            reference: data.id!,
+            nom: data.nom,
+            prenom: data.prenom,
+            matricule: data.matricule,
+            montant: data.montant,
+            observation: "true"
+        );
+        await transRestAgentsApi.insertData(transRest).then((value) {
+          transRestAgentList.clear();
+          getList();
+          Get.back();
+          Get.snackbar("Ajouté avec succès!",
+              "Vous avez ajouté ${nomController.text} à la liste",
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+          _isLoading.value = false;
+        });
+        form.reset();
+      }
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+
+
   void deleteTransRestAgents(int id) async {
     try {
       _isLoading.value = true;
@@ -102,5 +140,7 @@ class TransportRestPersonnelsController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  }
+  } 
+
+
 }
