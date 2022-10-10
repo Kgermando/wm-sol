@@ -36,6 +36,7 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
     authController.getUserId().then((value) {
       _user.value = value;
       _loadingProfil.value = false;
+      update();
       debugPrint("user profil: ${_user.value.matricule}");
     });
     print("Profil ${user.fonctionOccupe}");

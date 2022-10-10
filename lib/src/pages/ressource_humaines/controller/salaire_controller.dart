@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/api/mails/mail_api.dart';
 import 'package:wm_solution/src/api/rh/paiement_salaire_api.dart';
+import 'package:wm_solution/src/models/mail/mail_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
@@ -10,6 +12,7 @@ class SalaireController extends GetxController
     with StateMixin<List<PaiementSalaireModel>> {
   final PaiementSalaireApi paiementSalaireApi = PaiementSalaireApi();
   final ProfilController profilController = Get.find();
+  final MailApi mailApi = MailApi();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -17,7 +20,6 @@ class SalaireController extends GetxController
 
   final List<String> tauxJourHeureMoisSalaireList =
       SalaireDropdown().tauxJourHeureMoisSalaireDropdown;
-
 
   final TextEditingController joursHeuresPayeA100PourecentSalaireController =
       TextEditingController();
@@ -72,7 +74,20 @@ class SalaireController extends GetxController
   final TextEditingController totalDuBrutController = TextEditingController();
 
   String? tauxJourHeureMoisSalaire;
- 
+
+  // Approbations
+  final formKeyBudget = GlobalKey<FormState>();
+
+  String approbationDG = '-';
+  String approbationBudget = '-';
+  String approbationFin = '-';
+  String approbationDD = '-';
+  TextEditingController motifDGController = TextEditingController();
+  TextEditingController motifBudgetController = TextEditingController();
+  TextEditingController motifFinController = TextEditingController();
+  TextEditingController motifDDController = TextEditingController();
+  String? ligneBudgtaire;
+  String? ressource;
 
   @override
   void onInit() {
@@ -199,107 +214,402 @@ class SalaireController extends GetxController
             signatureDD: '-',
             ligneBudgetaire: '-',
             ressource: '-');
-        await paiementSalaireApi
-            .insertData(paiementSalaireModel)
-            .then((value) {
+        await paiementSalaireApi.insertData(paiementSalaireModel).then((value) {
           Get.back();
-          Get.snackbar(
-              "Soumission effectuée avec succès!", "Le document a bien été sauvegader",
+          Get.snackbar("Soumission effectuée avec succès!",
+              "Le document a bien été sauvegader",
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
           _isLoading.value = false;
         });
-        
       } catch (e) {
-        Get.snackbar(
-          "Erreur de soumission", "$e",
-          backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
+        Get.snackbar("Erreur de soumission", "$e",
+            backgroundColor: Colors.red,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
       }
     }
   }
 
-
   void submitObservation(PaiementSalaireModel data) async {
     try {
-       _isLoading.value = true;
+      _isLoading.value = true;
       final paiementSalaireModel = PaiementSalaireModel(
-        id: data.id,
-        nom: data.nom,
-        postNom: data.postNom,
-        prenom: data.prenom,
-        email: data.email,
-        telephone: data.telephone,
-        adresse: data.adresse,
-        departement: data.departement,
-        numeroSecuriteSociale: data.numeroSecuriteSociale,
-        matricule: data.matricule,
-        servicesAffectation: data.servicesAffectation,
-        salaire: data.salaire,
-        observation: 'true',
-        modePaiement: data.modePaiement,
-        createdAt: data.createdAt,
-        tauxJourHeureMoisSalaire: data.tauxJourHeureMoisSalaire,
-        joursHeuresPayeA100PourecentSalaire:
-            data.joursHeuresPayeA100PourecentSalaire,
-        totalDuSalaire: data.totalDuSalaire,
-        nombreHeureSupplementaires: data.nombreHeureSupplementaires,
-        tauxHeureSupplementaires: data.tauxHeureSupplementaires,
-        totalDuHeureSupplementaires: data.totalDuHeureSupplementaires,
-        supplementTravailSamediDimancheJoursFerie:
-            data.supplementTravailSamediDimancheJoursFerie,
-        prime: data.prime,
-        divers: data.divers,
-        joursCongesPaye: data.joursCongesPaye,
-        tauxCongesPaye: data.tauxCongesPaye,
-        totalDuCongePaye: data.totalDuCongePaye,
-        jourPayeMaladieAccident: data.jourPayeMaladieAccident,
-        tauxJournalierMaladieAccident: data.tauxJournalierMaladieAccident,
-        totalDuMaladieAccident: data.totalDuMaladieAccident,
-        pensionDeduction: data.pensionDeduction,
-        indemniteCompensatricesDeduction: data.indemniteCompensatricesDeduction,
-        avancesDeduction: data.avancesDeduction,
-        diversDeduction: data.diversDeduction,
-        retenuesFiscalesDeduction: data.retenuesFiscalesDeduction,
-        nombreEnfantBeneficaireAllocationsFamiliales:
-            data.nombreEnfantBeneficaireAllocationsFamiliales,
-        nombreDeJoursAllocationsFamiliales:
-            data.nombreDeJoursAllocationsFamiliales,
-        tauxJoursAllocationsFamiliales: data.tauxJoursAllocationsFamiliales,
-        totalAPayerAllocationsFamiliales: data.totalAPayerAllocationsFamiliales,
-        netAPayer: data.netAPayer,
-        montantPrisConsiderationCalculCotisationsINSS:
-            data.montantPrisConsiderationCalculCotisationsINSS,
-        totalDuBrut: data.totalDuBrut,
-        signature: data.signature,
-        approbationBudget: data.approbationBudget,
-        motifBudget: data.motifBudget,
-        signatureBudget: data.signatureBudget,
-        approbationFin: data.approbationFin,
-        motifFin: data.motifFin,
-        signatureFin: data.signatureFin,
-        approbationDD: data.approbationDD,
-        motifDD: data.motifDD,
-        signatureDD: data.signatureDD,
-        ligneBudgetaire: data.ligneBudgetaire,
-        ressource: data.ressource);
-    await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
-      Get.back();
-      Get.snackbar("Observation effectuée avec succès!",
-          "Le document a bien été sauvegader",
-          backgroundColor: Colors.green,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-      _isLoading.value = false;
-    }); 
+          id: data.id,
+          nom: data.nom,
+          postNom: data.postNom,
+          prenom: data.prenom,
+          email: data.email,
+          telephone: data.telephone,
+          adresse: data.adresse,
+          departement: data.departement,
+          numeroSecuriteSociale: data.numeroSecuriteSociale,
+          matricule: data.matricule,
+          servicesAffectation: data.servicesAffectation,
+          salaire: data.salaire,
+          observation: 'true',
+          modePaiement: data.modePaiement,
+          createdAt: data.createdAt,
+          tauxJourHeureMoisSalaire: data.tauxJourHeureMoisSalaire,
+          joursHeuresPayeA100PourecentSalaire:
+              data.joursHeuresPayeA100PourecentSalaire,
+          totalDuSalaire: data.totalDuSalaire,
+          nombreHeureSupplementaires: data.nombreHeureSupplementaires,
+          tauxHeureSupplementaires: data.tauxHeureSupplementaires,
+          totalDuHeureSupplementaires: data.totalDuHeureSupplementaires,
+          supplementTravailSamediDimancheJoursFerie:
+              data.supplementTravailSamediDimancheJoursFerie,
+          prime: data.prime,
+          divers: data.divers,
+          joursCongesPaye: data.joursCongesPaye,
+          tauxCongesPaye: data.tauxCongesPaye,
+          totalDuCongePaye: data.totalDuCongePaye,
+          jourPayeMaladieAccident: data.jourPayeMaladieAccident,
+          tauxJournalierMaladieAccident: data.tauxJournalierMaladieAccident,
+          totalDuMaladieAccident: data.totalDuMaladieAccident,
+          pensionDeduction: data.pensionDeduction,
+          indemniteCompensatricesDeduction:
+              data.indemniteCompensatricesDeduction,
+          avancesDeduction: data.avancesDeduction,
+          diversDeduction: data.diversDeduction,
+          retenuesFiscalesDeduction: data.retenuesFiscalesDeduction,
+          nombreEnfantBeneficaireAllocationsFamiliales:
+              data.nombreEnfantBeneficaireAllocationsFamiliales,
+          nombreDeJoursAllocationsFamiliales:
+              data.nombreDeJoursAllocationsFamiliales,
+          tauxJoursAllocationsFamiliales: data.tauxJoursAllocationsFamiliales,
+          totalAPayerAllocationsFamiliales:
+              data.totalAPayerAllocationsFamiliales,
+          netAPayer: data.netAPayer,
+          montantPrisConsiderationCalculCotisationsINSS:
+              data.montantPrisConsiderationCalculCotisationsINSS,
+          totalDuBrut: data.totalDuBrut,
+          signature: data.signature,
+          approbationBudget: data.approbationBudget,
+          motifBudget: data.motifBudget,
+          signatureBudget: data.signatureBudget,
+          approbationFin: data.approbationFin,
+          motifFin: data.motifFin,
+          signatureFin: data.signatureFin,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          ligneBudgetaire: data.ligneBudgetaire,
+          ressource: data.ressource);
+      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        Get.back();
+        Get.snackbar("Observation effectuée avec succès!",
+            "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-    
+  }
+
+  Future<void> submitDD(PaiementSalaireModel data) async {
+    try {
+      _isLoading.value = true;
+      final paiementSalaireModel = PaiementSalaireModel(
+          id: data.id,
+          nom: data.nom,
+          postNom: data.postNom,
+          prenom: data.prenom,
+          email: data.email,
+          telephone: data.telephone,
+          adresse: data.adresse,
+          departement: data.departement,
+          numeroSecuriteSociale: data.numeroSecuriteSociale,
+          matricule: data.matricule,
+          servicesAffectation: data.servicesAffectation,
+          salaire: data.salaire,
+          observation: data.observation,
+          modePaiement: data.modePaiement,
+          createdAt: data.createdAt,
+          tauxJourHeureMoisSalaire: data.tauxJourHeureMoisSalaire,
+          joursHeuresPayeA100PourecentSalaire:
+              data.joursHeuresPayeA100PourecentSalaire,
+          totalDuSalaire: data.totalDuSalaire,
+          nombreHeureSupplementaires: data.nombreHeureSupplementaires,
+          tauxHeureSupplementaires: data.tauxHeureSupplementaires,
+          totalDuHeureSupplementaires: data.totalDuHeureSupplementaires,
+          supplementTravailSamediDimancheJoursFerie:
+              data.supplementTravailSamediDimancheJoursFerie,
+          prime: data.prime,
+          divers: data.divers,
+          joursCongesPaye: data.joursCongesPaye,
+          tauxCongesPaye: data.tauxCongesPaye,
+          totalDuCongePaye: data.totalDuCongePaye,
+          jourPayeMaladieAccident: data.jourPayeMaladieAccident,
+          tauxJournalierMaladieAccident: data.tauxJournalierMaladieAccident,
+          totalDuMaladieAccident: data.totalDuMaladieAccident,
+          pensionDeduction: data.pensionDeduction,
+          indemniteCompensatricesDeduction:
+              data.indemniteCompensatricesDeduction,
+          avancesDeduction: data.avancesDeduction,
+          diversDeduction: data.diversDeduction,
+          retenuesFiscalesDeduction: data.retenuesFiscalesDeduction,
+          nombreEnfantBeneficaireAllocationsFamiliales:
+              data.nombreEnfantBeneficaireAllocationsFamiliales,
+          nombreDeJoursAllocationsFamiliales:
+              data.nombreDeJoursAllocationsFamiliales,
+          tauxJoursAllocationsFamiliales: data.tauxJoursAllocationsFamiliales,
+          totalAPayerAllocationsFamiliales:
+              data.totalAPayerAllocationsFamiliales,
+          netAPayer: data.netAPayer,
+          montantPrisConsiderationCalculCotisationsINSS:
+              data.montantPrisConsiderationCalculCotisationsINSS,
+          totalDuBrut: data.totalDuBrut,
+          signature: data.signature,
+          approbationBudget: '-',
+          motifBudget: '-',
+          signatureBudget: '-',
+          approbationFin: '-',
+          motifFin: '-',
+          signatureFin: '-',
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule,
+          ligneBudgetaire: '-',
+          ressource: '-');
+      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        Get.back();
+        Get.snackbar(
+            "Effectuée avec succès!", "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  Future<void> submitBudget(PaiementSalaireModel data) async {
+    try {
+      _isLoading.value = true;
+      final paiementSalaireModel = PaiementSalaireModel(
+          id: data.id,
+          nom: data.nom,
+          postNom: data.postNom,
+          prenom: data.prenom,
+          email: data.email,
+          telephone: data.telephone,
+          adresse: data.adresse,
+          departement: data.departement,
+          numeroSecuriteSociale: data.numeroSecuriteSociale,
+          matricule: data.matricule,
+          servicesAffectation: data.servicesAffectation,
+          salaire: data.salaire,
+          observation: data.observation,
+          modePaiement: data.modePaiement,
+          createdAt: data.createdAt,
+          tauxJourHeureMoisSalaire: data.tauxJourHeureMoisSalaire,
+          joursHeuresPayeA100PourecentSalaire:
+              data.joursHeuresPayeA100PourecentSalaire,
+          totalDuSalaire: data.totalDuSalaire,
+          nombreHeureSupplementaires: data.nombreHeureSupplementaires,
+          tauxHeureSupplementaires: data.tauxHeureSupplementaires,
+          totalDuHeureSupplementaires: data.totalDuHeureSupplementaires,
+          supplementTravailSamediDimancheJoursFerie:
+              data.supplementTravailSamediDimancheJoursFerie,
+          prime: data.prime,
+          divers: data.divers,
+          joursCongesPaye: data.joursCongesPaye,
+          tauxCongesPaye: data.tauxCongesPaye,
+          totalDuCongePaye: data.totalDuCongePaye,
+          jourPayeMaladieAccident: data.jourPayeMaladieAccident,
+          tauxJournalierMaladieAccident: data.tauxJournalierMaladieAccident,
+          totalDuMaladieAccident: data.totalDuMaladieAccident,
+          pensionDeduction: data.pensionDeduction,
+          indemniteCompensatricesDeduction:
+              data.indemniteCompensatricesDeduction,
+          avancesDeduction: data.avancesDeduction,
+          diversDeduction: data.diversDeduction,
+          retenuesFiscalesDeduction: data.retenuesFiscalesDeduction,
+          nombreEnfantBeneficaireAllocationsFamiliales:
+              data.nombreEnfantBeneficaireAllocationsFamiliales,
+          nombreDeJoursAllocationsFamiliales:
+              data.nombreDeJoursAllocationsFamiliales,
+          tauxJoursAllocationsFamiliales: data.tauxJoursAllocationsFamiliales,
+          totalAPayerAllocationsFamiliales:
+              data.totalAPayerAllocationsFamiliales,
+          netAPayer: data.netAPayer,
+          montantPrisConsiderationCalculCotisationsINSS:
+              data.montantPrisConsiderationCalculCotisationsINSS,
+          totalDuBrut: data.totalDuBrut,
+          signature: data.signature,
+          approbationBudget: approbationBudget,
+          motifBudget: (motifBudgetController.text == '')
+              ? '-'
+              : motifBudgetController.text,
+          signatureBudget: profilController.user.matricule,
+          approbationFin: '-',
+          motifFin: '-',
+          signatureFin: '-',
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          ligneBudgetaire: (ligneBudgtaire.toString() == '')
+              ? '-'
+              : ligneBudgtaire.toString(),
+          ressource: (ressource.toString() == '') ? '-' : ressource.toString());
+      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        Get.back();
+        Get.snackbar(
+            "Effectuée avec succès!", "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  Future<void> submitFin(PaiementSalaireModel data) async {
+    try {
+      _isLoading.value = true;
+      final paiementSalaireModel = PaiementSalaireModel(
+          id: data.id,
+          nom: data.nom,
+          postNom: data.postNom,
+          prenom: data.prenom,
+          email: data.email,
+          telephone: data.telephone,
+          adresse: data.adresse,
+          departement: data.departement,
+          numeroSecuriteSociale: data.numeroSecuriteSociale,
+          matricule: data.matricule,
+          servicesAffectation: data.servicesAffectation,
+          salaire: data.salaire,
+          observation: data.observation,
+          modePaiement: data.modePaiement,
+          createdAt: data.createdAt,
+          tauxJourHeureMoisSalaire: data.tauxJourHeureMoisSalaire,
+          joursHeuresPayeA100PourecentSalaire:
+              data.joursHeuresPayeA100PourecentSalaire,
+          totalDuSalaire: data.totalDuSalaire,
+          nombreHeureSupplementaires: data.nombreHeureSupplementaires,
+          tauxHeureSupplementaires: data.tauxHeureSupplementaires,
+          totalDuHeureSupplementaires: data.totalDuHeureSupplementaires,
+          supplementTravailSamediDimancheJoursFerie:
+              data.supplementTravailSamediDimancheJoursFerie,
+          prime: data.prime,
+          divers: data.divers,
+          joursCongesPaye: data.joursCongesPaye,
+          tauxCongesPaye: data.tauxCongesPaye,
+          totalDuCongePaye: data.totalDuCongePaye,
+          jourPayeMaladieAccident: data.jourPayeMaladieAccident,
+          tauxJournalierMaladieAccident: data.tauxJournalierMaladieAccident,
+          totalDuMaladieAccident: data.totalDuMaladieAccident,
+          pensionDeduction: data.pensionDeduction,
+          indemniteCompensatricesDeduction:
+              data.indemniteCompensatricesDeduction,
+          avancesDeduction: data.avancesDeduction,
+          diversDeduction: data.diversDeduction,
+          retenuesFiscalesDeduction: data.retenuesFiscalesDeduction,
+          nombreEnfantBeneficaireAllocationsFamiliales:
+              data.nombreEnfantBeneficaireAllocationsFamiliales,
+          nombreDeJoursAllocationsFamiliales:
+              data.nombreDeJoursAllocationsFamiliales,
+          tauxJoursAllocationsFamiliales: data.tauxJoursAllocationsFamiliales,
+          totalAPayerAllocationsFamiliales:
+              data.totalAPayerAllocationsFamiliales,
+          netAPayer: data.netAPayer,
+          montantPrisConsiderationCalculCotisationsINSS:
+              data.montantPrisConsiderationCalculCotisationsINSS,
+          totalDuBrut: data.totalDuBrut,
+          signature: data.signature,
+          approbationBudget: data.approbationBudget,
+          motifBudget: data.motifBudget,
+          signatureBudget: data.signatureBudget,
+          approbationFin: approbationFin,
+          motifFin:
+              (motifFinController.text == '') ? '-' : motifFinController.text,
+          signatureFin: profilController.user.matricule,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          ligneBudgetaire: data.ligneBudgetaire,
+          ressource: data.ressource);
+      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        sendEmail(value).then((value) {
+          Get.back();
+          Get.snackbar(
+              "Effectuée avec succès!", "Le document a bien été sauvegader",
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+          _isLoading.value = false;
+        }); 
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    } 
+  }
+
+  //Senfd Email
+  Future<void> sendEmail(PaiementSalaireModel data) async {
+    String mois = '';
+    if (DateTime.now().month == 1) {
+      mois = 'Janvier';
+    } else if (DateTime.now().month == 2) {
+      mois = 'Février';
+    } else if (DateTime.now().month == 3) {
+      mois = 'Mars';
+    } else if (DateTime.now().month == 4) {
+      mois = 'Avril';
+    } else if (DateTime.now().month == 5) {
+      mois = 'Mai';
+    } else if (DateTime.now().month == 6) {
+      mois = 'Juin';
+    } else if (DateTime.now().month == 7) {
+      mois = 'Juillet';
+    } else if (DateTime.now().month == 8) {
+      mois = 'Août';
+    } else if (DateTime.now().month == 9) {
+      mois = 'Septembre';
+    } else if (DateTime.now().month == 10) {
+      mois = 'Octobre';
+    } else if (DateTime.now().month == 11) {
+      mois = 'Novembre';
+    } else if (DateTime.now().month == 12) {
+      mois = 'Décembre';
+    }
+    final mailModel = MailModel(
+        fullName: "${data.prenom} ${data.nom}",
+        email: data.email,
+        cc: '-',
+        objet: "SALAIRE",
+        message:
+            "Bonjour ${data.prenom}, votre salaire de $mois est maintenant disponible.",
+        pieceJointe: "-",
+        read: 'false',
+        fullNameDest:
+            "${profilController.user.prenom} ${profilController.user.nom}",
+        emailDest: profilController.user.email,
+        dateSend: DateTime.now(),
+        dateRead: DateTime.now());
+    await mailApi.insertData(mailModel);
   }
 }

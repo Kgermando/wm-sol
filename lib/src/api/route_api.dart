@@ -1,5 +1,5 @@
-const String mainUrl = "http://localhost/api";
-// const String mainUrl = "http://192.168.43.96/api";
+// const String mainUrl = "http://localhost/api";
+const String mainUrl = "http://192.168.43.179/api";
 // const String mainUrl = "http://161.35.239.245/api";
 
 // Notifications departements

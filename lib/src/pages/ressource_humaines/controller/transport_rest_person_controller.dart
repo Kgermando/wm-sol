@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/rh/trans_rest_agents_api.dart'; 
+import 'package:wm_solution/src/api/rh/trans_rest_agents_api.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class TransportRestPersonnelsController extends GetxController
     with StateMixin<List<TransRestAgentsModel>> {
-  final TransRestAgentsApi transRestAgentsModel = TransRestAgentsApi();
+  final TransRestAgentsApi transRestAgentsApi = TransRestAgentsApi();
   final ProfilController profilController = Get.find();
+
+  var transRestAgentList = <TransRestAgentsModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -17,7 +19,7 @@ class TransportRestPersonnelsController extends GetxController
   bool get isChecked => _isChecked.value;
 
   final _isDeleting = false.obs;
-  bool get isDeleting => _isDeleting.value; 
+  bool get isDeleting => _isDeleting.value;
 
   final TextEditingController nomController = TextEditingController();
   final TextEditingController prenomController = TextEditingController();
@@ -27,37 +29,68 @@ class TransportRestPersonnelsController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    transRestAgentsModel.getAllData().then((response) {
+    getList();
+  }
+
+  @override
+  void dispose() {
+    nomController.dispose();
+    prenomController.dispose();
+    matriculeController.dispose();
+    montantController.dispose();
+    super.dispose();
+  }
+
+  void getList() {
+    transRestAgentsApi.getAllData().then((response) {
+      transRestAgentList.assignAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
-   @override
-  void dispose() {
-    nomController.dispose();
-    prenomController.dispose();
-    matriculeController.dispose();
-    montantController.dispose(); 
-    super.dispose();
-  }
-
- 
-
   void submitTransRestAgents(TransportRestaurationModel data) async {
     try {
-        _isLoading.value = true; 
-      final transRest = TransRestAgentsModel(
-          reference: data.createdRef,
-          nom: nomController.text,
-          prenom: prenomController.text,
-          matricule: matriculeController.text,
-          montant: montantController.text);
-      await transRestAgentsModel.insertData(transRest).then((value) {
-        Get.back();
-        Get.snackbar("Ajouté avec succès!",
-            "${nomController.text} a bien été ajouté",
+      final form = formKey.currentState!;
+      if (form.validate()) {
+        _isLoading.value = true;
+        final transRest = TransRestAgentsModel(
+            reference: data.id!,
+            nom: nomController.text,
+            prenom: prenomController.text,
+            matricule: matriculeController.text,
+            montant: montantController.text);
+        await transRestAgentsApi.insertData(transRest).then((value) {
+          transRestAgentList.clear();
+          getList();
+          Get.back(); 
+          Get.snackbar(
+              "Ajouté avec succès!", "Vous avez ajouté ${nomController.text} à la liste",
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+          _isLoading.value = false;
+        });
+        form.reset();
+      }
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void deleteTransRestAgents(int id) async {
+    try {
+      _isLoading.value = true;
+      await transRestAgentsApi.deleteData(id).then((value) {
+        transRestAgentList.clear();
+        getList();
+        // Get.back();
+        Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -69,10 +102,5 @@ class TransportRestPersonnelsController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-
-
-
-    
   }
 }
- 

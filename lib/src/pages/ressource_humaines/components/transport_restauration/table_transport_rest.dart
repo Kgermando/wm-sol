@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +11,8 @@ import 'package:wm_solution/src/pages/ressource_humaines/components/transport_re
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/class_implemented.dart';
+import 'package:wm_solution/src/utils/plutogrid_data_table.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
-import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableTransportRest extends StatefulWidget {
   const TableTransportRest(
@@ -32,10 +34,9 @@ class _TableTransportRestState extends State<TableTransportRest> {
   @override
   initState() {
     agentsColumn();
-    agentsRow();
+    agentsRow().then((value) => stateManager!.setShowLoading(false));
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,34 +45,34 @@ class _TableTransportRestState extends State<TableTransportRest> {
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
         final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.elementAt(0);
+        final idPlutoRow = dataId.last;
 
         final TransportRestaurationModel transportRestaurationModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(RhRoutes.rhPersonnelsDetail, arguments: transportRestaurationModel);
+        Get.toNamed(RhRoutes.rhTransportRestDetail,
+            arguments: transportRestaurationModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
-        stateManager!.notifyListeners();
+        stateManager!.setShowLoading(true);
       },
       createHeader: (PlutoGridStateManager header) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                child: AutoSizeText(
-                    "Transport & Restauration | Autres frais",
+                child: AutoSizeText("Transport & Restauration | Autres frais",
                     maxLines: 2,
                     style: (Responsive.isMobile(context)
                         ? Theme.of(context).textTheme.bodyMedium
-                        : Theme.of(context).textTheme.headlineSmall))), 
+                        : Theme.of(context).textTheme.headlineSmall))),
             Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, RhRoutes.rhTransportRest);
+                    onPressed: () { 
+                      Get.toNamed(RhRoutes.rhTransportRest);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -95,7 +96,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
             ClassFilterImplemented(),
           ],
           resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'id') {
+            if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'title') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -119,39 +120,41 @@ class _TableTransportRestState extends State<TableTransportRest> {
         ),
       ),
       createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: false); // default 40
+        stateManager.setPageSize(20, notify: true); // default 40
         return PlutoPagination(stateManager);
       },
     );
   }
 
-
-  Future agentsRow() async {
+  Future<List<PlutoRow>> agentsRow() async {
     var i = widget.transportRestList.length;
     for (var item in widget.transportRestList) {
-      rows.add(PlutoRow(cells: { 
-         'id': PlutoCell(value: i--),
-        'title': PlutoCell(value: item.title),
-        'observation': PlutoCell(
-            value: (item.observation == 'true') ? "Payé" : "Non payé"),
-        'signature': PlutoCell(value: item.signature),
-        'created': PlutoCell(
-            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-        'approbationDG': PlutoCell(value: item.approbationDG),
-        'approbationDD': PlutoCell(value: item.approbationDD),
-        'approbationBudget': PlutoCell(value: item.approbationBudget),
-        'approbationFin': PlutoCell(value: item.approbationFin)
-      }));
-    } 
+      setState(() {
+        rows.add(PlutoRow(cells: {
+          'numero': PlutoCell(value: i--),
+          'title': PlutoCell(value: item.title),
+          'observation': PlutoCell(
+              value: (item.observation == 'true') ? "Payé" : "Non payé"),
+          'signature': PlutoCell(value: item.signature),
+          'created': PlutoCell(
+              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+          'approbationDG': PlutoCell(value: item.approbationDG),
+          'approbationDD': PlutoCell(value: item.approbationDD),
+          'approbationBudget': PlutoCell(value: item.approbationBudget),
+          'approbationFin': PlutoCell(value: item.approbationFin),
+          'id': PlutoCell(value: item.id)
+        }));
+      });
+    }
+    return rows;
   }
-
 
   void agentsColumn() {
     columns = [
       PlutoColumn(
         readOnly: true,
-        title: 'Id',
-        field: 'id',
+        title: 'N°',
+        field: 'numero',
         type: PlutoColumnType.number(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -193,7 +196,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -205,7 +208,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -219,6 +222,23 @@ class _TableTransportRestState extends State<TableTransportRest> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -231,6 +251,23 @@ class _TableTransportRestState extends State<TableTransportRest> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -243,6 +280,23 @@ class _TableTransportRestState extends State<TableTransportRest> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -255,8 +309,36 @@ class _TableTransportRestState extends State<TableTransportRest> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Id',
+        field: 'id',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 80,
       ),
     ];
   }
-
 }

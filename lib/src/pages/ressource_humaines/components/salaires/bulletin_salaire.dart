@@ -7,6 +7,8 @@ import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/salaire_pdf.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaire_controller.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -32,6 +34,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   @override
   Widget build(BuildContext context) {
+    final SalaireController controller = Get.find();
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
@@ -53,86 +56,12 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                   decoration: const BoxDecoration(
                       borderRadius:
                           BorderRadius.all(Radius.circular(20))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: p20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment:
-                                    MainAxisAlignment.end,
-                          children: [
-                            PrintWidget(onPressed: () async {
-                              await SalairePdf.generate(widget.salaire);
-                            }),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.start,
-                          children: [
-                            Expanded(child: Text(
-                              'Bulletin de paie du ${DateFormat("dd-MM-yyyy HH:mm").format(widget.salaire.createdAt)}',
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            )) 
-                          ],
-                        ),
-                        const SizedBox(
-                          height: p20,
-                        ),
-                        agentWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        salaireWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        heureSupplementaireWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        supplementTravailSamediDimancheJoursFerieWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        primeWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        diversWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        congesPayeWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        maladieAccidentWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        totalDuBrutWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        deductionWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        allocationsFamilialesWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        netAPayerWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),
-                        montantPrisConsiderationCalculCotisationsINSSWidget(),
-                        const SizedBox(
-                          height: p10,
-                        ),  
-                      ]),
+                  child: Column(
+                    children: [
+                      dataWidget(controller),
+                      const SizedBox(height: p30),
+                      approbationWidget(controller)
+                    ],
                   )),
               ))
           ],
@@ -141,7 +70,95 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
     );
   }
 
-  Widget agentWidget() {
+  Widget dataWidget(SalaireController controller) {
+    return Card(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: p20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment:
+                        MainAxisAlignment.end,
+              children: [
+                PrintWidget(onPressed: () async {
+                  await SalairePdf.generate(widget.salaire);
+                }),
+              ],
+            ),
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.start,
+              children: [
+                Expanded(child: Text(
+                  'Bulletin de paie du ${DateFormat("dd-MM-yyyy HH:mm").format(widget.salaire.createdAt)}',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                )) 
+              ],
+            ),
+            const SizedBox(
+              height: p20,
+            ),
+            agentWidget(controller),
+            const SizedBox(
+              height: p10,
+            ),
+            salaireWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            heureSupplementaireWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            supplementTravailSamediDimancheJoursFerieWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            primeWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            diversWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            congesPayeWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            maladieAccidentWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            totalDuBrutWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            deductionWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            allocationsFamilialesWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            netAPayerWidget(),
+            const SizedBox(
+              height: p10,
+            ),
+            montantPrisConsiderationCalculCotisationsINSSWidget(),
+            const SizedBox(
+              height: p10,
+            ),  
+            
+          ]),
+      ),
+    );
+  }
+
+  Widget agentWidget(SalaireController controller) {
     final ProfilController profilController = Get.find();
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Column(
@@ -245,7 +262,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
           ),
           child2: (widget.salaire.observation == 'false' &&
                 profilController.user.departement == "Finances") 
-              ? checkboxRead() : Container(), 
+              ? checkboxRead(controller) : Container(), 
           child3: (widget.salaire.observation == 'true') 
             ? SelectableText(
               'Payé',
@@ -284,8 +301,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
     return Colors.green;
   }
 
-  checkboxRead() {
-    final SalaireController salaireController = Get.find();
+  checkboxRead(SalaireController controller) { 
     isChecked = false;
     return ListTile(
       leading: Checkbox(
@@ -295,7 +311,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
         onChanged: (bool? value) { 
           setState(() {
             isChecked = value!;
-            salaireController.submitObservation(widget.salaire);
+            controller.submitObservation(widget.salaire);
           }); 
         },
       ),
@@ -440,10 +456,12 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
         mainAxisAlignment: MainAxisAlignment.center,
         flex1: 3,
         flex2: 3,
-        child1: Expanded(
+        child1: SizedBox(
+          width: MediaQuery.of(context).size.width / 1.5,
           child: Text(
-                    'Supplement dû travail du samedi, du dimanche et jours ferié',
-                    style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+            'Supplement dû travail du samedi, du dimanche et jours ferié',
+            softWrap: true,
+            style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
         ), 
         child2: Column(
           children: [
@@ -881,21 +899,21 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
     );
   }
 
-  Widget montantPrisConsiderationCalculCotisationsINSSWidget(
-      ) {
+  Widget montantPrisConsiderationCalculCotisationsINSSWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     return Container(
       padding: const EdgeInsets.only(top: p16, bottom: p16),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           // top: BorderSide(width: 1.0),
-          bottom: BorderSide(width: 1.0, color: mainColor),
+          // bottom: BorderSide(width: 1.0, color: mainColor),
         ),
       ),
       child: ResponsiveChildWidget(
         mainAxisAlignment: MainAxisAlignment.center,
-        child1: Expanded(
+        child1: SizedBox(
+          width: MediaQuery.of(context).size.width / 1.5,
           child: Text(
             'Montant pris en consideration pour le calcul des cotisations INSS',
             style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)
@@ -914,6 +932,548 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
           ],
         )
       ) 
+    );
+  }
+
+
+  Widget approbationWidget(SalaireController controller) {
+    final ProfilController profilController = Get.find();
+    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    return Card(
+      elevation: 3,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(p10),
+          border: Border.all(
+            color: Colors.red.shade700,
+            width: 2.0,
+          ),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const TitleWidget(title: "Approbations"),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.add_task, color: Colors.green.shade700)),
+              ],
+            ),
+            const SizedBox(height: p20),
+            Divider(color: Colors.red[10]),
+            Padding(
+                padding: const EdgeInsets.all(p10),
+                child: ResponsiveChildWidget(
+                    flex1: 1,
+                    flex2: 4,
+                    child1: Text("Directeur de departement", style: bodyLarge),
+                    child2: Column(
+                      children: [
+                        ResponsiveChild3Widget(
+                            flex1: 2,
+                            flex2: 3,
+                            flex3: 2,
+                            child1: Column(
+                              children: [
+                                const Text("Approbation"),
+                                const SizedBox(height: p20),
+                                Text(
+                                    widget
+                                        .salaire.approbationDD,
+                                    style: bodyLarge!.copyWith(
+                                        color: (widget.salaire
+                                                    .approbationDD ==
+                                                "Unapproved")
+                                            ? Colors.red.shade700
+                                            : Colors.green.shade700)),
+                              ],
+                            ),
+                            child2: (widget.salaire
+                                        .approbationDD ==
+                                    "Unapproved")
+                                ? Column(
+                                    children: [
+                                      const Text("Motif"),
+                                      const SizedBox(height: p20),
+                                      Text(widget
+                                          .salaire.motifDD),
+                                    ],
+                                  )
+                                : Container(),
+                            child3: Column(
+                              children: [
+                                const Text("Signature"),
+                                const SizedBox(height: p20),
+                                Text(widget
+                                    .salaire.signatureDD),
+                              ],
+                            )),
+                        if (widget.salaire.approbationDD ==
+                                '-' &&
+                            profilController.user.fonctionOccupe ==
+                                "Directeur de departement")
+                          Padding(
+                              padding: const EdgeInsets.all(p10),
+                              child: ResponsiveChildWidget(
+                                  child1: approbationDDWidget(controller),
+                                  child2:
+                                      (controller.approbationDD == "Unapproved")
+                                          ? motifDDWidget(controller)
+                                          : Container())),
+                      ],
+                    ))),
+            const SizedBox(height: p20),
+            Divider(color: Colors.red[10]),
+            Padding(
+                padding: const EdgeInsets.all(p10),
+                child: ResponsiveChildWidget(
+                    flex1: 1,
+                    flex2: 4,
+                    child1: Text("Budget", style: bodyLarge),
+                    child2: Column(
+                      children: [
+                        ResponsiveChild3Widget(
+                            child1: Column(
+                              children: [
+                                const Text("Approbation"),
+                                const SizedBox(height: p20),
+                                Text(
+                                    widget.salaire
+                                        .approbationBudget,
+                                    style: bodyLarge.copyWith(
+                                        color: (widget.salaire
+                                                    .approbationBudget ==
+                                                "Unapproved")
+                                            ? Colors.red.shade700
+                                            : Colors.green.shade700)),
+                              ],
+                            ),
+                            child2: (widget.salaire
+                                        .approbationBudget ==
+                                    "Unapproved")
+                                ? Column(
+                                    children: [
+                                      const Text("Motif"),
+                                      const SizedBox(height: p20),
+                                      Text(widget.salaire
+                                          .motifBudget),
+                                    ],
+                                  )
+                                : Container(),
+                            child3: Column(
+                              children: [
+                                const Text("Signature"),
+                                const SizedBox(height: p20),
+                                Text(widget
+                                    .salaire.signatureBudget),
+                              ],
+                            )),
+                        const SizedBox(height: p20),
+                        ResponsiveChildWidget(
+                            flex1: 2,
+                            flex2: 2,
+                            child1: Column(
+                              children: [
+                                const Text("Ligne Budgetaire"),
+                                const SizedBox(height: p20),
+                                Text(
+                                    widget.salaire
+                                        .ligneBudgetaire,
+                                    style: bodyLarge.copyWith(
+                                        color: Colors.purple.shade700)),
+                              ],
+                            ),
+                            child2: Column(
+                              children: [
+                                const Text("Ressource"),
+                                const SizedBox(height: p20),
+                                Text(widget.salaire.ressource,
+                                    style: bodyLarge.copyWith(
+                                        color: Colors.purple.shade700)),
+                              ],
+                            )),
+                        if (widget.salaire.approbationBudget ==
+                                '-' &&
+                            profilController.user.fonctionOccupe ==
+                                "Directeur de budget")
+                          Padding(
+                            padding: const EdgeInsets.all(p10),
+                            child: Form(
+                              key: controller.formKeyBudget,
+                              child: Column(
+                                children: [
+                                  ResponsiveChildWidget(
+                                      child1: ligneBudgtaireWidget(controller),
+                                      child2: resourcesWidget(controller)),
+                                  ResponsiveChildWidget(
+                                      child1: approbationBudgetWidget(controller),
+                                      child2: (controller.approbationBudget ==
+                                              "Unapproved")
+                                          ? motifBudgetWidget(controller)
+                                          : Container())
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ))),
+            const SizedBox(height: p20),
+            Divider(color: Colors.red[10]),
+            Padding(
+              padding: const EdgeInsets.all(p10),
+              child: ResponsiveChildWidget(
+                  flex1: 1,
+                  flex2: 4,
+                  child1: Text("Finance", style: bodyLarge),
+                  child2: Column(
+                    children: [
+                      ResponsiveChild3Widget(
+                          flex1: 2,
+                          flex2: 3,
+                          flex3: 2,
+                          child1: Column(
+                            children: [
+                              const Text("Approbation"),
+                              const SizedBox(height: p20),
+                              Text(
+                                  widget
+                                      .salaire.approbationFin,
+                                  style: bodyLarge.copyWith(
+                                      color: (widget.salaire
+                                                  .approbationFin ==
+                                              "Unapproved")
+                                          ? Colors.red.shade700
+                                          : Colors.green.shade700)),
+                            ],
+                          ),
+                          child2:
+                              (widget.salaire.approbationFin ==
+                                      "Unapproved")
+                                  ? Column(
+                                      children: [
+                                        const Text("Motif"),
+                                        const SizedBox(height: p20),
+                                        Text(widget
+                                            .salaire.motifFin),
+                                      ],
+                                    )
+                                  : Container(),
+                          child3: Column(
+                            children: [
+                              const Text("Signature"),
+                              const SizedBox(height: p20),
+                              Text(
+                                  widget.salaire.signatureFin),
+                            ],
+                          )),
+                      if (widget.salaire.approbationFin ==
+                              '-' &&
+                          profilController.user.fonctionOccupe ==
+                              "Directeur de finance")
+                        Padding(
+                            padding: const EdgeInsets.all(p10),
+                            child: ResponsiveChildWidget(
+                                child1: approbationFinWidget(controller),
+                                child2:
+                                    (controller.approbationFin == "Unapproved")
+                                        ? motifFinWidget(controller)
+                                        : Container())),
+                    ],
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+   
+  Widget approbationDDWidget(SalaireController controller) {
+    List<String> approbationList = ['Approved', 'Unapproved', '-'];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p10),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Approbation',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.approbationDD,
+        isExpanded: true,
+        items: approbationList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            controller.approbationDD = value!;
+            if (controller.approbationDD == "Approved") {
+              controller.submitDD(widget.salaire);
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Widget motifDDWidget(SalaireController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p10),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                controller: controller.motifDDController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Ecrivez le motif...',
+                ),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Ce champs est obligatoire';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                  tooltip: 'Soumettre le Motif',
+                  onPressed: () {
+                    controller.submitDD(widget.salaire);
+                  },
+                  icon: Icon(Icons.send, color: Colors.red.shade700)),
+            )
+          ],
+        ));
+  }
+
+  Widget approbationBudgetWidget(SalaireController controller) {
+    List<String> approbationList = ['Approved', 'Unapproved', '-'];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p10),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Approbation',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.approbationBudget,
+        isExpanded: true,
+        items: approbationList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            controller.approbationBudget = value!;
+            final form = controller.formKeyBudget.currentState!;
+            if (form.validate()) {
+              if (controller.approbationBudget == "Approved") {
+                controller.submitBudget(widget.salaire);
+              }
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Widget motifBudgetWidget(SalaireController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p10),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                controller: controller.motifBudgetController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Ecrivez le motif...',
+                ),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Ce champs est obligatoire';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                  tooltip: 'Soumettre le Motif',
+                  onPressed: () {
+                    controller.submitBudget(widget.salaire);
+                  },
+                  icon: Icon(Icons.send, color: Colors.red.shade700)),
+            )
+          ],
+        ));
+  }
+
+  Widget approbationFinWidget(SalaireController controller) {
+    List<String> approbationList = ['Approved', 'Unapproved', '-'];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p10),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Approbation',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.approbationFin,
+        isExpanded: true,
+        items: approbationList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            controller.approbationFin = value!;
+            if (controller.approbationFin == "Approved") {
+              controller.submitFin(widget.salaire);
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Widget motifFinWidget(SalaireController controller) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p10),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: TextFormField(
+                controller: controller.motifFinController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Ecrivez le motif...',
+                ),
+                keyboardType: TextInputType.text,
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Ce champs est obligatoire';
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                  tooltip: 'Soumettre le Motif',
+                  onPressed: () {
+                    controller.submitFin(widget.salaire);
+                  },
+                  icon: Icon(Icons.send, color: Colors.red.shade700)),
+            )
+          ],
+        ));
+  }
+
+  // Soumettre une ligne budgetaire
+  Widget ligneBudgtaireWidget(SalaireController controller) {
+    final BudgetPrevisionnelController budgetPrevisionnelController =
+        Get.find();
+    final LignBudgetaireController lignBudgetaireController = Get.find();
+
+    return budgetPrevisionnelController.obx((state) {
+      return lignBudgetaireController.obx((ligne) {
+        List<String> dataList = [];
+        for (var i in state!) {
+          dataList = ligne!
+              .where((element) =>
+                  element.periodeBudgetDebut.microsecondsSinceEpoch ==
+                      i.periodeDebut.microsecondsSinceEpoch &&
+                  i.approbationDG == "Approved" &&
+                  i.approbationDD == "Approved" &&
+                  DateTime.now().isBefore(element.periodeBudgetFin) &&
+                  element.departement == "Ressources Humaines")
+              .map((e) => e.nomLigneBudgetaire)
+              .toList();
+        }
+        return Container(
+          margin: const EdgeInsets.only(bottom: p10),
+          child: DropdownButtonFormField<String>(
+            decoration: InputDecoration(
+              labelText: 'Ligne Budgetaire',
+              labelStyle: const TextStyle(),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+              contentPadding: const EdgeInsets.only(left: 5.0),
+            ),
+            value: controller.ligneBudgtaire,
+            isExpanded: true,
+            items: dataList.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            validator: (value) =>
+                value == null ? "Select Ligne Budgetaire" : null,
+            onChanged: (value) {
+              setState(() {
+                controller.ligneBudgtaire = value!;
+              });
+            },
+          ),
+        );
+      });
+    });
+  }
+
+  Widget resourcesWidget(SalaireController controller) {
+    List<String> dataList = ['caisse', 'banque', 'finExterieur'];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p10),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Resource',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.ressource,
+        isExpanded: true,
+        items: dataList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select Resource" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.ressource = value!;
+          });
+        },
+      ),
     );
   }
 }

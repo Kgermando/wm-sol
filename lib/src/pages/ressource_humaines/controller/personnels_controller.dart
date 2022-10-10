@@ -22,10 +22,11 @@ class PersonnelsController extends GetxController
   PerformenceApi performenceApi = PerformenceApi();
   final ProfilController profilController = Get.find();
 
+  var personnelsList = <AgentModel>[].obs;
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
-
 
   final _personne = AgentModel(
           nom: '-',
@@ -84,8 +85,6 @@ class PersonnelsController extends GetxController
   List<String> serviceAffectationEXp = ServiceAffectation().expDropdown;
   List<String> serviceAffectationComm = ServiceAffectation().commDropdown;
   List<String> serviceAffectationLog = ServiceAffectation().logDropdown;
-
-
 
   TextEditingController nomController = TextEditingController();
   TextEditingController postNomController = TextEditingController();
@@ -153,11 +152,7 @@ class PersonnelsController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    personnelsApi.getAllData().then((response) {
-      change(response, status: RxStatus.success());
-    }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
-    });
+    getList();
   }
 
   @override
@@ -180,9 +175,18 @@ class PersonnelsController extends GetxController
     super.dispose();
   }
 
+  void getList() async {
+    personnelsApi.getAllData().then((response) {
+      personnelsList.assignAll(response);
+      change(response, status: RxStatus.success());
+    }, onError: (err) {
+      change(null, status: RxStatus.error(err.toString()));
+    });
+  }
+
   detailView(int id) async {
     final data = await personnelsApi.getOneData(id);
-    _personne.value = data; 
+    _personne.value = data;
     return data;
   }
 
@@ -271,6 +275,8 @@ class PersonnelsController extends GetxController
         signature: profilController.user.matricule,
         created: DateTime.now());
     await performenceApi.insertData(performenceModel).then((value) {
+      personnelsList.clear();
+      getList();
       Get.back();
       Get.snackbar(
           "Enregistrement effectué!", "Le document a bien été sauvegader",
@@ -350,6 +356,8 @@ class PersonnelsController extends GetxController
         signature: profilController.user.matricule.toString(),
         created: DateTime.now());
     await personnelsApi.updateData(agentModel).then((value) {
+      personnelsList.clear();
+      getList();
       Get.back();
       Get.snackbar(
           "Modification effectué!", "Le document a bien été sauvegader",
@@ -358,6 +366,4 @@ class PersonnelsController extends GetxController
           snackPosition: SnackPosition.TOP);
     });
   }
-
-
 }

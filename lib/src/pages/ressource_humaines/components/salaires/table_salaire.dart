@@ -254,6 +254,23 @@ class _TableSalaireState extends State<TableSalaire> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -266,6 +283,23 @@ class _TableSalaireState extends State<TableSalaire> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -278,6 +312,23 @@ class _TableSalaireState extends State<TableSalaire> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
     ];
   }

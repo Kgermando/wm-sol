@@ -132,7 +132,7 @@ class TransportRestaurationModel {
 
 class TransRestAgentsModel {
   late int? id;
-  late DateTime reference;
+  late int reference;
   late String nom;
   late String prenom;
   late String matricule;
@@ -159,7 +159,7 @@ class TransRestAgentsModel {
   factory TransRestAgentsModel.fromJson(Map<String, dynamic> json) {
     return TransRestAgentsModel(
       id: json['id'],
-      reference: DateTime.parse(json['reference']),
+      reference: json['reference'],
       nom: json['nom'],
       prenom: json['prenom'],
       matricule: json['matricule'],
@@ -170,7 +170,7 @@ class TransRestAgentsModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'reference': reference.toIso8601String(),
+      'reference': reference,
       'nom': nom,
       'prenom': prenom,
       'matricule': matricule,
