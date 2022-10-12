@@ -13,9 +13,9 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/transport_restauration/transport_rest_pdf.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest_person_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
@@ -41,7 +41,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   @override
   Widget build(BuildContext context) {
-    final TransportRestController controller = Get.find();
+    final TransportRestController controller = Get.put(TransportRestController());
     final TransportRestPersonnelsController controllerAgent =
         Get.put(TransportRestPersonnelsController());
     return controllerAgent.obx(
@@ -66,6 +66,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                       },
                     ),
               body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -508,8 +509,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         Get.put(PersonnelsController());
 
     List<String> suggestionList =
-        controllerPersonnels.personnelsList.map((e) => e.matricule).toList();
-    print("suggestionList $suggestionList"); 
+        controllerPersonnels.personnelsList.map((e) => e.matricule).toList(); 
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(

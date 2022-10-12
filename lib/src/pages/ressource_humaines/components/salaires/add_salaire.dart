@@ -7,7 +7,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/salaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -34,6 +34,7 @@ class _AddSalaireState extends State<AddSalaire> {
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
       body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
               visible: !Responsive.isMobile(context),

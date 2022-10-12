@@ -1,8 +1,8 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+ 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/api_error.dart';
@@ -103,7 +103,9 @@ class AuthApi extends GetConnect {
 
     String idToken = box.read('idToken');
     int id = int.parse(jsonDecode(idToken));
-    print("id: $id");
+    if (kDebugMode) {
+      print("id: $id");
+    }
 
     var userIdUrl = Uri.parse("$mainUrl/user/$id");
     var resp = await client.get(userIdUrl, headers: header);

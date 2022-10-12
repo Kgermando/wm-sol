@@ -4,9 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/salaire_xlsx.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/salaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/utils/class_implemented.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -40,12 +39,12 @@ class _TableSalaireState extends State<TableSalaire> {
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
         final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.elementAt(0);
+        final idPlutoRow = dataId.last;
 
-        final PaiementSalaireModel salaire =
+        final PaiementSalaireModel dataItem =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(RhRoutes.rhPaiementBulletin, arguments: salaire);
+        Get.toNamed(RhRoutes.rhPaiementBulletin, arguments: dataItem);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -61,7 +60,7 @@ class _TableSalaireState extends State<TableSalaire> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, RhRoutes.rhPaiement);
+                      Get.toNamed(RhRoutes.rhPaiement); 
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -81,11 +80,9 @@ class _TableSalaireState extends State<TableSalaire> {
         columnFilter: PlutoGridColumnFilterConfig(
           filters: const [
             ...FilterHelper.defaultFilters,
-            // custom filter
-            ClassFilterImplemented(),
           ],
           resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'id') {
+            if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'prenom') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -109,6 +106,8 @@ class _TableSalaireState extends State<TableSalaire> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'approbationFin') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'id') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             }
             return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
           },
@@ -126,7 +125,7 @@ class _TableSalaireState extends State<TableSalaire> {
     var i = widget.salairesList.length;
     for (var item in widget.salairesList) {
       rows.add(PlutoRow(cells: {
-        'id': PlutoCell(value: i--),
+        'numero': PlutoCell(value: i--),
         'prenom': PlutoCell(value: item.prenom),
         'nom': PlutoCell(value: item.nom),
         'matricule': PlutoCell(value: item.matricule),
@@ -139,6 +138,7 @@ class _TableSalaireState extends State<TableSalaire> {
         'approbationDD': PlutoCell(value: item.approbationDD),
         'approbationBudget': PlutoCell(value: item.approbationBudget),
         'approbationFin': PlutoCell(value: item.approbationFin),
+        'id': PlutoCell(value: item.id)
       }));
     }
   }
@@ -149,8 +149,8 @@ class _TableSalaireState extends State<TableSalaire> {
     columns = [
       PlutoColumn(
         readOnly: true,
-        title: 'Id',
-        field: 'id',
+        title: 'N°',
+        field: 'numero',
         type: PlutoColumnType.number(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -329,6 +329,18 @@ class _TableSalaireState extends State<TableSalaire> {
             ),
           );
         },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Id',
+        field: 'id',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 80,
       ),
     ];
   }

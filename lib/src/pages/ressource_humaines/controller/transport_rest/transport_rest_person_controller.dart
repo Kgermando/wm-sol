@@ -50,6 +50,11 @@ class TransportRestPersonnelsController extends GetxController
     });
   }
 
+  detailView(int id) async {
+    final data = await transRestAgentsApi.getOneData(id);
+    return data;
+  }
+
   void submitTransRestAgents(TransportRestaurationModel data) async {
     try {
       final form = formKey.currentState!;

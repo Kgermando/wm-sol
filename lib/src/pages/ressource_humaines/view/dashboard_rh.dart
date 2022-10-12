@@ -4,7 +4,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 
 class DashboardRH extends StatefulWidget {
   const DashboardRH({Key? key}) : super(key: key);
@@ -28,6 +28,7 @@ class _DashboardRHState extends State<DashboardRH> {
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
         body: controller.obx((data) => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
               visible: !Responsive.isMobile(context),

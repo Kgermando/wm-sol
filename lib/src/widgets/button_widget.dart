@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:flutter/material.dart'; 
 
 class ButtonWidget extends StatelessWidget {
   final String text;
@@ -15,8 +14,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
-          minimumSize: const Size.fromHeight(40),
-          primary: mainColor,
+          minimumSize: const Size.fromHeight(40), 
         ),
         onPressed: onClicked,
         icon: const Icon(Icons.date_range),

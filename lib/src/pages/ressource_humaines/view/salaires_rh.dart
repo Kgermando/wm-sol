@@ -5,7 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/table_salaire.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/salaire_controller.dart'; 
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart'; 
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class SalairesRH extends StatefulWidget {
@@ -46,7 +46,7 @@ class _SalairesRHState extends State<SalairesRH> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: TableSalaire(salairesList: data!, controller: controller))
+                        child: TableSalaire(salairesList: controller.paiementSalaireList, controller: controller))
                 ),
               ],
             ))),

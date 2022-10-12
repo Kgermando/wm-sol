@@ -16,9 +16,7 @@ import 'package:wm_solution/src/widgets/menu_options.dart';
 
 AppBar headerBar(
     BuildContext context, GlobalKey<ScaffoldState> scaffoldKey, String title, String subTitle) {
-  final ProfilController userController = Get.put(ProfilController());
-
-  print("user bar ${userController.user.prenom}");
+  final ProfilController userController = Get.put(ProfilController()); 
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
 
@@ -27,37 +25,42 @@ AppBar headerBar(
   return AppBar(
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
-        ? Image.asset(InfoSystem().logoSansFond(), width: 20, height: 20,)
-        : Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  scaffoldKey.currentState!.openDrawer();
-                }),
-            IconButton(onPressed: () {
-                  Get.back();
-                }, icon: const Icon(Icons.arrow_back)
-            )
-          ],
-        ), 
-      title: Responsive.isMobile(context) ? Container() : InkWell(
-        onTap: () {
-          Get.back();
-        },
-        child: BreadCrumb(
+      ? Image.asset(InfoSystem().logoSansFond(), width: 20, height: 20,)
+      : Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                scaffoldKey.currentState!.openDrawer();
+              }),
+          IconButton(onPressed: () {
+                Get.back();
+              }, icon: const Icon(Icons.arrow_back)
+          )
+        ],
+      ), 
+    title: Responsive.isMobile(context) ? Container() : InkWell(
+      onTap: () {
+        Get.back();
+      },
+    child: Row(
+      children: [
+        const Icon(Icons.arrow_back),
+        BreadCrumb(
           overflow: ScrollableOverflow(
-		keepLastDivider: false,
-		reverse: false,
-		direction: Axis.horizontal),
-          items: <BreadCrumbItem>[
+          keepLastDivider: false,
+          reverse: false,
+          direction: Axis.horizontal),
+            items: <BreadCrumbItem>[ 
             BreadCrumbItem(content: BreadCrumbWidget(title: title)),
             BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
           ],
-          divider: const Icon(Icons.chevron_right),
+            divider: const Icon(Icons.chevron_right),
         ),
-      ),
+      ],
+    ),
+    ),
     actions: [
       IconButton(
           tooltip: 'Panier',

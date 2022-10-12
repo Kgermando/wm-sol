@@ -10,7 +10,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/salaire_pdf.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/salaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child4_widget.dart';
@@ -41,6 +41,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
         appBar: headerBar(context, scaffoldKey, title, "${widget.salaire.prenom} ${widget.salaire.nom}"),
         drawer: const DrawerMenu(),
         body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
               visible: !Responsive.isMobile(context),

@@ -11,7 +11,7 @@ import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/regex.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart'; 
@@ -77,8 +77,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    print("DEp ${widget.personne.departement}");
+  Widget build(BuildContext context) { 
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title,
@@ -367,11 +366,11 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     } else if (int.parse(profilController.user.role) > 3) {
       roleList = Dropdown().roleAgent;
     }
-
-    print("role user ${profilController.user.role}");
+ 
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 5,

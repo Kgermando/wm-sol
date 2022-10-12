@@ -39,7 +39,7 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
       update();
       debugPrint("user profil: ${_user.value.matricule}");
     });
-    print("Profil ${user.fonctionOccupe}");
+    // print("Profil ${user.fonctionOccupe}");
   }
 
   // void profil() {

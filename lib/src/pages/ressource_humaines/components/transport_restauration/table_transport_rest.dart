@@ -8,10 +8,8 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/transport_restauration/transport_restauration_xlsx.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/utils/class_implemented.dart';
-import 'package:wm_solution/src/utils/plutogrid_data_table.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 
 class TableTransportRest extends StatefulWidget {
@@ -91,9 +89,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
       configuration: PlutoGridConfiguration(
         columnFilter: PlutoGridColumnFilterConfig(
           filters: const [
-            ...FilterHelper.defaultFilters,
-            // custom filter
-            ClassFilterImplemented(),
+            ...FilterHelper.defaultFilters, 
           ],
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
@@ -113,6 +109,8 @@ class _TableTransportRestState extends State<TableTransportRest> {
             } else if (column.field == 'approbationBudget') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'approbationFin') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             }
             return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -336,7 +334,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 80,
         minWidth: 80,
       ),
     ];

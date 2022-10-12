@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:flutter/material.dart'; 
 import 'package:wm_solution/src/constants/responsive.dart';
 
 class ResponsiveChild3Widget extends StatelessWidget {

@@ -4,9 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agents_xlsx.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/utils/class_implemented.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -41,7 +40,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
         final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.elementAt(0); 
+        final idPlutoRow = dataId.last; 
 
         final AgentModel personne =
             await widget.controller.detailView(idPlutoRow.value);
@@ -62,7 +61,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
               children: [
                 IconButton(
                     onPressed: () {
-                      // Navigator.pushNamed(context, RhRoutes.rhAgent);
+                      Navigator.pushNamed(context, RhRoutes.rhPersonnelsPage);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -81,12 +80,10 @@ class _TablePersonnelsState extends State<TablePersonnels> {
       configuration: PlutoGridConfiguration(
         columnFilter: PlutoGridColumnFilterConfig(
           filters: const [
-            ...FilterHelper.defaultFilters,
-            // custom filter
-            ClassFilterImplemented(),
+            ...FilterHelper.defaultFilters, 
           ],
           resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'id') {
+            if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'statutAgent') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -106,11 +103,13 @@ class _TablePersonnelsState extends State<TablePersonnels> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'matricule') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'dateNaissance') {
+            } else if (column.field == 'createdAt') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'departement') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'servicesAffectation') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             }
             return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -129,7 +128,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
     for (var item in widget.personnelList) {
       rows.add(PlutoRow(cells: {
         // for (var i = 1; i < widget.personnelList.length; i++)
-        'id': PlutoCell(value: i--),
+        'numero': PlutoCell(value: i--),
         'statutAgent': PlutoCell(
             value: (item.statutAgent == "true") ? 'Actif' : 'Inactif'),
         'nom': PlutoCell(value: item.nom),
@@ -140,10 +139,11 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         'sexe': PlutoCell(value: item.sexe),
         'role': PlutoCell(value: "Niveau ${item.role}"),
         'matricule': PlutoCell(value: item.matricule),
-        'dateNaissance':
+        'createdAt':
             PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
         'departement': PlutoCell(value: item.departement),
-        'servicesAffectation': PlutoCell(value: item.servicesAffectation)
+        'servicesAffectation': PlutoCell(value: item.servicesAffectation),
+        'id': PlutoCell(value: item.id)
       }));
     }
   }
@@ -152,8 +152,8 @@ class _TablePersonnelsState extends State<TablePersonnels> {
     columns = [
       PlutoColumn(
         readOnly: true,
-        title: 'Id',
-        field: 'id',
+        title: 'N°',
+        field: 'numero',
         type: PlutoColumnType.number(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -281,8 +281,8 @@ class _TablePersonnelsState extends State<TablePersonnels> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Date de naissance',
-        field: 'dateNaissance',
+        title: 'createdAt',
+        field: 'createdAt',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -314,6 +314,18 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Id',
+        field: 'id',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 80,
+        minWidth: 80,
       ),
     ];
   }

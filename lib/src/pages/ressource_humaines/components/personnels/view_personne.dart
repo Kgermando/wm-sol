@@ -8,6 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agent_pdf.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -36,7 +37,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
               Row(
                 children: [
                   // if (int.parse(
-                  //       profilController.user.role) == 0 &&
+                  //       widget.personne.role) == 0 &&
                   //     actionnaire.isEmpty)
                   //   IconButton(
                   //       color: Colors.red.shade700,
@@ -46,6 +47,13 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   //       },
                   //       icon: const Icon(
                   //           Icons.admin_panel_settings)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, RhRoutes.rhPersonnelsDetail,
+                            arguments: widget.personne);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(
                       tooltip: "Imprimer le CV",
                       onPressed: () async {
@@ -352,7 +360,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   textAlign: TextAlign.start, style: bodyMedium)),
           ResponsiveChildWidget(
               child1: Text('Fonction occupée :',
-                  textAlign: TextAlign.start,
+                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.personne.fonctionOccupe,
                   textAlign: TextAlign.start, style: bodyMedium)),

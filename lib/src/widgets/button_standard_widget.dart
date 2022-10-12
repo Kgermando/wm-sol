@@ -20,8 +20,7 @@ class ButtonStandarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
         style: OutlinedButton.styleFrom(
-            minimumSize: const Size.fromHeight(40),
-            primary: color,
+            minimumSize: const Size.fromHeight(40), 
             backgroundColor: mainColor),
         onPressed: onClicked,
         icon: Icon(icon, color: color),

@@ -28,35 +28,6 @@ class PersonnelsController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  final _personne = AgentModel(
-          nom: '-',
-          postNom: '-',
-          prenom: '-',
-          email: '-',
-          telephone: '-',
-          adresse: '-',
-          sexe: '-',
-          role: '-',
-          matricule: '-',
-          numeroSecuriteSociale: '-',
-          dateNaissance: DateTime.now(),
-          lieuNaissance: '-',
-          nationalite: '-',
-          typeContrat: '-',
-          departement: '-',
-          servicesAffectation: '-',
-          dateDebutContrat: DateTime.now(),
-          dateFinContrat: DateTime.now(),
-          fonctionOccupe: '-',
-          statutAgent: '-',
-          createdAt: DateTime.now(),
-          salaire: '-',
-          signature: '-',
-          created: DateTime.now())
-      .obs;
-
-  AgentModel get personne => _personne.value;
-
   List<String> departementList = Dropdown().departement;
   List<String> typeContratList = Dropdown().typeContrat;
   List<String> sexeList = Dropdown().sexe;
@@ -186,7 +157,6 @@ class PersonnelsController extends GetxController
 
   detailView(int id) async {
     final data = await personnelsApi.getOneData(id);
-    _personne.value = data;
     return data;
   }
 
@@ -346,7 +316,7 @@ class PersonnelsController extends GetxController
             ? personne.experience
             : experienceController.text,
         statutAgent: personne.statutAgent,
-        createdAt: DateTime.now(),
+        createdAt: personne.createdAt,
         photo: (uploadedFileUrl == '')
             ? personne.photo
             : uploadedFileUrl.toString(),
@@ -361,6 +331,47 @@ class PersonnelsController extends GetxController
       Get.back();
       Get.snackbar(
           "Modification effectué!", "Le document a bien été sauvegader",
+          backgroundColor: Colors.green,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    });
+  }
+
+  void updateStatus(AgentModel personne, String statutPersonel) async {
+    final agentModel = AgentModel(
+        id: personne.id,
+        nom: personne.nom,
+        postNom: personne.postNom,
+        prenom: personne.prenom,
+        email: personne.email,
+        telephone: personne.telephone,
+        adresse: personne.adresse,
+        sexe: personne.sexe,
+        role: personne.role,
+        matricule: personne.matricule,
+        numeroSecuriteSociale: personne.numeroSecuriteSociale,
+        dateNaissance: personne.dateNaissance,
+        lieuNaissance: personne.lieuNaissance,
+        nationalite: personne.nationalite,
+        typeContrat: personne.typeContrat,
+        departement: personne.departement,
+        servicesAffectation: personne.servicesAffectation,
+        dateDebutContrat: personne.dateDebutContrat,
+        dateFinContrat: personne.dateFinContrat,
+        fonctionOccupe: personne.fonctionOccupe,
+        competance: personne.competance,
+        experience: personne.experience,
+        statutAgent: statutPersonel,
+        createdAt: personne.createdAt,
+        photo: personne.photo,
+        salaire: personne.salaire,
+        signature: personne.signature,
+        created: personne.created);
+    await personnelsApi.updateData(agentModel).then((value) { 
+      // detailView(value.id!);
+      // Get.back();
+      Get.snackbar("Modification du statut effectué!",
+          "Le document a bien été mise à jour.",
           backgroundColor: Colors.green,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);

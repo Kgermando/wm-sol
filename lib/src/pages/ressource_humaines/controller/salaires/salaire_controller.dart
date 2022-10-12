@@ -14,6 +14,8 @@ class SalaireController extends GetxController
   final ProfilController profilController = Get.find();
   final MailApi mailApi = MailApi();
 
+  var paiementSalaireList = <PaiementSalaireModel>[].obs;
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -92,11 +94,7 @@ class SalaireController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    paiementSalaireApi.getAllData().then((response) {
-      change(response, status: RxStatus.success());
-    }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
-    });
+    getList();
   }
 
   @override
@@ -126,6 +124,15 @@ class SalaireController extends GetxController
     montantPrisConsiderationCalculCotisationsINSSController.dispose();
     totalDuBrutController.dispose();
     super.dispose();
+  }
+
+  void getList() async {
+    await paiementSalaireApi.getAllData().then((response) {
+      paiementSalaireList.assignAll(response);
+      change(paiementSalaireList, status: RxStatus.success());
+    }, onError: (err) {
+      change(null, status: RxStatus.error(err.toString()));
+    });
   }
 
   detailView(int id) async {
@@ -215,6 +222,8 @@ class SalaireController extends GetxController
             ligneBudgetaire: '-',
             ressource: '-');
         await paiementSalaireApi.insertData(paiementSalaireModel).then((value) {
+          paiementSalaireList.clear();
+          getList();
           Get.back();
           Get.snackbar("Soumission effectuée avec succès!",
               "Le document a bien été sauvegader",
@@ -298,6 +307,8 @@ class SalaireController extends GetxController
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        paiementSalaireList.clear();
+        getList();
         Get.back();
         Get.snackbar("Observation effectuée avec succès!",
             "Le document a bien été sauvegader",
@@ -381,6 +392,8 @@ class SalaireController extends GetxController
           ligneBudgetaire: '-',
           ressource: '-');
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        paiementSalaireList.clear();
+        getList();
         Get.back();
         Get.snackbar(
             "Effectuée avec succès!", "Le document a bien été sauvegader",
@@ -467,6 +480,8 @@ class SalaireController extends GetxController
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString());
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        paiementSalaireList.clear();
+        getList();
         Get.back();
         Get.snackbar(
             "Effectuée avec succès!", "Le document a bien été sauvegader",
@@ -558,14 +573,14 @@ class SalaireController extends GetxController
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
           _isLoading.value = false;
-        }); 
+        });
       });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
-    } 
+    }
   }
 
   //Senfd Email

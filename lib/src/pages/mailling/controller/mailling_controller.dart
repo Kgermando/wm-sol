@@ -9,6 +9,8 @@ class MaillingController extends GetxController
   final MailApi mailApi = MailApi();
   final ProfilController profilController = Get.find();
 
+  var mailList = <MailModel>[].obs;
+
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -19,14 +21,33 @@ class MaillingController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    mailApi.getAllData().then((response) {
-      change(response, status: RxStatus.success());
+    getList();
+  }
+
+  void getList() async {
+    await mailApi.getAllData().then((response) {
+      mailList.assignAll(response); 
+      change(mailList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
-  
+  Future detailView(int id) async {
+    try {
+      _isLoading.value = true;
+      await mailApi.getOneData(id).then((value) {
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      _isLoading.value = false;
+      Get.snackbar(
+        "Erreur s'est produite",
+        "$e",
+        backgroundColor: Colors.red,
+      );
+    }
+  }
 
 
 }

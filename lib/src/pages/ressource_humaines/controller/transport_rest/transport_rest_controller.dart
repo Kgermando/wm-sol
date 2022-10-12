@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/transport_restaurant_api.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
 
 class TransportRestController extends GetxController
     with StateMixin<List<TransportRestaurationModel>> {
@@ -61,7 +60,7 @@ class TransportRestController extends GetxController
   detailView(int id) async {
     final data = await transportRestaurationApi.getOneData(id);
     return data;
-  } 
+  }
 
   void deleteData(int id) async {
     try {
