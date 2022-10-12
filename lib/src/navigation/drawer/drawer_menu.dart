@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
+import 'package:wm_solution/src/navigation/drawer/components/budget_nav.dart'; 
 import 'package:wm_solution/src/navigation/drawer/components/rh_nav.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 
@@ -20,6 +21,7 @@ class DrawerMenu extends StatelessWidget {
             height: 100,
           )),
           RhNav(currentRoute: currentRoute),
+          BudgetNav(currentRoute: currentRoute),
         ],
       ),
     );

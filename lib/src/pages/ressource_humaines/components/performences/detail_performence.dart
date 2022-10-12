@@ -96,111 +96,113 @@ class _DetailPerformenceState extends State<DetailPerformence> {
       travailleTotal += double.parse(item.travaille);
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(p10),
-      child: Column(
-        children: [
-          ResponsiveChildWidget(
-            flex1: 1,
-            flex2: 3,
-            child1: Text('Nom :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.performenceModel.nom,
-                    textAlign: TextAlign.start, style: bodyMedium)
-          ), 
-          Divider(
-            color: mainColor,
-          ),
-          ResponsiveChildWidget(
-            flex1: 1,
-            flex2: 3,
-            child1: Text('Post-Nom :',
-                textAlign: TextAlign.start,
-                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.performenceModel.postnom,
-                textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(
-            color: mainColor,
-          ), 
-          ResponsiveChildWidget(
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(p10),
+        child: Column(
+          children: [
+            ResponsiveChildWidget(
               flex1: 1,
               flex2: 3,
-              child1: Text('Prénom :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.performenceModel.prenom,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(
-            color: mainColor,
-          ),
-          ResponsiveChildWidget(
-              flex1: 1,
-              flex2: 3,
-              child1: Text('Matricule :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.performenceModel.agent,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(
-            color: mainColor,
-          ),
-          ResponsiveChildWidget(
-              flex1: 1,
-              flex2: 3,
-              child1: Text('Département :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.performenceModel.departement,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(
-            color: mainColor,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SelectableText("CUMULS",
-                textAlign: TextAlign.center,
-                style: headline6!.copyWith(
-                    color: Colors.red.shade700, fontWeight: FontWeight.bold)),
-          ]),
-          ResponsiveChild3Widget(
-            flex1: 3,
-            flex2: 3,
-            flex3: 3,
-            child1: Column(
-              children: [
-                Text('Hospitalité :',
-                    textAlign: TextAlign.start,
-                    style: headline6.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade700)),
-                SelectableText("$hospitaliteTotal",
-                    textAlign: TextAlign.start, style: headline6),
-              ],
+              child1: Text('Nom :',
+                      textAlign: TextAlign.start,
+                      style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+              child2: SelectableText(widget.performenceModel.nom,
+                      textAlign: TextAlign.start, style: bodyMedium)
             ), 
-            child2: Column(
-              children: [
-                Text('Ponctualité :',
-                    textAlign: TextAlign.start,
-                    style: headline6.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade700)),
-                SelectableText("$ponctualiteTotal",
-                    textAlign: TextAlign.start, style: headline6),
-              ],
-            ), 
-            child3: Column(
-              children: [
-                Text('Travaille :',
-                    textAlign: TextAlign.start,
-                    style: headline6.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.purple.shade700)),
-                SelectableText("$travailleTotal",
-                    textAlign: TextAlign.start, style: headline6),
-              ],
+            Divider(
+              color: mainColor,
             ),
-          ), 
-        ],
+            ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
+              child1: Text('Post-Nom :',
+                  textAlign: TextAlign.start,
+                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+              child2: SelectableText(widget.performenceModel.postnom,
+                  textAlign: TextAlign.start, style: bodyMedium)),
+            Divider(
+              color: mainColor,
+            ), 
+            ResponsiveChildWidget(
+                flex1: 1,
+                flex2: 3,
+                child1: Text('Prénom :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                child2: SelectableText(widget.performenceModel.prenom,
+                    textAlign: TextAlign.start, style: bodyMedium)),
+            Divider(
+              color: mainColor,
+            ),
+            ResponsiveChildWidget(
+                flex1: 1,
+                flex2: 3,
+                child1: Text('Matricule :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                child2: SelectableText(widget.performenceModel.agent,
+                    textAlign: TextAlign.start, style: bodyMedium)),
+            Divider(
+              color: mainColor,
+            ),
+            ResponsiveChildWidget(
+                flex1: 1,
+                flex2: 3,
+                child1: Text('Département :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                child2: SelectableText(widget.performenceModel.departement,
+                    textAlign: TextAlign.start, style: bodyMedium)),
+            Divider(
+              color: mainColor,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              SelectableText("CUMULS",
+                  textAlign: TextAlign.center,
+                  style: headline6!.copyWith(
+                      color: Colors.red.shade700, fontWeight: FontWeight.bold)),
+            ]),
+            ResponsiveChild3Widget(
+              flex1: 3,
+              flex2: 3,
+              flex3: 3,
+              child1: Column(
+                children: [
+                  Text('Hospitalité :',
+                      textAlign: TextAlign.start,
+                      style: headline6.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue.shade700)),
+                  SelectableText("$hospitaliteTotal",
+                      textAlign: TextAlign.start, style: headline6),
+                ],
+              ), 
+              child2: Column(
+                children: [
+                  Text('Ponctualité :',
+                      textAlign: TextAlign.start,
+                      style: headline6.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade700)),
+                  SelectableText("$ponctualiteTotal",
+                      textAlign: TextAlign.start, style: headline6),
+                ],
+              ), 
+              child3: Column(
+                children: [
+                  Text('Travaille :',
+                      textAlign: TextAlign.start,
+                      style: headline6.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.purple.shade700)),
+                  SelectableText("$travailleTotal",
+                      textAlign: TextAlign.start, style: headline6),
+                ],
+              ),
+            ), 
+          ],
+        ),
       ),
     );
   }
@@ -221,7 +223,6 @@ class _DetailPerformenceState extends State<DetailPerformence> {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final color = _lightColors[index % _lightColors.length];
     return Card(
-      elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(p10),
         child: Column(
@@ -233,10 +234,6 @@ class _DetailPerformenceState extends State<DetailPerformence> {
                 rapport.signature,
                 style: bodySmall,
               ),
-              // subtitle: SelectableText(
-              //   rapport.departement,
-              //   style: bodySmall,
-              // ),
               trailing: SelectableText(
                   timeago.format(rapport.created, locale: 'fr_short'),
                   textAlign: TextAlign.start,

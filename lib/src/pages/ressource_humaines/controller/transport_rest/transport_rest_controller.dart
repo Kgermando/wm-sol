@@ -49,8 +49,7 @@ class TransportRestController extends GetxController
 
   void getList() async {
     await transportRestaurationApi.getAllData().then((response) {
-      transportRestaurationList.assignAll(response);
-      // print("list data  ${response.length}");
+      transportRestaurationList.assignAll(response); 
       change(transportRestaurationList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

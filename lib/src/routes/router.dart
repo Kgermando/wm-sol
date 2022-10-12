@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
+import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
@@ -14,6 +16,10 @@ import 'package:wm_solution/src/pages/archives/views/archives.dart';
 import 'package:wm_solution/src/pages/auth/view/login_auth.dart';
 import 'package:wm_solution/src/pages/auth/view/change_password_auth.dart';
 import 'package:wm_solution/src/pages/auth/view/profil_auth.dart';
+import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/detail_budget_previsionnel.dart';
+import 'package:wm_solution/src/pages/budgets/components/ligne_budgetaire/ajout_ligne_budgetaire.dart';
+import 'package:wm_solution/src/pages/budgets/components/ligne_budgetaire/detail_ligne_budgetaire.dart';
+import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -212,5 +218,40 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
+
+  // Budgets
+  GetPage(
+    name: BudgetRoutes.budgetBudgetPrevisionel,
+    page: () => const BudgetPrevisionnelPage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)
+  ),
+  GetPage(
+    name: BudgetRoutes.budgetBudgetPrevisionelDetail,
+    page: () {
+      final DepartementBudgetModel departementBudgetModel = Get.arguments as DepartementBudgetModel;
+      return DetailBudgetPrevisionnel(departementBudgetModel: departementBudgetModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)
+  ),
+  GetPage(
+      name: BudgetRoutes.budgetLignebudgetaireDetail,
+      page: () {
+        final LigneBudgetaireModel ligneBudgetaireModel =
+            Get.arguments as LigneBudgetaireModel;
+        return DetailLigneBudgetaire(ligneBudgetaireModel: ligneBudgetaireModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: BudgetRoutes.budgetLignebudgetaireAdd,
+      page: () {
+        final DepartementBudgetModel departementBudgetModel =
+            Get.arguments as DepartementBudgetModel;
+        return AjoutLigneBudgetaire(departementBudgetModel: departementBudgetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   // DevisRoutes
 ];
