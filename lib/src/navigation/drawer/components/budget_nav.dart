@@ -46,7 +46,7 @@ class _BudgetNavState extends State<BudgetNav> {
               title: 'Dashboard',
               style: bodyText1!,
               onTap: () {
-                Navigator.pushNamed(context, BudgetRoutes.budgetDashboard);
+                Get.toNamed(BudgetRoutes.budgetDashboard); 
                 // Navigator.of(context).pop();
               }),
         if (userRole <= 2)
@@ -65,7 +65,7 @@ class _BudgetNavState extends State<BudgetNav> {
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {
-                Navigator.pushNamed(context, BudgetRoutes.budgetDD);
+                Get.toNamed(BudgetRoutes.budgetDD);  
                 // Navigator.of(context).pop();
               }),
         DrawerWidget(
@@ -76,8 +76,7 @@ class _BudgetNavState extends State<BudgetNav> {
             title: 'Budgets previsonels',
             style: bodyText1!,
             onTap: () {
-              Navigator.pushNamed(
-                  context, BudgetRoutes.budgetBudgetPrevisionel);
+              Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);   
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
@@ -88,6 +87,7 @@ class _BudgetNavState extends State<BudgetNav> {
             title: 'Historique Budgetaires',
             style: bodyText1,
             onTap: () {
+              Get.toNamed(BudgetRoutes.historiqueBudgetPrevisionel);  
               Navigator.pushNamed(
                   context, BudgetRoutes.historiqueBudgetPrevisionel);
               // Navigator.of(context).pop();
@@ -99,7 +99,7 @@ class _BudgetNavState extends State<BudgetNav> {
             title: 'Performences',
             style: bodyText1,
             onTap: () {
-              Navigator.pushNamed(context, RhRoutes.rhPerformence);
+              Get.toNamed(RhRoutes.rhPerformence);   
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
@@ -109,7 +109,7 @@ class _BudgetNavState extends State<BudgetNav> {
             title: 'Archives',
             style: bodyLarge!,
             onTap: () {
-              Navigator.pushNamed(context, ArchiveRoutes.archives);
+              Get.toNamed(ArchiveRoutes.archives);    
               // Navigator.of(context).pop();
             }),
       ],

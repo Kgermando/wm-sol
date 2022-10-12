@@ -20,6 +20,8 @@ import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/det
 import 'package:wm_solution/src/pages/budgets/components/ligne_budgetaire/ajout_ligne_budgetaire.dart';
 import 'package:wm_solution/src/pages/budgets/components/ligne_budgetaire/detail_ligne_budgetaire.dart';
 import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart';
+import 'package:wm_solution/src/pages/budgets/view/dashboard_budget.dart';
+import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -31,7 +33,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/add
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/bulletin_salaire.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/transport_restauration/detail_transport_rest.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/dashboard_rh.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/view/departement_rh.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/view/dd_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/performence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
@@ -105,7 +107,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhDD,
-      page: () => const DepartementRH(),
+      page: () => const DDRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
@@ -220,6 +222,16 @@ List<GetPage<dynamic>>? getPages = [
 
 
   // Budgets
+  GetPage(
+      name: BudgetRoutes.budgetDashboard,
+      page: () => const DashboardBudget(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: BudgetRoutes.budgetDD,
+      page: () => const DDBudget(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
     name: BudgetRoutes.budgetBudgetPrevisionel,
     page: () => const BudgetPrevisionnelPage(),

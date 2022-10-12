@@ -26,6 +26,8 @@ class RHNotifyController extends GetxController {
 
 
   // TransRest
+  final _itemCountTransRestDG = 0.obs;
+  int get itemCountTransRestDG => _itemCountTransRestDG.value;
   final _itemCountTransRestBudget = 0.obs;
   int get itemCountTransRestBudget => _itemCountTransRestBudget.value;
   final _itemCountTransRestDD = 0.obs;
@@ -80,7 +82,7 @@ class RHNotifyController extends GetxController {
   // transRest
   void getCountTransRestDG() async {
     NotifyModel notifySum = await transRestNotifyApi.getCountDG();
-    _itemCountTransRestBudget.value = notifySum.count;
+    _itemCountTransRestDG.value = notifySum.count;
   }
 
   void getCountTransRestBudget() async {

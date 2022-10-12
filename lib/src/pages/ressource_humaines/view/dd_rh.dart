@@ -12,14 +12,14 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/u
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
-class DepartementRH extends StatefulWidget {
-  const DepartementRH({super.key});
+class DDRH extends StatefulWidget {
+  const DDRH({super.key});
 
   @override
-  State<DepartementRH> createState() => _DepartementRHState();
+  State<DDRH> createState() => _DDRHState();
 }
 
-class _DepartementRHState extends State<DepartementRH> {
+class _DDRHState extends State<DDRH> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Direteur de département";

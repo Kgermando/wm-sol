@@ -24,12 +24,12 @@ class LoginAuth extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Image.asset(InfoSystem().logo(), height: 100),
+                      padding: const EdgeInsets.symmetric(vertical: p10),
+                      child: Image.asset(InfoSystem().logo(), height: 150),
                     ),
-                    Expanded(child: Container()),
                   ],
                 ),
                 const SizedBox(
