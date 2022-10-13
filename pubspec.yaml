@@ -81,6 +81,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  msix: ^3.6.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -111,3 +112,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+msix_config:
+  display_name: Work Management
+  publisher_display_name: Work_Management
+  identity_name: com.eventdrcTechnology.WorkManagement
+  msix_version: 3.0.0.0
+  certificate_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\CERTIFICAT\astrid_v2\CERTIFICATE.pfx
+  certificate_password: gk0813530838
+  publisher: CN=Germain kataku, O=Eventdrc Technology
+  logo_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo.png
+  start_menu_icon_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo.png
+  tile_icon_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo.png
+  # vs_generated_images_folder_path: C:\<PathToFolder>\icons
+  icons_background_color: '#ffffff'
+  architecture: x64
+  capabilities: 'internetClient,location,microphone,webcam'

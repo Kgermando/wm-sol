@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
-import 'package:wm_solution/src/helpers/get_local_storage.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -18,7 +18,7 @@ class LoginController extends GetxController {
 
   final TextEditingController matriculeController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
- 
+
   final _user = UserModel(
           nom: '-',
           prenom: '-',
@@ -38,10 +38,10 @@ class LoginController extends GetxController {
   UserModel get user => _user.value;
 
   @override
-  void onClose() {
+  void dispose() {
     matriculeController.dispose();
     passwordController.dispose();
-    super.onClose();
+    super.dispose();
   }
 
   String? validator(String value) {
@@ -80,58 +80,59 @@ class LoginController extends GetxController {
               await userController.updateData(userModel).then((userData) {
                 if (userData.departement == "Administration") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(AdminRoutes.adminDashboard);
+                    Get.offAllNamed(AdminRoutes.adminDashboard);
                   } else {
-                    Get.toNamed(AdminRoutes.adminLogistique);
+                    Get.offAllNamed(AdminRoutes.adminLogistique);
                   }
                 } else if (userData.departement == "Finances") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(FinanceRoutes.financeDashboard);
+                    Get.offAllNamed(FinanceRoutes.financeDashboard);
                   } else {
-                    Get.toNamed(FinanceRoutes.transactionsDettes);
+                    Get.offAllNamed(FinanceRoutes.transactionsDettes);
                   }
                 } else if (userData.departement == "Comptabilites") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(ComptabiliteRoutes.comptabiliteDashboard);
+                    Get.offAllNamed(ComptabiliteRoutes.comptabiliteDashboard);
                   } else {
-                    Get.toNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
+                    Get.offAllNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
                   }
                 } else if (userData.departement == "Budgets") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
+                    Get.offAllNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   } else {
-                    Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
+                    Get.offAllNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   }
                 } else if (userData.departement == "Ressources Humaines") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(RhRoutes.rhDashboard);
+                    Get.offAllNamed(RhRoutes.rhDashboard);
                   } else {
-                    Get.toNamed(RhRoutes.rhPresence);
+                    Get.offAllNamed(RhRoutes.rhPresence);
                   }
                 } else if (userData.departement == "Exploitations") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(ExploitationRoutes.expDashboard);
+                    Get.offAllNamed(ExploitationRoutes.expDashboard);
                   } else {
-                    Get.toNamed(ExploitationRoutes.expTache);
+                    Get.offAllNamed(ExploitationRoutes.expTache);
                   }
                 } else if (userData.departement == "Commercial et Marketing") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(ComMarketingRoutes.comMarketingDashboard);
+                    Get.offAllNamed(ComMarketingRoutes.comMarketingDashboard);
                   } else {
-                    Get.toNamed(ComMarketingRoutes.comMarketingAnnuaire);
+                    Get.offAllNamed(ComMarketingRoutes.comMarketingAnnuaire);
                   }
                 } else if (userData.departement == "Logistique") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(LogistiqueRoutes.logDashboard);
+                    Get.offAllNamed(LogistiqueRoutes.logDashboard);
                   } else {
-                    Get.toNamed(LogistiqueRoutes.logAnguinAuto);
+                    Get.offAllNamed(LogistiqueRoutes.logAnguinAuto);
                   }
                 } else if (userData.departement == "Support") {
-                  Get.toNamed(AdminRoutes.adminDashboard);
+                  Get.offAllNamed(AdminRoutes.adminDashboard);
                 }
               });
               _loadingLogin.value = false;
-              Get.snackbar("Authentification réussie", "Bienvenue ${user.prenom} dans l'interface ${InfoSystem().name()}",
+              Get.snackbar("Authentification réussie",
+                  "Bienvenue ${user.prenom} dans l'interface ${InfoSystem().name()}",
                   backgroundColor: Colors.green,
                   icon: const Icon(Icons.check),
                   snackPosition: SnackPosition.TOP);
@@ -157,7 +158,11 @@ class LoginController extends GetxController {
   }
 
   void logout() async {
-    final userModel = UserModel(
+    
+    try {
+      _loadingLogin.value = true;
+      authController.getUserId().then((user) async {
+      final userModel = UserModel(
         id: user.id,
         nom: user.nom,
         prenom: user.prenom,
@@ -171,24 +176,28 @@ class LoginController extends GetxController {
         isOnline: 'false',
         createdAt: user.createdAt,
         passwordHash: user.passwordHash,
-        succursale: user.succursale);
-    await userController.updateData(userModel).then((value) {
-      authController.logout().then((response) async {
-        GetLocalStorage().removeIdToken();
-        GetLocalStorage().removeAccessToken();
-        GetLocalStorage().removeRefreshToken();
+        succursale: user.succursale
+      ); 
+      await userController.updateData(userModel).then((value) {
+          GetStorage box = GetStorage();
+          box.remove('idToken');
+          box.remove('accessToken');
+          box.remove('refreshToken');
         Get.offAllNamed(UserRoutes.logout);
         Get.snackbar("Déconnexion réussie!", "",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
-      }, onError: (err) {
-        Get.snackbar(
-          "Une erreur s'est produite",
-          "$err",
-          backgroundColor: Colors.red,
-        );
       });
-    });
+      });
+    } catch (e) {
+      _loadingLogin.value = false;
+      Get.snackbar(
+        "Erreur de connection",
+        "$e",
+        backgroundColor: Colors.red,
+      );
+    }
   }
+ 
 }

@@ -13,6 +13,8 @@ import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/approbation_budget_previsionnel.dart';
 import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/detail_departement_budget_desktop.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
@@ -45,6 +47,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
 
   @override
   Widget build(BuildContext context) {
+    final ProfilController profilController = Get.find();
     final BudgetPrevisionnelController controller =
         Get.put(BudgetPrevisionnelController());
     final LignBudgetaireController lignBudgetaireController =
@@ -85,263 +88,268 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                 onPressed: () {
                   Get.toNamed(BudgetRoutes.budgetLignebudgetaireAdd,
                       arguments: widget.departementBudgetModel);
-                },
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
+},
+),
+body: Row(
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Visibility(
+  visible: !Responsive.isMobile(context),
+  child: const Expanded(flex: 1, child: DrawerMenu())),
+Expanded(
+  flex: 5,
+  child: SingleChildScrollView(
+      controller: ScrollController(),
+      physics: const ScrollPhysics(),
+      child: Container(
+        margin: const EdgeInsets.only(
+            top: p20, bottom: p8, right: p20, left: p20),
+        decoration: const BoxDecoration(
+            borderRadius:
+                BorderRadius.all(Radius.circular(20))),
+        child: Column(
+          children: [
+            Card(
+              elevation: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: p20),
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                      children: [
+                        TitleWidget(
+                            title: widget
+                                .departementBudgetModel
+                                .title),
+                        Column(
+                          children: [
+                            Row(
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TitleWidget(
-                                                title: widget
-                                                    .departementBudgetModel
-                                                    .title),
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    IconButton(
-                                                        tooltip: 'Rafraichir',
-                                                        onPressed: () {
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              BudgetRoutes
-                                                                  .budgetBudgetPrevisionel);
-                                                        },
-                                                        icon: Icon(
-                                                            Icons.refresh,
-                                                            color: Colors.green
-                                                                .shade700)),
-                                                    if (widget
-                                                            .departementBudgetModel
-                                                            .isSubmit ==
-                                                        'false')
-                                                      IconButton(
-                                                          tooltip:
-                                                              'Soumettre chez le directeur du budget',
-                                                          onPressed: () {
-                                                            alertDialog(
-                                                                controller);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.send),
-                                                          color: Colors
-                                                              .green.shade700),
-                                                    if (widget
-                                                            .departementBudgetModel
-                                                            .isSubmit ==
-                                                        'false')
-                                                      IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog(
-                                                                controller);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color: Colors
-                                                              .red.shade700),
-                                                  ],
-                                                ),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .departementBudgetModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                                if (widget
-                                                        .departementBudgetModel
-                                                        .isSubmit ==
-                                                    'true')
-                                                  Column(
-                                                    children: [
-                                                      if (panding)
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(p10),
-                                                          child: Row(
-                                                            children: [
-                                                              Container(
-                                                                width: 15,
-                                                                height: 15,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .orange
-                                                                      .shade700,
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                  width: p10),
-                                                              Text(
-                                                                  "En attente...",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .orange
-                                                                          .shade700))
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      if (biginLigneBudget)
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(p10),
-                                                          child: Row(
-                                                            children: [
-                                                              Container(
-                                                                width: 15,
-                                                                height: 15,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .green
-                                                                      .shade700,
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                  width: p10),
-                                                              Text(
-                                                                  "En cours...",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .green
-                                                                          .shade700))
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      if (expiredLigneBudget)
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(p10),
-                                                          child: Row(
-                                                            children: [
-                                                              Container(
-                                                                width: 15,
-                                                                height: 15,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .red
-                                                                      .shade700,
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                  width: p10),
-                                                              Text("Obsolète!",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .red
-                                                                          .shade700))
-                                                            ],
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  ),
-                                                if (widget
-                                                        .departementBudgetModel
-                                                        .isSubmit ==
-                                                    'false')
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            p10),
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          width: 15,
-                                                          height: 15,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors.purple
-                                                                .shade700,
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            width: p10),
-                                                        Text(
-                                                            "En constitution...",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .purple
-                                                                    .shade700))
-                                                      ],
-                                                    ),
-                                                  )
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget(),
-                                        Divider(color: Colors.red.shade700),
-                                        soldeBudgets(
-                                            lignBudgetaireController,
-                                            salaireController,
-                                            transportRestController,
-                                            transportRestPersonnelsController,
-                                            projetController,
-                                            campaignController,
-                                            devisController,
-                                            devisListObjetController),
-                                        Divider(color: Colors.red.shade700),
-                                        const SizedBox(height: p20),
-                                        LigneBudgetaire(
-                                            departementBudgetModel:
-                                                widget.departementBudgetModel,
-                                            controller: controller,
-                                            lignBudgetaireController:
-                                                lignBudgetaireController),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                IconButton(
+                                    tooltip: 'Rafraichir',
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context,
+                                          BudgetRoutes
+                                              .budgetBudgetPrevisionel);
+                                    },
+                                    icon: Icon(
+                                        Icons.refresh,
+                                        color: Colors.green
+                                            .shade700)),
+                                if (widget
+                                        .departementBudgetModel
+                                        .isSubmit ==
+                                    'false')
+                                  IconButton(
+                                      tooltip:
+                                          'Soumettre chez le directeur du budget',
+                                      onPressed: () {
+                                        alertDialog(
+                                            controller);
+                                      },
+                                      icon: const Icon(
+                                          Icons.send),
+                                      color: Colors
+                                          .green.shade700),
+                                if (widget
+                                        .departementBudgetModel
+                                        .isSubmit ==
+                                    'false')
+                                  IconButton(
+                                      tooltip: 'Supprimer',
+                                      onPressed: () async {
+                                        alertDeleteDialog(
+                                            controller);
+                                      },
+                                      icon: const Icon(
+                                          Icons.delete),
+                                      color: Colors
+                                          .red.shade700),
                               ],
                             ),
-                          )))
-                ],
+                            SelectableText(
+                                DateFormat(
+                                        "dd-MM-yyyy HH:mm")
+                                    .format(widget
+                                        .departementBudgetModel
+                                        .created),
+                                textAlign: TextAlign.start),
+                            if (widget
+                                    .departementBudgetModel
+                                    .isSubmit ==
+                                'true')
+                              Column(
+                                children: [
+                                  if (panding)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets
+                                              .all(p10),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 15,
+                                            height: 15,
+                                            decoration:
+                                                BoxDecoration(
+                                              color: Colors
+                                                  .orange
+                                                  .shade700,
+                                              shape: BoxShape
+                                                  .circle,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                              width: p10),
+                                          Text(
+                                              "En attente...",
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .orange
+                                                      .shade700))
+                                        ],
+                                      ),
+                                    ),
+                                  if (biginLigneBudget)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets
+                                              .all(p10),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 15,
+                                            height: 15,
+                                            decoration:
+                                                BoxDecoration(
+                                              color: Colors
+                                                  .green
+                                                  .shade700,
+                                              shape: BoxShape
+                                                  .circle,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                              width: p10),
+                                          Text(
+                                              "En cours...",
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .green
+                                                      .shade700))
+                                        ],
+                                      ),
+                                    ),
+                                  if (expiredLigneBudget)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets
+                                              .all(p10),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 15,
+                                            height: 15,
+                                            decoration:
+                                                BoxDecoration(
+                                              color: Colors
+                                                  .red
+                                                  .shade700,
+                                              shape: BoxShape
+                                                  .circle,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                              width: p10),
+                                          Text("Obsolète!",
+                                              style: TextStyle(
+                                                  color: Colors
+                                                      .red
+                                                      .shade700))
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            if (widget
+                                    .departementBudgetModel
+                                    .isSubmit ==
+                                'false')
+                              Padding(
+                                padding:
+                                    const EdgeInsets.all(
+                                        p10),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 15,
+                                      height: 15,
+                                      decoration:
+                                          BoxDecoration(
+                                        color: Colors.purple
+                                            .shade700,
+                                        shape:
+                                            BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                        width: p10),
+                                    Text(
+                                        "En constitution...",
+                                        style: TextStyle(
+                                            color: Colors
+                                                .purple
+                                                .shade700))
+                                  ],
+                                ),
+                              )
+                          ],
+                        )
+                      ],
+                    ),
+                    dataWidget(),
+                    Divider(color: Colors.red.shade700),
+                    soldeBudgets(
+                        lignBudgetaireController,
+                        salaireController,
+                        transportRestController,
+                        transportRestPersonnelsController,
+                        projetController,
+                        campaignController,
+                        devisController,
+                        devisListObjetController),
+                    Divider(color: Colors.red.shade700),
+                    const SizedBox(height: p20),
+                    LigneBudgetaire(
+                        departementBudgetModel:
+                            widget.departementBudgetModel,
+                        controller: controller,
+                        lignBudgetaireController:
+                            lignBudgetaireController),
+                    ApprobationBudgetPrevisionnel(
+                      data: widget.departementBudgetModel,
+                      controller: controller,
+                      profilController: profilController
+                    ),
+                    const SizedBox(
+                      height: p20,
+                    ),
+                  ],
+                ),
               ),
-            ));
+            )
+          ],
+        ),
+      )))
+      ],
+    ),
+  ));
   }
 
   Widget dataWidget() {

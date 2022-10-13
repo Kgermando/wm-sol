@@ -34,7 +34,8 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   @override
   Widget build(BuildContext context) {
-    final SalaireController controller = Get.find();
+    final SalaireController controller = Get.put(SalaireController());
+    final ProfilController profilController = Get.put(ProfilController()); 
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
@@ -61,7 +62,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                     children: [
                       dataWidget(controller),
                       const SizedBox(height: p30),
-                      approbationWidget(controller)
+                      approbationWidget(controller, profilController)
                     ],
                   )),
               ))
@@ -937,8 +938,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   }
 
 
-  Widget approbationWidget(SalaireController controller) {
-    final ProfilController profilController = Get.find();
+  Widget approbationWidget(SalaireController controller, ProfilController profilController) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Card(
       elevation: 3,

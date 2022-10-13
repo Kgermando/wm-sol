@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
-import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/bilan/bilan_xlsx.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableBudgetPrevisionnel extends StatefulWidget {
-  const TableBudgetPrevisionnel(
-      {super.key,
-      required this.departementBudgetList,
-      required this.controller});
-  final List<DepartementBudgetModel> departementBudgetList;
-  final BudgetPrevisionnelController controller;
+class TableBilan extends StatefulWidget {
+  const TableBilan({super.key, required this.bilanList, required this.controller});
+  final List<BilanModel> bilanList;
+  final BilanController controller;
 
   @override
-  State<TableBudgetPrevisionnel> createState() =>
-      _TableBudgetPrevisionnelState();
+  State<TableBilan> createState() => _TableBilanState();
 }
 
-class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
+class _TableBilanState extends State<TableBilan> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -42,11 +40,11 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         final dataId = tapEvent.row!.cells.values;
         final idPlutoRow = dataId.last;
 
-        final DepartementBudgetModel departementBudgetModel =
+        final BilanModel bilanModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(BudgetRoutes.budgetBudgetPrevisionelDetail,
-            arguments: departementBudgetModel);
+        Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail,
+            arguments: bilanModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -57,13 +55,25 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Budgets"),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                      context, BudgetRoutes.budgetBudgetPrevisionel);
-                },
-                icon: Icon(Icons.refresh, color: Colors.green.shade700))
+            const TitleWidget(title: "Bilans"),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, ComptabiliteRoutes.comptabiliteBilan);
+                    },
+                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                PrintWidget(onPressed: () {
+                  BilanXlsx().exportToExcel(widget.bilanList);
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const Text("Exportation effectué!"),
+                    backgroundColor: Colors.green[700],
+                  ));
+                })
+              ],
+            ),
           ],
         );
       },
@@ -75,11 +85,9 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'title') {
+            } else if (column.field == 'titleBilan') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'departement') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'periodeBudget') {
+            } else if (column.field == 'signature') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -102,22 +110,13 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.departementBudgetList
-        .where((element) => 
-          DateTime.now().millisecondsSinceEpoch <=
-              element.periodeFin.millisecondsSinceEpoch || 
-          element.isSubmit == 'false')
-        .toList();
-    var i = dataList.length;
-    for (var item in dataList) {
+    var i = widget.bilanList.length;
+    for (var item in widget.bilanList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'title': PlutoCell(value: item.title),
-          'departement': PlutoCell(value: item.departement),
-          'periodeBudget': PlutoCell(
-              value:
-                  "${DateFormat("dd-MM-yyyy").format(item.periodeDebut)} - ${DateFormat("dd-MM-yyyy").format(item.periodeFin)}"),
+          'titleBilan': PlutoCell(value: item.titleBilan),
+          'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'approbationDG': PlutoCell(value: item.approbationDG),
@@ -145,8 +144,8 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Titre',
-        field: 'title',
+        title: 'Titre du Bilan',
+        field: 'titleBilan',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -157,33 +156,21 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Département',
-        field: 'departement',
+        title: 'Signature',
+        field: 'signature',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Periode Budget',
-        field: 'periodeBudget',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 400,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
         title: 'Date',
         field: 'created',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

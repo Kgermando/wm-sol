@@ -1,5 +1,15 @@
 import 'package:get/get.dart';
+import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/compaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/succursale/succursale_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_ref_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
@@ -46,14 +56,33 @@ class WMBindings extends Bindings {
     Get.lazyPut<SalaireController>(() => SalaireController());
 
 
-    // Budgets
-    Get.lazyPut<BudgetPrevisionnelController>(
-        () => BudgetPrevisionnelController());
-    Get.lazyPut<LignBudgetaireController>(() => LignBudgetaireController());
+  // Budgets
+  Get.lazyPut<BudgetNotifyController>(() => BudgetNotifyController());
+  Get.lazyPut<BudgetPrevisionnelController>(
+      () => BudgetPrevisionnelController());
+  Get.lazyPut<LignBudgetaireController>(() => LignBudgetaireController());
+
+  // Comptabilites
+  Get.lazyPut<ComptabiliteNotifyController>(() => ComptabiliteNotifyController());
+  Get.lazyPut<BalanceController>(() => BalanceController());
+  Get.lazyPut<BalanceRefController>(() => BalanceRefController());
+  Get.lazyPut<BilanController>(() => BilanController());
+  Get.lazyPut<CompteBilanRefController>(() => CompteBilanRefController());
 
 
+  // Exploitations
+  Get.lazyPut<ProjetController>(() => ProjetController());
+  Get.lazyPut<SuccursaleController>(() => SuccursaleController());
+  Get.lazyPut<SuccursaleController>(() => SuccursaleController());
+  Get.lazyPut<SuccursaleController>(() => SuccursaleController());
 
-    // Commercial & Marketing
-    Get.lazyPut<SuccursaleController>(() => SuccursaleController());
+  // Commercial & Marketing
+  Get.lazyPut<CampaignController>(() => CampaignController());
+  Get.lazyPut<SuccursaleController>(() => SuccursaleController());
+
+    // Devis
+    Get.lazyPut<DevisController>(() => DevisController());
+    Get.lazyPut<DevisListObjetController>(() => DevisListObjetController());
+    
   }
 }

@@ -47,7 +47,7 @@ class GetLocalStorage extends GetxController {
   }
 
   removeUser() async {
-    box.remove(_keyUser);
+    await box.remove(_keyUser);
   }
 
   // ID User

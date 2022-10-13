@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
+import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
@@ -22,6 +24,11 @@ import 'package:wm_solution/src/pages/budgets/components/ligne_budgetaire/detail
 import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart';
 import 'package:wm_solution/src/pages/budgets/view/dashboard_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
+import 'package:wm_solution/src/pages/budgets/view/historique_budgets.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/balance/detail_balance.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/bilan/detail_bilan.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/balance_comptabilite.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/bilan_comptabilite.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -239,6 +246,11 @@ List<GetPage<dynamic>>? getPages = [
     transitionDuration: const Duration(seconds: 1)
   ),
   GetPage(
+      name: BudgetRoutes.historiqueBudgetPrevisionel,
+      page: () => const HistoriqueBudget(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
     name: BudgetRoutes.budgetBudgetPrevisionelDetail,
     page: () {
       final DepartementBudgetModel departementBudgetModel = Get.arguments as DepartementBudgetModel;
@@ -265,5 +277,39 @@ List<GetPage<dynamic>>? getPages = [
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
+
+
+  // Comptabilites
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteBalance,
+      page: () => const BalanceComptabilite(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteBalanceDetail,
+      page: () {
+        final BalanceCompteModel balanceCompteModel =
+            Get.arguments as BalanceCompteModel;
+        return DetailBalance(balanceCompteModel: balanceCompteModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteBilan,
+      page: () => const BilanComptabilite(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteBilanDetail,
+      page: () {
+        final BilanModel bilanModel =
+            Get.arguments as BilanModel;
+        return DetailBilan(bilanModel: bilanModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+
   // DevisRoutes
 ];

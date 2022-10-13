@@ -7,8 +7,8 @@ import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_con
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableBudgetPrevisionnel extends StatefulWidget {
-  const TableBudgetPrevisionnel(
+class TableHistoriqueBudget extends StatefulWidget {
+  const TableHistoriqueBudget(
       {super.key,
       required this.departementBudgetList,
       required this.controller});
@@ -16,11 +16,11 @@ class TableBudgetPrevisionnel extends StatefulWidget {
   final BudgetPrevisionnelController controller;
 
   @override
-  State<TableBudgetPrevisionnel> createState() =>
-      _TableBudgetPrevisionnelState();
+  State<TableHistoriqueBudget> createState() =>
+      _TableHistoriqueBudgetState();
 }
 
-class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
+class _TableHistoriqueBudgetState extends State<TableHistoriqueBudget> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -57,7 +57,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Budgets"),
+            const TitleWidget(title: "Historique Budgets"),
             IconButton(
                 onPressed: () {
                   Navigator.pushNamed(
@@ -103,10 +103,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.departementBudgetList
-        .where((element) => 
-          DateTime.now().millisecondsSinceEpoch <=
-              element.periodeFin.millisecondsSinceEpoch || 
-          element.isSubmit == 'false')
+        .where((element) => DateTime.now().isAfter(element.periodeFin))
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

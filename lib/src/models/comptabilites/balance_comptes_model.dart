@@ -80,7 +80,7 @@ class BalanceCompteModel {
 }
 
 class CompteBalanceRefModel {
-  late int id;
+  late int? id;
   late int reference;
   late String comptes;
   late String debit;
@@ -88,7 +88,7 @@ class CompteBalanceRefModel {
   late String solde;
 
   CompteBalanceRefModel(
-      {required this.id,
+      { this.id,
       required this.reference,
       required this.comptes,
       required this.debit,
@@ -107,12 +107,13 @@ class CompteBalanceRefModel {
 
   factory CompteBalanceRefModel.fromJson(Map<String, dynamic> json) {
     return CompteBalanceRefModel(
-        id: json['id'] ?? 0,
-        reference: json['reference'],
-        comptes: json['comptes'],
-        debit: json['debit'],
-        credit: json['credit'],
-        solde: json['solde']);
+      id: json['id'],
+      reference: json['reference'],
+      comptes: json['comptes'],
+      debit: json['debit'],
+      credit: json['credit'],
+      solde: json['solde']
+    );
   }
 
   Map<String, dynamic> toJson() {

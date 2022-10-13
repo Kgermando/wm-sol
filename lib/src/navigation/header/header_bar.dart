@@ -10,9 +10,10 @@ import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:wm_solution/src/utils/menu_items.dart';
+import 'package:wm_solution/src/utils/menu_options.dart';
 import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
-import 'package:wm_solution/src/widgets/menu_items.dart';
-import 'package:wm_solution/src/widgets/menu_options.dart'; 
+
 
 AppBar headerBar(
     BuildContext context, GlobalKey<ScaffoldState> scaffoldKey, String title, String subTitle) {

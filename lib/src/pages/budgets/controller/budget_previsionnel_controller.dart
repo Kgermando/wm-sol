@@ -29,6 +29,15 @@ class BudgetPrevisionnelController extends GetxController
     }
   } 
 
+    // Approbations
+  final formKeyBudget = GlobalKey<FormState>();
+
+  String approbationDG = '-'; 
+  String approbationDD = '-';
+  TextEditingController motifDGController = TextEditingController(); 
+  TextEditingController motifDDController = TextEditingController(); 
+
+
   @override
   void onInit() {
     super.onInit();
@@ -141,6 +150,84 @@ class BudgetPrevisionnelController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumis avec succès!", "Le document a bien été soumis",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur lors de la soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+
+  void submitDG(DepartementBudgetModel data) async {
+    try {
+      _isLoading.value = true;
+      final departementBudgetModel = DepartementBudgetModel(
+        id: data.id,
+        title: data.title,
+        departement: data.departement,
+        periodeDebut: data.periodeDebut,
+        periodeFin: data.periodeFin,
+        signature: data.signature,
+        createdRef: data.createdRef,
+        created: data.created,
+        isSubmit: data.isSubmit,
+        approbationDG: approbationDG,
+        motifDG:
+            (motifDGController.text == '') ? '-' : motifDGController.text,
+        signatureDG: profilController.user.matricule,
+        approbationDD: data.approbationDD,
+        motifDD: data.motifDD,
+        signatureDD: data.signatureDD,
+      ); 
+      await depeartementBudgetApi.updateData(departementBudgetModel).then((value) {
+        departementBudgetList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur lors de la soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submitDD(DepartementBudgetModel data) async {
+    try {
+      _isLoading.value = true;
+      final departementBudgetModel = DepartementBudgetModel(
+        id: data.id,
+        title: data.title,
+        departement: data.departement,
+        periodeDebut: data.periodeDebut,
+        periodeFin: data.periodeFin,
+        signature: data.signature,
+        createdRef: data.createdRef,
+        created: data.created,
+        isSubmit: data.isSubmit,
+        approbationDG: '-',
+        motifDG: '-',
+        signatureDG: '-',
+        approbationDD: approbationDD,
+        motifDD: (motifDDController.text == '') ? '-' : motifDDController.text,
+        signatureDD: profilController.user.matricule
+      );  
+      await depeartementBudgetApi.updateData(departementBudgetModel).then((value) {
+        departementBudgetList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

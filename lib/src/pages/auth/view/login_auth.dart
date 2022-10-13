@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
-import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:wm_solution/src/utils/info_system.dart'; 
 import 'package:wm_solution/src/widgets/custom_text.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -45,9 +45,11 @@ class LoginAuth extends GetView<LoginController> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    CustomText(
-                      text: "Bienvenue sur l'interface ${InfoSystem().name()}.",
-                      color: lightGrey,
+                    Expanded(
+                      child: CustomText(
+                        text: "Bienvenue sur l'interface ${InfoSystem().name()}.",
+                        color: lightGrey,
+                      ),
                     ),
                   ],
                 ),
@@ -59,13 +61,19 @@ class LoginAuth extends GetView<LoginController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    CustomText(text: "Mot de passe oublié ?", color: mainColor)
+                    TextButton(onPressed: () {}, child: CustomText(
+                            text: "Mot de passe oublié ?", color: mainColor)) 
                   ],
                 ),
                 const SizedBox(
                   height: p16,
                 ),
-                btnBuilder(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: btnBuilder(context)),
+                  ],
+                ),
                 const SizedBox(
                   height: p16,
                 ),
@@ -81,6 +89,7 @@ class LoginAuth extends GetView<LoginController> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
+          scrollPhysics: const ScrollPhysics(),
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -102,6 +111,7 @@ class LoginAuth extends GetView<LoginController> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
+          scrollPhysics: const ScrollPhysics(),
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -120,25 +130,25 @@ class LoginAuth extends GetView<LoginController> {
         ));
   }
 
-  Widget btnBuilder() {
+  Widget btnBuilder(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
-      child: InkWell(
-        onTap: controller.login,
-        child: Container(
-          decoration: BoxDecoration(
-              color: mainColor, borderRadius: BorderRadius.circular(20)),
-          alignment: Alignment.center,
-          width: double.maxFinite,
-          padding: const EdgeInsets.symmetric(vertical: 16),
+      height: 1.3 * (MediaQuery.of(context).size.height / 20), 
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            textStyle: const TextStyle(fontSize: 10),
+            elevation: 5.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+          ),
+          onPressed: controller.login,
           child: controller.isLoadingLogin
-              ? loading()
-              : const CustomText(
-                  text: "Login",
-                  color: Colors.white,
-                ),
-        ),
-      ),
+              ? loadingWhite()
+              : Text(
+                  "Login",
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white)
+                )), 
     );
   }
 }

@@ -19,8 +19,8 @@ class BudgetPrevisionnelPage extends StatefulWidget {
 
 class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines";
-  String subTitle = "Presence";
+  String title = "Budgets";
+  String subTitle = "budgets previsionnels";
 
   @override
   Widget build(BuildContext context) {

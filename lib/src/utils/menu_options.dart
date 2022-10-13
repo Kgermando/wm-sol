@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/menu_items.dart';
+import 'package:wm_solution/src/utils/menu_items.dart';
 
 class MenuOptions {
   PopupMenuItem<MenuItemModel> buildItem(MenuItemModel item) => PopupMenuItem(
@@ -18,7 +17,7 @@ class MenuOptions {
       ));
 
   void onSelected(BuildContext context, MenuItemModel item) async {
-    final LoginController controller = Get.find();
+    final LoginController controller = Get.put(LoginController());  
 
     switch (item) {
       case MenuItems.itemProfile:
@@ -36,7 +35,15 @@ class MenuOptions {
 
       case MenuItems.itemLogout:
         controller.logout();
-        Phoenix.rebirth(context);
+        // GetStorage box = GetStorage();
+        // String idToken = box.read('idToken');
+        // print("idToken $idToken");
+        
+        // box.remove('idToken');
+        // box.remove('accessToken');
+        // box.remove('refreshToken');
+        
+        // Phoenix.rebirth(context);
     }
   }
 }

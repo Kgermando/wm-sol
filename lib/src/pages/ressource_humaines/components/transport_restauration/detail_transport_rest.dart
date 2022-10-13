@@ -41,6 +41,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   @override
   Widget build(BuildContext context) {
+    final ProfilController profilController = Get.put(ProfilController()); 
     final TransportRestController controller = Get.put(TransportRestController());
     final TransportRestPersonnelsController controllerAgent =
         Get.put(TransportRestPersonnelsController());
@@ -166,7 +167,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                   ),
                                 ),
                                 const SizedBox(height: p30),
-                                approbationWidget(controller)
+                                approbationWidget(controller, profilController)
                               ],
                             )),
                       ))
@@ -568,8 +569,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         ));
   }
 
-  Widget approbationWidget(TransportRestController controller) {
-    final ProfilController profilController = Get.find();
+  Widget approbationWidget(TransportRestController controller, ProfilController profilController) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(

@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:convert';
- 
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -101,8 +101,9 @@ class AuthApi extends GetConnect {
     Map<String, String> header = headers;
     final box = GetStorage();
 
-    String idToken = box.read('idToken');
-    int id = int.parse(jsonDecode(idToken));
+    String? idToken = box.read('idToken');
+    int id = (idToken == null) ? 0 : int.parse(jsonDecode(idToken));
+    // int id = 0;
     if (kDebugMode) {
       print("id: $id");
     }
