@@ -7,6 +7,7 @@ import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
+import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
@@ -38,8 +39,12 @@ import 'package:wm_solution/src/pages/comptabilites/components/journals/search_g
 import 'package:wm_solution/src/pages/comptabilites/view/balance_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/bilan_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/compte_resultat_comptabilite.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/dashboard_comptabilite.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/dd_comptabilie.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/journal_livre_comptabilite.dart';
+import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
+import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -288,7 +293,18 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
+
   // Comptabilites
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteDashboard,
+      page: () => const DashboardComptabilite(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteDD,
+      page: () => const DDComptabilite(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBalance,
       page: () => const BalanceComptabilite(),
@@ -380,4 +396,17 @@ List<GetPage<dynamic>>? getPages = [
 
 
   // DevisRoutes
+  GetPage(
+      name: DevisRoutes.devis,
+      page: () => const DevisPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: DevisRoutes.devisDetail,
+      page: () {
+        final DevisModel devisModel = Get.arguments as DevisModel;
+        return DetailDevis(devisModel: devisModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 ];

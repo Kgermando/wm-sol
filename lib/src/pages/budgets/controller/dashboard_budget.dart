@@ -170,9 +170,7 @@ class DashboardBudgetController extends GetxController {
     }
     for (var item in dataDevisList) {
       var devisCaisseList = devisListObjetsList
-          .where((element) =>
-              element.referenceDate.microsecondsSinceEpoch ==
-              item.createdRef.microsecondsSinceEpoch)
+          .where((element) => element.reference == item.id)
           .toList();
       for (var element in devisCaisseList) {
         totalDevis += double.parse(element.montantGlobal);
@@ -212,8 +210,7 @@ class DashboardBudgetController extends GetxController {
     for (var item in dataDevisList.where((e) => e.ressource == "caisse")) {
       var devisCaisseList = devisListObjetsList
           .where((element) =>
-              element.referenceDate.microsecondsSinceEpoch ==
-              item.createdRef.microsecondsSinceEpoch)
+              element.reference == item.id)
           .toList();
       for (var element in devisCaisseList) {
         caisseEtatBesion += double.parse(element.montantGlobal);
@@ -248,8 +245,7 @@ class DashboardBudgetController extends GetxController {
     for (var item in dataDevisList.where((e) => e.ressource == "banque")) {
       var devisCaisseList = devisListObjetsList
           .where((element) =>
-              element.referenceDate.microsecondsSinceEpoch ==
-              item.createdRef.microsecondsSinceEpoch)
+              element.reference == item.id)
           .toList();
       for (var element in devisCaisseList) {
         banqueEtatBesion += double.parse(element.montantGlobal);
@@ -285,8 +281,7 @@ class DashboardBudgetController extends GetxController {
         in dataDevisList.where((e) => e.ressource == "finExterieur")) {
       var devisCaisseList = devisListObjetsList
           .where((element) =>
-              element.referenceDate.microsecondsSinceEpoch ==
-              item.createdRef.microsecondsSinceEpoch)
+              element.reference == item.id)
           .toList();
       for (var element in devisCaisseList) {
         finExterieurEtatBesion += double.parse(element.montantGlobal);

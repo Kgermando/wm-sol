@@ -539,24 +539,21 @@ Expanded(
       devisCaisseList = devisListObjetController.devisListObjetList
           .where((element) =>
               widget.departementBudgetModel.departement == item.departement &&
-              element.referenceDate.microsecondsSinceEpoch ==
-                  item.createdRef.microsecondsSinceEpoch &&
+              element.reference == item.id &&
               item.created.isBefore(widget.departementBudgetModel.periodeFin) &&
               item.ressource == "caisse")
           .toList();
       devisBanqueList = devisListObjetController.devisListObjetList
           .where((element) =>
               widget.departementBudgetModel.departement == item.departement &&
-              element.referenceDate.microsecondsSinceEpoch ==
-                  item.createdRef.microsecondsSinceEpoch &&
+              element.reference == item.id &&
               item.created.isBefore(widget.departementBudgetModel.periodeFin) &&
               item.ressource == "banque")
           .toList();
       devisfinExterieurList = devisListObjetController.devisListObjetList
           .where((element) =>
               widget.departementBudgetModel.departement == item.departement &&
-              element.referenceDate.microsecondsSinceEpoch ==
-                  item.createdRef.microsecondsSinceEpoch &&
+              element.reference == item.id &&
               item.created.isBefore(widget.departementBudgetModel.periodeFin) &&
               item.ressource == "finExterieur")
           .toList();

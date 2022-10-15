@@ -361,8 +361,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
       devisCaisseList = controller.devisListObjetsList
           .where((element) =>
               widget.ligneBudgetaireModel.departement == item.departement &&
-              element.referenceDate.microsecondsSinceEpoch ==
-                  item.createdRef.microsecondsSinceEpoch &&
+              element.reference == item.id &&
               item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
               item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "caisse")
@@ -370,8 +369,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
       devisBanqueList = controller.devisListObjetsList
           .where((element) =>
               widget.ligneBudgetaireModel.departement == item.departement &&
-              element.referenceDate.microsecondsSinceEpoch ==
-                  item.createdRef.microsecondsSinceEpoch &&
+              element.reference == item.id &&
               item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
               item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "banque")
@@ -379,8 +377,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
       devisfinExterieurList = controller.devisListObjetsList
           .where((element) =>
               widget.ligneBudgetaireModel.departement == item.departement &&
-              element.referenceDate.microsecondsSinceEpoch ==
-                  item.createdRef.microsecondsSinceEpoch &&
+              element.reference == item.id &&
               item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
               item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "finExterieur")
