@@ -24,9 +24,7 @@ class _RhNavState extends State<RhNav> {
     final RHNotifyController controller = Get.put(RHNotifyController());
 
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-
-    print("itemCount: ${int.parse(controller.itemCount)}");
+    final bodyText1 = Theme.of(context).textTheme.bodyText1; 
 
     return ExpansionTile(
       leading: const Icon(Icons.group, size: 30.0),

@@ -49,8 +49,7 @@ class _DetailBilanState extends State<DetailBilan> {
                   context, scaffoldKey, title, widget.bilanModel.titleBilan),
               drawer: const DrawerMenu(),
               floatingActionButton: (widget.bilanModel.isSubmit == 'false' &&
-                      widget.bilanModel.approbationDD == '-' &&
-                      widget.bilanModel.approbationDG == '-')
+                      widget.bilanModel.approbationDD == '-')
                   ? FloatingActionButton.extended(
                       label: const Text("Ajouter une écriture"),
                       tooltip: "Ecriture sur la feuille bilan",
@@ -104,9 +103,6 @@ class _DetailBilanState extends State<DetailBilan> {
                                                       sendButton(
                                                           bilanController),
                                                     if (widget.bilanModel
-                                                                .approbationDG ==
-                                                            "Unapproved" ||
-                                                        widget.bilanModel
                                                                 .approbationDD ==
                                                             "Unapproved")
                                                       deleteButton(
@@ -288,8 +284,7 @@ class _DetailBilanState extends State<DetailBilan> {
           children: [
             Slidable(
               enabled: (widget.bilanModel.isSubmit == "true" ||
-                      widget.bilanModel.approbationDD == "Unapproved" ||
-                      widget.bilanModel.approbationDG == "Unapproved")
+                      widget.bilanModel.approbationDD == "Unapproved")
                   ? false
                   : true,
               endActionPane: ActionPane(
@@ -390,8 +385,7 @@ class _DetailBilanState extends State<DetailBilan> {
           children: [
             Slidable(
               enabled: (widget.bilanModel.isSubmit == "true" ||
-                      widget.bilanModel.approbationDD == "Unapproved" ||
-                      widget.bilanModel.approbationDG == "Unapproved")
+                      widget.bilanModel.approbationDD == "Unapproved")
                   ? false
                   : true,
               endActionPane: ActionPane(

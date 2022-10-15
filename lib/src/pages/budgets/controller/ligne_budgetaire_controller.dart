@@ -3,14 +3,35 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/budgets/ligne_budgetaire_api.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart'; 
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
+import 'package:wm_solution/src/models/devis/devis_models.dart';
+import 'package:wm_solution/src/models/exploitations/projet_model.dart';
+import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
+import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/compaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
 class LignBudgetaireController extends GetxController
     with StateMixin<List<LigneBudgetaireModel>> {
   LIgneBudgetaireApi lIgneBudgetaireApi = LIgneBudgetaireApi();
   final ProfilController profilController = Get.find();
+  final CampaignController campaignController = Get.put(CampaignController());
+  final DevisController devisController = Get.put(DevisController());
+  final DevisListObjetController devisListObjetController = Get.put(DevisListObjetController());
+  final ProjetController projetController = Get.put(ProjetController());
+  final SalaireController salaireController = Get.put(SalaireController());
+  final TransportRestController transportRestController = Get.put(TransportRestController());
+  final TransportRestPersonnelsController transportRestPersonnelsController = Get.put(TransportRestPersonnelsController());
 
-    var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
+
+  var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -23,10 +44,52 @@ class LignBudgetaireController extends GetxController
   double caisseController = 0.0;
   double banqueController = 0.0;
 
+  List<CampaignModel> dataCampaignList = [];
+  List<DevisModel> dataDevisList = [];
+  List<DevisListObjetsModel> devisListObjetsList = []; // avec montant
+  List<ProjetModel> dataProjetList = [];
+  List<PaiementSalaireModel> dataSalaireList = [];
+  List<TransportRestaurationModel> dataTransRestList = [];
+  List<TransRestAgentsModel> tansRestList = []; // avec montant
+
   @override
   void onInit() {
     super.onInit();
     getList(); 
+
+    devisListObjetsList = devisListObjetController.devisListObjetList;
+    tansRestList = transportRestPersonnelsController.transRestAgentList;
+    dataCampaignList = campaignController.campaignList
+        .where((element) =>
+            element.approbationDG == 'Approved' &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == '-')
+        .toList();
+    dataDevisList = devisController.devisList
+        .where((element) =>
+            element.approbationDG == 'Approved' &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == '-')
+        .toList();
+    dataProjetList = projetController.projetList
+        .where((element) =>
+            element.approbationDG == 'Approved' &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == '-')
+        .toList();
+    dataSalaireList = salaireController.paiementSalaireList
+        .where((element) =>
+            element.createdAt.month == DateTime.now().month &&
+            element.createdAt.year == DateTime.now().year &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == '-')
+        .toList();
+    dataTransRestList = transportRestController.transportRestaurationList
+        .where((element) =>
+            element.approbationDG == 'Approved' &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == '-')
+        .toList();
   }
 
   @override
@@ -35,14 +98,13 @@ class LignBudgetaireController extends GetxController
     uniteChoisieController.dispose();
 
     super.dispose();
-  }
-
-
+  } 
  
 
   void getList() async {
     await lIgneBudgetaireApi.getAllData().then((response) {
       ligneBudgetaireList.assignAll(response);
+      
       change(ligneBudgetaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/bilan/bilan_xlsx.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
+import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/compte_resultat_xlsx.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableBilan extends StatefulWidget {
-  const TableBilan({super.key, required this.bilanList, required this.controller});
-  final List<BilanModel> bilanList;
-  final BilanController controller;
+class TableCompteResultat extends StatefulWidget {
+  const TableCompteResultat({super.key, required this.compteResultatList, required this.controller});
+  final List<CompteResulatsModel> compteResultatList;
+  final CompteResultatController controller;
 
   @override
-  State<TableBilan> createState() => _TableBilanState();
+  State<TableCompteResultat> createState() => _TableCompteResultatState();
 }
 
-class _TableBilanState extends State<TableBilan> {
+class _TableCompteResultatState extends State<TableCompteResultat> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -40,11 +40,11 @@ class _TableBilanState extends State<TableBilan> {
         final dataId = tapEvent.row!.cells.values;
         final idPlutoRow = dataId.last;
 
-        final BilanModel bilanModel =
+        final CompteResulatsModel compteResulatsModel =
             await widget.controller.detailView(idPlutoRow.value);
 
         Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail,
-            arguments: bilanModel);
+            arguments: compteResulatsModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -55,17 +55,17 @@ class _TableBilanState extends State<TableBilan> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Bilans"),
+            const TitleWidget(title: "Compte Resultats"),
             Row(
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, ComptabiliteRoutes.comptabiliteBilan);
+                      Navigator.pushNamed(context,
+                          ComptabiliteRoutes.comptabiliteCompteResultat);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  BilanXlsx().exportToExcel(widget.bilanList);
+                  CompteResulatXlsx().exportToExcel(widget.compteResultatList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -85,13 +85,13 @@ class _TableBilanState extends State<TableBilan> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'titleBilan') {
+            } else if (column.field == 'intitule') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'signature') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDD') {
+            }  else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -108,12 +108,12 @@ class _TableBilanState extends State<TableBilan> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.bilanList.length;
-    for (var item in widget.bilanList) {
+    var i = widget.compteResultatList.length;
+    for (var item in widget.compteResultatList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'titleBilan': PlutoCell(value: item.titleBilan),
+          'intitule': PlutoCell(value: item.intitule),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -141,8 +141,8 @@ class _TableBilanState extends State<TableBilan> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Titre du Bilan',
-        field: 'titleBilan',
+        title: 'Intitule',
+        field: 'intitule',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -174,7 +174,7 @@ class _TableBilanState extends State<TableBilan> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
+      ), 
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

@@ -47,7 +47,9 @@ class BudgetPrevisionnelController extends GetxController
 
   @override
   void dispose() {
-    titleController.dispose(); 
+    titleController.dispose();
+    motifDGController.dispose();
+    motifDDController.dispose();
     super.dispose();
   }  
 

@@ -4,11 +4,7 @@ class BalanceCompteModel {
   late String statut; // A defaut de modifier il vont déclaser le fichier
   late String signature; 
   late DateTime created;
-  late String isSubmit;
-    // Approbations DG
-  late String approbationDG;
-  late String motifDG;
-  late String signatureDG;
+  late String isSubmit; 
   // Approbations DD
   late String approbationDD;
   late String motifDD;
@@ -20,10 +16,7 @@ class BalanceCompteModel {
       required this.statut,
       required this.signature, 
       required this.created,
-      required this.isSubmit,
-      required this.approbationDG,
-      required this.motifDG,
-      required this.signatureDG,
+      required this.isSubmit, 
       required this.approbationDD,
       required this.motifDD,
       required this.signatureDD});
@@ -36,28 +29,23 @@ class BalanceCompteModel {
         signature: row[3],
         created: row[4],
         isSubmit: row[5],
-        approbationDG: row[6],
-        motifDG: row[7],
-        signatureDG: row[8],
-        approbationDD: row[9],
-        motifDD: row[10],
-        signatureDD: row[11]);
+        approbationDD: row[6],
+        motifDD: row[7],
+        signatureDD: row[8]
+    );
   }
 
   factory BalanceCompteModel.fromJson(Map<String, dynamic> json) {
     return BalanceCompteModel(
-        id: json['id'],
-        title: json['title'],
-        statut: json['statut'],
-        signature: json['signature'], 
-        created: DateTime.parse(json['created']),
-      isSubmit: json['isSubmit'],
-        approbationDG: json['approbationDG'],
-        motifDG: json['motifDG'],
-        signatureDG: json['signatureDG'],
-        approbationDD: json['approbationDD'],
-        motifDD: json['motifDD'],
-        signatureDD: json['signatureDD']
+      id: json['id'],
+      title: json['title'],
+      statut: json['statut'],
+      signature: json['signature'], 
+      created: DateTime.parse(json['created']),
+      isSubmit: json['isSubmit'], 
+      approbationDD: json['approbationDD'],
+      motifDD: json['motifDD'],
+      signatureDD: json['signatureDD']
     );
   }
 
@@ -68,10 +56,7 @@ class BalanceCompteModel {
       'statut': statut,
       'signature': signature, 
       'created': created.toIso8601String(),
-      'isSubmit': isSubmit,
-      'approbationDG': approbationDG,
-      'motifDG': motifDG,
-      'signatureDG': signatureDG,
+      'isSubmit': isSubmit, 
       'approbationDD': approbationDD,
       'motifDD': motifDD,
       'signatureDD': signatureDD

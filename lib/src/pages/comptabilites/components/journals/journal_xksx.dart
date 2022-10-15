@@ -1,38 +1,32 @@
 import 'dart:io';
 
+import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
-class BalanceXlsx {
-  Future<void> exportToExcel(List<BalanceCompteModel> dataList) async {
+class JournalXlsx {
+  Future<void> exportToExcel(List<JournalLivreModel> dataList) async {
     var excel = Excel.createExcel();
-    String title = "Balances";
+    String title = "Journals";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([
       "id",
-      "title",
-      "statut",
+      "intitule",
+      "debut",
+      "fin",
       "signature",
       "created",
-      "isSubmit", 
-      "approbationDD",
-      "motifDD",
-      "signatureDD"
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
       List<String> data = [
         dataList[i].id.toString(),
-        dataList[i].title,
-        dataList[i].statut,
+        dataList[i].intitule,
+        DateFormat("dd/MM/yy HH-mm").format(dataList[i].debut),
+        DateFormat("dd/MM/yy HH-mm").format(dataList[i].fin),
         dataList[i].signature,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].created),
-        dataList[i].isSubmit, 
-        dataList[i].approbationDD,
-        dataList[i].motifDD,
-        dataList[i].signatureDD,
       ];
 
       sheetObject.insertRowIterables(data, i + 1);

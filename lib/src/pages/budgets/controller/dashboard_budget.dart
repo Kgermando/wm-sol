@@ -33,8 +33,7 @@ class DashboardBudgetController extends GetxController {
   final DevisController devisController = Get.put(DevisController());
   final DevisListObjetController devisListObjetController =
       Get.put(DevisListObjetController());
-
-  final ScrollController _controllerScroll = ScrollController();
+ 
   final ScrollController controllerTable = ScrollController();
   
   double coutTotal = 0.0;

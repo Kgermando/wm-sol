@@ -4,6 +4,9 @@ import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
+import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
+import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
+import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
@@ -12,7 +15,7 @@ import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/archives/components/add_archive.dart';
 import 'package:wm_solution/src/pages/archives/components/archive_pdf_viewer.dart';
-import 'package:wm_solution/src/pages/archives/components/detail_archive.dart'; 
+import 'package:wm_solution/src/pages/archives/components/detail_archive.dart';
 import 'package:wm_solution/src/pages/archives/views/archive_folder_page.dart';
 import 'package:wm_solution/src/pages/archives/views/archives.dart';
 import 'package:wm_solution/src/pages/auth/view/login_auth.dart';
@@ -27,8 +30,16 @@ import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/historique_budgets.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/balance/detail_balance.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/detail_bilan.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/add_compte_resultat.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/detail_compte_resultat.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/update_compte_resultat.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/journals/detail_journal_livre.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/journals/search_grand_livre.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/balance_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/bilan_comptabilite.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/compte_resultat_comptabilite.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/journal_livre_comptabilite.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -61,15 +72,16 @@ List<GetPage<dynamic>>? getPages = [
       page: () => const ArchiveFolderPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-    GetPage(
+  GetPage(
       name: ArchiveRoutes.archiveTable,
       page: () {
-        ArchiveFolderModel  archiveFolderModel = Get.arguments as ArchiveFolderModel;
+        ArchiveFolderModel archiveFolderModel =
+            Get.arguments as ArchiveFolderModel;
         return ArchiveData(archiveFolderModel: archiveFolderModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-    GetPage(
+  GetPage(
       name: ArchiveRoutes.addArchives,
       page: () {
         ArchiveFolderModel archiveFolderModel =
@@ -81,22 +93,19 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: ArchiveRoutes.archivesDetail,
       page: () {
-        ArchiveModel archiveModel =
-            Get.arguments as ArchiveModel;
+        ArchiveModel archiveModel = Get.arguments as ArchiveModel;
         return DetailArchive(archiveModel: archiveModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ArchiveRoutes.archivePdf,
-      page: () { 
+      page: () {
         String url = Get.arguments as String;
         return ArchivePdfViewer(url: url);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
-
 
   // UserRoutes
   GetPage(name: UserRoutes.login, page: () => const LoginAuth()),
@@ -227,7 +236,6 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
-
   // Budgets
   GetPage(
       name: BudgetRoutes.budgetDashboard,
@@ -240,31 +248,32 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: BudgetRoutes.budgetBudgetPrevisionel,
-    page: () => const BudgetPrevisionnelPage(),
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)
-  ),
+      name: BudgetRoutes.budgetBudgetPrevisionel,
+      page: () => const BudgetPrevisionnelPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.historiqueBudgetPrevisionel,
       page: () => const HistoriqueBudget(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: BudgetRoutes.budgetBudgetPrevisionelDetail,
-    page: () {
-      final DepartementBudgetModel departementBudgetModel = Get.arguments as DepartementBudgetModel;
-      return DetailBudgetPrevisionnel(departementBudgetModel: departementBudgetModel);
-    },
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)
-  ),
+      name: BudgetRoutes.budgetBudgetPrevisionelDetail,
+      page: () {
+        final DepartementBudgetModel departementBudgetModel =
+            Get.arguments as DepartementBudgetModel;
+        return DetailBudgetPrevisionnel(
+            departementBudgetModel: departementBudgetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetLignebudgetaireDetail,
       page: () {
         final LigneBudgetaireModel ligneBudgetaireModel =
             Get.arguments as LigneBudgetaireModel;
-        return DetailLigneBudgetaire(ligneBudgetaireModel: ligneBudgetaireModel);
+        return DetailLigneBudgetaire(
+            ligneBudgetaireModel: ligneBudgetaireModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -273,11 +282,11 @@ List<GetPage<dynamic>>? getPages = [
       page: () {
         final DepartementBudgetModel departementBudgetModel =
             Get.arguments as DepartementBudgetModel;
-        return AjoutLigneBudgetaire(departementBudgetModel: departementBudgetModel);
+        return AjoutLigneBudgetaire(
+            departementBudgetModel: departementBudgetModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
 
   // Comptabilites
   GetPage(
@@ -294,7 +303,7 @@ List<GetPage<dynamic>>? getPages = [
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  
+
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBilan,
       page: () => const BilanComptabilite(),
@@ -303,12 +312,71 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBilanDetail,
       page: () {
-        final BilanModel bilanModel =
-            Get.arguments as BilanModel;
+        final BilanModel bilanModel = Get.arguments as BilanModel;
         return DetailBilan(bilanModel: bilanModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteCompteResultat,
+      page: () => const CompteResultatComptabilite(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteCompteResultatDetail,
+      page: () {
+        final CompteResulatsModel compteResulatsModel =
+            Get.arguments as CompteResulatsModel;
+        return DetailCompteResultat(compteResulatsModel: compteResulatsModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComptabiliteRoutes.comptabiliteCompteResultatAdd,
+    page: () => const AddCompteResultat(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComptabiliteRoutes.comptabiliteCompteResultatUpdate,
+    page: () {
+      final CompteResulatsModel compteResulatsModel =
+          Get.arguments as CompteResulatsModel;
+      return UpdateCompteResultat(compteResulatsModel: compteResulatsModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+    
+  GetPage(
+    name: ComptabiliteRoutes.comptabiliteJournalLivre,
+    page: () => const JournalLivreComptabilite(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComptabiliteRoutes.comptabiliteJournalDetail,
+    page: () {
+      final JournalLivreModel journalLivreModel =
+          Get.arguments as JournalLivreModel;
+      return DetailJournalLivre(journalLivreModel: journalLivreModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteGrandLivre,
+      page: () => const GrandLivre(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteGrandLivreSearch,
+      page: () {
+        final List<JournalModel> search =
+            Get.arguments as List<JournalModel>;
+        return SearchGrandLivre(search: search);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
 
 
   // DevisRoutes

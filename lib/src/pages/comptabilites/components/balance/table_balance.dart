@@ -91,8 +91,6 @@ class _TableBalanceState extends State<TableBalance> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDG') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
@@ -118,8 +116,7 @@ class _TableBalanceState extends State<TableBalance> {
           'title': PlutoCell(value: item.title),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
+              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)), 
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
@@ -177,35 +174,6 @@ class _TableBalanceState extends State<TableBalance> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Approbation DG',
-        field: 'approbationDG',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
-        minWidth: 150,
-        renderer: (rendererContext) {
-          Color textColor = Colors.black;
-          if (rendererContext.cell.value == 'Approved') {
-            textColor = Colors.green;
-          } else if (rendererContext.cell.value == 'Unapproved') {
-            textColor = Colors.red;
-          } else if (rendererContext.cell.value == '-') {
-            textColor = Colors.orange;
-          }
-          return Text(
-            rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        },
       ),
       PlutoColumn(
         readOnly: true,

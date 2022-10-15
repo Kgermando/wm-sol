@@ -31,9 +31,6 @@ class BilanXlsx {
         dataList[i].signature,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].created),
         dataList[i].isSubmit,
-        dataList[i].approbationDG,
-        dataList[i].motifDG,
-        dataList[i].signatureDG,
         dataList[i].approbationDD,
         dataList[i].motifDD,
         dataList[i].signatureDD

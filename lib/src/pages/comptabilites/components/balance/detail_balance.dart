@@ -50,8 +50,7 @@ class _DetailBalanceState extends State<DetailBalance> {
         drawer: const DrawerMenu(),
         floatingActionButton:
             (widget.balanceCompteModel.isSubmit == 'false' &&
-              widget.balanceCompteModel.approbationDD == '-' &&
-              widget.balanceCompteModel.approbationDG == '-')
+              widget.balanceCompteModel.approbationDD == '-')
           ? FloatingActionButton.extended(
               label: const Text("Ajouter une écriture"),
               tooltip: "Ecriture sur la feuille balance",
@@ -328,8 +327,7 @@ class _DetailBalanceState extends State<DetailBalance> {
           children: [
             Slidable(
               enabled: (widget.balanceCompteModel.isSubmit == "true" ||
-                      widget.balanceCompteModel.approbationDD == "Unapproved" ||
-                      widget.balanceCompteModel.approbationDG == "Unapproved")
+                      widget.balanceCompteModel.approbationDD == "Unapproved")
                   ? false
                   : true,
               endActionPane: ActionPane(

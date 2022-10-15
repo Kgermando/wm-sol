@@ -5,10 +5,7 @@ class JournalLivreModel {
   late DateTime fin; 
 
   late String signature; 
-  late DateTime created; 
-  late String approbationDG; // Approbations DG
-  late String motifDG;
-  late String signatureDG;
+  late DateTime created;  
   // Approbations DD
   late String approbationDD;
   late String motifDD;
@@ -20,10 +17,7 @@ class JournalLivreModel {
       required this.debut,
       required this.fin, 
       required this.signature, 
-      required this.created,
-      required this.approbationDG,
-      required this.motifDG,
-      required this.signatureDG,
+      required this.created, 
       required this.approbationDD,
       required this.motifDD,
       required this.signatureDD}); 
@@ -36,12 +30,9 @@ class JournalLivreModel {
       fin: row[3],
       signature: row[4],
       created: row[5],
-      approbationDG: row[6],
-      motifDG: row[7],
-      signatureDG: row[8],
-      approbationDD: row[9],
-      motifDD: row[10],
-      signatureDD: row[11]
+      approbationDD: row[6],
+      motifDD: row[7],
+      signatureDD: row[8]
     );
   }
 
@@ -52,10 +43,7 @@ class JournalLivreModel {
         debut: DateTime.parse(json['debut']),
         fin: DateTime.parse(json['fin']), 
         signature: json['signature'], 
-        created: DateTime.parse(json['created']),
-        approbationDG: json['approbationDG'],
-        motifDG: json['motifDG'],
-        signatureDG: json['signatureDG'],
+        created: DateTime.parse(json['created']), 
         approbationDD: json['approbationDD'],
         motifDD: json['motifDD'],
         signatureDD: json['signatureDD']);
@@ -68,10 +56,7 @@ class JournalLivreModel {
       'debut': debut.toIso8601String(),
       'fin': fin.toIso8601String(), 
       'signature': signature, 
-      'created': created.toIso8601String(),
-      'approbationDG': approbationDG,
-      'motifDG': motifDG,
-      'signatureDG': signatureDG,
+      'created': created.toIso8601String(), 
       'approbationDD': approbationDD,
       'motifDD': motifDD,
       'signatureDD': signatureDD

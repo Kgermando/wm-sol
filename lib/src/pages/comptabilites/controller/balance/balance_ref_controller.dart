@@ -77,9 +77,7 @@ class BalanceRefController extends GetxController
               : montantDebitController.text) -
           double.parse((montantCreditController.text == "")
               ? "0"
-              : montantCreditController.text);
-      print("comptes $comptes");
-      print("solde $solde");
+              : montantCreditController.text); 
       final compteBalanceRefModel = CompteBalanceRefModel(
           reference: data.id!,
           comptes: comptes.toString(),

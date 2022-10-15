@@ -4,11 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
-import 'package:wm_solution/src/models/rh/presence_personnel_model.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/table_salaire_user.dart';
+import 'package:wm_solution/src/models/rh/presence_personnel_model.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_note_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_personne_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_personne_controller.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -21,8 +19,7 @@ class InfosPersonne extends StatelessWidget {
     final PerformenceNoteController controllerNote =
         Get.put(PerformenceNoteController());
     final PresencePersonneController presencePersonneController =
-        Get.put(PresencePersonneController());
-    final SalaireController salaireController = Get.put(SalaireController());
+        Get.put(PresencePersonneController()); 
     return Column(
       children: [
         performenceWideget(context, controllerNote),

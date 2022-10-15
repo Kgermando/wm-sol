@@ -36,6 +36,7 @@ class _BalanceComptabiliteState extends State<BalanceComptabilite> {
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
                   label: const Text("Feuille Balance"),
+                  tooltip: "Ajouter Balance",
                   icon: const Icon(Icons.add),
                   onPressed: () {
                     newFicheDialog(context, controller);

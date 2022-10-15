@@ -16,6 +16,14 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
 
   TextEditingController titleController = TextEditingController();
 
+       // Approbations
+  final formKeyBudget = GlobalKey<FormState>();
+
+  String approbationDG = '-';
+  String approbationDD = '-';
+  TextEditingController motifDDController = TextEditingController(); 
+
+
   @override
   void onInit() {
     super.onInit();
@@ -24,6 +32,7 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
 
   @override
   void dispose() {
+    motifDDController.dispose();
     titleController.dispose();
     super.dispose();
   }
@@ -71,10 +80,7 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
         statut: 'false',
         signature: profilController.user.matricule.toString(),
         created: DateTime.now(),
-        isSubmit: 'false',
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
+        isSubmit: 'false', 
         approbationDD: '-',
         motifDD: '-',
         signatureDD: '-');
@@ -106,10 +112,7 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
           statut: data.statut,
           signature: data.signature,
           created: data.created,
-          isSubmit: 'true',
-          approbationDG: data.approbationDG,
-          motifDG: data.motifDG,
-          signatureDG: data.signatureDG,
+          isSubmit: 'true', 
           approbationDD: data.approbationDD,
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
@@ -117,6 +120,40 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
         balanceList.clear();
         getList();
         // Get.back();
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+
+  void submitDD(BalanceCompteModel data) async {
+    try {
+      _isLoading.value = true;
+      final balanceModel = BalanceCompteModel(
+        id: data.id,
+        title: data.title,
+        statut: data.statut,
+        signature: data.signature,
+        created: data.created,
+        isSubmit: data.isSubmit,
+        approbationDD: approbationDD,
+        motifDD:
+            (motifDDController.text == '') ? '-' : motifDDController.text,
+        signatureDD: profilController.user.matricule); 
+      await balanceCompteApi.updateData(balanceModel).then((value) {
+        balanceList.clear();
+        getList();
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
