@@ -13,7 +13,7 @@ class RHNotifyController extends GetxController {
 
   final _itemCount = '0'.obs;
   String get itemCount => _itemCount.value;
-
+ 
   // Salaire
   final _itemCountSalaireBudget = 0.obs;
   int get itemCountSalaireBudget => _itemCountSalaireBudget.value;
@@ -21,9 +21,12 @@ class RHNotifyController extends GetxController {
   int get itemCountSalaireDD => _itemCountSalaireDD.value;
   final _itemCountSalaireFin = 0.obs;
   int get itemCountSalaireFin => _itemCountSalaireFin.value;
+
+  // Observation
   final _itemCountSalaireObs = 0.obs;
   int get itemCountSalaireObs => _itemCountSalaireObs.value;
-
+  final _itemCountTransRestObs = 0.obs;
+  int get itemCountTransRestObs => _itemCountTransRestObs.value;
 
   // TransRest
   final _itemCountTransRestDG = 0.obs;
@@ -34,8 +37,8 @@ class RHNotifyController extends GetxController {
   int get itemCountTransRestDD => _itemCountTransRestDD.value;
   final _itemCountTransRestFin = 0.obs;
   int get itemCountTransRestFin => _itemCountTransRestFin.value;
-  final _itemCountTransRestObs = 0.obs;
-  int get itemCountTransRestObs => _itemCountTransRestObs.value;
+
+
 
 
   @override
@@ -51,6 +54,21 @@ class RHNotifyController extends GetxController {
     getCountTransRestSalaireDD();
     getCountTransRestFin();
     getCountTransResteObs();
+  }
+
+  @override
+  void refresh() {
+    getCountRh();
+    getCountSalaireBudget();
+    getCountSalaireDD();
+    getCountSalaireFin();
+    getCountSalaireObs();
+    getCountTransRestDG();
+    getCountTransRestBudget();
+    getCountTransRestSalaireDD();
+    getCountTransRestFin();
+    getCountTransResteObs();
+    super.refresh();
   }
 
   void getCountRh() async {

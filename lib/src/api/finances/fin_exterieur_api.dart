@@ -60,14 +60,13 @@ class FinExterieurApi extends GetConnect {
     }
   }
 
-  Future<FinanceExterieurModel> updateData(
-      int id, FinanceExterieurModel financeExterieurModel) async {
+  Future<FinanceExterieurModel> updateData(FinanceExterieurModel financeExterieurModel) async {
     Map<String, String> header = headers;
 
     var data = financeExterieurModel.toJson();
     var body = jsonEncode(data);
     var updateUrl = Uri.parse(
-        "$mainUrl/finances/transactions/banques/update-transaction-finExterieur/$id");
+        "$mainUrl/finances/transactions/banques/update-transaction-finExterieur/");
 
     var res = await client.put(updateUrl, headers: header, body: body);
     if (res.statusCode == 200) {

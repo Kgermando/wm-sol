@@ -117,7 +117,7 @@ class ComptabiliteRoutes {
   static const comptabiliteBilan = "/comptabilite-bilan";
   static const comptabiliteBilanAdd = "/comptabilite-bilan-add";
   static const comptabiliteBilanDetail = "/comptabilite-bilan-detail";
-  static const comptabiliteJournalLivre = "/comptabilite-journal(livre";
+  static const comptabiliteJournalLivre = "/comptabilite-journal-livre";
   static const comptabiliteJournalDetail = "/comptabilite-journal-detail";
   static const comptabiliteJournalAdd = "/comptabilite-journal-add";
   static const comptabiliteCompteResultat = "/comptabilite-compte-resultat";

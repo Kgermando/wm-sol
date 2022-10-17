@@ -5,10 +5,13 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_budget_previsionnel_dd.dart';
+import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_devis_budget.dart';
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_salaire_budget.dart';
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_transport_rest_budget.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
@@ -43,6 +46,9 @@ class _DDBudgetState extends State<DDBudget> {
     final SalaireController salaireController = Get.put(SalaireController());
     final TransportRestController transportRestController =
         Get.put(TransportRestController());  
+    final DevisNotifyController devisNotifyController =
+        Get.put(DevisNotifyController());
+    final DevisController devisController = Get.put(DevisController());
 
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
@@ -160,34 +166,36 @@ class _DDBudgetState extends State<DDBudget> {
                     //     children: const [TableCampaignBudget()],
                     //   ),
                     // ),
-                    // Card(
-                    //   color: Colors.grey.shade700,
-                    //   child: ExpansionTile(
-                    //     leading: const Icon(Icons.folder,
-                    //         color: Colors.white),
-                    //     title: Text('Dossier Etat de besoins',
-                    //         style: (Responsive.isDesktop(context))
-                    //             ? headline6!
-                    //                 .copyWith(color: Colors.white)
-                    //             : bodyLarge!
-                    //                 .copyWith(color: Colors.white)),
-                    //     subtitle: Text(
-                    //         "Vous avez $devisCount dossiers necessitent votre approbation",
-                    //         style: bodyMedium.copyWith(
-                    //             color: Colors.white70)),
-                    //     initiallyExpanded: false,
-                    //     onExpansionChanged: (val) {
-                    //       setState(() {
-                    //         isOpen3 = !val;
-                    //       });
-                    //     },
-                    //     trailing: const Icon(
-                    //       Icons.arrow_drop_down,
-                    //       color: Colors.white,
-                    //     ),
-                    //     children: const [TableDevisBudgetDD()],
-                    //   ),
-                    // ),
+                    Card(
+                      color: Colors.grey.shade700,
+                      child: ExpansionTile(
+                        leading: const Icon(Icons.folder,
+                            color: Colors.white),
+                        title: Text('Dossier Etat de besoins',
+                            style: (Responsive.isDesktop(context))
+                                ? headline6!
+                                    .copyWith(color: Colors.white)
+                                : bodyLarge!
+                                    .copyWith(color: Colors.white)),
+                        subtitle: Text(
+                            "Vous avez ${devisNotifyController.itemCountDevisBudget} dossiers necessitent votre approbation",
+                            style: bodyMedium.copyWith(
+                                color: Colors.white70)),
+                        initiallyExpanded: false,
+                        onExpansionChanged: (val) {
+                          setState(() {
+                            isOpen3 = !val;
+                          });
+                        },
+                        trailing: const Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        ),
+                        children: [
+                          TableDevisBudget(devisController: devisController)
+                        ],
+                      ),
+                    ),
                     // Card(
                     //   color: Colors.blue.shade700,
                     //   child: ExpansionTile(

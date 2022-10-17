@@ -8,6 +8,14 @@ import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart'
 import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
+import 'package:wm_solution/src/models/finances/banque_model.dart';
+import 'package:wm_solution/src/models/finances/banque_name_model.dart';
+import 'package:wm_solution/src/models/finances/caisse_model.dart';
+import 'package:wm_solution/src/models/finances/caisse_name_model.dart';
+import 'package:wm_solution/src/models/finances/creances_model.dart';
+import 'package:wm_solution/src/models/finances/dette_model.dart';
+import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
+import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
@@ -45,6 +53,17 @@ import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/journal_livre_comptabilite.dart';
 import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
 import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
+import 'package:wm_solution/src/pages/finances/components/banques/detail_banque.dart';
+import 'package:wm_solution/src/pages/finances/components/caisses/detail_caisse.dart';
+import 'package:wm_solution/src/pages/finances/components/creances/detail_creance.dart';
+import 'package:wm_solution/src/pages/finances/components/dettes/detail_dette.dart';
+import 'package:wm_solution/src/pages/finances/components/fin_exterieur/detail_fin_exterieur.dart';
+import 'package:wm_solution/src/pages/finances/view/banque_page.dart';
+import 'package:wm_solution/src/pages/finances/view/caisse_page.dart';
+import 'package:wm_solution/src/pages/finances/view/dashboard_finance.dart';
+import 'package:wm_solution/src/pages/finances/view/dd_finance.dart';
+import 'package:wm_solution/src/pages/finances/view/fin_exterieur_page.dart';
+import 'package:wm_solution/src/pages/finances/view/observation_page.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -406,6 +425,103 @@ List<GetPage<dynamic>>? getPages = [
       page: () {
         final DevisModel devisModel = Get.arguments as DevisModel;
         return DetailDevis(devisModel: devisModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+
+
+  // Finances
+  GetPage(
+      name: FinanceRoutes.financeDashboard,
+      page: () => const DashboadFinance(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.finDD,
+      page: () => const DDFinance(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.finObservation,
+      page: () => const ObservationPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsBanque,
+      page: () {
+        final BanqueNameModel banqueNameModel = Get.arguments as BanqueNameModel;
+        return  BanquePage(banqueNameModel: banqueNameModel);
+      }, 
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsBanqueDetail,
+      page: () {
+        final BanqueModel  banqueModel =
+            Get.arguments as BanqueModel;
+        return DetailBanque(banqueModel: banqueModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsCaisse,
+      page: () {
+        final CaisseNameModel caisseNameModel =
+            Get.arguments as CaisseNameModel;
+        return CaissePage(caisseNameModel: caisseNameModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsCaisseDetail,
+      page: () {
+        final CaisseModel  caisseModel = Get.arguments as CaisseModel;
+        return DetailCaisse(caisseModel: caisseModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsCreances,
+      page: () => const DevisPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsCreanceDetail,
+      page: () {
+        final CreanceModel creanceModel = Get.arguments as CreanceModel;
+        return DetailCreance(creanceModel: creanceModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsDettes,
+      page: () => const DevisPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsDetteDetail,
+      page: () {
+        final DetteModel detteModel = Get.arguments as DetteModel;
+        return DetailDette(detteModel: detteModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsFinancementExterne,
+      page: () {
+        final FinExterieurNameModel finExterieurNameModel =
+            Get.arguments as FinExterieurNameModel;
+        return FinExterieurPage(finExterieurNameModel: finExterieurNameModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: FinanceRoutes.transactionsFinancementExterneDetail,
+      page: () {
+        final FinanceExterieurModel financeExterieurModel =
+            Get.arguments as FinanceExterieurModel;
+        return DetailFinExterieur(financeExterieurModel: financeExterieurModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

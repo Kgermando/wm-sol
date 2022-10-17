@@ -90,6 +90,17 @@ var addTransRestAgentsUrl =
     Uri.parse("$mainUrl/rh/trans-rest-agents/insert-new-trans-rest-agent");
 
 // Finances
+var banqueNameUrl = Uri.parse("$mainUrl/finances/transactions/banques-name/");
+var addBanqueNameUrl = Uri.parse(
+    "$mainUrl/finances/transactions/banques-name/insert-new-transaction-banque");
+var caisseNameUrl = Uri.parse("$mainUrl/finances/transactions/caisses-name/");
+var addCaisseNameUrl = Uri.parse(
+    "$mainUrl/finances/transactions/caisses-name/insert-new-transaction-caisse");
+var finExterieurNameUrl = Uri.parse("$mainUrl/finances/transactions/fin-exterieur-name/");
+var addFinExterieurNameUrl = Uri.parse(
+    "$mainUrl/finances/transactions/fin-exterieur-name/insert-new-transaction-finExterieur");
+
+
 var banqueUrl = Uri.parse("$mainUrl/finances/transactions/banques/");
 var addBanqueUrl = Uri.parse(
     "$mainUrl/finances/transactions/banques/insert-new-transaction-banque");

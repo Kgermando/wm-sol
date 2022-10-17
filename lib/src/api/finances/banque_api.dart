@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class BanqueApi extends GetConnect {
   var client = http.Client();
+
   Future<List<BanqueModel>> getAllData() async {
     Map<String, String> header = headers;
 
@@ -41,7 +42,7 @@ class BanqueApi extends GetConnect {
   }
 
   Future<BanqueModel> insertData(BanqueModel banqueModel) async {
-    Map<String, String> header = headers;
+   Map<String, String> header = headers;
 
     var data = banqueModel.toJson();
     var body = jsonEncode(data);

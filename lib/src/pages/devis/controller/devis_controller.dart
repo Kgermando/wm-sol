@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
-import 'package:wm_solution/src/api/devis/devis_api.dart';
+import 'package:wm_solution/src/api/devis/devis_api.dart'; 
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart'; 
@@ -9,7 +9,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class DevisController extends GetxController
     with StateMixin<List<DevisModel>> {
-  final DevisAPi devisAPi = DevisAPi();
+  final DevisAPi devisAPi = DevisAPi(); 
   final ProfilController profilController = Get.find();
 
   var devisList = <DevisModel>[].obs;

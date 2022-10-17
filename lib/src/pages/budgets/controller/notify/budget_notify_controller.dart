@@ -15,6 +15,12 @@ class BudgetNotifyController extends GetxController {
     getCountBudget(); 
   }
 
+  @override
+  void refresh() {
+    getCountBudget(); 
+    super.refresh();
+  }
+
 
   void getCountBudget() async {
     NotifySumModel notifySum = await budgetDepartementNotifyApi.getCountBudget();
