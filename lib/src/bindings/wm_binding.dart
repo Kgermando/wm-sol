@@ -1,8 +1,23 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget.dart';
 import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/compaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/succursale/succursale_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/achats/achat_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/bon_livraison/bon_livraison_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/facture_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/facture_creance_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/numero_facture_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/gains/gain_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/history/history_livraison.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/history/history_ravitaillement_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/history/history_vente_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/produit_model/produit_model_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/restitution/restitution_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/stock_global/livraison_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/stock_global/ravitaillement_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/stock_global/stock_global_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_ref_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
@@ -113,11 +128,26 @@ class WMBindings extends Bindings {
   // Exploitations
   Get.lazyPut<ProjetController>(() => ProjetController()); 
 
-  // Commercial & Marketing
+  // Marketing
   Get.lazyPut<CampaignController>(() => CampaignController());
+
+  // Commercial
   Get.lazyPut<SuccursaleController>(() => SuccursaleController());
-
-
+  Get.lazyPut<AchatController>(() => AchatController());
+  Get.lazyPut<BonLivraisonController>(() => BonLivraisonController());
+  Get.lazyPut<CartController>(() => CartController());
+  Get.lazyPut<FactureController>(() => FactureController());
+  Get.lazyPut<FactureCreanceController>(() => FactureCreanceController());
+  Get.lazyPut<NumeroFactureController>(() => NumeroFactureController());
+  Get.lazyPut<GainController>(() => GainController());
+  Get.lazyPut<HistoryLivraisonController>(() => HistoryLivraisonController());
+  Get.lazyPut<HistoryRavitaillementController>(() => HistoryRavitaillementController());
+  Get.lazyPut<VenteCartController>(() => VenteCartController());
+  Get.lazyPut<ProduitModelController>(() => ProduitModelController());
+  Get.lazyPut<RestitutionController>(() => RestitutionController());
+  Get.lazyPut<LivraisonController>(() => LivraisonController());
+  Get.lazyPut<RavitaillementController>(() => RavitaillementController());
+  Get.lazyPut<StockGlobalController>(() => StockGlobalController());  
     
   }
 }

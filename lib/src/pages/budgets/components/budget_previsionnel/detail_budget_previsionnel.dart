@@ -19,7 +19,7 @@ import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/det
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/budgets/view/ligne_budgetaire.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/compaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
