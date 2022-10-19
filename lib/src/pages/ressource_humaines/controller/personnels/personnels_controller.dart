@@ -149,7 +149,7 @@ class PersonnelsController extends GetxController
   void getList() async {
     personnelsApi.getAllData().then((response) {
       personnelsList.assignAll(response);
-      change(response, status: RxStatus.success());
+      change(personnelsList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });

@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/devis/devis_models.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/campaign_xlxs.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableDevis extends StatefulWidget {
-  const TableDevis(
-      {super.key, required this.devisList, required this.controller});
-  final List<DevisModel> devisList;
-  final DevisController controller;
+class TableCampaign extends StatefulWidget {
+  const TableCampaign({super.key, required this.campaignList, required this.controller});
+  final List<CampaignModel> campaignList;
+  final CampaignController controller;
 
   @override
-  State<TableDevis> createState() => _TableDevisState();
+  State<TableCampaign> createState() => _TableCampaignState();
 }
 
-class _TableDevisState extends State<TableDevis> {
-  List<PlutoColumn> columns = [];
+class _TableCampaignState extends State<TableCampaign> {
+   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -39,11 +40,11 @@ class _TableDevisState extends State<TableDevis> {
         final dataId = tapEvent.row!.cells.values;
         final idPlutoRow = dataId.last;
 
-        final DevisModel devisModel =
+        final CampaignModel campaignModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(DevisRoutes.devisDetail,
-            arguments: devisModel);
+        Get.toNamed(ComMarketingRoutes.comMarketingCampaignDetail, 
+          arguments: campaignModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -52,9 +53,27 @@ class _TableDevisState extends State<TableDevis> {
       },
       createHeader: (PlutoGridStateManager header) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            TitleWidget(title: "Etat de besoin"),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const TitleWidget(title: "Campagnes"),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, ComMarketingRoutes.comMarketingCampaign);
+                    },
+                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                PrintWidget(onPressed: () {
+                  CampagneXlsx().exportToExcel(widget.campaignList);
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const Text("Exportation effectué!"),
+                    backgroundColor: Colors.green[700],
+                  ));
+                })
+              ],
+            ),
           ],
         );
       },
@@ -66,11 +85,17 @@ class _TableDevisState extends State<TableDevis> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'title') {
+            } else if (column.field == 'typeProduit') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'priority') {
+            } else if (column.field == 'dateDebutEtFin') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'departement') {
+            } else if (column.field == 'coutCampaign') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'lieuCible') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'promotion') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'objectifs') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -97,16 +122,19 @@ class _TableDevisState extends State<TableDevis> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.devisList.length;
-    for (var item in widget.devisList) {
+    var i = widget.campaignList.length;
+    for (var item in widget.campaignList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'title': PlutoCell(value: item.title),
-          'priority': PlutoCell(value: item.priority),
-          'departement': PlutoCell(value: item.departement),
+          'typeProduit': PlutoCell(value: item.typeProduit),
+          'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
+          'coutCampaign': PlutoCell(value: "${item.coutCampaign} \$"),
+          'lieuCible': PlutoCell(value: item.lieuCible),
+          'promotion': PlutoCell(value: item.promotion),
+          'objectifs': PlutoCell(value: item.objectifs),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
           'approbationDG': PlutoCell(value: item.approbationDG),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'approbationBudget': PlutoCell(value: item.approbationBudget),
@@ -134,8 +162,8 @@ class _TableDevisState extends State<TableDevis> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Titre',
-        field: 'title',
+        title: 'Type Produit',
+        field: 'typeProduit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -146,8 +174,20 @@ class _TableDevisState extends State<TableDevis> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Priorité',
-        field: 'priority',
+        title: 'Date Debut Et Fin',
+        field: 'dateDebutEtFin',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Coût de la Campagne',
+        field: 'coutCampaign',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -158,14 +198,38 @@ class _TableDevisState extends State<TableDevis> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Département',
-        field: 'departement',
+        title: 'Lieu Ciblé',
+        field: 'lieuCible',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Promotion',
+        field: 'promotion',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Objectifs',
+        field: 'objectifs',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -177,7 +241,7 @@ class _TableDevisState extends State<TableDevis> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(

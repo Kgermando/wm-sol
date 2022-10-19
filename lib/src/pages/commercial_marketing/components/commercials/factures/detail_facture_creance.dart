@@ -8,7 +8,6 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/factures/cart/table_creance_cart.dart';
@@ -53,90 +52,90 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: Column(
-                        children: [
-                          Card(
-                            elevation: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: p20),
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      TitleWidget(
-                                          title:
-                                              'Facture n° ${widget.creanceCartModel.client}'),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              PrintWidget(
-                                                  tooltip:
-                                                      'Imprimer le document',
-                                                  onPressed: () async {
-                                                    final pdfFile =
-                                                        await CreanceCartPDF
-                                                            .generate(
-                                                                widget
-                                                                    .creanceCartModel,
-                                                                "\$");
-                                                    PdfApi.openFile(
-                                                        pdfFile);
-                                                  })
-                                            ],
-                                          ),
-                                          SelectableText(
-                                              DateFormat("dd-MM-yy HH:mm")
-                                                  .format(widget
-                                                      .creanceCartModel
-                                                      .created),
-                                              textAlign: TextAlign.start),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Divider(
-                                    color: mainColor,
-                                  ),
-                                  dataWidget(),
-                                  Divider(
-                                    color: mainColor,
-                                  ),
-                                  TableCreanceCart(
-                                      factureList: jsonDecode(widget
-                                          .creanceCartModel
-                                          .cart) as List),
-                                  const SizedBox(height: p20),
-                                  totalCart()
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )))
-                ],
+        Visibility(
+            visible: !Responsive.isMobile(context),
+            child: const Expanded(flex: 1, child: DrawerMenu())),
+        Expanded(
+            flex: 5,
+            child: SingleChildScrollView(
+          controller: ScrollController(),
+          physics: const ScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.only(
+                top: p20, bottom: p8, right: p20, left: p20),
+            decoration: const BoxDecoration(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(20))),
+            child: Column(
+              children: [
+                Card(
+                  elevation: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: p20),
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                          children: [
+                            TitleWidget(
+                                title:
+                                    'Facture n° ${widget.creanceCartModel.client}'),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    PrintWidget(
+                                        tooltip:
+                                            'Imprimer le document',
+                                        onPressed: () async {
+                                          final pdfFile =
+                                              await CreanceCartPDF
+                                                  .generate(
+                                                      widget
+                                                          .creanceCartModel,
+                                                      "\$");
+                                          PdfApi.openFile(
+                                              pdfFile);
+                                        })
+                                  ],
+                                ),
+                                SelectableText(
+                                    DateFormat("dd-MM-yy HH:mm")
+                                        .format(widget
+                                            .creanceCartModel
+                                            .created),
+                                    textAlign: TextAlign.start),
+                              ],
+                            )
+                          ],
+                        ),
+                        Divider(
+                          color: mainColor,
+                        ),
+                        dataWidget(),
+                        Divider(
+                          color: mainColor,
+                        ),
+                        TableCreanceCart(
+                            factureList: jsonDecode(widget
+                                .creanceCartModel
+                                .cart) as List),
+                        const SizedBox(height: p20),
+                        totalCart()
+                      ],
+                    ),
+                  ),
+                )
+              ],
               ),
-            ));
+            )))
+        ],
+      ),
+    ));
   }
 
   Widget dataWidget() {

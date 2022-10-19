@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         if (int.parse(user.role) <= 2) {
           homeRoute = ExploitationRoutes.expDashboard;
         } else {
-          homeRoute = ExploitationRoutes.expTache;
+          homeRoute = TacheRoutes.tachePage;
         }
       } else if (user.departement == "Commercial et Marketing") {
         if (int.parse(user.role) <= 2) {

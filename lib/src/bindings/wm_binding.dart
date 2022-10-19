@@ -16,6 +16,8 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/commercial
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/stock_global/livraison_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/stock_global/ravitaillement_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/stock_global/stock_global_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/agenda/agenda_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
@@ -43,6 +45,7 @@ import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exte
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/notify/observation_notify_controller.dart';
+import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
@@ -60,12 +63,21 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/pr
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
+import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
+import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
 
 class WMBindings extends Bindings {
   @override
   void dependencies() {  
     // Mail
     Get.lazyPut<MaillingController>(() => MaillingController());
+
+    // Personnels & Roles
+    Get.lazyPut<PersonnelsRolesController>(() => PersonnelsRolesController());
+
+    // Taches
+    Get.lazyPut<TachesController>(() => TachesController());
+    Get.lazyPut<RapportController>(() => RapportController());
 
     // Authentification
     Get.lazyPut<LoginController>(() => LoginController());
@@ -130,6 +142,8 @@ class WMBindings extends Bindings {
 
   // Marketing
   Get.lazyPut<CampaignController>(() => CampaignController());
+  Get.lazyPut<AnnuaireController>(() => AnnuaireController());
+  Get.lazyPut<AgendaController>(() => AgendaController());
 
   // Commercial
   Get.lazyPut<SuccursaleController>(() => SuccursaleController());

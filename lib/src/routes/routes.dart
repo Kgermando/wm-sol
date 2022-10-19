@@ -11,6 +11,13 @@ class UpdateRoutes {
   static const updateAdd = "/update-add";
 }
 
+class TacheRoutes {
+  static const tachePage = "/tache-page";  
+  static const tacheDetail = "/tache-detail";
+  static const rapportAdd = "/rapport-add"; 
+  static const rapportDetail = "/rapport-detail";
+} 
+
 class UserRoutes {
   static const login = "/";
   static const logout = "/login";
@@ -179,10 +186,7 @@ class ExploitationRoutes {
   static const expProd = "/exploitation-productions";
   static const expProdDetail = "/exploitation-productions-detail";
   static const expFournisseur = "/exploitation-fournisseurs";
-  static const expFournisseurDetail = "/exploitation-fournisseurs-detail";
-  static const expTacheAdd = "/exploitation-taches-add";
-  static const expTache = "/exploitation-taches";
-  static const expTacheDetail = "/exploitation-taches-detail";
+  static const expFournisseurDetail = "/exploitation-fournisseurs-detail"; 
   static const expVersement = "/exploitation-virement";
   static const expVersementAdd = "/exploitation-virement-add";
   static const expVersementDetail = "/exploitation-virement-detail";

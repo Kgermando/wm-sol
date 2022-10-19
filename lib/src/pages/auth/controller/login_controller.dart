@@ -112,7 +112,7 @@ class LoginController extends GetxController {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(ExploitationRoutes.expDashboard);
                   } else {
-                    Get.offAllNamed(ExploitationRoutes.expTache);
+                    Get.offAllNamed(TacheRoutes.tachePage);
                   }
                 } else if (userData.departement == "Commercial et Marketing") {
                   if (int.parse(userData.role) <= 2) {

@@ -341,6 +341,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -350,6 +351,7 @@ class TransportRestController extends GetxController
 
   Future<void> submitFin(TransportRestaurationModel data) async {
     try {
+      _isLoading.value = true;
       final transRest = TransportRestaurationModel(
           id: data.id!,
           title: data.title,
@@ -384,6 +386,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

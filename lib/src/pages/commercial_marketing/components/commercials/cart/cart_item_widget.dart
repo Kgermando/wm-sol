@@ -1,67 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:wm_solution/src/api/auth/auth_api.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/achat_api.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/cart_api.dart';
-import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
+import 'package:flutter/material.dart'; 
+import 'package:wm_solution/src/constants/responsive.dart'; 
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
-import 'package:intl/intl.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';  
+import 'package:wm_solution/src/routes/routes.dart';
+import 'package:intl/intl.dart'; 
 
 class CartItemWidget extends StatefulWidget {
-  const CartItemWidget({Key? key, required this.cart}) : super(key: key);
-  final CartModel cart;
+  const CartItemWidget({Key? key, required this.cart, required this.controller}) : super(key: key);
+  final CartModel cart; 
+  final CartController controller;
 
   @override
   State<CartItemWidget> createState() => _CartItemWidgetState();
 }
 
 class _CartItemWidgetState extends State<CartItemWidget> {
-  bool isloading = false;
-
-  TextEditingController controllerQuantityCart = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
-  List<AchatModel> listAchat = [];
-
-  UserModel user = UserModel(
-      nom: '-',
-      prenom: '-',
-      email: '-',
-      telephone: '-',
-      matricule: '-',
-      departement: '-',
-      servicesAffectation: '-',
-      fonctionOccupe: '-',
-      role: '5',
-      isOnline: 'false',
-      createdAt: DateTime.now(),
-      passwordHash: '-',
-      succursale: '-');
-  Future<void> getData() async {
-    UserModel userModel = await AuthApi().getUserId();
-    List<AchatModel>? dataList = await AchatApi().getAllData();
-
-    if (!mounted) return;
-    setState(() {
-      user = userModel;
-      listAchat = dataList;
-    });
-  }
-
-  @override
-  void dispose() {
-    controllerQuantityCart.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     // var role = int.parse(user.role) <= 3;
@@ -180,64 +133,15 @@ class _CartItemWidgetState extends State<CartItemWidget> {
 
   Widget onCancel() {
     return IconButton(
-        tooltip: 'Annuler',
-        onPressed: () {
-          setState(() {
-            isloading = true;
-          });
-          setState(() {
-            updateAchat();
-          });
-          setState(() {
-            isloading = false;
-          });
-        },
-        icon: (isloading)
-            ? loadingMini()
-            : const Icon(Icons.cancel, color: Colors.red));
+      tooltip: 'Annuler',
+      onPressed: () {
+        setState(() {
+          widget.controller.updateAchat(widget.cart);
+        });
+      },
+      icon: const Icon(Icons.cancel, color: Colors.red)
+    );
   }
 
-  updateAchat() async {
-    final achatQtyList =
-        listAchat.where((e) => e.idProduct == widget.cart.idProductCart);
-
-    final achatQty = achatQtyList
-        .map((e) =>
-            double.parse(e.quantity) + double.parse(widget.cart.quantityCart))
-        .first;
-
-    final achatIdProduct = achatQtyList.map((e) => e.idProduct).first;
-    final achatQuantityAchat = achatQtyList.map((e) => e.quantityAchat).first;
-    final achatAchatUnit = achatQtyList.map((e) => e.priceAchatUnit).first;
-    final achatPrixVenteUnit = achatQtyList.map((e) => e.prixVenteUnit).first;
-    final achatUnite = achatQtyList.map((e) => e.unite).first;
-    final achatId = achatQtyList.map((e) => e.id).first;
-    final achattva = achatQtyList.map((e) => e.tva).first;
-    final achatRemise = achatQtyList.map((e) => e.remise).first;
-    final achatQtyRemise = achatQtyList.map((e) => e.qtyRemise).first;
-    final achatQtyLivre = achatQtyList.map((e) => e.qtyLivre).first;
-    final achatSuccursale = achatQtyList.map((e) => e.succursale).first;
-    final achatSignature = achatQtyList.map((e) => e.signature).first;
-    final achatCreated = achatQtyList.map((e) => e.created).first;
-
-    final achatModel = AchatModel(
-        id: achatId!,
-        idProduct: achatIdProduct,
-        quantity: achatQty.toString(),
-        quantityAchat: achatQuantityAchat,
-        priceAchatUnit: achatAchatUnit,
-        prixVenteUnit: achatPrixVenteUnit,
-        unite: achatUnite,
-        tva: achattva,
-        remise: achatRemise,
-        qtyRemise: achatQtyRemise,
-        qtyLivre: achatQtyLivre,
-        succursale: achatSuccursale,
-        signature: achatSignature,
-        created: achatCreated);
-    await AchatApi().updateData(achatModel);
-    await CartApi()
-        .deleteData(widget.cart.id!)
-        .then((value) => Navigator.pop(context));
-  }
+  
 }

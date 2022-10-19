@@ -2,12 +2,26 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/annuaire_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
+import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/restitution_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
 import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
+import 'package:wm_solution/src/models/exploitations/rapport_model.dart';
+import 'package:wm_solution/src/models/exploitations/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
 import 'package:wm_solution/src/models/finances/banque_name_model.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
@@ -37,6 +51,42 @@ import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart
 import 'package:wm_solution/src/pages/budgets/view/dashboard_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/historique_budgets.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/achats/detail_achat.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/bon_livraison/detail_bon_livraison.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/cart/detail_cart.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/factures/detail_facture.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/factures/detail_facture_creance.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/ajout_product_model.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/detail_product_model.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/update_product_modele_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/restitution/detail_restitution.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/add_stock_global.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/detail_stock_global.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/livraison_stock.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/ravitaillement_stock.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/add_succursale.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/detail_succursale.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/update_succursale.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/agenda/detail_agenda.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/agenda/update_agenda.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/add_annuaire.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/detail_anniuaire.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/update_annuaire.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/detail_campaign.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/achat_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/bon_livraison_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/cart_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/facture_creance_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/facture_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/history_livraison_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/history_ravitaillement_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/produit_model_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/restitution_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/stock_global_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/succursale_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/agenda_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/annuaire_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/campaign_page.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/balance/detail_balance.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/detail_bilan.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/add_compte_resultat.dart';
@@ -81,6 +131,10 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
+import 'package:wm_solution/src/pages/taches/components/add_rapport.dart';
+import 'package:wm_solution/src/pages/taches/components/detail_rapport.dart';
+import 'package:wm_solution/src/pages/taches/components/detail_tache.dart';
+import 'package:wm_solution/src/pages/taches/view/tache_page.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 List<GetPage<dynamic>>? getPages = [
@@ -89,6 +143,45 @@ List<GetPage<dynamic>>? getPages = [
   // GetPage(name: SettingsRoutes.settings, page: page),
   // GetPage(name: SettingsRoutes.pageVerrouillage, page: page),
   // GetPage(name: SettingsRoutes.splash, page: page),
+
+  // Taches & Rapports
+  GetPage(
+      name: TacheRoutes.tachePage,
+      page: () => const TachePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: TacheRoutes.tacheDetail,
+      page: () {
+        TacheModel tacheModel = Get.arguments as TacheModel;
+        return DetailTache(tacheModel: tacheModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: TacheRoutes.rapportDetail,
+      page: () {
+        TacheModel tacheModel = Get.arguments as TacheModel;
+        return DetailTache(tacheModel: tacheModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: TacheRoutes.rapportDetail,
+      page: () {
+        RapportModel rapportModel = Get.arguments as RapportModel;
+        return DetailRapport(rapportModel: rapportModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: TacheRoutes.rapportAdd,
+      page: () {
+        TacheModel tacheModel = Get.arguments as TacheModel;
+        return AddRapport(tacheModel: tacheModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   // Archives
   GetPage(
@@ -312,7 +405,6 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
-
   // Comptabilites
   GetPage(
       name: ComptabiliteRoutes.comptabiliteDashboard,
@@ -368,34 +460,34 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComptabiliteRoutes.comptabiliteCompteResultatAdd,
-    page: () => const AddCompteResultat(),
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
+      name: ComptabiliteRoutes.comptabiliteCompteResultatAdd,
+      page: () => const AddCompteResultat(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComptabiliteRoutes.comptabiliteCompteResultatUpdate,
-    page: () {
-      final CompteResulatsModel compteResulatsModel =
-          Get.arguments as CompteResulatsModel;
-      return UpdateCompteResultat(compteResulatsModel: compteResulatsModel);
-    },
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
-    
+      name: ComptabiliteRoutes.comptabiliteCompteResultatUpdate,
+      page: () {
+        final CompteResulatsModel compteResulatsModel =
+            Get.arguments as CompteResulatsModel;
+        return UpdateCompteResultat(compteResulatsModel: compteResulatsModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
   GetPage(
-    name: ComptabiliteRoutes.comptabiliteJournalLivre,
-    page: () => const JournalLivreComptabilite(),
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
+      name: ComptabiliteRoutes.comptabiliteJournalLivre,
+      page: () => const JournalLivreComptabilite(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComptabiliteRoutes.comptabiliteJournalDetail,
-    page: () {
-      final JournalLivreModel journalLivreModel =
-          Get.arguments as JournalLivreModel;
-      return DetailJournalLivre(journalLivreModel: journalLivreModel);
-    },
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
+      name: ComptabiliteRoutes.comptabiliteJournalDetail,
+      page: () {
+        final JournalLivreModel journalLivreModel =
+            Get.arguments as JournalLivreModel;
+        return DetailJournalLivre(journalLivreModel: journalLivreModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteGrandLivre,
@@ -405,14 +497,11 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: ComptabiliteRoutes.comptabiliteGrandLivreSearch,
       page: () {
-        final List<JournalModel> search =
-            Get.arguments as List<JournalModel>;
+        final List<JournalModel> search = Get.arguments as List<JournalModel>;
         return SearchGrandLivre(search: search);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
-
 
   // DevisRoutes
   GetPage(
@@ -428,8 +517,6 @@ List<GetPage<dynamic>>? getPages = [
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
-
 
   // Finances
   GetPage(
@@ -450,16 +537,16 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: FinanceRoutes.transactionsBanque,
       page: () {
-        final BanqueNameModel banqueNameModel = Get.arguments as BanqueNameModel;
-        return  BanquePage(banqueNameModel: banqueNameModel);
-      }, 
+        final BanqueNameModel banqueNameModel =
+            Get.arguments as BanqueNameModel;
+        return BanquePage(banqueNameModel: banqueNameModel);
+      },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsBanqueDetail,
       page: () {
-        final BanqueModel  banqueModel =
-            Get.arguments as BanqueModel;
+        final BanqueModel banqueModel = Get.arguments as BanqueModel;
         return DetailBanque(banqueModel: banqueModel);
       },
       transition: Transition.cupertino,
@@ -476,7 +563,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: FinanceRoutes.transactionsCaisseDetail,
       page: () {
-        final CaisseModel  caisseModel = Get.arguments as CaisseModel;
+        final CaisseModel caisseModel = Get.arguments as CaisseModel;
         return DetailCaisse(caisseModel: caisseModel);
       },
       transition: Transition.cupertino,
@@ -525,4 +612,267 @@ List<GetPage<dynamic>>? getPages = [
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
+
+
+  // Marketing
+  GetPage(
+      name: ComMarketingRoutes.comMarketingCampaign,
+      page: () => const CampaignPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingCampaignDetail,
+      page: () {
+        final CampaignModel campaignModel = Get.arguments as CampaignModel;
+        return DetailCampaign(campaignModel: campaignModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAnnuaire,
+      page: () => const AnnuairePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAnnuaireAdd,
+      page: () => const AddAnnuaire(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAnnuaireDetail,
+      page: () {
+        final AnnuaireColor annuaireColor = Get.arguments as AnnuaireColor;
+        return DetailAnnuaire(annuaireColor: annuaireColor);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAnnuaireEdit,
+      page: () {
+        final AnnuaireModel annuaireModel = Get.arguments as AnnuaireModel;
+        return UpdateAnnuaire(annuaireModel: annuaireModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAgenda,
+      page: () => const AgendaPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAgendaDetail,
+      page: () {
+        final AgendaColor agendaColor = Get.arguments as AgendaColor;
+        return DetailAgenda(agendaColor: agendaColor);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAgendaUpdate,
+      page: () {
+        final AgendaColor agendaColor = Get.arguments as AgendaColor;
+        return UpdateAgenda(agendaColor: agendaColor);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+
+  // Commercial
+  GetPage(
+    name: ComMarketingRoutes.comMarketingSuccursale,
+    page: () => const SuccursalePage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComMarketingRoutes.comMarketingSuccursaleAdd,
+    page: () => const AddSuccursale(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComMarketingRoutes.comMarketingAgendaDetail,
+    page: () {
+      final SuccursaleModel succursaleModel = Get.arguments as SuccursaleModel;
+      return DetailSuccursale(succursaleModel: succursaleModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComMarketingRoutes.comMarketingAgendaUpdate,
+    page: () {
+      final SuccursaleModel succursaleModel =
+          Get.arguments as SuccursaleModel;
+      return UpdateSuccursale(succursaleModel: succursaleModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+
+  
+  GetPage(
+    name: ComMarketingRoutes.comMarketingStockGlobal,
+    page: () => const StockGlobalPage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComMarketingRoutes.comMarketingStockGlobalAdd,
+    page: () => const AddStockGlobal(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComMarketingRoutes.comMarketingStockGlobalDetail,
+    page: () {
+      final StocksGlobalMOdel stocksGlobalMOdel =
+          Get.arguments as StocksGlobalMOdel;
+      return DetailStockGlobal(stocksGlobalMOdel: stocksGlobalMOdel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingStockGlobalLivraisonStock,
+      page: () {
+        final StocksGlobalMOdel stocksGlobalMOdel =
+            Get.arguments as StocksGlobalMOdel;
+        return LivraisonStock(stocksGlobalMOdel: stocksGlobalMOdel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingStockGlobalRavitaillement,
+      page: () {
+        final StocksGlobalMOdel stocksGlobalMOdel =
+            Get.arguments as StocksGlobalMOdel;
+        return RavitaillementStock(stocksGlobalMOdel: stocksGlobalMOdel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+
+  GetPage(  
+    name: ComMarketingRoutes.comMarketingRestitution,
+    page: () => const RestitutionPage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingRestitutionDetail,
+      page: () {
+        final RestitutionModel restitutionModel =
+            Get.arguments as RestitutionModel;
+        return DetailRestitution(restitutionModel: restitutionModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+    
+   GetPage(
+      name: ComMarketingRoutes.comMarketingProduitModel,
+      page: () => const ProduitModelPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingProduitModelAdd,
+      page: () => const AjoutProductModel(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingProduitModelDetail,
+      page: () {
+        final ProductModel productModel =
+            Get.arguments as ProductModel;
+        return DetailProductModel(productModel: productModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingProduitModelUpdate,
+      page: () {
+        final ProductModel productModel = Get.arguments as ProductModel;
+        return UpdateProductModele(productModel: productModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComMarketingRoutes.comMarketingHistoryRavitaillement,
+      page: () => const HistoryRavitaillementPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingHistoryLivraison,
+      page: () => const HistoryLivraisonPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComMarketingRoutes.comMarketingFacture,
+      page: () => const FacturePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingCreance,
+      page: () => const FactureCreancePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingFactureDetail,
+      page: () {
+        final FactureCartModel factureCartModel = Get.arguments as FactureCartModel;
+        return DetailFacture(factureCartModel: factureCartModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingCreanceDetail,
+      page: () {
+        final CreanceCartModel creanceCartModel =
+            Get.arguments as CreanceCartModel;
+        return DetailFactureCreance(creanceCartModel: creanceCartModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComMarketingRoutes.comMarketingcart,
+      page: () => const CartPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingcartDetail,
+      page: () {
+        final CartModel cart =
+            Get.arguments as CartModel;
+        return DetailCart(cart: cart);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComMarketingRoutes.comMarketingBonLivraison,
+      page: () => const BonLivraisonPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingBonLivraisonDetail,
+      page: () {
+        final BonLivraisonModel bonLivraisonModel = Get.arguments as BonLivraisonModel;
+        return DetailBonLivraison(bonLivraisonModel: bonLivraisonModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+    GetPage(
+      name: ComMarketingRoutes.comMarketingAchat,
+      page: () => const AchatPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingAchatDetail,
+      page: () {
+        final AchatModel achatModel =
+            Get.arguments as AchatModel;
+        return DetailAchat(achatModel: achatModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  
+
 ];

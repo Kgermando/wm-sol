@@ -7,6 +7,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/cart/cart_item_widget.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -24,7 +25,7 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final CartController controller = Get.put(CartController());
+    final CartController controller = Get.put(CartController()); 
     return controller.obx(
         onLoading: loading(),
         onEmpty: const Text('Le panier est vide.'),
@@ -61,7 +62,10 @@ class _CartPageState extends State<CartPage> {
                                       itemCount: controller.cartList.length,
                                       itemBuilder: (context, index) {
                                         final cart = controller.cartList[index];
-                                        return CartItemWidget(cart: cart);
+                                        return CartItemWidget(
+                                          cart: cart, 
+                                          controller: controller
+                                        );
                                       }),
                                 ),
                                 totalCart(controller)
