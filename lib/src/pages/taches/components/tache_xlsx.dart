@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/exploitations/tache_model.dart';
+import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 

@@ -4,8 +4,11 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart'; 
 import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
+import 'package:wm_solution/src/pages/finances/components/dd_finance/table_campaigns_fin.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_creance_dd.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_dette_dd.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_devis_finance.dart';
@@ -43,6 +46,8 @@ class _DDFinanceState extends State<DDFinance> {
   Widget build(BuildContext context) {
     final FinanceNotifyController financeNotifyController = Get.put(FinanceNotifyController());
     final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
+    final ComptabiliteNotifyController comptabiliteNotifyController =
+        Get.put(ComptabiliteNotifyController());
     final SalaireController salaireController = Get.put(SalaireController());
     final TransportRestController transportRestController =
         Get.put(TransportRestController()); 
@@ -51,7 +56,8 @@ class _DDFinanceState extends State<DDFinance> {
     final CreanceController creanceController =
         Get.put(CreanceController());
     final DetteController detteController =
-        Get.put(DetteController());  
+        Get.put(DetteController());
+    final CampaignController campaignController = Get.put(CampaignController());  
 
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
@@ -143,34 +149,34 @@ class _DDFinanceState extends State<DDFinance> {
                                     ],
                                   ),
                                 ),
-                                // Card(
-                                //   color: Colors.green.shade700,
-                                //   child: ExpansionTile(
-                                //     leading: const Icon(Icons.folder,
-                                //         color: Colors.white),
-                                //     title: Text('Dossier Campaigns',
-                                //         style: (Responsive.isDesktop(context))
-                                //             ? headline6!
-                                //                 .copyWith(color: Colors.white)
-                                //             : bodyLarge!
-                                //                 .copyWith(color: Colors.white)),
-                                //     subtitle: Text(
-                                //         "Vous avez $campaignCount dossiers necessitent votre approbation",
-                                //         style: bodyMedium.copyWith(
-                                //             color: Colors.white70)),
-                                //     initiallyExpanded: false,
-                                //     onExpansionChanged: (val) {
-                                //       setState(() {
-                                //         isOpen2 = !val;
-                                //       });
-                                //     },
-                                //     trailing: const Icon(
-                                //       Icons.arrow_drop_down,
-                                //       color: Colors.white,
-                                //     ),
-                                //     children: const [TableCampaignFin()],
-                                //   ),
-                                // ),
+                                Card(
+                                  color: Colors.green.shade700,
+                                  child: ExpansionTile(
+                                    leading: const Icon(Icons.folder,
+                                        color: Colors.white),
+                                    title: Text('Dossier Campaigns',
+                                        style: (Responsive.isDesktop(context))
+                                            ? headline6!
+                                                .copyWith(color: Colors.white)
+                                            : bodyLarge!
+                                                .copyWith(color: Colors.white)),
+                                    subtitle: Text(
+                                        "Vous avez ${comptabiliteNotifyController.campaignCountFin} dossiers necessitent votre approbation",
+                                        style: bodyMedium.copyWith(
+                                            color: Colors.white70)),
+                                    initiallyExpanded: false,
+                                    onExpansionChanged: (val) {
+                                      setState(() {
+                                        isOpen2 = !val;
+                                      });
+                                    },
+                                    trailing: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.white,
+                                    ),
+                                    children: [TableCampaignFin(campaignController: campaignController)],
+                                  ),
+                                ),
                                 // Card(
                                 //   color: Colors.grey.shade700,
                                 //   child: ExpansionTile(

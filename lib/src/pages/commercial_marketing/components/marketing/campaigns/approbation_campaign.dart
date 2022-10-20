@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/devis/devis_models.dart';
+import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class ApprobationDevis extends StatefulWidget {
-  const ApprobationDevis(
-      {super.key, required this.devisModel, required this.controller, required this.profilController});
-  final DevisModel devisModel;
-  final DevisController controller;
+class ApprobationCampaign extends StatefulWidget {
+  const ApprobationCampaign(
+      {super.key, required this.campaignModel, required this.controller, required this.profilController});
+  final CampaignModel campaignModel;
+  final CampaignController controller;
   final ProfilController profilController;
 
   @override
-  State<ApprobationDevis> createState() => _ApprobationDevisState();
+  State<ApprobationCampaign> createState() => _ApprobationCampaignState();
 }
 
-class _ApprobationDevisState extends State<ApprobationDevis> {
+class _ApprobationCampaignState extends State<ApprobationCampaign> {
   @override
   Widget build(BuildContext context) {
     return approbationWidget(widget.controller, widget.profilController);
   }
 
   Widget approbationWidget(
-      DevisController controller, ProfilController profilController) {
+      CampaignController controller, ProfilController profilController) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(
@@ -72,42 +72,42 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   const Text("Approbation"),
                                   const SizedBox(height: p20),
                                   Text(
-                                      widget.devisModel
+                                      widget.campaignModel
                                           .approbationDG,
                                       style: bodyLarge!.copyWith(
                                           color:
-                                              (widget.devisModel
+                                              (widget.campaignModel
                                                           .approbationDG ==
                                                       "Unapproved")
                                                   ? Colors.red.shade700
                                                   : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.devisModel
+                              child2: (widget.campaignModel
                                           .approbationDG ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
-                                        Text(widget.devisModel
+                                        Text(widget.campaignModel
                                             .motifDG),
                                       ],
                                     )
                                   : Container(),
-                              child3: (widget.devisModel
+                              child3: (widget.campaignModel
                                           .approbationDG ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Signature"),
                                         const SizedBox(height: p20),
-                                        Text(widget.devisModel
+                                        Text(widget.campaignModel
                                             .signatureDG),
                                       ],
                                     )
                                   : Container()),
-                          if (widget.devisModel.approbationDG ==
+                          if (widget.campaignModel.approbationDG ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur générale")
@@ -141,25 +141,25 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   const Text("Approbation"),
                                   const SizedBox(height: p20),
                                   Text(
-                                      widget.devisModel
+                                      widget.campaignModel
                                           .approbationDD,
                                       style: bodyLarge.copyWith(
                                           color:
-                                              (widget.devisModel
+                                              (widget.campaignModel
                                                           .approbationDD ==
                                                       "Unapproved")
                                                   ? Colors.red.shade700
                                                   : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.devisModel
+                              child2: (widget.campaignModel
                                           .approbationDD ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
-                                        Text(widget.devisModel
+                                        Text(widget.campaignModel
                                             .motifDD),
                                       ],
                                     )
@@ -169,10 +169,10 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   const Text("Signature"),
                                   const SizedBox(height: p20),
                                   Text(widget
-                                      .devisModel.signatureDD),
+                                      .campaignModel.signatureDD),
                                 ],
                               )),
-                          if (widget.devisModel.approbationDD ==
+                          if (widget.campaignModel.approbationDD ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur de departement")
@@ -202,25 +202,25 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   const Text("Approbation"),
                                   const SizedBox(height: p20),
                                   Text(
-                                      widget.devisModel
+                                      widget.campaignModel
                                           .approbationBudget,
                                       style: bodyLarge.copyWith(
                                           color:
-                                              (widget.devisModel
+                                              (widget.campaignModel
                                                           .approbationBudget ==
                                                       "Unapproved")
                                                   ? Colors.red.shade700
                                                   : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.devisModel
+                              child2: (widget.campaignModel
                                           .approbationBudget ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
-                                        Text(widget.devisModel
+                                        Text(widget.campaignModel
                                             .motifBudget),
                                       ],
                                     )
@@ -229,7 +229,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                 children: [
                                   const Text("Signature"),
                                   const SizedBox(height: p20),
-                                  Text(widget.devisModel
+                                  Text(widget.campaignModel
                                       .signatureBudget),
                                 ],
                               )),
@@ -242,7 +242,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   const Text("Ligne Budgetaire"),
                                   const SizedBox(height: p20),
                                   Text(
-                                      widget.devisModel
+                                      widget.campaignModel
                                           .ligneBudgetaire,
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
@@ -254,12 +254,12 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   const SizedBox(height: p20),
                                   Text(
                                       widget
-                                          .devisModel.ressource,
+                                          .campaignModel.ressource,
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
                                 ],
                               )),
-                          if (widget.devisModel
+                          if (widget.campaignModel
                                       .approbationBudget ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
@@ -306,18 +306,18 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                 const Text("Approbation"),
                                 const SizedBox(height: p20),
                                 Text(
-                                    widget.devisModel
+                                    widget.campaignModel
                                         .approbationFin,
                                     style: bodyLarge.copyWith(
                                         color: (widget
-                                                    .devisModel
+                                                    .campaignModel
                                                     .approbationFin ==
                                                 "Unapproved")
                                             ? Colors.red.shade700
                                             : Colors.green.shade700)),
                               ],
                             ),
-                            child2: (widget.devisModel
+                            child2: (widget.campaignModel
                                         .approbationFin ==
                                     "Unapproved")
                                 ? Column(
@@ -325,7 +325,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                       const Text("Motif"),
                                       const SizedBox(height: p20),
                                       Text(widget
-                                          .devisModel.motifFin),
+                                          .campaignModel.motifFin),
                                     ],
                                   )
                                 : Container(),
@@ -334,10 +334,10 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                 const Text("Signature"),
                                 const SizedBox(height: p20),
                                 Text(widget
-                                    .devisModel.signatureFin),
+                                    .campaignModel.signatureFin),
                               ],
                             )),
-                        if (widget.devisModel.approbationFin ==
+                        if (widget.campaignModel.approbationFin ==
                                 '-' &&
                             profilController.user.fonctionOccupe ==
                                 "Directeur de finance")
@@ -359,7 +359,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
     );
   }
 
-  Widget approbationDGWidget(DevisController controller) {
+  Widget approbationDGWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -382,7 +382,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           setState(() {
             controller.approbationDG = value!;
             if (controller.approbationDG == "Approved") {
-              controller.submitDG(widget.devisModel);
+              controller.submitDG(widget.campaignModel);
             }
           });
         },
@@ -390,7 +390,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
     );
   }
 
-  Widget motifDGWidget(DevisController controller) {
+  Widget motifDGWidget(CampaignController controller) {
     return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: Row(
@@ -419,7 +419,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
               child: IconButton(
                   tooltip: 'Soumettre le Motif',
                   onPressed: () {
-                    controller.submitDG(widget.devisModel);
+                    controller.submitDG(widget.campaignModel);
                   },
                   icon: Icon(Icons.send, color: Colors.red.shade700)),
             )
@@ -427,7 +427,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
         ));
   }
 
-  Widget approbationDDWidget(DevisController controller) {
+  Widget approbationDDWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -450,7 +450,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           setState(() {
             controller.approbationDD = value!;
             if (controller.approbationDD == "Approved") {
-              controller.submitDD(widget.devisModel);
+              controller.submitDD(widget.campaignModel);
             }
           });
         },
@@ -458,7 +458,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
     );
   }
 
-  Widget motifDDWidget(DevisController controller) {
+  Widget motifDDWidget(CampaignController controller) {
     return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: Row(
@@ -487,7 +487,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
               child: IconButton(
                   tooltip: 'Soumettre le Motif',
                   onPressed: () {
-                    controller.submitDD(widget.devisModel);
+                    controller.submitDD(widget.campaignModel);
                   },
                   icon: Icon(Icons.send, color: Colors.red.shade700)),
             )
@@ -495,7 +495,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
         ));
   }
 
-  Widget approbationBudgetWidget(DevisController controller) {
+  Widget approbationBudgetWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -520,7 +520,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
             final form = controller.formKeyBudget.currentState!;
             if (form.validate()) {
               if (controller.approbationBudget == "Approved") {
-                controller.submitBudget(widget.devisModel);
+                controller.submitBudget(widget.campaignModel);
               }
             }
           });
@@ -529,7 +529,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
     );
   }
 
-  Widget motifBudgetWidget(DevisController controller) {
+  Widget motifBudgetWidget(CampaignController controller) {
     return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: Row(
@@ -558,7 +558,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
               child: IconButton(
                   tooltip: 'Soumettre le Motif',
                   onPressed: () {
-                    controller.submitBudget(widget.devisModel);
+                    controller.submitBudget(widget.campaignModel);
                   },
                   icon: Icon(Icons.send, color: Colors.red.shade700)),
             )
@@ -566,7 +566,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
         ));
   }
 
-  Widget approbationFinWidget(DevisController controller) {
+  Widget approbationFinWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -589,7 +589,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           setState(() {
             controller.approbationFin = value!;
             if (controller.approbationFin == "Approved") {
-              controller.submitFin(widget.devisModel);
+              controller.submitFin(widget.campaignModel);
             }
           });
         },
@@ -597,7 +597,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
     );
   }
 
-  Widget motifFinWidget(DevisController controller) {
+  Widget motifFinWidget(CampaignController controller) {
     return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: Row(
@@ -626,7 +626,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
               child: IconButton(
                   tooltip: 'Soumettre le Motif',
                   onPressed: () {
-                    controller.submitFin(widget.devisModel);
+                    controller.submitFin(widget.campaignModel);
                   },
                   icon: Icon(Icons.send, color: Colors.red.shade700)),
             )
@@ -635,7 +635,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
   }
 
   // Soumettre une ligne budgetaire
-  Widget ligneBudgtaireWidget(DevisController controller) {
+  Widget ligneBudgtaireWidget(CampaignController controller) {
     final BudgetPrevisionnelController budgetPrevisionnelController =
         Get.find();
     final LignBudgetaireController lignBudgetaireController = Get.find();
@@ -686,7 +686,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
     });
   }
 
-  Widget resourcesWidget(DevisController controller) {
+  Widget resourcesWidget(CampaignController controller) {
     List<String> dataList = ['caisse', 'banque', 'finExterieur'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),

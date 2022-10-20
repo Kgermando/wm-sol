@@ -6,7 +6,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
-import 'package:wm_solution/src/models/exploitations/rapport_model.dart';
+import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class DetailRapport extends StatefulWidget {

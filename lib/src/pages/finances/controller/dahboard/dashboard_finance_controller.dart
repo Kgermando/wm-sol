@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
@@ -7,14 +7,14 @@ import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controlle
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart';
 
 class DashboardFinanceController extends GetxController {
+ 
   final BanqueController banqueController = Get.put(BanqueController());
   final CaisseController caisseController = Get.put(CaisseController());
   final CreanceController creanceController = Get.put(CreanceController());
   final DetteController detteController = Get.put(DetteController());
   final CreanceDetteController creanceDetteController = Get.put(CreanceDetteController());
   final FinExterieurController finExterieurController = Get.put(FinExterieurController());
-
-
+ 
   // Banque
   final _recetteBanque = 0.0.obs;
   double get recetteBanque => _recetteBanque.value;
@@ -78,6 +78,7 @@ class DashboardFinanceController extends GetxController {
   void onInit() {
     super.onInit();
     getData();
+
   }
   
 

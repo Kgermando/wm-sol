@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/exploitations/rapport_api.dart';
-import 'package:wm_solution/src/models/exploitations/rapport_model.dart';
-import 'package:wm_solution/src/models/exploitations/tache_model.dart';
+import 'package:wm_solution/src/models/taches/rapport_model.dart';
+import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class RapportController extends GetxController

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/exploitations/tache_model.dart';
+import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/taches/components/tache_xlsx.dart';
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';

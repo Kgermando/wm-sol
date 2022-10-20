@@ -20,8 +20,8 @@ import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart'
 import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
-import 'package:wm_solution/src/models/exploitations/rapport_model.dart';
-import 'package:wm_solution/src/models/exploitations/tache_model.dart';
+import 'package:wm_solution/src/models/taches/rapport_model.dart';
+import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
 import 'package:wm_solution/src/models/finances/banque_name_model.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
@@ -73,6 +73,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/detail_anniuaire.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/update_annuaire.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/detail_campaign.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/com_marketing_dd/comm_marketing_dd.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/achat_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/bon_livraison_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/cart_page.dart';
@@ -84,6 +85,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/prod
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/restitution_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/stock_global_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/succursale_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/dashboard/dashboard_comm_marketing_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/agenda_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/annuaire_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/campaign_page.dart';
@@ -681,10 +683,20 @@ List<GetPage<dynamic>>? getPages = [
 
   // Commercial
   GetPage(
-    name: ComMarketingRoutes.comMarketingSuccursale,
-    page: () => const SuccursalePage(),
+    name: ComMarketingRoutes.comMarketingDashboard,
+    page: () => const DashboardCommMarketingPage(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingDD,
+      page: () => const CommMarketingDD(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingSuccursale,
+      page: () => const SuccursalePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
     name: ComMarketingRoutes.comMarketingSuccursaleAdd,
     page: () => const AddSuccursale(),
