@@ -12,6 +12,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/personnels_roles/view/table_personnels_roles.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
+import 'package:wm_solution/src/pages/taches/components/table_taches_detail.dart';
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
 import 'package:wm_solution/src/pages/taches/components/table_taches.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -74,7 +75,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                         color: Colors.amber.shade100,
                         padding: const EdgeInsets.all(p20),
                         child: Form(
-                          key: controller.formKey,
+                          key: tachesController.formKey,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
@@ -104,13 +105,18 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                 title: 'Créer maintenant',
                                 press: () {
                                   final form =
-                                      controller.formKey.currentState!;
+                                      tachesController.formKey.currentState!;
                                   if (form.validate()) {
-                                    controller.submit();
+                                    tachesController.submit(
+                                      widget.campaignModel.typeProduit,
+                                      tachesController.tachesList.length,
+                                      widget.campaignModel.id!,
+                                      'Commercial et Marketing'
+                                    );
                                     form.reset();
                                   }
                                 },
-                              isLoading: controller.isLoading)
+                              isLoading: tachesController.isLoading)
                             ],
                           ),
                         ),
@@ -210,11 +216,16 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                             id: widget.campaignModel.id!,
                                             departement:
                                                 'Commercial et Marketing'),
-                                        TableTaches(
+                                        TableTachesDetail(
                                             tachesController: tachesController,
-                                            profilController: profilController),
+                                            id: widget.campaignModel.id!,
+                                            departement:
+                                                'Commercial et Marketing'),
                                         const SizedBox(height: p20),
-                                        ApprobationCampaign(campaignModel: widget.campaignModel, controller: controller, profilController: profilController)
+                                        ApprobationCampaign(
+                                            campaignModel: widget.campaignModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
                                   ),

@@ -39,12 +39,6 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
-                onPressed: () {},
-              ),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

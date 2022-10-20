@@ -21,6 +21,7 @@ class StockGlobalController extends GetxController
   bool get isLoading => _isLoading.value;
 
   List<ProductModel> idProductDropdown = [];
+  
 
   final List<String> unites = Dropdown().unites;
 
