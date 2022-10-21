@@ -32,7 +32,12 @@ import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_com
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/dashboard/dashboard_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/notify/notify_exp.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/production/fournisseur_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/production/production_exp_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/versements/versement_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
@@ -138,7 +143,13 @@ class WMBindings extends Bindings {
 
 
   // Exploitations
-  Get.lazyPut<ProjetController>(() => ProjetController()); 
+  Get.lazyPut<ProjetController>(() => ProjetController());
+  Get.lazyPut<DashboardExpController>(() => DashboardExpController());
+  Get.lazyPut<NotifyExpController>(() => NotifyExpController());
+  Get.lazyPut<FourniseurController>(() => FourniseurController());
+  Get.lazyPut<ProductionExpController>(() => ProductionExpController());
+  Get.lazyPut<VersementController>(() => VersementController());
+
 
   // Marketing
   Get.lazyPut<CampaignController>(() => CampaignController());

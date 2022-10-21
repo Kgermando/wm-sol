@@ -27,14 +27,15 @@ class DashboardComptabiliteController extends GetxController {
     getData();
   }
 
-  Future<void> getData() async {
+  void getData() async {
     var bilans = await bilanController.bilanApi.getAllData();
     var journals = await journalController.journalLivreApi.getAllData();
     var balances = await balanceController.balanceCompteApi.getAllData();
     var compteResults = await compteResultatController.compteResultatApi.getAllData();
 
     _bilanCount.value = bilans
-        .where((element) => element.approbationDD == "Approved")
+        .where((element) =>
+         element.approbationDD == "Approved")
         .length;
    _journalCount.value = journals
         .where((element) => element.approbationDD == "Approved")

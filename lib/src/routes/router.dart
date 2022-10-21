@@ -20,6 +20,9 @@ import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart'
 import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
+import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
+import 'package:wm_solution/src/models/exploitations/production_model.dart';
+import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
@@ -105,6 +108,16 @@ import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/journal_livre_comptabilite.dart';
 import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
 import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
+import 'package:wm_solution/src/pages/exploitations/components/fournisseurs/detail_fournisseur.dart';
+import 'package:wm_solution/src/pages/exploitations/components/productions/detail_production_exp.dart';
+import 'package:wm_solution/src/pages/exploitations/components/projets/add_projet.dart';
+import 'package:wm_solution/src/pages/exploitations/components/projets/detail_projet.dart';
+import 'package:wm_solution/src/pages/exploitations/components/projets/update_projet.dart';
+import 'package:wm_solution/src/pages/exploitations/view/dashboard_exp.dart';
+import 'package:wm_solution/src/pages/exploitations/view/exp_dd.dart';
+import 'package:wm_solution/src/pages/exploitations/view/fournisseurs_page.dart';
+import 'package:wm_solution/src/pages/exploitations/view/production_exp_page.dart';
+import 'package:wm_solution/src/pages/exploitations/view/projet_page.dart';
 import 'package:wm_solution/src/pages/finances/components/banques/detail_banque.dart';
 import 'package:wm_solution/src/pages/finances/components/caisses/detail_caisse.dart';
 import 'package:wm_solution/src/pages/finances/components/creances/detail_creance.dart';
@@ -871,11 +884,11 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
-    GetPage(
-      name: ComMarketingRoutes.comMarketingAchat,
-      page: () => const AchatPage(),
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComMarketingRoutes.comMarketingAchat,
+    page: () => const AchatPage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComMarketingRoutes.comMarketingAchatDetail,
       page: () {
@@ -886,5 +899,80 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   
+  // Exploitations
+  GetPage(
+    name: ExploitationRoutes.expDashboard,
+    page: () => const DashboardExp(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ExploitationRoutes.expDD,
+      page: () => const ExpDD(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
+  GetPage(
+      name: ExploitationRoutes.expFournisseur,
+      page: () => const FournisseursPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ExploitationRoutes.expFournisseurDetail,
+    page: () {
+      final FournisseurModel fournisseurModel = Get.arguments as FournisseurModel;
+      return DetailFournisseur(fournisseurModel: fournisseurModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ExploitationRoutes.expProd,
+      page: () => const ProductionExpPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ExploitationRoutes.expProdDetail,
+      page: () {
+        final ProductionModel productionModel =
+            Get.arguments as ProductionModel;
+        return DetailProductionExp(productionModel: productionModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  
+  GetPage(
+    name: ExploitationRoutes.expProjet,
+    page: () => const ProjetPage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ExploitationRoutes.expProjetAdd,
+    page: () => const AddProjet(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ExploitationRoutes.expProjetDetail,
+    page: () {
+      final ProjetModel projetModel =
+          Get.arguments as ProjetModel;
+      return DetailProjet(projetModel: projetModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ExploitationRoutes.expProjetDetail,
+      page: () {
+        final ProjetModel projetModel = Get.arguments as ProjetModel;
+        return DetailProjet(projetModel: projetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ExploitationRoutes.expProjetUpdate,
+      page: () {
+        final ProjetModel projetModel = Get.arguments as ProjetModel;
+        return UpdateProjet(projetModel: projetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 ];
