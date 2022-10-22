@@ -23,6 +23,13 @@ import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
 import 'package:wm_solution/src/models/exploitations/production_model.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
+import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/models/logistiques/carburant_model.dart';
+import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
+import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
+import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
+import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
+import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
@@ -129,6 +136,30 @@ import 'package:wm_solution/src/pages/finances/view/dashboard_finance.dart';
 import 'package:wm_solution/src/pages/finances/view/dd_finance.dart';
 import 'package:wm_solution/src/pages/finances/view/fin_exterieur_page.dart';
 import 'package:wm_solution/src/pages/finances/view/observation_page.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/carburants/add_carburant.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/carburants/detail_carburant.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/add_engin.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/detail_engin.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/add_trajet.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/detail_trajet.dart';
+import 'package:wm_solution/src/pages/logistique/components/entretiens/add_entretien.dart';
+import 'package:wm_solution/src/pages/logistique/components/entretiens/detail_entretien.dart';
+import 'package:wm_solution/src/pages/logistique/components/etat_materiels/add_etat_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/components/etat_materiels/detail_etat_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/components/etat_materiels/update_etat_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/components/immobiliers/detail_immobilier.dart';
+import 'package:wm_solution/src/pages/logistique/components/immobiliers/update_immobilier.dart';
+import 'package:wm_solution/src/pages/logistique/components/mobiliers/detail_mobilier.dart';
+import 'package:wm_solution/src/pages/logistique/components/mobiliers/update_mobilier.dart';
+import 'package:wm_solution/src/pages/logistique/view/carburant_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/dahsboard_log.dart';
+import 'package:wm_solution/src/pages/logistique/view/engin_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/entretiens_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/etat_materiel_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/immobilier_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/log_dd.dart';
+import 'package:wm_solution/src/pages/logistique/view/mobilier_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/trajet_page.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -972,6 +1003,180 @@ List<GetPage<dynamic>>? getPages = [
       page: () {
         final ProjetModel projetModel = Get.arguments as ProjetModel;
         return UpdateProjet(projetModel: projetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  // Logistique
+    GetPage(
+      name: LogistiqueRoutes.logDashboard,
+      page: () => const DashboardLog(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+    GetPage(
+      name: LogistiqueRoutes.logDD,
+      page: () => const LogDD(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+    GetPage(
+      name: LogistiqueRoutes.logAnguinAuto,
+      page: () => const EnginPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAddAnguinAuto,
+      page: () => const AddEngin(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAnguinAutoDetail,
+      page: () {
+        final AnguinModel anguinModel = Get.arguments as AnguinModel;
+        return DetailEngin(anguinModel: anguinModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  // GetPage(
+  //     name: LogistiqueRoutes.logAnguinAutoUpdate,
+  //     page: () {
+  //       final AnguinModel anguinModel = Get.arguments as AnguinModel;
+  //       return DetailEngin(anguinModel: anguinModel);
+  //     },
+  //     transition: Transition.cupertino,
+  //     transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+    name: LogistiqueRoutes.logCarburantAuto,
+    page: () => const CarburantPage(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAddCarburantAuto,
+      page: () => const AddCarburant(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logCarburantAutoDetail,
+      page: () {
+        final CarburantModel carburantModel = Get.arguments as CarburantModel;
+        return DetailCarburant(carburantModel: carburantModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)), 
+
+   GetPage(
+      name: LogistiqueRoutes.logTrajetAuto,
+      page: () => const TrajetPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAddTrajetAuto,
+      page: () {
+        final AnguinModel anguinModel = Get.arguments as AnguinModel;
+        return AddTrajet(anguinModel: anguinModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAddTrajetAuto,
+      page: () {
+        final TrajetModel trajetModel = Get.arguments as TrajetModel;
+        return DetailTrajet(trajetModel: trajetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  
+  GetPage(
+      name: LogistiqueRoutes.logEntretien,
+      page: () => const EntretiensPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAddEntretien,
+      page: () => const AddEntretien(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logEntretienDetail,
+      page: () {
+        final EntretienModel entretienModel = Get.arguments as EntretienModel;
+        return DetailEntretien(entretienModel: entretienModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: LogistiqueRoutes.logEtatMateriel,
+      page: () => const EtatMaterielPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAddEtatMateriel,
+      page: () => const AddEtatMateriel(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logEtatMaterielDetail,
+      page: () {
+        final EtatMaterielModel etatMaterielModel = Get.arguments as EtatMaterielModel;
+        return DetailEtatMateriel(etatMaterielModel: etatMaterielModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logEtatMaterielUpdate,
+      page: () {
+        final EtatMaterielModel etatMaterielModel =
+            Get.arguments as EtatMaterielModel;
+        return UpdateEtatMateriel(etatMaterielModel: etatMaterielModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: LogistiqueRoutes.logImmobilierMateriel,
+      page: () => const ImmobilierPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logImmobilierMaterielDetail,
+      page: () {
+        final ImmobilierModel immobilierModel =
+            Get.arguments as ImmobilierModel;
+        return DetailImmobilier(immobilierModel: immobilierModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logImmobilierMaterielUpdate,
+      page: () {
+        final ImmobilierModel immobilierModel =
+            Get.arguments as ImmobilierModel;
+        return UpdateImmobimier(immobilierModel: immobilierModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  
+  GetPage(
+      name: LogistiqueRoutes.logMobilierMateriel,
+      page: () => const MobilierPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logMobilierMaterielDetail,
+      page: () {
+        final MobilierModel mobilierModel =
+            Get.arguments as MobilierModel;
+        return DetailMobiler(mobilierModel: mobilierModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logMobilierMaterielUpdate,
+      page: () {
+        final MobilierModel mobilierModel = Get.arguments as MobilierModel;
+        return UpdateMobilier(mobilierModel: mobilierModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

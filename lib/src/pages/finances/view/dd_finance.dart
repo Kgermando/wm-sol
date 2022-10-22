@@ -8,10 +8,13 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/
 import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart'; 
 import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/notify/notify_exp.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_campaigns_fin.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_creance_dd.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_dette_dd.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_devis_finance.dart';
+import 'package:wm_solution/src/pages/finances/components/dd_finance/table_projet_fin.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_salaire_finance.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_transport_rest_finance.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
@@ -46,8 +49,8 @@ class _DDFinanceState extends State<DDFinance> {
   Widget build(BuildContext context) {
     final FinanceNotifyController financeNotifyController = Get.put(FinanceNotifyController());
     final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
-    final ComptabiliteNotifyController comptabiliteNotifyController =
-        Get.put(ComptabiliteNotifyController());
+    final ComMarketingNotifyController comMarketingNotifyController =
+        Get.put(ComMarketingNotifyController());
     final SalaireController salaireController = Get.put(SalaireController());
     final TransportRestController transportRestController =
         Get.put(TransportRestController()); 
@@ -58,6 +61,8 @@ class _DDFinanceState extends State<DDFinance> {
     final DetteController detteController =
         Get.put(DetteController());
     final CampaignController campaignController = Get.put(CampaignController());  
+    final ProjetController projetController = Get.put(ProjetController());  
+    final NotifyExpController expController = Get.put(NotifyExpController());
 
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
@@ -161,7 +166,7 @@ class _DDFinanceState extends State<DDFinance> {
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${comptabiliteNotifyController.campaignCountFin} dossiers necessitent votre approbation",
+                                        "Vous avez ${comMarketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -177,34 +182,34 @@ class _DDFinanceState extends State<DDFinance> {
                                     children: [TableCampaignFin(campaignController: campaignController)],
                                   ),
                                 ),
-                                // Card(
-                                //   color: Colors.grey.shade700,
-                                //   child: ExpansionTile(
-                                //     leading: const Icon(Icons.folder,
-                                //         color: Colors.white),
-                                //     title: Text('Dossier Projets',
-                                //         style: (Responsive.isDesktop(context))
-                                //             ? headline6!
-                                //                 .copyWith(color: Colors.white)
-                                //             : bodyLarge!
-                                //                 .copyWith(color: Colors.white)),
-                                //     subtitle: Text(
-                                //         "Vous avez $projetCount dossiers necessitent votre approbation",
-                                //         style: bodyMedium.copyWith(
-                                //             color: Colors.white70)),
-                                //     initiallyExpanded: false,
-                                //     onExpansionChanged: (val) {
-                                //       setState(() {
-                                //         isOpen4 = !val;
-                                //       });
-                                //     },
-                                //     trailing: const Icon(
-                                //       Icons.arrow_drop_down,
-                                //       color: Colors.white,
-                                //     ),
-                                //     children: const [TableProjetFin()],
-                                //   ),
-                                // ),
+                                Card(
+                                  color: Colors.grey.shade700,
+                                  child: ExpansionTile(
+                                    leading: const Icon(Icons.folder,
+                                        color: Colors.white),
+                                    title: Text('Dossier Projets',
+                                        style: (Responsive.isDesktop(context))
+                                            ? headline6!
+                                                .copyWith(color: Colors.white)
+                                            : bodyLarge!
+                                                .copyWith(color: Colors.white)),
+                                    subtitle: Text(
+                                        "Vous avez ${expController.itemCountProjetFin} dossiers necessitent votre approbation",
+                                        style: bodyMedium.copyWith(
+                                            color: Colors.white70)),
+                                    initiallyExpanded: false,
+                                    onExpansionChanged: (val) {
+                                      setState(() {
+                                        isOpen4 = !val;
+                                      });
+                                    },
+                                    trailing: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.white,
+                                    ),
+                                    children: [TableProjetFin(projetController: projetController)],
+                                  ),
+                                ),
                                 Card(
                                   color: Colors.grey.shade700,
                                   child: ExpansionTile(

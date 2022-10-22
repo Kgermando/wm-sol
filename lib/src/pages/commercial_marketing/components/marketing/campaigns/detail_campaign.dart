@@ -13,8 +13,7 @@ import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_rol
 import 'package:wm_solution/src/pages/personnels_roles/view/table_personnels_roles.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/pages/taches/components/table_taches_detail.dart';
-import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
-import 'package:wm_solution/src/pages/taches/components/table_taches.dart';
+import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';

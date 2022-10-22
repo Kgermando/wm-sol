@@ -6,12 +6,12 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/com_marketing_dd/table_campaigns_dd.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/com_marketing_dd/table_produit_model_dd.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/com_marketing_dd/table_succursale_dd.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/table_succursale.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/com_marketing_dd/table_succursale_dd.dart'; 
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
 
 class CommMarketingDD extends StatefulWidget {
   const CommMarketingDD({super.key});
@@ -36,8 +36,8 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
 
   @override
   Widget build(BuildContext context) {
-    final ComptabiliteNotifyController comptabiliteNotifyController =
-        Get.put(ComptabiliteNotifyController());
+    final ComMarketingNotifyController comMarketingNotifyController =
+        Get.put(ComMarketingNotifyController());
     final CampaignController campaignController =
         Get.put(CampaignController());
     final SuccursaleController succursaleController =
@@ -86,7 +86,7 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${comptabiliteNotifyController.campaignCountDD} dossiers necessitent votre approbation",
+                                        "Vous avez ${comMarketingNotifyController.campaignCountDD} dossiers necessitent votre approbation",
                                         style: bodyMedium!
                                             .copyWith(color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -114,7 +114,7 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${comptabiliteNotifyController.succursaleCountDD} dossiers necessitent votre approbation",
+                                        "Vous avez ${comMarketingNotifyController.succursaleCountDD} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -142,7 +142,7 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${comptabiliteNotifyController.prodModelCount} dossiers necessitent votre approbation",
+                                        "Vous avez ${comMarketingNotifyController.prodModelCount} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,

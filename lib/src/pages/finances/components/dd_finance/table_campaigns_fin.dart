@@ -125,7 +125,10 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
 
   Future<List<PlutoRow>> agentsRow() async {
      var dataList = widget.campaignController.campaignList
-        .where((element) => element.approbationFin == "-")
+        .where((element) => element.approbationDG == 'Approved' &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == 'Approved' && 
+            element.approbationFin == "-")
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

@@ -6,7 +6,7 @@ import 'package:wm_solution/src/api/notifications/departements/comm_marketing_de
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 
-class ComptabiliteNotifyController extends GetxController {
+class ComMarketingNotifyController extends GetxController {
   ComMarketingDepartementNotifyApi comMarketingDepartementNotifyApi =
       ComMarketingDepartementNotifyApi();
   CampaignNotifyApi campaignNotifyApi = CampaignNotifyApi();
