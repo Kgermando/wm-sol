@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
@@ -7,8 +8,11 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/components/banques/table_banque.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/models/finances/banque_name_model.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class BanquePage extends StatefulWidget {
   const BanquePage({super.key, required this.banqueNameModel});
@@ -19,13 +23,13 @@ class BanquePage extends StatefulWidget {
 }
 
 class _BanquePageState extends State<BanquePage> {
+  final BanqueController controller = Get.put(BanqueController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
-  String subTitle = "banques";
+  String subTitle = "Banques";
 
- @override
+  @override
   Widget build(BuildContext context) {
-    final BanqueController controller = Get.put(BanqueController());
     return SafeArea(
       child: controller.obx(
           onLoading: loading(),
@@ -50,7 +54,10 @@ class _BanquePageState extends State<BanquePage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableBanque(banqueList: controller.banqueList, controller: controller))),
+                          child: TableBanque(
+                              banqueList: controller.banqueList.where((p0) => p0.banqueName == widget.banqueNameModel.nomComplet).toList(),
+                              controller: controller,
+                              name: widget.banqueNameModel.nomComplet))),
                 ],
               ))),
     );
@@ -68,14 +75,18 @@ class _BanquePageState extends State<BanquePage> {
           foregroundColor: Colors.white,
           backgroundColor: Colors.yellow.shade700,
           label: 'Retrait',
-          onPressed: () {},
+          onPressed: () {
+            retraitDialog();
+          },
         ),
         SpeedDialChild(
           child: const Icon(Icons.file_download),
           foregroundColor: Colors.white,
           backgroundColor: Colors.green.shade700,
           label: 'Dépôt',
-          onPressed: () {},
+          onPressed: () {
+            depotDialog();
+          },
         ),
       ],
       child: const Icon(
@@ -83,5 +94,223 @@ class _BanquePageState extends State<BanquePage> {
         color: Colors.white,
       ),
     );
+  }
+
+  retraitDialog() {
+    return showDialog(
+        context: context,
+        // barrierDismissible: false,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(p8),
+                ),
+                backgroundColor: Colors.transparent,
+                child: SizedBox(
+                  height: 400,
+                  child: Form(
+                    key: controller.formKeyRetrait,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(p16),
+                        child: SizedBox(
+                          width: Responsive.isDesktop(context)
+                              ? MediaQuery.of(context).size.width / 2
+                              : MediaQuery.of(context).size.width,
+                          child: ListView(
+                            children: [
+                              const TitleWidget(title: 'Banque Retrait'),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              ResponsiveChildWidget(
+                                  child1: nomCompletWidget(),
+                                  child2: pieceJustificativeWidget()),
+                              ResponsiveChildWidget(
+                                  child1: libelleWidget(),
+                                  child2: pieceJustificativeWidget()), 
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              BtnWidget(
+                                  title: 'Soumettre',
+                                  isLoading: controller.isLoading,
+                                  press: () {
+                                    final form =
+                                        controller.formKeyRetrait.currentState!;
+                                    if (form.validate()) {
+                                      controller.submitRetrait(
+                                          widget.banqueNameModel);
+                                      form.reset();
+                                    }
+                                  })
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ));
+          });
+        });
+  }
+
+  depotDialog() {
+    return showDialog(
+        context: context,
+        // barrierDismissible: false,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(p8),
+                ),
+                backgroundColor: Colors.transparent,
+                child: SizedBox(
+                  height: 400,
+                  child: Form(
+                    key: controller.formKeyDepot,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(p16),
+                        child: SizedBox(
+                          width: Responsive.isDesktop(context)
+                              ? MediaQuery.of(context).size.width / 2
+                              : MediaQuery.of(context).size.width,
+                          child: ListView(
+                            children: [
+                              const TitleWidget(title: 'Banque Depôt'),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              ResponsiveChildWidget(
+                                  child1: nomCompletWidget(),
+                                  child2: pieceJustificativeWidget()),
+                              ResponsiveChildWidget(
+                                  child1: libelleWidget(),
+                                  child2: pieceJustificativeWidget()), 
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              BtnWidget(
+                                  title: 'Soumettre',
+                                  isLoading: controller.isLoading,
+                                  press: () {
+                                    final form =
+                                        controller.formKeyDepot.currentState!;
+                                    if (form.validate()) {
+                                      controller
+                                          .submitDepot(widget.banqueNameModel);
+                                      form.reset();
+                                    }
+                                  })
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ));
+          });
+        });
+  }
+
+  Widget nomCompletWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.nomCompletController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Nom complet',
+          ),
+          keyboardType: TextInputType.text,
+          validator: (value) => value != null && value.isEmpty
+              ? 'Ce champs est obligatoire.'
+              : null,
+          style: const TextStyle(),
+        ));
+  }
+
+  Widget pieceJustificativeWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.pieceJustificativeController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'N° de la pièce justificative',
+          ),
+          keyboardType: TextInputType.text,
+          validator: (value) => value != null && value.isEmpty
+              ? 'Ce champs est obligatoire.'
+              : null,
+          style: const TextStyle(),
+        ));
+  }
+
+  Widget libelleWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.libelleController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Libellé',
+          ),
+          keyboardType: TextInputType.text,
+          validator: (value) => value != null && value.isEmpty
+              ? 'Ce champs est obligatoire.'
+              : null,
+          style: const TextStyle(),
+        ));
+  }
+
+  Widget montantWidget() {
+    final headline6 = Theme.of(context).textTheme.headline6;
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 5,
+              child: TextFormField(
+                controller: controller.montantController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                ],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Montant',
+                ),
+                validator: (value) => value != null && value.isEmpty
+                    ? 'Ce champs est obligatoire.'
+                    : null,
+                style: const TextStyle(),
+              ),
+            ),
+            const SizedBox(width: p20),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  "\$",
+                  style: headline6!,
+                ))
+          ],
+        ));
   }
 }

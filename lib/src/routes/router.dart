@@ -24,6 +24,8 @@ import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
 import 'package:wm_solution/src/models/exploitations/production_model.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/models/logistiques/approvision_reception_model.dart';
+import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart';
 import 'package:wm_solution/src/models/logistiques/carburant_model.dart';
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
 import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
@@ -46,6 +48,13 @@ import 'package:wm_solution/src/models/rh/perfomence_model.dart';
 import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_budget.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_comm_marketing.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_dashboard.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_exploitation.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_finance.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_logistique.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_rh.dart';
 import 'package:wm_solution/src/pages/archives/components/add_archive.dart';
 import 'package:wm_solution/src/pages/archives/components/archive_pdf_viewer.dart';
 import 'package:wm_solution/src/pages/archives/components/detail_archive.dart';
@@ -132,10 +141,14 @@ import 'package:wm_solution/src/pages/finances/components/dettes/detail_dette.da
 import 'package:wm_solution/src/pages/finances/components/fin_exterieur/detail_fin_exterieur.dart';
 import 'package:wm_solution/src/pages/finances/view/banque_page.dart';
 import 'package:wm_solution/src/pages/finances/view/caisse_page.dart';
+import 'package:wm_solution/src/pages/finances/view/creance_page.dart';
 import 'package:wm_solution/src/pages/finances/view/dashboard_finance.dart';
 import 'package:wm_solution/src/pages/finances/view/dd_finance.dart';
+import 'package:wm_solution/src/pages/finances/view/dette_page.dart';
 import 'package:wm_solution/src/pages/finances/view/fin_exterieur_page.dart';
 import 'package:wm_solution/src/pages/finances/view/observation_page.dart';
+import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_accuse_reception.dart';
+import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_approvisionnement.dart';
 import 'package:wm_solution/src/pages/logistique/components/automobiles/carburants/add_carburant.dart';
 import 'package:wm_solution/src/pages/logistique/components/automobiles/carburants/detail_carburant.dart';
 import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/add_engin.dart';
@@ -151,6 +164,8 @@ import 'package:wm_solution/src/pages/logistique/components/immobiliers/detail_i
 import 'package:wm_solution/src/pages/logistique/components/immobiliers/update_immobilier.dart';
 import 'package:wm_solution/src/pages/logistique/components/mobiliers/detail_mobilier.dart';
 import 'package:wm_solution/src/pages/logistique/components/mobiliers/update_mobilier.dart';
+import 'package:wm_solution/src/pages/logistique/view/accuser_reception_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/approvisionnement_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/carburant_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/dahsboard_log.dart';
 import 'package:wm_solution/src/pages/logistique/view/engin_page.dart';
@@ -616,7 +631,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsCreances,
-      page: () => const DevisPage(),
+      page: () => const CreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
@@ -629,7 +644,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsDettes,
-      page: () => const DevisPage(),
+      page: () => const DettePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
@@ -1178,6 +1193,72 @@ List<GetPage<dynamic>>? getPages = [
         final MobilierModel mobilierModel = Get.arguments as MobilierModel;
         return UpdateMobilier(mobilierModel: mobilierModel);
       },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logApprovisionnement,
+      page: () => const ApprovisionnementPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logApprovisionnementDetail,
+      page: () {
+        final ApprovisionnementModel approvisionnementModel = 
+          Get.arguments as ApprovisionnementModel;
+        return DetailApprovisionnement(approvisionnementModel: approvisionnementModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logApprovisionReception,
+      page: () => const AccuseReceptionPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logApprovisionnementDetail,
+      page: () {
+        final ApprovisionReceptionModel approvisionReceptionModel =
+            Get.arguments as ApprovisionReceptionModel;
+        return DetailAccuseReception(approvisionReceptionModel: approvisionReceptionModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+    
+  // Administration
+  GetPage(
+    name: AdminRoutes.adminDashboard,
+    page: () => const AdminDashboard(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminBudget,
+      page: () => const AdminBudget(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminCommMarketing,
+      page: () => const AdminCommMarketing(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminExploitation,
+      page: () => const AdminExploitation(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminFinance,
+      page: () => const AdminFinance(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminLogistique,
+      page: () => const AdminLogistique(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminRH,
+      page: () => const AdminRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 ];

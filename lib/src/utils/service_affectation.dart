@@ -16,6 +16,8 @@ class ServiceAffectation {
 
   List<String> adminDropdown = [
     'Administration', 
+    'Secretariat',
+    'Reception',
     'Consultant(e)',
     'Aucun poste occupé'
   ];

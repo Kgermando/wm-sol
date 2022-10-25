@@ -8,8 +8,9 @@ import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_com
 import 'package:wm_solution/src/routes/routes.dart';
 
 class CommercialMaketingNav extends StatefulWidget {
-  const CommercialMaketingNav({super.key, required this.currentRoute});
+  const CommercialMaketingNav({super.key, required this.currentRoute, required this.profilController});
   final String currentRoute;
+  final ProfilController profilController;
 
   @override
   State<CommercialMaketingNav> createState() => _CommercialMaketingNavState();
@@ -20,20 +21,19 @@ class _CommercialMaketingNavState extends State<CommercialMaketingNav> {
   bool isOpenComMarketing2 = false;
 
   @override
-  Widget build(BuildContext context) {
-    final ProfilController profilController = Get.put(ProfilController());
+  Widget build(BuildContext context) { 
     final ComptabiliteNotifyController controller =
         Get.put(ComptabiliteNotifyController());
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
-    int userRole = int.parse(profilController.user.role);
+    int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
       title:
           AutoSizeText('Commercial & Marketing', maxLines: 2, style: bodyLarge),
       initiallyExpanded:
-          (profilController.user.departement == 'Commercial et Marketing')
+          (widget.profilController.user.departement == 'Commercial et Marketing')
               ? true
               : false,
       onExpansionChanged: (val) {

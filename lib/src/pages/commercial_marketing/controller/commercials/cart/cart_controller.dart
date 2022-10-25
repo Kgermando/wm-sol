@@ -40,8 +40,6 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  String matricule = '';
-
   TextEditingController controllerQuantityCart = TextEditingController();
 
   @override
@@ -63,7 +61,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
   }
 
   void getList() async {
-    await cartApi.getAllData(matricule).then((response) {
+    await cartApi.getAllData(profilController.user.matricule).then((response) {
       cartList.assignAll(response);
       change(cartList, status: RxStatus.success());
     }, onError: (err) {

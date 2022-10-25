@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget {
     }
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      popGesture: true,
       title: InfoSystem().name(),
       initialBinding: WMBindings(),
       initialRoute: homeRoute,

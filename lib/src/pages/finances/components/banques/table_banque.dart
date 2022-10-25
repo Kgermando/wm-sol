@@ -12,9 +12,11 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 
 class TableBanque extends StatefulWidget {
-  const TableBanque({super.key, required this.banqueList, required this.controller});
+  const 
+  TableBanque({super.key, required this.banqueList, required this.controller, required this.name});
   final List<BanqueModel> banqueList;
   final BanqueController controller;
+  final String name;
 
   @override
   State<TableBanque> createState() => _TableBanqueState();
@@ -60,7 +62,7 @@ class _TableBanqueState extends State<TableBanque> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TitleWidget(title: "Transactions Bancaire"),
+                  TitleWidget(title: widget.name),
                   Row(
                     children: [
                       IconButton(

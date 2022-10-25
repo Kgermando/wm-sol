@@ -4,8 +4,12 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
+import 'package:wm_solution/src/pages/finances/components/observation/table_campaigns_obs.dart';
 import 'package:wm_solution/src/pages/finances/components/observation/table_devis_obs.dart';
+import 'package:wm_solution/src/pages/finances/components/observation/table_projet_obs.dart';
 import 'package:wm_solution/src/pages/finances/components/observation/table_salaire_obs.dart';
 import 'package:wm_solution/src/pages/finances/components/observation/table_transport_rest_obs.dart';
 import 'package:wm_solution/src/pages/finances/controller/notify/observation_notify_controller.dart'; 
@@ -20,6 +24,15 @@ class ObservationPage extends StatefulWidget {
 }
 
 class _ObservationPageState extends State<ObservationPage> {
+  final ObservationNotifyController controller =
+      Get.put(ObservationNotifyController());
+  final SalaireController salaireController = Get.put(SalaireController());
+  final TransportRestController transportRestController =
+      Get.put(TransportRestController());
+  final DevisController devisController = Get.put(DevisController());
+  final CampaignController campaignController = Get.put(CampaignController());
+  final ProjetController projetController = Get.put(ProjetController());
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finance";
   String subTitle = "observations";
@@ -33,11 +46,7 @@ class _ObservationPageState extends State<ObservationPage> {
   Widget build(BuildContext context) {
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final ObservationNotifyController controller = Get.put(ObservationNotifyController());  
-    final SalaireController salaireController = Get.put(SalaireController());
-    final TransportRestController transportRestController =
-        Get.put(TransportRestController()); 
-    final DevisController devisController = Get.put(DevisController()); 
+    
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,
@@ -66,7 +75,7 @@ class _ObservationPageState extends State<ObservationPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Card(
-                                  color: Colors.purple.shade700,
+                                  color: Colors.red.shade700,
                                   child: ExpansionTile(
                                     leading: const Icon(Icons.folder,
                                         color: Colors.white),
@@ -140,8 +149,8 @@ class _ObservationPageState extends State<ObservationPage> {
                                       Icons.arrow_drop_down,
                                       color: Colors.white,
                                     ),
-                                    children: const [
-                                      
+                                    children: [
+                                      TableCampaignObs(controller: campaignController)
                                     ],
                                   ),
                                 ),
@@ -167,17 +176,17 @@ class _ObservationPageState extends State<ObservationPage> {
                                       Icons.arrow_drop_down,
                                       color: Colors.white,
                                     ),
-                                    children: const [
-                                      
+                                    children: [
+                                      TableProjetObs(controller: projetController)
                                     ],
                                   ),
                                 ), 
                               Card(
-                                  color: Colors.grey.shade700,
+                                  color: Colors.teal.shade700,
                                   child: ExpansionTile(
                                     leading: const Icon(Icons.folder,
                                         color: Colors.white),
-                                    title: Text('Dossier état de besoin',
+                                    title: Text('Dossier dévis',
                                         style: headline6.copyWith(
                                             color: Colors.white)),
                                     subtitle: Text(

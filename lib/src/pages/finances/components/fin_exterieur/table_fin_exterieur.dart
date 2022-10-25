@@ -12,9 +12,10 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 
 class TableFinExterieur extends StatefulWidget {
-  const TableFinExterieur({super.key, required this.finExterieurList, required this.controller}); 
+  const TableFinExterieur({super.key, required this.finExterieurList, required this.controller, required this.name}); 
    final List<FinanceExterieurModel> finExterieurList;
   final FinExterieurController controller;
+  final String name;
 
   @override
   State<TableFinExterieur> createState() => _TableFinExterieurState();
@@ -60,7 +61,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TitleWidget(title: "Autres Financements"),
+                  TitleWidget(title: widget.name),
                   Row(
                     children: [
                       IconButton(

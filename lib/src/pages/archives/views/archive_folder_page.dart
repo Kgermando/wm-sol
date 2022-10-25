@@ -18,8 +18,20 @@ final _lightColors = [
   Colors.lightBlue.shade400,
   Colors.orange.shade400,
   Colors.pinkAccent.shade400,
-  Colors.tealAccent.shade400
+  Colors.tealAccent.shade400,
+  Colors.purpleAccent.shade400,
+  Colors.limeAccent.shade400,
+  Colors.blueAccent.shade400,
+  Colors.brown.shade400,
+  Colors.cyanAccent.shade400,
+  Colors.grey.shade400,
+  Colors.indigoAccent.shade400,
+  Colors.redAccent.shade400,
+  Colors.deepPurple.shade400
 ];
+
+Color listColor =
+    Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 
 class ArchiveFolderPage extends StatefulWidget {
   const ArchiveFolderPage({super.key});
@@ -96,15 +108,13 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
   Widget cardFolder(ArchiveFolderModel data, Color color) {
     return GestureDetector(
         onDoubleTap: () {
-          Navigator.pushNamed(context, ArchiveRoutes.archiveTable,
-              arguments: data);
+          Get.toNamed(ArchiveRoutes.archiveTable, arguments: data);
         },
         child: Column(
           children: [
             Icon(
-              Icons.archive,
-              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                  .withOpacity(1.0),
+              Icons.folder,
+              color: color,
               size: 100.0,
             ),
             Text(data.folderName)
@@ -137,6 +147,7 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
                     if (form.validate()) {
                       controller.submit();
                       form.reset();
+                      Navigator.pop(context, 'ok');
                     }
                   },
                   child: const Text('OK'),

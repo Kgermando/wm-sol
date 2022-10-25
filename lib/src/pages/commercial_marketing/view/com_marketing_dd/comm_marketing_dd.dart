@@ -10,8 +10,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/components/com_market
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart'; 
-import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart';  
 
 class CommMarketingDD extends StatefulWidget {
   const CommMarketingDD({super.key});

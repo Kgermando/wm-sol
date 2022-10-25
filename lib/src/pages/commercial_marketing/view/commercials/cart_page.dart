@@ -18,13 +18,14 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  final CartController controller = Get.put(CartController()); 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial & Marketing";
   String subTitle = "Panier";
 
   @override
   Widget build(BuildContext context) {
-    final CartController controller = Get.put(CartController()); 
+    
     return controller.obx(
         onLoading: loading(),
         onEmpty: const Text('Le panier est vide.'),
@@ -37,6 +38,9 @@ class _CartPageState extends State<CartPage> {
               floatingActionButton: (controller.cartList.isNotEmpty)
                   ? speedialWidget(controller)
                   : Container(),
+              bottomNavigationBar: SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: totalCart(controller)),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -56,18 +60,18 @@ class _CartPageState extends State<CartPage> {
                                     BorderRadius.all(Radius.circular(20))),
                             child: Column(
                               children: [
-                                Expanded(
-                                  child: ListView.builder(
-                                      itemCount: controller.cartList.length,
-                                      itemBuilder: (context, index) {
-                                        final cart = controller.cartList[index];
-                                        return CartItemWidget(
-                                          cart: cart, 
-                                          controller: controller
-                                        );
-                                      }),
-                                ),
-                                totalCart(controller)
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                    itemCount: controller.cartList.length,
+                                    itemBuilder: (context, index) {
+                                      final cart = controller.cartList[index];
+                                      return CartItemWidget(
+                                        cart: cart, 
+                                        controller: controller
+                                      );
+                                    }),
+                                const SizedBox(height: p50),
+                                
                               ],
                             ),
                           )))

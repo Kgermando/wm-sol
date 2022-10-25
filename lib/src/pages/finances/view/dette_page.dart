@@ -9,6 +9,7 @@ import 'package:wm_solution/src/pages/finances/components/dettes/table_dette.dar
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DettePage extends StatefulWidget {
@@ -90,26 +91,12 @@ class _DettePageState extends State<DettePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              Row(
-                                children: [
-                                  Expanded(child: nomCompletWidget(controller)),
-                                  const SizedBox(
-                                    width: p10,
-                                  ),
-                                  Expanded(
-                                      child:
-                                          pieceJustificativeWidget(controller))
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(child: libelleWidget(controller)),
-                                  const SizedBox(
-                                    width: p10,
-                                  ),
-                                  Expanded(child: montantWidget(controller))
-                                ],
-                              ),
+                              ResponsiveChildWidget(
+                                  child1: nomCompletWidget(controller),
+                                  child2: pieceJustificativeWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: libelleWidget(controller),
+                                  child2: montantWidget(controller)), 
                               const SizedBox(
                                 height: p20,
                               ),

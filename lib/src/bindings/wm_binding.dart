@@ -50,6 +50,18 @@ import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exte
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/notify/observation_notify_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/automobiles/carburant_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/entretiens/objet_remplace_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/notify/notify_log.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart';
@@ -174,5 +186,20 @@ class WMBindings extends Bindings {
   Get.lazyPut<RavitaillementController>(() => RavitaillementController());
   Get.lazyPut<StockGlobalController>(() => StockGlobalController());  
     
+
+  // Logistique
+  Get.lazyPut<ApprovisionReceptionController>(() => ApprovisionReceptionController());  
+  Get.lazyPut<ApprovisionnementController>(() => ApprovisionnementController());  
+  Get.lazyPut<CarburantController>(() => CarburantController());  
+  Get.lazyPut<EnginController>(() => EnginController());  
+  Get.lazyPut<TrajetController>(() => TrajetController());  
+  Get.lazyPut<DashboardLogController>(() => DashboardLogController());  
+  Get.lazyPut<EntretienController>(() => EntretienController());  
+  Get.lazyPut<ObjetRemplaceController>(() => ObjetRemplaceController());  
+  Get.lazyPut<EtatMaterielController>(() => EtatMaterielController());  
+  Get.lazyPut<ImmobilierController>(() => ImmobilierController());  
+  Get.lazyPut<MobilierController>(() => MobilierController());  
+  Get.lazyPut<NotifyLogController>(() => NotifyLogController());  
+  
   }
 }

@@ -8,16 +8,18 @@ import 'package:wm_solution/src/constants/reponsiveness.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
+// import 'package:wm_solution/src/navigation/header/controller/update_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/menu_items.dart';
 import 'package:wm_solution/src/utils/menu_options.dart';
 import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 
-
-AppBar headerBar(
-    BuildContext context, GlobalKey<ScaffoldState> scaffoldKey, String title, String subTitle) {
-  final ProfilController userController = Get.put(ProfilController()); 
+AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
+    String title, String subTitle) {
+  final ProfilController userController = Get.put(ProfilController());
+  // final UpdateController updateController = Get.put(UpdateController());
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
 
@@ -26,46 +28,77 @@ AppBar headerBar(
   return AppBar(
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
-      ? Image.asset(InfoSystem().logoSansFond(), width: 20, height: 20,)
-      : Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                scaffoldKey.currentState!.openDrawer();
-              }),
-          IconButton(onPressed: () {
-                Get.back();
-              }, icon: const Icon(Icons.arrow_back)
+        ? Image.asset(
+            InfoSystem().logoSansFond(),
+            width: 20,
+            height: 20,
           )
-        ],
-      ), 
-    title: Responsive.isMobile(context) ? Container() : InkWell(
-      onTap: () {
-        Get.back();
-      },
-    child: Row(
-      children: [
-        const Icon(Icons.arrow_back),
-        BreadCrumb(
-          overflow: ScrollableOverflow(
-          keepLastDivider: false,
-          reverse: false,
-          direction: Axis.horizontal),
-            items: <BreadCrumbItem>[ 
-            BreadCrumbItem(content: BreadCrumbWidget(title: title)),
-            BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
-          ],
-            divider: const Icon(Icons.chevron_right),
-        ),
-      ],
-    ),
-    ),
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    scaffoldKey.currentState!.openDrawer();
+                  }),
+              IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back))
+            ],
+          ),
+    title: Responsive.isMobile(context)
+        ? Container()
+        : InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: Row(
+              children: [
+                const Icon(Icons.arrow_back),
+                BreadCrumb(
+                  overflow: ScrollableOverflow(
+                      keepLastDivider: false,
+                      reverse: false,
+                      direction: Axis.horizontal),
+                  items: <BreadCrumbItem>[
+                    BreadCrumbItem(content: BreadCrumbWidget(title: title)),
+                    BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
+                  ],
+                  divider: const Icon(Icons.chevron_right),
+                ),
+              ],
+            ),
+          ),
     actions: [
+
+      //  if (Platform.isWindows &&
+      //     updateController.updateVersionList.isNotEmpty &&
+      //     updateController.sumVersionCloud > updateController.sumVersion)
+      //   IconButton(
+      //       iconSize: 40,
+      //       tooltip: 'Téléchargement',
+      //       onPressed: () {
+      //         setState(() {
+      //           if (updateController.sumVersionCloud > updateController.sumVersion) {
+      //             downloadNetworkSoftware(
+      //                 url: updateVersionList.last.urlUpdate);
+      //           }
+      //         });
+      //       },
+      //       icon: (downloading)
+      //           ? (progressString == "100%")
+      //               ? const Icon(Icons.check)
+      //               : AutoSizeText(progressString,
+      //                   maxLines: 1, style: const TextStyle(fontSize: 12.0))
+      //           : Icon(Icons.download, color: Colors.red.shade700)),
+
       IconButton(
           tooltip: 'Panier',
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(ComMarketingRoutes.comMarketingcart);
+          },
           icon: Badge(
             badgeContent:
                 const Text('150', style: TextStyle(color: Colors.white)),
@@ -73,7 +106,9 @@ AppBar headerBar(
           )),
       IconButton(
           tooltip: 'Agenda',
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(ComMarketingRoutes.comMarketingAgenda);
+          },
           icon: Badge(
             showBadge: true,
             badgeContent:
@@ -83,7 +118,9 @@ AppBar headerBar(
           )),
       IconButton(
           tooltip: 'Mailling',
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(MailRoutes.mails);
+          },
           icon: Badge(
             showBadge: true,
             badgeContent:

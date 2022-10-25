@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comm_marketing/commerciale/achat_api.dart';
+import 'package:wm_solution/src/api/comm_marketing/commerciale/cart_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';
 
 class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   final AchatApi achatApi = AchatApi();
-  final ProfilController profilController = Get.find();
-  final CartController cartController = Get.put(CartController());
+  final CartApi cartApi = CartApi();
+  final ProfilController profilController = Get.find(); 
 
   var achatList = <AchatModel>[].obs;
 
@@ -84,7 +84,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
           succursale: profilController.user.succursale,
           signature: profilController.user.matricule,
           created: DateTime.now());
-      await cartController.cartApi.insertData(cartModel).then((value) async {
+      await cartApi.insertData(cartModel).then((value) async {
         final achatModel = AchatModel(
             id: achat.id!,
             idProduct: achat.idProduct,

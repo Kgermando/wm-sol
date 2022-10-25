@@ -227,6 +227,18 @@ var objetsRemplaceUrl = Uri.parse("$mainUrl/objets-remplaces/");
 var addobjetsRemplaceUrl =
     Uri.parse("$mainUrl/objets-remplaces/insert-new-objet-remplace");
 
+var approvisionnementsUrl = Uri.parse("$mainUrl/approvisionnements/");
+var addapprovisionnementsUrl =
+    Uri.parse("$mainUrl/approvisionnements/insert-new-approvisionnement");
+
+var approvisionReceptionsUrl = Uri.parse("$mainUrl/approvision-receptions/");
+var addApprovisionReceptionsUrl =
+    Uri.parse("$mainUrl/approvision-receptions/insert-new-approvision-reception");
+
+
+
+
+
 // Exploitations
 var projetsUrl = Uri.parse("$mainUrl/projets/");
 var addProjetssUrl = Uri.parse("$mainUrl/projets/insert-new-projet");

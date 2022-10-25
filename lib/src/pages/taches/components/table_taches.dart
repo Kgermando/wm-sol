@@ -61,19 +61,24 @@ class _TableTachesState extends State<TableTaches> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const TitleWidget(title: "Vos taches"),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, TacheRoutes.tachePage);
-                },
-                icon: Icon(Icons.refresh, color: Colors.green.shade700)),
-            PrintWidget(onPressed: () {
-              TacheXlsx().exportToExcel(widget.tachesController.tachesList);
-              if (!mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: const Text("Exportation effectué!"),
-                backgroundColor: Colors.green[700],
-              ));
-            })
+            Column(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, TacheRoutes.tachePage);
+                    },
+                    icon: Icon(Icons.refresh, color: Colors.green.shade700)), 
+                PrintWidget(onPressed: () {
+                  TacheXlsx().exportToExcel(widget.tachesController.tachesList);
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const Text("Exportation effectué!"),
+                    backgroundColor: Colors.green[700],
+                  ));
+                })
+              ],
+            ),
+            
           ],
         );
       },

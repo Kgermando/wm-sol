@@ -6,7 +6,8 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/logistique/components/mobiliers/table_mobilier.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
-import 'package:wm_solution/src/widgets/loading.dart'; 
+import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart'; 
 
 
 class MobilierPage extends StatefulWidget {
@@ -80,35 +81,11 @@ class _MobilierPageState extends State<MobilierPage> {
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
-                              Responsive.isMobile(context)
-                                  ? Column(
-                                      children: [nomWidget(), modeleWidget()],
-                                    )
-                                  : Row(
-                                      children: [
-                                        Expanded(child: nomWidget()),
-                                        const SizedBox(
-                                          width: p10,
-                                        ),
-                                        Expanded(child: modeleWidget())
-                                      ],
-                                    ),
-                              Responsive.isMobile(context)
-                                  ? Column(
-                                      children: [
-                                        marqueWidget(),
-                                        nombreWidget()
-                                      ],
-                                    )
-                                  : Row(
-                                      children: [
-                                        Expanded(child: marqueWidget()),
-                                        const SizedBox(
-                                          width: p10,
-                                        ),
-                                        Expanded(child: nombreWidget())
-                                      ],
-                                    ),
+                              ResponsiveChildWidget(
+                                  child1: nomWidget(),
+                                  child2: modeleWidget()), 
+                              ResponsiveChildWidget(
+                                  child1: marqueWidget(), child2: nombreWidget()),  
                               descriptionWidget(),
                               const SizedBox(
                                 height: p20,
@@ -126,6 +103,7 @@ class _MobilierPageState extends State<MobilierPage> {
                     if (form.validate()) {
                       controller.submit();
                       form.reset();
+                      Navigator.pop(context, 'ok');
                     }
                   },
                   child: const Text('OK'),

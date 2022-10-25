@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/performence_api.dart';
 import 'package:wm_solution/src/api/rh/personnels_api.dart';
+import 'package:wm_solution/src/models/rh/agent_count_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
@@ -23,6 +24,7 @@ class PersonnelsController extends GetxController
   final ProfilController profilController = Get.put(ProfilController());
 
   var personnelsList = <AgentModel>[].obs;
+  var agentPieChartList = <AgentPieChartModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -124,6 +126,7 @@ class PersonnelsController extends GetxController
   void onInit() {
     super.onInit();
     getList();
+    agentPieChart();
   }
 
   @override
@@ -149,6 +152,15 @@ class PersonnelsController extends GetxController
   void getList() async {
     personnelsApi.getAllData().then((response) {
       personnelsList.assignAll(response);
+      change(personnelsList, status: RxStatus.success());
+    }, onError: (err) {
+      change(null, status: RxStatus.error(err.toString()));
+    });
+  }
+
+  void agentPieChart() async {
+    personnelsApi.getChartPieSexe().then((response) {
+      agentPieChartList.assignAll(response);
       change(personnelsList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -367,7 +379,7 @@ class PersonnelsController extends GetxController
         salaire: personne.salaire,
         signature: personne.signature,
         created: personne.created);
-    await personnelsApi.updateData(agentModel).then((value) { 
+    await personnelsApi.updateData(agentModel).then((value) {
       // detailView(value.id!);
       // Get.back();
       Get.snackbar("Modification du statut effectué!",

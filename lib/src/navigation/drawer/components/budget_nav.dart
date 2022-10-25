@@ -8,29 +8,30 @@ import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_co
 import 'package:wm_solution/src/routes/routes.dart';
 
 class BudgetNav extends StatefulWidget {
-  const BudgetNav({super.key, required this.currentRoute});
+  const BudgetNav({super.key, required this.currentRoute, required this.profilController});
   final String currentRoute;
+  final ProfilController profilController;
 
   @override
   State<BudgetNav> createState() => _BudgetNavState();
 }
 
 class _BudgetNavState extends State<BudgetNav> {
+  final BudgetNotifyController controller = Get.put(BudgetNotifyController()); 
   bool isOpen = false;
 
   @override
   Widget build(BuildContext context) {
-    final BudgetNotifyController controller = Get.put(BudgetNotifyController());
-    final ProfilController profilController = Get.put(ProfilController());
+   
 
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
 
-    int userRole = int.parse(profilController.user.role);
+    int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.fact_check, size: 30.0),
       title: AutoSizeText('Budgets', maxLines: 1, style: bodyLarge),
-      initiallyExpanded: (profilController.user.departement == 'Budgets') ? true : false,
+      initiallyExpanded: (widget.profilController.user.departement == 'Budgets') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

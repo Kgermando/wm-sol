@@ -16,26 +16,35 @@ class FinanceNotifyController extends GetxController {
   final _itemCountObs = '0'.obs;
   String get itemCountObs => _itemCountObs.value;
 
-  final _creanceCount = 0.obs;
-  int get creanceCount => _creanceCount.value;
-  final _detteCount = 0.obs;
-  int get detteCount => _detteCount.value;
+  final _creanceCountDD = 0.obs;
+  int get creanceCountDD => _creanceCountDD.value;
+   final _creanceCountDG = 0.obs;
+  int get creanceCountDG => _creanceCountDG.value;
+
+  final _detteCountDD = 0.obs;
+  int get detteCountDD => _detteCountDD.value;
+    final _detteCountDG = 0.obs;
+  int get detteCountDG => _detteCountDG.value;
 
   @override
   void onInit() {
     super.onInit();
     getCountDD();
     getCountObs();
-    getCountCreance();
-    getCountDette();
+    getCountCreanceDD();
+    getCountCreanceDG();
+    getCountDetteDD();
+    getCountDetteDG();
   }
 
   @override
   void refresh() {
     getCountDD();
     getCountObs();
-    getCountCreance();
-    getCountDette();
+    getCountCreanceDD();
+    getCountCreanceDG();
+    getCountDetteDD();
+    getCountDetteDG();
     super.refresh();
   }
 
@@ -51,15 +60,25 @@ class FinanceNotifyController extends GetxController {
     _itemCountObs.value = notifySum.sum;
   }
 
-  void getCountCreance() async {
+  void getCountCreanceDD() async {
     NotifyModel notifySum =
         await creanceNotifyApi.getCountDD();
-    _creanceCount.value = notifySum.count;
+    _creanceCountDD.value = notifySum.count;
   }
 
-  void getCountDette() async {
+   void getCountCreanceDG() async {
+    NotifyModel notifySum = await creanceNotifyApi.getCountDG();
+    _creanceCountDG.value = notifySum.count;
+  }
+
+  void getCountDetteDD() async {
     NotifyModel notifySum =
         await detteNotifyApi.getCountDD();
-    _detteCount.value = notifySum.count;
+    _detteCountDD.value = notifySum.count;
+  }
+
+  void getCountDetteDG() async {
+    NotifyModel notifySum = await detteNotifyApi.getCountDG();
+    _detteCountDG.value = notifySum.count;
   }
 }

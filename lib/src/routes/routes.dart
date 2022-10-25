@@ -175,6 +175,10 @@ class LogistiqueRoutes {
   static const logMobilierMaterielUpdate = "/log-mobilier-materiel-udpate";
   static const logDD = "/log-dd";
   static const logEtatBesoin = "/log-etat-besoin";
+  static const logApprovisionnement = "/log-approvisionnement"; 
+  static const logApprovisionnementDetail = "/log-approvisionnement-detail"; 
+  static const logApprovisionReception = "/log-approvision-reception";
+  static const logApprovisionReceptionDetail = "/log-approvision-reception-detail";
 }
 
 class ExploitationRoutes {

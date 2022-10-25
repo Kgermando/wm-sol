@@ -14,15 +14,15 @@ class CaisseController extends GetxController
 
   var caisseList = <CaisseModel>[].obs;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyEncaissement = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyDecaissement = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
   TextEditingController nomCompletController = TextEditingController();
   TextEditingController pieceJustificativeController = TextEditingController();
   TextEditingController libelleController = TextEditingController();
-  TextEditingController montantController = TextEditingController();
-  TextEditingController deperatmentController = TextEditingController();
+  TextEditingController montantController = TextEditingController(); 
 
   String? typeOperation;  // For Update
 
@@ -52,8 +52,7 @@ class CaisseController extends GetxController
     nomCompletController.dispose();
     pieceJustificativeController.dispose();
     libelleController.dispose();
-    montantController.dispose();
-    deperatmentController.dispose();
+    montantController.dispose(); 
     super.dispose();
   }
 

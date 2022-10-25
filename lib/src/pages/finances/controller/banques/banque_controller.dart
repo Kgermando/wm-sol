@@ -14,15 +14,15 @@ class BanqueController extends GetxController
 
   var banqueList = <BanqueModel>[].obs;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyDepot = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyRetrait = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
   TextEditingController nomCompletController = TextEditingController();
   TextEditingController pieceJustificativeController = TextEditingController();
   TextEditingController libelleController = TextEditingController();
-  TextEditingController montantController = TextEditingController();
-  TextEditingController deperatmentController = TextEditingController();
+  TextEditingController montantController = TextEditingController(); 
 
   String? typeOperation; // For Update
 
@@ -51,8 +51,7 @@ class BanqueController extends GetxController
     nomCompletController.dispose();
     pieceJustificativeController.dispose();
     libelleController.dispose();
-    montantController.dispose();
-    deperatmentController.dispose();
+    montantController.dispose(); 
     super.dispose();
   }
 

@@ -108,6 +108,7 @@ newFicheDialog() {
                     if (form.validate()) {
                       controller.submit();
                       form.reset();
+                      Navigator.pop(context, 'ok');
                     }
                   },
                   child: const Text('OK'),

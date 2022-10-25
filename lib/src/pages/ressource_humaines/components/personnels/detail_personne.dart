@@ -59,7 +59,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                         height: 30,
                         child: TabBar(
                           physics: ScrollPhysics(),
-                          tabs: [Tab(text: "Profile"), Tab(text: "Stats")],
+                          tabs: [Tab(text: "Profil"), Tab(text: "Stats")],
                         ),
                       ),
                       Container(

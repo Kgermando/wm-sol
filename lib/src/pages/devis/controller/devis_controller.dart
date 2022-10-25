@@ -6,6 +6,8 @@ import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart'; 
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/utils/dropdown.dart';
+import 'package:wm_solution/src/utils/priority_dropdown.dart';
 
 class DevisController extends GetxController
     with StateMixin<List<DevisModel>> {
@@ -17,6 +19,12 @@ class DevisController extends GetxController
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
+
+
+  final List<String> priorityList = PriorityDropdown().priorityDropdown;
+  final TextEditingController titleController = TextEditingController();
+  final List<String> departementList = Dropdown().departement;
+  String? priority;
 
 
   // Approbations
@@ -82,6 +90,51 @@ class DevisController extends GetxController
       });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submit() async {
+    try {
+      _isLoading.value = true;
+      final devisModel = DevisModel(
+          title: titleController.text,
+          priority: priority.toString(),
+          departement: '-',
+          observation: 'false',
+          signature: profilController.user.matricule,
+          createdRef: DateTime.now(),
+          created: DateTime.now(),
+          isSubmit: 'false',
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationBudget: '-',
+          motifBudget: '-',
+          signatureBudget: '-',
+          approbationFin: '-',
+          motifFin: '-',
+          signatureFin: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-',
+          ligneBudgetaire: '-',
+          ressource: '-');
+      await devisAPi.insertData(devisModel).then((value) {
+        devisList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été soumis",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);

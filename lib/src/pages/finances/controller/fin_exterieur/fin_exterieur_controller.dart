@@ -12,7 +12,8 @@ class FinExterieurController extends GetxController
 
   var finExterieurList = <FinanceExterieurModel>[].obs;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyDepot = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyRetrait = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
@@ -20,8 +21,7 @@ class FinExterieurController extends GetxController
   final TextEditingController pieceJustificativeController =
       TextEditingController();
   final TextEditingController libelleController = TextEditingController();
-  final TextEditingController montantController = TextEditingController();
-  final TextEditingController deperatmentController = TextEditingController();
+  final TextEditingController montantController = TextEditingController(); 
   String? typeOperation;
 
   final _recette = 0.0.obs;
@@ -47,8 +47,7 @@ class FinExterieurController extends GetxController
     nomCompletController.dispose();
     pieceJustificativeController.dispose();
     libelleController.dispose();
-    montantController.dispose();
-    deperatmentController.dispose();
+    montantController.dispose(); 
     super.dispose();
   }
 
@@ -99,17 +98,18 @@ class FinExterieurController extends GetxController
     }
   }
 
-  void submit(FinExterieurNameModel data) async {
+  void submitDepot(FinExterieurNameModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = FinanceExterieurModel(
-          nomComplet: nomCompletController.text, 
+          nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
           montant: montantController.text,
-          typeOperation: typeOperation.toString(),
-          numeroOperation: 'Transaction-Autres-Fin-${finExterieurList.length + 1}',
-          signature: profilController.user.matricule, 
+          typeOperation: 'Depot',
+          numeroOperation:
+              'Transaction-Autres-Fin-${finExterieurList.length + 1}',
+          signature: profilController.user.matricule,
           reference: data.id!,
           financeExterieurName: data.nomComplet,
           created: DateTime.now());
@@ -132,7 +132,7 @@ class FinExterieurController extends GetxController
     }
   }
 
-  void submitUpdate(FinanceExterieurModel data) async {
+  void submitRetrait(FinExterieurNameModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = FinanceExterieurModel(
@@ -141,10 +141,11 @@ class FinExterieurController extends GetxController
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
           montant: montantController.text,
-          typeOperation: typeOperation.toString(),
-          numeroOperation: data.numeroOperation,
+          typeOperation: 'Retrait',
+          numeroOperation:
+              'Transaction-Autres-Fin-${finExterieurList.length + 1}',
           signature: profilController.user.matricule,
-          reference: data.reference,
+          reference: data.id!,
           financeExterieurName: data.nomComplet,
           created: data.created);
       await finExterieurApi.updateData(dataItem).then((value) {

@@ -11,9 +11,10 @@ import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class Tablecaisse extends StatefulWidget {
-  const Tablecaisse({super.key, required this.caisseList, required this.controller});
+  const Tablecaisse({super.key, required this.caisseList, required this.controller, required this.name});
   final List<CaisseModel> caisseList;
   final CaisseController controller;
+  final String name;
 
   @override
   State<Tablecaisse> createState() => _TablecaisseState();
@@ -59,7 +60,7 @@ class _TablecaisseState extends State<Tablecaisse> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TitleWidget(title: "Livre de Caisse"),
+                  TitleWidget(title: widget.name),
                   Row(
                     children: [
                       IconButton(

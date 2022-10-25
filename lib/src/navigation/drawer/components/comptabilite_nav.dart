@@ -8,8 +8,9 @@ import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_com
 import 'package:wm_solution/src/routes/routes.dart';
 
 class ComptabiliteNav extends StatefulWidget {
-  const ComptabiliteNav({super.key, required this.currentRoute});
+  const ComptabiliteNav({super.key, required this.currentRoute, required this.profilController});
   final String currentRoute;
+  final ProfilController profilController;
 
   @override
   State<ComptabiliteNav> createState() => _ComptabiliteNavState();
@@ -19,18 +20,17 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) {
-    final ProfilController profilController = Get.put(ProfilController());
+  Widget build(BuildContext context) { 
     final ComptabiliteNotifyController comptabiliteNotifyController = Get.put(ComptabiliteNotifyController());
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
-    int userRole = int.parse(profilController.user.role);
+    int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.table_view, size: 30.0),
       title: AutoSizeText('Comptabilités', maxLines: 1, style: bodyLarge),
       initiallyExpanded:
-          (profilController.user.departement == 'Comptabilites') ? true : false,
+          (widget.profilController.user.departement == 'Comptabilites') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

@@ -17,7 +17,6 @@ class AnguinModel {
   late String typeMoteur;
 
   late String signature; // celui qui fait le document
-  late DateTime createdRef;
   late DateTime created;
 
    // Approbations DG
@@ -46,8 +45,7 @@ class AnguinModel {
       required this.provenance,
       required this.typeCaburant,
       required this.typeMoteur,
-      required this.signature,
-      required this.createdRef,
+      required this.signature, 
       required this.created,
       required this.approbationDG,
       required this.motifDG,
@@ -75,14 +73,13 @@ class AnguinModel {
         typeCaburant: row[13],
         typeMoteur: row[14],
         signature: row[15],
-        createdRef: row[16],
-        created: row[17],
-        approbationDG: row[18],
-        motifDG: row[19],
-        signatureDG: row[20],
-        approbationDD: row[21],
-        motifDD: row[22],
-        signatureDD: row[23]
+        created: row[16],
+        approbationDG: row[17],
+        motifDG: row[18],
+        signatureDG: row[19],
+        approbationDD: row[20],
+        motifDD: row[21],
+        signatureDD: row[22] 
     );
   }
 
@@ -103,8 +100,7 @@ class AnguinModel {
         provenance: json['provenance'],
         typeCaburant: json['typeCaburant'],
         typeMoteur: json['typeMoteur'],
-        signature: json['signature'],
-        createdRef: DateTime.parse(json['createdRef']),
+        signature: json['signature'], 
         created: DateTime.parse(json['created']),
         approbationDG: json['approbationDG'],
         motifDG: json['motifDG'],
@@ -132,8 +128,7 @@ class AnguinModel {
       'provenance': provenance,
       'typeCaburant': typeCaburant,
       'typeMoteur': typeMoteur,
-      'signature': signature,
-      'createdRef': createdRef.toIso8601String(),
+      'signature': signature, 
       'created': created.toIso8601String(),
       'approbationDG': approbationDG,
       'motifDG': motifDG,
