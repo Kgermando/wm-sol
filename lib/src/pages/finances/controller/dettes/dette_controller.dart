@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/finances/dette_api.dart';
 import 'package:wm_solution/src/models/finances/creance_dette_model.dart';
-import 'package:wm_solution/src/models/finances/dette_model.dart'; 
+import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 
-class DetteController extends GetxController
-    with StateMixin<List<DetteModel>> {
+class DetteController extends GetxController with StateMixin<List<DetteModel>> {
   final DetteApi detteApi = DetteApi();
   final ProfilController profilController = Get.find();
-   final CreanceDetteController creanceDetteController =
+  final CreanceDetteController creanceDetteController =
       Get.put(CreanceDetteController());
 
   var detteList = <DetteModel>[].obs;
@@ -38,10 +37,7 @@ class DetteController extends GetxController
   final _paye = 0.0.obs; // total creanceDette
   double get paye => _paye.value;
 
-  var creanceDetteList = <CreanceDetteModel>[].obs; 
-
-
-
+  var creanceDetteList = <CreanceDetteModel>[].obs;
 
   @override
   void onInit() {
@@ -84,7 +80,7 @@ class DetteController extends GetxController
 
       for (var item in creanceDetteList) {
         _paye.value += double.parse(item.montant);
-      }  
+      }
       change(detteList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -102,7 +98,7 @@ class DetteController extends GetxController
       await detteApi.deleteData(id).then((value) {
         detteList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -158,21 +154,21 @@ class DetteController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = DetteModel(
-        id: data.id,
-        nomComplet: nomCompletController.text,
-        pieceJustificative: pieceJustificativeController.text,
-        libelle: libelleController.text,
-        montant: montantController.text,
-        numeroOperation: data.numeroOperation,
-        statutPaie: data.statutPaie,
-        signature: profilController.user.matricule,
-        created: data.created,
-        approbationDG: data.approbationDG,
-        motifDG: data.motifDG,
-        signatureDG: data.signatureDG,
-        approbationDD: data.approbationDD,
-        motifDD: data.motifDD,
-        signatureDD: data.signatureDD);
+          id: data.id,
+          nomComplet: nomCompletController.text,
+          pieceJustificative: pieceJustificativeController.text,
+          libelle: libelleController.text,
+          montant: montantController.text,
+          numeroOperation: data.numeroOperation,
+          statutPaie: data.statutPaie,
+          signature: profilController.user.matricule,
+          created: data.created,
+          approbationDG: data.approbationDG,
+          motifDG: data.motifDG,
+          signatureDG: data.signatureDG,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD);
       await detteApi.updateData(dataItem).then((value) {
         detteList.clear();
         getList();
@@ -192,7 +188,7 @@ class DetteController extends GetxController
     }
   }
 
-    void submitobservation(DetteModel data) async {
+  void submitobservation(DetteModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = DetteModel(
@@ -228,7 +224,7 @@ class DetteController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 
   void submitDG(DetteModel data) async {
     try {
@@ -286,8 +282,8 @@ class DetteController extends GetxController
           motifDG: '-',
           signatureDG: '-',
           approbationDD: approbationDD,
-          motifDD: (motifDDController.text == '') 
-            ? '-' : motifDDController.text,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await detteApi.updateData(dataItem).then((value) {
         detteList.clear();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/finances/banque_api.dart'; 
+import 'package:wm_solution/src/api/finances/banque_api.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
-import 'package:wm_solution/src/models/finances/banque_name_model.dart'; 
+import 'package:wm_solution/src/models/finances/banque_name_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/type_operation.dart';
@@ -22,7 +22,7 @@ class BanqueController extends GetxController
   TextEditingController nomCompletController = TextEditingController();
   TextEditingController pieceJustificativeController = TextEditingController();
   TextEditingController libelleController = TextEditingController();
-  TextEditingController montantController = TextEditingController(); 
+  TextEditingController montantController = TextEditingController();
 
   String? typeOperation; // For Update
 
@@ -32,7 +32,7 @@ class BanqueController extends GetxController
   final _recette = 0.0.obs;
   double get recette => _recette.value;
   final _depenses = 0.0.obs;
-  double get depenses => _depenses.value; 
+  double get depenses => _depenses.value;
 
   @override
   void onInit() {
@@ -51,16 +51,16 @@ class BanqueController extends GetxController
     nomCompletController.dispose();
     pieceJustificativeController.dispose();
     libelleController.dispose();
-    montantController.dispose(); 
+    montantController.dispose();
     super.dispose();
   }
 
   void getList() async {
     await banqueApi.getAllData().then((response) {
       banqueList.assignAll(response);
-      List<BanqueModel?> recetteList =
-          banqueList
-          .where((element) => element.typeOperation == "Depot").toList();
+      List<BanqueModel?> recetteList = banqueList
+          .where((element) => element.typeOperation == "Depot")
+          .toList();
       List<BanqueModel?> depensesList = banqueList
           .where((element) => element.typeOperation == "Retrait")
           .toList();
@@ -87,7 +87,7 @@ class BanqueController extends GetxController
       await banqueApi.deleteData(id).then((value) {
         banqueList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

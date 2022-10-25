@@ -51,7 +51,7 @@ class PersonnelsRolesController extends GetxController
       await personnelsRoleApi.deleteData(id).then((value) {
         personnelsRoleList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -70,11 +70,10 @@ class PersonnelsRolesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AgentRoleModel(
-        reference: id,
-        departement: departement,
-        agent: agentController.text,
-        role: roleController.text
-      );
+          reference: id,
+          departement: departement,
+          agent: agentController.text,
+          role: roleController.text);
       await personnelsRoleApi.insertData(dataItem).then((value) {
         personnelsRoleList.clear();
         getList();
@@ -98,11 +97,10 @@ class PersonnelsRolesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AgentRoleModel(
-        reference: data.reference,
-        departement: data.departement,
-        agent: agentController.text,
-        role: roleController.text
-      );
+          reference: data.reference,
+          departement: data.departement,
+          agent: agentController.text,
+          role: roleController.text);
       await personnelsRoleApi.updateData(dataItem).then((value) {
         personnelsRoleList.clear();
         getList();

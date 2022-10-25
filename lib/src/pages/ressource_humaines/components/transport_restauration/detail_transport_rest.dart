@@ -32,6 +32,10 @@ class DetailTransportRest extends StatefulWidget {
 }
 
 class _DetailTransportRestState extends State<DetailTransportRest> {
+  final ProfilController profilController = Get.put(ProfilController());
+  final TransportRestController controller = Get.put(TransportRestController());
+  final TransportRestPersonnelsController controllerAgent =
+      Get.put(TransportRestPersonnelsController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
@@ -41,10 +45,6 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   @override
   Widget build(BuildContext context) {
-    final ProfilController profilController = Get.put(ProfilController()); 
-    final TransportRestController controller = Get.put(TransportRestController());
-    final TransportRestPersonnelsController controllerAgent =
-        Get.put(TransportRestPersonnelsController());
     return controllerAgent.obx(
         onLoading: loading(),
         onEmpty: const Text('Aucune donnée'),
@@ -56,16 +56,16 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                   widget.transportRestaurationModel.title),
               drawer: const DrawerMenu(),
               floatingActionButton:
-                (widget.transportRestaurationModel.isSubmit == "true")
-                  ? Container()
-                  : FloatingActionButton.extended(
-                      label: const Text("Ajouter une personne"),
-                      tooltip: "Ajout personne à la liste",
-                      icon: const Icon(Icons.person_add),
-                      onPressed: () {
-                        detailAgentDialog(controller, controllerAgent);
-                      },
-                    ),
+                  (widget.transportRestaurationModel.isSubmit == "true")
+                      ? Container()
+                      : FloatingActionButton.extended(
+                          label: const Text("Ajouter une personne"),
+                          tooltip: "Ajout personne à la liste",
+                          icon: const Icon(Icons.person_add),
+                          onPressed: () {
+                            detailAgentDialog(controller, controllerAgent);
+                          },
+                        ),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,75 +85,77 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                     BorderRadius.all(Radius.circular(20))),
                             child: Column(
                               children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: p20),
-                            child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      if (Responsive.isDesktop(context))
-                                        TitleWidget(
-                                            title: widget
-                                                .transportRestaurationModel
-                                                .title),
-                                      if (!Responsive.isDesktop(
-                                          context))
-                                        Container(),
-                                      Column(
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              if (widget
-                                                      .transportRestaurationModel
-                                                      .isSubmit ==
-                                                  "false")
-                                              IconButton(
-                                                  color: Colors
-                                                      .green.shade700,
-                                                  onPressed: () {
-                                                    controller.sendDD(widget
-                                                        .transportRestaurationModel);
-                                                  },
-                                                  icon: const Icon(
-                                                      Icons.send)),
-                                              if (widget
-                                                      .transportRestaurationModel
-                                                      .isSubmit ==
-                                                  "false")
-                                                IconButton(
-                                                    color: Colors
-                                                        .red.shade700,
-                                                    onPressed: () {
-                                                      controller.deleteData(
-                                                          widget
-                                                        .transportRestaurationModel.id!);
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.delete)),
-                                              PrintWidget(
-                                                  onPressed: () async {
-                                                await TransRestPdf.generate(
-                                                    state!,
-                                                    widget
-                                                        .transportRestaurationModel);
-                                              }),
-                                            ],
-                                          ),
-                                          SelectableText(
-                                              DateFormat(
-                                                      "dd-MM-yyyy HH:mm")
-                                                  .format(widget
-                                                      .transportRestaurationModel
-                                                      .created),
-                                              textAlign:
-                                                  TextAlign.start),
+                                              if (Responsive.isDesktop(context))
+                                                TitleWidget(
+                                                    title: widget
+                                                        .transportRestaurationModel
+                                                        .title),
+                                              if (!Responsive.isDesktop(
+                                                  context))
+                                                Container(),
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      if (widget
+                                                              .transportRestaurationModel
+                                                              .isSubmit ==
+                                                          "false")
+                                                        IconButton(
+                                                            color: Colors
+                                                                .green.shade700,
+                                                            onPressed: () {
+                                                              controller.sendDD(
+                                                                  widget
+                                                                      .transportRestaurationModel);
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.send)),
+                                                      if (widget
+                                                              .transportRestaurationModel
+                                                              .isSubmit ==
+                                                          "false")
+                                                        IconButton(
+                                                            tooltip:
+                                                                'Supprimer',
+                                                            onPressed:
+                                                                () async {
+                                                              alertDeleteDialog();
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.delete),
+                                                            color: Colors
+                                                                .red.shade700),
+                                                      PrintWidget(
+                                                          onPressed: () async {
+                                                        await TransRestPdf.generate(
+                                                            state!,
+                                                            widget
+                                                                .transportRestaurationModel);
+                                                      }),
+                                                    ],
+                                                  ),
+                                                  SelectableText(
+                                                      DateFormat(
+                                                              "dd-MM-yyyy HH:mm")
+                                                          .format(widget
+                                                              .transportRestaurationModel
+                                                              .created),
+                                                      textAlign:
+                                                          TextAlign.start),
                                                 ],
                                               )
                                             ],
@@ -174,6 +176,38 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                 ],
               ),
             ));
+  }
+
+  alertDeleteDialog() {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return AlertDialog(
+              title: Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: mainColor)),
+              content: const SizedBox(
+                  // height: 100,
+                  width: 100,
+                  child: Text("Cette action permet de supprimer le document")),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Annuler'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    controller
+                        .deleteData(widget.transportRestaurationModel.id!);
+                    Navigator.pop(context, 'ok');
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          });
+        });
   }
 
   Widget dataWidget(TransportRestController controller) {
@@ -304,32 +338,38 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
       Container(
         padding: const EdgeInsets.all(p10),
         width: 100,
-        child: AutoSizeText("N°", style: bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
+        child: AutoSizeText("N°",
+            style: bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
       ),
       Container(
         padding: const EdgeInsets.all(p10),
         width: 200,
-        child: AutoSizeText("Nom", style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+        child: AutoSizeText("Nom",
+            style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
       ),
       Container(
         padding: const EdgeInsets.all(p10),
         width: 200,
-        child: AutoSizeText("Prenom", style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+        child: AutoSizeText("Prenom",
+            style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
       ),
       Container(
         padding: const EdgeInsets.all(p10),
         width: 200,
-        child: AutoSizeText("Matricule", style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+        child: AutoSizeText("Matricule",
+            style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
       ),
       Container(
         padding: const EdgeInsets.all(p10),
         width: 200,
-        child: AutoSizeText("Montant", style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+        child: AutoSizeText("Montant",
+            style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
       ),
       Container(
         padding: const EdgeInsets.all(p10),
         width: 200,
-        child: AutoSizeText("Retirer", style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+        child: AutoSizeText("Retirer",
+            style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
       ),
     ]);
   }
@@ -369,10 +409,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         child: (widget.transportRestaurationModel.isSubmit == "true")
             ? IconButton(
                 color: Colors.green.shade700,
-                onPressed: () {
-                  
-                },
-                icon: const Icon(Icons.check_box)) 
+                onPressed: () {},
+                icon: const Icon(Icons.check_box))
             : IconButton(
                 color: Colors.red.shade700,
                 onPressed: () {
@@ -383,7 +421,6 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
     ]);
   }
 
- 
   checkboxAgentPaye(TransportRestPersonnelsController controllerAgent,
       TransRestAgentsModel item) {
     bool isCheckedItem = false;
@@ -430,7 +467,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                             const SizedBox(
                               width: p10,
                             ),
-                            Expanded(child: nomWidget(controllerAgent))  
+                            Expanded(child: nomWidget(controllerAgent))
                           ],
                         ),
                         Row(
@@ -510,17 +547,16 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         Get.put(PersonnelsController());
 
     List<String> suggestionList =
-        controllerPersonnels.personnelsList.map((e) => e.matricule).toList(); 
+        controllerPersonnels.personnelsList.map((e) => e.matricule).toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
           controller: controllerAgent.matriculeController,
           decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: "Matricule",
-            hintText: "-"
-          ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              labelText: "Matricule",
+              hintText: "-"),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
           progressIndicatorBuilder: loading(),
@@ -569,7 +605,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         ));
   }
 
-  Widget approbationWidget(TransportRestController controller, ProfilController profilController) {
+  Widget approbationWidget(
+      TransportRestController controller, ProfilController profilController) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(

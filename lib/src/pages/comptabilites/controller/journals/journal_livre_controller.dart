@@ -4,7 +4,8 @@ import 'package:wm_solution/src/api/comptabilite/journal_livre_api.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class JournalLivreController extends GetxController with StateMixin<List<JournalLivreModel>> {
+class JournalLivreController extends GetxController
+    with StateMixin<List<JournalLivreModel>> {
   final JournalLivreApi journalLivreApi = JournalLivreApi();
   final ProfilController profilController = Get.find();
 
@@ -17,14 +18,12 @@ class JournalLivreController extends GetxController with StateMixin<List<Journal
   DateTimeRange? dateRange;
   TextEditingController intituleController = TextEditingController();
 
-
-       // Approbations
+  // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
   String approbationDG = '-';
-  String approbationDD = '-'; 
-  TextEditingController motifDDController = TextEditingController(); 
-
+  String approbationDD = '-';
+  TextEditingController motifDDController = TextEditingController();
 
   @override
   void onInit() {
@@ -59,7 +58,7 @@ class JournalLivreController extends GetxController with StateMixin<List<Journal
       await journalLivreApi.deleteData(id).then((value) {
         journalLivreList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -77,12 +76,12 @@ class JournalLivreController extends GetxController with StateMixin<List<Journal
   void submit() async {
     try {
       _isLoading.value = true;
-       final journalLivre = JournalLivreModel(
+      final journalLivre = JournalLivreModel(
           intitule: intituleController.text,
           debut: dateRange!.start,
           fin: dateRange!.end,
           signature: profilController.user.matricule,
-          created: DateTime.now(), 
+          created: DateTime.now(),
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
@@ -105,11 +104,10 @@ class JournalLivreController extends GetxController with StateMixin<List<Journal
     }
   }
 
-
   void submitDD(JournalLivreModel data) async {
     try {
       _isLoading.value = true;
-       final journalLivre = JournalLivreModel(
+      final journalLivre = JournalLivreModel(
           intitule: data.intitule,
           debut: data.debut,
           fin: data.fin,

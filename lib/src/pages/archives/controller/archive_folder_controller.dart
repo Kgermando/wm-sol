@@ -28,7 +28,6 @@ class ArchiveFolderController extends GetxController
     super.dispose();
   }
 
-
   void getList() async {
     await archiveFolderApi.getAllData().then((response) {
       archiveFolderList.assignAll(response);
@@ -50,7 +49,7 @@ class ArchiveFolderController extends GetxController
       await archiveFolderApi.deleteData(id).then((value) {
         archiveFolderList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -65,7 +64,7 @@ class ArchiveFolderController extends GetxController
     }
   }
 
-   void submit() async {
+  void submit() async {
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveFolderModel(
@@ -75,7 +74,7 @@ class ArchiveFolderController extends GetxController
           created: DateTime.now());
       await archiveFolderApi.insertData(archiveModel).then((value) {
         archiveFolderList.clear();
-        getList(); 
+        getList();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -102,7 +101,7 @@ class ArchiveFolderController extends GetxController
   //         created: DateTime.now());
   //     await archiveFolderApi.updateData(transRest).then((value) {
   //       archiveFolderList.clear();
-  //       getList(); 
+  //       getList();
   //       Get.snackbar("Soumission effectuée avec succès!",
   //           "Le document a bien été sauvegader",
   //           backgroundColor: Colors.green,

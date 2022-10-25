@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comm_marketing/commerciale/number_facture_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/number_facture.dart'; 
+import 'package:wm_solution/src/models/comm_maketing/number_facture.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class NumeroFactureController extends GetxController
@@ -41,7 +41,7 @@ class NumeroFactureController extends GetxController
       await numberFactureApi.deleteData(id).then((value) {
         numberFactureList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

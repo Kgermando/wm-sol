@@ -18,7 +18,7 @@ class ApprovisionReceptionController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-    List<String> departementList = Dropdown().departement;
+  List<String> departementList = Dropdown().departement;
 
   String? departement;
   TextEditingController provisionController = TextEditingController();
@@ -59,7 +59,7 @@ class ApprovisionReceptionController extends GetxController
       await approvisionReceptionApi.deleteData(id).then((value) {
         approvisionReceptionList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -78,16 +78,15 @@ class ApprovisionReceptionController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
-        provision: data.provision,
-        departement: departement.toString(), 
-        quantity: quantityController.text,
-        unite: data.unite,
-        signatureLivraison: profilController.user.matricule,
-        created: DateTime.now(),
-        accuseReception: 'false',
-        signatureReception: '-',
-        createdReception: DateTime.now()
-      );
+          provision: data.provision,
+          departement: departement.toString(),
+          quantity: quantityController.text,
+          unite: data.unite,
+          signatureLivraison: profilController.user.matricule,
+          created: DateTime.now(),
+          accuseReception: 'false',
+          signatureReception: '-',
+          createdReception: DateTime.now());
       await approvisionReceptionApi.insertData(dataItem).then((value) {
         approvisionReceptionList.clear();
         getList();
@@ -111,16 +110,15 @@ class ApprovisionReceptionController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
-        provision: data.provision,
-        departement: data.departement,
-        quantity: data.quantity,
-        unite: data.unite,
-        signatureLivraison: data.signatureLivraison,
-        created: data.created,
-        accuseReception: boolean,
-        signatureReception: profilController.user.matricule,
-        createdReception: DateTime.now()
-      );
+          provision: data.provision,
+          departement: data.departement,
+          quantity: data.quantity,
+          unite: data.unite,
+          signatureLivraison: data.signatureLivraison,
+          created: data.created,
+          accuseReception: boolean,
+          signatureReception: profilController.user.matricule,
+          createdReception: DateTime.now());
       await approvisionReceptionApi.updateData(dataItem).then((value) {
         approvisionReceptionList.clear();
         getList();

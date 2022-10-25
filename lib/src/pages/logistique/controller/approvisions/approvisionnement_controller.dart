@@ -17,7 +17,7 @@ class ApprovisionnementController extends GetxController
   bool get isLoading => _isLoading.value;
 
   List<String> unitesList = Dropdown().unites;
-  
+
   TextEditingController provisionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   String? unite;
@@ -55,7 +55,7 @@ class ApprovisionnementController extends GetxController
       await approvisionnementApi.deleteData(id).then((value) {
         approvisionnementList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

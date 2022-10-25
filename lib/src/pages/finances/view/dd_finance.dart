@@ -108,231 +108,228 @@ class _DDFinanceState extends State<DDFinance> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Card(
-                                  color: Colors.purple.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Salaires',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${rhNotifyController.itemCountSalaireFin} dossiers necessitent votre approbation",
-                                        style: bodyMedium!
-                                            .copyWith(color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen1 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableSalaireFinance(
-                                          salaireController: salaireController)
-                                    ],
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Card(
+                                color: Colors.purple.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Salaires',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${rhNotifyController.itemCountSalaireFin} dossiers necessitent votre approbation",
+                                      style: bodyMedium!
+                                          .copyWith(color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen1 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [
+                                    TableSalaireFinance(
+                                        salaireController: salaireController)
+                                  ],
                                 ),
-                                Card(
-                                  color: Colors.blue.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text(
-                                        'Dossier Transports & Restaurations',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${rhNotifyController.itemCountTransRestFin} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen5 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(Icons.arrow_drop_down,
-                                        color: Colors.white),
-                                    children: [
-                                      TableTransportRestFinance(
-                                          transportRestController:
-                                              transportRestController)
-                                    ],
+                              ),
+                              Card(
+                                color: Colors.blue.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text(
+                                      'Dossier Transports & Restaurations',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${rhNotifyController.itemCountTransRestFin} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen5 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  children: [
+                                    TableTransportRestFinance(
+                                        transportRestController:
+                                            transportRestController)
+                                  ],
+                                ),
+                              ),
+                              Card(
+                                color: Colors.green.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Campaigns',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${comMarketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen2 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [
+                                    TableCampaignFin(
+                                        campaignController:
+                                            campaignController)
+                                  ],
                                 ),
-                                Card(
-                                  color: Colors.green.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Campaigns',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${comMarketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen2 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableCampaignFin(
-                                          campaignController:
-                                              campaignController)
-                                    ],
+                              ),
+                              Card(
+                                color: Colors.grey.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Projets',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${expController.itemCountProjetFin} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen4 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [
+                                    TableProjetFin(
+                                        projetController: projetController)
+                                  ],
                                 ),
-                                Card(
-                                  color: Colors.grey.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Projets',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${expController.itemCountProjetFin} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen4 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableProjetFin(
-                                          projetController: projetController)
-                                    ],
+                              ),
+                              Card(
+                                color: Colors.grey.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Etat de besoins',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${devisNotifyController.itemCountDevisFin} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen3 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [
+                                    TableDevisFinance(
+                                        devisController: devisController)
+                                  ],
                                 ),
-                                Card(
-                                  color: Colors.grey.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Etat de besoins',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${devisNotifyController.itemCountDevisFin} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen3 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableDevisFinance(
-                                          devisController: devisController)
-                                    ],
+                              ),
+                              Card(
+                                color: Colors.red.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Dette',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${financeNotifyController.detteCountDD} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen6 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [
+                                    TableDetteDD(
+                                        detteController: detteController)
+                                  ],
                                 ),
-                                Card(
-                                  color: Colors.red.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Dette',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${financeNotifyController.detteCountDD} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen6 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableDetteDD(
-                                          detteController: detteController)
-                                    ],
+                              ),
+                              Card(
+                                color: Colors.orange.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Créances',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${financeNotifyController.creanceCountDD} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen7 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [
+                                    TableCreanceDD(
+                                        creanceController: creanceController)
+                                  ],
                                 ),
-                                Card(
-                                  color: Colors.orange.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Créances',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${financeNotifyController.creanceCountDD} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen7 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableCreanceDD(
-                                          creanceController: creanceController)
-                                    ],
-                                  ),
-                                ),
-                              ]),
-                        )),
+                              ),
+                            ])),
                   ))
             ],
           )),

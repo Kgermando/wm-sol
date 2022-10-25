@@ -32,81 +32,84 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
 
   @override
   Widget build(BuildContext context) {
-    return PlutoGrid(
-      columns: columns,
-      rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.last;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: PlutoGrid(
+        columns: columns,
+        rows: rows,
+        onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+          final dataId = tapEvent.row!.cells.values;
+          final idPlutoRow = dataId.last;
 
-        final EntretienModel entretienModel =
-            await widget.entretienController.detailView(idPlutoRow.value);
+          final EntretienModel entretienModel =
+              await widget.entretienController.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logEntretienDetail,
-            arguments: entretienModel);
-      },
-      onLoaded: (PlutoGridOnLoadedEvent event) {
-        stateManager = event.stateManager;
-        stateManager!.setShowColumnFilter(true);
-        stateManager!.setShowLoading(true);
-      },
-      createHeader: (PlutoGridStateManager header) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const TitleWidget(title: "Entretiens & Maintenances"),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, LogistiqueRoutes.logEntretien);
-                    },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
-                PrintWidget(onPressed: () {
-                  EntretienXlsx().exportToExcel(widget.entretienController.entretienList);
-                  if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text("Exportation effectué!"),
-                    backgroundColor: Colors.green[700],
-                  ));
-                })
-              ],
-            ),
-          ],
-        );
-      },
-      configuration: PlutoGridConfiguration(
-        columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters,
-          ],
-          resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'numero') {
+          Get.toNamed(LogistiqueRoutes.logEntretienDetail,
+              arguments: entretienModel);
+        },
+        onLoaded: (PlutoGridOnLoadedEvent event) {
+          stateManager = event.stateManager;
+          stateManager!.setShowColumnFilter(true);
+          stateManager!.setShowLoading(true);
+        },
+        createHeader: (PlutoGridStateManager header) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: "Entretiens & Maintenances"),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, LogistiqueRoutes.logEntretien);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                  PrintWidget(onPressed: () {
+                    EntretienXlsx().exportToExcel(widget.entretienController.entretienList);
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text("Exportation effectué!"),
+                      backgroundColor: Colors.green[700],
+                    ));
+                  })
+                ],
+              ),
+            ],
+          );
+        },
+        configuration: PlutoGridConfiguration(
+          columnFilter: PlutoGridColumnFilterConfig(
+            filters: const [
+              ...FilterHelper.defaultFilters,
+            ],
+            resolveDefaultColumnFilter: (column, resolver) {
+              if (column.field == 'numero') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'nom') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'typeObjet') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'typeMaintenance') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'dureeTravaux') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'created') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'approbationDD') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'id') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              }
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nom') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'typeObjet') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'typeMaintenance') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'dureeTravaux') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDD') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'id') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }
-            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-          },
+            },
+          ),
         ),
+        createFooter: (stateManager) {
+          stateManager.setPageSize(20, notify: true); // default 40
+          return PlutoPagination(stateManager);
+        },
       ),
-      createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: true); // default 40
-        return PlutoPagination(stateManager);
-      },
     );
   }
 

@@ -4,11 +4,9 @@ import 'package:wm_solution/src/api/comptabilite/bilan_api.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class BilanController extends GetxController
-    with StateMixin<List<BilanModel>> {
+class BilanController extends GetxController with StateMixin<List<BilanModel>> {
   final BilanApi bilanApi = BilanApi();
   final ProfilController profilController = Get.find();
-
 
   var bilanList = <BilanModel>[].obs;
 
@@ -18,13 +16,12 @@ class BilanController extends GetxController
 
   TextEditingController titleBilanController = TextEditingController();
 
-         // Approbations
+  // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
   String approbationDG = '-';
   String approbationDD = '-';
-  TextEditingController motifDDController = TextEditingController(); 
-
+  TextEditingController motifDDController = TextEditingController();
 
   @override
   void onInit() {
@@ -38,7 +35,6 @@ class BilanController extends GetxController
     titleBilanController.dispose();
     super.dispose();
   }
-
 
   void getList() async {
     await bilanApi.getAllData().then((response) {
@@ -60,7 +56,7 @@ class BilanController extends GetxController
       await bilanApi.deleteData(id).then((value) {
         bilanList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -75,7 +71,6 @@ class BilanController extends GetxController
     }
   }
 
-
   void submit() async {
     try {
       _isLoading.value = true;
@@ -83,7 +78,7 @@ class BilanController extends GetxController
           titleBilan: titleBilanController.text,
           signature: profilController.user.matricule,
           created: DateTime.now(),
-          isSubmit: 'false', 
+          isSubmit: 'false',
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
@@ -104,7 +99,7 @@ class BilanController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 
   void sendDD(BilanModel data) async {
     try {
@@ -114,7 +109,7 @@ class BilanController extends GetxController
           titleBilan: data.titleBilan,
           signature: data.signature,
           created: data.created,
-          isSubmit: 'true', 
+          isSubmit: 'true',
           approbationDD: data.approbationDD,
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
@@ -135,9 +130,8 @@ class BilanController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  }  
+  }
 
-  
   void submitDD(BilanModel data) async {
     try {
       _isLoading.value = true;
@@ -169,5 +163,4 @@ class BilanController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
 }

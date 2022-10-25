@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/presence_personnel_api.dart';
-import 'package:wm_solution/src/models/rh/presence_model.dart'; 
+import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/models/rh/presence_personnel_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -32,11 +32,12 @@ class PresencePersonneController extends GetxController
     super.onInit();
     getList();
 
-      for (var element in presencePersonneList) {
-      _isHoursCumulsWork.value += element.createdSortie.hour - element.created.hour;
+    for (var element in presencePersonneList) {
+      _isHoursCumulsWork.value +=
+          element.createdSortie.hour - element.created.hour;
     }
 
-     _isJoursWork.value += presencePersonneList.length;
+    _isJoursWork.value += presencePersonneList.length;
 
     for (var element in presencePersonneList) {
       _isHoursWork.value += element.createdSortie.hour - element.created.hour;
@@ -50,10 +51,9 @@ class PresencePersonneController extends GetxController
     super.dispose();
   }
 
-
   void getList() async {
     await presencePersonnelApi.getAllData().then((response) {
-      presencePersonneList.assignAll(response); 
+      presencePersonneList.assignAll(response);
       change(presencePersonneList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -71,7 +71,7 @@ class PresencePersonneController extends GetxController
       await presencePersonnelApi.deleteData(id).then((value) {
         presencePersonneList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -148,5 +148,5 @@ class PresencePersonneController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 }

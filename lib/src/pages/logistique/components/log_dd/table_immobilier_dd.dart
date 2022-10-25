@@ -33,83 +33,86 @@ class _TableImmobilierDDState extends State<TableImmobilierDD> {
 
   @override
   Widget build(BuildContext context) {
-    return PlutoGrid(
-      columns: columns,
-      rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.last;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: PlutoGrid(
+        columns: columns,
+        rows: rows,
+        onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+          final dataId = tapEvent.row!.cells.values;
+          final idPlutoRow = dataId.last;
 
-        final ImmobilierModel immobilierModel =
-            await widget.immobilierController.detailView(idPlutoRow.value);
+          final ImmobilierModel immobilierModel =
+              await widget.immobilierController.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logImmobilierMaterielDetail,
-            arguments: immobilierModel);
-      },
-      onLoaded: (PlutoGridOnLoadedEvent event) {
-        stateManager = event.stateManager;
-        stateManager!.setShowColumnFilter(true);
-        stateManager!.setShowLoading(true);
-      },
-      createHeader: (PlutoGridStateManager header) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const TitleWidget(title: "Immobiliers"),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, LogistiqueRoutes.logImmobilierMateriel);
-                    },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
-                PrintWidget(onPressed: () {
-                  ImmobilierXlsx().exportToExcel(widget.immobilierController.immobilierList);
-                  if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text("Exportation effectué!"),
-                    backgroundColor: Colors.green[700],
-                  ));
-                })
-              ],
-            ),
-          ],
-        );
-      },
-      configuration: PlutoGridConfiguration(
-        columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters,
-          ],
-          resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'numero') {
+          Get.toNamed(LogistiqueRoutes.logImmobilierMaterielDetail,
+              arguments: immobilierModel);
+        },
+        onLoaded: (PlutoGridOnLoadedEvent event) {
+          stateManager = event.stateManager;
+          stateManager!.setShowColumnFilter(true);
+          stateManager!.setShowLoading(true);
+        },
+        createHeader: (PlutoGridStateManager header) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: "Immobiliers"),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, LogistiqueRoutes.logImmobilierMateriel);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                  PrintWidget(onPressed: () {
+                    ImmobilierXlsx().exportToExcel(widget.immobilierController.immobilierList);
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text("Exportation effectué!"),
+                      backgroundColor: Colors.green[700],
+                    ));
+                  })
+                ],
+              ),
+            ],
+          );
+        },
+        configuration: PlutoGridConfiguration(
+          columnFilter: PlutoGridColumnFilterConfig(
+            filters: const [
+              ...FilterHelper.defaultFilters,
+            ],
+            resolveDefaultColumnFilter: (column, resolver) {
+              if (column.field == 'numero') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'typeAllocation') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'numeroCertificat') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'superficie') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'dateAcquisition') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'created') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'approbationDG') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'approbationDD') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'id') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              }
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'typeAllocation') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'numeroCertificat') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'superficie') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'dateAcquisition') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDG') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDD') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'id') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }
-            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-          },
+            },
+          ),
         ),
+        createFooter: (stateManager) {
+          stateManager.setPageSize(20, notify: true); // default 40
+          return PlutoPagination(stateManager);
+        },
       ),
-      createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: true); // default 40
-        return PlutoPagination(stateManager);
-      },
     );
   }
 

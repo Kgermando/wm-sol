@@ -15,22 +15,18 @@ class ImmobilierController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-    // Approbations
+  // Approbations
   String approbationDG = '-';
   String approbationDD = '-';
   TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
 
   TextEditingController titleController = TextEditingController();
-  TextEditingController typeAllocationController =
-      TextEditingController();
+  TextEditingController typeAllocationController = TextEditingController();
   TextEditingController adresseController = TextEditingController();
-  TextEditingController numeroCertificatController =
-      TextEditingController();
+  TextEditingController numeroCertificatController = TextEditingController();
   TextEditingController superficieController = TextEditingController();
-  TextEditingController dateAcquisitionController =
-      TextEditingController();
-
+  TextEditingController dateAcquisitionController = TextEditingController();
 
   @override
   void onInit() {
@@ -52,7 +48,6 @@ class ImmobilierController extends GetxController
     super.dispose();
   }
 
-
   void getList() async {
     await immobilierApi.getAllData().then((response) {
       immobilierList.assignAll(response);
@@ -73,7 +68,7 @@ class ImmobilierController extends GetxController
       await immobilierApi.deleteData(id).then((value) {
         immobilierList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -92,20 +87,20 @@ class ImmobilierController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ImmobilierModel(
-        title: titleController.text,
-        typeAllocation: typeAllocationController.text,
-        adresse: adresseController.text,
-        numeroCertificat: numeroCertificatController.text,
-        superficie: superficieController.text,
-        dateAcquisition: DateTime.parse(dateAcquisitionController.text),
-        signature: profilController.user.matricule, 
-        created: DateTime.now(),
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+          title: titleController.text,
+          typeAllocation: typeAllocationController.text,
+          adresse: adresseController.text,
+          numeroCertificat: numeroCertificatController.text,
+          superficie: superficieController.text,
+          dateAcquisition: DateTime.parse(dateAcquisitionController.text),
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await immobilierApi.insertData(dataItem).then((value) {
         immobilierList.clear();
         getList();
@@ -129,21 +124,21 @@ class ImmobilierController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ImmobilierModel(
-        id: data.id,
-        title: titleController.text,
-        typeAllocation: typeAllocationController.text,
-        adresse: adresseController.text,
-        numeroCertificat: numeroCertificatController.text,
-        superficie: superficieController.text,
-        dateAcquisition: DateTime.parse(dateAcquisitionController.text),
-        signature: profilController.user.matricule, 
-        created: data.created,
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+          id: data.id,
+          title: titleController.text,
+          typeAllocation: typeAllocationController.text,
+          adresse: adresseController.text,
+          numeroCertificat: numeroCertificatController.text,
+          superficie: superficieController.text,
+          dateAcquisition: DateTime.parse(dateAcquisitionController.text),
+          signature: profilController.user.matricule,
+          created: data.created,
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await immobilierApi.updateData(dataItem).then((value) {
         immobilierList.clear();
         getList();
@@ -174,7 +169,7 @@ class ImmobilierController extends GetxController
           numeroCertificat: data.numeroCertificat,
           superficie: data.superficie,
           dateAcquisition: data.dateAcquisition,
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDG: approbationDG,
           motifDG:
@@ -182,7 +177,7 @@ class ImmobilierController extends GetxController
           signatureDG: profilController.user.matricule,
           approbationDD: data.approbationDD,
           motifDD: data.motifDD,
-          signatureDD: data.signatureDD); 
+          signatureDD: data.signatureDD);
       await immobilierApi.updateData(dataItem).then((value) {
         immobilierList.clear();
         getList();
@@ -213,7 +208,7 @@ class ImmobilierController extends GetxController
           numeroCertificat: data.numeroCertificat,
           superficie: data.superficie,
           dateAcquisition: data.dateAcquisition,
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDG: '-',
           motifDG: '-',
@@ -221,7 +216,7 @@ class ImmobilierController extends GetxController
           approbationDD: approbationDD,
           motifDD:
               (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule); 
+          signatureDD: profilController.user.matricule);
       await immobilierApi.updateData(dataItem).then((value) {
         immobilierList.clear();
         getList();
@@ -240,6 +235,4 @@ class ImmobilierController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-
 }

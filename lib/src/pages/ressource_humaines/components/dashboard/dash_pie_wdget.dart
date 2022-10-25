@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/models/rh/agent_count_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -20,7 +19,8 @@ class _DashRHPieWidgetState extends State<DashRHPieWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Responsive.isDesktop(context) ? 400 : double.infinity,
+      // width: Responsive.isDesktop(context) ? 400 : double.infinity,
+      width: MediaQuery.maybeOf(context)!.size.width / 1.1,
       child: Card(
         elevation: 6,
         child: SfCircularChart(

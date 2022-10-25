@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comptabilite/compte_resultat_api.dart';
-import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart'; 
+import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class CompteResultatController extends GetxController with StateMixin<List<CompteResulatsModel>> {
+class CompteResultatController extends GetxController
+    with StateMixin<List<CompteResulatsModel>> {
   final CompteResultatApi compteResultatApi = CompteResultatApi();
   final ProfilController profilController = Get.find();
 
@@ -14,15 +15,14 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-     // Approbations
+  // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
   String approbationDG = '-';
-  String approbationDD = '-'; 
-  TextEditingController motifDDController = TextEditingController(); 
+  String approbationDD = '-';
+  TextEditingController motifDDController = TextEditingController();
 
-
-   TextEditingController intituleController = TextEditingController();
+  TextEditingController intituleController = TextEditingController();
   TextEditingController achatMarchandisesController = TextEditingController();
   TextEditingController variationStockMarchandisesController =
       TextEditingController();
@@ -61,15 +61,14 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
       TextEditingController();
   TextEditingController soldeDebiteurController = TextEditingController();
 
-
   @override
   void onInit() {
     super.onInit();
     getList();
   }
 
-@override
-  void dispose() { 
+  @override
+  void dispose() {
     motifDDController.dispose();
 
     intituleController.dispose();
@@ -121,7 +120,7 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
       await compteResultatApi.deleteData(id).then((value) {
         compteResultatList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -169,7 +168,7 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
           soldeDebiteur: soldeDebiteurController.text,
           signature: profilController.user.matricule.toString(),
           createdRef: DateTime.now(),
-          created: DateTime.now(), 
+          created: DateTime.now(),
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
@@ -196,7 +195,7 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
     try {
       _isLoading.value = true;
       final compteResulatsModel = CompteResulatsModel(
-        id: data.id,
+          id: data.id,
           intitule: intituleController.text,
           achatMarchandises: achatMarchandisesController.text,
           variationStockMarchandises: variationStockMarchandisesController.text,
@@ -226,7 +225,7 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
           soldeDebiteur: soldeDebiteurController.text,
           signature: profilController.user.matricule,
           createdRef: data.createdRef,
-          created: DateTime.now(), 
+          created: DateTime.now(),
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
@@ -248,44 +247,43 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
           snackPosition: SnackPosition.TOP);
     }
   }
- 
+
   void submitDD(CompteResulatsModel data) async {
     try {
       _isLoading.value = true;
       final compteResulatsModel = CompteResulatsModel(
-        intitule: data.intitule,
-        achatMarchandises: data.achatMarchandises,
-        variationStockMarchandises: data.variationStockMarchandises,
-        achatApprovionnements: data.achatApprovionnements,
-        variationApprovionnements: data.variationApprovionnements,
-        autresChargesExterne: data.autresChargesExterne,
-        impotsTaxesVersementsAssimiles: data.impotsTaxesVersementsAssimiles,
-        renumerationPersonnel: data.renumerationPersonnel,
-        chargesSocialas: data.chargesSocialas,
-        dotatiopnsProvisions: data.dotatiopnsProvisions,
-        autresCharges: data.autresCharges,
-        chargesfinancieres: data.chargesfinancieres,
-        chargesExptionnelles: data.chargesExptionnelles,
-        impotSurbenefices: data.impotSurbenefices,
-        soldeCrediteur: data.soldeCrediteur,
-        ventesMarchandises: data.ventesMarchandises,
-        productionVendueBienEtSerices: data.productionVendueBienEtSerices,
-        productionStockee: data.productionStockee,
-        productionImmobilisee: data.productionImmobilisee,
-        subventionExploitation: data.subventionExploitation,
-        autreProduits: data.autreProduits,
-        montantExportation: data.montantExportation,
-        produitfinancieres: data.produitfinancieres,
-        produitExceptionnels: data.produitExceptionnels,
-        soldeDebiteur: data.soldeDebiteur,
-        signature: data.signature,
-        createdRef: data.createdRef,
-        created: data.created, 
-        approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule
-      );
+          intitule: data.intitule,
+          achatMarchandises: data.achatMarchandises,
+          variationStockMarchandises: data.variationStockMarchandises,
+          achatApprovionnements: data.achatApprovionnements,
+          variationApprovionnements: data.variationApprovionnements,
+          autresChargesExterne: data.autresChargesExterne,
+          impotsTaxesVersementsAssimiles: data.impotsTaxesVersementsAssimiles,
+          renumerationPersonnel: data.renumerationPersonnel,
+          chargesSocialas: data.chargesSocialas,
+          dotatiopnsProvisions: data.dotatiopnsProvisions,
+          autresCharges: data.autresCharges,
+          chargesfinancieres: data.chargesfinancieres,
+          chargesExptionnelles: data.chargesExptionnelles,
+          impotSurbenefices: data.impotSurbenefices,
+          soldeCrediteur: data.soldeCrediteur,
+          ventesMarchandises: data.ventesMarchandises,
+          productionVendueBienEtSerices: data.productionVendueBienEtSerices,
+          productionStockee: data.productionStockee,
+          productionImmobilisee: data.productionImmobilisee,
+          subventionExploitation: data.subventionExploitation,
+          autreProduits: data.autreProduits,
+          montantExportation: data.montantExportation,
+          produitfinancieres: data.produitfinancieres,
+          produitExceptionnels: data.produitExceptionnels,
+          soldeDebiteur: data.soldeDebiteur,
+          signature: data.signature,
+          createdRef: data.createdRef,
+          created: data.created,
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await compteResultatApi.updateData(compteResulatsModel).then((value) {
         compteResultatList.clear();
         getList();
@@ -304,6 +302,4 @@ class CompteResultatController extends GetxController with StateMixin<List<Compt
           snackPosition: SnackPosition.TOP);
     }
   }
-
- 
 }

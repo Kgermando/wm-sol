@@ -4,9 +4,9 @@ import 'package:wm_solution/src/api/logistiques/entretien_api.dart';
 import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
-import 'package:wm_solution/src/models/logistiques/mobilier_model.dart'; 
+import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 
@@ -17,7 +17,7 @@ class EntretienController extends GetxController
   final EnginController enginController = Get.put(EnginController());
   final ImmobilierController immobilierController =
       Get.put(ImmobilierController());
-  final MobilierController mobilierController = Get.put(MobilierController()); 
+  final MobilierController mobilierController = Get.put(MobilierController());
 
   var entretienList = <EntretienModel>[].obs;
 
@@ -25,7 +25,7 @@ class EntretienController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-    // Approbations
+  // Approbations
   String approbationDD = '-';
   TextEditingController motifDDController = TextEditingController();
 
@@ -47,9 +47,9 @@ class EntretienController extends GetxController
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     motifDDController.dispose();
-    dureeTravauxController.dispose();  
+    dureeTravauxController.dispose();
     super.dispose();
   }
 
@@ -89,7 +89,7 @@ class EntretienController extends GetxController
       await entretienApi.deleteData(id).then((value) {
         entretienList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -108,18 +108,17 @@ class EntretienController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = EntretienModel(
-        nom: nom.toString(),
-        typeObjet: typeObjet.toString(), 
-        typeMaintenance: typeMaintenance.toString(),
-        dureeTravaux: dureeTravauxController.text,
-        signature: profilController.user.matricule, 
-        created: DateTime.now(),
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-'
-      );
+          nom: nom.toString(),
+          typeObjet: typeObjet.toString(),
+          typeMaintenance: typeMaintenance.toString(),
+          dureeTravaux: dureeTravauxController.text,
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await entretienApi.insertData(dataItem).then((value) {
-        entretienList.clear(); 
+        entretienList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -140,18 +139,18 @@ class EntretienController extends GetxController
   void submitUpdate(EntretienModel data) async {
     try {
       _isLoading.value = true;
-       final dataItem = EntretienModel(
+      final dataItem = EntretienModel(
           id: data.id,
           nom: nom.toString(),
-          typeObjet: typeObjet.toString(), 
+          typeObjet: typeObjet.toString(),
           typeMaintenance: typeMaintenance.toString(),
           dureeTravaux: dureeTravauxController.text,
-          signature: profilController.user.matricule, 
+          signature: profilController.user.matricule,
           created: data.created,
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
-      await entretienApi.updateData(dataItem).then((value) { 
+      await entretienApi.updateData(dataItem).then((value) {
         entretienList.clear();
         getList();
         Get.back();
@@ -174,17 +173,17 @@ class EntretienController extends GetxController
     try {
       _isLoading.value = true;
       final entretienModel = EntretienModel(
-        id: data.id!,
-        nom: data.nom,
-        typeObjet: data.typeObjet, 
-        typeMaintenance: data.typeMaintenance,
-        dureeTravaux: data.dureeTravaux,
-        signature: data.signature, 
-        created: data.created,
-        approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule);
+          id: data.id!,
+          nom: data.nom,
+          typeObjet: data.typeObjet,
+          typeMaintenance: data.typeMaintenance,
+          dureeTravaux: data.dureeTravaux,
+          signature: data.signature,
+          created: data.created,
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await entretienApi.updateData(entretienModel).then((value) {
         entretienList.clear();
         getList();
@@ -203,10 +202,4 @@ class EntretienController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-
-
-
-
-   
 }

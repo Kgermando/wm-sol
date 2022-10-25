@@ -62,65 +62,62 @@ class _AdminCommMarketingState extends State<AdminCommMarketing> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                 Card(
-                                  color: Colors.orange.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Campagnes',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${comMarketingNotifyController.campaignCountDG} dossiers necessitent votre approbation",
-                                        style: bodyMedium!
-                                            .copyWith(color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen1 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(Icons.arrow_drop_down,
-                                        color: Colors.white),
-                                    children: [TableCampaignDG(campaignController: campaignController)],
-                                  ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                               Card(
+                                color: Colors.orange.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Campagnes',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${comMarketingNotifyController.campaignCountDG} dossiers necessitent votre approbation",
+                                      style: bodyMedium!
+                                          .copyWith(color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen1 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  children: [TableCampaignDG(campaignController: campaignController)],
                                 ),
-                                Card(
-                                  color: Colors.blue.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Succursale',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${comMarketingNotifyController.succursaleCountDG} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen2 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(Icons.arrow_drop_down,
-                                        color: Colors.white),
-                                    children: [TableSuccursaleDG(succursaleController: succursaleController)],
-                                  ),
+                              ),
+                              Card(
+                                color: Colors.blue.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Succursale',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${comMarketingNotifyController.succursaleCountDG} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen2 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  children: [TableSuccursaleDG(succursaleController: succursaleController)],
                                 ),
-                              ]),
-                        )),
+                              ),
+                            ])),
                   ))
             ],
           )),

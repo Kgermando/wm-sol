@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/finances/fin_exterieur_name_api.dart';
-import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart'; 
+import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class FinExterieurNameController extends GetxController
@@ -61,7 +61,7 @@ class FinExterieurNameController extends GetxController
       await finExterieurNameApi.deleteData(id).then((value) {
         finExterieurNameList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

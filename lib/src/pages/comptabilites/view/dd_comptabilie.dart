@@ -67,135 +67,132 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                               Card(
-                                  color: Colors.orange.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(
-                                      Icons.folder,
-                                      color: Colors.white,
-                                    ),
-                                    title: Text('Dossier Compte Balances',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${notify.balanceCount} dossiers necessitent votre approbation",
-                                        style: bodyMedium!
-                                            .copyWith(color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen4 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [TableBalanceCompteDD(balanceController: balanceController)],
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                             Card(
+                                color: Colors.orange.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.folder,
+                                    color: Colors.white,
                                   ),
-                                ),
-                                Card(
-                                  color: Colors.blue.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(
-                                      Icons.folder,
-                                      color: Colors.white,
-                                    ),
-                                    title: Text('Dossier Bilans',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${notify.bilanCount} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen1 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [TableCompteBilanDD(bilanController: bilanController)],
+                                  title: Text('Dossier Compte Balances',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${notify.balanceCount} dossiers necessitent votre approbation",
+                                      style: bodyMedium!
+                                          .copyWith(color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen4 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [TableBalanceCompteDD(balanceController: balanceController)],
                                 ),
-                                Card(
-                                  color: Colors.teal.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(
-                                      Icons.folder,
-                                      color: Colors.white,
-                                    ),
-                                    title: Text('Dossier Compte resultats',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${notify.compteResultatCount} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen3 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [TableCompteResultatDD(compteResultatController: compteResultatController)],
+                              ),
+                              Card(
+                                color: Colors.blue.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.folder,
+                                    color: Colors.white,
                                   ),
-                                ),
-                                Card(
-                                  color: Colors.purple.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(
-                                      Icons.folder,
-                                      color: Colors.white,
-                                    ),
-                                    title: Text('Dossier Compte journals',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6!
-                                                .copyWith(color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${notify.journalCount} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen2 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TableJournalComptabiliteDD(journalLivreController: journalLivreController)
-                                    ],
+                                  title: Text('Dossier Bilans',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${notify.bilanCount} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen1 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
                                   ),
+                                  children: [TableCompteBilanDD(bilanController: bilanController)],
                                 ),
-                              ]),
-                        )),
+                              ),
+                              Card(
+                                color: Colors.teal.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.folder,
+                                    color: Colors.white,
+                                  ),
+                                  title: Text('Dossier Compte resultats',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${notify.compteResultatCount} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen3 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
+                                  ),
+                                  children: [TableCompteResultatDD(compteResultatController: compteResultatController)],
+                                ),
+                              ),
+                              Card(
+                                color: Colors.purple.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(
+                                    Icons.folder,
+                                    color: Colors.white,
+                                  ),
+                                  title: Text('Dossier Compte journals',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6!
+                                              .copyWith(color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${notify.journalCount} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen2 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.white,
+                                  ),
+                                  children: [
+                                    TableJournalComptabiliteDD(journalLivreController: journalLivreController)
+                                  ],
+                                ),
+                              ),
+                            ])),
                   ))
             ],
           )),

@@ -27,7 +27,6 @@ class BonLivraisonController extends GetxController
     super.onInit();
     getList();
   }
- 
 
   void getList() async {
     await bonLivraisonApi.getAllData().then((response) {
@@ -49,7 +48,7 @@ class BonLivraisonController extends GetxController
       await bonLivraisonApi.deleteData(id).then((value) {
         bonLivraisonList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -62,11 +61,12 @@ class BonLivraisonController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
+
   // Livraison vers succursale
   void bonLivraisonStock(BonLivraisonModel data) async {
     try {
-        // Update Bon livraison
+      // Update Bon livraison
       final bonLivraisonModel = BonLivraisonModel(
           id: data.id!,
           idProduct: data.idProduct,
@@ -191,13 +191,12 @@ class BonLivraisonController extends GetxController
             _isLoading.value = false;
           });
         }
-      }); 
+      });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-   
   }
 }

@@ -67,7 +67,7 @@ class TransportRestController extends GetxController
       await transportRestaurationApi.deleteData(id).then((value) {
         transportRestaurationList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

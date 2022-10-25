@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comptabilite/compte_bilan_ref_api.dart';
-import 'package:wm_solution/src/models/comptabilites/bilan_model.dart'; 
+import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_bilan_ref_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -24,7 +24,6 @@ class CompteBilanRefController extends GetxController
   List<CompteBilanRefModel> compteActifList = [];
   List<CompteBilanRefModel> comptePassifList = [];
   List<CompteBilanRefModel> compteBilanRefFilter = [];
- 
 
   @override
   void onInit() {
@@ -58,7 +57,7 @@ class CompteBilanRefController extends GetxController
       await compteBilanRefApi.deleteData(id).then((value) {
         compteBilanRefList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -100,7 +99,7 @@ class CompteBilanRefController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 
   void submitEdit(CompteBilanRefModel bilanRef) async {
     try {
@@ -132,6 +131,5 @@ class CompteBilanRefController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
- 
+  }
 }

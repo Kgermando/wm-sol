@@ -22,7 +22,7 @@ class CarburantController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-    // Approbations
+  // Approbations
   String approbationDD = '-';
   TextEditingController motifDDController = TextEditingController();
 
@@ -56,11 +56,11 @@ class CarburantController extends GetxController
     prixAchatParLitreController.dispose();
     nomReceptionisteController.dispose();
     qtyAchatController.dispose();
-    dateHeureSortieAnguinController.dispose(); 
+    dateHeureSortieAnguinController.dispose();
     super.dispose();
   }
 
-  void getData() async {  
+  void getData() async {
     enginList = enginController.enginList
         .where((element) =>
             element.approbationDG == "Approved" &&
@@ -69,7 +69,7 @@ class CarburantController extends GetxController
     annuaireList = annuaireController.annuaireList
         .where((element) => element.categorie == 'Fournisseur')
         .toList();
-  } 
+  }
 
   void getList() async {
     await carburantApi.getAllData().then((response) {
@@ -91,7 +91,7 @@ class CarburantController extends GetxController
       await carburantApi.deleteData(id).then((value) {
         carburantList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -110,30 +110,29 @@ class CarburantController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = CarburantModel(
-        operationEntreSortie: operationEntreSortie.toString(),
-        typeCaburant: typeCaburant.toString(),
-        fournisseur: (fournisseur == '') ? '-' : fournisseur.toString(),
-        nomeroFactureAchat: (nomeroFactureAchatController.text == '')
-            ? '-'
-            : nomeroFactureAchatController.text,
-        prixAchatParLitre: (prixAchatParLitreController.text == '')
-            ? '-'
-            : prixAchatParLitreController.text,
-        nomReceptioniste: (nomReceptionisteController.text == '')
-            ? '-'
-            : nomReceptionisteController.text,
-        numeroPlaque: (numeroPlaque == '') ? '-' : numeroPlaque.toString(),
-        dateHeureSortieAnguin: DateTime.parse(
-            (dateHeureSortieAnguinController.text == '')
-                ? "2099-12-31 00:00:00"
-                : dateHeureSortieAnguinController.text),
-        qtyAchat: qtyAchatController.text,
-        signature: profilController.user.matricule, 
-        created: DateTime.now(),
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-'
-      );
+          operationEntreSortie: operationEntreSortie.toString(),
+          typeCaburant: typeCaburant.toString(),
+          fournisseur: (fournisseur == '') ? '-' : fournisseur.toString(),
+          nomeroFactureAchat: (nomeroFactureAchatController.text == '')
+              ? '-'
+              : nomeroFactureAchatController.text,
+          prixAchatParLitre: (prixAchatParLitreController.text == '')
+              ? '-'
+              : prixAchatParLitreController.text,
+          nomReceptioniste: (nomReceptionisteController.text == '')
+              ? '-'
+              : nomReceptionisteController.text,
+          numeroPlaque: (numeroPlaque == '') ? '-' : numeroPlaque.toString(),
+          dateHeureSortieAnguin: DateTime.parse(
+              (dateHeureSortieAnguinController.text == '')
+                  ? "2099-12-31 00:00:00"
+                  : dateHeureSortieAnguinController.text),
+          qtyAchat: qtyAchatController.text,
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await carburantApi.insertData(dataItem).then((value) {
         carburantList.clear();
         getList();
@@ -190,7 +189,7 @@ class CarburantController extends GetxController
           numeroPlaque: data.numeroPlaque,
           dateHeureSortieAnguin: data.dateHeureSortieAnguin,
           qtyAchat: data.qtyAchat,
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDD: approbationDD,
           motifDD:

@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comm_marketing/commerciale/succursale_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/utils/province.dart'; 
+import 'package:wm_solution/src/utils/province.dart';
 
-class SuccursaleController extends GetxController with StateMixin<List<SuccursaleModel>> {
+class SuccursaleController extends GetxController
+    with StateMixin<List<SuccursaleModel>> {
   final SuccursaleApi succursaleApi = SuccursaleApi();
   final ProfilController profilController = Get.find();
 
@@ -33,7 +34,7 @@ class SuccursaleController extends GetxController with StateMixin<List<Succursal
     getList();
   }
 
-    @override
+  @override
   void dispose() {
     nameController.dispose();
     adresseController.dispose();
@@ -41,7 +42,6 @@ class SuccursaleController extends GetxController with StateMixin<List<Succursal
     motifDDController.dispose();
     super.dispose();
   }
-
 
   void getList() async {
     succursaleApi.getAllData().then((response) {
@@ -63,7 +63,7 @@ class SuccursaleController extends GetxController with StateMixin<List<Succursal
       await succursaleApi.deleteData(id).then((value) {
         succursaleList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -117,8 +117,9 @@ class SuccursaleController extends GetxController with StateMixin<List<Succursal
       final dataItem = SuccursaleModel(
           id: data.id,
           name: (nameController.text == '') ? data.name : nameController.text,
-          adresse:
-              (adresseController.text == '') ? data.adresse : adresseController.text,
+          adresse: (adresseController.text == '')
+              ? data.adresse
+              : adresseController.text,
           province: province.toString(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
@@ -185,20 +186,19 @@ class SuccursaleController extends GetxController with StateMixin<List<Succursal
   Future<void> submitDD(SuccursaleModel data) async {
     try {
       final dataItem = SuccursaleModel(
-        id: data.id,
-        name: data.name,
-        adresse: data.adresse,
-        province: data.province,
-        signature: data.signature,
-        created: data.created,
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule
-      );
+          id: data.id,
+          name: data.name,
+          adresse: data.adresse,
+          province: data.province,
+          signature: data.signature,
+          created: data.created,
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await succursaleApi.updateData(dataItem).then((value) {
         succursaleList.clear();
         getList();

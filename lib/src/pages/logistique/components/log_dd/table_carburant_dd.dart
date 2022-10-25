@@ -32,91 +32,94 @@ class _TableCarburantDDState extends State<TableCarburantDD> {
 
   @override
   Widget build(BuildContext context) {
-    return PlutoGrid(
-      columns: columns,
-      rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.last;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: PlutoGrid(
+        columns: columns,
+        rows: rows,
+        onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+          final dataId = tapEvent.row!.cells.values;
+          final idPlutoRow = dataId.last;
 
-        final CarburantModel carburantModel =
-            await widget.carburantController.detailView(idPlutoRow.value);
+          final CarburantModel carburantModel =
+              await widget.carburantController.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logCarburantAutoDetail,
-            arguments: carburantModel);
-      },
-      onLoaded: (PlutoGridOnLoadedEvent event) {
-        stateManager = event.stateManager;
-        stateManager!.setShowColumnFilter(true);
-        stateManager!.setShowLoading(true);
-      },
-      createHeader: (PlutoGridStateManager header) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const TitleWidget(title: "Carburants"),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, LogistiqueRoutes.logCarburantAuto);
-                    },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
-                PrintWidget(onPressed: () {
-                  CarburantXlsx().exportToExcel(widget.carburantController.carburantList);
-                  if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text("Exportation effectué!"),
-                    backgroundColor: Colors.green[700],
-                  ));
-                })
-              ],
-            ),
-          ],
-        );
-      },
-      configuration: PlutoGridConfiguration(
-        columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters,
-          ],
-          resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'numero') {
+          Get.toNamed(LogistiqueRoutes.logCarburantAutoDetail,
+              arguments: carburantModel);
+        },
+        onLoaded: (PlutoGridOnLoadedEvent event) {
+          stateManager = event.stateManager;
+          stateManager!.setShowColumnFilter(true);
+          stateManager!.setShowLoading(true);
+        },
+        createHeader: (PlutoGridStateManager header) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: "Carburants"),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, LogistiqueRoutes.logCarburantAuto);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                  PrintWidget(onPressed: () {
+                    CarburantXlsx().exportToExcel(widget.carburantController.carburantList);
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text("Exportation effectué!"),
+                      backgroundColor: Colors.green[700],
+                    ));
+                  })
+                ],
+              ),
+            ],
+          );
+        },
+        configuration: PlutoGridConfiguration(
+          columnFilter: PlutoGridColumnFilterConfig(
+            filters: const [
+              ...FilterHelper.defaultFilters,
+            ],
+            resolveDefaultColumnFilter: (column, resolver) {
+              if (column.field == 'numero') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'operationEntreSortie') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'typeCaburant') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'fournisseur') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'nomeroFactureAchat') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'prixAchatParLitre') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'qtyAchat') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'nomReceptioniste') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'numeroPlaque') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'dateHeureSortieAnguin') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'created') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'approbationDD') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'id') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              }
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'operationEntreSortie') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'typeCaburant') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'fournisseur') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nomeroFactureAchat') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'prixAchatParLitre') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'qtyAchat') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nomReceptioniste') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'numeroPlaque') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'dateHeureSortieAnguin') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDD') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'id') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }
-            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-          },
+            },
+          ),
         ),
+        createFooter: (stateManager) {
+          stateManager.setPageSize(20, notify: true); // default 40
+          return PlutoPagination(stateManager);
+        },
       ),
-      createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: true); // default 40
-        return PlutoPagination(stateManager);
-      },
     );
   }
 

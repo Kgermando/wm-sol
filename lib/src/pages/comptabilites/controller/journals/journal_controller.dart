@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comptabilite/journal_api.dart';
-import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart'; 
+import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class JournalController extends GetxController with StateMixin<List<JournalModel>> {
+class JournalController extends GetxController
+    with StateMixin<List<JournalModel>> {
   final JournalApi journalApi = JournalApi();
   final ProfilController profilController = Get.find();
 
@@ -14,7 +15,6 @@ class JournalController extends GetxController with StateMixin<List<JournalModel
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
-
 
   String? comptesAllSelect;
   String? comptes;
@@ -26,7 +26,6 @@ class JournalController extends GetxController with StateMixin<List<JournalModel
   TextEditingController tvaController = TextEditingController();
   TextEditingController remarqueController = TextEditingController();
 
- 
   @override
   void onInit() {
     super.onInit();
@@ -39,7 +38,7 @@ class JournalController extends GetxController with StateMixin<List<JournalModel
     libeleController.dispose();
     montantDebitController.dispose();
     montantCreditController.dispose();
-    tvaController.dispose(); 
+    tvaController.dispose();
     remarqueController.dispose();
     super.dispose();
   }
@@ -64,7 +63,7 @@ class JournalController extends GetxController with StateMixin<List<JournalModel
       await journalApi.deleteData(id).then((value) {
         journalList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -82,20 +81,20 @@ class JournalController extends GetxController with StateMixin<List<JournalModel
   void submit(JournalLivreModel data) async {
     try {
       _isLoading.value = true;
-       final journalModel = JournalModel(
-        reference: data.id!,
-        numeroOperation: numeroOperationController.text,
-        libele: libeleController.text,
-        compte: comptes.toString(),
-        montantDebit: (montantDebitController.text == "")
-            ? "0"
-            : montantDebitController.text,
-        montantCredit: (montantCreditController.text == "")
-            ? "0"
-            : montantCreditController.text,
-        tva: tvaController.text,
-        type: type.toString(),
-        created: DateTime.now());
+      final journalModel = JournalModel(
+          reference: data.id!,
+          numeroOperation: numeroOperationController.text,
+          libele: libeleController.text,
+          compte: comptes.toString(),
+          montantDebit: (montantDebitController.text == "")
+              ? "0"
+              : montantDebitController.text,
+          montantCredit: (montantCreditController.text == "")
+              ? "0"
+              : montantCreditController.text,
+          tva: tvaController.text,
+          type: type.toString(),
+          created: DateTime.now());
       await journalApi.insertData(journalModel).then((value) {
         journalList.clear();
         getList();
@@ -118,7 +117,7 @@ class JournalController extends GetxController with StateMixin<List<JournalModel
   void submitUpdate(JournalModel data) async {
     try {
       _isLoading.value = true;
-       final journalModel = JournalModel(
+      final journalModel = JournalModel(
           reference: data.id!,
           numeroOperation: data.numeroOperation,
           libele: libeleController.text,

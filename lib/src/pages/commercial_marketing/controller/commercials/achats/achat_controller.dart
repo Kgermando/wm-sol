@@ -9,7 +9,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   final AchatApi achatApi = AchatApi();
   final CartApi cartApi = CartApi();
-  final ProfilController profilController = Get.find(); 
+  final ProfilController profilController = Get.find();
 
   var achatList = <AchatModel>[].obs;
 
@@ -51,7 +51,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
       await achatApi.deleteData(id).then((value) {
         achatList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

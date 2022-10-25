@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/gain_api.dart'; 
-import 'package:wm_solution/src/models/comm_maketing/gain_model.dart'; 
+import 'package:wm_solution/src/api/comm_marketing/commerciale/gain_api.dart';
+import 'package:wm_solution/src/models/comm_maketing/gain_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class GainController extends GetxController with StateMixin<List<GainModel>> {
@@ -40,7 +40,7 @@ class GainController extends GetxController with StateMixin<List<GainModel>> {
       await gainApi.deleteData(id).then((value) {
         gainList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

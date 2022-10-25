@@ -70,9 +70,9 @@ class TransportRestPersonnelsController extends GetxController
         await transRestAgentsApi.insertData(transRest).then((value) {
           transRestAgentList.clear();
           getList();
-          Get.back(); 
-          Get.snackbar(
-              "Ajouté avec succès!", "Vous avez ajouté ${nomController.text} à la liste",
+          Get.back();
+          Get.snackbar("Ajouté avec succès!",
+              "Vous avez ajouté ${nomController.text} à la liste",
               duration: const Duration(seconds: 5),
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
@@ -100,8 +100,7 @@ class TransportRestPersonnelsController extends GetxController
             prenom: data.prenom,
             matricule: data.matricule,
             montant: data.montant,
-            observation: "true"
-        );
+            observation: "true");
         await transRestAgentsApi.insertData(transRest).then((value) {
           transRestAgentList.clear();
           getList();
@@ -124,15 +123,13 @@ class TransportRestPersonnelsController extends GetxController
     }
   }
 
-
-
   void deleteTransRestAgents(int id) async {
     try {
       _isLoading.value = true;
       await transRestAgentsApi.deleteData(id).then((value) {
         transRestAgentList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -145,7 +142,5 @@ class TransportRestPersonnelsController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
-
-
+  }
 }

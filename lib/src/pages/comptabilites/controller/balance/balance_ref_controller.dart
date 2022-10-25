@@ -54,7 +54,7 @@ class BalanceRefController extends GetxController
       await compteBalanceRefApi.deleteData(id).then((value) {
         compteBalanceRefList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -77,7 +77,7 @@ class BalanceRefController extends GetxController
               : montantDebitController.text) -
           double.parse((montantCreditController.text == "")
               ? "0"
-              : montantCreditController.text); 
+              : montantCreditController.text);
       final compteBalanceRefModel = CompteBalanceRefModel(
           reference: data.id!,
           comptes: comptes.toString(),
@@ -91,7 +91,7 @@ class BalanceRefController extends GetxController
       await compteBalanceRefApi.insertData(compteBalanceRefModel).then((value) {
         compteBalanceRefList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -131,7 +131,7 @@ class BalanceRefController extends GetxController
       await compteBalanceRefApi.updateData(compteBalanceRefModel).then((value) {
         compteBalanceRefList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

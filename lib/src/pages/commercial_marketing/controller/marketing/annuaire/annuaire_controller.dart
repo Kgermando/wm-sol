@@ -42,8 +42,6 @@ class AnnuaireController extends GetxController
     getList();
   }
 
-
-
   @override
   void dispose() {
     debouncer?.cancel();
@@ -98,7 +96,7 @@ class AnnuaireController extends GetxController
       await annuaireApi.deleteData(id).then((value) {
         annuaireList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -117,19 +115,18 @@ class AnnuaireController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AnnuaireModel(
-        categorie: categorie.toString(),
-        nomPostnomPrenom: nomPostnomPrenomController.text,
-        email: emailController.text,
-        mobile1: mobile1Controller.text,
-        mobile2: mobile2Controller.text,
-        secteurActivite: secteurActiviteController.text,
-        nomEntreprise: nomEntrepriseController.text,
-        grade: gradeController.text,
-        adresseEntreprise: adresseEntrepriseController.text,
-        succursale: profilController.user.succursale,
-        signature: profilController.user.matricule,
-        created: DateTime.now()
-      );
+          categorie: categorie.toString(),
+          nomPostnomPrenom: nomPostnomPrenomController.text,
+          email: emailController.text,
+          mobile1: mobile1Controller.text,
+          mobile2: mobile2Controller.text,
+          secteurActivite: secteurActiviteController.text,
+          nomEntreprise: nomEntrepriseController.text,
+          grade: gradeController.text,
+          adresseEntreprise: adresseEntrepriseController.text,
+          succursale: profilController.user.succursale,
+          signature: profilController.user.matricule,
+          created: DateTime.now());
       await annuaireApi.insertData(dataItem).then((value) {
         annuaireList.clear();
         getList();
@@ -153,20 +150,19 @@ class AnnuaireController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AnnuaireModel(
-        id: data.id,
-        categorie: categorie.toString(),
-        nomPostnomPrenom: nomPostnomPrenomController.text,
-        email: emailController.text,
-        mobile1: mobile1Controller.text,
-        mobile2: mobile2Controller.text,
-        secteurActivite: secteurActiviteController.text,
-        nomEntreprise: nomEntrepriseController.text,
-        grade: gradeController.text,
-        adresseEntreprise: adresseEntrepriseController.text,
-        succursale: profilController.user.succursale,
-        signature: profilController.user.matricule,
-        created: data.created
-      );
+          id: data.id,
+          categorie: categorie.toString(),
+          nomPostnomPrenom: nomPostnomPrenomController.text,
+          email: emailController.text,
+          mobile1: mobile1Controller.text,
+          mobile2: mobile2Controller.text,
+          secteurActivite: secteurActiviteController.text,
+          nomEntreprise: nomEntrepriseController.text,
+          grade: gradeController.text,
+          adresseEntreprise: adresseEntrepriseController.text,
+          succursale: profilController.user.succursale,
+          signature: profilController.user.matricule,
+          created: data.created);
       await annuaireApi.updateData(dataItem).then((value) {
         annuaireList.clear();
         getList();
@@ -184,5 +180,5 @@ class AnnuaireController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 }

@@ -20,7 +20,7 @@ class ArchiveController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-    final List<String> departementList = Dropdown().departement;
+  final List<String> departementList = Dropdown().departement;
 
   TextEditingController nomDocumentController = TextEditingController();
   String? departement;
@@ -31,7 +31,7 @@ class ArchiveController extends GetxController
   bool get isUploading => _isUploading.value;
   final _isUploadingDone = false.obs;
   bool get isUploadingDone => _isUploadingDone.value;
- 
+
   String? uploadedFileUrl;
 
   void pdfUpload(File pdfFile) async {
@@ -51,14 +51,12 @@ class ArchiveController extends GetxController
     String? etagpdf = await bucketpdf.uploadFile('$folderName/$pdfFileName',
         pdfFile, 'application/pdf', dospace.Permissions.public);
     _isUploading.value = false;
-    _isUploadingDone.value = false; 
+    _isUploadingDone.value = false;
     if (kDebugMode) {
       print('upload: $etagpdf');
       print('done');
     }
   }
-
-
 
   @override
   void onInit() {
@@ -75,10 +73,9 @@ class ArchiveController extends GetxController
     super.dispose();
   }
 
-
   void getList() async {
     await archiveApi.getAllData().then((response) {
-      archiveList.assignAll(response); 
+      archiveList.assignAll(response);
       change(archiveList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -96,7 +93,7 @@ class ArchiveController extends GetxController
       await archiveApi.deleteData(id).then((value) {
         archiveList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -111,11 +108,10 @@ class ArchiveController extends GetxController
     }
   }
 
-
   void submit(ArchiveFolderModel data) async {
     try {
       _isLoading.value = true;
-       final archiveModel = ArchiveModel(
+      final archiveModel = ArchiveModel(
           departement: data.departement,
           folderName: data.folderName,
           nomDocument: nomDocumentController.text,
@@ -148,8 +144,9 @@ class ArchiveController extends GetxController
       final archiveModel = ArchiveModel(
           departement: data.departement,
           folderName: data.folderName,
-          nomDocument: (nomDocumentController.text == "") 
-            ? nomDocumentController.text : data.nomDocument,
+          nomDocument: (nomDocumentController.text == "")
+              ? nomDocumentController.text
+              : data.nomDocument,
           description: (descriptionController.text == "")
               ? descriptionController.text
               : data.description,

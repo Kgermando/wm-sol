@@ -70,8 +70,8 @@ class PresenceController extends GetxController
       await presenceApi.insertData(presenceModel).then((value) {
         presenceList.clear();
         getList();
-        // Get.back();
-       
+        Get.back();
+
         Get.snackbar(
             "Liste Presence créé avec succès!", "Nouvelle liste de presence.",
             backgroundColor: Colors.green,

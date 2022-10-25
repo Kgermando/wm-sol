@@ -5,7 +5,8 @@ import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class TrajetController extends GetxController with StateMixin<List<TrajetModel>> {
+class TrajetController extends GetxController
+    with StateMixin<List<TrajetModel>> {
   final TrajetApi trajetApi = TrajetApi();
   final ProfilController profilController = Get.find();
 
@@ -14,14 +15,13 @@ class TrajetController extends GetxController with StateMixin<List<TrajetModel>>
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
- 
+
   // Approbations
-  String approbationDD = '-'; 
+  String approbationDD = '-';
   TextEditingController motifDDController = TextEditingController();
 
   TextEditingController nomeroEntrepriseController = TextEditingController();
-  final TextEditingController conducteurController =
-      TextEditingController();
+  final TextEditingController conducteurController = TextEditingController();
   final TextEditingController trajetDeController = TextEditingController();
   final TextEditingController trajetAController = TextEditingController();
   final TextEditingController missionController = TextEditingController();
@@ -30,7 +30,6 @@ class TrajetController extends GetxController with StateMixin<List<TrajetModel>>
   final TextEditingController kilometrageRetourController =
       TextEditingController();
 
- 
   @override
   void onInit() {
     super.onInit();
@@ -70,7 +69,7 @@ class TrajetController extends GetxController with StateMixin<List<TrajetModel>>
       await trajetApi.deleteData(id).then((value) {
         trajetList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -89,20 +88,19 @@ class TrajetController extends GetxController with StateMixin<List<TrajetModel>>
     try {
       _isLoading.value = true;
       final trajetModel = TrajetModel(
-        nomeroEntreprise: data.nomeroEntreprise,
-        conducteur: conducteurController.text,
-        trajetDe: trajetDeController.text,
-        trajetA: trajetAController.text,
-        mission: missionController.text,
-        kilometrageSorite: kilometrageSoriteController.text,
-        kilometrageRetour: '-',
-        signature: profilController.user.matricule,
-        reference: data.id!,
-        created: DateTime.now(),
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-'
-      );
+          nomeroEntreprise: data.nomeroEntreprise,
+          conducteur: conducteurController.text,
+          trajetDe: trajetDeController.text,
+          trajetA: trajetAController.text,
+          mission: missionController.text,
+          kilometrageSorite: kilometrageSoriteController.text,
+          kilometrageRetour: '-',
+          signature: profilController.user.matricule,
+          reference: data.id!,
+          created: DateTime.now(),
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await trajetApi.insertData(trajetModel).then((value) {
         trajetList.clear();
         getList();
@@ -126,20 +124,20 @@ class TrajetController extends GetxController with StateMixin<List<TrajetModel>>
     try {
       _isLoading.value = true;
       final dataItem = TrajetModel(
-        id: data.id!,
-        nomeroEntreprise: data.nomeroEntreprise,
-        conducteur: data.conducteur,
-        trajetDe: data.trajetDe,
-        trajetA: data.trajetA,
-        mission: data.mission,
-        kilometrageSorite: data.kilometrageSorite,
-        kilometrageRetour: kilometrageRetourController.text,
-        signature:profilController.user.matricule,
-        reference: data.reference,
-        created: DateTime.now(),
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+          id: data.id!,
+          nomeroEntreprise: data.nomeroEntreprise,
+          conducteur: data.conducteur,
+          trajetDe: data.trajetDe,
+          trajetA: data.trajetA,
+          mission: data.mission,
+          kilometrageSorite: data.kilometrageSorite,
+          kilometrageRetour: kilometrageRetourController.text,
+          signature: profilController.user.matricule,
+          reference: data.reference,
+          created: DateTime.now(),
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await trajetApi.updateData(dataItem).then((value) {
         trajetList.clear();
         getList();

@@ -53,7 +53,7 @@ class AgendaController extends GetxController
       await agendaApi.deleteData(id).then((value) {
         agendaList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -100,12 +100,12 @@ class AgendaController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AgendaModel(
-        id: data.id!,
-        title: titleController.text,
-        description: descriptionController.text,
-        dateRappel: DateTime.parse(dateRappelController.text),
-        signature: profilController.user.matricule,
-        created: data.created);
+          id: data.id!,
+          title: titleController.text,
+          description: descriptionController.text,
+          dateRappel: DateTime.parse(dateRappelController.text),
+          signature: profilController.user.matricule,
+          created: data.created);
       await agendaApi.updateData(dataItem).then((value) {
         agendaList.clear();
         getList();

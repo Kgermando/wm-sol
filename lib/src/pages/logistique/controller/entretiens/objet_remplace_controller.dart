@@ -12,14 +12,13 @@ class ObjetRemplaceController extends GetxController
   final ProfilController profilController = Get.find();
 
   ScrollController controllerTable = ScrollController();
-  
+
   var objetRemplaceList = <ObjetRemplaceModel>[].obs;
 
   final GlobalKey<FormState> formObjetKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  
   TextEditingController nomObjetController = TextEditingController();
   TextEditingController coutController = TextEditingController();
   TextEditingController caracteristiqueController = TextEditingController();
@@ -31,8 +30,8 @@ class ObjetRemplaceController extends GetxController
     getList();
   }
 
-   @override
-  void dispose() { 
+  @override
+  void dispose() {
     nomObjetController.dispose();
     coutController.dispose();
     caracteristiqueController.dispose();
@@ -40,7 +39,6 @@ class ObjetRemplaceController extends GetxController
 
     super.dispose();
   }
- 
 
   void getList() async {
     await objetRemplaceApi.getAllData().then((response) {
@@ -62,7 +60,7 @@ class ObjetRemplaceController extends GetxController
       await objetRemplaceApi.deleteData(id).then((value) {
         objetRemplaceList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -77,20 +75,18 @@ class ObjetRemplaceController extends GetxController
     }
   }
 
-
   void submitObjetRemplace() async {
-    int? id = entretienController.entretienList.map((element) => element.id).last;
+    int? id =
+        entretienController.entretienList.map((element) => element.id).last;
     try {
       _isLoading.value = true;
       final objetRemplace = ObjetRemplaceModel(
-          reference:  id! + 1,
+          reference: id! + 1,
           nom: nomObjetController.text,
           cout: coutController.text,
           caracteristique: caracteristiqueController.text,
           observation: observationController.text);
-      await objetRemplaceApi
-          .insertData(objetRemplace)
-          .then((value) {
+      await objetRemplaceApi.insertData(objetRemplace).then((value) {
         objetRemplaceList.clear();
         getList();
         Get.back();
@@ -108,8 +104,6 @@ class ObjetRemplaceController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
- 
 
   void submitUpdate(ObjetRemplaceModel data) async {
     try {

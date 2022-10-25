@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/devis/devis_list_objets_api.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
-import 'package:wm_solution/src/models/devis/devis_models.dart'; 
+import 'package:wm_solution/src/models/devis/devis_models.dart';
 
 class DevisListObjetController extends GetxController
     with StateMixin<List<DevisListObjetsModel>> {
@@ -18,7 +18,7 @@ class DevisListObjetController extends GetxController
   final TextEditingController designationController = TextEditingController();
   double montantUnitaire = 0.0;
   double montantGlobal = 0.0;
- 
+
   @override
   void onInit() {
     super.onInit();
@@ -45,7 +45,7 @@ class DevisListObjetController extends GetxController
       await devisListObjetsApi.deleteData(id).then((value) {
         devisListObjetList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -58,7 +58,7 @@ class DevisListObjetController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 
   Future<void> submitObjet(DevisModel data) async {
     try {

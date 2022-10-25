@@ -10,7 +10,8 @@ class CreanceController extends GetxController
     with StateMixin<List<CreanceModel>> {
   final CreanceApi creanceApi = CreanceApi();
   final ProfilController profilController = Get.find();
-  final CreanceDetteController creanceDetteController = Get.put(CreanceDetteController());
+  final CreanceDetteController creanceDetteController =
+      Get.put(CreanceDetteController());
 
   var creanceList = <CreanceModel>[].obs;
 
@@ -18,30 +19,26 @@ class CreanceController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  
   final TextEditingController nomCompletController = TextEditingController();
   final TextEditingController pieceJustificativeController =
       TextEditingController();
   final TextEditingController libelleController = TextEditingController();
   final TextEditingController montantController = TextEditingController();
 
-
-    // Approbations
+  // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
-  String approbationDG = '-'; 
+  String approbationDG = '-';
   String approbationDD = '-';
-  TextEditingController motifDGController = TextEditingController(); 
+  TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
 
   final _nonPaye = 0.0.obs; // total Créance
   double get nonPaye => _nonPaye.value;
   final _paye = 0.0.obs; // total creanceDette
   double get paye => _paye.value;
- 
-  var creanceDetteList = <CreanceDetteModel>[].obs; 
 
-
+  var creanceDetteList = <CreanceDetteModel>[].obs;
 
   @override
   void onInit() {
@@ -65,7 +62,6 @@ class CreanceController extends GetxController
     motifDDController.dispose();
     super.dispose();
   }
-
 
   void getList() async {
     await creanceApi.getAllData().then((response) {
@@ -103,7 +99,7 @@ class CreanceController extends GetxController
       await creanceApi.deleteData(id).then((value) {
         creanceList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -121,21 +117,21 @@ class CreanceController extends GetxController
   void submit() async {
     try {
       _isLoading.value = true;
-       final dataItem = CreanceModel(
-        nomComplet: nomCompletController.text,
-        pieceJustificative: pieceJustificativeController.text,
-        libelle: libelleController.text,
-        montant: montantController.text,
-        numeroOperation: 'Transaction-Creance-${creanceList.length + 1}',
-        statutPaie: 'false',
-        signature: profilController.user.matricule, 
-        created: DateTime.now(),
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+      final dataItem = CreanceModel(
+          nomComplet: nomCompletController.text,
+          pieceJustificative: pieceJustificativeController.text,
+          libelle: libelleController.text,
+          montant: montantController.text,
+          numeroOperation: 'Transaction-Creance-${creanceList.length + 1}',
+          statutPaie: 'false',
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await creanceApi.insertData(dataItem).then((value) {
         creanceList.clear();
         getList();
@@ -158,23 +154,22 @@ class CreanceController extends GetxController
   void submitUpdate(CreanceModel data) async {
     try {
       _isLoading.value = true;
-       final dataItem = CreanceModel(
-        id: data.id,
-        nomComplet: nomCompletController.text,
-        pieceJustificative: pieceJustificativeController.text,
-        libelle: libelleController.text,
-        montant: montantController.text,
-        numeroOperation: data.numeroOperation,
-        statutPaie: data.statutPaie,
-        signature: profilController.user.matricule,
-        created: data.created,
-        approbationDG: data.approbationDG,
-        motifDG: data.motifDG,
-        signatureDG: data.signatureDG,
-        approbationDD: data.approbationDD,
-        motifDD: data.motifDD,
-        signatureDD: data.signatureDD
-      );
+      final dataItem = CreanceModel(
+          id: data.id,
+          nomComplet: nomCompletController.text,
+          pieceJustificative: pieceJustificativeController.text,
+          libelle: libelleController.text,
+          montant: montantController.text,
+          numeroOperation: data.numeroOperation,
+          statutPaie: data.statutPaie,
+          signature: profilController.user.matricule,
+          created: data.created,
+          approbationDG: data.approbationDG,
+          motifDG: data.motifDG,
+          signatureDG: data.signatureDG,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD);
       await creanceApi.updateData(dataItem).then((value) {
         creanceList.clear();
         getList();
@@ -205,7 +200,7 @@ class CreanceController extends GetxController
           montant: data.montant,
           numeroOperation: data.numeroOperation,
           statutPaie: 'true',
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDG: data.approbationDG,
           motifDG: data.motifDG,
@@ -216,9 +211,9 @@ class CreanceController extends GetxController
       await creanceApi.updateData(dataItem).then((value) {
         creanceList.clear();
         getList();
-        // Get.back();
-        Get.snackbar("Créance payé avec succès!",
-            "Le document a bien été sauvegader",
+        Get.back();
+        Get.snackbar(
+            "Créance payé avec succès!", "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -230,7 +225,7 @@ class CreanceController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 
   void submitDG(CreanceModel data) async {
     try {
@@ -275,22 +270,22 @@ class CreanceController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = CreanceModel(
-        id: data.id,
-        nomComplet: nomCompletController.text,
-        pieceJustificative: pieceJustificativeController.text,
-        libelle: libelleController.text,
-        montant: montantController.text,
-        numeroOperation: data.numeroOperation,
-        statutPaie: data.statutPaie,
-        signature: profilController.user.matricule,
-        created: data.created,
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: approbationDD,
-        motifDD: (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule
-      );
+          id: data.id,
+          nomComplet: nomCompletController.text,
+          pieceJustificative: pieceJustificativeController.text,
+          libelle: libelleController.text,
+          montant: montantController.text,
+          numeroOperation: data.numeroOperation,
+          statutPaie: data.statutPaie,
+          signature: profilController.user.matricule,
+          created: data.created,
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await creanceApi.updateData(dataItem).then((value) {
         creanceList.clear();
         getList();

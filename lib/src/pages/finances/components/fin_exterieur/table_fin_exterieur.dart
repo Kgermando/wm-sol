@@ -276,8 +276,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ResponsiveChild3Widget(
-              child1: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child1: Row( 
                 children: [
                   SelectableText('Total recette: ',
                       style: bodyMedium!.copyWith(

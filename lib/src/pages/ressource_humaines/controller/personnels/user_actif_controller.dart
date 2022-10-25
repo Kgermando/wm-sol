@@ -4,26 +4,24 @@ import 'package:wm_solution/src/api/user/user_api.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 
-class UsersController extends GetxController
-    with StateMixin<List<UserModel>> {
+class UsersController extends GetxController with StateMixin<List<UserModel>> {
   final UserApi userApi = UserApi();
 
   var usersList = <UserModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
-  bool get isLoading => _isLoading.value; 
+  bool get isLoading => _isLoading.value;
 
   String? succursale;
-
 
   @override
   void onInit() {
     super.onInit();
     getList();
   }
-  
-   void getList() async {
+
+  void getList() async {
     userApi.getAllData().then((response) {
       usersList.assignAll(response);
       change(response, status: RxStatus.success());
@@ -40,9 +38,12 @@ class UsersController extends GetxController
   // Delete user login accès
   void deleteUser(AgentModel personne) async {
     int? userId = usersList
-        .where((element) => element.matricule == personne.matricule && 
-          element.prenom == personne.prenom && element.nom == personne.nom)
-        .map((e) => e.id).first;
+        .where((element) =>
+            element.matricule == personne.matricule &&
+            element.prenom == personne.prenom &&
+            element.nom == personne.nom)
+        .map((e) => e.id)
+        .first;
     deleteData(userId!);
   }
 
@@ -52,8 +53,9 @@ class UsersController extends GetxController
       await userApi.deleteData(id).then((value) {
         usersList.clear();
         getList();
-        // Get.back();
-        Get.snackbar("Suppression de l'accès avec succès!", "Cet élément a bien été supprimé",
+        Get.back();
+        Get.snackbar("Suppression de l'accès avec succès!",
+            "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -70,20 +72,20 @@ class UsersController extends GetxController
   void createUser(AgentModel personne) async {
     try {
       final userModel = UserModel(
-        photo: '-',
-        nom: personne.nom,
-        prenom: personne.prenom,
-        email: personne.email,
-        telephone: personne.telephone,
-        matricule: personne.matricule,
-        departement: personne.departement,
-        servicesAffectation: personne.servicesAffectation,
-        fonctionOccupe: personne.fonctionOccupe,
-        role: personne.role,
-        isOnline: 'false',
-        createdAt: DateTime.now(),
-        passwordHash: '12345678',
-        succursale: '-');
+          photo: '-',
+          nom: personne.nom,
+          prenom: personne.prenom,
+          email: personne.email,
+          telephone: personne.telephone,
+          matricule: personne.matricule,
+          departement: personne.departement,
+          servicesAffectation: personne.servicesAffectation,
+          fonctionOccupe: personne.fonctionOccupe,
+          role: personne.role,
+          isOnline: 'false',
+          createdAt: DateTime.now(),
+          passwordHash: '12345678',
+          succursale: '-');
       await userApi.insertData(userModel).then((value) {
         usersList.clear();
         getList();
@@ -101,7 +103,7 @@ class UsersController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  }  
+  }
 
   void succursaleUser(UserModel user) async {
     try {
@@ -124,7 +126,8 @@ class UsersController extends GetxController
         usersList.clear();
         getList();
         Get.back();
-        Get.snackbar("Succursale ajoutée avec succès!", "Le document a bien été soumis",
+        Get.snackbar(
+            "Succursale ajoutée avec succès!", "Le document a bien été soumis",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -136,6 +139,5 @@ class UsersController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
-
+  }
 }

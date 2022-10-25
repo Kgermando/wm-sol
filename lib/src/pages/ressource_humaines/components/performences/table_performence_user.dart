@@ -66,7 +66,7 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
                   IconButton(
                       tooltip: 'Rafraichir',
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPerformence);
+                        Navigator.pushNamed(context, RhRoutes.rhPerformence); 
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

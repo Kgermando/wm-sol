@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/budgets/ligne_budgetaire_api.dart';
-import 'package:wm_solution/src/models/budgets/departement_budget_model.dart'; 
+import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
@@ -24,12 +24,14 @@ class LignBudgetaireController extends GetxController
   final ProfilController profilController = Get.find();
   final CampaignController campaignController = Get.put(CampaignController());
   final DevisController devisController = Get.put(DevisController());
-  final DevisListObjetController devisListObjetController = Get.put(DevisListObjetController());
+  final DevisListObjetController devisListObjetController =
+      Get.put(DevisListObjetController());
   final ProjetController projetController = Get.put(ProjetController());
   final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController = Get.put(TransportRestController());
-  final TransportRestPersonnelsController transportRestPersonnelsController = Get.put(TransportRestPersonnelsController());
-
+  final TransportRestController transportRestController =
+      Get.put(TransportRestController());
+  final TransportRestPersonnelsController transportRestPersonnelsController =
+      Get.put(TransportRestPersonnelsController());
 
   var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
 
@@ -55,7 +57,7 @@ class LignBudgetaireController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getList(); 
+    getList();
 
     devisListObjetsList = devisListObjetController.devisListObjetList;
     tansRestList = transportRestPersonnelsController.transRestAgentList;
@@ -98,13 +100,12 @@ class LignBudgetaireController extends GetxController
     uniteChoisieController.dispose();
 
     super.dispose();
-  } 
- 
+  }
 
   void getList() async {
     await lIgneBudgetaireApi.getAllData().then((response) {
       ligneBudgetaireList.assignAll(response);
-      
+
       change(ligneBudgetaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -122,7 +123,7 @@ class LignBudgetaireController extends GetxController
       await lIgneBudgetaireApi.deleteData(id).then((value) {
         ligneBudgetaireList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -174,6 +175,5 @@ class LignBudgetaireController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
-
+  }
 }

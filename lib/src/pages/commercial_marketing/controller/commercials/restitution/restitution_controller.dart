@@ -53,7 +53,7 @@ class RestitutionController extends GetxController
       await restitutionApi.deleteData(id).then((value) {
         restitutionList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -107,7 +107,7 @@ class RestitutionController extends GetxController
         await achatController.achatApi.updateData(achatModel).then((value) {
           restitutionList.clear();
           getList();
-          // Get.back();
+          Get.back();
           Get.snackbar("Le tranfert des l'article a réussi!",
               "Cet article a bien été transferé",
               backgroundColor: Colors.green,

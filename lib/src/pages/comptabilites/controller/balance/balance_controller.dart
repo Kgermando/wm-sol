@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comptabilite/balance_compte_api.dart'; 
-import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart'; 
+import 'package:wm_solution/src/api/comptabilite/balance_compte_api.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class BalanceController extends GetxController with StateMixin<List<BalanceCompteModel>> {
+class BalanceController extends GetxController
+    with StateMixin<List<BalanceCompteModel>> {
   final BalanceCompteApi balanceCompteApi = BalanceCompteApi();
   final ProfilController profilController = Get.find();
 
@@ -16,13 +17,12 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
 
   TextEditingController titleController = TextEditingController();
 
-       // Approbations
+  // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
   String approbationDG = '-';
   String approbationDD = '-';
-  TextEditingController motifDDController = TextEditingController(); 
-
+  TextEditingController motifDDController = TextEditingController();
 
   @override
   void onInit() {
@@ -57,7 +57,7 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
       await balanceCompteApi.deleteData(id).then((value) {
         balanceList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -76,18 +76,18 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
     try {
       _isLoading.value = true;
       final balance = BalanceCompteModel(
-        title: titleController.text,
-        statut: 'false',
-        signature: profilController.user.matricule.toString(),
-        created: DateTime.now(),
-        isSubmit: 'false', 
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+          title: titleController.text,
+          statut: 'false',
+          signature: profilController.user.matricule.toString(),
+          created: DateTime.now(),
+          isSubmit: 'false',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await balanceCompteApi.insertData(balance).then((value) {
         balanceList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -112,14 +112,14 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
           statut: data.statut,
           signature: data.signature,
           created: data.created,
-          isSubmit: 'true', 
+          isSubmit: 'true',
           approbationDD: data.approbationDD,
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await balanceCompteApi.updateData(bilanModel).then((value) {
         balanceList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -135,21 +135,20 @@ class BalanceController extends GetxController with StateMixin<List<BalanceCompt
     }
   }
 
-
   void submitDD(BalanceCompteModel data) async {
     try {
       _isLoading.value = true;
       final balanceModel = BalanceCompteModel(
-        id: data.id,
-        title: data.title,
-        statut: data.statut,
-        signature: data.signature,
-        created: data.created,
-        isSubmit: data.isSubmit,
-        approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule); 
+          id: data.id,
+          title: data.title,
+          statut: data.statut,
+          signature: data.signature,
+          created: data.created,
+          isSubmit: data.isSubmit,
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await balanceCompteApi.updateData(balanceModel).then((value) {
         balanceList.clear();
         getList();

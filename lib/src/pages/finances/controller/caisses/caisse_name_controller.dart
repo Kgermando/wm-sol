@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/finances/caisse_name_api.dart';
-import 'package:wm_solution/src/models/finances/caisse_name_model.dart'; 
+import 'package:wm_solution/src/models/finances/caisse_name_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class CaisseNameController extends GetxController
@@ -61,12 +61,11 @@ class CaisseNameController extends GetxController
       await caisseNameApi.deleteData(id).then((value) {
         caisseNameList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
-          backgroundColor: Colors.green,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP
-        );
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
         _isLoading.value = false;
       });
     } catch (e) {

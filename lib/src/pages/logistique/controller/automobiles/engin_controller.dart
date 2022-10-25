@@ -20,14 +20,11 @@ class EnginController extends GetxController
 
   final genreDrop = EnguinsDropdown().enginDropdown;
 
-    // Approbations
+  // Approbations
   String approbationDG = '-';
   String approbationDD = '-';
   TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
-
-
-
 
   final TextEditingController nomController = TextEditingController();
   final TextEditingController modeleController = TextEditingController();
@@ -52,7 +49,7 @@ class EnginController extends GetxController
     getList();
   }
 
-@override
+  @override
   void dispose() {
     motifDGController.dispose();
     motifDDController.dispose();
@@ -71,6 +68,7 @@ class EnginController extends GetxController
 
     super.dispose();
   }
+
   void getList() async {
     await enginsApi.getAllData().then((response) {
       enginList.assignAll(response);
@@ -91,7 +89,7 @@ class EnginController extends GetxController
       await enginsApi.deleteData(id).then((value) {
         enginList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -109,7 +107,7 @@ class EnginController extends GetxController
   void submit() async {
     try {
       _isLoading.value = true;
-       String numero = '';
+      String numero = '';
       if (numberPlaque < 10) {
         numero = "00$numberPlaque";
       } else if (numberPlaque < 99) {
@@ -118,28 +116,28 @@ class EnginController extends GetxController
         numero = "$numberPlaque";
       }
       final dataItem = AnguinModel(
-        nom: nomController.text,
-        modele: modeleController.text,
-        marque: marqueController.text,
-        numeroChassie: numeroChassieController.text,
-        couleur: couleurController.text,
-        genre: genre.toString(),
-        qtyMaxReservoir: qtyMaxReservoirController.text,
-        dateFabrication: DateTime.parse(dateFabricationController.text),
-        nomeroPLaque: nomeroPLaqueController.text,
-        nomeroEntreprise: numero,
-        kilometrageInitiale: kilometrageInitialeController.text,
-        provenance: provenanceController.text,
-        typeCaburant: typeCaburantController.text,
-        typeMoteur: typeMoteurController.text,
-        signature: profilController.user.matricule, 
-        created: DateTime.now(),
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+          nom: nomController.text,
+          modele: modeleController.text,
+          marque: marqueController.text,
+          numeroChassie: numeroChassieController.text,
+          couleur: couleurController.text,
+          genre: genre.toString(),
+          qtyMaxReservoir: qtyMaxReservoirController.text,
+          dateFabrication: DateTime.parse(dateFabricationController.text),
+          nomeroPLaque: nomeroPLaqueController.text,
+          nomeroEntreprise: numero,
+          kilometrageInitiale: kilometrageInitialeController.text,
+          provenance: provenanceController.text,
+          typeCaburant: typeCaburantController.text,
+          typeMoteur: typeMoteurController.text,
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await enginsApi.insertData(dataItem).then((value) {
         enginList.clear();
         getList();
@@ -163,30 +161,29 @@ class EnginController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AnguinModel(
-        id: data.id!,
-        nom: nomController.text,
-        modele: modeleController.text,
-        marque: marqueController.text,
-        numeroChassie: numeroChassieController.text,
-        couleur: couleurController.text,
-        genre: genre.toString(),
-        qtyMaxReservoir: qtyMaxReservoirController.text,
-        dateFabrication: DateTime.parse(dateFabricationController.text),
-        nomeroPLaque: nomeroPLaqueController.text,
-        nomeroEntreprise: data.nomeroEntreprise,
-        kilometrageInitiale: kilometrageInitialeController.text,
-        provenance: provenanceController.text,
-        typeCaburant: typeCaburantController.text,
-        typeMoteur: typeMoteurController.text,
-        signature: profilController.user.matricule, 
-        created: data.created,
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-'
-      );
+          id: data.id!,
+          nom: nomController.text,
+          modele: modeleController.text,
+          marque: marqueController.text,
+          numeroChassie: numeroChassieController.text,
+          couleur: couleurController.text,
+          genre: genre.toString(),
+          qtyMaxReservoir: qtyMaxReservoirController.text,
+          dateFabrication: DateTime.parse(dateFabricationController.text),
+          nomeroPLaque: nomeroPLaqueController.text,
+          nomeroEntreprise: data.nomeroEntreprise,
+          kilometrageInitiale: kilometrageInitialeController.text,
+          provenance: provenanceController.text,
+          typeCaburant: typeCaburantController.text,
+          typeMoteur: typeMoteurController.text,
+          signature: profilController.user.matricule,
+          created: data.created,
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await enginsApi.updateData(dataItem).then((value) {
         enginList.clear();
         getList();
@@ -225,7 +222,7 @@ class EnginController extends GetxController
           provenance: data.provenance,
           typeCaburant: data.typeCaburant,
           typeMoteur: data.typeMoteur,
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDG: approbationDG,
           motifDG:
@@ -272,7 +269,7 @@ class EnginController extends GetxController
           provenance: data.provenance,
           typeCaburant: data.typeCaburant,
           typeMoteur: data.typeMoteur,
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDG: '-',
           motifDG: '-',

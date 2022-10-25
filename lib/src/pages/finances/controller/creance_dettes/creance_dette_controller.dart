@@ -4,7 +4,7 @@ import 'package:wm_solution/src/api/finances/creance_dette_api.dart';
 import 'package:wm_solution/src/models/finances/creance_dette_model.dart';
 import 'package:wm_solution/src/models/finances/creances_model.dart';
 import 'package:wm_solution/src/models/finances/dette_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class CreanceDetteController extends GetxController
     with StateMixin<List<CreanceDetteModel>> {
@@ -40,7 +40,7 @@ class CreanceDetteController extends GetxController
     nomCompletController.dispose();
     pieceJustificativeController.dispose();
     libelleController.dispose();
-    montantController.dispose(); 
+    montantController.dispose();
     super.dispose();
   }
 
@@ -64,7 +64,7 @@ class CreanceDetteController extends GetxController
       await creanceDetteApi.deleteData(id).then((value) {
         creanceDetteList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -110,7 +110,7 @@ class CreanceDetteController extends GetxController
     }
   }
 
-   void submitDette(DetteModel data) async {
+  void submitDette(DetteModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = CreanceDetteModel(
@@ -141,20 +141,19 @@ class CreanceDetteController extends GetxController
     }
   }
 
-
   void submitUpdate(CreanceDetteModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = CreanceDetteModel(
-        id: data.id,
-        reference: data.reference,
-        nomComplet: nomCompletController.text,
-        pieceJustificative: pieceJustificativeController.text,
-        libelle: libelleController.text,
-        montant: montantController.text,
-        creanceDette: data.creanceDette,
-        signature: profilController.user.matricule,
-        created: DateTime.now());
+          id: data.id,
+          reference: data.reference,
+          nomComplet: nomCompletController.text,
+          pieceJustificative: pieceJustificativeController.text,
+          libelle: libelleController.text,
+          montant: montantController.text,
+          creanceDette: data.creanceDette,
+          signature: profilController.user.matricule,
+          created: DateTime.now());
       await creanceDetteApi.updateData(dataItem).then((value) {
         creanceDetteList.clear();
         getList();
@@ -172,5 +171,5 @@ class CreanceDetteController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 }

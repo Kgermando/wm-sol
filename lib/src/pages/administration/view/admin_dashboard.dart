@@ -57,137 +57,134 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Wrap(
-                                  alignment: WrapAlignment.spaceEvenly,
-                                  children: [
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentsCount}',
-                                        title: 'Total agents',
-                                        icon: Icons.group,
-                                        color: Colors.blue.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              RhRoutes.rhPersonnelsPage); 
-                                        },
-                                        number: '${controller.agentActifCount}',
-                                        title: 'Agent Actifs',
-                                        icon: Icons.person,
-                                        color: Colors.green.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              BudgetRoutes.budgetDashboard); 
-                                        },
-                                        number:
-                                            "${NumberFormat.decimalPattern('fr').format(double.parse(controller.poursentExecution.toStringAsFixed(0)))} %",
-                                        title: "Budgets",
-                                        icon: Icons.monetization_on_outlined,
-                                        color: Colors.purple.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              FinanceRoutes.transactionsDettes);  
-                                        },
-                                        number:
-                                            "${NumberFormat.decimalPattern('fr').format(controller.soldeDette)} \$",
-                                        title: 'Dette',
-                                        icon: Icons.blur_linear_rounded,
-                                        color: Colors.red.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              FinanceRoutes.transactionsCreances); 
-                                        },
-                                        number:
-                                            "${NumberFormat.decimalPattern('fr').format(controller.soldeCreance)} \$",
-                                        title: 'Créance',
-                                        icon: Icons.money_off_csred,
-                                        color: Colors.deepOrange.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(FinanceRoutes
-                                              .financeDashboard);  
-                                        },
-                                        number:
-                                            "${NumberFormat.decimalPattern('fr').format(controller.depenses)} \$",
-                                        title: 'Dépenses',
-                                        icon: Icons.monetization_on,
-                                        color: Colors.pink.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              FinanceRoutes.financeDashboard);   
-                                        },
-                                        number:
-                                            "${NumberFormat.decimalPattern('fr').format(controller.disponible)} \$",
-                                        title: 'Disponible',
-                                        icon: Icons.attach_money,
-                                        color: Colors.teal.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              ComptabiliteRoutes
-                                              .comptabiliteBilan);   
-                                        },
-                                        number: '${controller.bilanCount}',
-                                        title: 'Bilans',
-                                        icon: Icons.blur_linear_rounded,
-                                        color: Colors.blueGrey.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(ComptabiliteRoutes
-                                              .comptabiliteJournalLivre); 
-                                        },
-                                        number: '${controller.journalCount}',
-                                        title: 'Journals',
-                                        icon: Icons.backup_table,
-                                        color: Colors.blueAccent.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              ExploitationRoutes.expProjet); 
-                                        },
-                                        number: '${controller.projetsApprouveCount}',
-                                        title: 'Projets approuvés',
-                                        icon: Icons.work,
-                                        color: Colors.grey.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(
-                                              ComMarketingRoutes
-                                              .comMarketingDashboard); 
-                                        },
-                                        number: '${controller.campaignCount}',
-                                        title: 'Campagnes',
-                                        icon: Icons.campaign,
-                                        color: Colors.orange.shade700),
-                                  ],
-                                ),
-                                const SizedBox(height: p20),
-                                ResponsiveChildWidget(
-                                  flex1: 3,
-                                  flex2: 1,
-                                  child1: FlashCard(
-                                    height: 400,
-                                    width: double.infinity,
-                                    frontWidget:
-                                        CourbeVenteGainYear(controller: dashboardComMarketingController),
-                                    backWidget:
-                                        CourbeVenteGainMounth(controller: dashboardComMarketingController)), 
-                                  child2: DashRHPieWidget(controller: personnelsController)
-                                ) 
-                              ]),
-                        )),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                alignment: WrapAlignment.spaceEvenly,
+                                children: [
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentsCount}',
+                                      title: 'Total agents',
+                                      icon: Icons.group,
+                                      color: Colors.blue.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            RhRoutes.rhPersonnelsPage); 
+                                      },
+                                      number: '${controller.agentActifCount}',
+                                      title: 'Agent Actifs',
+                                      icon: Icons.person,
+                                      color: Colors.green.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            BudgetRoutes.budgetDashboard); 
+                                      },
+                                      number:
+                                          "${NumberFormat.decimalPattern('fr').format(double.parse(controller.poursentExecution.toStringAsFixed(0)))} %",
+                                      title: "Budgets",
+                                      icon: Icons.monetization_on_outlined,
+                                      color: Colors.purple.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            FinanceRoutes.transactionsDettes);  
+                                      },
+                                      number:
+                                          "${NumberFormat.decimalPattern('fr').format(controller.soldeDette)} \$",
+                                      title: 'Dette',
+                                      icon: Icons.blur_linear_rounded,
+                                      color: Colors.red.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            FinanceRoutes.transactionsCreances); 
+                                      },
+                                      number:
+                                          "${NumberFormat.decimalPattern('fr').format(controller.soldeCreance)} \$",
+                                      title: 'Créance',
+                                      icon: Icons.money_off_csred,
+                                      color: Colors.deepOrange.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(FinanceRoutes
+                                            .financeDashboard);  
+                                      },
+                                      number:
+                                          "${NumberFormat.decimalPattern('fr').format(controller.depenses)} \$",
+                                      title: 'Dépenses',
+                                      icon: Icons.monetization_on,
+                                      color: Colors.pink.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            FinanceRoutes.financeDashboard);   
+                                      },
+                                      number:
+                                          "${NumberFormat.decimalPattern('fr').format(controller.disponible)} \$",
+                                      title: 'Disponible',
+                                      icon: Icons.attach_money,
+                                      color: Colors.teal.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            ComptabiliteRoutes
+                                            .comptabiliteBilan);   
+                                      },
+                                      number: '${controller.bilanCount}',
+                                      title: 'Bilans',
+                                      icon: Icons.blur_linear_rounded,
+                                      color: Colors.blueGrey.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(ComptabiliteRoutes
+                                            .comptabiliteJournalLivre); 
+                                      },
+                                      number: '${controller.journalCount}',
+                                      title: 'Journals',
+                                      icon: Icons.backup_table,
+                                      color: Colors.blueAccent.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            ExploitationRoutes.expProjet); 
+                                      },
+                                      number: '${controller.projetsApprouveCount}',
+                                      title: 'Projets approuvés',
+                                      icon: Icons.work,
+                                      color: Colors.grey.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(
+                                            ComMarketingRoutes
+                                            .comMarketingDashboard); 
+                                      },
+                                      number: '${controller.campaignCount}',
+                                      title: 'Campagnes',
+                                      icon: Icons.campaign,
+                                      color: Colors.orange.shade700),
+                                ],
+                              ),
+                              const SizedBox(height: p20),
+                              ResponsiveChildWidget(
+                                flex1: 3,
+                                flex2: 1,
+                                child1: FlashCard(
+                                  height: 400,
+                                  width: MediaQuery.maybeOf(context)!.size.width / 1.1,
+                                  frontWidget:
+                                      CourbeVenteGainYear(controller: dashboardComMarketingController),
+                                  backWidget:
+                                      CourbeVenteGainMounth(controller: dashboardComMarketingController)), 
+                                child2: DashRHPieWidget(controller: personnelsController)
+                              ) 
+                            ])),
                   ))
             ],
           )),

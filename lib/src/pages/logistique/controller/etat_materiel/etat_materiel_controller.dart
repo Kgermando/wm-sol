@@ -14,11 +14,10 @@ class EtatMaterielController extends GetxController
     with StateMixin<List<EtatMaterielModel>> {
   final EtatMaterielApi etatMaterielApi = EtatMaterielApi();
   final ProfilController profilController = Get.find();
-    final EnginController enginController = Get.put(EnginController());
+  final EnginController enginController = Get.put(EnginController());
   final ImmobilierController immobilierController =
       Get.put(ImmobilierController());
-  final MobilierController mobilierController = Get.put(MobilierController()); 
-
+  final MobilierController mobilierController = Get.put(MobilierController());
 
   var etatMaterielList = <EtatMaterielModel>[].obs;
 
@@ -40,7 +39,7 @@ class EtatMaterielController extends GetxController
   List<MobilierModel> mobilierList = [];
   List<ImmobilierModel> immobilierList = [];
   List<AnguinModel> enguinsList = [];
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -49,7 +48,7 @@ class EtatMaterielController extends GetxController
 
   @override
   void dispose() {
-    motifDDController.dispose(); 
+    motifDDController.dispose();
 
     super.dispose();
   }
@@ -90,7 +89,7 @@ class EtatMaterielController extends GetxController
       await etatMaterielApi.deleteData(id).then((value) {
         etatMaterielList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -114,7 +113,7 @@ class EtatMaterielController extends GetxController
           marque: '-',
           typeObjet: typeObjet.toString(),
           statut: statut.toString(),
-          signature: profilController.user.matricule, 
+          signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDD: '-',
           motifDD: '-',
@@ -148,7 +147,7 @@ class EtatMaterielController extends GetxController
           marque: data.marque,
           typeObjet: typeObjet.toString(),
           statut: statut.toString(),
-          signature: profilController.user.matricule, 
+          signature: profilController.user.matricule,
           created: data.created,
           approbationDD: '-',
           motifDD: '-',
@@ -182,7 +181,7 @@ class EtatMaterielController extends GetxController
         marque: data.marque,
         typeObjet: data.typeObjet,
         statut: statutObjet.toString(),
-        signature: data.signature, 
+        signature: data.signature,
         created: data.created,
         approbationDD: data.approbationDD,
         motifDD: data.motifDD,
@@ -207,8 +206,6 @@ class EtatMaterielController extends GetxController
     }
   }
 
- 
-
   void submitDD(EtatMaterielModel data) async {
     try {
       _isLoading.value = true;
@@ -219,7 +216,7 @@ class EtatMaterielController extends GetxController
           marque: data.marque,
           typeObjet: data.typeObjet,
           statut: data.statut,
-          signature: data.signature, 
+          signature: data.signature,
           created: data.created,
           approbationDD: approbationDD,
           motifDD:

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/update/update_api.dart';
 import 'package:wm_solution/src/models/update/update_model.dart';
-import 'package:wm_solution/src/utils/info_system.dart'; 
+import 'package:wm_solution/src/utils/info_system.dart';
 
 class UpdateController extends GetxController
     with StateMixin<List<UpdateModel>> {
-  final UpdateVersionApi updateVersionApi = UpdateVersionApi(); 
+  final UpdateVersionApi updateVersionApi = UpdateVersionApi();
 
   var updateVersionList = <UpdateModel>[].obs;
 
@@ -20,13 +20,10 @@ class UpdateController extends GetxController
 
   TextEditingController versionController = TextEditingController();
   TextEditingController motifController = TextEditingController();
-  
 
-  
   bool isUploading = false;
   bool isUploadingDone = false;
   String? uploadedFileUrl;
-
 
   @override
   void onInit() {
@@ -34,13 +31,12 @@ class UpdateController extends GetxController
     getList();
   }
 
-    @override
+  @override
   void dispose() {
     versionController.dispose();
     motifController.dispose();
     super.dispose();
   }
-
 
   // void _pdfUpload(File file) async {
   //   String projectName = "fokad-spaces";
@@ -70,11 +66,10 @@ class UpdateController extends GetxController
   //   }
   // }
 
-  
-
   void getList() async {
     await updateVersionApi.getAllData().then((response) {
-      updateVersionList.assignAll(response.where((element) => element.isActive == "true").toList()); 
+      updateVersionList.assignAll(
+          response.where((element) => element.isActive == "true").toList());
       // Version actuel
       var isVersion = isUpdateVersion.split('.');
       for (var e in isVersion) {
@@ -103,7 +98,7 @@ class UpdateController extends GetxController
       await updateVersionApi.deleteData(id).then((value) {
         updateVersionList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -153,7 +148,9 @@ class UpdateController extends GetxController
       _isLoading.value = true;
       final dataItem = UpdateModel(
         version: versionController.text,
-        urlUpdate: (uploadedFileUrl == '') ? data.urlUpdate : uploadedFileUrl.toString(),
+        urlUpdate: (uploadedFileUrl == '')
+            ? data.urlUpdate
+            : uploadedFileUrl.toString(),
         created: data.created,
         isActive: 'false',
         motif: motifController.text,

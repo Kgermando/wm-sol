@@ -269,7 +269,6 @@ class _TableBanqueState extends State<TableBanque> {
         padding: const EdgeInsets.all(8.0),
         child: ResponsiveChild3Widget(
           child1: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                 SelectableText('Total recette: ',
                     style: bodyMedium!.copyWith(

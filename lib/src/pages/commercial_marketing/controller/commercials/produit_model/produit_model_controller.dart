@@ -19,7 +19,8 @@ class ProduitModelController extends GetxController
   TextEditingController sousCategorie1Controller = TextEditingController();
   TextEditingController sousCategorie2Controller = TextEditingController();
   TextEditingController sousCategorie3Controller = TextEditingController();
-  TextEditingController uniteController = TextEditingController(); // sousCategorie4
+  TextEditingController uniteController =
+      TextEditingController(); // sousCategorie4
 
   // Approbations
   String approbationDG = '-';
@@ -44,7 +45,6 @@ class ProduitModelController extends GetxController
     super.dispose();
   }
 
-
   void getList() async {
     await produitModelApi.getAllData().then((response) {
       produitModelList.assignAll(response);
@@ -65,7 +65,7 @@ class ProduitModelController extends GetxController
       await produitModelApi.deleteData(id).then((value) {
         produitModelList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -86,26 +86,25 @@ class ProduitModelController extends GetxController
       final idProductform =
           "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.text}";
       final dataItem = ProductModel(
-        categorie: categorieController.text,
-        sousCategorie1: (sousCategorie1Controller.text == "")
-            ? '-'
-            : sousCategorie1Controller.text,
-        sousCategorie2: (sousCategorie2Controller.text == "")
-            ? '-'
-            : sousCategorie2Controller.text,
-        sousCategorie3: (sousCategorie3Controller.text == "")
-            ? '-'
-            : sousCategorie3Controller.text,
-        sousCategorie4: (uniteController.text == "")
-            ? '-'
-            : sousCategorie3Controller.text,
-        idProduct: idProductform,
-        signature: profilController.user.matricule,
-        created: DateTime.now(),
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-'
-      );
+          categorie: categorieController.text,
+          sousCategorie1: (sousCategorie1Controller.text == "")
+              ? '-'
+              : sousCategorie1Controller.text,
+          sousCategorie2: (sousCategorie2Controller.text == "")
+              ? '-'
+              : sousCategorie2Controller.text,
+          sousCategorie3: (sousCategorie3Controller.text == "")
+              ? '-'
+              : sousCategorie3Controller.text,
+          sousCategorie4: (uniteController.text == "")
+              ? '-'
+              : sousCategorie3Controller.text,
+          idProduct: idProductform,
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await produitModelApi.insertData(dataItem).then((value) {
         produitModelList.clear();
         getList();
@@ -178,8 +177,7 @@ class ProduitModelController extends GetxController
           approbationDD: approbationDD,
           motifDD:
               (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule
-      );
+          signatureDD: profilController.user.matricule);
       await produitModelApi.updateData(dataItem).then((value) {
         produitModelList.clear();
         getList();

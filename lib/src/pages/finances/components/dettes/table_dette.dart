@@ -323,8 +323,7 @@ class _TableDetteState extends State<TableDette> {
       color: Colors.red.shade700,
       child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ResponsiveChild3Widget(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: ResponsiveChild3Widget( 
             child1: Row(
               children: [
                 SelectableText('Total: ',

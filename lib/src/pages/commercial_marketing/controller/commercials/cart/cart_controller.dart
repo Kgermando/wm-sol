@@ -80,7 +80,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       await cartApi.deleteData(id).then((value) {
         cartList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

@@ -27,16 +27,15 @@ class BudgetPrevisionnelController extends GetxController
     } else {
       return '${DateFormat('dd/MM/yyyy').format(dateRange!.start)} - ${DateFormat('dd/MM/yyyy').format(dateRange!.end)}';
     }
-  } 
+  }
 
-    // Approbations
+  // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
-  String approbationDG = '-'; 
+  String approbationDG = '-';
   String approbationDD = '-';
-  TextEditingController motifDGController = TextEditingController(); 
-  TextEditingController motifDDController = TextEditingController(); 
-
+  TextEditingController motifDGController = TextEditingController();
+  TextEditingController motifDDController = TextEditingController();
 
   @override
   void onInit() {
@@ -51,12 +50,11 @@ class BudgetPrevisionnelController extends GetxController
     motifDGController.dispose();
     motifDDController.dispose();
     super.dispose();
-  }  
-
+  }
 
   void getList() async {
     await depeartementBudgetApi.getAllData().then((response) {
-      departementBudgetList.assignAll(response); 
+      departementBudgetList.assignAll(response);
       change(departementBudgetList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -74,7 +72,7 @@ class BudgetPrevisionnelController extends GetxController
       await depeartementBudgetApi.deleteData(id).then((value) {
         departementBudgetList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -106,9 +104,10 @@ class BudgetPrevisionnelController extends GetxController
           signatureDG: '-',
           approbationDD: '-',
           motifDD: '-',
-          signatureDD: '-'
-      ); 
-      await depeartementBudgetApi.insertData(departementBudgetModel).then((value) {
+          signatureDD: '-');
+      await depeartementBudgetApi
+          .insertData(departementBudgetModel)
+          .then((value) {
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -147,7 +146,8 @@ class BudgetPrevisionnelController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await depeartementBudgetApi
-          .updateData(departementBudgetModel).then((value) {
+          .updateData(departementBudgetModel)
+          .then((value) {
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -165,7 +165,6 @@ class BudgetPrevisionnelController extends GetxController
     }
   }
 
-
   void submitDG(DepartementBudgetModel data) async {
     try {
       _isLoading.value = true;
@@ -180,14 +179,15 @@ class BudgetPrevisionnelController extends GetxController
         created: data.created,
         isSubmit: data.isSubmit,
         approbationDG: approbationDG,
-        motifDG:
-            (motifDGController.text == '') ? '-' : motifDGController.text,
+        motifDG: (motifDGController.text == '') ? '-' : motifDGController.text,
         signatureDG: profilController.user.matricule,
         approbationDD: data.approbationDD,
         motifDD: data.motifDD,
         signatureDD: data.signatureDD,
-      ); 
-      await depeartementBudgetApi.updateData(departementBudgetModel).then((value) {
+      );
+      await depeartementBudgetApi
+          .updateData(departementBudgetModel)
+          .then((value) {
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -209,23 +209,25 @@ class BudgetPrevisionnelController extends GetxController
     try {
       _isLoading.value = true;
       final departementBudgetModel = DepartementBudgetModel(
-        id: data.id,
-        title: data.title,
-        departement: data.departement,
-        periodeDebut: data.periodeDebut,
-        periodeFin: data.periodeFin,
-        signature: data.signature,
-        createdRef: data.createdRef,
-        created: data.created,
-        isSubmit: data.isSubmit,
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationDD: approbationDD,
-        motifDD: (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule
-      );  
-      await depeartementBudgetApi.updateData(departementBudgetModel).then((value) {
+          id: data.id,
+          title: data.title,
+          departement: data.departement,
+          periodeDebut: data.periodeDebut,
+          periodeFin: data.periodeFin,
+          signature: data.signature,
+          createdRef: data.createdRef,
+          created: data.created,
+          isSubmit: data.isSubmit,
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
+      await depeartementBudgetApi
+          .updateData(departementBudgetModel)
+          .then((value) {
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -242,10 +244,4 @@ class BudgetPrevisionnelController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-
-
-
- 
-
 }

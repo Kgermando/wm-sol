@@ -68,91 +68,88 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Card(
-                                  color: Colors.blue.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Engins',
-                                        style: headline6!
-                                            .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${controller.itemCountEnginDG} dossiers necessitent votre approbation",
-                                        style: bodyMedium!
-                                            .copyWith(color: Colors.white)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen1 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(Icons.arrow_drop_down,
-                                        color: Colors.white),
-                                    children: [TableEnginDG(enginController: enginController)],
-                                  ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Card(
+                                color: Colors.blue.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Engins',
+                                      style: headline6!
+                                          .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${controller.itemCountEnginDG} dossiers necessitent votre approbation",
+                                      style: bodyMedium!
+                                          .copyWith(color: Colors.white)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen1 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  children: [TableEnginDG(enginController: enginController)],
                                 ),
-                                Card(
-                                  color: Colors.lime.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text('Dossier Immobiliers',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6.copyWith(
-                                                color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${controller.itemCountImmobilierDG} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen2 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(Icons.arrow_drop_down,
-                                        color: Colors.white),
-                                    children: [TableImmobilierDG(immobilierController: immobilierController)],
-                                  ),
+                              ),
+                              Card(
+                                color: Colors.lime.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text('Dossier Immobiliers',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6.copyWith(
+                                              color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${controller.itemCountImmobilierDG} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen2 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  children: [TableImmobilierDG(immobilierController: immobilierController)],
                                 ),
-                                Card(
-                                  color: Colors.orange.shade700,
-                                  child: ExpansionTile(
-                                    leading: const Icon(Icons.folder,
-                                        color: Colors.white),
-                                    title: Text(
-                                        'Dossier sur les états de besoin',
-                                        style: (Responsive.isDesktop(context))
-                                            ? headline6.copyWith(
-                                                color: Colors.white)
-                                            : bodyLarge!
-                                                .copyWith(color: Colors.white)),
-                                    subtitle: Text(
-                                        "Vous avez ${devisNotifyController.itemCountDevisDG} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
-                                    initiallyExpanded: false,
-                                    onExpansionChanged: (val) {
-                                      setState(() {
-                                        isOpen3 = !val;
-                                      });
-                                    },
-                                    trailing: const Icon(Icons.arrow_drop_down,
-                                        color: Colors.white),
-                                    children: [
-                                      TableDevisDG(devisController: devisController)
-                                    ],
-                                  ),
+                              ),
+                              Card(
+                                color: Colors.orange.shade700,
+                                child: ExpansionTile(
+                                  leading: const Icon(Icons.folder,
+                                      color: Colors.white),
+                                  title: Text(
+                                      'Dossier sur les états de besoin',
+                                      style: (Responsive.isDesktop(context))
+                                          ? headline6.copyWith(
+                                              color: Colors.white)
+                                          : bodyLarge!
+                                              .copyWith(color: Colors.white)),
+                                  subtitle: Text(
+                                      "Vous avez ${devisNotifyController.itemCountDevisDG} dossiers necessitent votre approbation",
+                                      style: bodyMedium.copyWith(
+                                          color: Colors.white70)),
+                                  initiallyExpanded: false,
+                                  onExpansionChanged: (val) {
+                                    setState(() {
+                                      isOpen3 = !val;
+                                    });
+                                  },
+                                  trailing: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  children: [
+                                    TableDevisDG(devisController: devisController)
+                                  ],
                                 ),
-                              ]),
-                        )),
+                              ),
+                            ])),
                   ))
             ],
           )),

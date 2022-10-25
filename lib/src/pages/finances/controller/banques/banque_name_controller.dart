@@ -37,7 +37,7 @@ class BanqueNameController extends GetxController
     nomCompletController.dispose();
     rccmController.dispose();
     idNatController.dispose();
-    addresseController.dispose(); 
+    addresseController.dispose();
     super.dispose();
   }
 
@@ -61,7 +61,7 @@ class BanqueNameController extends GetxController
       await banqueNameApi.deleteData(id).then((value) {
         banqueNameList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -83,7 +83,8 @@ class BanqueNameController extends GetxController
           nomComplet: nomCompletController.text,
           rccm: (rccmController.text == '') ? '-' : rccmController.text,
           idNat: (idNatController.text == '') ? '-' : idNatController.text,
-          addresse: (addresseController.text == '') ? '-' : addresseController.text,
+          addresse:
+              (addresseController.text == '') ? '-' : addresseController.text,
           created: DateTime.now());
       await banqueNameApi.insertData(dataItem).then((value) {
         banqueNameList.clear();
@@ -108,14 +109,17 @@ class BanqueNameController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = BanqueNameModel(
-        id: data.id,
-        nomComplet: (nomCompletController.text == '') ? data.nomComplet : nomCompletController.text,
-        rccm: (rccmController.text == '') ? data.rccm : rccmController.text,
-        idNat: (idNatController.text == '') ? data.idNat : idNatController.text,
-        addresse:
-            (addresseController.text == '') ? data.addresse : addresseController.text,
-        created: data.created
-      );
+          id: data.id,
+          nomComplet: (nomCompletController.text == '')
+              ? data.nomComplet
+              : nomCompletController.text,
+          rccm: (rccmController.text == '') ? data.rccm : rccmController.text,
+          idNat:
+              (idNatController.text == '') ? data.idNat : idNatController.text,
+          addresse: (addresseController.text == '')
+              ? data.addresse
+              : addresseController.text,
+          created: data.created);
       await banqueNameApi.updateData(dataItem).then((value) {
         banqueNameList.clear();
         getList();

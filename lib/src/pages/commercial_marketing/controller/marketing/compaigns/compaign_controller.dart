@@ -90,7 +90,7 @@ class CampaignController extends GetxController
       await campaignApi.deleteData(id).then((value) {
         campaignList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -109,32 +109,31 @@ class CampaignController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = CampaignModel(
-        typeProduit: typeProduitController.text,
-        dateDebutEtFin:
-            "Du ${DateFormat('dd/MM/yyyy').format(dateRange!.start)} - Au ${DateFormat('dd/MM/yyyy').format(dateRange!.end)}",
-        coutCampaign: coutCampaignController.text,
-        lieuCible: lieuCibleController.text,
-        promotion: promotionController.text,
-        objectifs: objectifsController.text,
-        observation: 'false',
-        signature: profilController.user.matricule.toString(),
-        createdRef: DateTime.now(),
-        created: DateTime.now(),
-        approbationDG: '-',
-        motifDG: '-',
-        signatureDG: '-',
-        approbationBudget: '-',
-        motifBudget: '-',
-        signatureBudget: '-',
-        approbationFin: '-',
-        motifFin: '-',
-        signatureFin: '-',
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-',
-        ligneBudgetaire: '-',
-        ressource: '-'
-      );
+          typeProduit: typeProduitController.text,
+          dateDebutEtFin:
+              "Du ${DateFormat('dd/MM/yyyy').format(dateRange!.start)} - Au ${DateFormat('dd/MM/yyyy').format(dateRange!.end)}",
+          coutCampaign: coutCampaignController.text,
+          lieuCible: lieuCibleController.text,
+          promotion: promotionController.text,
+          objectifs: objectifsController.text,
+          observation: 'false',
+          signature: profilController.user.matricule.toString(),
+          createdRef: DateTime.now(),
+          created: DateTime.now(),
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationBudget: '-',
+          motifBudget: '-',
+          signatureBudget: '-',
+          approbationFin: '-',
+          motifFin: '-',
+          signatureFin: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-',
+          ligneBudgetaire: '-',
+          ressource: '-');
       await campaignApi.insertData(dataItem).then((value) {
         campaignList.clear();
         getList();
@@ -157,32 +156,31 @@ class CampaignController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = CampaignModel(
-        id: data.id!,
-        typeProduit: data.typeProduit,
-        dateDebutEtFin: data.dateDebutEtFin,
-        coutCampaign: data.coutCampaign,
-        lieuCible: data.lieuCible,
-        promotion: data.promotion,
-        objectifs: data.objectifs,
-        observation: 'true',
-        signature: data.signature,
-        createdRef: data.createdRef,
-        created: data.created,
-        approbationDG: data.approbationDG,
-        motifDG: data.motifDG,
-        signatureDG: data.signatureDG,
-        approbationBudget: data.approbationBudget,
-        motifBudget: data.motifBudget,
-        signatureBudget: data.signatureBudget,
-        approbationFin: data.approbationFin,
-        motifFin: data.motifFin,
-        signatureFin: data.signatureFin,
-        approbationDD: data.approbationDD,
-        motifDD: data.motifDD,
-        signatureDD: data.signatureDD,
-        ligneBudgetaire: data.ligneBudgetaire,
-        ressource: data.ressource
-      );
+          id: data.id!,
+          typeProduit: data.typeProduit,
+          dateDebutEtFin: data.dateDebutEtFin,
+          coutCampaign: data.coutCampaign,
+          lieuCible: data.lieuCible,
+          promotion: data.promotion,
+          objectifs: data.objectifs,
+          observation: 'true',
+          signature: data.signature,
+          createdRef: data.createdRef,
+          created: data.created,
+          approbationDG: data.approbationDG,
+          motifDG: data.motifDG,
+          signatureDG: data.signatureDG,
+          approbationBudget: data.approbationBudget,
+          motifBudget: data.motifBudget,
+          signatureBudget: data.signatureBudget,
+          approbationFin: data.approbationFin,
+          motifFin: data.motifFin,
+          signatureFin: data.signatureFin,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          ligneBudgetaire: data.ligneBudgetaire,
+          ressource: data.ressource);
       await campaignApi.updateData(dataItem).then((value) {
         campaignList.clear();
         getList();

@@ -276,7 +276,6 @@ class _TablecaisseState extends State<Tablecaisse> {
           padding: const EdgeInsets.all(8.0),
           child: ResponsiveChild3Widget(
               child1: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SelectableText('Total recette: ',
                       style: bodyMedium!.copyWith(

@@ -9,18 +9,16 @@ class PerformenceNoteController extends GetxController
   PerformenceNoteApi performenceNoteApi = PerformenceNoteApi();
   final ProfilController profilController = Get.find();
 
-   var performenceNoteList = <PerformenceNoteModel>[].obs;
+  var performenceNoteList = <PerformenceNoteModel>[].obs;
 
-   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
-  
 
   final TextEditingController hospitaliteController = TextEditingController();
   final TextEditingController ponctualiteController = TextEditingController();
   final TextEditingController travailleController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
- 
 
   @override
   void onInit() {
@@ -57,7 +55,7 @@ class PerformenceNoteController extends GetxController
       await performenceNoteApi.deleteData(id).then((value) {
         performenceNoteList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -77,7 +75,7 @@ class PerformenceNoteController extends GetxController
       final form = formKey.currentState!;
       if (form.validate()) {
         _isLoading.value = true;
-         final performenceNoteModel = PerformenceNoteModel(
+        final performenceNoteModel = PerformenceNoteModel(
             agent: data.agent,
             departement: data.departement,
             hospitalite: hospitaliteController.text,
@@ -90,8 +88,7 @@ class PerformenceNoteController extends GetxController
           performenceNoteList.clear();
           getList();
           Get.back();
-          Get.snackbar("Noté avec succès!",
-              "Vous avez noté ${data.agent}",
+          Get.snackbar("Noté avec succès!", "Vous avez noté ${data.agent}",
               duration: const Duration(seconds: 5),
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
@@ -107,5 +104,4 @@ class PerformenceNoteController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
 }

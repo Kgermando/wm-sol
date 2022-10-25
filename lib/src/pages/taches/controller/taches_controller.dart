@@ -14,7 +14,7 @@ class TachesController extends GetxController
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
- 
+
   TextEditingController jalonController = TextEditingController();
   TextEditingController tacheController = TextEditingController();
   String? agent;
@@ -27,7 +27,7 @@ class TachesController extends GetxController
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     jalonController.dispose();
     tacheController.dispose();
 
@@ -54,7 +54,7 @@ class TachesController extends GetxController
       await tachesApi.deleteData(id).then((value) {
         tachesList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -73,17 +73,16 @@ class TachesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
-        nom: nom,  // Nom du projet ou campaign
-        numeroTache: "${length + 1}",
-        agent: agent.toString(),
-        jalon: jalonController.text,
-        tache: tacheController.text,
-        signatureResp: profilController.user.matricule,
-        created: DateTime.now(),
-        read: 'false', 
-        departement: '',
-        reference: id
-      );
+          nom: nom, // Nom du projet ou campaign
+          numeroTache: "${length + 1}",
+          agent: agent.toString(),
+          jalon: jalonController.text,
+          tache: tacheController.text,
+          signatureResp: profilController.user.matricule,
+          created: DateTime.now(),
+          read: 'false',
+          departement: '',
+          reference: id);
       await tachesApi.insertData(dataItem).then((value) {
         tachesList.clear();
         getList();
@@ -107,17 +106,16 @@ class TachesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
-        nom: data.nom,  
-        numeroTache: data.numeroTache,
-        agent: agent.toString(),
-        jalon: jalonController.text,
-        tache: tacheController.text,
-        signatureResp: profilController.user.matricule,
-        created: data.created,
-        read: data.read,
-        departement: data.departement,
-        reference: data.reference
-      );
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          agent: agent.toString(),
+          jalon: jalonController.text,
+          tache: tacheController.text,
+          signatureResp: profilController.user.matricule,
+          created: data.created,
+          read: data.read,
+          departement: data.departement,
+          reference: data.reference);
       await tachesApi.updateData(dataItem).then((value) {
         tachesList.clear();
         getList();
@@ -153,7 +151,7 @@ class TachesController extends GetxController
           reference: data.reference);
       await tachesApi.updateData(dataItem).then((value) {
         tachesList.clear();
-        getList(); 
+        getList();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -168,6 +166,4 @@ class TachesController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-   
 }

@@ -14,7 +14,7 @@ class PerformenceController extends GetxController
   bool get isLoading => _isLoading.value;
 
   @override
-  void onInit() { 
+  void onInit() {
     super.onInit();
     getList();
   }
@@ -28,7 +28,6 @@ class PerformenceController extends GetxController
     });
   }
 
- 
   detailView(int id) async {
     final data = await performenceApi.getOneData(id);
     return data;
@@ -40,7 +39,7 @@ class PerformenceController extends GetxController
       await performenceApi.deleteData(id).then((value) {
         performenceList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

@@ -50,7 +50,7 @@ class RapportController extends GetxController
       await rapportApi.deleteData(id).then((value) {
         rapportList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -69,13 +69,12 @@ class RapportController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-        nom: data.nom,
-        numeroTache: data.numeroTache,
-        rapport: rapportController.text,
-        signature: profilController.user.matricule.toString(),
-        created: DateTime.now(),
-        reference: data.id!
-      );
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          rapport: rapportController.text,
+          signature: profilController.user.matricule.toString(),
+          created: DateTime.now(),
+          reference: data.id!);
       await rapportApi.insertData(dataItem).then((value) {
         rapportList.clear();
         getList();

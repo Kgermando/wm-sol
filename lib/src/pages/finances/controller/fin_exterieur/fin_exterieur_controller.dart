@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/finances/fin_exterieur_api.dart'; 
+import 'package:wm_solution/src/api/finances/fin_exterieur_api.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
-import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart'; 
+import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class FinExterieurController extends GetxController
@@ -21,14 +21,13 @@ class FinExterieurController extends GetxController
   final TextEditingController pieceJustificativeController =
       TextEditingController();
   final TextEditingController libelleController = TextEditingController();
-  final TextEditingController montantController = TextEditingController(); 
+  final TextEditingController montantController = TextEditingController();
   String? typeOperation;
 
   final _recette = 0.0.obs;
   double get recette => _recette.value;
   final _depenses = 0.0.obs;
-  double get depenses => _depenses.value; 
-
+  double get depenses => _depenses.value;
 
   @override
   void onInit() {
@@ -47,7 +46,7 @@ class FinExterieurController extends GetxController
     nomCompletController.dispose();
     pieceJustificativeController.dispose();
     libelleController.dispose();
-    montantController.dispose(); 
+    montantController.dispose();
     super.dispose();
   }
 
@@ -83,7 +82,7 @@ class FinExterieurController extends GetxController
       await finExterieurApi.deleteData(id).then((value) {
         finExterieurList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

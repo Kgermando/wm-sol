@@ -15,8 +15,8 @@ class MobilierController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-    // Approbations 
-  String approbationDD = '-'; 
+  // Approbations
+  String approbationDD = '-';
   TextEditingController motifDDController = TextEditingController();
 
   TextEditingController nomController = TextEditingController();
@@ -25,7 +25,6 @@ class MobilierController extends GetxController
   TextEditingController descriptionMobilierController = TextEditingController();
   TextEditingController nombreController = TextEditingController();
 
-
   @override
   void onInit() {
     super.onInit();
@@ -33,7 +32,7 @@ class MobilierController extends GetxController
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     motifDDController.dispose();
     nomController.dispose();
     modeleController.dispose();
@@ -63,7 +62,7 @@ class MobilierController extends GetxController
       await mobilierApi.deleteData(id).then((value) {
         mobilierList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -82,16 +81,16 @@ class MobilierController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = MobilierModel(
-        nom: nomController.text,
-        modele: modeleController.text,
-        marque: marqueController.text,
-        descriptionMobilier: descriptionMobilierController.text,
-        nombre: nombreController.text,
-        signature: profilController.user.matricule, 
-        created: DateTime.now(),
-        approbationDD: '-',
-        motifDD: '-',
-        signatureDD: '-');
+          nom: nomController.text,
+          modele: modeleController.text,
+          marque: marqueController.text,
+          descriptionMobilier: descriptionMobilierController.text,
+          nombre: nombreController.text,
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-');
       await mobilierApi.insertData(dataItem).then((value) {
         mobilierList.clear();
         getList();
@@ -121,7 +120,7 @@ class MobilierController extends GetxController
           marque: marqueController.text,
           descriptionMobilier: descriptionMobilierController.text,
           nombre: nombreController.text,
-          signature: profilController.user.matricule, 
+          signature: profilController.user.matricule,
           created: data.created,
           approbationDD: '-',
           motifDD: '-',
@@ -149,19 +148,18 @@ class MobilierController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = MobilierModel(
-        id: data.id!,
-        nom: data.nom,
-        modele: data.modele,
-        marque: data.marque,
-        descriptionMobilier: data.descriptionMobilier,
-        nombre: data.nombre,
-        signature: data.signature, 
-        created: data.created,
-        approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule
-      );
+          id: data.id!,
+          nom: data.nom,
+          modele: data.modele,
+          marque: data.marque,
+          descriptionMobilier: data.descriptionMobilier,
+          nombre: data.nombre,
+          signature: data.signature,
+          created: data.created,
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await mobilierApi.updateData(dataItem).then((value) {
         mobilierList.clear();
         getList();

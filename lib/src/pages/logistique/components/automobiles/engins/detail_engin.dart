@@ -22,13 +22,14 @@ class DetailEngin extends StatefulWidget {
 }
 
 class _DetailEnginState extends State<DetailEngin> {
+  final EnginController controller = Get.put(EnginController());
+  final ProfilController profilController = Get.put(ProfilController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
   @override
   Widget build(BuildContext context) {
-    final EnginController controller = Get.put(EnginController());
-    final ProfilController profilController = Get.put(ProfilController());
+
 
     return controller.obx(
         onLoading: loading(),
@@ -106,7 +107,7 @@ class _DetailEnginState extends State<DetailEngin> {
                                                 IconButton(
                                                     tooltip: 'Supprimer',
                                                     onPressed: () async {
-                                      alertDeleteDialog(controller);
+                                      alertDeleteDialog();
                                                     },
                                                     icon: const Icon(
                                                         Icons.delete),
@@ -144,16 +145,16 @@ class _DetailEnginState extends State<DetailEngin> {
   }
 
 
-   alertDeleteDialog(EnginController controller) {
+   alertDeleteDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?'),
-              content: const SizedBox(
-                  height: 100,
+                            title: Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: mainColor)),
+              content: const SizedBox( 
                   width: 100,
                   child: Text("Cette action permet de supprimer le document")),
               actions: <Widget>[
@@ -165,6 +166,7 @@ class _DetailEnginState extends State<DetailEngin> {
                   onPressed: () {
                     controller.enginsApi
                         .deleteData(widget.anguinModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK'),
                 ),

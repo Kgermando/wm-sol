@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comm_marketing/commerciale/livraison_history_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart'; 
+import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class HistoryLivraisonController extends GetxController
@@ -42,7 +42,7 @@ class HistoryLivraisonController extends GetxController
       await livraisonHistorylivraisonHistoryApi.deleteData(id).then((value) {
         livraisonHistoryList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

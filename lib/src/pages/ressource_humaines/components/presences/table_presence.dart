@@ -63,8 +63,7 @@ class _TablePresenceState extends State<TablePresence> {
             Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      // Get.toNamed(RhRoutes.rhPresence);
+                    onPressed: () { 
                       Navigator.of(context).pushNamed(RhRoutes.rhPresence);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),

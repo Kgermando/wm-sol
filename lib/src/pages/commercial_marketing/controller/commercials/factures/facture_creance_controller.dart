@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/creance_facture_api.dart'; 
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart'; 
+import 'package:wm_solution/src/api/comm_marketing/commerciale/creance_facture_api.dart';
+import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class FactureCreanceController extends GetxController
@@ -41,7 +41,7 @@ class FactureCreanceController extends GetxController
       await creanceFactureApi.deleteData(id).then((value) {
         creanceFactureList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),

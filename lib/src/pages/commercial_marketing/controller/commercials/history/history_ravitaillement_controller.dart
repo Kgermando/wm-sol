@@ -6,8 +6,9 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class HistoryRavitaillementController extends GetxController
     with StateMixin<List<HistoryRavitaillementModel>> {
-  final HistoryRavitaillementApi historyRavitaillementApi = HistoryRavitaillementApi();
-  final ProfilController profilController = Get.find(); 
+  final HistoryRavitaillementApi historyRavitaillementApi =
+      HistoryRavitaillementApi();
+  final ProfilController profilController = Get.find();
 
   var historyRavitaillementList = <HistoryRavitaillementModel>[].obs;
 
@@ -15,14 +16,12 @@ class HistoryRavitaillementController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
- 
   @override
   void onInit() {
     super.onInit();
     getList();
   }
 
- 
   void getList() async {
     await historyRavitaillementApi.getAllData().then((response) {
       historyRavitaillementList.assignAll(response);
@@ -43,7 +42,7 @@ class HistoryRavitaillementController extends GetxController
       await historyRavitaillementApi.deleteData(id).then((value) {
         historyRavitaillementList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -56,6 +55,5 @@ class HistoryRavitaillementController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  } 
- 
+  }
 }

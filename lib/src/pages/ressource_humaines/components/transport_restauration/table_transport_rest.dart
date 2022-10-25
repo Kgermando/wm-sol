@@ -69,8 +69,8 @@ class _TableTransportRestState extends State<TableTransportRest> {
             Row(
               children: [
                 IconButton(
-                    onPressed: () { 
-                      Get.toNamed(RhRoutes.rhTransportRest);
+                    onPressed: () {  
+                       Navigator.pushNamed(context, RhRoutes.rhTransportRest);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
