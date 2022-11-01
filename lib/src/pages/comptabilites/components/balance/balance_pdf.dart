@@ -77,7 +77,7 @@ class BalancePdf {
           child: pw.Image(image),
         ),
         pw.Text(InfoSystem().namelong()),
-        pw.Text("FOKAD SA",
+        pw.Text(InfoSystem().name(),
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
       ],
     );
@@ -228,7 +228,7 @@ class BalancePdf {
                       ),
                     )),
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(double.parse(compte.debit))} \$",
+                        "${compte.debit} \$",
                         textAlign: TextAlign.center),
                   ),
                 ),
@@ -243,7 +243,7 @@ class BalancePdf {
                       ),
                     )),
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(double.parse(compte.credit))} \$",
+                        "${compte.credit} \$",
                         textAlign: TextAlign.center),
                   ),
                 ),
@@ -258,7 +258,7 @@ class BalancePdf {
                       ),
                     )),
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(compte.solde)} \$",
+                        "${compte.solde} \$",
                         textAlign: TextAlign.center),
                   ),
                 )

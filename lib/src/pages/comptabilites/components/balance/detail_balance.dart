@@ -28,137 +28,136 @@ class DetailBalance extends StatefulWidget {
 }
 
 class _DetailBalanceState extends State<DetailBalance> {
+  final BalanceController controller = Get.put(BalanceController());
+  final ProfilController profilController = Get.put(ProfilController());
+  final BalanceRefController balanceRefController =
+      Get.put(BalanceRefController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabiliés";
 
   @override
   Widget build(BuildContext context) {
-    final BalanceController controller = Get.put(BalanceController());
-    final ProfilController profilController = Get.put(ProfilController());
-    final BalanceRefController balanceRefController =
-        Get.put(BalanceRefController());
-
-    return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.balanceCompteModel.title),
-        drawer: const DrawerMenu(),
-        floatingActionButton:
-            (widget.balanceCompteModel.isSubmit == 'false' &&
-              widget.balanceCompteModel.approbationDD == '-')
-          ? FloatingActionButton.extended(
-              label: const Text("Ajouter une écriture"),
-              tooltip: "Ecriture sur la feuille balance",
-              icon: const Icon(Icons.person_add),
-              onPressed: () {
-                newEcritureDialog(balanceRefController);
-              },
-            )
-          : Container(),
-  body: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Visibility(
-          visible: !Responsive.isMobile(context),
-          child: const Expanded(flex: 1, child: DrawerMenu())),
-      Expanded(
-          flex: 5,
-          child: SingleChildScrollView(
-      controller: ScrollController(),
-      physics: const ScrollPhysics(),
-      child: Container(
-        margin: const EdgeInsets.only(
-            top: p20, bottom: p8, right: p20, left: p20),
-        decoration: const BoxDecoration(
-            borderRadius:
-                BorderRadius.all(Radius.circular(20))),
-        child: Column(
-          children: [
-            Card(
-              elevation: 3,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: p20),
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                      children: [
-                        TitleWidget(
-                            title:
-                                Responsive.isMobile(context)
-                                    ? "Balance"
-                                    : "Comptes Balance"),
-                        Column(
-                          children: [
-                            Row(
+    return balanceRefController.obx(
+        onLoading: loading(),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => Text(
+            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(
+                  context, scaffoldKey, title, widget.balanceCompteModel.title),
+              drawer: const DrawerMenu(),
+              floatingActionButton:
+                  (widget.balanceCompteModel.isSubmit == 'false' &&
+                          widget.balanceCompteModel.approbationDD == '-')
+                      ? FloatingActionButton.extended(
+                          label: const Text("Ajouter une écriture"),
+                          tooltip: "Ecriture sur la feuille balance",
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            newEcritureDialog(balanceRefController);
+                          },
+                        )
+                      : Container(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
                               children: [
-                                if (widget.balanceCompteModel
-                                            .signature ==
-                                        profilController
-                                            .user
-                                            .matricule &&
-                                    widget.balanceCompteModel
-                                            .isSubmit ==
-                                        "false") // Uniqyement celui a remplit le document
-                                  sendButton(controller),
-                                if (widget
-                                        .balanceCompteModel
-                                        .approbationDD ==
-                                    "-")
-                                  deleteButton(controller),
-                                PrintWidget(
-                                    tooltip:
-                                        'Imprimer le document',
-                                    onPressed: () async {
-                                      var compteBalanceRefPdf =
-                                          balanceRefController
-                                              .compteBalanceRefList
-                                              .where((element) =>
-                                                  element
-                                                      .reference ==
-                                                  widget
-                                                      .balanceCompteModel
-                                                      .id)
-                                              .toList();
-                                      await BalancePdf.generate(
-                                          widget
-                                              .balanceCompteModel,
-                                          compteBalanceRefPdf);
-                                    }),
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TitleWidget(
+                                                title:
+                                                    Responsive.isMobile(context)
+                                                        ? "Balance"
+                                                        : "Comptes Balance"),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    if (widget.balanceCompteModel
+                                                                .signature ==
+                                                            profilController
+                                                                .user
+                                                                .matricule &&
+                                                        widget.balanceCompteModel
+                                                                .isSubmit ==
+                                                            "false") // Uniqyement celui a remplit le document
+                                                      sendButton(controller),
+                                                    if (widget
+                                                            .balanceCompteModel
+                                                            .approbationDD ==
+                                                        "-")
+                                                      deleteButton(controller),
+                                                    PrintWidget(
+                                                        tooltip:
+                                                            'Imprimer le document',
+                                                        onPressed: () async {
+                                                          var compteBalanceRefPdf =
+                                                              balanceRefController
+                                                                  .compteBalanceRefList
+                                                                  .where((element) =>
+                                                                      element
+                                                                          .reference ==
+                                                                      widget
+                                                                          .balanceCompteModel
+                                                                          .id)
+                                                                  .toList();
+                                                          await BalancePdf.generate(
+                                                              widget
+                                                                  .balanceCompteModel,
+                                                              compteBalanceRefPdf);
+                                                        }),
+                                                  ],
+                                                ),
+                                                Text(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .balanceCompteModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(balanceRefController),
+                                        totalMontant(balanceRefController)
+                                      ],
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
-                            Text(
-                                DateFormat(
-                                        "dd-MM-yyyy HH:mm")
-                                    .format(widget
-                                        .balanceCompteModel
-                                        .created),
-                                textAlign: TextAlign.start),
-                          ],
-                        )
-                      ],
-                    ),
-                    dataWidget(balanceRefController),
-                    totalMontant(balanceRefController)
-                  ],
-                ),
+                          )))
+                ],
               ),
-            )
-          ],
-        ),
-      )))
-    ],
-  ),
-));
+            ));
   }
 
   Widget totalMontant(BalanceRefController balanceRefController) {
@@ -192,10 +191,10 @@ class _DetailBalanceState extends State<DetailBalance> {
                   textAlign: TextAlign.start,
                   style: headline6!.copyWith(fontWeight: FontWeight.bold)),
               child2: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(
                   left: BorderSide(
-                    color: mainColor,
+                    color: Colors.red,
                     width: 2,
                   ),
                 )),
@@ -205,10 +204,10 @@ class _DetailBalanceState extends State<DetailBalance> {
                     style: headline6.copyWith(fontWeight: FontWeight.bold)),
               ),
               child3: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(
                   left: BorderSide(
-                    color: mainColor,
+                    color: Colors.red,
                     width: 2,
                   ),
                 )),
@@ -218,10 +217,10 @@ class _DetailBalanceState extends State<DetailBalance> {
                     style: headline6.copyWith(fontWeight: FontWeight.bold)),
               ),
               child4: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(
                   left: BorderSide(
-                    color: mainColor,
+                    color: Colors.red,
                     width: 2,
                   ),
                 )),
@@ -242,16 +241,8 @@ class _DetailBalanceState extends State<DetailBalance> {
       child: Column(
         children: [
           Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Text("Titre:",
-                      style: bodyLarge!.copyWith(fontWeight: FontWeight.bold))),
-              Expanded(
-                  flex: 3,
-                  child:
-                      Text(widget.balanceCompteModel.title, style: bodyLarge))
-            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text(widget.balanceCompteModel.title, style: bodyLarge)],
           ),
           const SizedBox(height: p20),
           Divider(color: mainColor),
@@ -265,7 +256,7 @@ class _DetailBalanceState extends State<DetailBalance> {
               decoration: const BoxDecoration(),
               child: Text("Comptes",
                   textAlign: TextAlign.start,
-                  style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+                  style: bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
             ),
             child2: Container(
               decoration: BoxDecoration(
@@ -306,16 +297,15 @@ class _DetailBalanceState extends State<DetailBalance> {
           ),
           Divider(color: mainColor),
           const SizedBox(height: p30),
-          compteWidget(balanceRefController)
+          compteWidget()
         ],
       ),
     );
   }
 
-  Widget compteWidget(BalanceRefController balanceRefController) {
+  Widget compteWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    List<CompteBalanceRefModel>? dataList = balanceRefController
-        .compteBalanceRefList
+    var dataList = balanceRefController.compteBalanceRefList
         .where((element) => element.reference == widget.balanceCompteModel.id)
         .toList();
     return ListView.builder(
@@ -501,14 +491,11 @@ class _DetailBalanceState extends State<DetailBalance> {
     );
   }
 
-
-  newEcritureDialog(
-      BalanceRefController balanceRefController) {
+  newEcritureDialog(BalanceRefController balanceRefController) {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (dialogContext) {
-          final formKey = GlobalKey<FormState>();
           bool isLoading = false;
 
           List<String> comptesList = [];
@@ -532,7 +519,7 @@ class _DetailBalanceState extends State<DetailBalance> {
                   child: isLoading
                       ? loading()
                       : Form(
-                          key: formKey,
+                          key: balanceRefController.formKey,
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
@@ -672,11 +659,12 @@ class _DetailBalanceState extends State<DetailBalance> {
                 TextButton(
                   onPressed: () {
                     isLoading = true;
-                    final form = formKey.currentState!;
+                    final form = balanceRefController.formKey.currentState!;
                     if (form.validate()) {
                       balanceRefController.submit(widget.balanceCompteModel);
                       form.reset();
                     }
+                    Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK'),
                 ),
@@ -686,12 +674,12 @@ class _DetailBalanceState extends State<DetailBalance> {
         });
   }
 
-  editLigneButton(BalanceRefController balanceRefController, CompteBalanceRefModel compte) {
+  editLigneButton(
+      BalanceRefController balanceRefController, CompteBalanceRefModel compte) {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (dialogContext) {
-          final formKey = GlobalKey<FormState>();
           bool isLoading = false;
 
           List<String> comptesList = [];
@@ -715,7 +703,7 @@ class _DetailBalanceState extends State<DetailBalance> {
                   child: isLoading
                       ? loading()
                       : Form(
-                          key: formKey,
+                          key: balanceRefController.formKey,
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
@@ -855,11 +843,12 @@ class _DetailBalanceState extends State<DetailBalance> {
                 TextButton(
                   onPressed: () {
                     isLoading = true;
-                    final form = formKey.currentState!;
+                    final form = balanceRefController.formKey.currentState!;
                     if (form.validate()) {
                       balanceRefController.submitEdit(compte);
                       form.reset();
                     }
+                    Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK'),
                 ),

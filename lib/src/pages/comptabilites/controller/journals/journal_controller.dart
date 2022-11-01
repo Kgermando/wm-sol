@@ -98,7 +98,6 @@ class JournalController extends GetxController
       await journalApi.insertData(journalModel).then((value) {
         journalList.clear();
         getList();
-        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -134,7 +133,6 @@ class JournalController extends GetxController
       await journalApi.updateData(journalModel).then((value) {
         journalList.clear();
         getList();
-        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

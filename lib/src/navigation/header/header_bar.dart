@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +11,9 @@ import 'package:wm_solution/src/constants/reponsiveness.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
-// import 'package:wm_solution/src/navigation/header/controller/update_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/menu_items.dart';
@@ -19,7 +23,13 @@ import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
   final ProfilController userController = Get.put(ProfilController());
-  // final UpdateController updateController = Get.put(UpdateController());
+  final UpdateController updateController = Get.put(UpdateController());
+  final NotifyHeaderController notifyHeaderController = Get.put(NotifyHeaderController());
+
+  var departementList = (notifyHeaderController.profilController.user.departement == '-')
+      ? ["Support"]
+      : jsonDecode(notifyHeaderController.profilController.user.departement);
+  String departement = departementList.first;
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
 
@@ -73,36 +83,50 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           ),
     actions: [
 
-      //  if (Platform.isWindows &&
-      //     updateController.updateVersionList.isNotEmpty &&
-      //     updateController.sumVersionCloud > updateController.sumVersion)
-      //   IconButton(
-      //       iconSize: 40,
-      //       tooltip: 'Téléchargement',
-      //       onPressed: () {
-      //         setState(() {
-      //           if (updateController.sumVersionCloud > updateController.sumVersion) {
-      //             downloadNetworkSoftware(
-      //                 url: updateVersionList.last.urlUpdate);
-      //           }
-      //         });
-      //       },
-      //       icon: (downloading)
-      //           ? (progressString == "100%")
-      //               ? const Icon(Icons.check)
-      //               : AutoSizeText(progressString,
-      //                   maxLines: 1, style: const TextStyle(fontSize: 12.0))
-      //           : Icon(Icons.download, color: Colors.red.shade700)),
+       if (Platform.isWindows &&
+          updateController.updateList.isNotEmpty &&
+          updateController.sumVersionCloud > updateController.sumVersion)
+        IconButton(
+            iconSize: 40,
+            tooltip: 'Téléchargement',
+            onPressed: () {
+              if (updateController.sumVersionCloud >
+                  updateController.sumVersion) {
+                updateController
+                  .downloadNetworkSoftware(url: updateController.updateList.last.urlUpdate);
+              }
+            },
+            icon: (updateController.downloading)
+                ? (updateController.progressString == "100%")
+                    ? const Icon(Icons.check)
+                    : AutoSizeText(updateController.progressString,
+                        maxLines: 1, style: const TextStyle(fontSize: 12.0))
+                : Icon(Icons.download, color: Colors.red.shade700)),
 
+      if(departement == 'Exploitations')
+      IconButton(
+          tooltip: 'Tâches',
+          onPressed: () {
+            Get.toNamed(TacheRoutes.tachePage);
+          },
+          icon: Badge(
+            showBadge: (notifyHeaderController.tacheItemCount >= 1) ? true : false,
+            badgeContent:
+               Text(notifyHeaderController.tacheItemCount.toString(), style: const TextStyle(color: Colors.white)),
+            child: const Icon(Icons.work_outline),
+          )),
+      if (departement == 'Commercial et Marketing')
       IconButton(
           tooltip: 'Panier',
           onPressed: () {
             Get.toNamed(ComMarketingRoutes.comMarketingcart);
           },
           icon: Badge(
-            badgeContent:
-                const Text('150', style: TextStyle(color: Colors.white)),
-            child: const Icon(Icons.shopping_cart),
+            showBadge:
+                  (notifyHeaderController.cartItemCount >= 1) ? true : false,
+            badgeContent: Text(notifyHeaderController.cartItemCount.toString(),
+                style: const TextStyle(color: Colors.white)),
+            child: const Icon(Icons.shopping_cart_outlined),
           )),
       IconButton(
           tooltip: 'Agenda',
@@ -110,9 +134,10 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             Get.toNamed(ComMarketingRoutes.comMarketingAgenda);
           },
           icon: Badge(
-            showBadge: true,
+            showBadge:
+                (notifyHeaderController.agendaItemCount >= 1) ? true : false,
             badgeContent:
-                const Text('6', style: TextStyle(color: Colors.white)),
+             Text(notifyHeaderController.agendaItemCount.toString(), style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.note_alt_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
           )),
@@ -122,20 +147,14 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             Get.toNamed(MailRoutes.mails);
           },
           icon: Badge(
-            showBadge: true,
+            showBadge:
+                (notifyHeaderController.mailsItemCount >= 1) ? true : false,
             badgeContent:
-                const Text('22', style: TextStyle(color: Colors.white)),
+             Text(notifyHeaderController.mailsItemCount.toString(), style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.mail_outline_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
           )),
-      IconButton(
-          tooltip: 'Notifications',
-          onPressed: () {},
-          icon: Badge(
-            badgeContent:
-                const Text('16', style: TextStyle(color: Colors.white)),
-            child: const Icon(Icons.notifications),
-          )),
+      
       if (!Responsive.isMobile(context))
         const SizedBox(
           width: p10,

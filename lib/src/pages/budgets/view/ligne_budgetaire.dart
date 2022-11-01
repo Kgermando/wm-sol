@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -12,10 +11,9 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 class LigneBudgetaire extends StatefulWidget {
   const LigneBudgetaire(
       {super.key,
-      required this.departementBudgetModel,
-      required this.controller, required this.lignBudgetaireController});
-  final DepartementBudgetModel departementBudgetModel;
-  final BudgetPrevisionnelController controller;
+      required this.departementBudgetModel, 
+      required this.lignBudgetaireController});
+  final DepartementBudgetModel departementBudgetModel; 
   final LignBudgetaireController lignBudgetaireController;
 
   @override
@@ -37,80 +35,84 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
 
   @override
   Widget build(BuildContext context) {
-    return PlutoGrid(
-      columns: columns,
-      rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.last;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 2,
+      child: PlutoGrid(
+        columns: columns,
+        rows: rows,
+        onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+          final dataId = tapEvent.row!.cells.values;
+          final idPlutoRow = dataId.last;
 
-        final LigneBudgetaireModel ligneBudgetaireModel =
-            await widget.controller.detailView(idPlutoRow.value);
+          final LigneBudgetaireModel ligneBudgetaireModel =
+              await widget.lignBudgetaireController
+              .detailView(idPlutoRow.value);
 
-        Get.toNamed(BudgetRoutes.budgetLignebudgetaireDetail,
-            arguments: ligneBudgetaireModel);
-      },
-      onLoaded: (PlutoGridOnLoadedEvent event) {
-        stateManager = event.stateManager;
-        stateManager!.setShowColumnFilter(true);
-        stateManager!.setShowLoading(true);
-      },
-      createHeader: (PlutoGridStateManager header) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const TitleWidget(title: 'Lignes budgetaires'),
-            IconButton(
-                tooltip: 'Rafraichir',
-                onPressed: () {
-                  Navigator.pushNamed(
-                      context, BudgetRoutes.budgetBudgetPrevisionel);
-                },
-                icon: Icon(Icons.refresh, color: Colors.green.shade700)),
-          ],
-        );
-      },
-      configuration: PlutoGridConfiguration(
-        columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters,
-          ],
-          resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'numero') {
+          Get.toNamed(BudgetRoutes.budgetLignebudgetaireDetail,
+              arguments: ligneBudgetaireModel);
+        },
+        onLoaded: (PlutoGridOnLoadedEvent event) {
+          stateManager = event.stateManager;
+          stateManager!.setShowColumnFilter(true);
+          stateManager!.setShowLoading(true);
+        },
+        createHeader: (PlutoGridStateManager header) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: 'Lignes budgetaires'),
+              IconButton(
+                  tooltip: 'Rafraichir',
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, BudgetRoutes.budgetBudgetPrevisionel);
+                  },
+                  icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+            ],
+          );
+        },
+        configuration: PlutoGridConfiguration(
+          columnFilter: PlutoGridColumnFilterConfig(
+            filters: const [
+              ...FilterHelper.defaultFilters,
+            ],
+            resolveDefaultColumnFilter: (column, resolver) {
+              if (column.field == 'numero') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'nomLigneBudgetaire') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'departement') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'periodeBudget') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'uniteChoisie') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'nombreUnite') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'coutUnitaire') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'coutTotal') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'caisse') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'banque') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'finExterieur') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'created') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'id') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              }
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nomLigneBudgetaire') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'departement') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'periodeBudget') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'uniteChoisie') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nombreUnite') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'coutUnitaire') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'coutTotal') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'caisse') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'banque') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'finExterieur') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'id') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }
-            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-          },
+            },
+          ),
         ),
+        createFooter: (stateManager) {
+          stateManager.setPageSize(20, notify: true); // default 40
+          return PlutoPagination(stateManager);
+        },
       ),
-      createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: true); // default 40
-        return PlutoPagination(stateManager);
-      },
     );
   }
 
@@ -286,7 +288,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
         readOnly: true,
         title: 'Date',
         field: 'created',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

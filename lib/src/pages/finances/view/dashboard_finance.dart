@@ -65,8 +65,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                   children: [
                                     DashboardCardWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(
-                                            FinanceRoutes.transactionsCaisse);
+                                         
                                       },
                                       title: 'CAISSE',
                                       icon: Icons.view_stream_outlined,
@@ -76,8 +75,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                     ),
                                     DashboardCardWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(
-                                            FinanceRoutes.transactionsBanque);
+                                         
                                       },
                                       title: 'BANQUE',
                                       icon: Icons.business,
@@ -120,8 +118,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                     // ),
                                     DashboardCardWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(FinanceRoutes
-                                            .transactionsFinancementExterne);
+                                         
                                       },
                                       title: 'FIN. EXTERNE',
                                       icon: Icons.money_outlined,

@@ -10,7 +10,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableProduitModel extends StatefulWidget {
-  const TableProduitModel({super.key, required this.produitModelList, required this.controller});
+  const TableProduitModel({super.key, required this.produitModelList, 
+      required this.controller});
   final List<ProductModel> produitModelList;
   final ProduitModelController controller;
 

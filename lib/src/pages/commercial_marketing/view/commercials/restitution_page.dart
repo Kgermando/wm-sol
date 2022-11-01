@@ -52,6 +52,7 @@ class _RestitutionPageState extends State<RestitutionPage> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(20))),
                       child: ListView.builder(
+                        shrinkWrap: true,
                           itemCount: controller
                               .restitutionList.length,
                           itemBuilder: (context, index) {

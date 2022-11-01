@@ -1,14 +1,10 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/archives/archive_api.dart';
+import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/utils/dropdown.dart';
-import 'package:wm_solution/src/widgets/file_uploader.dart';
-import 'package:dospace/dospace.dart' as dospace;
+import 'package:wm_solution/src/utils/dropdown.dart'; 
 
 class ArchiveController extends GetxController
     with StateMixin<List<ArchiveModel>> {
@@ -34,28 +30,14 @@ class ArchiveController extends GetxController
 
   String? uploadedFileUrl;
 
-  void pdfUpload(File pdfFile) async {
-    String projectName = "fokad-spaces";
-    String region = "sfo3";
-    String folderName = "archives";
-    String? pdfFileName;
-
-    String extension = 'pdf';
-    pdfFileName = "${DateTime.now().millisecondsSinceEpoch}.$extension";
-
-    uploadedFileUrl =
-        "https://$projectName.$region.digitaloceanspaces.com/$folderName/$pdfFileName";
-    // print('url: $uploadedFileUrl');
+ 
+  void uploadFile(String file) async {
     _isUploading.value = true;
-    dospace.Bucket bucketpdf = FileUploader().spaces.bucket('fokad-spaces');
-    String? etagpdf = await bucketpdf.uploadFile('$folderName/$pdfFileName',
-        pdfFile, 'application/pdf', dospace.Permissions.public);
-    _isUploading.value = false;
-    _isUploadingDone.value = false;
-    if (kDebugMode) {
-      print('upload: $etagpdf');
-      print('done');
-    }
+    await FileApi().uploadFiled(file).then((value) {
+      _isUploading.value = false;
+      _isUploadingDone.value = false;
+      uploadedFileUrl = value;
+    });
   }
 
   @override

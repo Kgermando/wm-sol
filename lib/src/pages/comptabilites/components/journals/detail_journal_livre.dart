@@ -27,13 +27,15 @@ class DetailJournalLivre extends StatefulWidget {
 }
 
 class _DetailJournalLivreState extends State<DetailJournalLivre> {
+  final JournalLivreController journalLivreController =
+      Get.put(JournalLivreController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
 
   @override
   Widget build(BuildContext context) {
     final JournalController controller = Get.put(JournalController());
-    final JournalLivreController journalLivreController = Get.put(JournalLivreController());
+    
     final ProfilController profilController = Get.put(ProfilController());
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(
@@ -89,7 +91,14 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                                 title: "Journals"),
                                             Row(
                                               children: [ 
-                                                const SizedBox(width: p10),
+                                                if (widget.journalLivreModel
+                                                            .signature ==
+                                                        profilController
+                                                            .user.matricule &&
+                                                    widget.journalLivreModel
+                                                            .isSubmit ==
+                                                        "false") // Uniqyement celui a remplit le document
+                                                  sendButton(),
                                                 SelectableText(
                                                   DateFormat(
                                                           "dd-MM-yyyy HH:mm")
@@ -195,6 +204,37 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
           ],
         ),
       ));
+  }
+
+
+  
+  Widget sendButton() {
+    return IconButton(
+      icon: Icon(Icons.send, color: Colors.green.shade700),
+      tooltip: "Soumettre chez le directeur de departement",
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Etes-vous pour soumettre ce document ?',
+              style: TextStyle(color: mainColor)),
+          content: const Text(
+              'Cette action permet de soumettre ce document chez le directeur de departement.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler'),
+            ),
+            TextButton(
+              onPressed: () async {
+                journalLivreController.sendDD(widget.journalLivreModel);
+                Navigator.pop(context, 'ok');
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
 

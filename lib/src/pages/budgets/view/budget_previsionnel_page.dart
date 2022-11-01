@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +7,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/table_budget_previsionnel.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
+import 'package:wm_solution/src/widgets/button_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class BudgetPrevisionnelPage extends StatefulWidget {
@@ -18,13 +18,14 @@ class BudgetPrevisionnelPage extends StatefulWidget {
 }
 
 class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
+  final BudgetPrevisionnelController controller =
+      Get.put(BudgetPrevisionnelController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
   String subTitle = "budgets previsionnels";
 
   @override
   Widget build(BuildContext context) {
-    final BudgetPrevisionnelController controller = Get.put(BudgetPrevisionnelController());
     return SafeArea(
       child: controller.obx(
           onLoading: loading(),
@@ -40,7 +41,7 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
                 tooltip: "Générer un nouveau budget",
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  newFicheDialog(controller);
+                  newFicheDialog();
                 },
               ),
               body: Row(
@@ -65,32 +66,43 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
     );
   }
 
-  newFicheDialog(BudgetPrevisionnelController controller) {
+  newFicheDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
+          String getPlageDate() {
+            if (controller.dateRange == null) {
+              return 'Date de Debut et Fin';
+            } else {
+              return '${DateFormat('dd/MM/yyyy').format(controller.dateRange!.start)} - ${DateFormat('dd/MM/yyyy').format(controller.dateRange!.end)}';
+            }
+          }
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Génerer la fiche de presence'),
+              title: const Text('Génerer le Budget previsionnel'),
               content: SizedBox(
-                  height: 200,
-                  width: 300,
-                  child: controller.isLoading
-                      ? loading()
-                      : Form(
-                          key: controller.formKey,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              AutoSizeText(
-                                "Feuille du ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.now())}",
-                                style: TextStyle(color: Colors.red.shade700),
-                              ),
-                              const SizedBox(height: p20),
-                              const Icon(Icons.co_present, size: p50)
-                            ],
-                          ))),
+                height: 300,
+                width: 500,
+                child: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      titleWidget(),
+                      departmentWidget(),
+                      Container(
+                          margin: const EdgeInsets.only(bottom: p20),
+                          child: ButtonWidget(
+                            text: getPlageDate(),
+                            onClicked: () => setState(() {
+                              pickDateRange(context);
+                              FocusScope.of(context)
+                                  .requestFocus(FocusNode());
+                            }),
+                          ),
+                        )
+                    ],
+                  ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -98,8 +110,12 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.submit();
-                    Navigator.pop(context, 'ok');
+                    final form = controller.formKey.currentState!;
+                    if (form.validate()) {
+                      controller.submit();
+                      form.reset();
+                      Navigator.pop(context, 'ok');
+                    }
                   },
                   child: const Text('OK'),
                 ),
@@ -109,7 +125,58 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
         });
   }
 
-  Future pickDateRange(BudgetPrevisionnelController controller) async {
+  Widget titleWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.titleController,
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Titre',
+          ),
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget departmentWidget() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Département',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.departement,
+        isExpanded: true,
+        items: controller.departementList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select departement" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.departement = value!;
+          });
+        },
+      ),
+    );
+  }
+
+ 
+  Future pickDateRange(BuildContext context) async {
     final initialDateRange = DateTimeRange(
       start: DateTime.now(),
       end: DateTime.now().add(const Duration(hours: 24 * 3)),

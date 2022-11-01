@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -78,55 +80,56 @@ class LoginController extends GetxController {
                   passwordHash: user.passwordHash,
                   succursale: user.succursale);
               await userController.updateData(userModel).then((userData) {
-                if (userData.departement == "Administration") {
+                var departement = jsonDecode(userData.departement);
+                if (departement.first == "Administration") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(AdminRoutes.adminDashboard);
                   } else {
                     Get.offAllNamed(AdminRoutes.adminLogistique);
                   }
-                } else if (userData.departement == "Finances") {
+                } else if (departement.first == "Finances") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(FinanceRoutes.financeDashboard);
                   } else {
                     Get.offAllNamed(FinanceRoutes.transactionsDettes);
                   }
-                } else if (userData.departement == "Comptabilites") {
+                } else if (departement.first == "Comptabilites") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(ComptabiliteRoutes.comptabiliteDashboard);
                   } else {
                     Get.offAllNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
                   }
-                } else if (userData.departement == "Budgets") {
+                } else if (departement.first == "Budgets") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   } else {
                     Get.offAllNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   }
-                } else if (userData.departement == "Ressources Humaines") {
+                } else if (departement.first == "Ressources Humaines") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(RhRoutes.rhDashboard);
                   } else {
                     Get.offAllNamed(RhRoutes.rhPresence);
                   }
-                } else if (userData.departement == "Exploitations") {
+                } else if (departement.first == "Exploitations") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(ExploitationRoutes.expDashboard);
                   } else {
                     Get.offAllNamed(TacheRoutes.tachePage);
                   }
-                } else if (userData.departement == "Commercial et Marketing") {
+                } else if (departement.first == "Commercial et Marketing") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(ComMarketingRoutes.comMarketingDashboard);
                   } else {
                     Get.offAllNamed(ComMarketingRoutes.comMarketingAnnuaire);
                   }
-                } else if (userData.departement == "Logistique") {
+                } else if (departement.first == "Logistique") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(LogistiqueRoutes.logDashboard);
                   } else {
                     Get.offAllNamed(LogistiqueRoutes.logAnguinAuto);
                   }
-                } else if (userData.departement == "Support") {
+                } else if (departement.first == "Support") {
                   Get.offAllNamed(AdminRoutes.adminDashboard);
                 }
               });

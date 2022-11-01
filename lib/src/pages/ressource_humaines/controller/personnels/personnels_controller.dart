@@ -1,11 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'dart:convert'; 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/performence_api.dart';
 import 'package:wm_solution/src/api/rh/personnels_api.dart';
+import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:wm_solution/src/models/rh/agent_count_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
@@ -13,9 +11,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/country.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/fonction_occupe.dart';
-import 'package:wm_solution/src/utils/service_affectation.dart';
-import 'package:dospace/dospace.dart' as dospace;
-import 'package:wm_solution/src/widgets/file_uploader.dart';
+import 'package:wm_solution/src/utils/service_affectation.dart'; 
 
 class PersonnelsController extends GetxController
     with StateMixin<List<AgentModel>> {
@@ -89,39 +85,22 @@ class PersonnelsController extends GetxController
   List<String> servAffectList = [];
   List<String> fonctionList = [];
 
-  final _isUploading = false.obs;
+   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
-
   final _isUploadingDone = false.obs;
   bool get isUploadingDone => _isUploadingDone.value;
 
   String? uploadedFileUrl;
 
-  void photeUpload(File file) async {
-    String projectName = "fokad-spaces";
-    String region = "sfo3";
-    String folderName = "profile";
-    String? photoFileName;
-
-    String extension = 'png';
-    photoFileName = "${DateTime.now().millisecondsSinceEpoch}.$extension";
-
-    uploadedFileUrl =
-        "https://$projectName.$region.digitaloceanspaces.com/$folderName/$photoFileName";
-
+  void uploadFile(String file) async {
     _isUploading.value = true;
-    dospace.Bucket bucketphoto = FileUploader().spaces.bucket('fokad-spaces');
-    String? profile = await bucketphoto.uploadFile('$folderName/$photoFileName',
-        file, 'image/png', dospace.Permissions.public);
-    _isUploading.value = false;
-    _isUploadingDone.value = true;
-
-    if (kDebugMode) {
-      print('upload: $profile');
-      print('done');
-    }
+    await FileApi().uploadFiled(file).then((value) {
+      uploadedFileUrl = value;
+      _isUploading.value = false;
+      _isUploadingDone.value = true; 
+    });
   }
-
+  
   @override
   void onInit() {
     super.onInit();
@@ -174,9 +153,7 @@ class PersonnelsController extends GetxController
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
-    final form = formKey.currentState!;
-    if (form.validate()) {
-      try {
+    try {
         _isLoading.value = true;
         final agentModel = AgentModel(
             nom: (nomController.text == '') ? '-' : nomController.text,
@@ -242,8 +219,7 @@ class PersonnelsController extends GetxController
           "$e",
           backgroundColor: Colors.red,
         );
-      }
-    }
+      } 
   }
 
   Future submitPerformence() async {

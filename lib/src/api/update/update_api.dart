@@ -1,6 +1,6 @@
 // ignore_for_file: unused_local_variable
 
-import 'dart:convert';
+import 'dart:convert'; 
 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
@@ -57,6 +57,7 @@ class UpdateVersionApi extends GetConnect {
       throw Exception(resp.statusCode);
     }
   }
+ 
 
   Future<UpdateModel> updateData(UpdateModel updateModel) async {
     Map<String, String> header = headers;

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,12 +38,6 @@ class _AddArchiveState extends State<AddArchive> {
           appBar: headerBar(
               context, scaffoldKey, title, widget.archiveFolderModel.folderName),
           drawer: const DrawerMenu(),
-          floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Ajouter une personne"),
-            tooltip: "Ajout personne à la liste",
-            icon: const Icon(Icons.person_add),
-            onPressed: () {},
-          ),
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,48 +62,51 @@ class _AddArchiveState extends State<AddArchive> {
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: p20),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: const [
-                                        TitleWidget(title: "Ajout archive")
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: p20,
-                                    ),
-                                    nomDocumentWidget(controller),
-                                    ResponsiveChildWidget(
-                                      child1: fichierWidget(controller), 
-                                      child2: Container()) ,
-                                    descriptionWidget(controller),
-                                    const SizedBox(
-                                      height: p20,
-                                    ),
-                                    BtnWidget(
-                                        title: 'Soumettre',
-                                        isLoading: controller.isLoading,
-                                        press: () {
-                                          final form =
-                                            controller.formKey.currentState!;
-                                          if (form.validate()) {
-                                            controller.submit(widget.archiveFolderModel);
-                                            form.reset();
-                                          }
-                                          Navigator.of(context).pop();
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: const Text(
-                                                "Enregistrer avec succès!"),
-                                            backgroundColor:
-                                                Colors.green[700],
-                                          ));
-                                        })
-                                  ],
+                                child: Form(
+                                  key: controller.formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: const [
+                                          TitleWidget(title: "Ajout archive")
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: p20,
+                                      ),
+                                      nomDocumentWidget(controller),
+                                      ResponsiveChildWidget(
+                                        child1: fichierWidget(controller), 
+                                        child2: Container()) ,
+                                      descriptionWidget(controller),
+                                      const SizedBox(
+                                        height: p20,
+                                      ),
+                                      BtnWidget(
+                                          title: 'Soumettre',
+                                          isLoading: controller.isLoading,
+                                          press: () {
+                                            final form =
+                                              controller.formKey.currentState!;
+                                            if (form.validate()) {
+                                              controller.submit(widget.archiveFolderModel);
+                                              form.reset();
+                                            }
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: const Text(
+                                                  "Enregistrer avec succès!"),
+                                              backgroundColor:
+                                                  Colors.green[700],
+                                            ));
+                                          })
+                                    ],
+                                  ),
                                 ),
                               ),
                             )
@@ -184,8 +179,7 @@ class _AddArchiveState extends State<AddArchive> {
                     allowedExtensions: ['pdf'],
                   );
                   if (result != null) {
-                    File file = File(result.files.single.path!);
-                    controller.pdfUpload(file);
+                    controller.uploadFile(result.files.single.path!);
                   } else {
                     const Text("Votre fichier n'existe pas");
                   }

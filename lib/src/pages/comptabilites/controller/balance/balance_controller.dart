@@ -103,7 +103,7 @@ class BalanceController extends GetxController
     }
   }
 
-  sendDD(BalanceCompteModel data) async {
+  void sendDD(BalanceCompteModel data) async {
     try {
       _isLoading.value = true;
       final bilanModel = BalanceCompteModel(

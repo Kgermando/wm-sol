@@ -28,8 +28,7 @@ class DetailDevis extends StatefulWidget {
 
 class _DetailDevisState extends State<DetailDevis> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines";
-  String subTitle = "Présences";
+  String title = "Devis"; 
 
   bool isChecked = false;
 

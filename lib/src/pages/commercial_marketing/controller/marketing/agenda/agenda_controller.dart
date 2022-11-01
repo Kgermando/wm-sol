@@ -35,7 +35,7 @@ class AgendaController extends GetxController
 
   void getList() async {
     await agendaApi.getAllData().then((response) {
-      agendaList.assignAll(response);
+      agendaList.assignAll(response.where((element) => element.signature == profilController.user.matricule));
       change(agendaList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

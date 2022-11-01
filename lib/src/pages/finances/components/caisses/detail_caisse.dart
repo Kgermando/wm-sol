@@ -103,9 +103,16 @@ class _DetailCaisseState extends State<DetailCaisse> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
+            child1: Text('Caisse :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(widget.caisseModel.caisseName,
+                textAlign: TextAlign.start, style: bodyMedium),
+          ),
+          ResponsiveChildWidget(
+            child1: Text('Nom Complet :',
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.caisseModel.nomComplet,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
@@ -141,7 +148,7 @@ class _DetailCaisseState extends State<DetailCaisse> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.caisseModel.typeOperation,
-                textAlign: TextAlign.start, style: bodyMedium),
+                textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.purple)),
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(

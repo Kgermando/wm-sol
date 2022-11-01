@@ -91,15 +91,16 @@ class BudgetRoutes {
 }
 
 class FinanceRoutes {
-  static const financeDashboard = "/finance-dashboard";
-  static const financeTransactions = "/finance-transactions";
-  static const transactionsCaisse = "/transactions-caisse";
+  static const financeDashboard = "/finance-dashboard"; 
+  
+  // static const transactionsCaisse = "/transactions-caisse/:data";
   static const transactionsCaisseDetail = "/transactions-caisse-detail";
   static const transactionsCaisseEncaissement =
       "/transactions-caisse-encaissement";
   static const transactionsCaisseDecaissement =
       "/transactions-caisse-decaissement";
-  static const transactionsBanque = "/transactions-banque";
+
+  // static const transactionsBanque = "/transactions-banque/:data";
   static const transactionsBanqueDetail = "/transactions-banque-detail";
   static const transactionsBanqueRetrait = "/transactions-banque-retrait";
   static const transactionsBanqueDepot = "/transactions-banque-depot";
@@ -107,14 +108,13 @@ class FinanceRoutes {
   static const transactionsDetteDetail = "/transactions-dettes-detail";
   static const transactionsCreances = "/transactions-creances";
   static const transactionsCreanceDetail = "/transactions-creances-detail";
-  static const transactionsFinancementExterne =
-      "/transactions-financement-externe";
+
+  // static const transactionsFinancementExterne = "/transactions-financement-externe/:data";
   static const transactionsFinancementExterneAdd =
       "/transactions-financement-externe-add";
   static const transactionsFinancementExterneDetail =
       "/transactions-financement-externe-detail";
 
-  // static const transactionsDepenses = "/transactions-depenses";
   static const finDD = "/fin-dd";
   static const finObservation = "/fin-observation";
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,9 +12,10 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableArchive extends StatefulWidget {
   const TableArchive(
-      {super.key, required this.archiveFolderModel, required this.controller});
+      {super.key, required this.archiveFolderModel, required this.controller, required this.controllerFolder});
   final ArchiveFolderModel archiveFolderModel;
   final ArchiveController controller;
+  final ArchiveFolderController controllerFolder;
 
   @override
   State<TableArchive> createState() => _TableArchiveState();
@@ -33,8 +36,6 @@ class _TableArchiveState extends State<TableArchive> {
 
   @override
   Widget build(BuildContext context) {
-    final ArchiveFolderController controller =
-        Get.put(ArchiveFolderController());
     return PlutoGrid(
       columns: columns,
       rows: rows,
@@ -43,7 +44,7 @@ class _TableArchiveState extends State<TableArchive> {
         final idPlutoRow = dataId.last;
 
         final ArchiveModel archiveModel =
-            await controller.detailView(idPlutoRow.value);
+            await widget.controller.detailView(idPlutoRow.value);
 
         Get.toNamed(ArchiveRoutes.archivesDetail, arguments: archiveModel);
       },
@@ -59,7 +60,7 @@ class _TableArchiveState extends State<TableArchive> {
             const TitleWidget(title: "Archives"),
             Row(
               children: [
-                deleteButton(controller),
+                deleteButton(),
                 IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -107,11 +108,13 @@ class _TableArchiveState extends State<TableArchive> {
 
     var i = dataItemList.length;
     for (var item in dataItemList) {
+      var departementList = jsonDecode(item.departement);
+      String departement = departementList.first;
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nomDocument': PlutoCell(value: item.nomDocument),
-          'departement': PlutoCell(value: item.departement),
+          'departement': PlutoCell(value: departement),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -145,7 +148,7 @@ class _TableArchiveState extends State<TableArchive> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -187,7 +190,7 @@ class _TableArchiveState extends State<TableArchive> {
     ];
   }
 
-  Widget deleteButton(ArchiveFolderController controller) {
+  Widget deleteButton() {
     return IconButton(
       icon: Icon(Icons.delete, color: Colors.red.shade700),
       tooltip: "Supprimer",
@@ -204,7 +207,7 @@ class _TableArchiveState extends State<TableArchive> {
             ),
             TextButton(
               onPressed: () async {
-                await controller.archiveFolderApi
+                await widget.controllerFolder.archiveFolderApi
                     .deleteData(widget.archiveFolderModel.id!)
                     .then((value) => Navigator.of(context).pop());
               },

@@ -38,8 +38,8 @@ class _DettePageState extends State<DettePage> {
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
-                  label: const Text("Nouvelle créance"),
-                  tooltip: "Ajouter la nouvelle créance",
+                  label: const Text("Nouvelle dette"),
+                  tooltip: "Ajouter la nouvelle dette",
                   icon: const Icon(Icons.add),
                   onPressed: () {
                     transactionsDialogDette(controller);
@@ -87,7 +87,7 @@ class _DettePageState extends State<DettePage> {
                               : MediaQuery.of(context).size.width,
                           child: ListView(
                             children: [
-                              const TitleWidget(title: 'Ajout Dete'),
+                              const TitleWidget(title: 'Ajout Dette'),
                               const SizedBox(
                                 height: p20,
                               ),

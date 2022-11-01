@@ -47,7 +47,7 @@ class _TableDetteState extends State<TableDette> {
               final DetteModel detteModel =
                   await widget.controller.detailView(idPlutoRow.value);
 
-              Get.toNamed(FinanceRoutes.transactionsDettes,
+              Get.toNamed(FinanceRoutes.transactionsDetteDetail,
                   arguments: detteModel);
             },
             onLoaded: (PlutoGridOnLoadedEvent event) {

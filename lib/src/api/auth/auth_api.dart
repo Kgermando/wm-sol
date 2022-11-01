@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 class AuthApi extends GetConnect {
   var client = http.Client();
 
+
   Future<bool> login(String matricule, String passwordHash) async {
     var data = {'matricule': matricule, 'passwordHash': passwordHash};
     var body = jsonEncode(data);
@@ -29,6 +30,9 @@ class AuthApi extends GetConnect {
       Token token = Token.fromJson(json.decode(resp.body));
       // Store the tokens
 
+      // box.write(_keyIdToken, json.encode(token.id.toString())); // Id user
+      // box.write(_keyAccessToken, json.encode(token.accessToken)); // accessToken
+      // box.write( _keyRefreshToken, json.encode(token.refreshToken)); // refreshToken
       GetLocalStorage().saveIdToken(token.id.toString()); // Id user
       GetLocalStorage().saveAccessToken(token.accessToken);
       GetLocalStorage().saveRefreshToken(token.refreshToken);

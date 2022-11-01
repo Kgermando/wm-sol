@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -31,58 +33,60 @@ class MyApp extends StatelessWidget {
       print("departement ${user.departement}");
     }
     String homeRoute = "";
-    if (user.departement == '-') {
+    
+    var departement = (user.departement == '-') ? ['-'] : jsonDecode(user.departement);
+    if (departement.first == '-') {
       homeRoute = UserRoutes.login;
     } else {
-      if (user.departement == "Administration") {
+      if (departement.first == "Administration") {
         if (int.parse(user.role) <= 2) {
           homeRoute = AdminRoutes.adminDashboard;
         } else {
           homeRoute = AdminRoutes.adminLogistique;
         }
-      } else if (user.departement == "Finances") {
+      } else if (departement.first == "Finances") {
         if (int.parse(user.role) <= 2) {
           homeRoute = FinanceRoutes.financeDashboard;
         } else {
           homeRoute = FinanceRoutes.transactionsDettes;
         }
-      } else if (user.departement == "Comptabilites") {
+      } else if (departement.first == "Comptabilites") {
         if (int.parse(user.role) <= 2) {
           homeRoute = ComptabiliteRoutes.comptabiliteDashboard;
         } else {
           homeRoute = ComptabiliteRoutes.comptabiliteJournalLivre;
         }
-      } else if (user.departement == "Budgets") {
+      } else if (departement.first == "Budgets") {
         if (int.parse(user.role) <= 2) {
           homeRoute = BudgetRoutes.budgetDashboard;
         } else {
           homeRoute = BudgetRoutes.budgetBudgetPrevisionel;
         }
-      } else if (user.departement == "Ressources Humaines") {
+      } else if (departement.first == "Ressources Humaines") {
         if (int.parse(user.role) <= 2) {
           homeRoute = RhRoutes.rhDashboard;
         } else {
           homeRoute = RhRoutes.rhPresence;
         }
-      } else if (user.departement == "Exploitations") {
+      } else if (departement.first == "Exploitations") {
         if (int.parse(user.role) <= 2) {
           homeRoute = ExploitationRoutes.expDashboard;
         } else {
           homeRoute = TacheRoutes.tachePage;
         }
-      } else if (user.departement == "Commercial et Marketing") {
+      } else if (departement.first == "Commercial et Marketing") {
         if (int.parse(user.role) <= 2) {
           homeRoute = ComMarketingRoutes.comMarketingDashboard;
         } else {
           homeRoute = ComMarketingRoutes.comMarketingAnnuaire;
         }
-      } else if (user.departement == "Logistique") {
+      } else if (departement.first == "Logistique") {
         if (int.parse(user.role) <= 2) {
           homeRoute = LogistiqueRoutes.logDashboard;
         } else {
           homeRoute = LogistiqueRoutes.logAnguinAuto;
         }
-      } else if (user.departement == "Support") {
+      } else if (departement.first == "Support") {
         homeRoute = AdminRoutes.adminDashboard;
       }
     }

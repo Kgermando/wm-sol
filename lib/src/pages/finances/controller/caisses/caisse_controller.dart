@@ -28,12 +28,7 @@ class CaisseController extends GetxController
 
   final List<String> typeCaisse = TypeOperation().typeVereCaisse;
   final List<String> departementList = Dropdown().departement;
-
-  final _recette = 0.0.obs;
-  double get recette => _recette.value;
-  final _depenses = 0.0.obs;
-  double get depenses => _depenses.value;
-
+ 
   @override
   void onInit() {
     super.onInit();
@@ -57,19 +52,7 @@ class CaisseController extends GetxController
 
   void getList() async {
     await caisseApi.getAllData().then((response) {
-      caisseList.assignAll(response);
-      List<CaisseModel?> recetteList = caisseList
-          .where((element) => element.typeOperation == "Encaissement")
-          .toList();
-      List<CaisseModel?> depensesList = caisseList
-          .where((element) => element.typeOperation == "Decaissement")
-          .toList();
-      for (var item in recetteList) {
-        _recette.value += double.parse(item!.montant);
-      }
-      for (var item in depensesList) {
-        _depenses.value += double.parse(item!.montant);
-      }
+      caisseList.assignAll(response); 
       change(caisseList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

@@ -48,7 +48,7 @@ List<PlutoColumn> columns = [];
               final CreanceModel creanceModel =
                   await widget.controller.detailView(idPlutoRow.value);
 
-              Get.toNamed(FinanceRoutes.transactionsBanque,
+              Get.toNamed(FinanceRoutes.transactionsCreanceDetail,
                   arguments: creanceModel);
             },
             onLoaded: (PlutoGridOnLoadedEvent event) {

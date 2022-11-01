@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -11,15 +12,24 @@ import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_
 import 'package:wm_solution/src/routes/routes.dart';
 
 class FinanceNav extends StatefulWidget {
-  const FinanceNav({super.key, required this.currentRoute, required this.profilController});
+  const FinanceNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
+  final List<dynamic> departement;
 
   @override
   State<FinanceNav> createState() => _FinanceNavState();
 }
 
 class _FinanceNavState extends State<FinanceNav> {
+  final FinanceNotifyController financeNotifyController =
+      Get.put(FinanceNotifyController());
+  final BanqueNameController banqueNameController =
+      Get.put(BanqueNameController());
+  final CaisseNameController caisseNameController =
+      Get.put(CaisseNameController());
+  final FinExterieurNameController finExterieurNameController =
+      Get.put(FinExterieurNameController());
   bool isOpen = false;
   bool isOpenBanque = false;
   bool isOpenCaisse = false;
@@ -27,23 +37,16 @@ class _FinanceNavState extends State<FinanceNav> {
 
   @override
   Widget build(BuildContext context) {
-    final FinanceNotifyController financeNotifyController =
-        Get.put(FinanceNotifyController());
-    final BanqueNameController banqueNameController =
-        Get.put(BanqueNameController());
-    final CaisseNameController caisseNameController =
-        Get.put(CaisseNameController());
-    final FinExterieurNameController finExterieurNameController =
-        Get.put(FinExterieurNameController());
+
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2;
+    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.account_balance, size: 30.0),
       title: AutoSizeText('Finances', maxLines: 1, style: bodyLarge),
       initiallyExpanded:
-          (widget.profilController.user.departement == 'Finances') ? true : false,
+          (widget.departement.first == 'Finances') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;
@@ -132,13 +135,13 @@ class _FinanceNavState extends State<FinanceNav> {
           children: banqueNameController.banqueNameList.map((element) {
             return DrawerWidget(
                 selected:
-                    widget.currentRoute == FinanceRoutes.transactionsBanque,
+                    widget.currentRoute == '/transactions-banque/${element.id}',
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
-                title: element.nomComplet,
+                title: element.nomComplet.toUpperCase(),
                 style: bodyText2!,
                 onTap: () { 
-                  Get.toNamed(FinanceRoutes.transactionsBanque,
+                  Get.toNamed('/transactions-banque/${element.id}',
                       arguments: element);
                 });
           }).toList(),
@@ -155,13 +158,13 @@ class _FinanceNavState extends State<FinanceNav> {
           children: caisseNameController.caisseNameList.map((element) {
             return DrawerWidget(
                 selected:
-                    widget.currentRoute == FinanceRoutes.transactionsCaisse,
+                    widget.currentRoute == '/transactions-caisse/${element.id}',
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
-                title: element.nomComplet,
+                title: element.nomComplet.toUpperCase(),
                 style: bodyText2!,
                 onTap: () { 
-                  Get.toNamed(FinanceRoutes.transactionsCaisse,
+                  Get.toNamed('/transactions-caisse/${element.id!}',
                       arguments: element);
                 });
           }).toList(),
@@ -179,14 +182,15 @@ class _FinanceNavState extends State<FinanceNav> {
               finExterieurNameController.finExterieurNameList.map((element) {
             return DrawerWidget(
                 selected: widget.currentRoute ==
-                    FinanceRoutes.transactionsFinancementExterne,
+                    '/transactions-financement-externe/${element.id}',
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
-                title: element.nomComplet,
+                title: element.nomComplet.toUpperCase(),
                 style: bodyText2!,
                 onTap: () { 
-                  Get.toNamed(FinanceRoutes.transactionsFinancementExterne,
-                      arguments: element);
+                  Get.toNamed(
+                    '/transactions-financement-externe/${element.id}',
+                    arguments: element);
                 });
           }).toList(),
         ),

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget.dart';
+import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/bon_livraison/bon_livraison_controller.dart';
@@ -82,10 +83,20 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
+import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 
 class WMBindings extends Bindings {
   @override
   void dependencies() {  
+    // Authentification
+    Get.lazyPut<LoginController>(() => LoginController());
+    Get.lazyPut<ProfilController>(() => ProfilController());
+    Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
+    Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
+
+    // Header
+    Get.lazyPut<NotifyHeaderController>(() => NotifyHeaderController());
+
     // Mail
     Get.lazyPut<MaillingController>(() => MaillingController());
 
@@ -96,11 +107,6 @@ class WMBindings extends Bindings {
     Get.lazyPut<TachesController>(() => TachesController());
     Get.lazyPut<RapportController>(() => RapportController());
 
-    // Authentification
-    Get.lazyPut<LoginController>(() => LoginController());
-    Get.lazyPut<ProfilController>(() => ProfilController());
-    Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
-    Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
 
     // RH
     Get.lazyPut<RHNotifyController>(() => RHNotifyController());
@@ -200,6 +206,9 @@ class WMBindings extends Bindings {
   Get.lazyPut<ImmobilierController>(() => ImmobilierController());  
   Get.lazyPut<MobilierController>(() => MobilierController());  
   Get.lazyPut<NotifyLogController>(() => NotifyLogController());  
+
+  // Update Version
+  Get.lazyPut<UpdateController>(() => UpdateController());  
   
   }
 }

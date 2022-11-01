@@ -27,6 +27,7 @@ class BalanceRefController extends GetxController
     getList();
   }
 
+ 
   @override
   void dispose() {
     montantDebitController.dispose();
@@ -90,8 +91,7 @@ class BalanceRefController extends GetxController
           solde: solde.toString());
       await compteBalanceRefApi.insertData(compteBalanceRefModel).then((value) {
         compteBalanceRefList.clear();
-        getList();
-        Get.back();
+        getList(); 
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -130,8 +130,7 @@ class BalanceRefController extends GetxController
           solde: solde.toString());
       await compteBalanceRefApi.updateData(compteBalanceRefModel).then((value) {
         compteBalanceRefList.clear();
-        getList();
-        Get.back();
+        getList(); 
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

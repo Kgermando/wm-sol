@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -103,10 +103,10 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.departementBudgetList
-        .where((element) => 
-          DateTime.now().millisecondsSinceEpoch <=
-              element.periodeFin.millisecondsSinceEpoch || 
-          element.isSubmit == 'false')
+        .where((element) =>
+            DateTime.now().millisecondsSinceEpoch <=
+                element.periodeFin.millisecondsSinceEpoch ||
+            element.isSubmit == 'false')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {
@@ -183,7 +183,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         readOnly: true,
         title: 'Date',
         field: 'created',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

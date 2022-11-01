@@ -42,9 +42,9 @@ class _AgendaPageState extends State<AgendaPage> {
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter stock"),
-                tooltip: "Ajout le stock global",
-                icon: const Icon(Icons.person_add),
+                label: const Text("Ajouter rappel"),
+                tooltip: "Ajout un rappel",
+                icon: const Icon(Icons.add),
                 onPressed: () {
                   newFicheDialog(controller, profilController);
                 },

@@ -13,5 +13,10 @@ String token = (accessToken == null) ? '' :  jsonDecode(accessToken!);
 Map<String, String> headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  "authorization": "Bearer $token"
+  "Authorization": "Bearer $token"
+};
+
+Map<String, String> headerForm = {
+  'Content-Type': 'multipart/form-data',
+  'Authorization': 'Bearer $token'
 };

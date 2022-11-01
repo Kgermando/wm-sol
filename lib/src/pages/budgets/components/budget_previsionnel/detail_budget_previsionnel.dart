@@ -15,7 +15,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/approbation_budget_previsionnel.dart';
-import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/detail_departement_budget_desktop.dart';
+import 'package:wm_solution/src/pages/budgets/components/budget_previsionnel/solde_budget.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/budgets/view/ligne_budgetaire.dart';
@@ -136,7 +136,8 @@ Expanded(
                                       Navigator.pushNamed(
                                           context,
                                           BudgetRoutes
-                                              .budgetBudgetPrevisionel);
+                                          .budgetBudgetPrevisionelDetail, 
+                                      arguments: widget.departementBudgetModel);
                                     },
                                     icon: Icon(
                                         Icons.refresh,
@@ -328,10 +329,10 @@ Expanded(
                     const SizedBox(height: p20),
                     LigneBudgetaire(
                         departementBudgetModel:
-                            widget.departementBudgetModel,
-                        controller: controller,
+                            widget.departementBudgetModel, 
                         lignBudgetaireController:
                             lignBudgetaireController),
+                    const SizedBox(height: p20),
                     ApprobationBudgetPrevisionnel(
                       data: widget.departementBudgetModel,
                       controller: controller,
@@ -359,9 +360,17 @@ Expanded(
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Département :',
+            child1: Text('Titre :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(widget.departementBudgetModel.title,
+                textAlign: TextAlign.start, style: bodyMedium),
+          ),
+          Divider(color: mainColor),
+          ResponsiveChildWidget(
+            child1: Text('Département :',
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.departementBudgetModel.departement,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
@@ -726,10 +735,13 @@ Expanded(
     double banqueSolde = banqueLigneBud - banque;
     double finExterieurSolde = finExterieurLigneBud - finExterieur;
 
-    double touxExecutions =
-        (caisseSolde + banqueSolde + finExterieurSolde) * 100 / coutTotal;
+    // double touxExecutions =
+    //     (caisseSolde + banqueSolde + finExterieurSolde) * 100 / coutTotal;
 
-    return DetailDepartementSoldeBudgets(
+    double touxExecutions =
+        coutTotal * 100 / (caisseSolde + banqueSolde + finExterieurSolde);
+
+    return SoldeBudgets(
         coutTotal: coutTotal,
         caisseSolde: caisseSolde,
         banqueSolde: banqueSolde,

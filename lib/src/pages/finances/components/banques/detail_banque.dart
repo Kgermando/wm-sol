@@ -96,16 +96,24 @@ class _DetailBanqueState extends State<DetailBanque> {
             ));
   }
 
-   Widget dataWidget() {
+  Widget dataWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
-        children: [
+        children: [ 
+          ResponsiveChildWidget(
+            child1: Text('Banque :',
+                textAlign: TextAlign.start,
+                style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(widget.banqueModel.banqueName,
+                textAlign: TextAlign.start, style: bodyMedium),
+          ), 
+          Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Nom Complet :',
                     textAlign: TextAlign.start,
-                    style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)), 
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)), 
             child2: SelectableText(widget.banqueModel.nomComplet,
                     textAlign: TextAlign.start, style: bodyMedium),
           ),
@@ -142,7 +150,7 @@ class _DetailBanqueState extends State<DetailBanque> {
             child2: SelectableText(
                 widget.banqueModel.typeOperation,
                 textAlign: TextAlign.start,
-                style: bodyMedium),
+                style: bodyMedium.copyWith(color: Colors.purple)),
           ),  
           Divider(color: mainColor),
           ResponsiveChildWidget(
@@ -151,7 +159,7 @@ class _DetailBanqueState extends State<DetailBanque> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.numeroOperation,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ), 
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Signature :',

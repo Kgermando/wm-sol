@@ -9,9 +9,8 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableBudgetPrevisionnelDG extends StatefulWidget {
   const TableBudgetPrevisionnelDG(
-      {super.key, 
-      required this.budgetPrevisionnelController});
-  final BudgetPrevisionnelController budgetPrevisionnelController; 
+      {super.key, required this.budgetPrevisionnelController});
+  final BudgetPrevisionnelController budgetPrevisionnelController;
 
   @override
   State<TableBudgetPrevisionnelDG> createState() =>
@@ -42,8 +41,8 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
           final dataId = tapEvent.row!.cells.values;
           final idPlutoRow = dataId.last;
 
-          final DepartementBudgetModel departementBudgetModel =
-              await widget.budgetPrevisionnelController
+          final DepartementBudgetModel departementBudgetModel = await widget
+              .budgetPrevisionnelController
               .detailView(idPlutoRow.value);
 
           Get.toNamed(BudgetRoutes.budgetBudgetPrevisionelDetail,
@@ -109,7 +108,7 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
             DateTime.now().millisecondsSinceEpoch <=
                 element.periodeFin.millisecondsSinceEpoch &&
             element.approbationDG == '-' &&
-            element.approbationDD == 'Approved' && 
+            element.approbationDD == 'Approved' &&
             element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
@@ -187,7 +186,7 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
         readOnly: true,
         title: 'Date',
         field: 'created',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

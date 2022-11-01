@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -108,8 +106,8 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                             const TitleWidget(title: "Modification du profil"),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
-                                // fichierWidget(controller),
+                              children: [
+                                fichierWidget(),
                               ],
                             ),
                             const SizedBox(height: p20),
@@ -144,12 +142,18 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                                 child2: (controller.typeContrat == 'CDD')
                                     ? dateFinContratWidget(controller)
                                     : Container()),
+                            competanceWidget(controller),
+                            experienceWidget(controller),
                             const SizedBox(height: p20),
                             BtnWidget(
                                 title: 'Soumettre modification',
                                 isLoading: controller.isLoading,
                                 press: () {
-                                  controller.submitUpdate(widget.personne);
+                                  final form = controller.formKey.currentState!;
+                                  if (form.validate()) {
+                                    controller.submitUpdate(widget.personne);
+                                    form.reset();
+                                  } 
                                 })
                           ]),
                         ),
@@ -161,44 +165,47 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     );
   }
 
-  Widget fichierWidget(PersonnelsController controller) {
+ Widget fichierWidget() {
     return Container(
         padding: const EdgeInsets.all(2),
         margin: const EdgeInsets.all(2),
         child: controller.isUploading
             ? const SizedBox(
                 height: 50.0, width: 50.0, child: LinearProgressIndicator())
-            : SizedBox(
-                height: 100.0,
-                width: 100.0,
-                child: CircleAvatar(
-                  child: TextButton.icon(
-                      onPressed: () async {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: ['png', 'jpg'],
-                        );
-                        if (result != null) {
-                          File file = File(result.files.single.path!);
-                          controller.photeUpload(file);
-                        } else {
-                          const Text("Le fichier n'existe pas");
-                        }
-                      },
-                      icon: controller.isUploadingDone
-                          ? Icon(Icons.check_circle_outline,
-                              color: Colors.green.shade700)
-                          : const Icon(Icons.person),
-                      label: controller.isUploadingDone
-                          ? Text("Téléchargement terminé",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(color: Colors.green.shade700))
-                          : Text("Photo",
-                              style: Theme.of(context).textTheme.bodyLarge)),
-                ),
+            : Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    child: SizedBox(
+                      height: 100.0,
+                      width: 100.0,
+                      child: CircleAvatar(
+                          child: (controller.uploadedFileUrl == null)
+                              ? Image.asset('assets/images/avatar.jpg')
+                              : Image.network(controller.uploadedFileUrl!)),
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 10,
+                      left: 70,
+                      child: IconButton(
+                          onPressed: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['png', 'jpg'],
+                            );
+                            if (result != null) {
+                              setState(() {
+                                controller
+                                    .uploadFile(result.files.single.path!);
+                              });
+                            } else {
+                              const Text("Le fichier n'existe pas");
+                            }
+                          },
+                          icon: const Icon(Icons.camera_alt)))
+                ],
               ));
   }
 

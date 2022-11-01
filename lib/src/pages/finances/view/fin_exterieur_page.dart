@@ -54,12 +54,13 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                     decoration: const BoxDecoration(
                         borderRadius:
                             BorderRadius.all(Radius.circular(20))),
-                    child: TableFinExterieur(finExterieurList: controller.finExterieurList
+                    child: TableFinExterieur(
+                        finExterieurList: controller.finExterieurList
                       .where((p0) =>
                           p0.financeExterieurName ==
                           widget.finExterieurNameModel.nomComplet)
                       .toList(), controller: controller,
-                      name: widget.finExterieurNameModel.nomComplet))),
+                      finExterieurNameModel: widget.finExterieurNameModel))),
           ],
         ))),
     );

@@ -7,6 +7,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/archives/components/archive_table.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
+import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -25,6 +26,8 @@ class _ArchiveDataState extends State<ArchiveData> {
   @override
   Widget build(BuildContext context) {
     final ArchiveController controller = Get.put(ArchiveController());
+    final ArchiveFolderController controllerFolder =
+        Get.put(ArchiveFolderController());
 
     return controller.obx(
         onLoading: loading(),
@@ -60,7 +63,9 @@ class _ArchiveDataState extends State<ArchiveData> {
                                   BorderRadius.all(Radius.circular(20))),
                           child: TableArchive(
                               archiveFolderModel: widget.archiveFolderModel,
-                              controller: controller))),
+                              controller: controller,
+                              controllerFolder: controllerFolder
+                            ))),
                 ],
               ),
             ));

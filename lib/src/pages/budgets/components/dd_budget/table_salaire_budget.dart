@@ -30,7 +30,6 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -61,11 +60,12 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPaiement); 
+                        Get.toNamed(RhRoutes.rhPaiement);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    SalaireXlsx().exportToExcel(widget.salaireController.paiementSalaireList);
+                    SalaireXlsx().exportToExcel(
+                        widget.salaireController.paiementSalaireList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -122,9 +122,8 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
     );
   }
 
-
   Future agentsRow() async {
-   var dataList = widget.salaireController.paiementSalaireList
+    var dataList = widget.salaireController.paiementSalaireList
         .where((element) =>
             element.createdAt.month == DateTime.now().month &&
             element.createdAt.year == DateTime.now().year &&
@@ -152,8 +151,6 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
       }));
     }
   }
-
-
 
   void agentsColumn() {
     columns = [
@@ -245,7 +242,7 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
         readOnly: true,
         title: 'Date',
         field: 'createdAt',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

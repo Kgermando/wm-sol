@@ -1,12 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/performence_api.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class PerformenceController extends GetxController
     with StateMixin<List<PerformenceModel>> {
   PerformenceApi performenceApi = PerformenceApi();
-
+  final ProfilController profilController = Get.find();
   var performenceList = <PerformenceModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -21,7 +24,8 @@ class PerformenceController extends GetxController
 
   void getList() async {
     await performenceApi.getAllData().then((response) {
-      performenceList.assignAll(response);
+      var departement = jsonDecode(profilController.user.departement);
+      performenceList.assignAll(response.where((element) => element.departement == departement.first));
       change(performenceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

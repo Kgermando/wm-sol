@@ -36,13 +36,7 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, "nouveau compte résultat"),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
-                onPressed: () {},
-              ),
+              drawer: const DrawerMenu(), 
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,50 +54,53 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
                             decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const TitleWidget(
-                                            title: "Compte resultats"),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        intituleWidget(),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        chargesWidget(),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        produitWidget(),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        BtnWidget(
-                                            title: 'Soumettre',
-                                            isLoading: controller. isLoading,
-                                            press: () {
-                                              final form =
-                                                  controller.formKey.currentState!;
-                                              if (form.validate()) {
-                                                controller.submit();
-                                                form.reset();
-                                              }
-                                            })
-                                      ],
+                            child: Form(
+                              key: controller.formKey,
+                              child: Column(
+                                children: [
+                                  Card(
+                                    elevation: 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: p20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleWidget(
+                                              title: "Compte resultats"),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          intituleWidget(),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          chargesWidget(),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          produitWidget(),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          BtnWidget(
+                                              title: 'Soumettre',
+                                              isLoading: controller. isLoading,
+                                              press: () {
+                                                final form =
+                                                    controller.formKey.currentState!;
+                                                if (form.validate()) {
+                                                  controller.submit();
+                                                  form.reset();
+                                                }
+                                              })
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           )))
                 ],

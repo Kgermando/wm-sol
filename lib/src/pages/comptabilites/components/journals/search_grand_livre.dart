@@ -74,13 +74,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, compte),
-      drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Ajouter une personne"),
-        tooltip: "Ajout personne à la liste",
-        icon: const Icon(Icons.person_add),
-        onPressed: () {},
-      ),
+      drawer: const DrawerMenu(), 
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,33 +91,24 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
                         top: p20, bottom: p8, right: p20, left: p20),
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
+                    child: ListView(
+                      shrinkWrap: true,
                       children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: p20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AutoSizeText(
-                                    "Résultats pour le compte <<$compte>>",
-                                    maxLines: 3,
-                                    textAlign: TextAlign.start,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6!
-                                        .copyWith(color: mainColor)),
-                                const SizedBox(height: p20),
-                                Expanded(
-                                    child: EasyTable<JournalModel>(_model,
-                                        multiSort: true)),
-                                totalWidget()
-                              ],
-                            ),
-                          ),
-                        )
+                        AutoSizeText(
+                            "Résultats pour le compte <<$compte>>",
+                            maxLines: 3,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6!
+                                .copyWith(color: mainColor)),
+                        const SizedBox(height: p20),
+                        SizedBox(
+                          height: 500,
+                          child: EasyTable<JournalModel>(_model,
+                              multiSort: true),
+                        ),
+                        totalWidget()
                       ],
                     ),
                   )))
@@ -135,7 +120,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
   Widget totalWidget() {
     final headlineMedium = Theme.of(context).textTheme.headlineMedium;
     double totalDebit = 0.0;
-    double totalCredit = 0.0;
+    double totalCredit = 0.0; 
     for (var element in widget.search) {
       totalDebit += double.parse(element.montantDebit);
     }
@@ -151,23 +136,31 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
             child: ResponsiveChildWidget(
               child1: Text("Total débit :",
                 style: headlineMedium!.copyWith(
-                    color: Colors.red, fontWeight: FontWeight.bold)), 
+                    color: Colors.yellow, fontWeight: FontWeight.bold)), 
               child2: Text(
                 "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
-                style: headlineMedium.copyWith(color: Colors.red))
+                style: headlineMedium.copyWith(color: Colors.yellow))
             )
           ),
           Expanded(
             child: ResponsiveChildWidget(
               child1: Text("Total crédit :",
                 style: headlineMedium.copyWith(
-                    color: Colors.orange,
+                    color: Colors.green,
                     fontWeight: FontWeight.bold)),
               child2: Text(
                 "${NumberFormat.decimalPattern('fr').format(totalCredit)} \$",
-                style: headlineMedium.copyWith(color: Colors.orange))
+                style: headlineMedium.copyWith(color: Colors.green))
             ) 
           ),
+          Expanded(
+              child: ResponsiveChildWidget(
+                  child1: Text("Solde :",
+                      style: headlineMedium.copyWith(
+                          color: Colors.red, fontWeight: FontWeight.bold)),
+                  child2: Text(
+                      "${NumberFormat.decimalPattern('fr').format(totalDebit - totalCredit)} \$",
+                      style: headlineMedium.copyWith(color: Colors.red)))),
         ],
       ),
     );

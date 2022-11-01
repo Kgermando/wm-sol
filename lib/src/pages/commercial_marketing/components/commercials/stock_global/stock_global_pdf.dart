@@ -73,7 +73,7 @@ class StockGlobalPdf {
           child: pw.Image(image),
         ),
         pw.Text(InfoSystem().namelong()),
-        pw.Text("FOKAD SA",
+        pw.Text(InfoSystem().name(),
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
       ],
     );

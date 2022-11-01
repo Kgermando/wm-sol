@@ -9,32 +9,30 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class AdministrationNav extends StatefulWidget {
   const AdministrationNav(
-      {super.key, required this.currentRoute, required this.profilController});
+      {super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
+  final List<dynamic> departement;
 
   @override
   State<AdministrationNav> createState() => _AdministrationNavState();
 }
 
 class _AdministrationNavState extends State<AdministrationNav> {
-  final AdminNotifyController controller = Get.put(AdminNotifyController()); 
-  bool isOpen1 = false; 
-  
-  
+  final AdminNotifyController controller = Get.put(AdminNotifyController());
+  bool isOpen1 = false;
+
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-
+    final bodyText1 = Theme.of(context).textTheme.bodyText1; 
     return ExpansionTile(
       leading: const Icon(
         Icons.admin_panel_settings,
         size: 30.0,
       ),
       title: AutoSizeText('Administration', maxLines: 1, style: bodyLarge),
-      initiallyExpanded:
-          (widget.profilController.user.departement == 'Administration') ? true : false,
+      initiallyExpanded: (widget.departement.first == 'Administration') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen1 = !val;

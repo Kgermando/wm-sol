@@ -53,6 +53,7 @@ class _BonLivraisonPageState extends State<BonLivraisonPage> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(20))),
                       child: ListView.builder(
+                        shrinkWrap: true,
                           itemCount: controller
                               .bonLivraisonList.length,
                           itemBuilder: (context, index) {

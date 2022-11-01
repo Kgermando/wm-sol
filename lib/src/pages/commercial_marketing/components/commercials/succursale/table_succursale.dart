@@ -9,9 +9,9 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class TableSuccursale extends StatefulWidget {
-  const TableSuccursale({super.key, required this.succursaleList, required this.controller});
+  const TableSuccursale({super.key, 
+    required this.succursaleList, required this.controller});
   final List<SuccursaleModel> succursaleList;
   final SuccursaleController controller;
 
@@ -20,7 +20,7 @@ class TableSuccursale extends StatefulWidget {
 }
 
 class _TableSuccursaleState extends State<TableSuccursale> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -119,7 +119,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
           'name': PlutoCell(value: item.name),
           'province': PlutoCell(value: item.province),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'approbationDG': PlutoCell(value: item.approbationDG),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
@@ -152,7 +152,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -178,7 +178,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DG',
@@ -251,4 +251,5 @@ class _TableSuccursaleState extends State<TableSuccursale> {
       ),
     ];
   }
+
 }

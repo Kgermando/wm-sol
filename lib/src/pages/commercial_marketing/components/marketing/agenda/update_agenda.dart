@@ -22,7 +22,7 @@ class UpdateAgenda extends StatefulWidget {
 class _UpdateAgendaState extends State<UpdateAgenda> {
   final AgendaController controller = Get.put(AgendaController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines";
+  String title = "Commercial & Marketing";
 
   @override
   void initState() {
@@ -93,7 +93,7 @@ class _UpdateAgendaState extends State<UpdateAgenda> {
                                             controller
                                                 .formKey.currentState!;
                                         if (form.validate()) {
-                                          controller.submit();
+                                          controller.submitUpdate(widget.agendaColor.agendaModel);
                                           form.reset();
                                         }
                                       })

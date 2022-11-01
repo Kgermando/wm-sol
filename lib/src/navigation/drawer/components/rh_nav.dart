@@ -8,9 +8,10 @@ import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class RhNav extends StatefulWidget {
-  const RhNav({super.key, required this.currentRoute, required this.profilController});
+  const RhNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
+  final List<dynamic> departement;
 
   @override
   State<RhNav> createState() => _RhNavState();
@@ -24,12 +25,12 @@ class _RhNavState extends State<RhNav> {
     final RHNotifyController controller = Get.put(RHNotifyController());
 
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1; 
+    final bodyText1 = Theme.of(context).textTheme.bodyText1;  
 
     return ExpansionTile(
       leading: const Icon(Icons.group, size: 30.0),
       title: AutoSizeText('RH', maxLines: 1, style: bodyLarge),
-      initiallyExpanded: (widget.profilController.user.departement == 'Ressources Humaines') ? true : false,
+      initiallyExpanded: (widget.departement.first == 'Ressources Humaines') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

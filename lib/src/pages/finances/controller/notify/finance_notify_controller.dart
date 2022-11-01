@@ -56,7 +56,7 @@ class FinanceNotifyController extends GetxController {
 
   void getCountObs() async {
     NotifySumModel notifySum =
-        await financeDepartementNotifyApi.getCountFinanceDD();
+        await financeDepartementNotifyApi.getCountFinanceObs();
     _itemCountObs.value = notifySum.sum;
   }
 
@@ -66,7 +66,7 @@ class FinanceNotifyController extends GetxController {
     _creanceCountDD.value = notifySum.count;
   }
 
-   void getCountCreanceDG() async {
+  void getCountCreanceDG() async {
     NotifyModel notifySum = await creanceNotifyApi.getCountDG();
     _creanceCountDG.value = notifySum.count;
   }

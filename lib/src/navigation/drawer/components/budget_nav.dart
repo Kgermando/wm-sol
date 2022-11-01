@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,10 @@ import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_co
 import 'package:wm_solution/src/routes/routes.dart';
 
 class BudgetNav extends StatefulWidget {
-  const BudgetNav({super.key, required this.currentRoute, required this.profilController});
+  const BudgetNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
+  final List<dynamic> departement;
 
   @override
   State<BudgetNav> createState() => _BudgetNavState();
@@ -21,17 +23,14 @@ class _BudgetNavState extends State<BudgetNav> {
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) {
-   
-
+  Widget build(BuildContext context) { 
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-
+    final bodyText1 = Theme.of(context).textTheme.bodyText1; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.fact_check, size: 30.0),
       title: AutoSizeText('Budgets', maxLines: 1, style: bodyLarge),
-      initiallyExpanded: (widget.profilController.user.departement == 'Budgets') ? true : false,
+      initiallyExpanded: (widget.departement.first == 'Budgets') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

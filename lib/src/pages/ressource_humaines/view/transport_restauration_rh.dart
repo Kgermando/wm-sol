@@ -45,14 +45,11 @@ class _TransportRestaurationRHState extends State<TransportRestaurationRH> {
                 context: context,
                 constraints: BoxConstraints(
                   maxWidth: Responsive.isDesktop(context)
-                      ? sized.width / 2
+                      ? sized.width / 1.3
                       : sized.width,
                 ),
                 builder: (BuildContext context) {
-                  return Container(
-                    height: Responsive.isDesktop(context)
-                        ? sized.height / 2
-                        : sized.height,
+                  return Container( 
                     color: Colors.amber.shade100,
                     padding: const EdgeInsets.all(p20),
                     child: Form(

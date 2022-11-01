@@ -1,0 +1,264 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart'; 
+import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/models/mail/mail_model.dart'; 
+import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart'; 
+import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart'; 
+import 'package:wm_solution/src/utils/regex.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/widgets/title_widget.dart';
+
+class TransfertMail extends StatefulWidget {
+  const TransfertMail({super.key, required this.mailModel});
+  final MailModel mailModel;
+
+  @override
+  State<TransfertMail> createState() => _TransfertMailState();
+}
+
+class _TransfertMailState extends State<TransfertMail> {
+  final MaillingController controller = Get.put(MaillingController());
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  String title = "Mails";
+  String subTitle = "Transferer";
+
+  final ScrollController controllerScrollCC = ScrollController();
+  bool isOpen = false;
+
+    @override
+  initState() {
+    controller.objetController = TextEditingController(text: widget.mailModel.objet);
+    controller.messageController = TextEditingController(text: widget.mailModel.message);
+    controller.pieceJointeController = TextEditingController(text: widget.mailModel.pieceJointe);
+    super.initState();
+  }
+
+   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const MailsNAv(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: MailsNAv())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TitleWidget(title: "Tranferer le mail"),
+                    const SizedBox(
+                      height: p20,
+                    ),
+                    emailWidget(),
+                    const SizedBox(height: p20),
+                    objetWidget(),
+                    messageWidget(),
+                    const SizedBox(
+                      height: p20,
+                    ), 
+                    BtnWidget(
+                        title: 'Envoyez',
+                        isLoading: controller.isLoading,
+                        press: () {
+                          final form =
+                              controller.formKey.currentState!;
+                          if (form.validate()) {
+                            controller.send();
+                            form.reset();
+                          }
+                        })
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )))
+        ],
+      ),
+    );
+  }
+
+   Widget emailWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.emailController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: "Email",
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) => RegExpIsValide().validateEmail(value),
+        ));
+  }
+
+  Widget objetWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.objetController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: "Objet",
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget ccWidget() {
+    return Material(
+      color: Colors.amber.shade50,
+      child: ExpansionTile(
+        leading: const Icon(Icons.person),
+        title: const Text('Cc'),
+        subtitle: SizedBox(
+          width: MediaQuery.of(context).size.width / 2,
+          height: 20,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: controller.ccList.length,
+              itemBuilder: (BuildContext context, index) {
+                final agent = controller.ccList[index];
+                return Text("${agent.email}; ");
+              }),
+        ),
+        onExpansionChanged: (val) {
+          setState(() {
+            isOpen = !val;
+          });
+        },
+        trailing: const Icon(Icons.arrow_drop_down),
+        children: [
+          SizedBox(
+            height: 100,
+            child: Scrollbar(
+              controller: controllerScrollCC,
+              trackVisibility: true,
+              thumbVisibility: true,
+              child: ListView.builder(
+                  itemCount: controller.usersController.usersList.length,
+                  controller: controllerScrollCC,
+                  itemBuilder: (context, i) {
+                    var user = controller.usersController.usersList[i];
+                    return ListTile(
+                        title: Text(user.email),
+                        leading: Checkbox(
+                          value: controller.ccList.contains(user),
+                          onChanged: (val) {
+                            if (val == true) {
+                              setState(() {
+                                controller.ccList.add(user);
+                              });
+                            } else {
+                              setState(() {
+                                controller.ccList.remove(user);
+                              });
+                            }
+                          },
+                        ));
+                  }),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget messageWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.messageController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: "Mail ...",
+            helperText: "Ecrivez mail ...",
+          ),
+          keyboardType: TextInputType.multiline,
+          minLines: 10,
+          maxLines: 20,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget fichierWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: controller.isUploading
+            ? const SizedBox(height: 50.0, width: 50.0, child: LinearProgressIndicator())
+            : TextButton.icon(
+                onPressed: () async {
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: [
+                      'pdf',
+                      'doc',
+                      'docx',
+                      'xlsx',
+                      'pptx',
+                      'jpg',
+                      'png'
+                    ],
+                  );
+                  if (result != null) {
+                    controller.uploadFile(result.files.single.path!);
+                  } else {
+                    const Text("Votre fichier n'existe pas");
+                  }
+                },
+                icon: controller.isUploadingDone
+                    ? Icon(Icons.check_circle_outline,
+                        color: Colors.green.shade700)
+                    : const Icon(Icons.attach_email),
+                label: controller.isUploadingDone
+                    ? Text("Téléchargement terminé",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.green.shade700))
+                    : Text("Joindre un fichier",
+                        style: Theme.of(context).textTheme.bodyLarge)));
+  }
+}

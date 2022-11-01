@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
+import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart';
 import 'package:wm_solution/src/pages/finances/components/fin_exterieur/fin_autre_xlsx.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
@@ -12,10 +13,10 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 
 class TableFinExterieur extends StatefulWidget {
-  const TableFinExterieur({super.key, required this.finExterieurList, required this.controller, required this.name}); 
+  const TableFinExterieur({super.key, required this.finExterieurList, required this.controller, required this.finExterieurNameModel}); 
    final List<FinanceExterieurModel> finExterieurList;
-  final FinExterieurController controller;
-  final String name;
+  final FinExterieurController controller; 
+  final FinExterieurNameModel finExterieurNameModel;
 
   @override
   State<TableFinExterieur> createState() => _TableFinExterieurState();
@@ -49,7 +50,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
               final FinanceExterieurModel financeExterieurModel =
                   await widget.controller.detailView(idPlutoRow.value);
 
-              Get.toNamed(FinanceRoutes.transactionsFinancementExterne,
+              Get.toNamed(FinanceRoutes.transactionsFinancementExterneDetail,
                   arguments: financeExterieurModel);
             },
             onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -61,16 +62,17 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.name),
+                  TitleWidget(title: widget.finExterieurNameModel.nomComplet),
                   Row(
                     children: [
                       IconButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context,
-                                FinanceRoutes.transactionsFinancementExterne);
-                          },
-                          icon: Icon(Icons.refresh,
-                              color: Colors.green.shade700)),
+                        onPressed: () {
+                          Navigator.pushNamed(context,
+                            '/transactions-financement-externe/${widget.finExterieurNameModel.id}', 
+                            arguments: widget.finExterieurNameModel);
+                        },
+                        icon: Icon(Icons.refresh,
+                          color: Colors.green.shade700)),
                       PrintWidget(onPressed: () {
                         FinAutreXlsx().exportToExcel(widget.finExterieurList);
                         if (!mounted) return;
@@ -271,6 +273,22 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
 
   Widget totalSolde() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    double recette = 0.0;
+    double depenses = 0.0;
+    List<FinanceExterieurModel?> recetteList = widget.finExterieurList
+        .where((element) => element.financeExterieurName == widget.finExterieurNameModel.nomComplet &&
+           element.typeOperation == "Depot")
+        .toList();
+    List<FinanceExterieurModel?> depensesList = widget.finExterieurList
+        .where((element) => element.financeExterieurName == widget.finExterieurNameModel.nomComplet &&
+           element.typeOperation == "Retrait")
+        .toList();
+    for (var item in recetteList) {
+      recette += double.parse(item!.montant);
+    }
+    for (var item in depensesList) {
+      depenses += double.parse(item!.montant);
+    }
     return Card(
       color: Colors.red.shade700,
       child: Padding(
@@ -282,7 +300,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                       style: bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(widget.controller.recette)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette)} \$',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -293,7 +311,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(widget.controller.depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(depenses)} \$',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -304,7 +322,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(widget.controller.recette - widget.controller.depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} \$',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],

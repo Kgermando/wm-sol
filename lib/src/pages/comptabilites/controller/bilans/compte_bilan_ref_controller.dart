@@ -85,7 +85,7 @@ class CompteBilanRefController extends GetxController
       await compteBilanRefApi.insertData(compteBilanRefModel).then((value) {
         compteBilanRefList.clear();
         getList();
-        Get.back();
+        // Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

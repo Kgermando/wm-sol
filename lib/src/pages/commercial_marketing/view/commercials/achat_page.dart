@@ -53,6 +53,7 @@ class _AchatPageState extends State<AchatPage> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(20))),
                       child: ListView.builder(
+                        shrinkWrap: true,
                         itemCount: controller.achatList.length,
                         itemBuilder: (context, index) {
                           final data = controller.achatList[index];

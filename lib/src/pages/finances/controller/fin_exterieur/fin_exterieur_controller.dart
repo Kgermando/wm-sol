@@ -24,11 +24,7 @@ class FinExterieurController extends GetxController
   final TextEditingController montantController = TextEditingController();
   String? typeOperation;
 
-  final _recette = 0.0.obs;
-  double get recette => _recette.value;
-  final _depenses = 0.0.obs;
-  double get depenses => _depenses.value;
-
+ 
   @override
   void onInit() {
     super.onInit();
@@ -53,18 +49,7 @@ class FinExterieurController extends GetxController
   void getList() async {
     await finExterieurApi.getAllData().then((response) {
       finExterieurList.assignAll(response);
-      List<FinanceExterieurModel?> recetteList = finExterieurList
-          .where((element) => element.typeOperation == "Depot")
-          .toList();
-      List<FinanceExterieurModel?> depensesList = finExterieurList
-          .where((element) => element.typeOperation == "Retrait")
-          .toList();
-      for (var item in recetteList) {
-        _recette.value += double.parse(item!.montant);
-      }
-      for (var item in depensesList) {
-        _depenses.value += double.parse(item!.montant);
-      }
+      
       change(finExterieurList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

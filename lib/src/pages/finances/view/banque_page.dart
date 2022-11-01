@@ -57,7 +57,7 @@ class _BanquePageState extends State<BanquePage> {
                           child: TableBanque(
                               banqueList: controller.banqueList.where((p0) => p0.banqueName == widget.banqueNameModel.nomComplet).toList(),
                               controller: controller,
-                              name: widget.banqueNameModel.nomComplet))),
+                              banqueNameModel: widget.banqueNameModel))),
                 ],
               ))),
     );
@@ -129,7 +129,7 @@ class _BanquePageState extends State<BanquePage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: pieceJustificativeWidget()), 
+                                  child2: montantWidget()), 
                               const SizedBox(
                                 height: p20,
                               ),
@@ -192,7 +192,7 @@ class _BanquePageState extends State<BanquePage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: pieceJustificativeWidget()), 
+                                  child2: montantWidget()), 
                               const SizedBox(
                                 height: p20,
                               ),

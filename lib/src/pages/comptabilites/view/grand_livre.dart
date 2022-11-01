@@ -157,8 +157,7 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
                 value: value,
                 child: Text(value!.intitule),
               );
-            })
-            .toSet()
+            }).toSet()
             .toList(),
         validator: (value) => value == null ? "Select Livre" : null,
         onChanged: (value) {

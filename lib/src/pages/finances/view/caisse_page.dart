@@ -28,10 +28,8 @@ class _CaissePageState extends State<CaissePage> {
   String title = "Finances";
   String subTitle = "Caisses";
 
-
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: controller.obx(
           onLoading: loading(),
@@ -56,18 +54,19 @@ class _CaissePageState extends State<CaissePage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: Tablecaisse(caisseList: controller.caisseList
-                            .where((p0) =>
-                                p0.caisseName ==
-                                widget.caisseNameModel.nomComplet)
-                            .toList(), controller: controller,
-                            name: widget.caisseNameModel.nomComplet))),
+                          child: Tablecaisse(
+                              caisseList: controller.caisseList
+                                  .where((p0) =>
+                                      p0.caisseName ==
+                                      widget.caisseNameModel.nomComplet)
+                                  .toList(),
+                              controller: controller,
+                              caisseNameModel: widget.caisseNameModel))),
                 ],
               ))),
     );
   }
 
-  
   SpeedDial speedialWidget() {
     return SpeedDial(
       closedForegroundColor: themeColor,
@@ -80,8 +79,8 @@ class _CaissePageState extends State<CaissePage> {
           foregroundColor: Colors.black,
           backgroundColor: Colors.yellow.shade700,
           label: 'Décaissement',
-          onPressed: () { 
-            
+          onPressed: () {
+            decaissementDialog();
           },
         ),
         SpeedDialChild(
@@ -90,7 +89,7 @@ class _CaissePageState extends State<CaissePage> {
           backgroundColor: Colors.green.shade700,
           label: 'Encaissement',
           onPressed: () {
-             
+            encaissementDialog();
           },
         ),
       ],
@@ -100,7 +99,6 @@ class _CaissePageState extends State<CaissePage> {
       ),
     );
   }
-
 
   encaissementDialog() {
     return showDialog(
@@ -135,7 +133,7 @@ class _CaissePageState extends State<CaissePage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: pieceJustificativeWidget()), 
+                                  child2: montantWidget()),
                               const SizedBox(
                                 height: p20,
                               ),
@@ -146,10 +144,11 @@ class _CaissePageState extends State<CaissePage> {
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
-                                    final form =
-                                        controller.formKeyEncaissement.currentState!;
+                                    final form = controller
+                                        .formKeyEncaissement.currentState!;
                                     if (form.validate()) {
-                                      controller.submitEncaissement(widget.caisseNameModel);
+                                      controller.submitEncaissement(
+                                          widget.caisseNameModel);
                                       form.reset();
                                     }
                                   })
@@ -197,7 +196,7 @@ class _CaissePageState extends State<CaissePage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: pieceJustificativeWidget()), 
+                                  child2: montantWidget()),
                               const SizedBox(
                                 height: p20,
                               ),
@@ -208,10 +207,11 @@ class _CaissePageState extends State<CaissePage> {
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
-                                    final form =
-                                        controller.formKeyDecaissement.currentState!;
+                                    final form = controller
+                                        .formKeyDecaissement.currentState!;
                                     if (form.validate()) {
-                                      controller.submitDecaissement(widget.caisseNameModel);
+                                      controller.submitDecaissement(
+                                          widget.caisseNameModel);
                                       form.reset();
                                     }
                                   })
@@ -225,7 +225,6 @@ class _CaissePageState extends State<CaissePage> {
           });
         });
   }
-
 
   Widget nomCompletWidget() {
     return Container(

@@ -32,87 +32,91 @@ class _TableJournalComptabiliteDDState extends State<TableJournalComptabiliteDD>
 
   @override
   Widget build(BuildContext context) {
-    return PlutoGrid(
-      columns: columns,
-      rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
-        final idPlutoRow = dataId.last;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: PlutoGrid(
+        columns: columns,
+        rows: rows,
+        onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+          final dataId = tapEvent.row!.cells.values;
+          final idPlutoRow = dataId.last;
 
-        final JournalLivreModel journalLivreModel =
-            await widget.journalLivreController.detailView(idPlutoRow.value);
+          final JournalLivreModel journalLivreModel =
+              await widget.journalLivreController.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComptabiliteRoutes.comptabiliteJournalDetail,
-            arguments: journalLivreModel);
-      },
-      onLoaded: (PlutoGridOnLoadedEvent event) {
-        stateManager = event.stateManager;
-        stateManager!.setShowColumnFilter(true);
-        stateManager!.setShowLoading(true);
-      },
-      createHeader: (PlutoGridStateManager header) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const TitleWidget(title: "Livre Journal"),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, ComptabiliteRoutes.comptabiliteJournalLivre);
-                    },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
-                PrintWidget(onPressed: () {
-                  JournalXlsx().exportToExcel(widget.journalLivreController.journalLivreList);
-                  if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text("Exportation effectué!"),
-                    backgroundColor: Colors.green[700],
-                  ));
-                })
-              ],
-            ),
-          ],
-        );
-      },
-      configuration: PlutoGridConfiguration(
-        columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters,
-          ],
-          resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'numero') {
+          Get.toNamed(ComptabiliteRoutes.comptabiliteJournalDetail,
+              arguments: journalLivreModel);
+        },
+        onLoaded: (PlutoGridOnLoadedEvent event) {
+          stateManager = event.stateManager;
+          stateManager!.setShowColumnFilter(true);
+          stateManager!.setShowLoading(true);
+        },
+        createHeader: (PlutoGridStateManager header) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: "Livre Journal"),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, ComptabiliteRoutes.comptabiliteJournalLivre);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                  PrintWidget(onPressed: () {
+                    JournalXlsx().exportToExcel(widget.journalLivreController.journalLivreList);
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text("Exportation effectué!"),
+                      backgroundColor: Colors.green[700],
+                    ));
+                  })
+                ],
+              ),
+            ],
+          );
+        },
+        configuration: PlutoGridConfiguration(
+          columnFilter: PlutoGridColumnFilterConfig(
+            filters: const [
+              ...FilterHelper.defaultFilters,
+            ],
+            resolveDefaultColumnFilter: (column, resolver) {
+              if (column.field == 'numero') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'intitule') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'debut') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'fin') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'signature') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'created') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'approbationDD') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'id') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              }
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'intitule') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'debut') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'fin') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'signature') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDD') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'id') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }
-            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-          },
+            },
+          ),
         ),
+        createFooter: (stateManager) {
+          stateManager.setPageSize(20, notify: true); // default 40
+          return PlutoPagination(stateManager);
+        },
       ),
-      createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: true); // default 40
-        return PlutoPagination(stateManager);
-      },
     );
   }
 
-  Future<List<PlutoRow>> agentsRow() async {
+  Future<List<PlutoRow>> agentsRow() async { 
     var dataList = widget.journalLivreController.journalLivreList
-        .where((element) =>  element.approbationDD == "-" ) .toList();
+        .where((element) =>  element.approbationDD == "-" && 
+        element.isSubmit == "true") .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {

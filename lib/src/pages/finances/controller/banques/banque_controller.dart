@@ -29,22 +29,18 @@ class BanqueController extends GetxController
   final List<String> typeCaisse = TypeOperation().typeVereCaisse;
   final List<String> departementList = Dropdown().departement;
 
-  final _recette = 0.0.obs;
-  double get recette => _recette.value;
-  final _depenses = 0.0.obs;
-  double get depenses => _depenses.value;
-
   @override
   void onInit() {
     super.onInit();
     getList();
+    
   }
 
-  @override
-  void refresh() {
-    getList();
-    super.refresh();
-  }
+  // @override
+  // void refresh() {
+  //   getList();
+  //   super.refresh();
+  // }
 
   @override
   void dispose() {
@@ -57,25 +53,14 @@ class BanqueController extends GetxController
 
   void getList() async {
     await banqueApi.getAllData().then((response) {
-      banqueList.assignAll(response);
-      List<BanqueModel?> recetteList = banqueList
-          .where((element) => element.typeOperation == "Depot")
-          .toList();
-      List<BanqueModel?> depensesList = banqueList
-          .where((element) => element.typeOperation == "Retrait")
-          .toList();
-      for (var item in recetteList) {
-        _recette.value += double.parse(item!.montant);
-      }
-      for (var item in depensesList) {
-        _depenses.value += double.parse(item!.montant);
-      }
+      banqueList.assignAll(response); 
       change(banqueList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
+ 
   detailView(int id) async {
     final data = await banqueApi.getOneData(id);
     return data;

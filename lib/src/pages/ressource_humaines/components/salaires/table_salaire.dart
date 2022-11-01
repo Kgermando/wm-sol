@@ -10,7 +10,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableSalaire extends StatefulWidget {
-  const TableSalaire({super.key, required this.salairesList, required this.controller});
+  const TableSalaire(
+      {super.key, required this.salairesList, required this.controller});
   final List<PaiementSalaireModel> salairesList;
   final SalaireController controller;
 
@@ -30,7 +31,6 @@ class _TableSalaireState extends State<TableSalaire> {
     agentsRow();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _TableSalaireState extends State<TableSalaire> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Get.toNamed(RhRoutes.rhPaiement); 
+                      Get.toNamed(RhRoutes.rhPaiement);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -120,7 +120,6 @@ class _TableSalaireState extends State<TableSalaire> {
     );
   }
 
-
   Future agentsRow() async {
     var i = widget.salairesList.length;
     for (var item in widget.salairesList) {
@@ -142,8 +141,6 @@ class _TableSalaireState extends State<TableSalaire> {
       }));
     }
   }
-
-
 
   void agentsColumn() {
     columns = [
@@ -235,7 +232,7 @@ class _TableSalaireState extends State<TableSalaire> {
         readOnly: true,
         title: 'Date',
         field: 'createdAt',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

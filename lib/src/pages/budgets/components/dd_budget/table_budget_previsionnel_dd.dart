@@ -9,9 +9,8 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableBudgetPrevisionnelDD extends StatefulWidget {
   const TableBudgetPrevisionnelDD(
-      {super.key, 
-      required this.budgetPrevisionnelController});
-  final BudgetPrevisionnelController budgetPrevisionnelController; 
+      {super.key, required this.budgetPrevisionnelController});
+  final BudgetPrevisionnelController budgetPrevisionnelController;
 
   @override
   State<TableBudgetPrevisionnelDD> createState() =>
@@ -42,8 +41,8 @@ class _TableBudgetPrevisionnelDDState extends State<TableBudgetPrevisionnelDD> {
           final dataId = tapEvent.row!.cells.values;
           final idPlutoRow = dataId.last;
 
-          final DepartementBudgetModel departementBudgetModel =
-              await widget.budgetPrevisionnelController
+          final DepartementBudgetModel departementBudgetModel = await widget
+              .budgetPrevisionnelController
               .detailView(idPlutoRow.value);
 
           Get.toNamed(BudgetRoutes.budgetBudgetPrevisionelDetail,
@@ -186,7 +185,7 @@ class _TableBudgetPrevisionnelDDState extends State<TableBudgetPrevisionnelDD> {
         readOnly: true,
         title: 'Date',
         field: 'created',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

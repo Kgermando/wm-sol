@@ -8,8 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_bilan_ref_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/bilan_pdf.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
@@ -28,15 +27,14 @@ class DetailBilan extends StatefulWidget {
 }
 
 class _DetailBilanState extends State<DetailBilan> {
+  final CompteBilanRefController controller =
+      Get.put(CompteBilanRefController());
+  final BilanController bilanController = Get.put(BilanController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabiliés";
 
   @override
-  Widget build(BuildContext context) {
-    final CompteBilanRefController controller =
-        Get.put(CompteBilanRefController());
-    final BilanController bilanController = Get.put(BilanController());
-    final ProfilController profilController = Get.put(ProfilController());
+  Widget build(BuildContext context) { 
 
     return controller.obx(
         onLoading: loading(),
@@ -53,7 +51,7 @@ class _DetailBilanState extends State<DetailBilan> {
                   ? FloatingActionButton.extended(
                       label: const Text("Ajouter une écriture"),
                       tooltip: "Ecriture sur la feuille bilan",
-                      icon: const Icon(Icons.person_add),
+                      icon: const Icon(Icons.add),
                       onPressed: () {
                         newEcritureDialog(controller);
                       },
@@ -97,16 +95,12 @@ class _DetailBilanState extends State<DetailBilan> {
                                                 Row(
                                                   children: [
                                                     if (widget.bilanModel
-                                                            .signature ==
-                                                        profilController.user
-                                                            .matricule) // Uniqyement celui a remplit le document
-                                                      sendButton(
-                                                          bilanController),
+                                                            .isSubmit == 'false') // Uniqyement celui a remplit le document
+                                                      sendButton(),
                                                     if (widget.bilanModel
                                                                 .approbationDD ==
                                                             "Unapproved")
-                                                      deleteButton(
-                                                          bilanController),
+                                                      deleteButton(),
                                                     PrintWidget(
                                                         tooltip:
                                                             'Imprimer le document',
@@ -147,8 +141,7 @@ class _DetailBilanState extends State<DetailBilan> {
 
   Widget dataWidget(CompteBilanRefController controller) {
     final headline6 = Theme.of(context).textTheme.headline6;
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    final bodyLarge = Theme.of(context).textTheme.bodyLarge; 
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     return Padding(
       padding: const EdgeInsets.all(p10),
@@ -156,20 +149,15 @@ class _DetailBilanState extends State<DetailBilan> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                  flex: 1,
-                  child: Text("Titre:",
-                      style:
-                          bodyMedium!.copyWith(fontWeight: FontWeight.bold))),
-              Expanded(
-                  flex: 3,
-                  child: Text(widget.bilanModel.titleBilan, style: bodyMedium))
+              Text(widget.bilanModel.titleBilan, style: bodyLarge)
             ],
           ),
           const SizedBox(height: p20),
           Divider(color: mainColor),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
@@ -217,7 +205,7 @@ class _DetailBilanState extends State<DetailBilan> {
                   height: MediaQuery.of(context).size.height / 1.5),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(p8),
+                  padding: const EdgeInsets.symmetric(horizontal: p8),
                   child: Column(
                     children: [
                       Text('PASSIF',
@@ -732,7 +720,7 @@ class _DetailBilanState extends State<DetailBilan> {
     );
   }
 
-  Widget deleteButton(BilanController bilanController) {
+  Widget deleteButton() {
     return IconButton(
       icon: Icon(Icons.delete, color: Colors.blue.shade700),
       tooltip: "Supprimer",
@@ -760,7 +748,7 @@ class _DetailBilanState extends State<DetailBilan> {
     );
   }
 
-  Widget sendButton(BilanController bilanController) {
+  Widget sendButton() {
     return IconButton(
       icon: Icon(Icons.send, color: Colors.green.shade700),
       tooltip: "Soumettre chez le directeur de departement",
@@ -793,8 +781,7 @@ class _DetailBilanState extends State<DetailBilan> {
     return showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (dialogContext) {
-          final formKey = GlobalKey<FormState>();
+        builder: (dialogContext) { 
           bool isLoading = false;
           String? comptesAllSelect;
 
@@ -819,7 +806,7 @@ class _DetailBilanState extends State<DetailBilan> {
                   child: isLoading
                       ? loading()
                       : Form(
-                          key: formKey,
+                          key: controller.formKey,
                           child: Column(
                             children: [
                               ResponsiveChildWidget(

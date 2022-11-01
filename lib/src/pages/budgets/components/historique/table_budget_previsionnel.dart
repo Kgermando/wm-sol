@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -16,8 +16,7 @@ class TableHistoriqueBudget extends StatefulWidget {
   final BudgetPrevisionnelController controller;
 
   @override
-  State<TableHistoriqueBudget> createState() =>
-      _TableHistoriqueBudgetState();
+  State<TableHistoriqueBudget> createState() => _TableHistoriqueBudgetState();
 }
 
 class _TableHistoriqueBudgetState extends State<TableHistoriqueBudget> {
@@ -180,7 +179,7 @@ class _TableHistoriqueBudgetState extends State<TableHistoriqueBudget> {
         readOnly: true,
         title: 'Date',
         field: 'created',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

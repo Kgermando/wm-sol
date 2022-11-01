@@ -21,7 +21,7 @@ class DetailAgenda extends StatefulWidget {
 
 class _DetailAgendaState extends State<DetailAgenda> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines"; 
+  String title = "Commercial & Marketing";
 
   @override
   Widget build(BuildContext context) {

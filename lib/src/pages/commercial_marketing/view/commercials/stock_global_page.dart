@@ -40,7 +40,7 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
           floatingActionButton: FloatingActionButton.extended(
             label: const Text("Ajouter stock"),
             tooltip: "Ajout le stock global",
-            icon: const Icon(Icons.person_add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               Get.toNamed(
                 ComMarketingRoutes.comMarketingStockGlobalAdd
@@ -65,6 +65,7 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(20))),
                       child: ListView.builder( 
+                        shrinkWrap: true,
                           itemCount: controller.stockGlobalList.length,
                           itemBuilder: (context, index) {
                             final data = controller.stockGlobalList[index];

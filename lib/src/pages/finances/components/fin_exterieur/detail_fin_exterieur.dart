@@ -105,9 +105,16 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
+            child1: Text('Banque :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(widget.financeExterieurModel.financeExterieurName,
+                textAlign: TextAlign.start, style: bodyMedium),
+          ),
+          ResponsiveChildWidget(
+            child1: Text('Nom Complet :',
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.financeExterieurModel.nomComplet,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
@@ -143,7 +150,7 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.financeExterieurModel.typeOperation,
-                textAlign: TextAlign.start, style: bodyMedium),
+                textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.purple)),
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(

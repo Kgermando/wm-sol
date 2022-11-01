@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
+import 'package:wm_solution/src/models/finances/banque_name_model.dart';
 import 'package:wm_solution/src/pages/finances/components/banques/banque_xlsx.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -10,13 +11,15 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class TableBanque extends StatefulWidget {
-  const 
-  TableBanque({super.key, required this.banqueList, required this.controller, required this.name});
+  const TableBanque(
+      {super.key,
+      required this.banqueList,
+      required this.controller,
+      required this.banqueNameModel});
   final List<BanqueModel> banqueList;
   final BanqueController controller;
-  final String name;
+  final BanqueNameModel banqueNameModel;
 
   @override
   State<TableBanque> createState() => _TableBanqueState();
@@ -46,11 +49,11 @@ class _TableBanqueState extends State<TableBanque> {
             onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
               final dataId = tapEvent.row!.cells.values;
               final idPlutoRow = dataId.last;
-        
+
               final BanqueModel banqueModel =
                   await widget.controller.detailView(idPlutoRow.value);
-        
-              Get.toNamed(FinanceRoutes.transactionsBanque,
+
+              Get.toNamed(FinanceRoutes.transactionsBanqueDetail,
                   arguments: banqueModel);
             },
             onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -62,15 +65,17 @@ class _TableBanqueState extends State<TableBanque> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.name),
+                  TitleWidget(title: widget.banqueNameModel.nomComplet),
                   Row(
                     children: [
                       IconButton(
                           onPressed: () {
                             Navigator.pushNamed(
-                                context, FinanceRoutes.transactionsBanque);
+                            context, '/transactions-banque/${widget.banqueNameModel.id}',
+                            arguments: widget.banqueNameModel);
                           },
-                          icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                          icon: Icon(Icons.refresh,
+                              color: Colors.green.shade700)),
                       PrintWidget(onPressed: () {
                         BanqueXlsx().exportToExcel(widget.banqueList);
                         if (!mounted) return;
@@ -91,23 +96,32 @@ class _TableBanqueState extends State<TableBanque> {
                 ],
                 resolveDefaultColumnFilter: (column, resolver) {
                   if (column.field == 'numero') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'nomComplet') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'pieceJustificative') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'libelle') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'montant') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'typeOperation') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'numeroOperation') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'created') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'id') {
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   }
                   return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
                 },
@@ -135,7 +149,7 @@ class _TableBanqueState extends State<TableBanque> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"), 
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
@@ -208,7 +222,7 @@ class _TableBanqueState extends State<TableBanque> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Type d\'operation',
@@ -230,7 +244,7 @@ class _TableBanqueState extends State<TableBanque> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -260,49 +274,64 @@ class _TableBanqueState extends State<TableBanque> {
     ];
   }
 
-
   Widget totalSolde() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    double recette = 0.0;
+    double depenses = 0.0;
+    var recetteList = widget.banqueList
+        .where((element) =>
+            element.banqueName == widget.banqueNameModel.nomComplet &&
+            element.typeOperation == "Depot")
+        .toList();
+    var depensesList = widget.banqueList
+        .where((element) =>
+            element.banqueName == widget.banqueNameModel.nomComplet &&
+            element.typeOperation == "Retrait")
+        .toList();
+    for (var item in recetteList) {
+      recette += double.parse(item.montant);
+    }
+    for (var item in depensesList) {
+      depenses += double.parse(item.montant);
+    }
     return Card(
       color: Colors.red.shade700,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ResponsiveChild3Widget(
-          child1: Row(
-            children: [
-                SelectableText('Total recette: ',
-                    style: bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.white)),
-                SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.controller.recette)} \$',
-                    style: bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.white))
-              ],
-            ), 
-          child2: Row(
-            children: [
-              SelectableText('Total dépenses: ',
-                  style: bodyMedium.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white)),
-              SelectableText(
-                  '${NumberFormat.decimalPattern('fr').format(widget.controller.depenses)} \$',
-                  style: bodyMedium.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white))
-            ],
-          ), 
-          child3: Row(
-              children: [
-                SelectableText('Solde: ',
-                    style: bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.white)),
-                SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.controller.recette - widget.controller.depenses)} \$',
-                    style: bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.white))
-              ],
-            )
-        ) 
-      ),
+          padding: const EdgeInsets.all(8.0),
+          child: ResponsiveChild3Widget(
+              child1: Row(
+                children: [
+                  SelectableText('Total recette: ',
+                      style: bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  SelectableText(
+                      '${NumberFormat.decimalPattern('fr').format(recette)} \$',
+                      style: bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white))
+                ],
+              ),
+              child2: Row(
+                children: [
+                  SelectableText('Total dépenses: ',
+                      style: bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  SelectableText(
+                      '${NumberFormat.decimalPattern('fr').format(depenses)} \$',
+                      style: bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white))
+                ],
+              ),
+              child3: Row(
+                children: [
+                  SelectableText('Solde: ',
+                      style: bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  SelectableText(
+                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} \$',
+                      style: bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white))
+                ],
+              ))),
     );
   }
 }

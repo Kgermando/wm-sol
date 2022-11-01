@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/widgets/responsive_child5_widget.dart';
 
-class DetailDepartementSoldeBudgets extends StatelessWidget {
-  const DetailDepartementSoldeBudgets(
+class SoldeBudgets extends StatelessWidget {
+  const SoldeBudgets(
       {Key? key,
       required this.coutTotal,
       required this.caisseSolde,

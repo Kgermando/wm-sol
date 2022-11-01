@@ -32,6 +32,7 @@ import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
 import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
+import 'package:wm_solution/src/models/mail/mail_model.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
@@ -104,6 +105,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/prod
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/restitution_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/stock_global_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/succursale_page.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/vente_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/dashboard/dashboard_comm_marketing_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/agenda_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/annuaire_page.dart';
@@ -175,6 +177,12 @@ import 'package:wm_solution/src/pages/logistique/view/immobilier_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/log_dd.dart';
 import 'package:wm_solution/src/pages/logistique/view/mobilier_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/trajet_page.dart';
+import 'package:wm_solution/src/pages/mailling/components/detail_mail.dart';
+import 'package:wm_solution/src/pages/mailling/view/mail_send.dart';
+import 'package:wm_solution/src/pages/mailling/components/new_mail.dart';
+import 'package:wm_solution/src/pages/mailling/components/repondre_mail.dart';
+import 'package:wm_solution/src/pages/mailling/components/tranfert_mail.dart';
+import 'package:wm_solution/src/pages/mailling/view/mails_page.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -196,6 +204,7 @@ import 'package:wm_solution/src/pages/taches/components/add_rapport.dart';
 import 'package:wm_solution/src/pages/taches/components/detail_rapport.dart';
 import 'package:wm_solution/src/pages/taches/components/detail_tache.dart';
 import 'package:wm_solution/src/pages/taches/view/tache_page.dart';
+import 'package:wm_solution/src/pages/update/view/update_page.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 List<GetPage<dynamic>>? getPages = [
@@ -204,6 +213,47 @@ List<GetPage<dynamic>>? getPages = [
   // GetPage(name: SettingsRoutes.settings, page: page),
   // GetPage(name: SettingsRoutes.pageVerrouillage, page: page),
   // GetPage(name: SettingsRoutes.splash, page: page),
+
+  // Mails
+   GetPage(
+      name: MailRoutes.mails,
+      page: () => const MailPages(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MailRoutes.addMail,
+      page: () => const NewMail(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MailRoutes.mailSend,
+      page: () => const MailSend(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: MailRoutes.mailDetail,
+    page: () {
+      MailColor mailColor = Get.arguments as MailColor;
+      return DetailMail(mailColor: mailColor);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MailRoutes.mailRepondre,
+      page: () {
+        MailModel mailModel = Get.arguments as MailModel;
+        return RepondreMail(mailModel: mailModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MailRoutes.mailTransfert,
+      page: () {
+        MailModel mailModel = Get.arguments as MailModel;
+        return TransfertMail(mailModel: mailModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   // Taches & Rapports
   GetPage(
@@ -446,7 +496,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: BudgetRoutes.budgetLignebudgetaireDetail,
+      name: BudgetRoutes.budgetLignebudgetaireDetail, 
       page: () {
         final LigneBudgetaireModel ligneBudgetaireModel =
             Get.arguments as LigneBudgetaireModel;
@@ -596,7 +646,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: FinanceRoutes.transactionsBanque,
+      name: '/transactions-banque/:id',
       page: () {
         final BanqueNameModel banqueNameModel =
             Get.arguments as BanqueNameModel;
@@ -613,7 +663,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: FinanceRoutes.transactionsCaisse,
+      name: '/transactions-caisse/:id',
       page: () {
         final CaisseNameModel caisseNameModel =
             Get.arguments as CaisseNameModel;
@@ -656,7 +706,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: FinanceRoutes.transactionsFinancementExterne,
+      name: '/transactions-financement-externe/:id',
       page: () {
         final FinExterieurNameModel finExterieurNameModel =
             Get.arguments as FinExterieurNameModel;
@@ -778,6 +828,11 @@ List<GetPage<dynamic>>? getPages = [
     },
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComMarketingRoutes.comMarketingVente,
+      page: () => const VentePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)), 
 
   
   GetPage(
@@ -1052,14 +1107,6 @@ List<GetPage<dynamic>>? getPages = [
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  // GetPage(
-  //     name: LogistiqueRoutes.logAnguinAutoUpdate,
-  //     page: () {
-  //       final AnguinModel anguinModel = Get.arguments as AnguinModel;
-  //       return DetailEngin(anguinModel: anguinModel);
-  //     },
-  //     transition: Transition.cupertino,
-  //     transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
     name: LogistiqueRoutes.logCarburantAuto,
@@ -1259,6 +1306,13 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: AdminRoutes.adminRH,
       page: () => const AdminRH(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+    // Update version
+    GetPage(
+      name: UpdateRoutes.updatePage,
+      page: () => const UpdatePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 ];

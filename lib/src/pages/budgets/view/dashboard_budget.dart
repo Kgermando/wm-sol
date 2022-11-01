@@ -6,7 +6,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget.dart';
+import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_budget_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -19,15 +19,15 @@ class DashboardBudget extends StatefulWidget {
 }
 
 class _DashboardBudgetState extends State<DashboardBudget> {
+  final DashboardBudgetController controller =
+      Get.put(DashboardBudgetController());
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
   String subTitle = "Dashboard";
 
   @override
   Widget build(BuildContext context) {
-    final DashboardBudgetController controller =
-        Get.put(DashboardBudgetController());
-
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,
@@ -60,10 +60,8 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                   children: [
                                     DashNumberBudgetWidget(
                                         gestureTapCallback: () {
-                                          Navigator.pushNamed(
-                                              context,
-                                              BudgetRoutes
-                                                  .budgetBudgetPrevisionel);
+                                          Get.toNamed(BudgetRoutes
+                                              .budgetBudgetPrevisionel);
                                         },
                                         number:
                                             '${NumberFormat.decimalPattern('fr').format(controller.coutTotal)} \$',
@@ -72,10 +70,8 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                         color: Colors.blue.shade700),
                                     DashNumberBudgetWidget(
                                         gestureTapCallback: () {
-                                          Navigator.pushNamed(
-                                              context,
-                                              BudgetRoutes
-                                                  .budgetBudgetPrevisionel);
+                                          Get.toNamed(BudgetRoutes
+                                              .budgetBudgetPrevisionel); 
                                         },
                                         number:
                                             '${NumberFormat.decimalPattern('fr').format(controller.sommeEnCours)} \$',
@@ -84,10 +80,8 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                         color: Colors.pink.shade700),
                                     DashNumberBudgetWidget(
                                         gestureTapCallback: () {
-                                          Navigator.pushNamed(
-                                              context,
-                                              BudgetRoutes
-                                                  .budgetBudgetPrevisionel);
+                                          Get.toNamed(BudgetRoutes
+                                              .budgetBudgetPrevisionel);  
                                         },
                                         number:
                                             '${NumberFormat.decimalPattern('fr').format(controller.sommeRestantes)} \$',
@@ -96,10 +90,8 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                         color: Colors.red.shade700),
                                     DashNumberBudgetWidget(
                                         gestureTapCallback: () {
-                                          Navigator.pushNamed(
-                                              context,
-                                              BudgetRoutes
-                                                  .budgetBudgetPrevisionel);
+                                          Get.toNamed(BudgetRoutes
+                                              .budgetBudgetPrevisionel);
                                         },
                                         number:
                                             "${NumberFormat.decimalPattern('fr').format(double.parse(controller.poursentExecution.toStringAsFixed(0)))} %",

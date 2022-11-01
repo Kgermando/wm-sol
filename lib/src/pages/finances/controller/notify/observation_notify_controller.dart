@@ -22,7 +22,7 @@ class ObservationNotifyController extends GetxController {
   var transRestList = <TransportRestaurationModel>[].obs;
   var campaignList = <CampaignModel>[].obs;
   var devisList = <DevisModel>[].obs;
-  var projetList = <ProjetModel>[].obs;
+  var projetList = <ProjetModel>[].obs; 
 
   @override
   void onInit() {

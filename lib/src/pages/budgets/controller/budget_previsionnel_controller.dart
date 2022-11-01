@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/budgets/departement_budget_api.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/utils/dropdown.dart';
 
 class BudgetPrevisionnelController extends GetxController
     with StateMixin<List<DepartementBudgetModel>> {
@@ -21,13 +21,8 @@ class BudgetPrevisionnelController extends GetxController
   String? departement;
   TextEditingController titleController = TextEditingController();
 
-  String getPlageDate() {
-    if (dateRange == null) {
-      return 'Date de Debut et Fin';
-    } else {
-      return '${DateFormat('dd/MM/yyyy').format(dateRange!.start)} - ${DateFormat('dd/MM/yyyy').format(dateRange!.end)}';
-    }
-  }
+  List<String> departementList = Dropdown().departement;
+
 
   // Approbations
   final formKeyBudget = GlobalKey<FormState>();
@@ -40,8 +35,7 @@ class BudgetPrevisionnelController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getList();
-    getPlageDate();
+    getList(); 
   }
 
   @override
@@ -109,8 +103,7 @@ class BudgetPrevisionnelController extends GetxController
           .insertData(departementBudgetModel)
           .then((value) {
         departementBudgetList.clear();
-        getList();
-        Get.back();
+        getList(); 
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

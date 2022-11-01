@@ -11,7 +11,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableSalaireUser extends StatefulWidget {
-  const TableSalaireUser({super.key, required this.personne, required this.controller});
+  const TableSalaireUser(
+      {super.key, required this.personne, required this.controller});
   final AgentModel personne;
   final SalaireController controller;
 
@@ -32,21 +33,20 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 4, 
+      height: MediaQuery.of(context).size.height / 4,
       child: PlutoGrid(
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
           final dataId = tapEvent.row!.cells.values;
           final idPlutoRow = dataId.last;
-      
+
           final PaiementSalaireModel dataItem =
               await widget.controller.detailView(idPlutoRow.value);
-      
+
           Get.toNamed(RhRoutes.rhPaiementBulletin, arguments: dataItem);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -63,14 +63,17 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPaiement); 
+                        Get.toNamed(RhRoutes.rhPaiement);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    SalaireXlsx().exportToExcel(widget.controller.paiementSalaireList.where((e) =>
+                    SalaireXlsx().exportToExcel(widget
+                        .controller.paiementSalaireList
+                        .where((e) =>
                             e.matricule == widget.personne.matricule &&
                             e.prenom == widget.personne.prenom &&
-                            e.nom == widget.personne.nom).toList());
+                            e.nom == widget.personne.nom)
+                        .toList());
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -126,9 +129,6 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
       ),
     );
   }
-
-
-
 
   void agentsColumn() {
     columns = [
@@ -220,7 +220,7 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
         readOnly: true,
         title: 'Date',
         field: 'createdAt',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
@@ -330,8 +330,7 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
     ];
   }
 
-
-    void agentsRow() {
+  void agentsRow() {
     var dataList = widget.controller.paiementSalaireList
         .where((e) =>
             e.matricule == widget.personne.matricule &&
@@ -358,6 +357,4 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
       }));
     }
   }
-
-
 }

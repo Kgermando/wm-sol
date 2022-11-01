@@ -68,8 +68,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
     return showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (dialogContext) {
-          final formKey = GlobalKey<FormState>();
+        builder: (dialogContext) { 
           bool isLoading = false;
           String getPlageDate() {
             if (controller.dateRange == null) {
@@ -88,7 +87,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                   child: isLoading
                       ? loading()
                       : Form(
-                          key: formKey,
+                          key: controller.formKey,
                           child: Column(
                             children: [
                               intituleWidget(controller),
@@ -113,7 +112,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                 TextButton(
                   onPressed: () {
                     isLoading = true;
-                    final form = formKey.currentState!;
+                    final form = controller.formKey.currentState!;
                     if (form.validate()) {
                       controller.submit();
                       form.reset();

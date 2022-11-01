@@ -1,23 +1,7 @@
 name: wm_solution
-description: A new Flutter project.
-
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+description: Solution Work Management.
+ 
+version: 3.0.0+2
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -116,13 +100,13 @@ msix_config:
   display_name: Work Management
   publisher_display_name: Work_Management
   identity_name: com.eventdrcTechnology.WorkManagement
-  msix_version: 3.0.0.0
+  msix_version: 3.0.0.2
   certificate_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\CERTIFICAT\astrid_v2\CERTIFICATE.pfx
   certificate_password: gk0813530838
   publisher: CN=Germain kataku, O=Eventdrc Technology
-  logo_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo.png
-  start_menu_icon_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo.png
-  tile_icon_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo.png
+  logo_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo_fond.png
+  start_menu_icon_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo_fond.png
+  tile_icon_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\PROJECT\wm_solution\assets\images\logo_fond.png
   # vs_generated_images_folder_path: C:\<PathToFolder>\icons
   icons_background_color: '#ffffff'
   architecture: x64

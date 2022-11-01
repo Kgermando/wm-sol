@@ -64,7 +64,8 @@ class _TableSalaireDDState extends State<TableSalaireDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    SalaireXlsx().exportToExcel(widget.salaireController.paiementSalaireList);
+                    SalaireXlsx().exportToExcel(
+                        widget.salaireController.paiementSalaireList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -239,7 +240,7 @@ class _TableSalaireDDState extends State<TableSalaireDD> {
         readOnly: true,
         title: 'Date',
         field: 'createdAt',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

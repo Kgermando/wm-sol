@@ -119,4 +119,5 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
           snackPosition: SnackPosition.TOP);
     }
   }
+ 
 }

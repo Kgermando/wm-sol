@@ -95,6 +95,60 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
     }
   }
 
+  void addCart(AchatModel achat) async {
+    try {
+      _isLoading.value = true;
+      final cartModel = CartModel(
+          idProductCart: achat.idProduct,
+          quantityCart: controllerQuantityCart.text,
+          priceCart: achat.prixVenteUnit,
+          priceAchatUnit: achat.priceAchatUnit,
+          unite: achat.unite,
+          tva: achat.tva,
+          remise: achat.remise,
+          qtyRemise: achat.qtyRemise,
+          succursale: profilController.user.succursale,
+          signature: profilController.user.matricule,
+          created: DateTime.now());
+      await cartApi.insertData(cartModel).then((value) async {
+        var qty = double.parse(achat.quantity) -
+            double.parse(controllerQuantityCart.text);
+        final achatModel = AchatModel(
+          id: achat.id!,
+          idProduct: achat.idProduct,
+          quantity: qty.toString(),
+          quantityAchat: achat.quantityAchat,
+          priceAchatUnit: achat.priceAchatUnit,
+          prixVenteUnit: achat.prixVenteUnit,
+          unite: achat.unite,
+          tva: achat.tva,
+          remise: achat.remise,
+          qtyRemise: achat.qtyRemise,
+          qtyLivre: achat.qtyLivre,
+          succursale: achat.succursale,
+          signature: achat.signature,
+          created: achat.created
+        );
+        await achatController.achatApi.updateData(achatModel).then((value) {
+          cartList.clear();
+          getList();
+          Get.back();
+          Get.snackbar("Soumission effectuée avec succès!",
+              "Le document a bien été sauvegader",
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+          _isLoading.value = false;
+        });
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
   Future<void> submitFacture() async {
     try {
       final jsonList = jsonEncode(cartList);

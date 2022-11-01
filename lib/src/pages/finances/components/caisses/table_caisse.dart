@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
+import 'package:wm_solution/src/models/finances/caisse_name_model.dart';
 import 'package:wm_solution/src/pages/finances/components/caisses/caisse_xlsx.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -11,10 +12,10 @@ import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class Tablecaisse extends StatefulWidget {
-  const Tablecaisse({super.key, required this.caisseList, required this.controller, required this.name});
+  const Tablecaisse({super.key, required this.caisseList, required this.controller, required this.caisseNameModel});
   final List<CaisseModel> caisseList;
   final CaisseController controller;
-  final String name;
+  final CaisseNameModel caisseNameModel;
 
   @override
   State<Tablecaisse> createState() => _TablecaisseState();
@@ -45,11 +46,11 @@ class _TablecaisseState extends State<Tablecaisse> {
               final dataId = tapEvent.row!.cells.values;
               final idPlutoRow = dataId.last;
 
-              final CaisseModel banqueModel =
+              final CaisseModel caisseModel =
                   await widget.controller.detailView(idPlutoRow.value);
 
-              Get.toNamed(FinanceRoutes.transactionsCaisse,
-                  arguments: banqueModel);
+              Get.toNamed(FinanceRoutes.transactionsCaisseDetail,
+                  arguments: caisseModel);
             },
             onLoaded: (PlutoGridOnLoadedEvent event) {
               stateManager = event.stateManager;
@@ -60,13 +61,14 @@ class _TablecaisseState extends State<Tablecaisse> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.name),
+                  TitleWidget(title: widget.caisseNameModel.nomComplet),
                   Row(
                     children: [
                       IconButton(
                           onPressed: () {
                             Navigator.pushNamed(
-                                context, FinanceRoutes.transactionsCaisse);
+                            context, '/transactions-caisse/${widget.caisseNameModel.id}',
+                             arguments: widget.caisseNameModel);
                           },
                           icon: Icon(Icons.refresh,
                               color: Colors.green.shade700)),
@@ -270,6 +272,22 @@ class _TablecaisseState extends State<Tablecaisse> {
 
   Widget totalSolde() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    double recette = 0.0;
+    double depenses = 0.0;
+    List<CaisseModel?> recetteList = widget.caisseList
+        .where((element) => element.caisseName == widget.caisseNameModel.nomComplet &&
+          element.typeOperation == "Encaissement")
+        .toList();
+    List<CaisseModel?> depensesList = widget.caisseList
+        .where((element) => element.caisseName == widget.caisseNameModel.nomComplet &&
+           element.typeOperation == "Decaissement")
+        .toList();
+    for (var item in recetteList) {
+      recette += double.parse(item!.montant);
+    }
+    for (var item in depensesList) {
+      depenses += double.parse(item!.montant);
+    }
     return Card(
       color: Colors.red.shade700,
       child: Padding(
@@ -281,7 +299,7 @@ class _TablecaisseState extends State<Tablecaisse> {
                       style: bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(widget.controller.recette)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette)} \$',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -292,7 +310,7 @@ class _TablecaisseState extends State<Tablecaisse> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(widget.controller.depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(depenses)} \$',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -303,7 +321,7 @@ class _TablecaisseState extends State<Tablecaisse> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(widget.controller.recette - widget.controller.depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} \$',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],

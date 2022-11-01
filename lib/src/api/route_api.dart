@@ -98,7 +98,7 @@ var addCaisseNameUrl = Uri.parse(
     "$mainUrl/finances/transactions/caisses-name/insert-new-transaction-caisse");
 var finExterieurNameUrl = Uri.parse("$mainUrl/finances/transactions/fin-exterieur-name/");
 var addFinExterieurNameUrl = Uri.parse(
-    "$mainUrl/finances/transactions/fin-exterieur-name/insert-new-transaction-finExterieur");
+    "$mainUrl/finances/transactions/fin-exterieur-name/insert-new-transaction-fin-exterieur");
 
 
 var banqueUrl = Uri.parse("$mainUrl/finances/transactions/banques/");
@@ -345,11 +345,21 @@ var addArchveFolderUrl =
 var mailsUrl = Uri.parse("$mainUrl/mails/");
 var addMailUrl = Uri.parse("$mainUrl/mails/insert-new-mail");
 
-// Approbation
-var approbationsUrl = Uri.parse("$mainUrl/approbations/");
-var addapprobationsUrl =
-    Uri.parse("$mainUrl/approbations/insert-new-approbation");
-
+// Update Software
 var updateVerionUrl = Uri.parse("$mainUrl/update-versions/");
 var addUpdateVerionrUrl =
     Uri.parse("$mainUrl/update-versions/insert-new-update-verion");
+
+ 
+// Suivis & controlles
+var abonnementClientUrl = Uri.parse("$mainUrl/abonnement-clients/");
+var addAbonnementClientUrl =
+    Uri.parse("$mainUrl/entreprise-infos/insert-new-abonnement-client");
+
+var entrepriseInfoUrl = Uri.parse("$mainUrl/entreprise-infos/");
+var addEntrepriseInfoUrl =
+    Uri.parse("$mainUrl/update-versions/insert-new-entreprise-info");
+
+var suivisUrl = Uri.parse("$mainUrl/suivis/");
+var addSuivisUrl =
+    Uri.parse("$mainUrl/update-versions/insert-new-suivi");

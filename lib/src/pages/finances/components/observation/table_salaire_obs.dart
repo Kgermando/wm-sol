@@ -30,7 +30,6 @@ class _TableSalaireObsState extends State<TableSalaireObs> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -61,11 +60,12 @@ class _TableSalaireObsState extends State<TableSalaireObs> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPaiement); 
+                        Get.toNamed(RhRoutes.rhPaiement);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    SalaireXlsx().exportToExcel(widget.salaireController.paiementSalaireList);
+                    SalaireXlsx().exportToExcel(
+                        widget.salaireController.paiementSalaireList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -122,15 +122,14 @@ class _TableSalaireObsState extends State<TableSalaireObs> {
     );
   }
 
-
   Future agentsRow() async {
-   var dataList = widget.salaireController.paiementSalaireList
+    var dataList = widget.salaireController.paiementSalaireList
         .where((element) =>
             element.createdAt.month == DateTime.now().month &&
             element.createdAt.year == DateTime.now().year &&
             element.approbationDD == 'Approved' &&
             element.approbationBudget == 'Approved' &&
-            element.approbationFin == "Approved" && 
+            element.approbationFin == "Approved" &&
             element.observation == "false")
         .toList();
     var i = dataList.length;
@@ -153,8 +152,6 @@ class _TableSalaireObsState extends State<TableSalaireObs> {
       }));
     }
   }
-
-
 
   void agentsColumn() {
     columns = [
@@ -246,7 +243,7 @@ class _TableSalaireObsState extends State<TableSalaireObs> {
         readOnly: true,
         title: 'Date',
         field: 'createdAt',
-        type: PlutoColumnType.date(),
+        type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,

@@ -80,12 +80,46 @@ class JournalLivreController extends GetxController
           intitule: intituleController.text,
           debut: dateRange!.start,
           fin: dateRange!.end,
+          isSubmit: 'false',
           signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
       await journalLivreApi.insertData(journalLivre).then((value) {
+        journalLivreList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void sendDD(JournalLivreModel data) async {
+    try {
+      _isLoading.value = true;
+      final journalLivre = JournalLivreModel(
+          intitule: data.intitule,
+          debut: data.debut,
+          fin: data.fin,
+          isSubmit: 'true',
+          signature: data.signature,
+          created: data.created,
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
+      await journalLivreApi.updateData(journalLivre).then((value) {
         journalLivreList.clear();
         getList();
         Get.back();
@@ -111,6 +145,7 @@ class JournalLivreController extends GetxController
           intitule: data.intitule,
           debut: data.debut,
           fin: data.fin,
+          isSubmit: data.isSubmit,
           signature: data.signature,
           created: data.created,
           approbationDD: approbationDD,

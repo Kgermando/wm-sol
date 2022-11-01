@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -8,32 +9,33 @@ import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_com
 import 'package:wm_solution/src/routes/routes.dart';
 
 class CommercialMaketingNav extends StatefulWidget {
-  const CommercialMaketingNav({super.key, required this.currentRoute, required this.profilController});
+  const CommercialMaketingNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
+  final List<dynamic> departement;
 
   @override
   State<CommercialMaketingNav> createState() => _CommercialMaketingNavState();
 }
 
 class _CommercialMaketingNavState extends State<CommercialMaketingNav> {
+      final ComptabiliteNotifyController controller =
+      Get.put(ComptabiliteNotifyController());
   bool isOpenComMarketing1 = false;
   bool isOpenComMarketing2 = false;
 
   @override
-  Widget build(BuildContext context) { 
-    final ComptabiliteNotifyController controller =
-        Get.put(ComptabiliteNotifyController());
+  Widget build(BuildContext context) {  
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2;
+    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
       title:
           AutoSizeText('Commercial & Marketing', maxLines: 2, style: bodyLarge),
       initiallyExpanded:
-          (widget.profilController.user.departement == 'Commercial et Marketing')
+          (widget.departement.first == 'Commercial et Marketing')
               ? true
               : false,
       onExpansionChanged: (val) {

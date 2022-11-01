@@ -87,8 +87,15 @@ class DashboardBudgetController extends GetxController {
     super.onInit();
     getData();  
   }
+  
 
-  Future<void> getData() async {
+  @override
+  void refresh() {
+    getData();  
+    super.refresh();
+  }
+
+  void getData() async {
     var departements = await budgetPrevisionnelController.depeartementBudgetApi.getAllData();
     var budgets = await lignBudgetaireController.lIgneBudgetaireApi.getAllData();
     var campaigns = await campaignController.campaignApi.getAllData();

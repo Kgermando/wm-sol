@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,10 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class LogistiqueNav extends StatefulWidget {
   const LogistiqueNav(
-      {super.key, required this.currentRoute, required this.profilController});
+      {super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
+  final List<dynamic> departement;
 
   @override
   State<LogistiqueNav> createState() => _LogistiqueNavState();
@@ -22,19 +24,19 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
   bool isOpen = false;
   bool isOpen1 = false;
   bool isOpen2 = false;
-  bool isOpen3 = false;
+  bool isOpen3 = false; 
 
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2;
+    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.brightness_low, size: 30.0),
       title: AutoSizeText('Logistique', maxLines: 1, style: bodyLarge),
       initiallyExpanded:
-          (widget.profilController.user.departement == 'Logistique')
+          (widget.departement.first == 'Logistique')
               ? true
               : false,
       onExpansionChanged: (val) {
