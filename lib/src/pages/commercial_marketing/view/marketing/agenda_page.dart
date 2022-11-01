@@ -15,6 +15,17 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
+
+final _lightColors = [
+  Colors.amber.shade300,
+  Colors.lightGreen.shade300,
+  Colors.lightBlue.shade300,
+  Colors.orange.shade300,
+  Colors.pinkAccent.shade100,
+  Colors.tealAccent.shade100
+];
+
+
 class AgendaPage extends StatefulWidget {
   const AgendaPage({super.key});
 
@@ -84,15 +95,13 @@ class _AgendaPageState extends State<AgendaPage> {
       crossAxisSpacing: 16.0,
       children: List.generate(dataList.length, (index) {
         final agenda = dataList[index];
-        // final color = _lightColors[index % _lightColors.length];
+        final color = _lightColors[index % _lightColors.length];
         return GestureDetector(
           onTap: () {
             Get.toNamed(ComMarketingRoutes.comMarketingAgendaDetail,
                 arguments: AgendaColor(
                     agendaModel: agenda,
-                    color:
-                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                            .withOpacity(1.0)));
+                    color: color));
           },
           child: AgendaCardWidget(
               agendaModel: agenda,

@@ -81,8 +81,11 @@ class AdminDashboardController extends GetxController {
   var departementsList = <DepartementBudgetModel>[].obs;
 
   // RH
-  int agentsCount = 0;
-  int agentActifCount = 0;
+  final _agentsCount = 0.obs;
+  int get agentsCount => _agentsCount.value;
+
+  final _agentActifCount = 0.obs;
+  int get agentActifCount => _agentActifCount.value;
 
   // Budgets
   double coutTotal = 0.0;
@@ -135,12 +138,16 @@ class AdminDashboardController extends GetxController {
     getData();
   }
 
+  @override
+  void refresh() {
+    getData();
+    super.refresh();
+  }
 
-
-  void getData() async {
+  Future<void> getData() async {
    
-    agentsCount = personnelsController.personnelsList.length;
-    agentActifCount =
+    _agentsCount.value = personnelsController.personnelsList.length;
+    _agentActifCount.value =
         personnelsController.personnelsList
         .where((element) => element.statutAgent == 'true').length;
 

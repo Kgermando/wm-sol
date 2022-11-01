@@ -69,11 +69,11 @@ class _TableUpdateState extends State<TableUpdate> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'version') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'urlUpdate') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'isActive') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'motif') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'urlUpdate') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -97,10 +97,10 @@ class _TableUpdateState extends State<TableUpdate> {
           'numero': PlutoCell(value: i--),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'version': PlutoCell(value: item.version),
-          'urlUpdate': PlutoCell(value: item.urlUpdate),
+          'version': PlutoCell(value: item.version), 
           'isActive': PlutoCell(value: item.isActive),
           'motif': PlutoCell(value: item.motif),
+          'urlUpdate': PlutoCell(value: item.urlUpdate),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -145,25 +145,7 @@ class _TableUpdateState extends State<TableUpdate> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Url',
-        field: 'urlUpdate',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        renderer: (rendererContext) {
-          return IconButton(
-              onPressed: () {
-                rendererContext.cell.value.toString();
-              },
-              icon: const Icon(Icons.download));
-        },
-        minWidth: 150,
-      ),
+      ), 
       PlutoColumn(
         readOnly: true,
         title: 'Actif',
@@ -186,6 +168,24 @@ class _TableUpdateState extends State<TableUpdate> {
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 150,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Url',
+        field: 'urlUpdate',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return IconButton(
+              onPressed: () {
+                rendererContext.cell.value.toString();
+              },
+              icon: const Icon(Icons.download));
+        },
         minWidth: 150,
       ),
       PlutoColumn(
