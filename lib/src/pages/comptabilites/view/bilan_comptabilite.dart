@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
@@ -22,46 +22,43 @@ class _BilanComptabiliteState extends State<BilanComptabilite> {
 
   @override
   Widget build(BuildContext context) {
-    final BilanController controller = Get.put(BilanController()); 
+    final BilanController controller = Get.put(BilanController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
-            key: scaffoldKey,
-            appBar: headerBar(context, scaffoldKey, title, subTitle),
-            drawer: const DrawerMenu(),
-            floatingActionButton: FloatingActionButton.extended(
-              label: const Text("Feuille Bilan"),
-              tooltip: "Ajpouter le Bilan",
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                newFicheDialog(context, controller);
-              }),
-            body: Row(
-              children: [
-                Visibility(
-                    visible: !Responsive.isMobile(context),
-                    child: const Expanded(flex: 1, child: DrawerMenu())),
-                Expanded(
-                    flex: 5,
-                    child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, right: p20, left: p20, bottom: p8),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: TableBilan(bilanList: controller.bilanList, controller: controller)
-                  )
-                ),
-              ],
-            ))),
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                  label: const Text("Feuille Bilan"),
+                  tooltip: "Ajpouter le Bilan",
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    newFicheDialog(context, controller);
+                  }),
+              body: Row(
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: Container(
+                          margin: const EdgeInsets.only(
+                              top: p20, right: p20, left: p20, bottom: p8),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: TableBilan(
+                              bilanList: controller.bilanList,
+                              controller: controller))),
+                ],
+              ))),
     );
   }
-
-
 
   newFicheDialog(BuildContext context, BilanController controller) {
     return showDialog(
@@ -91,7 +88,7 @@ class _BilanComptabiliteState extends State<BilanComptabilite> {
                   child: const Text('Annuler'),
                 ),
                 TextButton(
-                  onPressed: () { 
+                  onPressed: () {
                     controller.submit();
                   },
                   child: const Text('OK'),
@@ -102,26 +99,25 @@ class _BilanComptabiliteState extends State<BilanComptabilite> {
         });
   }
 
-
   Widget titleBilanWidget(BilanController controller) {
     return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: TextFormField(
-        controller: controller.titleBilanController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Titre du Bilan',
-        ),
-        keyboardType: TextInputType.text,
-        style: const TextStyle(),
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.titleBilanController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Titre du Bilan',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 }

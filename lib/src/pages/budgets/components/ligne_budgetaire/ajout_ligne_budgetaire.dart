@@ -23,8 +23,8 @@ class AjoutLigneBudgetaire extends StatefulWidget {
 }
 
 class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
- final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Budgets"; 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  String title = "Budgets";
 
   @override
   Widget build(BuildContext context) {
@@ -34,95 +34,106 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
         Get.put(LignBudgetaireController());
 
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.departementBudgetModel.title),
-        drawer: const DrawerMenu(),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(20))),
-            child: Column(
-              children: [
-                Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: p20),
-                    child: Form(
-                      key: lignBudgetaireController.formKey,
-                      child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: [
-                          const TitleWidget(title: "Ligne Budgetaire"),
-                          const SizedBox(
-                            height: p30,
-                          ),
-                          ResponsiveChildWidget(
-                            child1: nomLigneBudgetaireWidget(lignBudgetaireController), 
-                            child2: uniteChoisieWidget(lignBudgetaireController)
-                          ),
-                          ResponsiveChildWidget(
-                            child1:
-                                nombreUniteWidget(lignBudgetaireController),
-                            child2: coutUnitaireWidget(lignBudgetaireController)), 
-                          coutTotalValeur(lignBudgetaireController),
-                           ResponsiveChildWidget(
-                            child1: caisseWidget(lignBudgetaireController),
-                            child2: banqueWidget(lignBudgetaireController)),
-                            Row(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.departementBudgetModel.title),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
                               children: [
-                                Expanded(
-                                    child: finExterieurValeur(lignBudgetaireController)),
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Form(
+                                      key: lignBudgetaireController.formKey,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleWidget(
+                                              title: "Ligne Budgetaire"),
+                                          const SizedBox(
+                                            height: p30,
+                                          ),
+                                          ResponsiveChildWidget(
+                                              child1: nomLigneBudgetaireWidget(
+                                                  lignBudgetaireController),
+                                              child2: uniteChoisieWidget(
+                                                  lignBudgetaireController)),
+                                          ResponsiveChildWidget(
+                                              child1: nombreUniteWidget(
+                                                  lignBudgetaireController),
+                                              child2: coutUnitaireWidget(
+                                                  lignBudgetaireController)),
+                                          coutTotalValeur(
+                                              lignBudgetaireController),
+                                          ResponsiveChildWidget(
+                                              child1: caisseWidget(
+                                                  lignBudgetaireController),
+                                              child2: banqueWidget(
+                                                  lignBudgetaireController)),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child: finExterieurValeur(
+                                                      lignBudgetaireController)),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          BtnWidget(
+                                              title: 'Soumettre',
+                                              isLoading:
+                                                  lignBudgetaireController
+                                                      .isLoading,
+                                              press: () {
+                                                final form =
+                                                    lignBudgetaireController
+                                                        .formKey.currentState!;
+                                                if (form.validate()) {
+                                                  lignBudgetaireController
+                                                      .submit(widget
+                                                          .departementBudgetModel);
+                                                  form.reset();
+                                                }
+                                              })
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
-                            ),  
-                            const SizedBox(
-                              height: p20,
                             ),
-                            BtnWidget(
-                                title: 'Soumettre',
-                                isLoading: lignBudgetaireController.isLoading,
-                                press: () {
-                                  final form =
-                                      lignBudgetaireController.formKey.currentState!;
-                                  if (form.validate()) {
-                                    lignBudgetaireController.submit(widget.departementBudgetModel);
-                                    form.reset();
-                                  }
-                                })
-                          ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )))
-          ],
-        ),
+                          )))
+                ],
+              ),
             ));
   }
 
-    Widget nomLigneBudgetaireWidget(
+  Widget nomLigneBudgetaireWidget(
       LignBudgetaireController lignBudgetaireController) {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -189,7 +200,8 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
             }
           },
           onChanged: (value) => setState(() {
-            lignBudgetaireController.nombreUniteController = (value == "") ? 1 : double.parse(value);
+            lignBudgetaireController.nombreUniteController =
+                (value == "") ? 1 : double.parse(value);
           }),
         ));
   }
@@ -216,7 +228,8 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
             }
           },
           onChanged: (value) => setState(() {
-            lignBudgetaireController.coutUnitaireController = (value == "") ? 1 : double.parse(value);
+            lignBudgetaireController.coutUnitaireController =
+                (value == "") ? 1 : double.parse(value);
           }),
         ));
   }
@@ -249,7 +262,8 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                   }
                 },
                 onChanged: (value) => setState(() {
-                  lignBudgetaireController.caisseController = (value == "") ? 1 : double.parse(value);
+                  lignBudgetaireController.caisseController =
+                      (value == "") ? 1 : double.parse(value);
                 }),
               ),
             ),
@@ -290,7 +304,8 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                   }
                 },
                 onChanged: (value) => setState(() {
-                  lignBudgetaireController.banqueController = (value == "") ? 1 : double.parse(value);
+                  lignBudgetaireController.banqueController =
+                      (value == "") ? 1 : double.parse(value);
                 }),
               ),
             ),
@@ -306,7 +321,8 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
   Widget coutTotalValeur(LignBudgetaireController lignBudgetaireController) {
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final coutToal = lignBudgetaireController.nombreUniteController * lignBudgetaireController.coutUnitaireController;
+    final coutToal = lignBudgetaireController.nombreUniteController *
+        lignBudgetaireController.coutUnitaireController;
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
         child: Text(
@@ -319,8 +335,10 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
   Widget finExterieurValeur(LignBudgetaireController lignBudgetaireController) {
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final coutToal = lignBudgetaireController.nombreUniteController * lignBudgetaireController.coutUnitaireController;
-    final fonds = lignBudgetaireController.caisseController + lignBudgetaireController.banqueController;
+    final coutToal = lignBudgetaireController.nombreUniteController *
+        lignBudgetaireController.coutUnitaireController;
+    final fonds = lignBudgetaireController.caisseController +
+        lignBudgetaireController.banqueController;
     final fondsAtrouver = coutToal - fonds;
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
@@ -330,6 +348,4 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                 ? headline6!.copyWith(color: Colors.red.shade700)
                 : bodyLarge!.copyWith(color: Colors.red.shade700)));
   }
-
-
 }

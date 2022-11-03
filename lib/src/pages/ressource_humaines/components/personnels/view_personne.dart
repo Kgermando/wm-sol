@@ -345,7 +345,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
   }
 
   Widget serviceWidget() {
-    final ProfilController profilController = Get.find();
+    final ProfilController profilController = Get.put(ProfilController());
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final role = int.parse(profilController.user.role);
     return Padding(
@@ -360,7 +360,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   textAlign: TextAlign.start, style: bodyMedium)),
           ResponsiveChildWidget(
               child1: Text('Fonction occupée :',
-                   textAlign: TextAlign.start,
+                  textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.personne.fonctionOccupe,
                   textAlign: TextAlign.start, style: bodyMedium)),

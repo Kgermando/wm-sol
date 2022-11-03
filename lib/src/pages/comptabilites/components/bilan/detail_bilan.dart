@@ -8,7 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_bilan_ref_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
+import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/bilan_pdf.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
@@ -34,13 +34,11 @@ class _DetailBilanState extends State<DetailBilan> {
   String title = "Comptabiliés";
 
   @override
-  Widget build(BuildContext context) { 
-
+  Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -95,11 +93,12 @@ class _DetailBilanState extends State<DetailBilan> {
                                                 Row(
                                                   children: [
                                                     if (widget.bilanModel
-                                                            .isSubmit == 'false') // Uniqyement celui a remplit le document
+                                                            .isSubmit ==
+                                                        'false') // Uniqyement celui a remplit le document
                                                       sendButton(),
                                                     if (widget.bilanModel
-                                                                .approbationDD ==
-                                                            "Unapproved")
+                                                            .approbationDD ==
+                                                        "Unapproved")
                                                       deleteButton(),
                                                     PrintWidget(
                                                         tooltip:
@@ -141,7 +140,7 @@ class _DetailBilanState extends State<DetailBilan> {
 
   Widget dataWidget(CompteBilanRefController controller) {
     final headline6 = Theme.of(context).textTheme.headline6;
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge; 
+    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     return Padding(
       padding: const EdgeInsets.all(p10),
@@ -150,9 +149,7 @@ class _DetailBilanState extends State<DetailBilan> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(widget.bilanModel.titleBilan, style: bodyLarge)
-            ],
+            children: [Text(widget.bilanModel.titleBilan, style: bodyLarge)],
           ),
           const SizedBox(height: p20),
           Divider(color: mainColor),
@@ -781,7 +778,7 @@ class _DetailBilanState extends State<DetailBilan> {
     return showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (dialogContext) { 
+        builder: (dialogContext) {
           bool isLoading = false;
           String? comptesAllSelect;
 

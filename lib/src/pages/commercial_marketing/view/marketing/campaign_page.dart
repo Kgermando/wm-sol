@@ -5,7 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/table_campaigns.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -18,7 +18,7 @@ class CampaignPage extends StatefulWidget {
 
 class _CampaignPageState extends State<CampaignPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
   String subTitle = "Campagnes";
 
   @override
@@ -26,10 +26,9 @@ class _CampaignPageState extends State<CampaignPage> {
     final CampaignController controller = Get.put(CampaignController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -39,7 +38,7 @@ class _CampaignPageState extends State<CampaignPage> {
                   tooltip: "Créer une campagne",
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    Get.toNamed(ComMarketingRoutes.comMarketingCampaignAdd);
+                    Get.toNamed(MarketingRoutes.marketingCampaignAdd);
                   }),
               body: Row(
                 children: [
@@ -54,7 +53,9 @@ class _CampaignPageState extends State<CampaignPage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableCampaign(campaignList: controller.campaignList, controller: controller))),
+                          child: TableCampaign(
+                              campaignList: controller.campaignList,
+                              controller: controller))),
                 ],
               ))),
     );

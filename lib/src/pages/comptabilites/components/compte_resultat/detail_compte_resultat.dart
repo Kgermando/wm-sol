@@ -40,72 +40,70 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
 
   @override
   Widget build(BuildContext context) {
-    final CompteResultatController controller = Get.put(CompteResultatController());
-    final ProfilController profilController =
-        Get.put(ProfilController());
+    final CompteResultatController controller =
+        Get.put(CompteResultatController());
+    final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.compteResulatsModel.intitule),
-        drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text("Ajouter une personne"),
-          tooltip: "Ajout personne à la liste",
-          icon: const Icon(Icons.person_add),
-          onPressed: () {},
-        ),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: p20),
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.compteResulatsModel.intitule),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter une personne"),
+                tooltip: "Ajout personne à la liste",
+                icon: const Icon(Icons.add),
+                onPressed: () {},
+              ),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
                               children: [
-                                pageDetail(controller, profilController),
-                                ApprobationCompteResultat(
-                                    data: widget.compteResulatsModel,
-                                    controller: controller,
-                                    profilController: profilController)
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        pageDetail(
+                                            controller, profilController),
+                                        ApprobationCompteResultat(
+                                            data: widget.compteResulatsModel,
+                                            controller: controller,
+                                            profilController: profilController)
+                                      ],
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
-          ],
-        ),
-      )
-    );
+                          )))
+                ],
+              ),
+            ));
   }
-
 
   totalCharges() {
     totalCharges1 = double.parse(widget.compteResulatsModel.achatMarchandises) +
@@ -113,7 +111,8 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         double.parse(widget.compteResulatsModel.achatApprovionnements) +
         double.parse(widget.compteResulatsModel.variationApprovionnements) +
         double.parse(widget.compteResulatsModel.autresChargesExterne) +
-        double.parse(widget.compteResulatsModel.impotsTaxesVersementsAssimiles) +
+        double.parse(
+            widget.compteResulatsModel.impotsTaxesVersementsAssimiles) +
         double.parse(widget.compteResulatsModel.renumerationPersonnel) +
         double.parse(widget.compteResulatsModel.chargesSocialas) +
         double.parse(widget.compteResulatsModel.dotatiopnsProvisions) +
@@ -123,11 +122,13 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
     totalCharges123 = totalCharges1 +
         double.parse(widget.compteResulatsModel.chargesExptionnelles) +
         double.parse(widget.compteResulatsModel.impotSurbenefices);
-    totalGeneralCharges = totalCharges123 + double.parse(widget.compteResulatsModel.soldeCrediteur);
+    totalGeneralCharges = totalCharges123 +
+        double.parse(widget.compteResulatsModel.soldeCrediteur);
   }
 
   totalProduits() {
-    totalProduits1 = double.parse(widget.compteResulatsModel.ventesMarchandises) +
+    totalProduits1 = double.parse(
+            widget.compteResulatsModel.ventesMarchandises) +
         double.parse(widget.compteResulatsModel.productionVendueBienEtSerices) +
         double.parse(widget.compteResulatsModel.productionStockee) +
         double.parse(widget.compteResulatsModel.productionImmobilisee) +
@@ -135,15 +136,15 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         double.parse(widget.compteResulatsModel.autreProduits) +
         double.parse(widget.compteResulatsModel.produitfinancieres);
 
-    totalProduits123 = totalProduits1 + double.parse(widget.compteResulatsModel.produitExceptionnels);
+    totalProduits123 = totalProduits1 +
+        double.parse(widget.compteResulatsModel.produitExceptionnels);
     totalGeneralProduits = totalProduits123 +
         double.parse(widget.compteResulatsModel.soldeDebiteur) +
         double.parse(widget.compteResulatsModel.montantExportation);
   }
 
   Widget pageDetail(
-    CompteResultatController controller, 
-    ProfilController profilController) { 
+      CompteResultatController controller, ProfilController profilController) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Card(
         elevation: 10,
@@ -157,8 +158,9 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   children: [
                     Row(
                       children: [
-                        if (widget.compteResulatsModel.approbationDD == '-' || 
-                            widget.compteResulatsModel.approbationDD == "Unapproved")
+                        if (widget.compteResulatsModel.approbationDD == '-' ||
+                            widget.compteResulatsModel.approbationDD ==
+                                "Unapproved")
                           editButton(),
                         if (int.parse(profilController.user.role) <= 3 ||
                             widget.compteResulatsModel.approbationDD == '-')
@@ -178,7 +180,8 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                       ],
                     ),
                     SelectableText(
-                        DateFormat("dd-MM-yyyy HH:mm").format(widget.compteResulatsModel.created),
+                        DateFormat("dd-MM-yyyy HH:mm")
+                            .format(widget.compteResulatsModel.created),
                         textAlign: TextAlign.start),
                   ],
                 )
@@ -207,9 +210,9 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
               child: const Text('Annuler'),
             ),
             TextButton(
-              onPressed: () { 
+              onPressed: () {
                 Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultatUpdate,
-                    arguments: widget.compteResulatsModel); 
+                    arguments: widget.compteResulatsModel);
               },
               child: const Text('OK'),
             ),
@@ -238,7 +241,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
             TextButton(
               onPressed: () async {
                 Navigator.pop(context);
-                 controller.compteResultatApi
+                controller.compteResultatApi
                     .deleteData(widget.compteResulatsModel.id!)
                     .then((value) => Navigator.of(context).pop());
               },
@@ -676,13 +679,14 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         Divider(
           color: mainColor,
         ),
-        ResponsiveChildWidget(child1: Text('Total (I):',
-          textAlign: TextAlign.start,
-          style:
-              headline6!.copyWith(fontWeight: FontWeight.bold)), child2: SelectableText(
-          "${NumberFormat.decimalPattern('fr').format(totalCharges1)} \$",
-          textAlign: TextAlign.start,
-          style: headline6.copyWith(color: Colors.red.shade700))),
+        ResponsiveChildWidget(
+            child1: Text('Total (I):',
+                textAlign: TextAlign.start,
+                style: headline6!.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(
+                "${NumberFormat.decimalPattern('fr').format(totalCharges1)} \$",
+                textAlign: TextAlign.start,
+                style: headline6.copyWith(color: Colors.red.shade700))),
         Divider(
           color: Colors.red.shade700,
         ),
@@ -743,15 +747,14 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
           color: Colors.red.shade700,
         ),
         ResponsiveChildWidget(
-          child1: AutoSizeText('Total des charges(I + II + III):',
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        style: headline6.copyWith(fontWeight: FontWeight.bold)),
-          child2: SelectableText(
-                        "${NumberFormat.decimalPattern('fr').format(totalCharges123)} \$",
-                        textAlign: TextAlign.start,
-                        style: headline6.copyWith(color: Colors.red.shade700))),
-         
+            child1: AutoSizeText('Total des charges(I + II + III):',
+                textAlign: TextAlign.start,
+                maxLines: 1,
+                style: headline6.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(
+                "${NumberFormat.decimalPattern('fr').format(totalCharges123)} \$",
+                textAlign: TextAlign.start,
+                style: headline6.copyWith(color: Colors.red.shade700))),
         Divider(
           color: Colors.red.shade700,
         ),
@@ -1035,26 +1038,24 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
             children: [
               Text('Total (I):',
                   textAlign: TextAlign.start,
-                  style: headline6!
-                      .copyWith(fontWeight: FontWeight.bold)),
+                  style: headline6!.copyWith(fontWeight: FontWeight.bold)),
               SelectableText("Dont à l'exportation :",
                   textAlign: TextAlign.start, style: bodyMedium),
             ],
-          ), 
+          ),
           child2: Column(
             children: [
               SelectableText(
                   "${NumberFormat.decimalPattern('fr').format(totalProduits1)} \$",
                   textAlign: TextAlign.start,
-                  style:
-                      headline6.copyWith(color: Colors.red.shade700)),
+                  style: headline6.copyWith(color: Colors.red.shade700)),
               SelectableText(
                   "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.montantExportation))} \$",
                   textAlign: TextAlign.center,
                   style: bodyMedium),
             ],
           ),
-        ), 
+        ),
         Divider(
           color: Colors.red.shade700,
         ),
@@ -1088,12 +1089,12 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         ),
         ResponsiveChildWidget(
           child1: Text('Total des produits(I + II):',
-                      textAlign: TextAlign.start,
-                      style: headline6.copyWith(fontWeight: FontWeight.bold)),
+              textAlign: TextAlign.start,
+              style: headline6.copyWith(fontWeight: FontWeight.bold)),
           child2: SelectableText(
-                      "${NumberFormat.decimalPattern('fr').format(totalProduits123)} \$",
-                      textAlign: TextAlign.start,
-                      style: headline6.copyWith(color: Colors.red.shade700)),
+              "${NumberFormat.decimalPattern('fr').format(totalProduits123)} \$",
+              textAlign: TextAlign.start,
+              style: headline6.copyWith(color: Colors.red.shade700)),
         ),
         Divider(
           color: Colors.red.shade700,
@@ -1129,13 +1130,13 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         ),
         ResponsiveChildWidget(
           child1: Text('TOTAL GENERAL :',
-                      textAlign: TextAlign.start,
-                      style: headline6.copyWith(fontWeight: FontWeight.bold)), 
+              textAlign: TextAlign.start,
+              style: headline6.copyWith(fontWeight: FontWeight.bold)),
           child2: SelectableText(
               "${NumberFormat.decimalPattern('fr').format(totalGeneralProduits)} \$",
               textAlign: TextAlign.start,
               style: headline6.copyWith(color: Colors.red.shade700)),
-        ), 
+        ),
         Divider(
           color: Colors.red.shade700,
         ),

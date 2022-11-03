@@ -30,12 +30,11 @@ class _DetailArchiveState extends State<DetailArchive> {
   @override
   Widget build(BuildContext context) {
     final ArchiveController controller = Get.put(ArchiveController());
-    
+
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(

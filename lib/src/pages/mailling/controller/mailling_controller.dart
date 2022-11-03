@@ -13,18 +13,16 @@ import 'package:wm_solution/src/routes/routes.dart';
 class MaillingController extends GetxController
     with StateMixin<List<MailModel>> {
   final MailApi mailApi = MailApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final UsersController usersController = Get.put(UsersController());
 
   var mailList = <MailModel>[].obs;
   var mailSendList = <MailModel>[].obs;
 
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  
   TextEditingController emailController = TextEditingController();
   TextEditingController objetController = TextEditingController();
   TextEditingController messageController = TextEditingController();
@@ -32,7 +30,7 @@ class MaillingController extends GetxController
   bool read = false;
   List<UserModel> ccList = [];
 
-    final _isUploading = false.obs;
+  final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
   final _isUploadingDone = false.obs;
   bool get isUploadingDone => _isUploadingDone.value;
@@ -45,11 +43,9 @@ class MaillingController extends GetxController
       uploadedFileUrl = value;
       _isUploading.value = false;
       _isUploadingDone.value = true;
- 
     });
   }
 
-  
   @override
   void onInit() {
     super.onInit();
@@ -80,7 +76,7 @@ class MaillingController extends GetxController
           .where((element) =>
               element.email == profilController.user.email ||
               element.email == "support@eventdrc.com")
-          .toList()); 
+          .toList());
       mailSendList.assignAll(response
           .where((element) => element.emailDest == profilController.user.email)
           .toList());
@@ -94,7 +90,6 @@ class MaillingController extends GetxController
     final data = await mailApi.getOneData(id);
     return data;
   }
-
 
   void deleteData(int id) async {
     try {
@@ -117,7 +112,6 @@ class MaillingController extends GetxController
     }
   }
 
-
   void send() async {
     try {
       _isLoading.value = true;
@@ -126,25 +120,24 @@ class MaillingController extends GetxController
           .first;
       var ccJson = jsonEncode(ccList);
       final mailModel = MailModel(
-        fullName: "${userSelect.prenom} ${userSelect.nom}",
-        email: emailController.text,
-        cc: ccJson,
-        objet: objetController.text,
-        message: messageController.text,
-        pieceJointe:
-            (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-        read: 'false',
-        fullNameDest: "${profilController.user.prenom} ${profilController.user.nom}",
-        emailDest: profilController.user.email,
-        dateSend: DateTime.now(),
-        dateRead: DateTime.now()
-      );
+          fullName: "${userSelect.prenom} ${userSelect.nom}",
+          email: emailController.text,
+          cc: ccJson,
+          objet: objetController.text,
+          message: messageController.text,
+          pieceJointe:
+              (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+          read: 'false',
+          fullNameDest:
+              "${profilController.user.prenom} ${profilController.user.nom}",
+          emailDest: profilController.user.email,
+          dateSend: DateTime.now(),
+          dateRead: DateTime.now());
       await mailApi.insertData(mailModel).then((value) {
         mailList.clear();
         getList();
         Get.back();
-        Get.snackbar("Envoyer avec succès!",
-            "Votre mail a bien été envoyé.",
+        Get.snackbar("Envoyer avec succès!", "Votre mail a bien été envoyé.",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -176,7 +169,7 @@ class MaillingController extends GetxController
           dateRead: DateTime.now());
       await mailApi.updateData(dataItem).then((value) {
         Get.toNamed(MailRoutes.mailDetail,
-            arguments: MailColor(mail: mail, color: color)); 
+            arguments: MailColor(mail: mail, color: color));
         _isLoading.value = false;
       });
     } catch (e) {
@@ -186,6 +179,4 @@ class MaillingController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-
 }

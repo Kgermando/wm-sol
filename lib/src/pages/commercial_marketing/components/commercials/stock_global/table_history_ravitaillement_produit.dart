@@ -7,7 +7,7 @@ import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_mode
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/history_ravitaillement/history_ravitaillement_xlsx.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/history_ravitaillement/history_ravitaillement_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/history/history_ravitaillement_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -30,9 +30,8 @@ class _TableHistoryRavitaillementProduitState
     extends State<TableHistoryRavitaillementProduit> {
   final HistoryRavitaillementController historyRavitaillementController =
       Get.put(HistoryRavitaillementController());
-  final ProfilController profilController =
-      Get.put(ProfilController());    
-  
+  final ProfilController profilController = Get.put(ProfilController());
+
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -85,8 +84,7 @@ class _TableHistoryRavitaillementProduitState
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(context,
-                            ComMarketingRoutes.comMarketingStockGlobal);
+                        Navigator.pushNamed(context, ComRoutes.comStockGlobal);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

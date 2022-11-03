@@ -9,7 +9,7 @@ class ObjetRemplaceController extends GetxController
     with StateMixin<List<ObjetRemplaceModel>> {
   final ObjetRemplaceApi objetRemplaceApi = ObjetRemplaceApi();
   final EntretienController entretienController = EntretienController();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   ScrollController controllerTable = ScrollController();
 

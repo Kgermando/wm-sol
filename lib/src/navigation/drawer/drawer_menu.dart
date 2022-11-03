@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/navigation/drawer/components/administration_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/budget_nav.dart';
-import 'package:wm_solution/src/navigation/drawer/components/commercial_marketing_nav.dart';
+import 'package:wm_solution/src/navigation/drawer/components/commercial_nav.dart';
+import 'package:wm_solution/src/navigation/drawer/components/marketing_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/comptabilite_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/exploitation_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/finance_nav.dart';
@@ -20,7 +21,7 @@ class DrawerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     final currentRoute = Get.currentRoute;
     var departement = (profilController.user.departement == '-') ? ["Support"] : jsonDecode(profilController.user.departement);
     return Drawer(
@@ -55,7 +56,14 @@ class DrawerMenu extends StatelessWidget {
           if (departement.first == 'Commercial et Marketing' ||
               departement.first == 'Administration' ||
               departement.first == 'Support')
-          CommercialMaketingNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
+          MaketingNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
+          if (departement.first == 'Commercial et Marketing' ||
+              departement.first == 'Administration' ||
+              departement.first == 'Support')
+            CommercialNav(
+                currentRoute: currentRoute,
+                profilController: profilController,
+                departement: departement),
           if (departement.first == 'Exploitations' ||
               departement.first == 'Administration' ||
               departement.first == 'Support') 

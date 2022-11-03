@@ -44,7 +44,7 @@ class _TableCampaignObsState extends State<TableCampaignObs> {
           final CampaignModel campaignModel =
               await widget.controller.detailView(idPlutoRow.value);
 
-          Get.toNamed(ComMarketingRoutes.comMarketingCampaignDetail, 
+          Get.toNamed(MarketingRoutes.marketingCampaignDetail, 
             arguments: campaignModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -62,7 +62,7 @@ class _TableCampaignObsState extends State<TableCampaignObs> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ComMarketingRoutes.comMarketingCampaign);
+                            context, MarketingRoutes.marketingCampaign);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

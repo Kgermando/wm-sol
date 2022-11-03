@@ -6,7 +6,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/cart/cart_item_widget.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/cart/cart_item_widget.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -18,19 +18,17 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final CartController controller = Get.put(CartController()); 
+  final CartController controller = Get.put(CartController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial & Marketing";
   String subTitle = "Panier";
 
   @override
   Widget build(BuildContext context) {
-    
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Le panier est vide.'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -39,8 +37,8 @@ class _CartPageState extends State<CartPage> {
                   ? speedialWidget(controller)
                   : Container(),
               bottomNavigationBar: SizedBox(
-                width: MediaQuery.of(context).size.width / 2,
-                child: totalCart(controller)),
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: totalCart(controller)),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -61,17 +59,14 @@ class _CartPageState extends State<CartPage> {
                             child: Column(
                               children: [
                                 ListView.builder(
-                                  shrinkWrap: true,
+                                    shrinkWrap: true,
                                     itemCount: controller.cartList.length,
                                     itemBuilder: (context, index) {
                                       final cart = controller.cartList[index];
                                       return CartItemWidget(
-                                        cart: cart, 
-                                        controller: controller
-                                      );
+                                          cart: cart, controller: controller);
                                     }),
                                 const SizedBox(height: p50),
-                                
                               ],
                             ),
                           )))
@@ -129,7 +124,7 @@ class _CartPageState extends State<CartPage> {
             label: 'Générer facture',
             onPressed: () {
               controller.submitFacture();
-              controller.createFacturePDF();  
+              controller.createFacturePDF();
             }),
         SpeedDialChild(
             child: const Icon(Icons.money_off),

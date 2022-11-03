@@ -10,7 +10,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 class StockGlobalController extends GetxController
     with StateMixin<List<StocksGlobalMOdel>> {
   final StockGlobalApi stockGlobalApi = StockGlobalApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final ProduitModelController produitModelController =
       Get.put(ProduitModelController());
 

@@ -14,7 +14,6 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class GrandLivre extends StatefulWidget {
   const GrandLivre({super.key});
 
@@ -23,11 +22,9 @@ class GrandLivre extends StatefulWidget {
 }
 
 class _GrandLivreState extends State<GrandLivre> {
-  
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
   String subTitle = "grand livre";
-
 
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -42,45 +39,41 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final JournalLivreController controller = Get.put(JournalLivreController());
     final JournalController journalController = Get.put(JournalController());
     return SafeArea(
       child: controller.obx(
-    onLoading: loading(),
-    onEmpty: const Text('Aucune donnée'),
-    onError: (error) => Text(
-        "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-    (data) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(context, scaffoldKey, title, subTitle),
-        drawer: const DrawerMenu(),
-        body: Row(
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, right: p20, left: p20, bottom: p8),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child: pageView(journalController.journalList, controller)
-                )
-            ),
-          ],
-        ))),
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              body: Row(
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: Container(
+                          margin: const EdgeInsets.only(
+                              top: p20, right: p20, left: p20, bottom: p8),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: pageView(
+                              journalController.journalList, controller))),
+                ],
+              ))),
     );
   }
 
-
   Widget pageView(List<JournalModel> data, JournalLivreController controller) {
-    return Container( 
+    return Container(
       padding: const EdgeInsets.all(p20),
       child: Form(
         key: formKey,
@@ -122,7 +115,8 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
                         : Row(children: [
                             SizedBox(width: 300.0, child: compteWidget(data)),
                             const SizedBox(width: p10),
-                            SizedBox(width: 250.0, child: livreWidget(controller)),
+                            SizedBox(
+                                width: 250.0, child: livreWidget(controller)),
                             const SizedBox(width: p10),
                             SizedBox(
                                 width: 150.0,
@@ -157,7 +151,8 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
                 value: value,
                 child: Text(value!.intitule),
               );
-            }).toSet()
+            })
+            .toSet()
             .toList(),
         validator: (value) => value == null ? "Select Livre" : null,
         onChanged: (value) {
@@ -224,6 +219,7 @@ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
                 element.reference == livre.reference ||
             element.compte == compteController.text)
         .toList();
-    Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivreSearch, arguments: search);
+    Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivreSearch,
+        arguments: search);
   }
 }

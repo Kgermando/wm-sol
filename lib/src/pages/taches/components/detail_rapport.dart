@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart'; 
+import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
@@ -10,8 +10,7 @@ import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class DetailRapport extends StatefulWidget {
-  const DetailRapport(
-      {super.key,required this.rapportModel});
+  const DetailRapport({super.key, required this.rapportModel});
   final RapportModel rapportModel;
 
   @override
@@ -28,10 +27,9 @@ class _DetailRapportState extends State<DetailRapport> {
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -55,7 +53,7 @@ class _DetailRapportState extends State<DetailRapport> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             child: Column(
-                              children: [ 
+                              children: [
                                 Card(
                                   elevation: 3,
                                   child: Padding(

@@ -28,7 +28,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       Get.put(AdminDashboardController());
   final PersonnelsController personnelsController =
       Get.put(PersonnelsController());
-  final DashboardComMarketingController dashboardComMarketingController = Get.put(DashboardComMarketingController());
+  final DashboardcomController dashboardcomController =
+      Get.put(DashboardcomController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Administration";
   String subTitle = "Dashboard";
@@ -65,8 +66,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 children: [
                                   DashNumberWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(
-                                            RhRoutes.rhPersonnelsPage);
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
                                       },
                                       number: '${controller.agentsCount}',
                                       title: 'Total agents',
@@ -74,8 +74,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       color: Colors.blue.shade700),
                                   DashNumberWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(
-                                            RhRoutes.rhPersonnelsPage); 
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
                                       },
                                       number: '${controller.agentActifCount}',
                                       title: 'Agent Actifs',
@@ -84,7 +83,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(
-                                            BudgetRoutes.budgetDashboard); 
+                                            BudgetRoutes.budgetDashboard);
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(double.parse(controller.poursentExecution.toStringAsFixed(0)))} %",
@@ -94,7 +93,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(
-                                            FinanceRoutes.transactionsDettes);  
+                                            FinanceRoutes.transactionsDettes);
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(controller.soldeDette)} \$",
@@ -104,7 +103,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(
-                                            FinanceRoutes.transactionsCreances); 
+                                            FinanceRoutes.transactionsCreances);
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(controller.soldeCreance)} \$",
@@ -113,8 +112,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       color: Colors.deepOrange.shade700),
                                   DashNumberWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(FinanceRoutes
-                                            .financeDashboard);  
+                                        Get.toNamed(
+                                            FinanceRoutes.financeDashboard);
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(controller.depenses)} \$",
@@ -124,7 +123,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(
-                                            FinanceRoutes.financeDashboard);   
+                                            FinanceRoutes.financeDashboard);
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(controller.disponible)} \$",
@@ -133,9 +132,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       color: Colors.teal.shade700),
                                   DashNumberWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(
-                                            ComptabiliteRoutes
-                                            .comptabiliteBilan);   
+                                        Get.toNamed(ComptabiliteRoutes
+                                            .comptabiliteBilan);
                                       },
                                       number: '${controller.bilanCount}',
                                       title: 'Bilans',
@@ -144,7 +142,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(ComptabiliteRoutes
-                                            .comptabiliteJournalLivre); 
+                                            .comptabiliteJournalLivre);
                                       },
                                       number: '${controller.journalCount}',
                                       title: 'Journals',
@@ -153,17 +151,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(
-                                            ExploitationRoutes.expProjet); 
+                                            ExploitationRoutes.expProjet);
                                       },
-                                      number: '${controller.projetsApprouveCount}',
+                                      number:
+                                          '${controller.projetsApprouveCount}',
                                       title: 'Projets approuvés',
                                       icon: Icons.work,
                                       color: Colors.grey.shade700),
                                   DashNumberWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(
-                                            ComMarketingRoutes
-                                            .comMarketingDashboard); 
+                                            MarketingRoutes.marketingDashboard);
                                       },
                                       number: '${controller.campaignCount}',
                                       title: 'Campagnes',
@@ -173,17 +171,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                               const SizedBox(height: p20),
                               ResponsiveChildWidget(
-                                flex1: 3,
-                                flex2: 1,
-                                child1: FlashCard(
-                                  height: 400,
-                                  width: MediaQuery.maybeOf(context)!.size.width / 1.1,
-                                  frontWidget:
-                                      CourbeVenteGainYear(controller: dashboardComMarketingController),
-                                  backWidget:
-                                      CourbeVenteGainMounth(controller: dashboardComMarketingController)), 
-                                child2: DashRHPieWidget(controller: personnelsController)
-                              ) 
+                                  flex1: 3,
+                                  flex2: 1,
+                                  child1: FlashCard(
+                                      height: 400,
+                                      width: MediaQuery.maybeOf(context)!
+                                              .size
+                                              .width /
+                                          1.1,
+                                      frontWidget: CourbeVenteGainYear(
+                                          controller: dashboardcomController),
+                                      backWidget: CourbeVenteGainMounth(
+                                          controller: dashboardcomController)),
+                                  child2: DashRHPieWidget(
+                                      controller: personnelsController))
                             ])),
                   ))
             ],

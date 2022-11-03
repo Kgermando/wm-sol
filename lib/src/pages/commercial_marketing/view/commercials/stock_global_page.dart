@@ -28,54 +28,51 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(
-              context, scaffoldKey, title, subTitle),
-          drawer: const DrawerMenu(),
-          floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Ajouter stock"),
-            tooltip: "Ajout le stock global",
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Get.toNamed(
-                ComMarketingRoutes.comMarketingStockGlobalAdd
-              );
-            },
-          ),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: ListView.builder( 
-                        shrinkWrap: true,
-                          itemCount: controller.stockGlobalList.length,
-                          itemBuilder: (context, index) {
-                            final data = controller.stockGlobalList[index];
-                            return ListStockGlobal(
-                              stocksGlobalMOdel: data,
-                              role: profilController.user.role);
-                          }),
-                    )))
-            ],
-          ),
-        ));
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter stock"),
+                tooltip: "Ajout le stock global",
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Get.toNamed(ComRoutes.comStockGlobalAdd);
+                },
+              ),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: controller.stockGlobalList.length,
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      controller.stockGlobalList[index];
+                                  return ListStockGlobal(
+                                      stocksGlobalMOdel: data,
+                                      role: profilController.user.role);
+                                }),
+                          )))
+                ],
+              ),
+            ));
   }
 }

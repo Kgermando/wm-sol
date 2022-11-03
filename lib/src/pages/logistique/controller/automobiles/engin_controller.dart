@@ -8,7 +8,7 @@ import 'package:wm_solution/src/utils/enguins_dropdown.dart';
 class EnginController extends GetxController
     with StateMixin<List<AnguinModel>> {
   final AnguinApi enginsApi = AnguinApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var enginList = <AnguinModel>[].obs;
 

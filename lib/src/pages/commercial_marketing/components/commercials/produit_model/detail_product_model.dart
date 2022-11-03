@@ -31,79 +31,90 @@ class _DetailProductModelState extends State<DetailProductModel> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.productModel.idProduct),
-        drawer: const DrawerMenu(),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-              controller: ScrollController(),
-              physics: const ScrollPhysics(),
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: p20, bottom: p8, right: p20, left: p20),
-                decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(20))),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: p20),
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+              key: scaffoldKey,
+              appBar: headerBar(
+                  context, scaffoldKey, title, widget.productModel.idProduct),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
                               children: [
-                                TitleWidget(title: widget.productModel.categorie),
-                                Column(
-                                  children: [
-                                    Row(
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                  if (widget.productModel.approbationDD == "-")
-                                    editButton(controller),
-                                  if (widget.productModel.approbationDD == "-")
-                                          deleteButton(controller),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TitleWidget(
+                                                title: widget
+                                                    .productModel.categorie),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    if (widget.productModel
+                                                            .approbationDD ==
+                                                        "-")
+                                                      editButton(controller),
+                                                    if (widget.productModel
+                                                            .approbationDD ==
+                                                        "-")
+                                                      deleteButton(controller),
+                                                  ],
+                                                ),
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .productModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                        ApprobationProdModel(
+                                            data: widget.productModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
-                                    SelectableText(
-                                      DateFormat("dd-MM-yyyy HH:mm")
-                                            .format(widget.productModel.created),
-                                        textAlign: TextAlign.start),
-                                  ],
+                                  ),
                                 )
                               ],
                             ),
-                            dataWidget(),
-                            ApprobationProdModel(data: widget.productModel, controller: controller, profilController: profilController)
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )))
-          ],
-        ),
-      ));
-}
+                          )))
+                ],
+              ),
+            ));
+  }
 
   Widget editButton(ProduitModelController controller) {
     return IconButton(
@@ -124,7 +135,7 @@ class _DetailProductModelState extends State<DetailProductModel> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                Get.toNamed(ComMarketingRoutes.comMarketingProduitModelUpdate,
+                Get.toNamed(ComRoutes.comProduitModelUpdate,
                     arguments: widget.productModel);
               },
               child: const Text('OK'),

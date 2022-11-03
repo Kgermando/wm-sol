@@ -1,33 +1,31 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/comm_maketing/courbe_vente_gain_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/dashboard/dashboard_com_marketing_controller.dart';
 
 class CourbeVenteGainMounth extends StatefulWidget {
-  const CourbeVenteGainMounth({Key? key, required this.controller}) : super(key: key);
-  final DashboardComMarketingController controller;
+  const CourbeVenteGainMounth({Key? key, required this.controller})
+      : super(key: key);
+  final DashboardcomController controller;
 
   @override
   State<CourbeVenteGainMounth> createState() => _CourbeVenteGainMounthState();
 }
 
-class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> { 
-
+class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
   TooltipBehavior? _tooltipBehavior;
 
   bool? isCardView;
 
   @override
   void initState() {
-    _tooltipBehavior = TooltipBehavior(enable: true); 
+    _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
 
- 
-
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Row(

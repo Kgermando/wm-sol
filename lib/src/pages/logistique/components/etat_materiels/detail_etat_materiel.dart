@@ -31,10 +31,9 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -43,7 +42,7 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter une personne"),
                 tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {},
               ),
               body: Row(
@@ -72,67 +71,74 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                         horizontal: p20),
                                     child: Column(
                                       crossAxisAlignment:
-      CrossAxisAlignment.start,
-  children: [
-    Row(
-      mainAxisAlignment:
-          MainAxisAlignment.spaceBetween,
-      children: [
-        const TitleWidget(
-            title: "Etat Materiel"),
-        Column(
-          children: [
-            Column(
-              children: [
-                if (int.parse(profilController.user.role) <=
-                        3 &&
-                    widget.etatMaterielModel.approbationDD ==
-                        "Approved")
-                  Row(
-                    children: [
-                      IconButton(
-                          tooltip:
-                              'Modifier',
-                          onPressed: () {
-                            Get.toNamed(
-                                LogistiqueRoutes
-                                    .logEtatMaterielUpdate,
-                                arguments:
-                                    widget
-                                        .etatMaterielModel);
-                          },
-                          icon: const Icon(
-                              Icons.edit)),
-                      IconButton(
-                          tooltip:
-                              'Supprimer',
-                          onPressed:
-                              () async {
-                            alertDeleteDialog();
-                          },
-                          icon: const Icon(
-                              Icons.delete),
-                          color: Colors.red
-                              .shade700),
-                    ],
-                  ),
-                SelectableText(
-                    DateFormat(
-                            "dd-MM-yy HH:mm")
-                        .format(widget
-                            .etatMaterielModel
-                            .created),
-                    textAlign:
-                        TextAlign.start),
-              ],
-            ),
-          ],
-        )
-      ],
-    ),
-    dataWidget(),
-    const SizedBox(height: p20),
-    ApprobationEtatMateriel(data: widget.etatMaterielModel, controller: controller, profilController: profilController)
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const TitleWidget(
+                                                title: "Etat Materiel"),
+                                            Column(
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    if (int.parse(
+                                                                profilController
+                                                                    .user
+                                                                    .role) <=
+                                                            3 &&
+                                                        widget.etatMaterielModel
+                                                                .approbationDD ==
+                                                            "Approved")
+                                                      Row(
+                                                        children: [
+                                                          IconButton(
+                                                              tooltip:
+                                                                  'Modifier',
+                                                              onPressed: () {
+                                                                Get.toNamed(
+                                                                    LogistiqueRoutes
+                                                                        .logEtatMaterielUpdate,
+                                                                    arguments:
+                                                                        widget
+                                                                            .etatMaterielModel);
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.edit)),
+                                                          IconButton(
+                                                              tooltip:
+                                                                  'Supprimer',
+                                                              onPressed:
+                                                                  () async {
+                                                                alertDeleteDialog();
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.delete),
+                                                              color: Colors.red
+                                                                  .shade700),
+                                                        ],
+                                                      ),
+                                                    SelectableText(
+                                                        DateFormat(
+                                                                "dd-MM-yy HH:mm")
+                                                            .format(widget
+                                                                .etatMaterielModel
+                                                                .created),
+                                                        textAlign:
+                                                            TextAlign.start),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                        const SizedBox(height: p20),
+                                        ApprobationEtatMateriel(
+                                            data: widget.etatMaterielModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
                                   ),

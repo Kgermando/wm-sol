@@ -19,7 +19,7 @@ class ListStockGlobal extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (roleAgent <= 3) {
-          Get.toNamed(ComMarketingRoutes.comMarketingStockGlobalDetail,
+          Get.toNamed(ComRoutes.comStockGlobalDetail,
               arguments: stocksGlobalMOdel);
         }
       },

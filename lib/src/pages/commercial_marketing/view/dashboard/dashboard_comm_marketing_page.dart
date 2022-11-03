@@ -29,8 +29,7 @@ class _DashboardCommMarketingPageState
 
   @override
   Widget build(BuildContext context) {
-    final DashboardComMarketingController controller =
-        Get.put(DashboardComMarketingController());
+    final DashboardcomController controller = Get.put(DashboardcomController());
 
     return SafeArea(
       child: Scaffold(
@@ -64,8 +63,7 @@ class _DashboardCommMarketingPageState
                                   children: [
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Get.toNamed(ComMarketingRoutes
-                                              .comMarketingVente); 
+                                          Get.toNamed(ComRoutes.comVente);
                                         },
                                         number:
                                             '${NumberFormat.decimalPattern('fr').format(controller.sumVente)} \$',
@@ -74,8 +72,7 @@ class _DashboardCommMarketingPageState
                                         color: Colors.purple.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Get.toNamed(ComMarketingRoutes
-                                              .comMarketingVente);    
+                                          Get.toNamed(ComRoutes.comVente);
                                         },
                                         number:
                                             '${NumberFormat.decimalPattern('fr').format(controller.sumGain)} \$',
@@ -84,8 +81,7 @@ class _DashboardCommMarketingPageState
                                         color: Colors.green.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Get.toNamed(ComMarketingRoutes
-                                              .comMarketingCreance);   
+                                          Get.toNamed(ComRoutes.comCreance);
                                         },
                                         number:
                                             '${NumberFormat.decimalPattern('fr').format(controller.sumDCreance)} \$',
@@ -94,8 +90,7 @@ class _DashboardCommMarketingPageState
                                         color: Colors.pink.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Get.toNamed(ComMarketingRoutes
-                                              .comMarketingSuccursale);  
+                                          Get.toNamed(ComRoutes.comSuccursale);
                                         },
                                         number: '${controller.succursaleCount}',
                                         title: 'Succursale',
@@ -103,8 +98,8 @@ class _DashboardCommMarketingPageState
                                         color: Colors.brown.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Get.toNamed(ComMarketingRoutes
-                                              .comMarketingCampaign); 
+                                          Get.toNamed(MarketingRoutes
+                                              .marketingCampaign);
                                         },
                                         number: '${controller.campaignCount}',
                                         title: 'Campagnes',
@@ -112,8 +107,8 @@ class _DashboardCommMarketingPageState
                                         color: Colors.orange.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Get.toNamed(ComMarketingRoutes
-                                              .comMarketingAnnuaire);
+                                          Get.toNamed(MarketingRoutes
+                                              .marketingAnnuaire);
                                         },
                                         number: '${controller.annuaireCount}',
                                         title: 'Annuaire',
@@ -121,10 +116,8 @@ class _DashboardCommMarketingPageState
                                         color: Colors.yellow.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
-                                          Navigator.pushNamed(
-                                              context,
-                                              ComMarketingRoutes
-                                                  .comMarketingAgenda);
+                                          Navigator.pushNamed(context,
+                                              MarketingRoutes.marketingAgenda);
                                         },
                                         number: '${controller.agendaCount}',
                                         title: 'Agenda',

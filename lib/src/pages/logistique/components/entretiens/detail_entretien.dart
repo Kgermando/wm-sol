@@ -30,14 +30,14 @@ class _DetailEntretienState extends State<DetailEntretien> {
   @override
   Widget build(BuildContext context) {
     final EntretienController controller = Get.put(EntretienController());
-    final ObjetRemplaceController objetRemplaceController = Get.put(ObjetRemplaceController());
+    final ObjetRemplaceController objetRemplaceController =
+        Get.put(ObjetRemplaceController());
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -46,7 +46,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter une personne"),
                 tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {},
               ),
               body: Row(
@@ -92,15 +92,16 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                                         tooltip: 'Modifier',
                                                         onPressed: () {
                                                           Get.toNamed(
-                                                            LogistiqueRoutes
-                                                                .logEntretienUpdate,
-                                                            arguments: widget.entretienModel);
+                                                              LogistiqueRoutes
+                                                                  .logEntretienUpdate,
+                                                              arguments: widget
+                                                                  .entretienModel);
                                                         },
                                                         icon: const Icon(
                                                             Icons.edit)),
                                                     IconButton(
                                                         tooltip: 'Supprimer',
-                                                        onPressed: () async { 
+                                                        onPressed: () async {
                                                           alertDeleteDialog(
                                                               controller);
                                                         },
@@ -111,9 +112,11 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                                   ],
                                                 ),
                                                 SelectableText(
-                                                  DateFormat("dd-MM-yyyy")
-                                                    .format(widget.entretienModel.created),
-                                                  textAlign: TextAlign.start),
+                                                    DateFormat("dd-MM-yyyy")
+                                                        .format(widget
+                                                            .entretienModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
                                               ],
                                             )
                                           ],
@@ -126,7 +129,10 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                             entretienModel:
                                                 widget.entretienModel),
                                         const SizedBox(height: p20),
-                                        ApprobationEntretien(data: widget.entretienModel, controller: controller, profilController: profilController)
+                                        ApprobationEntretien(
+                                            data: widget.entretienModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
                                   ),
@@ -169,7 +175,6 @@ class _DetailEntretienState extends State<DetailEntretien> {
         });
   }
 
-
   Widget dataWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
@@ -204,7 +209,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
-          ), 
+          ),
           Divider(
             color: mainColor,
           ),
@@ -241,8 +246,4 @@ class _DetailEntretienState extends State<DetailEntretien> {
       ),
     );
   }
-
-
-
-
 }

@@ -8,7 +8,7 @@ class HistoryLivraisonController extends GetxController
     with StateMixin<List<LivraisonHistoryModel>> {
   final LivraisonHistoryApi livraisonHistorylivraisonHistoryApi =
       LivraisonHistoryApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var livraisonHistoryList = <LivraisonHistoryModel>[].obs;
 

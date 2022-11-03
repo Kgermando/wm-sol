@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/comm_maketing/vente_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/dashboard/dashboard_com_marketing_controller.dart';
 
 class ArticlePlusVendus extends StatefulWidget {
-  const ArticlePlusVendus({Key? key, required this.controller}) : super(key: key);
-  final DashboardComMarketingController controller;
+  const ArticlePlusVendus({Key? key, required this.controller})
+      : super(key: key);
+  final DashboardcomController controller;
 
   @override
   State<ArticlePlusVendus> createState() => _ArticlePlusVendusState();

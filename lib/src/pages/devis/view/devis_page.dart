@@ -25,84 +25,83 @@ class _DevisPageState extends State<DevisPage> {
   String subTitle = "Devis";
 
   @override
-  Widget build(BuildContext context) { 
-    final sized = MediaQuery.of(context).size; 
+  Widget build(BuildContext context) {
+    final sized = MediaQuery.of(context).size;
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (data) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(context, scaffoldKey, title, subTitle),
-        drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text("Nouveau devis"),
-          tooltip: "Devis",
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            showModalBottomSheet<void>(
-              context: context,
-              constraints: BoxConstraints(
-                maxWidth: sized.width / 1.5,
-              ),
-              builder: (BuildContext context) {
-                return Container(
-                  height: sized.height / 2,
-                  color: Colors.amber.shade100,
-                  padding: const EdgeInsets.all(p20),
-                  child: Form(
-                    key: controller.formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const TitleWidget(
-                            title: "Création du devis"),
-                        const SizedBox(
-                          height: p20,
-                        ),
-                        ResponsiveChildWidget(
-                          child1: titleWidget(), 
-                          child2: priorityWidget()
-                        ), 
-                        const SizedBox(
-                          height: p20,
-                        ),
-                        BtnWidget(
-                            title: 'Crée maintenant',
-                            press: () {
-                              final form = controller.formKey.currentState!;
-                              if (form.validate()) {
-                                controller.submit();
-                                form.reset();
-                              }
-                            },
-                            isLoading: controller.isLoading)
-                      ],
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (data) => Scaffold(
+            key: scaffoldKey,
+            appBar: headerBar(context, scaffoldKey, title, subTitle),
+            drawer: const DrawerMenu(),
+            floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Nouveau devis"),
+                tooltip: "Devis",
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    constraints: BoxConstraints(
+                      maxWidth: sized.width / 1.5,
                     ),
-                  ),
-                );
-              },
-            );
-          }),
-        body: Row(
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      top: p20, right: p20, left: p20, bottom: p8),
-                  decoration: const BoxDecoration(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(20))),
-                  child: TableDevis(devisList: controller.devisList, controller: controller))),
-          ],
-        )));
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: sized.height / 2,
+                        color: Colors.amber.shade100,
+                        padding: const EdgeInsets.all(p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const TitleWidget(title: "Création du devis"),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              ResponsiveChildWidget(
+                                  child1: titleWidget(),
+                                  child2: priorityWidget()),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              BtnWidget(
+                                  title: 'Crée maintenant',
+                                  press: () {
+                                    final form =
+                                        controller.formKey.currentState!;
+                                    if (form.validate()) {
+                                      controller.submit();
+                                      form.reset();
+                                    }
+                                  },
+                                  isLoading: controller.isLoading)
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }),
+            body: Row(
+              children: [
+                Visibility(
+                    visible: !Responsive.isMobile(context),
+                    child: const Expanded(flex: 1, child: DrawerMenu())),
+                Expanded(
+                    flex: 5,
+                    child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableDevis(
+                            devisList: controller.devisList,
+                            controller: controller))),
+              ],
+            )));
   }
-
 
   Widget titleWidget() {
     return Container(
@@ -152,7 +151,4 @@ class _DevisPageState extends State<DevisPage> {
       ),
     );
   }
-
-
-  
 }

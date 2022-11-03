@@ -28,10 +28,9 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -85,7 +84,8 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
                                                 final form = controller
                                                     .formKey.currentState!;
                                                 if (form.validate()) {
-                                                  controller.submitUpdate(widget.etatMaterielModel);
+                                                  controller.submitUpdate(
+                                                      widget.etatMaterielModel);
                                                   form.reset();
                                                 }
                                               })

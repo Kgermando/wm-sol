@@ -38,10 +38,9 @@ class _AnnuairePageState extends State<AnnuairePage> {
     final AnnuaireController controller = Get.put(AnnuaireController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -49,9 +48,9 @@ class _AnnuairePageState extends State<AnnuairePage> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter contact"),
                 tooltip: "Ajout un nouveau contact",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {
-                  Get.toNamed(ComMarketingRoutes.comMarketingAnnuaireAdd);
+                  Get.toNamed(MarketingRoutes.marketingAnnuaireAdd);
                 },
               ),
               body: Row(
@@ -139,7 +138,7 @@ class _AnnuairePageState extends State<AnnuairePage> {
       children: [
         GestureDetector(
             onTap: () {
-              Get.toNamed(ComMarketingRoutes.comMarketingAnnuaireDetail,
+              Get.toNamed(MarketingRoutes.marketingAnnuaireDetail,
                   arguments: AnnuaireColor(
                       annuaireModel: annuaireModel, color: color));
             },

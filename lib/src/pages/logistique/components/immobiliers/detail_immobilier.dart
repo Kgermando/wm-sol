@@ -33,10 +33,9 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -121,7 +120,10 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                         ),
                                         dataWidget(),
                                         const SizedBox(height: p20),
-                                        ApprobationImmobilier(data: widget.immobilierModel, controller: controller, profilController: profilController)
+                                        ApprobationImmobilier(
+                                            data: widget.immobilierModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
                                   ),
@@ -153,7 +155,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.immobilierApi.deleteData(widget.immobilierModel.id!); 
+                    controller.immobilierApi
+                        .deleteData(widget.immobilierModel.id!);
                   },
                   child: const Text('OK'),
                 ),
@@ -170,12 +173,11 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Type d\'Allocation :',
-              textAlign: TextAlign.start,
-              style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.immobilierModel.typeAllocation,
-                    textAlign: TextAlign.start, style: bodyMedium)
-          ),
+              child1: Text('Type d\'Allocation :',
+                  textAlign: TextAlign.start,
+                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+              child2: SelectableText(widget.immobilierModel.typeAllocation,
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -184,7 +186,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.immobilierModel.adresse,
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -193,7 +195,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.immobilierModel.numeroCertificat,
-                  textAlign: TextAlign.start, style: bodyMedium)),  
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -202,7 +204,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.immobilierModel.superficie,
-                  textAlign: TextAlign.start, style: bodyMedium)),   
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -213,7 +215,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
               child2: SelectableText(
                   DateFormat("dd-MM-yy")
                       .format(widget.immobilierModel.dateAcquisition),
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                  textAlign: TextAlign.start,
+                  style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -222,8 +225,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.immobilierModel.signature,
-                  textAlign: TextAlign.start,
-                  style: bodyMedium)),  
+                  textAlign: TextAlign.start, style: bodyMedium)),
         ],
       ),
     );

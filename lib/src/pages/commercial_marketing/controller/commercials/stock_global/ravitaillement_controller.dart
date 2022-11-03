@@ -12,7 +12,7 @@ class RavitaillementController extends GetxController {
       Get.put(StockGlobalController());
   final HistoryRavitaillementController historyRavitaillementController =
       Get.put(HistoryRavitaillementController());
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -53,7 +53,7 @@ class RavitaillementController extends GetxController {
   // Historique de ravitaillement
   void submit(StocksGlobalMOdel stock) async {
     try {
-        var qtyDisponible =
+      var qtyDisponible =
           double.parse(controllerquantity.text) + double.parse(stock.quantity);
 
       // Add Achat history pour voir les entrés et sorties de chaque produit
@@ -92,8 +92,9 @@ class RavitaillementController extends GetxController {
             qtyRavitailler: stock.qtyRavitailler,
             signature: profilController.user.matricule,
             created: DateTime.now());
-          stockGlobalController.stockGlobalApi.updateData(stocksGlobalMOdel)
-            .then((value) { 
+        stockGlobalController.stockGlobalApi
+            .updateData(stocksGlobalMOdel)
+            .then((value) {
           stockGlobalController.stockGlobalList;
           Get.back();
           Get.snackbar("Livraison effectuée avec succès!",
@@ -103,13 +104,12 @@ class RavitaillementController extends GetxController {
               snackPosition: SnackPosition.TOP);
           _isLoading.value = false;
         });
-      }); 
+      });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-    
   }
 }

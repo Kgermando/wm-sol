@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart'; 
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/facture_creance_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableFactureCreance extends StatefulWidget {
-  const TableFactureCreance({super.key, required this.creanceFactureList, required this.controller, required this.profilController});
+  const TableFactureCreance(
+      {super.key,
+      required this.creanceFactureList,
+      required this.controller,
+      required this.profilController});
   final List<CreanceCartModel> creanceFactureList;
   final FactureCreanceController controller;
   final ProfilController profilController;
@@ -43,8 +47,7 @@ class _TableFactureCreanceState extends State<TableFactureCreance> {
         final CreanceCartModel creanceCartModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComMarketingRoutes.comMarketingCreanceDetail,
-            arguments: creanceCartModel);
+        Get.toNamed(ComRoutes.comCreanceDetail, arguments: creanceCartModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -58,8 +61,7 @@ class _TableFactureCreanceState extends State<TableFactureCreance> {
             const TitleWidget(title: "Facture Créance"),
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                      context, ComMarketingRoutes.comMarketingCreance);
+                  Navigator.pushNamed(context, ComRoutes.comCreance);
                 },
                 icon: Icon(Icons.refresh, color: Colors.green.shade700)),
           ],

@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class PersonnelsRolesController extends GetxController
     with StateMixin<List<AgentRoleModel>> {
   final AgentRoleApi personnelsRoleApi = AgentRoleApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var personnelsRoleList = <AgentRoleModel>[].obs;
 

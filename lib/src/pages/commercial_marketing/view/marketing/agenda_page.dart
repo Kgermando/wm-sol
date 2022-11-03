@@ -15,7 +15,6 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
-
 final _lightColors = [
   Colors.amber.shade300,
   Colors.lightGreen.shade300,
@@ -24,7 +23,6 @@ final _lightColors = [
   Colors.pinkAccent.shade100,
   Colors.tealAccent.shade100
 ];
-
 
 class AgendaPage extends StatefulWidget {
   const AgendaPage({super.key});
@@ -44,10 +42,9 @@ class _AgendaPageState extends State<AgendaPage> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -98,10 +95,8 @@ class _AgendaPageState extends State<AgendaPage> {
         final color = _lightColors[index % _lightColors.length];
         return GestureDetector(
           onTap: () {
-            Get.toNamed(ComMarketingRoutes.comMarketingAgendaDetail,
-                arguments: AgendaColor(
-                    agendaModel: agenda,
-                    color: color));
+            Get.toNamed(MarketingRoutes.marketingAgendaDetail,
+                arguments: AgendaColor(agendaModel: agenda, color: color));
           },
           child: AgendaCardWidget(
               agendaModel: agenda,
@@ -150,7 +145,7 @@ class _AgendaPageState extends State<AgendaPage> {
                   onPressed: () {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
-                      controller.submit(); 
+                      controller.submit();
                       form.reset();
                     }
                   },

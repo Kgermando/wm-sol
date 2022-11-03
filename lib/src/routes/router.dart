@@ -61,6 +61,7 @@ import 'package:wm_solution/src/pages/archives/components/archive_pdf_viewer.dar
 import 'package:wm_solution/src/pages/archives/components/detail_archive.dart';
 import 'package:wm_solution/src/pages/archives/views/archive_folder_page.dart';
 import 'package:wm_solution/src/pages/archives/views/archives.dart';
+import 'package:wm_solution/src/pages/auth/view/forgot_password.dart';
 import 'package:wm_solution/src/pages/auth/view/login_auth.dart';
 import 'package:wm_solution/src/pages/auth/view/change_password_auth.dart';
 import 'package:wm_solution/src/pages/auth/view/profil_auth.dart';
@@ -92,7 +93,9 @@ import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/add_annuaire.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/detail_anniuaire.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/update_annuaire.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/add_campaign.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/detail_campaign.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/update_campaign.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/com_marketing_dd/comm_marketing_dd.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/achat_page.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/bon_livraison_page.dart';
@@ -200,6 +203,8 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
+import 'package:wm_solution/src/pages/screens/help_page.dart';
+import 'package:wm_solution/src/pages/screens/settings_page.dart';
 import 'package:wm_solution/src/pages/taches/components/add_rapport.dart';
 import 'package:wm_solution/src/pages/taches/components/detail_rapport.dart';
 import 'package:wm_solution/src/pages/taches/components/detail_tache.dart';
@@ -208,9 +213,44 @@ import 'package:wm_solution/src/pages/update/view/update_page.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 List<GetPage<dynamic>>? getPages = [
+  // UserRoutes
+   GetPage(
+    name: UserRoutes.login,
+    page: () => const LoginAuth(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: UserRoutes.logout,
+      page: () => const LoginAuth(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: UserRoutes.profil,
+      page: () => const ProfileAuth(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: UserRoutes.changePassword,
+      page: () => const ChangePasswordAuth(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: UserRoutes.forgotPassword,
+      page: () => const ForgotPassword(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)), 
+
   // Settings
-  // GetPage(name: SettingsRoutes.helps, page: page),
-  // GetPage(name: SettingsRoutes.settings, page: page),
+  GetPage(
+      name: SettingsRoutes.settings,
+      page: () => const SettingsPage(),
+      transition: Transition.upToDown,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: SettingsRoutes.helps,
+      page: () => const HelpPage(),
+      transition: Transition.upToDown,
+      transitionDuration: const Duration(seconds: 1)),
   // GetPage(name: SettingsRoutes.pageVerrouillage, page: page),
   // GetPage(name: SettingsRoutes.splash, page: page),
 
@@ -335,13 +375,6 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
-  // UserRoutes
-  GetPage(name: UserRoutes.login, page: () => const LoginAuth()),
-  GetPage(name: UserRoutes.logout, page: () => const LoginAuth()),
-  GetPage(name: UserRoutes.profil, page: () => const ProfileAuth()),
-  GetPage(name: UserRoutes.forgotPassword, page: () => const ProfileAuth()),
-  GetPage(
-      name: UserRoutes.changePassword, page: () => const ChangePasswordAuth()),
 
   // RH
   GetPage(
@@ -727,31 +760,54 @@ List<GetPage<dynamic>>? getPages = [
 
   // Marketing
   GetPage(
-      name: ComMarketingRoutes.comMarketingCampaign,
+      name: MarketingRoutes.marketingDD,
       page: () => const CampaignPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingCampaignDetail,
+      name: MarketingRoutes.marketingDD,
+      page: () => const AddCampaign(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MarketingRoutes.marketingCampaign,
+      page: () => const CampaignPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MarketingRoutes.marketingCampaignAdd,
+      page: () => const AddCampaign(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MarketingRoutes.marketingCampaignDetail,
       page: () {
         final CampaignModel campaignModel = Get.arguments as CampaignModel;
         return DetailCampaign(campaignModel: campaignModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: MarketingRoutes.marketingCampaignUpdate,
+      page: () {
+        final CampaignModel campaignModel = Get.arguments as CampaignModel;
+        return UpdateCampaign(campaignModel: campaignModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComMarketingRoutes.comMarketingAnnuaire,
+      name: MarketingRoutes.marketingAnnuaire,
       page: () => const AnnuairePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingAnnuaireAdd,
+      name: MarketingRoutes.marketingAnnuaireAdd,
       page: () => const AddAnnuaire(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingAnnuaireDetail,
+      name: MarketingRoutes.marketingAnnuaireDetail,
       page: () {
         final AnnuaireColor annuaireColor = Get.arguments as AnnuaireColor;
         return DetailAnnuaire(annuaireColor: annuaireColor);
@@ -759,7 +815,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingAnnuaireEdit,
+      name: MarketingRoutes.marketingAnnuaireEdit,
       page: () {
         final AnnuaireModel annuaireModel = Get.arguments as AnnuaireModel;
         return UpdateAnnuaire(annuaireModel: annuaireModel);
@@ -768,12 +824,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComMarketingRoutes.comMarketingAgenda,
+      name: MarketingRoutes.marketingAgenda,
       page: () => const AgendaPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingAgendaDetail,
+      name: MarketingRoutes.marketingAgendaDetail,
       page: () {
         final AgendaColor agendaColor = Get.arguments as AgendaColor;
         return DetailAgenda(agendaColor: agendaColor);
@@ -781,7 +837,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingAgendaUpdate,
+      name: MarketingRoutes.marketingAgendaUpdate,
       page: () {
         final AgendaColor agendaColor = Get.arguments as AgendaColor;
         return UpdateAgenda(agendaColor: agendaColor);
@@ -792,27 +848,27 @@ List<GetPage<dynamic>>? getPages = [
 
   // Commercial
   GetPage(
-    name: ComMarketingRoutes.comMarketingDashboard,
+    name: ComRoutes.comDashboard,
     page: () => const DashboardCommMarketingPage(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingDD,
+      name: ComRoutes.comDD,
       page: () => const CommMarketingDD(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingSuccursale,
+      name: ComRoutes.comSuccursale,
       page: () => const SuccursalePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComMarketingRoutes.comMarketingSuccursaleAdd,
+    name: ComRoutes.comSuccursaleAdd,
     page: () => const AddSuccursale(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComMarketingRoutes.comMarketingAgendaDetail,
+    name: ComRoutes.comSuccursaleDetail,
     page: () {
       final SuccursaleModel succursaleModel = Get.arguments as SuccursaleModel;
       return DetailSuccursale(succursaleModel: succursaleModel);
@@ -820,7 +876,7 @@ List<GetPage<dynamic>>? getPages = [
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComMarketingRoutes.comMarketingAgendaUpdate,
+    name: ComRoutes.comSuccursaleUpdate,
     page: () {
       final SuccursaleModel succursaleModel =
           Get.arguments as SuccursaleModel;
@@ -829,24 +885,22 @@ List<GetPage<dynamic>>? getPages = [
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingVente,
+      name: ComRoutes.comVente,
       page: () => const VentePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)), 
-
-  
   GetPage(
-    name: ComMarketingRoutes.comMarketingStockGlobal,
+    name: ComRoutes.comStockGlobal,
     page: () => const StockGlobalPage(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComMarketingRoutes.comMarketingStockGlobalAdd,
+    name: ComRoutes.comStockGlobalAdd,
     page: () => const AddStockGlobal(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ComMarketingRoutes.comMarketingStockGlobalDetail,
+    name: ComRoutes.comStockGlobalDetail,
     page: () {
       final StocksGlobalMOdel stocksGlobalMOdel =
           Get.arguments as StocksGlobalMOdel;
@@ -855,7 +909,7 @@ List<GetPage<dynamic>>? getPages = [
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingStockGlobalLivraisonStock,
+      name: ComRoutes.comStockGlobalLivraisonStock,
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
             Get.arguments as StocksGlobalMOdel;
@@ -864,7 +918,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingStockGlobalRavitaillement,
+      name: ComRoutes.comStockGlobalRavitaillement,
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
             Get.arguments as StocksGlobalMOdel;
@@ -875,12 +929,12 @@ List<GetPage<dynamic>>? getPages = [
 
 
   GetPage(  
-    name: ComMarketingRoutes.comMarketingRestitution,
+    name: ComRoutes.comRestitution,
     page: () => const RestitutionPage(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingRestitutionDetail,
+      name: ComRoutes.comRestitutionDetail,
       page: () {
         final RestitutionModel restitutionModel =
             Get.arguments as RestitutionModel;
@@ -890,17 +944,17 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
     
    GetPage(
-      name: ComMarketingRoutes.comMarketingProduitModel,
+      name: ComRoutes.comProduitModel,
       page: () => const ProduitModelPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingProduitModelAdd,
+      name: ComRoutes.comProduitModelAdd,
       page: () => const AjoutProductModel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingProduitModelDetail,
+      name: ComRoutes.comProduitModelDetail,
       page: () {
         final ProductModel productModel =
             Get.arguments as ProductModel;
@@ -909,7 +963,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingProduitModelUpdate,
+      name: ComRoutes.comProduitModelUpdate,
       page: () {
         final ProductModel productModel = Get.arguments as ProductModel;
         return UpdateProductModele(productModel: productModel);
@@ -918,28 +972,28 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComMarketingRoutes.comMarketingHistoryRavitaillement,
+      name: ComRoutes.comHistoryRavitaillement,
       page: () => const HistoryRavitaillementPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingHistoryLivraison,
+      name: ComRoutes.comHistoryLivraison,
       page: () => const HistoryLivraisonPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComMarketingRoutes.comMarketingFacture,
+      name: ComRoutes.comFacture,
       page: () => const FacturePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingCreance,
+      name: ComRoutes.comCreance,
       page: () => const FactureCreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingFactureDetail,
+      name: ComRoutes.comFactureDetail,
       page: () {
         final FactureCartModel factureCartModel = Get.arguments as FactureCartModel;
         return DetailFacture(factureCartModel: factureCartModel);
@@ -947,7 +1001,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingCreanceDetail,
+      name: ComRoutes.comCreanceDetail,
       page: () {
         final CreanceCartModel creanceCartModel =
             Get.arguments as CreanceCartModel;
@@ -957,12 +1011,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComMarketingRoutes.comMarketingcart,
+      name: ComRoutes.comCart,
       page: () => const CartPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingcartDetail,
+      name: ComRoutes.comCartDetail,
       page: () {
         final CartModel cart =
             Get.arguments as CartModel;
@@ -972,12 +1026,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComMarketingRoutes.comMarketingBonLivraison,
+      name: ComRoutes.comBonLivraison,
       page: () => const BonLivraisonPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingBonLivraisonDetail,
+      name: ComRoutes.comBonLivraisonDetail,
       page: () {
         final BonLivraisonModel bonLivraisonModel = Get.arguments as BonLivraisonModel;
         return DetailBonLivraison(bonLivraisonModel: bonLivraisonModel);
@@ -986,12 +1040,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-    name: ComMarketingRoutes.comMarketingAchat,
+    name: ComRoutes.comAchat,
     page: () => const AchatPage(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComMarketingRoutes.comMarketingAchatDetail,
+      name: ComRoutes.comAchatDetail,
       page: () {
         final AchatModel achatModel =
             Get.arguments as AchatModel;

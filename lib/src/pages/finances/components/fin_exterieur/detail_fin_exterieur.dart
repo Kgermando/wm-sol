@@ -28,10 +28,9 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
     final FinExterieurController controller = Get.put(FinExterieurController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -71,7 +70,8 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
                                           children: [
                                             TitleWidget(
                                                 title: widget
-                                                    .financeExterieurModel.financeExterieurName),
+                                                    .financeExterieurModel
+                                                    .financeExterieurName),
                                             Column(
                                               children: [
                                                 SelectableText(
@@ -108,8 +108,10 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
             child1: Text('Banque :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.financeExterieurModel.financeExterieurName,
-                textAlign: TextAlign.start, style: bodyMedium),
+            child2: SelectableText(
+                widget.financeExterieurModel.financeExterieurName,
+                textAlign: TextAlign.start,
+                style: bodyMedium),
           ),
           ResponsiveChildWidget(
             child1: Text('Nom Complet :',
@@ -123,8 +125,10 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
             child1: Text('Pièce justificative :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.financeExterieurModel.pieceJustificative,
-                textAlign: TextAlign.start, style: bodyMedium),
+            child2: SelectableText(
+                widget.financeExterieurModel.pieceJustificative,
+                textAlign: TextAlign.start,
+                style: bodyMedium),
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
@@ -150,7 +154,8 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.financeExterieurModel.typeOperation,
-                textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.purple)),
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(color: Colors.purple)),
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(

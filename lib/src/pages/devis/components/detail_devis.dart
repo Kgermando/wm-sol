@@ -28,7 +28,7 @@ class DetailDevis extends StatefulWidget {
 
 class _DetailDevisState extends State<DetailDevis> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Devis"; 
+  String title = "Devis";
 
   bool isChecked = false;
 
@@ -40,10 +40,9 @@ class _DetailDevisState extends State<DetailDevis> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -94,28 +93,36 @@ class _DetailDevisState extends State<DetailDevis> {
                                                         color: Colors
                                                             .green.shade700,
                                                         onPressed: () {
-                                                          controller.sendDD(widget.devisModel);
+                                                          controller.sendDD(
+                                                              widget
+                                                                  .devisModel);
                                                         },
                                                         icon: const Icon(
                                                             Icons.send)),
-                                                    if(widget.devisModel.approbationDD == '-')
-                                                    deleteButton(controller), 
+                                                    if (widget.devisModel
+                                                            .approbationDD ==
+                                                        '-')
+                                                      deleteButton(controller),
                                                   ],
                                                 ),
                                                 SelectableText(
                                                     DateFormat("dd-MM-yyyy")
-                                                        .format(widget.devisModel.created),
+                                                        .format(widget
+                                                            .devisModel
+                                                            .created),
                                                     textAlign: TextAlign.start),
                                               ],
                                             )
                                           ],
                                         ),
-                                        dataWidget(controller, profilController),
+                                        dataWidget(
+                                            controller, profilController),
                                         SizedBox(
                                           height: 300,
                                           width: double.infinity,
                                           child: SingleChildScrollView(
-                                              child: tableDevisListObjet(devisListObjetController)),
+                                              child: tableDevisListObjet(
+                                                  devisListObjetController)),
                                         ),
                                         ApprobationDevis(
                                             devisModel: widget.devisModel,
@@ -133,21 +140,21 @@ class _DetailDevisState extends State<DetailDevis> {
             ));
   }
 
-  Widget dataWidget(DevisController controller, ProfilController profilController) {
+  Widget dataWidget(
+      DevisController controller, ProfilController profilController) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         children: [
           ResponsiveChildWidget(
-            flex1: 1,
-            flex2: 3,
-            child1: Text('Titre :',
-              textAlign: TextAlign.start,
-              style: bodyMedium!
-                  .copyWith(fontWeight: FontWeight.bold)), 
-            child2: SelectableText(widget.devisModel.title,
-                          textAlign: TextAlign.start, style: bodyMedium)),
+              flex1: 1,
+              flex2: 3,
+              child1: Text('Titre :',
+                  textAlign: TextAlign.start,
+                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+              child2: SelectableText(widget.devisModel.title,
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(color: mainColor),
           ResponsiveChildWidget(
               flex1: 1,
@@ -157,7 +164,6 @@ class _DetailDevisState extends State<DetailDevis> {
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.devisModel.priority,
                   textAlign: TextAlign.start, style: bodyMedium)),
-           
           Divider(color: mainColor),
           ResponsiveChildWidget(
               flex1: 1,
@@ -167,7 +173,6 @@ class _DetailDevisState extends State<DetailDevis> {
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.devisModel.departement,
                   textAlign: TextAlign.start, style: bodyMedium)),
-           
           Divider(color: mainColor),
           ResponsiveChild3Widget(
               flex1: 1,
@@ -176,20 +181,20 @@ class _DetailDevisState extends State<DetailDevis> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: (widget.devisModel.observation == 'false' &&
-                    profilController.user.departement == "Finances") 
-                  ? checkboxRead(controller) : Container(),
+                      profilController.user.departement == "Finances")
+                  ? checkboxRead(controller)
+                  : Container(),
               child3: (widget.devisModel.observation == 'true')
-                ? SelectableText(
-                    'Payé',
-                    style: bodyMedium.copyWith(
-                        color: Colors.greenAccent.shade700),
-                  )
-                : SelectableText(
-                    'Non payé',
-                    style: bodyMedium.copyWith(
-                        color: Colors.redAccent.shade700),
-                  )   
-            ), 
+                  ? SelectableText(
+                      'Payé',
+                      style: bodyMedium.copyWith(
+                          color: Colors.greenAccent.shade700),
+                    )
+                  : SelectableText(
+                      'Non payé',
+                      style:
+                          bodyMedium.copyWith(color: Colors.redAccent.shade700),
+                    )),
           Divider(color: mainColor),
         ],
       ),
@@ -219,13 +224,13 @@ class _DetailDevisState extends State<DetailDevis> {
         checkColor: Colors.white,
         fillColor: MaterialStateProperty.resolveWith(getColor),
         value: isChecked,
-        onChanged: (bool? value) { 
+        onChanged: (bool? value) {
           setState(() {
             isChecked = value!;
             if (isChecked) {
               controller.submitObservation(widget.devisModel, 'true');
             } else {
-              controller.submitObservation(widget.devisModel, 'false'); 
+              controller.submitObservation(widget.devisModel, 'false');
             }
           });
         },

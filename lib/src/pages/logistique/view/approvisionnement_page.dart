@@ -29,10 +29,9 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -40,7 +39,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter de la provision"),
                 tooltip: "Ajout la provision",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {
                   newDialog();
                 },
@@ -63,7 +62,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
                             child: ListView.builder(
-                              shrinkWrap: true,
+                                shrinkWrap: true,
                                 itemCount:
                                     controller.approvisionnementList.length,
                                 itemBuilder: (context, index) {
@@ -87,8 +86,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
               scrollable: true,
-              title:
-                  Text('Ajout stock', style: TextStyle(color: mainColor)),
+              title: Text('Ajout stock', style: TextStyle(color: mainColor)),
               content: SizedBox(
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
@@ -138,8 +136,8 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
           decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: 'Type d\'Allocation',
-              hintText: 'Bureau, Entrepôt,...'),
+              labelText: 'Provision',
+              hintText: 'Cartouche, Papier,...'),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
           validator: (value) {
@@ -154,27 +152,27 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
 
   Widget quantityWidget() {
     return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: TextFormField(
-        controller: controller.quantityController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Adresse',
-        ),
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.quantityController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Quantité',
+          ),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
           ],
-        style: const TextStyle(),
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 
   Widget uniteWidget() {

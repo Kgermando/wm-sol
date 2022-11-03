@@ -33,10 +33,9 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -45,7 +44,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter le ravitaillement"),
                 tooltip: "Ajout le ravitaillement",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {
                   newDialog();
                 },
@@ -168,7 +167,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
       trailing: Form(
         key: approvisionReceptionController.receptionFormKey,
         child: Row(
-          children: [ 
+          children: [
             Expanded(child: qtyReceptionWidget()),
             Expanded(child: departementWidget()),
           ],
@@ -196,7 +195,10 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
-                              Text(widget.approvisionnementModel.provision, style: Theme.of(context).textTheme.headlineSmall),
+                              Text(widget.approvisionnementModel.provision,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
                               quantityWidget(),
                               const SizedBox(
                                 height: p20,
@@ -224,7 +226,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
           });
         });
   }
- 
+
   Widget quantityWidget() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -236,8 +238,8 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
               child: TextFormField(
                 controller: controller.quantityController,
                 decoration: InputDecoration(
-                  border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
                   labelText: 'Adresse',
                 ),
                 keyboardType:
@@ -255,11 +257,12 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                 },
               )),
         ),
-        Expanded(child: Text(widget.approvisionnementModel.unite, style: Theme.of(context).textTheme.headlineSmall))
+        Expanded(
+            child: Text(widget.approvisionnementModel.unite,
+                style: Theme.of(context).textTheme.headlineSmall))
       ],
     );
   }
-
 
   Widget departementWidget() {
     return Container(
@@ -273,7 +276,8 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
         ),
         value: approvisionReceptionController.departement,
         isExpanded: true,
-        items: approvisionReceptionController.departementList.map((String value) {
+        items:
+            approvisionReceptionController.departementList.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(value),
@@ -283,9 +287,11 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
         onChanged: (value) {
           setState(() {
             approvisionReceptionController.departement = value!;
-            final form = approvisionReceptionController.receptionFormKey.currentState!;
+            final form =
+                approvisionReceptionController.receptionFormKey.currentState!;
             if (form.validate()) {
-              approvisionReceptionController.submit(widget.approvisionnementModel);
+              approvisionReceptionController
+                  .submit(widget.approvisionnementModel);
               form.reset();
               Navigator.pop(context, 'ok');
             }
@@ -301,8 +307,8 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
         child: TextFormField(
           controller: controller.quantityController,
           decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
             labelText: 'Adresse',
           ),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -319,6 +325,4 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
           },
         ));
   }
-
- 
 }

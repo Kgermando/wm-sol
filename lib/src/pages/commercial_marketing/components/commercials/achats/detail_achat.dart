@@ -31,14 +31,14 @@ class _DetailAchatState extends State<DetailAchat> {
   Widget build(BuildContext context) {
     final AchatController controller = Get.put(AchatController());
     final ProfilController profilController = Get.put(ProfilController());
-    final VenteCartController venteCartController = Get.put(VenteCartController());
+    final VenteCartController venteCartController =
+        Get.put(VenteCartController());
 
     var roleAgent = int.parse(profilController.user.role) <= 3;
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -76,22 +76,27 @@ class _DetailAchatState extends State<DetailAchat> {
                                     Column(
                                       children: [
                                         Row(
-                                          children: [ 
-                                            reporting(profilController, venteCartController),
+                                          children: [
+                                            reporting(profilController,
+                                                venteCartController),
                                             if (roleAgent)
-                            if (double.parse(widget.achatModel.quantity) > 0)
-                              transfertProduit()
+                                              if (double.parse(widget
+                                                      .achatModel.quantity) >
+                                                  0)
+                                                transfertProduit()
                                           ],
                                         ),
                                         SelectableText(
                                             DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(widget.achatModel.created),
+                                                .format(
+                                                    widget.achatModel.created),
                                             textAlign: TextAlign.start),
                                       ],
                                     )
                                   ],
                                 ),
-                                dataWidget(profilController, venteCartController),
+                                dataWidget(
+                                    profilController, venteCartController),
                               ],
                             ),
                           )))
@@ -101,8 +106,7 @@ class _DetailAchatState extends State<DetailAchat> {
   }
 
   Widget dataWidget(ProfilController profilController,
-    VenteCartController venteCartController
-    ) {
+      VenteCartController venteCartController) {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
@@ -165,14 +169,15 @@ class _DetailAchatState extends State<DetailAchat> {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
 
-    var prixAchatTotal =
-        double.parse(widget.achatModel.priceAchatUnit) * double.parse(widget.achatModel.quantityAchat);
-    var margeBenifice =
-        double.parse(widget.achatModel.prixVenteUnit) - double.parse(widget.achatModel.priceAchatUnit);
-    var margeBenificeTotal = margeBenifice * double.parse(widget.achatModel.quantityAchat);
+    var prixAchatTotal = double.parse(widget.achatModel.priceAchatUnit) *
+        double.parse(widget.achatModel.quantityAchat);
+    var margeBenifice = double.parse(widget.achatModel.prixVenteUnit) -
+        double.parse(widget.achatModel.priceAchatUnit);
+    var margeBenificeTotal =
+        margeBenifice * double.parse(widget.achatModel.quantityAchat);
 
-    var margeBenificeRemise =
-        double.parse(widget.achatModel.remise) - double.parse(widget.achatModel.priceAchatUnit);
+    var margeBenificeRemise = double.parse(widget.achatModel.remise) -
+        double.parse(widget.achatModel.priceAchatUnit);
     var margeBenificeTotalRemise =
         margeBenificeRemise * double.parse(widget.achatModel.quantityAchat);
 
@@ -299,7 +304,8 @@ class _DetailAchatState extends State<DetailAchat> {
                         : bodyText2,
                     overflow: TextOverflow.ellipsis),
                 const Spacer(),
-                Text('${double.parse(widget.achatModel.remise).toStringAsFixed(2)} \$',
+                Text(
+                    '${double.parse(widget.achatModel.remise).toStringAsFixed(2)} \$',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -319,7 +325,8 @@ class _DetailAchatState extends State<DetailAchat> {
                         : bodyText2,
                     overflow: TextOverflow.ellipsis),
                 const Spacer(),
-                Text('${widget.achatModel.qtyRemise} ${widget.achatModel.unite}',
+                Text(
+                    '${widget.achatModel.qtyRemise} ${widget.achatModel.unite}',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -558,8 +565,8 @@ class _DetailAchatState extends State<DetailAchat> {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
 
-    var prixTotalRestante =
-        double.parse(widget.achatModel.quantity) * double.parse(widget.achatModel.prixVenteUnit);
+    var prixTotalRestante = double.parse(widget.achatModel.quantity) *
+        double.parse(widget.achatModel.prixVenteUnit);
 
     return Card(
         child: Padding(
@@ -627,7 +634,7 @@ class _DetailAchatState extends State<DetailAchat> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Get.toNamed(ComMarketingRoutes.comMarketingRestitutionStock,
+                Get.toNamed(ComRoutes.comRestitutionStock,
                     arguments: widget.achatModel);
               },
               child: const Text('OK'),

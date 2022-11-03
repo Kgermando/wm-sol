@@ -29,13 +29,10 @@ class _DetailEnginState extends State<DetailEngin> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -44,7 +41,7 @@ class _DetailEnginState extends State<DetailEngin> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter un trajet"),
                 tooltip: "Ajouter un nouveau trajet",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {
                   Get.toNamed(LogistiqueRoutes.logAddTrajetAuto,
                       arguments: widget.anguinModel);
@@ -91,70 +88,69 @@ class _DetailEnginState extends State<DetailEngin> {
                                                     widget.anguinModel
                                                             .approbationDD ==
                                                         "-")
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                    tooltip: 'Modifier',
-                                                    onPressed: () {
-                                                      Get.toNamed(
-                                                          LogistiqueRoutes
-                                                              .logAnguinAutoUpdate,
-                                                          arguments: widget
-                                                              .anguinModel); 
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.edit)),
-                                                IconButton(
-                                                    tooltip: 'Supprimer',
-                                                    onPressed: () async {
-                                      alertDeleteDialog();
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.delete),
-                                                    color: Colors
-                                                        .red.shade700),
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
+                                                          tooltip: 'Modifier',
+                                                          onPressed: () {
+                                                            Get.toNamed(
+                                                                LogistiqueRoutes
+                                                                    .logAnguinAutoUpdate,
+                                                                arguments: widget
+                                                                    .anguinModel);
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.edit)),
+                                                      IconButton(
+                                                          tooltip: 'Supprimer',
+                                                          onPressed: () async {
+                                                            alertDeleteDialog();
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.delete),
+                                                          color: Colors
+                                                              .red.shade700),
+                                                    ],
+                                                  ),
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .anguinModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
                                               ],
-                                            ),
-                                          SelectableText(
-                                              DateFormat(
-                                                      "dd-MM-yyyy HH:mm")
-                                                  .format(widget
-                                                      .anguinModel
-                                                      .created),
-                                              textAlign: TextAlign.start),
-                                        ],
-                                      )
-                                    ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                        const SizedBox(height: p20),
+                                        ApprobationEngin(
+                                            data: widget.anguinModel,
+                                            controller: controller,
+                                            profilController: profilController)
+                                      ],
+                                    ),
                                   ),
-                                  dataWidget(),
-                                  const SizedBox(height: p20),
-                                  ApprobationEngin(
-                                    data: widget.anguinModel,
-                                    controller: controller,
-                                    profilController: profilController)
+                                )
                               ],
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
+                          )))
                 ],
               ),
             ));
   }
 
-
-   alertDeleteDialog() {
+  alertDeleteDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-                            title: Text('Etes-vous sûr de vouloir faire ceci ?',
+              title: Text('Etes-vous sûr de vouloir faire ceci ?',
                   style: TextStyle(color: mainColor)),
-              content: const SizedBox( 
+              content: const SizedBox(
                   width: 100,
                   child: Text("Cette action permet de supprimer le document")),
               actions: <Widget>[
@@ -164,8 +160,7 @@ class _DetailEnginState extends State<DetailEngin> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.enginsApi
-                        .deleteData(widget.anguinModel.id!);
+                    controller.enginsApi.deleteData(widget.anguinModel.id!);
                     Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK'),
@@ -375,8 +370,10 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText("${widget.anguinModel.kilometrageInitiale} km",
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    "${widget.anguinModel.kilometrageInitiale} km",
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),

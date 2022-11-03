@@ -22,102 +22,102 @@ class AddArchive extends StatefulWidget {
 
 class _AddArchiveState extends State<AddArchive> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Archive"; 
+  String title = "Archive";
 
   @override
   Widget build(BuildContext context) {
     final ArchiveController controller = Get.put(ArchiveController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(
-              context, scaffoldKey, title, widget.archiveFolderModel.folderName),
-          drawer: const DrawerMenu(),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      physics: const ScrollPhysics(),
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, bottom: p8, right: p20, left: p20),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Column(
-                          children: [
-                            Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: p20),
-                                child: Form(
-                                  key: controller.formKey,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: const [
-                                          TitleWidget(title: "Ajout archive")
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.archiveFolderModel.folderName),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Form(
+                                      key: controller.formKey,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: const [
+                                              TitleWidget(
+                                                  title: "Ajout archive")
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          nomDocumentWidget(controller),
+                                          ResponsiveChildWidget(
+                                              child1: fichierWidget(controller),
+                                              child2: Container()),
+                                          descriptionWidget(controller),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          BtnWidget(
+                                              title: 'Soumettre',
+                                              isLoading: controller.isLoading,
+                                              press: () {
+                                                final form = controller
+                                                    .formKey.currentState!;
+                                                if (form.validate()) {
+                                                  controller.submit(widget
+                                                      .archiveFolderModel);
+                                                  form.reset();
+                                                }
+                                                Navigator.of(context).pop();
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: const Text(
+                                                      "Enregistrer avec succès!"),
+                                                  backgroundColor:
+                                                      Colors.green[700],
+                                                ));
+                                              })
                                         ],
                                       ),
-                                      const SizedBox(
-                                        height: p20,
-                                      ),
-                                      nomDocumentWidget(controller),
-                                      ResponsiveChildWidget(
-                                        child1: fichierWidget(controller), 
-                                        child2: Container()) ,
-                                      descriptionWidget(controller),
-                                      const SizedBox(
-                                        height: p20,
-                                      ),
-                                      BtnWidget(
-                                          title: 'Soumettre',
-                                          isLoading: controller.isLoading,
-                                          press: () {
-                                            final form =
-                                              controller.formKey.currentState!;
-                                            if (form.validate()) {
-                                              controller.submit(widget.archiveFolderModel);
-                                              form.reset();
-                                            }
-                                            Navigator.of(context).pop();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                              content: const Text(
-                                                  "Enregistrer avec succès!"),
-                                              backgroundColor:
-                                                  Colors.green[700],
-                                            ));
-                                          })
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )))
-            ],
-          ),
-        ));
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
-
 
   Widget nomDocumentWidget(ArchiveController controller) {
     return Container(

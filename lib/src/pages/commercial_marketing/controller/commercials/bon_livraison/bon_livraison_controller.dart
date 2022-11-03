@@ -11,7 +11,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/commercial
 class BonLivraisonController extends GetxController
     with StateMixin<List<BonLivraisonModel>> {
   final BonLivraisonApi bonLivraisonApi = BonLivraisonApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final AchatController achatController = Get.put(AchatController());
   final HistoryLivraisonController historyLivraisonController =
       Get.put(HistoryLivraisonController());

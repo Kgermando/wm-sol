@@ -13,7 +13,7 @@ import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_rol
 import 'package:wm_solution/src/pages/personnels_roles/view/table_personnels_roles.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/pages/taches/components/table_taches_detail.dart';
-import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart'; 
+import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -45,10 +45,9 @@ class _DetailCampaignState extends State<DetailCampaign> {
     int userRole = int.parse(profilController.user.role);
     final sized = MediaQuery.of(context).size;
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -101,21 +100,20 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                 height: p20,
                               ),
                               BtnWidget(
-                                title: 'Créer maintenant',
-                                press: () {
-                                  final form =
-                                      tachesController.formKey.currentState!;
-                                  if (form.validate()) {
-                                    tachesController.submit(
-                                      widget.campaignModel.typeProduit,
-                                      tachesController.tachesList.length,
-                                      widget.campaignModel.id!,
-                                      'Commercial et Marketing'
-                                    );
-                                    form.reset();
-                                  }
-                                },
-                              isLoading: tachesController.isLoading)
+                                  title: 'Créer maintenant',
+                                  press: () {
+                                    final form =
+                                        tachesController.formKey.currentState!;
+                                    if (form.validate()) {
+                                      tachesController.submit(
+                                          widget.campaignModel.typeProduit,
+                                          tachesController.tachesList.length,
+                                          widget.campaignModel.id!,
+                                          'Commercial et Marketing');
+                                      form.reset();
+                                    }
+                                  },
+                                  isLoading: tachesController.isLoading)
                             ],
                           ),
                         ),
@@ -173,8 +171,8 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                                                   Colors.purple,
                                                               onPressed: () {
                                                                 Get.toNamed(
-                                                                    ComMarketingRoutes
-                                                                        .comMarketingCampaignUpdate,
+                                                                    MarketingRoutes
+                                                                        .marketingCampaignUpdate,
                                                                     arguments:
                                                                         widget
                                                                             .campaignModel);

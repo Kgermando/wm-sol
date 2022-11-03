@@ -46,10 +46,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
   @override
   Widget build(BuildContext context) {
     return controllerAgent.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -61,7 +60,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                       : FloatingActionButton.extended(
                           label: const Text("Ajouter une personne"),
                           tooltip: "Ajout personne à la liste",
-                          icon: const Icon(Icons.person_add),
+                          icon: const Icon(Icons.add),
                           onPressed: () {
                             detailAgentDialog(controller, controllerAgent);
                           },
@@ -211,7 +210,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
   }
 
   Widget dataWidget(TransportRestController controller) {
-    final ProfilController profilController = Get.find();
+    final ProfilController profilController = Get.put(ProfilController());
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
       padding: const EdgeInsets.all(p10),

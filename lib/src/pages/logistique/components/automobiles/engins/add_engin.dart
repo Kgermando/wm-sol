@@ -26,21 +26,19 @@ class _AddEnginState extends State<AddEngin> {
   String subTitle = "Nouvel Engin";
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, subTitle),
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter une personne"),
                 tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {},
               ),
               body: Row(
@@ -73,44 +71,44 @@ class _AddEnginState extends State<AddEngin> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                        const TitleWidget(
-                                            title: "Nouvel Engin"),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        ResponsiveChildWidget(
-                                          child1: nomWidget(), 
-                                          child2: modeleWidget()
-                                        ),
-                                        ResponsiveChildWidget(
-                                            child1: marqueWidget(),
-                                            child2: numeroChassieWidget()),
-                                        ResponsiveChildWidget(
-                                            child1: couleurNomWidget(),
-                                            child2: genreWidget()),
-                                        ResponsiveChildWidget(
-                                            child1: qtyMaxReservoirWidget(),
-                                            child2: dateFabricationWidget()),
-                                        ResponsiveChildWidget(
-                                          child1: nomeroPLaqueWidget(),
-                                          child2: nomeroEntrepriseWidget()),
-                                        ResponsiveChildWidget(
-                                          child1: kilometrageInitialeWidget(),
-                                          child2: provenanceWidget()), 
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        BtnWidget(
-                                            title: 'Soumettre',
-                                            isLoading: controller.isLoading,
-                                            press: () {
-                                              final form =
-                                              controller.formKey.currentState!;
-                                              if (form.validate()) {
-                                                controller.submit();
-                                                form.reset();
-                                              }
-                                            })
+                                          const TitleWidget(
+                                              title: "Nouvel Engin"),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          ResponsiveChildWidget(
+                                              child1: nomWidget(),
+                                              child2: modeleWidget()),
+                                          ResponsiveChildWidget(
+                                              child1: marqueWidget(),
+                                              child2: numeroChassieWidget()),
+                                          ResponsiveChildWidget(
+                                              child1: couleurNomWidget(),
+                                              child2: genreWidget()),
+                                          ResponsiveChildWidget(
+                                              child1: qtyMaxReservoirWidget(),
+                                              child2: dateFabricationWidget()),
+                                          ResponsiveChildWidget(
+                                              child1: nomeroPLaqueWidget(),
+                                              child2: nomeroEntrepriseWidget()),
+                                          ResponsiveChildWidget(
+                                              child1:
+                                                  kilometrageInitialeWidget(),
+                                              child2: provenanceWidget()),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          BtnWidget(
+                                              title: 'Soumettre',
+                                              isLoading: controller.isLoading,
+                                              press: () {
+                                                final form = controller
+                                                    .formKey.currentState!;
+                                                if (form.validate()) {
+                                                  controller.submit();
+                                                  form.reset();
+                                                }
+                                              })
                                         ],
                                       ),
                                     ),
@@ -123,7 +121,6 @@ class _AddEnginState extends State<AddEngin> {
               ),
             ));
   }
-
 
   Widget nomWidget() {
     return Container(

@@ -48,13 +48,11 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
   Widget build(BuildContext context) {
     final ArchiveFolderController controller =
         Get.put(ArchiveFolderController());
-    final ProfilController profilController = Get.find();
+    final ProfilController profilController = Get.put(ProfilController());
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-        (state) {
+        onError: (error) => loadingError(context, error!), (state) {
       var archiveFolderList = controller.archiveFolderList
           .where((element) =>
               element.departement == profilController.user.departement)

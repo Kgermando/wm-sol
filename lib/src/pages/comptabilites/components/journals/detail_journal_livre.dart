@@ -35,14 +35,13 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
   @override
   Widget build(BuildContext context) {
     final JournalController controller = Get.put(JournalController());
-    
+
     final ProfilController profilController = Get.put(ProfilController());
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -90,7 +89,7 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                             const TitleWidget(
                                                 title: "Journals"),
                                             Row(
-                                              children: [ 
+                                              children: [
                                                 if (widget.journalLivreModel
                                                             .signature ==
                                                         profilController
@@ -100,114 +99,111 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                                         "false") // Uniqyement celui a remplit le document
                                                   sendButton(),
                                                 SelectableText(
-                                                  DateFormat(
-                                                          "dd-MM-yyyy HH:mm")
-                                                      .format(widget.journalLivreModel
-                                                          .created),
-                                                  textAlign: TextAlign.end,
-                                                  style: bodyMedium)
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .journalLivreModel
+                                                            .created),
+                                                    textAlign: TextAlign.end,
+                                                    style: bodyMedium)
                                               ],
                                             )
                                           ],
                                         ),
                                         const SizedBox(height: p20),
-                                ResponsiveChildWidget(
-                                  flex1: 1,
-                                  flex2: 3,
-                                  child1: Text('Intitule :',
-                                    textAlign: TextAlign
-                                        .start,
-                                    style: bodyMedium!
-                                        .copyWith(
-                                            fontWeight:
-                                                FontWeight
-                                                    .bold)), 
-                                  child2: SelectableText(
-                                      widget.journalLivreModel.intitule,
-                                      textAlign: TextAlign.justify,
-                                      style: bodyMedium)
-                                ),
-                                Divider(color: mainColor),
-                                ResponsiveChildWidget(
+                                        ResponsiveChildWidget(
+                                            flex1: 1,
+                                            flex2: 3,
+                                            child1: Text('Intitule :',
+                                                textAlign: TextAlign.start,
+                                                style: bodyMedium!.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            child2: SelectableText(
+                                                widget
+                                                    .journalLivreModel.intitule,
+                                                textAlign: TextAlign.justify,
+                                                style: bodyMedium)),
+                                        Divider(color: mainColor),
+                                        ResponsiveChildWidget(
                                           flex1: 1,
                                           flex2: 3,
-                                  child1: Text('Date de début :',
-                                  textAlign: TextAlign.start,
-                                  style: bodyMedium.copyWith(
-                                      fontWeight:
-                                          FontWeight.bold)), 
-                                child2: SelectableText(
-                                    DateFormat("dd-MM-yyyy").format(
-                                        widget
-                                            .journalLivreModel.debut),
-                                    textAlign: TextAlign.justify,
-                                    style: bodyMedium),
-                              ),
+                                          child1: Text('Date de début :',
+                                              textAlign: TextAlign.start,
+                                              style: bodyMedium.copyWith(
+                                                  fontWeight: FontWeight.bold)),
+                                          child2: SelectableText(
+                                              DateFormat("dd-MM-yyyy").format(
+                                                  widget
+                                                      .journalLivreModel.debut),
+                                              textAlign: TextAlign.justify,
+                                              style: bodyMedium),
+                                        ),
                                         Divider(color: mainColor),
-                              ResponsiveChildWidget(
-                                flex1: 1,
-                                flex2: 3,
-                                child1: Text('Date de fin :',
-                                  textAlign: TextAlign.start,
-                                  style: bodyMedium.copyWith(
-                                      fontWeight:
-                                          FontWeight.bold)),
-                              child2: SelectableText(
-                                  DateFormat("dd-MM-yyyy").format(
-                                      widget
-                                          .journalLivreModel.fin),
-                                  textAlign: TextAlign.justify,
-                                  style: bodyMedium)), 
-                              Divider(color: mainColor),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text('Signature :',
-                                        textAlign: TextAlign.start,
-                                        style: bodyMedium.copyWith(
-                                            fontWeight:
-                                                FontWeight.bold)),
+                                        ResponsiveChildWidget(
+                                            flex1: 1,
+                                            flex2: 3,
+                                            child1: Text('Date de fin :',
+                                                textAlign: TextAlign.start,
+                                                style: bodyMedium.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            child2: SelectableText(
+                                                DateFormat("dd-MM-yyyy").format(
+                                                    widget
+                                                        .journalLivreModel.fin),
+                                                textAlign: TextAlign.justify,
+                                                style: bodyMedium)),
+                                        Divider(color: mainColor),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Text('Signature :',
+                                                  textAlign: TextAlign.start,
+                                                  style: bodyMedium.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            Expanded(
+                                              flex: 3,
+                                              child: SelectableText(
+                                                  widget.journalLivreModel
+                                                      .signature,
+                                                  textAlign: TextAlign.justify,
+                                                  style: bodyMedium),
+                                            )
+                                          ],
+                                        ),
+                                        Divider(color: mainColor),
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              1.5,
+                                          child: Expanded(
+                                              child: TableJournal(
+                                                  itemList:
+                                                      controller.journalList)),
+                                        ),
+                                        totalWidget(controller.journalList),
+                                        const SizedBox(height: p20),
+                                        ApprobationJournalLivre(
+                                            data: widget.journalLivreModel,
+                                            controller: journalLivreController,
+                                            profilController: profilController)
+                                      ],
+                                    ),
                                   ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: SelectableText(
-                                        widget.journalLivreModel.signature,
-                                        textAlign: TextAlign.justify,
-                                        style: bodyMedium),
-                                  )
-                                ],
-                              ),
-                              Divider(color: mainColor),
-                              SizedBox(
-                                height: MediaQuery.of(context)
-                                        .size
-                                        .height /
-                                    1.5,
-                                child: Expanded(
-                                  child: TableJournal(itemList: controller.journalList)
-                                ),
-                              ),
-                              totalWidget(controller.journalList),  
-                              const SizedBox(height: p20),
-                            ApprobationJournalLivre(
-                              data: widget.journalLivreModel,
-                              controller: journalLivreController,
-                              profilController: profilController)
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )))
-          ],
-        ),
-      ));
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
 
-
-  
   Widget sendButton() {
     return IconButton(
       icon: Icon(Icons.send, color: Colors.green.shade700),
@@ -237,7 +233,6 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
     );
   }
 
-
   Widget totalWidget(List<JournalModel> itemList) {
     final headlineMedium = Theme.of(context).textTheme.headlineMedium;
     double totalDebit = 0.0;
@@ -252,25 +247,21 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Expanded(
-          child: ResponsiveChildWidget(
-            child1: Text("Total débit :",
-                style: headlineMedium!.copyWith(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold)), 
-            child2: Text(
-              "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
-              style: headlineMedium.copyWith(color: Colors.red))) 
-        ),
+            child: ResponsiveChildWidget(
+                child1: Text("Total débit :",
+                    style: headlineMedium!.copyWith(
+                        color: Colors.red, fontWeight: FontWeight.bold)),
+                child2: Text(
+                    "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
+                    style: headlineMedium.copyWith(color: Colors.red)))),
         Expanded(
-          child: ResponsiveChildWidget(
-            child1: Text("Total crédit :",
-              style: headlineMedium.copyWith(
-                  color: Colors.orange, fontWeight: FontWeight.bold)),
-            child2: Text(
-              "${NumberFormat.decimalPattern('fr').format(totalCredit)} \$",
-              style: headlineMedium.copyWith(color: Colors.orange))
-          )
-        ),
+            child: ResponsiveChildWidget(
+                child1: Text("Total crédit :",
+                    style: headlineMedium.copyWith(
+                        color: Colors.orange, fontWeight: FontWeight.bold)),
+                child2: Text(
+                    "${NumberFormat.decimalPattern('fr').format(totalCredit)} \$",
+                    style: headlineMedium.copyWith(color: Colors.orange)))),
       ],
     );
   }
@@ -372,47 +363,56 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                             case "Classe_1_Comptes_de_ressources_durables":
                                               comptesList
                                                   .addAll(class1Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_2_Comptes_Actif_immobilise":
                                               comptesList
                                                   .addAll(class2Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_3_Comptes_de_stocks":
                                               comptesList
                                                   .addAll(class3Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_4_Comptes_de_tiers":
                                               comptesList
                                                   .addAll(class4Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_5_Comptes_de_tresorerie":
                                               comptesList
                                                   .addAll(class5Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_6_Comptes_de_charges_des_activites_ordinaires":
                                               comptesList
                                                   .addAll(class6Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_7_Comptes_de_produits_des_activites_ordinaires":
                                               comptesList
                                                   .addAll(class7Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_8_Comptes_des_autres_charges_et_des_autres_produits":
                                               comptesList
                                                   .addAll(class8Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             case "Classe_9_Comptes_des_engagements_hors_bilan_et_comptes_de_la_comptabilite_analytique_de_gestion":
                                               comptesList
                                                   .addAll(class9Dropdown);
-                                              controller.comptes = comptesList.first;
+                                              controller.comptes =
+                                                  comptesList.first;
                                               break;
                                             default:
                                               comptesList
@@ -454,8 +454,10 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                   )),
                               Column(
                                 children: [
-                                  if (controller.type == "Debit") debit(controller),
-                                  if (controller.type == "Credit") credit(controller)
+                                  if (controller.type == "Debit")
+                                    debit(controller),
+                                  if (controller.type == "Credit")
+                                    credit(controller)
                                 ],
                               ),
                               tvaWidget(controller)

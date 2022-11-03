@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart';
+import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
+import 'package:wm_solution/src/pages/administration/controller/admin_notify_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/achats/achat_controller.dart';
@@ -64,6 +66,7 @@ import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobili
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/notify/notify_log.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_notify_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
@@ -109,6 +112,7 @@ class WMBindings extends Bindings {
 
 
     // RH
+    Get.lazyPut<DashobardNotifyController>(() => DashobardNotifyController());
     Get.lazyPut<RHNotifyController>(() => RHNotifyController());
     Get.lazyPut<PersonnelsController>(() => PersonnelsController());
     Get.lazyPut<SalaireController>(() => SalaireController());
@@ -209,6 +213,12 @@ class WMBindings extends Bindings {
 
   // Update Version
   Get.lazyPut<UpdateController>(() => UpdateController());  
+
+
+  // Administration
+  Get.lazyPut<AdminDashboardController>(() => AdminDashboardController()); 
+  Get.lazyPut<AdminNotifyController>(() => AdminNotifyController()); 
+
   
   }
 }

@@ -26,10 +26,9 @@ class _EnginPageState extends State<EnginPage> {
     final EnginController controller = Get.put(EnginController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),

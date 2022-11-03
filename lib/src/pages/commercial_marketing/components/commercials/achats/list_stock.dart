@@ -18,8 +18,7 @@ class ListStock extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (roleAgent <= 3) {
-          Get.toNamed(ComMarketingRoutes.comMarketingAchatDetail,
-              arguments: achat);
+          Get.toNamed(ComRoutes.comAchatDetail, arguments: achat);
         }
       },
       child: Card(

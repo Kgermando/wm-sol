@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
+import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -26,17 +26,15 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
 
   @override
   Widget build(BuildContext context) {
-     
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, "nouveau compte résultat"),
-              drawer: const DrawerMenu(), 
+              drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -86,10 +84,10 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
                                           ),
                                           BtnWidget(
                                               title: 'Soumettre',
-                                              isLoading: controller. isLoading,
+                                              isLoading: controller.isLoading,
                                               press: () {
-                                                final form =
-                                                    controller.formKey.currentState!;
+                                                final form = controller
+                                                    .formKey.currentState!;
                                                 if (form.validate()) {
                                                   controller.submit();
                                                   form.reset();
@@ -108,8 +106,6 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
             ));
   }
 
-
-  
   Widget chargesWidget() {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(

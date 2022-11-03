@@ -12,7 +12,7 @@ import 'package:wm_solution/src/utils/carburant_dropdown.dart';
 class CarburantController extends GetxController
     with StateMixin<List<CarburantModel>> {
   final CarburantApi carburantApi = CarburantApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final EnginController enginController = Get.put(EnginController());
   final AnnuaireController annuaireController = Get.put(AnnuaireController());
 

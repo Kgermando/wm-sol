@@ -43,7 +43,8 @@ class Dropdown {
     'Budgets',
     'Ressources Humaines',
     'Exploitations',
-    'Commercial et Marketing',
+    'Commercial',
+    'Marketing',
     'Logistique',
     'Actionnaire'
   ];

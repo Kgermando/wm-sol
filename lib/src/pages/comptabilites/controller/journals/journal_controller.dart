@@ -8,7 +8,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class JournalController extends GetxController
     with StateMixin<List<JournalModel>> {
   final JournalApi journalApi = JournalApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var journalList = <JournalModel>[].obs;
 

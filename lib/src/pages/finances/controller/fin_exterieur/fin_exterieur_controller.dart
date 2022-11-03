@@ -8,7 +8,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class FinExterieurController extends GetxController
     with StateMixin<List<FinanceExterieurModel>> {
   final FinExterieurApi finExterieurApi = FinExterieurApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var finExterieurList = <FinanceExterieurModel>[].obs;
 
@@ -24,7 +24,6 @@ class FinExterieurController extends GetxController
   final TextEditingController montantController = TextEditingController();
   String? typeOperation;
 
- 
   @override
   void onInit() {
     super.onInit();
@@ -49,7 +48,7 @@ class FinExterieurController extends GetxController
   void getList() async {
     await finExterieurApi.getAllData().then((response) {
       finExterieurList.assignAll(response);
-      
+
       change(finExterieurList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

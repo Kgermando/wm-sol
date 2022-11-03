@@ -26,10 +26,9 @@ class _BalanceComptabiliteState extends State<BalanceComptabilite> {
 
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -54,7 +53,9 @@ class _BalanceComptabiliteState extends State<BalanceComptabilite> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableBalance(balanceList: controller.balanceList, controller: controller))),
+                          child: TableBalance(
+                              balanceList: controller.balanceList,
+                              controller: controller))),
                 ],
               ))),
     );

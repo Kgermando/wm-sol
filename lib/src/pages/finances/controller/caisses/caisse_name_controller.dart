@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class CaisseNameController extends GetxController
     with StateMixin<List<CaisseNameModel>> {
   final CaisseNameApi caisseNameApi = CaisseNameApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var caisseNameList = <CaisseNameModel>[].obs;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart'; 
+import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/prod_model_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -10,8 +10,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableProduitModel extends StatefulWidget {
-  const TableProduitModel({super.key, required this.produitModelList, 
-      required this.controller});
+  const TableProduitModel(
+      {super.key, required this.produitModelList, required this.controller});
   final List<ProductModel> produitModelList;
   final ProduitModelController controller;
 
@@ -44,7 +44,7 @@ class _TableProduitModelState extends State<TableProduitModel> {
         final ProductModel productionModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComMarketingRoutes.comMarketingProduitModelDetail,
+        Get.toNamed(ComRoutes.comProduitModelDetail,
             arguments: productionModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -61,8 +61,7 @@ class _TableProduitModelState extends State<TableProduitModel> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, ComMarketingRoutes.comMarketingProduitModel);
+                      Navigator.pushNamed(context, ComRoutes.comProduitModel);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {

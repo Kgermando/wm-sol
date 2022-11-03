@@ -32,10 +32,9 @@ class _BanquePageState extends State<BanquePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -55,7 +54,11 @@ class _BanquePageState extends State<BanquePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           child: TableBanque(
-                              banqueList: controller.banqueList.where((p0) => p0.banqueName == widget.banqueNameModel.nomComplet).toList(),
+                              banqueList: controller.banqueList
+                                  .where((p0) =>
+                                      p0.banqueName ==
+                                      widget.banqueNameModel.nomComplet)
+                                  .toList(),
                               controller: controller,
                               banqueNameModel: widget.banqueNameModel))),
                 ],
@@ -129,7 +132,7 @@ class _BanquePageState extends State<BanquePage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: montantWidget()), 
+                                  child2: montantWidget()),
                               const SizedBox(
                                 height: p20,
                               ),
@@ -192,7 +195,7 @@ class _BanquePageState extends State<BanquePage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: montantWidget()), 
+                                  child2: montantWidget()),
                               const SizedBox(
                                 height: p20,
                               ),

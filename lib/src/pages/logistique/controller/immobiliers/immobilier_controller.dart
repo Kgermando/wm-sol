@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class ImmobilierController extends GetxController
     with StateMixin<List<ImmobilierModel>> {
   final ImmobilierApi immobilierApi = ImmobilierApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var immobilierList = <ImmobilierModel>[].obs;
 

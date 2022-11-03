@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class MobilierController extends GetxController
     with StateMixin<List<MobilierModel>> {
   final MobilierApi mobilierApi = MobilierApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var mobilierList = <MobilierModel>[].obs;
 

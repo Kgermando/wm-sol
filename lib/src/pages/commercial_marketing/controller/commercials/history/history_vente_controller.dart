@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class VenteCartController extends GetxController
     with StateMixin<List<VenteCartModel>> {
   final VenteCartApi venteCartApi = VenteCartApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var livraisonHistoryVenteCartList = <VenteCartModel>[].obs;
 

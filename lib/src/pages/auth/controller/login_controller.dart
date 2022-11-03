@@ -117,11 +117,17 @@ class LoginController extends GetxController {
                   } else {
                     Get.offAllNamed(TacheRoutes.tachePage);
                   }
-                } else if (departement.first == "Commercial et Marketing") {
+                } else if (departement.first == "Marketing") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(ComMarketingRoutes.comMarketingDashboard);
+                    Get.offAllNamed(MarketingRoutes.marketingDashboard);
                   } else {
-                    Get.offAllNamed(ComMarketingRoutes.comMarketingAnnuaire);
+                    Get.offAllNamed(MarketingRoutes.marketingAnnuaire);
+                  }
+                } else if (departement.first == "Commercial") {
+                  if (int.parse(userData.role) <= 2) {
+                    Get.offAllNamed(ComRoutes.comDashboard);
+                  } else {
+                    Get.offAllNamed(ComRoutes.comVente);
                   }
                 } else if (departement.first == "Logistique") {
                   if (int.parse(userData.role) <= 2) {
@@ -151,11 +157,10 @@ class LoginController extends GetxController {
         });
       } catch (e) {
         _loadingLogin.value = false;
-        Get.snackbar(
-          "Erreur de connection",
-          "$e",
-          backgroundColor: Colors.red,
-        );
+        Get.snackbar("Erreur lors de la connection", "$e",
+            backgroundColor: Colors.red,
+            icon: const Icon(Icons.close),
+            snackPosition: SnackPosition.TOP);
       }
     }
   }
@@ -194,12 +199,11 @@ class LoginController extends GetxController {
       });
       });
     } catch (e) {
-      _loadingLogin.value = false;
-      Get.snackbar(
-        "Erreur de connection",
-        "$e",
-        backgroundColor: Colors.red,
-      );
+      _loadingLogin.value = false; 
+      Get.snackbar("Erreur lors de la connection", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.close),
+          snackPosition: SnackPosition.TOP);
     }
   }
  

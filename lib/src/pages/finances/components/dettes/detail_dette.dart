@@ -35,13 +35,12 @@ class _DetailDetteState extends State<DetailDette> {
     final DetteController controller = Get.put(DetteController());
     final CreanceDetteController creanceDetteController =
         Get.put(CreanceDetteController());
-    final ProfilController profilController = Get.find();
+    final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -92,7 +91,7 @@ class _DetailDetteState extends State<DetailDette> {
                                               children: [
                                                 SelectableText(
                                                     DateFormat(
-                                                "dd-MM-yyyy HH:mm")
+                                                            "dd-MM-yyyy HH:mm")
                                                         .format(widget
                                                             .detteModel
                                                             .created),
@@ -298,8 +297,7 @@ class _DetailDetteState extends State<DetailDette> {
               totalCreanceDette += double.parse(item.montant);
             }
             double total = 0.0;
-            total =
-                double.parse(widget.detteModel.montant) - totalCreanceDette;
+            total = double.parse(widget.detteModel.montant) - totalCreanceDette;
             return AlertDialog(
                 content: SizedBox(
               height: (Responsive.isDesktop(context)) ? 400 : 480,

@@ -28,13 +28,11 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
 
   @override
   Widget build(BuildContext context) {
-    
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -156,8 +154,10 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
     List<String> stocks = [];
     List<String> catList = [];
 
-    prod = controller.idProductDropdown.map((e) => e.idProduct).toSet().toList();
-    stocks = controller.stockGlobalList.map((e) => e.idProduct).toSet().toList();
+    prod =
+        controller.idProductDropdown.map((e) => e.idProduct).toSet().toList();
+    stocks =
+        controller.stockGlobalList.map((e) => e.idProduct).toSet().toList();
 
     catList = prod.toSet().difference(stocks.toSet()).toList();
 
@@ -282,34 +282,34 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
 
   Widget tvaField() {
     return ResponsiveChildWidget(
-      child1: Container(
-        margin: const EdgeInsets.only(bottom: 20.0),
-        child: TextFormField(
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-          ],
-          decoration: InputDecoration(
-            labelText: 'TVA en %',
-            // hintText: 'Mettez "1" si vide',
-            labelStyle: const TextStyle(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
+        child1: Container(
+          margin: const EdgeInsets.only(bottom: 20.0),
+          child: TextFormField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+            ],
+            decoration: InputDecoration(
+              labelText: 'TVA en %',
+              // hintText: 'Mettez "1" si vide',
+              labelStyle: const TextStyle(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
             ),
+            validator: (value) {
+              if (RegExpIsValide().isValideVente.hasMatch(value!)) {
+                return 'chiffres obligatoire';
+              } else {
+                return null;
+              }
+            },
+            onChanged: (value) => setState(() {
+              controller.tva = (value == "") ? 1 : double.parse(value);
+            }),
           ),
-          validator: (value) {
-            if (RegExpIsValide().isValideVente.hasMatch(value!)) {
-              return 'chiffres obligatoire';
-            } else {
-              return null;
-            }
-          },
-          onChanged: (value) => setState(() {
-            controller.tva = (value == "") ? 1 : double.parse(value);
-          }),
         ),
-      ),
-      child2: tvaValeur());
+        child2: tvaValeur());
   }
 
   double? pavTVA;

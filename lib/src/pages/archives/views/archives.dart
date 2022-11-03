@@ -30,10 +30,9 @@ class _ArchiveDataState extends State<ArchiveData> {
         Get.put(ArchiveFolderController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -64,8 +63,7 @@ class _ArchiveDataState extends State<ArchiveData> {
                           child: TableArchive(
                               archiveFolderModel: widget.archiveFolderModel,
                               controller: controller,
-                              controllerFolder: controllerFolder
-                            ))),
+                              controllerFolder: controllerFolder))),
                 ],
               ),
             ));

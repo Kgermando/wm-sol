@@ -28,10 +28,9 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -78,31 +77,32 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
               return '${DateFormat('dd/MM/yyyy').format(controller.dateRange!.start)} - ${DateFormat('dd/MM/yyyy').format(controller.dateRange!.end)}';
             }
           }
+
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
               title: const Text('Génerer le Budget previsionnel'),
               content: SizedBox(
-                height: 300,
-                width: 500,
-                child: Form(
-                  key: controller.formKey,
-                  child: Column(
-                    children: [
-                      titleWidget(),
-                      departmentWidget(),
-                      Container(
-                          margin: const EdgeInsets.only(bottom: p20),
-                          child: ButtonWidget(
-                            text: getPlageDate(),
-                            onClicked: () => setState(() {
-                              pickDateRange(context);
-                              FocusScope.of(context)
-                                  .requestFocus(FocusNode());
-                            }),
-                          ),
-                        )
-                    ],
-                  ))),
+                  height: 300,
+                  width: 500,
+                  child: Form(
+                      key: controller.formKey,
+                      child: Column(
+                        children: [
+                          titleWidget(),
+                          departmentWidget(),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: p20),
+                            child: ButtonWidget(
+                              text: getPlageDate(),
+                              onClicked: () => setState(() {
+                                pickDateRange(context);
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                              }),
+                            ),
+                          )
+                        ],
+                      ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -175,7 +175,6 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
     );
   }
 
- 
   Future pickDateRange(BuildContext context) async {
     final initialDateRange = DateTimeRange(
       start: DateTime.now(),

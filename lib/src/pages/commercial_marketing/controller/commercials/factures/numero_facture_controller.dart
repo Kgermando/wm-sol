@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class NumeroFactureController extends GetxController
     with StateMixin<List<NumberFactureModel>> {
   final NumberFactureApi numberFactureApi = NumberFactureApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var numberFactureList = <NumberFactureModel>[].obs;
 

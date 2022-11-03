@@ -8,13 +8,13 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
+import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/regex.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -27,14 +27,13 @@ class AddPersonnel extends StatefulWidget {
 }
 
 class _AddPersonnelState extends State<AddPersonnel> {
-  final PersonnelsController controller = Get.put(PersonnelsController()); 
+  final PersonnelsController controller = Get.put(PersonnelsController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Add profil";
-  
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -50,65 +49,65 @@ class _AddPersonnelState extends State<AddPersonnel> {
                   controller: ScrollController(),
                   physics: const ScrollPhysics(),
                   child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          // border: Border.all(
-                          //   // color: Colors.red,
-                          // ),
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Card(
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Form(
-                            key: controller.formKey,
-                            child: Column(
-                              children: [
-                                const TitleWidget(title: "Nouveau profil"),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    fichierWidget(),
-                                  ],
-                                ),
-                                const SizedBox(height: p20),
-                                ResponsiveChildWidget(
-                                    child1: nomWidget(controller),
-                                    child2: postNomWidget(controller)),
-                                ResponsiveChildWidget(
-                                    child1: prenomWidget(controller),
-                                    child2: sexeWidget(controller)),
-                                ResponsiveChildWidget(
-                                    child1: dateNaissanceWidget(controller),
-                                    child2: lieuNaissanceWidget(controller)),
-                                ResponsiveChildWidget(
-                                    child1: nationaliteWidget(controller),
-                                    child2: adresseWidget(controller)),
-                                ResponsiveChildWidget(
-                                    child1: emailWidget(controller),
-                                    child2: telephoneWidget(controller)),
-                                departmentWidget(controller),
-                                servicesAffectationWidget(controller),
-                                ResponsiveChildWidget(
-                                    child1: matriculeWidget(controller),
-                                    child2: numeroSecuriteSocialeWidget(
-                                        controller)),
-                                ResponsiveChildWidget(
-                                    child1: fonctionOccupeWidget(controller),
-                                    child2: roleWidget(controller)),
-                                ResponsiveChildWidget(
-                                    child1: typeContratWidget(controller),
-                                    child2: salaireWidget(controller)),
-                                ResponsiveChildWidget(
-                                    child1: dateDebutContratWidget(controller),
-                                    child2: (controller.typeContrat == 'CDD')
-                                        ? dateFinContratWidget(controller)
-                                        : Container()),
-                                competanceWidget(controller),
-                                experienceWidget(controller),
-                                const SizedBox(height: p20),
-                                BtnWidget(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        // border: Border.all(
+                        //   // color: Colors.red,
+                        // ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            children: [
+                              const TitleWidget(title: "Nouveau profil"),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  fichierWidget(),
+                                ],
+                              ),
+                              const SizedBox(height: p20),
+                              ResponsiveChildWidget(
+                                  child1: nomWidget(controller),
+                                  child2: postNomWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: prenomWidget(controller),
+                                  child2: sexeWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: dateNaissanceWidget(controller),
+                                  child2: lieuNaissanceWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: nationaliteWidget(controller),
+                                  child2: adresseWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: emailWidget(controller),
+                                  child2: telephoneWidget(controller)),
+                              departmentWidget(controller),
+                              servicesAffectationWidget(controller),
+                              ResponsiveChildWidget(
+                                  child1: matriculeWidget(controller),
+                                  child2:
+                                      numeroSecuriteSocialeWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: fonctionOccupeWidget(controller),
+                                  child2: roleWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: typeContratWidget(controller),
+                                  child2: salaireWidget(controller)),
+                              ResponsiveChildWidget(
+                                  child1: dateDebutContratWidget(controller),
+                                  child2: (controller.typeContrat == 'CDD')
+                                      ? dateFinContratWidget(controller)
+                                      : Container()),
+                              competanceWidget(controller),
+                              experienceWidget(controller),
+                              const SizedBox(height: p20),
+                              BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -119,12 +118,12 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                       form.reset();
                                     }
                                   })
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                    ), 
+                    ),
+                  ),
                 )),
           ],
         ));
@@ -138,39 +137,40 @@ class _AddPersonnelState extends State<AddPersonnel> {
             ? const SizedBox(
                 height: 50.0, width: 50.0, child: LinearProgressIndicator())
             : Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned(
-                  child: SizedBox(
-                    height: 100.0,
-                    width: 100.0,
-                    child: CircleAvatar(
-                      child: (controller.uploadedFileUrl == null) 
-                        ? Image.asset('assets/images/avatar.jpg')
-                        : Image.network(controller.uploadedFileUrl!) 
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    child: SizedBox(
+                      height: 100.0,
+                      width: 100.0,
+                      child: CircleAvatar(
+                          child: (controller.uploadedFileUrl == null)
+                              ? Image.asset('assets/images/avatar.jpg')
+                              : Image.network(controller.uploadedFileUrl!)),
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 10,
-                  left: 70,
-                  child: IconButton(onPressed: () async {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions: ['png', 'jpg'],
-                    );
-                    if (result != null) {
-                      setState(() {
-                        controller.uploadFile(result.files.single.path!);
-                      });
-                    } else {
-                      const Text("Le fichier n'existe pas");
-                    }
-                  }, 
-                  icon: const Icon(Icons.camera_alt)))
-              ],
-            ));
+                  Positioned(
+                      bottom: 10,
+                      left: 70,
+                      child: IconButton(
+                          onPressed: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['png', 'jpg'],
+                            );
+                            if (result != null) {
+                              setState(() {
+                                controller
+                                    .uploadFile(result.files.single.path!);
+                              });
+                            } else {
+                              const Text("Le fichier n'existe pas");
+                            }
+                          },
+                          icon: const Icon(Icons.camera_alt)))
+                ],
+              ));
   }
 
   Widget nomWidget(PersonnelsController controller) {
@@ -328,7 +328,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
   }
 
   Widget roleWidget(PersonnelsController controller) {
-    final ProfilController profilController = Get.find();
+    final ProfilController profilController = Get.put(ProfilController());
     List<String> roleList = [];
     if (int.parse(profilController.user.role) == 0) {
       roleList = Dropdown().roleAdmin;
@@ -337,7 +337,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     } else if (int.parse(profilController.user.role) > 3) {
       roleList = Dropdown().roleAgent;
     }
- 
+
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: Row(
@@ -525,8 +525,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     );
   }
 
-  Widget departmentWidget(
-      PersonnelsController controller) {
+  Widget departmentWidget(PersonnelsController controller) {
     double width = 100;
     if (MediaQuery.of(context).size.width >= 1100) {
       width = 300;
@@ -580,8 +579,8 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  void onSelectedDep(PersonnelsController controller, bool selected,
-      String dataName) {
+  void onSelectedDep(
+      PersonnelsController controller, bool selected, String dataName) {
     if (selected == true) {
       setState(() {
         controller.departementSelectedList.add(dataName);
@@ -589,7 +588,8 @@ class _AddPersonnelState extends State<AddPersonnel> {
         final date = DateFormat("yy").format(DateTime.now());
 
         if (controller.departementSelectedList.first == 'Actionnaire') {
-          controller.matricule = "${prefix}ACT$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}ACT$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionActionnaireList;
           controller.servAffectList = controller.serviceAffectationActionnaire;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -597,14 +597,16 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationActionnaire.first;
         } else if (controller.departementSelectedList.first ==
             'Administration') {
-          controller.matricule = "${prefix}ADM$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}ADM$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionAdminList;
           controller.servAffectList = controller.serviceAffectationAdmin;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationAdmin.first;
         } else if (controller.departementSelectedList.first == 'Finances') {
-          controller.matricule = "${prefix}FIN$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}FIN$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionfinList;
           controller.servAffectList = controller.serviceAffectationFin;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -612,14 +614,16 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationFin.first;
         } else if (controller.departementSelectedList.first ==
             'Comptabilites') {
-          controller.matricule = "${prefix}CPT$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}CPT$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctioncompteList;
           controller.servAffectList = controller.serviceAffectationCompt;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationCompt.first;
         } else if (controller.departementSelectedList.first == 'Budgets') {
-          controller.matricule = "${prefix}BUD$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}BUD$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionbudList;
           controller.servAffectList = controller.serviceAffectationBud;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -627,7 +631,8 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationBud.first;
         } else if (controller.departementSelectedList.first ==
             'Ressources Humaines') {
-          controller.matricule = "${prefix}RH$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}RH$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionrhList;
           controller.servAffectList = controller.serviceAffectationRH;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -635,7 +640,8 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationRH.first;
         } else if (controller.departementSelectedList.first ==
             'Exploitations') {
-          controller.matricule = "${prefix}EXP$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}EXP$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionexpList;
           controller.servAffectList = controller.serviceAffectationEXp;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -643,14 +649,16 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationEXp.first;
         } else if (controller.departementSelectedList.first ==
             'Commercial et Marketing') {
-          controller.matricule = "${prefix}COM$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}COM$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctioncommList;
           controller.servAffectList = controller.serviceAffectationComm;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationComm.first;
         } else if (controller.departementSelectedList.first == 'Logistique') {
-          controller.matricule = "${prefix}LOG$date-${widget.personnelList.length + 1}";
+          controller.matricule =
+              "${prefix}LOG$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctionlogList;
           controller.servAffectList = controller.serviceAffectationLog;
           controller.fonctionOccupe = controller.fonctionList.first;

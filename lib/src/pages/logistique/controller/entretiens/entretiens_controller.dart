@@ -13,7 +13,7 @@ import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_c
 class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {
   final EntretienApi entretienApi = EntretienApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final EnginController enginController = Get.put(EnginController());
   final ImmobilierController immobilierController =
       Get.put(ImmobilierController());

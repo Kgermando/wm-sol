@@ -27,45 +27,42 @@ class _BonLivraisonPageState extends State<BonLivraisonPage> {
     final BonLivraisonController controller = Get.put(BonLivraisonController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(context, scaffoldKey, title, subTitle),
-          drawer: const DrawerMenu(), 
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                          itemCount: controller
-                              .bonLivraisonList.length,
-                          itemBuilder: (context, index) {
-                            final data = controller
-                                .bonLivraisonList[index];
-                            return bonLivraisonItemWidget(
-                                data);
-                          }),
-                    )))
-            ],
-          ),
-        ));
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: controller.bonLivraisonList.length,
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      controller.bonLivraisonList[index];
+                                  return bonLivraisonItemWidget(data);
+                                }),
+                          )))
+                ],
+              ),
+            ));
   }
 
   Widget bonLivraisonItemWidget(BonLivraisonModel bonLivraisonModel) {
@@ -75,7 +72,7 @@ class _BonLivraisonPageState extends State<BonLivraisonPage> {
     }
     return GestureDetector(
       onTap: () {
-        Get.toNamed(ComMarketingRoutes.comMarketingBonLivraisonDetail,
+        Get.toNamed(ComRoutes.comBonLivraisonDetail,
             arguments: bonLivraisonModel);
       },
       child: Card(
@@ -91,14 +88,14 @@ class _BonLivraisonPageState extends State<BonLivraisonPage> {
           title: Text(bonLivraisonModel.succursale,
               overflow: TextOverflow.clip,
               style: Responsive.isDesktop(context)
-                ? const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  )
-                : const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  )),
+                  ? const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    )
+                  : const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    )),
           subtitle: Text(
             bonLivraisonModel.idProduct,
             overflow: TextOverflow.clip,

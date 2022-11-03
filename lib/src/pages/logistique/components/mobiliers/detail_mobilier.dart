@@ -32,10 +32,9 @@ class _DetailMobilerState extends State<DetailMobiler> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -88,11 +87,11 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                                       IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
-                                                        Get.toNamed(
-                                                            LogistiqueRoutes
-                                                                .logMobilierMaterielUpdate,
-                                                            arguments: widget
-                                                                .mobilierModel);
+                                                            Get.toNamed(
+                                                                LogistiqueRoutes
+                                                                    .logMobilierMaterielUpdate,
+                                                                arguments: widget
+                                                                    .mobilierModel);
                                                           },
                                                           icon: const Icon(
                                                               Icons.edit)),
@@ -121,7 +120,10 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                         ),
                                         dataWidget(),
                                         const SizedBox(height: p20),
-                                        ApprobationMobilier(data: widget.mobilierModel, controller: controller, profilController: profilController)
+                                        ApprobationMobilier(
+                                            data: widget.mobilierModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
                                   ),
@@ -170,13 +172,11 @@ class _DetailMobilerState extends State<DetailMobiler> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
-              textAlign: TextAlign.start,
-              style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)), 
-            child2: SelectableText(widget.mobilierModel.nom,
-              textAlign: TextAlign.start, style: bodyMedium)
-          ),
-           
+              child1: Text('Nom Complet :',
+                  textAlign: TextAlign.start,
+                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+              child2: SelectableText(widget.mobilierModel.nom,
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -185,7 +185,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.mobilierModel.modele,
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -194,7 +194,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.mobilierModel.marque,
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -203,7 +203,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.mobilierModel.descriptionMobilier,
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                  textAlign: TextAlign.start, style: bodyMedium)),
           Divider(
             color: mainColor,
           ),
@@ -221,7 +221,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.mobilierModel.signature,
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                  textAlign: TextAlign.start, style: bodyMedium)),
         ],
       ),
     );

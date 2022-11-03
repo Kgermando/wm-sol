@@ -22,46 +22,42 @@ class _SuccursalePageState extends State<SuccursalePage> {
   String title = "Commercial & Marketing";
   String subTitle = "Succursales";
 
-
   @override
-  Widget build(BuildContext context) { 
-
+  Widget build(BuildContext context) {
     return SafeArea(
       child: controller.obx(
-        onLoading: loading(),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-        (data) => Scaffold(
-            key: scaffoldKey,
-            appBar: headerBar(context, scaffoldKey, title, subTitle),
-            drawer: const DrawerMenu(),
-            floatingActionButton: FloatingActionButton.extended(
-              label: const Text("Ajouter une succursale"),
-              tooltip: "Nouveau succursale",
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Get.toNamed(ComMarketingRoutes.comMarketingSuccursaleAdd);
-              }),
-            body: Row(
-              children: [
-                Visibility(
-                    visible: !Responsive.isMobile(context),
-                    child: const Expanded(flex: 1, child: DrawerMenu())),
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, right: p20, left: p20, bottom: p8),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child:
-                      TableSuccursale(succursaleList: controller.succursaleList, 
-                      controller: controller))),
-              ],
-            ))),
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                  label: const Text("Ajouter une succursale"),
+                  tooltip: "Nouveau succursale",
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    Get.toNamed(ComRoutes.comSuccursaleAdd);
+                  }),
+              body: Row(
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: Container(
+                          margin: const EdgeInsets.only(
+                              top: p20, right: p20, left: p20, bottom: p8),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: TableSuccursale(
+                              succursaleList: controller.succursaleList,
+                              controller: controller))),
+                ],
+              ))),
     );
   }
-   
 }

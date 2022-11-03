@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/mail/mail_model.dart'; 
-import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart'; 
+import 'package:wm_solution/src/models/mail/mail_model.dart';
+import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -23,42 +23,40 @@ class DetailMail extends StatefulWidget {
 class _DetailMailState extends State<DetailMail> {
   final MaillingController controller = Get.put(MaillingController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Mails"; 
+  String title = "Mails";
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(
-              context, scaffoldKey, title, widget.mailColor.mail.fullNameDest),
-          drawer: const MailsNAv(), 
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: MailsNAv())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      physics: const ScrollPhysics(),
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, bottom: p8, right: p20, left: p20),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: pageDetail()
-                      )))
-            ],
-          ),
-        ));
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.mailColor.mail.fullNameDest),
+              drawer: const MailsNAv(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: MailsNAv())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  top: p20, bottom: p8, right: p20, left: p20),
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: pageDetail())))
+                ],
+              ),
+            ));
   }
 
   Widget pageDetail() {
@@ -86,12 +84,13 @@ class _DetailMailState extends State<DetailMail> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SelectableText(
-                        timeago.format(widget.mailColor.mail.dateSend, locale: 'fr_short'),
+                        timeago.format(widget.mailColor.mail.dateSend,
+                            locale: 'fr_short'),
                         textAlign: TextAlign.start),
                     IconButton(
                         onPressed: () {
                           Get.toNamed(MailRoutes.mailRepondre,
-                              arguments: widget.mailColor.mail); 
+                              arguments: widget.mailColor.mail);
                         },
                         tooltip: 'Repondre',
                         icon: const Icon(Icons.reply)),
@@ -118,7 +117,6 @@ class _DetailMailState extends State<DetailMail> {
       ),
     ]);
   }
-  
 
   Widget dataWidget() {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
@@ -148,7 +146,8 @@ class _DetailMailState extends State<DetailMail> {
             subtitle: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (widget.mailColor.mail.email == controller.profilController.user.email)
+                if (widget.mailColor.mail.email ==
+                    controller.profilController.user.email)
                   Row(children: [
                     AutoSizeText("à".toUpperCase()),
                     const SizedBox(height: p8),
@@ -163,7 +162,8 @@ class _DetailMailState extends State<DetailMail> {
                         children: [
                           const AutoSizeText("De:"),
                           const SizedBox(width: p10),
-                          AutoSizeText(widget.mailColor.mail.emailDest, style: bodySmall),
+                          AutoSizeText(widget.mailColor.mail.emailDest,
+                              style: bodySmall),
                           const SizedBox(width: p10),
                           AutoSizeText(widget.mailColor.mail.fullNameDest,
                               style: bodySmall!
@@ -174,7 +174,8 @@ class _DetailMailState extends State<DetailMail> {
                         children: [
                           AutoSizeText("à:".toUpperCase()),
                           const SizedBox(width: p10),
-                          AutoSizeText(widget.mailColor.mail.email, style: bodySmall),
+                          AutoSizeText(widget.mailColor.mail.email,
+                              style: bodySmall),
                           const SizedBox(width: p10),
                           AutoSizeText(widget.mailColor.mail.fullName,
                               style: bodySmall.copyWith(
@@ -226,4 +227,3 @@ class _DetailMailState extends State<DetailMail> {
     );
   }
 }
- 

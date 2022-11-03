@@ -8,7 +8,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 class BudgetPrevisionnelController extends GetxController
     with StateMixin<List<DepartementBudgetModel>> {
   DepeartementBudgetApi depeartementBudgetApi = DepeartementBudgetApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var departementBudgetList = <DepartementBudgetModel>[].obs;
 
@@ -23,7 +23,6 @@ class BudgetPrevisionnelController extends GetxController
 
   List<String> departementList = Dropdown().departement;
 
-
   // Approbations
   final formKeyBudget = GlobalKey<FormState>();
 
@@ -35,7 +34,7 @@ class BudgetPrevisionnelController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getList(); 
+    getList();
   }
 
   @override
@@ -103,7 +102,7 @@ class BudgetPrevisionnelController extends GetxController
           .insertData(departementBudgetModel)
           .then((value) {
         departementBudgetList.clear();
-        getList(); 
+        getList();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

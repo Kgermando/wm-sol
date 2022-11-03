@@ -12,7 +12,7 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailCart extends StatefulWidget {
   const DetailCart({super.key, required this.cart});
-  final CartModel cart; 
+  final CartModel cart;
 
   @override
   State<DetailCart> createState() => _DetailCartState();
@@ -20,92 +20,91 @@ class DetailCart extends StatefulWidget {
 
 class _DetailCartState extends State<DetailCart> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing"; 
+  String title = "Commercial & Marketing";
 
   @override
   Widget build(BuildContext context) {
     final CartController controller = Get.put(CartController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.cart.idProductCart),
-        drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text("Ajouter une personne"),
-          tooltip: "Ajout personne à la liste",
-          icon: const Icon(Icons.person_add),
-          onPressed: () {},
-        ),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: Column(
-                        children: [
-                          Card(
-                            elevation: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: p20),
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleWidget(
-                                          title: 'Votre panier'),
-                                      Column(
-                                        children: [ 
-                                          SelectableText(
-                                              DateFormat("dd-MM-yy HH:mm")
-                                                  .format(widget.cart.created),
-                                              textAlign: TextAlign.start),
-                                        ],
-                                      )
-                                    ],
+              key: scaffoldKey,
+              appBar: headerBar(
+                  context, scaffoldKey, title, widget.cart.idProductCart),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter une personne"),
+                tooltip: "Ajout personne à la liste",
+                icon: const Icon(Icons.add),
+                onPressed: () {},
+              ),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const TitleWidget(
+                                                title: 'Votre panier'),
+                                            Column(
+                                              children: [
+                                                SelectableText(
+                                                    DateFormat("dd-MM-yy HH:mm")
+                                                        .format(widget
+                                                            .cart.created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                        Divider(
+                                          color: mainColor,
+                                        ),
+                                        const SizedBox(height: p10),
+                                        total(),
+                                      ],
+                                    ),
                                   ),
-                                  dataWidget(),
-                                  Divider(
-                                    color: mainColor,
-                                  ),
-                                  const SizedBox(height: p10),
-                                  total(),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                    )))
-          ],
-        ),
-      ));
+                          )))
+                ],
+              ),
+            ));
   }
 
-
-   Widget dataWidget() {
+  Widget dataWidget() {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Padding(
       padding: const EdgeInsets.all(p10),
@@ -158,7 +157,8 @@ class _DetailCartState extends State<DetailCart> {
                     textAlign: TextAlign.start,
                     style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
               ),
-              (double.parse(widget.cart.quantityCart) >= double.parse(widget.cart.qtyRemise))
+              (double.parse(widget.cart.quantityCart) >=
+                      double.parse(widget.cart.qtyRemise))
                   ? Expanded(
                       flex: 3,
                       child: Text(
@@ -187,9 +187,11 @@ class _DetailCartState extends State<DetailCart> {
     var quantityCart = double.parse(widget.cart.quantityCart);
 
     if (quantityCart >= qtyRemise) {
-      sum = double.parse(widget.cart.quantityCart) * double.parse(widget.cart.remise);
+      sum = double.parse(widget.cart.quantityCart) *
+          double.parse(widget.cart.remise);
     } else {
-      sum = double.parse(widget.cart.quantityCart) * double.parse(widget.cart.priceCart);
+      sum = double.parse(widget.cart.quantityCart) *
+          double.parse(widget.cart.priceCart);
     }
 
     return Card(
@@ -215,5 +217,4 @@ class _DetailCartState extends State<DetailCart> {
       ),
     );
   }
-
 }

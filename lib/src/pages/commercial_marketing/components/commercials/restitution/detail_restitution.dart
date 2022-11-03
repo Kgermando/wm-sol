@@ -34,10 +34,9 @@ class _DetailRestitutionState extends State<DetailRestitution> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -66,81 +65,81 @@ class _DetailRestitutionState extends State<DetailRestitution> {
                                   elevation: 3,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                  horizontal: p20),
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const TitleWidget(
-                                          title: "Bon de livraison"),
-                                      Column(
-                                        children: [
-                                          PrintWidget(
-                                            tooltip:
-                                                'Imprimer le document',
-                                            onPressed: () async {
-                                              await RestitutionPdf
-                                                  .generate(widget.restitutionModel);
-                                            },
-                                          ),
-                                          SelectableText(
-                                              DateFormat(
-                                                      "dd-MM-yyyy HH:mm")
-                                                  .format(widget
-                                                      .restitutionModel
-                                                      .created),
-                                              textAlign: TextAlign.start),
-                                        ],
-                                      )
-                                    ],
-                              ),
-                                    dataWidget(controller, profilController),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )))
-        ],
-      ),
-    ));
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const TitleWidget(
+                                                title: "Bon de livraison"),
+                                            Column(
+                                              children: [
+                                                PrintWidget(
+                                                  tooltip:
+                                                      'Imprimer le document',
+                                                  onPressed: () async {
+                                                    await RestitutionPdf
+                                                        .generate(widget
+                                                            .restitutionModel);
+                                                  },
+                                                ),
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .restitutionModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(
+                                            controller, profilController),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
 
-  Widget dataWidget(RestitutionController controller,
-      ProfilController profilController) {
+  Widget dataWidget(
+      RestitutionController controller, ProfilController profilController) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         children: [
-          if (widget.restitutionModel.succursale == profilController.user.succursale) 
-          accRecepetion(controller),
+          if (widget.restitutionModel.succursale ==
+              profilController.user.succursale)
+            accRecepetion(controller),
           const SizedBox(height: p20),
           ResponsiveChildWidget(
-            child1: Text('Produit :',
-                        style:
-                            bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.visible),
-            child2: Text(widget.restitutionModel.idProduct,
-                        style: bodyMedium, overflow: TextOverflow.visible)
-          ),
+              child1: Text('Produit :',
+                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.visible),
+              child2: Text(widget.restitutionModel.idProduct,
+                  style: bodyMedium, overflow: TextOverflow.visible)),
           Divider(
             color: mainColor,
           ),
           ResponsiveChildWidget(
-            child1: Text('Quantité restutué :',
-              style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis), 
-            child2: Text(
-              '${NumberFormat.decimalPattern('fr').format(double.parse(widget.restitutionModel.quantity))} ${widget.restitutionModel.unite}',
-              style: bodyMedium,
-              overflow: TextOverflow.ellipsis)
-          ) 
+              child1: Text('Quantité restutué :',
+                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis),
+              child2: Text(
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(widget.restitutionModel.quantity))} ${widget.restitutionModel.unite}',
+                  style: bodyMedium,
+                  overflow: TextOverflow.ellipsis))
         ],
       ),
     );
@@ -197,13 +196,12 @@ class _DetailRestitutionState extends State<DetailRestitution> {
       checkColor: Colors.white,
       fillColor: MaterialStateProperty.resolveWith(getColor),
       value: isChecked,
-      onChanged: (bool? value) { 
+      onChanged: (bool? value) {
         setState(() {
           isChecked = value!;
           controller.receptionProduit(widget.restitutionModel);
-        }); 
+        });
       },
     );
   }
-
 }

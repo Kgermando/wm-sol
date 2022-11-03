@@ -25,8 +25,8 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
-    @override
-  initState() { 
+  @override
+  initState() {
     controller.titleController =
         TextEditingController(text: widget.immobilierModel.title);
     controller.typeAllocationController =
@@ -43,14 +43,12 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -59,7 +57,7 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter une personne"),
                 tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {},
               ),
               body: Row(
@@ -98,12 +96,11 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
                                             height: p20,
                                           ),
                                           ResponsiveChildWidget(
-                                            child1: typeAllocationWidget(), 
-                                            child2: adresseWidget()
-                                          ),
+                                              child1: typeAllocationWidget(),
+                                              child2: adresseWidget()),
                                           ResponsiveChildWidget(
                                               child1: numeroCertificatWidget(),
-                                              child2: superficieWidget()), 
+                                              child2: superficieWidget()),
                                           dateAcquisitionWidget(),
                                           const SizedBox(
                                             height: p20,
@@ -112,10 +109,11 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
                                               title: 'Soumettre',
                                               isLoading: controller.isLoading,
                                               press: () {
-                                                final form =
-                                                    controller.formKey.currentState!;
+                                                final form = controller
+                                                    .formKey.currentState!;
                                                 if (form.validate()) {
-                                                  controller.submitUpdate(widget.immobilierModel);
+                                                  controller.submitUpdate(
+                                                      widget.immobilierModel);
                                                   form.reset();
                                                 }
                                               })
@@ -132,8 +130,7 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
             ));
   }
 
-
-   Widget typeAllocationWidget() {
+  Widget typeAllocationWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -244,7 +241,4 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
           },
         ));
   }
-
-
-
 }

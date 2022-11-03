@@ -44,10 +44,9 @@ class _DetailPresenceState extends State<DetailPresence> {
 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -98,31 +97,33 @@ class _DetailPresenceState extends State<DetailPresence> {
                                                   Row(
                                                     children: [
                                                       deleteDialog(controller),
-                                                      Container( 
+                                                      Container(
                                                         width: 2,
                                                         height: 22,
                                                         color: lightGrey,
                                                       ),
                                                       const SizedBox(width: p8),
                                                       RichText(
-                                                        textAlign:
-                                                              TextAlign.start, 
-                                                        text: TextSpan(
-                                                          style: Theme.of(context).textTheme.bodyMedium,
-                                                          children: [
-                                                            const TextSpan(
-                                                              text: "Créé à "
-                                                            ),
-                                                            TextSpan(
-                                                              text: DateFormat("HH:mm")
-                                                              .format(widget
-                                                                  .presenceModel
-                                                                  .created)
-                                                            )
-                                                          ]
-                                                        )) 
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          text: TextSpan(
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyMedium,
+                                                              children: [
+                                                                const TextSpan(
+                                                                    text:
+                                                                        "Créé à "),
+                                                                TextSpan(
+                                                                    text: DateFormat(
+                                                                            "HH:mm")
+                                                                        .format(widget
+                                                                            .presenceModel
+                                                                            .created))
+                                                              ]))
                                                     ],
-                                                  ) 
+                                                  )
                                                 ],
                                               ),
                                               Divider(color: mainColor),
@@ -454,8 +455,7 @@ class _DetailPresenceState extends State<DetailPresence> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return StatefulBuilder(builder: (context, StateSetter setState) { 
-
+          return StatefulBuilder(builder: (context, StateSetter setState) {
             Color getColor(Set<MaterialState> states) {
               const Set<MaterialState> interactiveStates = <MaterialState>{
                 MaterialState.pressed,
@@ -471,32 +471,28 @@ class _DetailPresenceState extends State<DetailPresence> {
             checkboxRead(PresencePersonneController controllerPresencePersonne,
                 PresencePersonnelModel personne) {
               return ListTile(
-                      leading: Checkbox(
-                        checkColor: Colors.white,
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: isSortie,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isSortie = value!;
-                            if (isSortie) {
-                              sortieBoolean = 'true';
-                              controllerPresencePersonne.submitSortie(
-                                  widget.presenceModel,
-                                  personne,
-                                  sortieBoolean);
-                            } else {
-                              sortieBoolean = 'false';
-                              controllerPresencePersonne.submitSortie(
-                                  widget.presenceModel,
-                                  personne,
-                                  sortieBoolean);
-                            }
-                          });
-                        },
-                      ),
-                      title: Text(
-                          "Cocher pour marquer la sortie de ${personne.identifiant}"),
-                    );
+                leading: Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith(getColor),
+                  value: isSortie,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isSortie = value!;
+                      if (isSortie) {
+                        sortieBoolean = 'true';
+                        controllerPresencePersonne.submitSortie(
+                            widget.presenceModel, personne, sortieBoolean);
+                      } else {
+                        sortieBoolean = 'false';
+                        controllerPresencePersonne.submitSortie(
+                            widget.presenceModel, personne, sortieBoolean);
+                      }
+                    });
+                  },
+                ),
+                title: Text(
+                    "Cocher pour marquer la sortie de ${personne.identifiant}"),
+              );
             }
 
             return AlertDialog(

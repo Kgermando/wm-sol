@@ -34,10 +34,9 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
         Get.put(LignBudgetaireController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -88,7 +87,9 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
                                                 SelectableText(
                                                     DateFormat(
                                                             "dd-MM-yyyy HH:mm")
-                                                        .format(widget.ligneBudgetaireModel.created),
+                                                        .format(widget
+                                                            .ligneBudgetaireModel
+                                                            .created),
                                                     textAlign: TextAlign.start),
                                               ],
                                             )
@@ -129,8 +130,10 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
                     style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
-                child: SelectableText(widget.ligneBudgetaireModel.nomLigneBudgetaire,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    widget.ligneBudgetaireModel.nomLigneBudgetaire,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -158,7 +161,8 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               ),
               Expanded(
                 child: SelectableText(
-                    DateFormat("dd-MM-yyyy").format(widget.ligneBudgetaireModel.periodeBudgetFin),
+                    DateFormat("dd-MM-yyyy")
+                        .format(widget.ligneBudgetaireModel.periodeBudgetFin),
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -335,24 +339,34 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     // Campaigns
     campaignCaisseList = controller.dataCampaignList
         .where((element) =>
-            widget.ligneBudgetaireModel.departement == "Commercial et Marketing" &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            widget.ligneBudgetaireModel.departement ==
+                "Commercial et Marketing" &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.created
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "caisse")
         .toList();
     campaignBanqueList = controller.dataCampaignList
         .where((element) =>
-            widget.ligneBudgetaireModel.departement == "Commercial et Marketing" &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            widget.ligneBudgetaireModel.departement ==
+                "Commercial et Marketing" &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.created
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "banque")
         .toList();
     campaignfinExterieurList = controller.dataCampaignList
         .where((element) =>
-            widget.ligneBudgetaireModel.departement == "Commercial et Marketing" &&
-            "Commercial et Marketing" == widget.ligneBudgetaireModel.departement &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            widget.ligneBudgetaireModel.departement ==
+                "Commercial et Marketing" &&
+            "Commercial et Marketing" ==
+                widget.ligneBudgetaireModel.departement &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.created
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "finExterieur")
         .toList();
 
@@ -362,24 +376,30 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
           .where((element) =>
               widget.ligneBudgetaireModel.departement == item.departement &&
               element.reference == item.id &&
-              item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-              item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+              item.ligneBudgetaire ==
+                  widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+              item.created
+                  .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "caisse")
           .toList();
       devisBanqueList = controller.devisListObjetsList
           .where((element) =>
               widget.ligneBudgetaireModel.departement == item.departement &&
               element.reference == item.id &&
-              item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-              item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+              item.ligneBudgetaire ==
+                  widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+              item.created
+                  .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "banque")
           .toList();
       devisfinExterieurList = controller.devisListObjetsList
           .where((element) =>
               widget.ligneBudgetaireModel.departement == item.departement &&
               element.reference == item.id &&
-              item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-              item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+              item.ligneBudgetaire ==
+                  widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+              item.created
+                  .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "finExterieur")
           .toList();
     }
@@ -388,22 +408,28 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     projetCaisseList = controller.dataProjetList
         .where((element) =>
             widget.ligneBudgetaireModel.departement == "Exploitations" &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.created
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "caisse")
         .toList();
     projetBanqueList = controller.dataProjetList
         .where((element) =>
             widget.ligneBudgetaireModel.departement == "Exploitations" &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.created
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "banque")
         .toList();
     projetfinExterieurList = controller.dataProjetList
         .where((element) =>
             widget.ligneBudgetaireModel.departement == "Exploitations" &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.created
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "finExterieur")
         .toList();
 
@@ -411,22 +437,28 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     salaireCaisseList = controller.dataSalaireList
         .where((element) =>
             widget.ligneBudgetaireModel.departement == element.departement &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.createdAt.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.createdAt
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "caisse")
         .toList();
     salaireBanqueList = controller.dataSalaireList
         .where((element) =>
             widget.ligneBudgetaireModel.departement == element.departement &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.createdAt.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.createdAt
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "banque")
         .toList();
     salairefinExterieurList = controller.dataSalaireList
         .where((element) =>
             widget.ligneBudgetaireModel.departement == element.departement &&
-            element.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-            element.createdAt.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+            element.ligneBudgetaire ==
+                widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+            element.createdAt
+                .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
             element.ressource == "finExterieur")
         .toList();
 
@@ -434,26 +466,35 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     for (var item in controller.dataTransRestList) {
       transRestCaisseList = controller.tansRestList
           .where((element) =>
-              widget.ligneBudgetaireModel.departement == "'Ressources Humaines'" &&
+              widget.ligneBudgetaireModel.departement ==
+                  "'Ressources Humaines'" &&
               element.reference == item.id &&
-              item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-              item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+              item.ligneBudgetaire ==
+                  widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+              item.created
+                  .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "caisse")
           .toList();
       transRestBanqueList = controller.tansRestList
           .where((element) =>
-              widget.ligneBudgetaireModel.departement == "'Ressources Humaines'" &&
+              widget.ligneBudgetaireModel.departement ==
+                  "'Ressources Humaines'" &&
               element.reference == item.id &&
-              item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-              item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+              item.ligneBudgetaire ==
+                  widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+              item.created
+                  .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "banque")
           .toList();
       transRestFinExterieurList = controller.tansRestList
           .where((element) =>
-              widget.ligneBudgetaireModel.departement == "'Ressources Humaines'" &&
+              widget.ligneBudgetaireModel.departement ==
+                  "'Ressources Humaines'" &&
               element.reference == item.id &&
-              item.ligneBudgetaire == widget.ligneBudgetaireModel.nomLigneBudgetaire &&
-              item.created.isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
+              item.ligneBudgetaire ==
+                  widget.ligneBudgetaireModel.nomLigneBudgetaire &&
+              item.created
+                  .isBefore(widget.ligneBudgetaireModel.periodeBudgetFin) &&
               item.ressource == "finExterieur")
           .toList();
     }
@@ -532,9 +573,12 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
         finExterieurTransRest;
 
     // Differences entre les couts initial et les depenses
-    double caisseSolde = double.parse(widget.ligneBudgetaireModel.caisse) - caisse;
-    double banqueSolde = double.parse(widget.ligneBudgetaireModel.banque) - banque;
-    double finExterieurSolde = double.parse(widget.ligneBudgetaireModel.finExterieur) - finExterieur;
+    double caisseSolde =
+        double.parse(widget.ligneBudgetaireModel.caisse) - caisse;
+    double banqueSolde =
+        double.parse(widget.ligneBudgetaireModel.banque) - banque;
+    double finExterieurSolde =
+        double.parse(widget.ligneBudgetaireModel.finExterieur) - finExterieur;
     double touxExecutions = (caisseSolde + banqueSolde + finExterieurSolde) *
         100 /
         double.parse(widget.ligneBudgetaireModel.coutTotal);

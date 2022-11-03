@@ -10,7 +10,7 @@ import 'package:wm_solution/src/utils/type_operation.dart';
 class CaisseController extends GetxController
     with StateMixin<List<CaisseModel>> {
   final CaisseApi caisseApi = CaisseApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var caisseList = <CaisseModel>[].obs;
 
@@ -28,7 +28,7 @@ class CaisseController extends GetxController
 
   final List<String> typeCaisse = TypeOperation().typeVereCaisse;
   final List<String> departementList = Dropdown().departement;
- 
+
   @override
   void onInit() {
     super.onInit();
@@ -52,7 +52,7 @@ class CaisseController extends GetxController
 
   void getList() async {
     await caisseApi.getAllData().then((response) {
-      caisseList.assignAll(response); 
+      caisseList.assignAll(response);
       change(caisseList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

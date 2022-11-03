@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class FactureCreanceController extends GetxController
     with StateMixin<List<CreanceCartModel>> {
   final CreanceFactureApi creanceFactureApi = CreanceFactureApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var creanceFactureList = <CreanceCartModel>[].obs;
 

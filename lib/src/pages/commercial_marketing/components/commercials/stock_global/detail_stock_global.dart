@@ -14,7 +14,7 @@ import 'package:wm_solution/src/widgets/loading.dart';
 
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
-import 'package:wm_solution/src/widgets/responsive_child_widget.dart'; 
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
 class DetailStockGlobal extends StatefulWidget {
   const DetailStockGlobal({super.key, required this.stocksGlobalMOdel});
@@ -33,73 +33,75 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
     final StockGlobalController controller = Get.put(StockGlobalController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(context, scaffoldKey, title,
-              widget.stocksGlobalMOdel.idProduct),
-          drawer: const DrawerMenu(),
-          floatingActionButton: speedialWidget(),
-          body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: Column(
-                        children: [
-                          Card(
-                            elevation: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: p20),
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [ 
-                                      Column(
-                                        children: [
-                                          reporting(),
-                                          SelectableText(
-                                            DateFormat("dd-MM-yyyy HH:mm")
-                                              .format(widget.stocksGlobalMOdel
-                                                        .created),
-                                            textAlign: TextAlign.start),
-                                        ],
-                                      )
-                                    ],
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.stocksGlobalMOdel.idProduct),
+              drawer: const DrawerMenu(),
+              floatingActionButton: speedialWidget(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                reporting(),
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .stocksGlobalMOdel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                      ],
+                                    ),
                                   ),
-                                  dataWidget(),
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                    )))
+                          )))
                 ],
               ),
             ));
   }
 
-    Widget dataWidget() {
+  Widget dataWidget() {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
@@ -117,7 +119,8 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
           const SizedBox(
             height: 20,
           ),
-          TableHistoryRavitaillementProduit(stocksGlobalMOdel: widget.stocksGlobalMOdel),
+          TableHistoryRavitaillementProduit(
+              stocksGlobalMOdel: widget.stocksGlobalMOdel),
           const SizedBox(
             height: 50,
           ),
@@ -144,53 +147,55 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ResponsiveChildWidget(
-              child1: Text('Produit :',
-                textAlign: TextAlign.start,
-                style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.stocksGlobalMOdel.idProduct,
-                      textAlign: TextAlign.start, style: bodyMedium)
-            ),
+                child1: Text('Produit :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+                child2: SelectableText(widget.stocksGlobalMOdel.idProduct,
+                    textAlign: TextAlign.start, style: bodyMedium)),
             Divider(
               color: mainColor,
             ),
             ResponsiveChildWidget(
-              child1: Text('Quantités entrant :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.quantityAchat).toStringAsFixed(0)))} ${widget.stocksGlobalMOdel.unite}',
-                  textAlign: TextAlign.start, style: bodyMedium)), 
+                child1: Text('Quantités entrant :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                child2: SelectableText(
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.quantityAchat).toStringAsFixed(0)))} ${widget.stocksGlobalMOdel.unite}',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium)),
             Divider(
               color: mainColor,
-            ), 
+            ),
             ResponsiveChildWidget(
                 child1: Text('Prix d\'achats unitaire :',
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} \$',
-                    textAlign: TextAlign.start, style: bodyMedium)),
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} \$',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium)),
             Divider(
               color: mainColor,
-            ), 
+            ),
             ResponsiveChildWidget(
                 child1: Text('Prix d\'achats total :',
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} \$',
-                    textAlign: TextAlign.start, style: bodyMedium)),  
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} \$',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium)),
             if (double.parse(widget.stocksGlobalMOdel.tva) > 1)
               Divider(
                 color: mainColor,
               ),
             if (double.parse(widget.stocksGlobalMOdel.tva) > 1)
-            ResponsiveChildWidget(
+              ResponsiveChildWidget(
                   child1: Text('TVA :',
                       textAlign: TextAlign.start,
                       style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                   child2: SelectableText('${widget.stocksGlobalMOdel.tva} %',
-                      textAlign: TextAlign.start, style: bodyMedium)), 
+                      textAlign: TextAlign.start, style: bodyMedium)),
             Divider(
               color: mainColor,
             ),
@@ -199,8 +204,9 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} \$',
-                    textAlign: TextAlign.start, style: bodyMedium)),  
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} \$',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium)),
             Divider(
               color: mainColor,
             ),
@@ -208,28 +214,28 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
               height: 20.0,
             ),
             ResponsiveChildWidget(
-              child1: Text('Marge bénéficiaire unitaire',
-                style: Responsive.isDesktop(context)
-                    ? const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                        color: Colors.orange)
-                    : bodyMedium.copyWith(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis),
-              child2: Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$',
-                style: Responsive.isDesktop(context)
-                    ? const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                        color: Colors.orange)
-                    : bodyMedium,
-                overflow: TextOverflow.ellipsis)), 
+                child1: Text('Marge bénéficiaire unitaire',
+                    style: Responsive.isDesktop(context)
+                        ? const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: Colors.orange)
+                        : bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis),
+                child2: Text(
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$',
+                    style: Responsive.isDesktop(context)
+                        ? const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: Colors.orange)
+                        : bodyMedium,
+                    overflow: TextOverflow.ellipsis)),
             Divider(
               color: mainColor,
             ),
             ResponsiveChildWidget(
-              child1: Text('Marge bénéficiaire total',
+                child1: Text('Marge bénéficiaire total',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700,
@@ -237,15 +243,14 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                             color: Color(0xFFE64A19))
                         : bodyMedium.copyWith(fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis),
-              child2: Text(
+                child2: Text(
                     '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} \$',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
                             color: Color(0xFFE64A19))
-                        : bodyMedium)), 
-             
+                        : bodyMedium)),
           ],
         ),
       ),
@@ -332,7 +337,6 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
     );
   }
 
-
   Widget reporting() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -357,8 +361,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
           backgroundColor: Colors.green.shade700,
           label: 'Ravitaillement stock',
           onPressed: () {
-            Get.toNamed(
-                ComMarketingRoutes.comMarketingStockGlobalRavitaillement,
+            Get.toNamed(ComRoutes.comStockGlobalRavitaillement,
                 arguments: widget.stocksGlobalMOdel);
           },
         ),
@@ -368,9 +371,8 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
             backgroundColor: Colors.blue.shade700,
             label: 'Livraison stock',
             onPressed: () {
-              Get.toNamed(
-                  ComMarketingRoutes.comMarketingStockGlobalLivraisonStock,
-                  arguments: widget.stocksGlobalMOdel);  
+              Get.toNamed(ComRoutes.comStockGlobalLivraisonStock,
+                  arguments: widget.stocksGlobalMOdel);
             }),
       ],
       child: const Icon(

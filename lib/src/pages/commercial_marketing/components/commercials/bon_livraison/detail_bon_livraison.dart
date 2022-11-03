@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/bon_livraison/bon_livraison_pdf.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/bon_livraison/bon_livraison_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -33,93 +33,96 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-    key: scaffoldKey,
-    appBar: headerBar(
-        context, scaffoldKey, title, widget.bonLivraisonModel.idProduct),
-    drawer: const DrawerMenu(),
-    body: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Visibility(
-            visible: !Responsive.isMobile(context),
-            child: const Expanded(flex: 1, child: DrawerMenu())),
-        Expanded(
-            flex: 5,
-            child: SingleChildScrollView(
-                controller: ScrollController(),
-                physics: const ScrollPhysics(),
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      top: p20, bottom: p8, right: p20, left: p20),
-                  decoration: const BoxDecoration(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(20))),
-                  child: Column(
-                    children: [
-                      Card(
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: p20),
-                          child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const TitleWidget(
-                                      title: "Bon de livraison"),
-                                  Column(
-                                    children: [
-                                      PrintWidget(
-                                        tooltip:
-                                            'Imprimer le document',
-                                        onPressed: () async {
-                                          await BonLivraisonPDF
-                                              .generate(widget.bonLivraisonModel, "\$");
-                                        },
-                                      ),
-                                      SelectableText(
-                                          DateFormat(
-                                              "dd-MM-yyyy HH:mm")
-                                            .format(widget.bonLivraisonModel
-                                                          .created),
-                                          textAlign: TextAlign.start),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              dataWidget(controller, profilController),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )))
-      ],
-    ),
-    ));
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.bonLivraisonModel.idProduct),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const TitleWidget(
+                                                title: "Bon de livraison"),
+                                            Column(
+                                              children: [
+                                                PrintWidget(
+                                                  tooltip:
+                                                      'Imprimer le document',
+                                                  onPressed: () async {
+                                                    await BonLivraisonPDF.generate(
+                                                        widget
+                                                            .bonLivraisonModel,
+                                                        "\$");
+                                                  },
+                                                ),
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .bonLivraisonModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(
+                                            controller, profilController),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
 
-
-   Widget dataWidget(BonLivraisonController controller,
-      ProfilController profilController) {
+  Widget dataWidget(
+      BonLivraisonController controller, ProfilController profilController) {
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.bonLivraisonModel.succursale == profilController.user.succursale) 
-          accRecepetion(controller),
+          if (widget.bonLivraisonModel.succursale ==
+              profilController.user.succursale)
+            accRecepetion(controller),
           const SizedBox(height: p20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -258,7 +261,8 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                       overflow: TextOverflow.ellipsis),
                 ),
                 Expanded(
-                  child: Text('${widget.bonLivraisonModel.qtyRemise} ${widget.bonLivraisonModel.unite}',
+                  child: Text(
+                      '${widget.bonLivraisonModel.qtyRemise} ${widget.bonLivraisonModel.unite}',
                       style: Responsive.isDesktop(context)
                           ? const TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 20)
@@ -281,7 +285,8 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                     overflow: TextOverflow.ellipsis),
               ),
               Expanded(
-                child: Text("${widget.bonLivraisonModel.firstName} ${widget.bonLivraisonModel.lastName}",
+                child: Text(
+                    "${widget.bonLivraisonModel.firstName} ${widget.bonLivraisonModel.lastName}",
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -305,7 +310,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
               ),
               Expanded(
                 child: Text(
-      "${widget.bonLivraisonModel.accuseReceptionFirstName} ${widget.bonLivraisonModel.accuseReceptionLastName}",
+                    "${widget.bonLivraisonModel.accuseReceptionFirstName} ${widget.bonLivraisonModel.accuseReceptionLastName}",
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -370,13 +375,12 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
       checkColor: Colors.white,
       fillColor: MaterialStateProperty.resolveWith(getColor),
       value: isChecked,
-      onChanged: (bool? value) { 
+      onChanged: (bool? value) {
         setState(() {
           isChecked = value!;
           controller.bonLivraisonStock(widget.bonLivraisonModel);
-        }); 
+        });
       },
     );
   }
-
 }

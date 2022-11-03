@@ -5,12 +5,15 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/facture_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableFacture extends StatefulWidget {
   const TableFacture(
-      {super.key, required this.factureList, required this.controller, required this.profilController});
+      {super.key,
+      required this.factureList,
+      required this.controller,
+      required this.profilController});
   final List<FactureCartModel> factureList;
   final FactureController controller;
   final ProfilController profilController;
@@ -44,8 +47,7 @@ class _TableFactureState extends State<TableFacture> {
         final FactureCartModel factureCartModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComMarketingRoutes.comMarketingFactureDetail,
-            arguments: factureCartModel);
+        Get.toNamed(ComRoutes.comFactureDetail, arguments: factureCartModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -59,8 +61,7 @@ class _TableFactureState extends State<TableFacture> {
             const TitleWidget(title: "Factures"),
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                      context, ComMarketingRoutes.comMarketingFacture);
+                  Navigator.pushNamed(context, ComRoutes.comFacture);
                 },
                 icon: Icon(Icons.refresh, color: Colors.green.shade700)),
           ],
@@ -96,7 +97,8 @@ class _TableFactureState extends State<TableFacture> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.factureList
-      .where((element) => element.succursale == widget.profilController.user.succursale)
+        .where((element) =>
+            element.succursale == widget.profilController.user.succursale)
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

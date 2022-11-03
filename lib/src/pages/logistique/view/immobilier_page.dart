@@ -6,10 +6,9 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/components/immobiliers/table_immobilier.dart';
-import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';  
+import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
-
 
 class ImmobilierPage extends StatefulWidget {
   const ImmobilierPage({super.key});
@@ -26,50 +25,50 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: controller.obx(
-        onLoading: loading(),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-        (data) => Scaffold(
-            key: scaffoldKey,
-            appBar: headerBar(context, scaffoldKey, title, subTitle),
-            drawer: const DrawerMenu(),
-            floatingActionButton: FloatingActionButton.extended(
-              label: const Text("Ajouter un immobilier"),
-              tooltip: "Ajouter un nouveau immobilier",
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                newFicheDialog();
-              },
-            ),
-            body: Row(
-              children: [
-                Visibility(
-                    visible: !Responsive.isMobile(context),
-                    child: const Expanded(flex: 1, child: DrawerMenu())),
-                Expanded(
-                    flex: 5,
-                    child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, right: p20, left: p20, bottom: p8),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: TableImmobilier(immobilierList: controller.immobilierList, controller: controller))),
-              ],
-            ))),
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter un immobilier"),
+                tooltip: "Ajouter un nouveau immobilier",
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  newFicheDialog();
+                },
+              ),
+              body: Row(
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: Container(
+                          margin: const EdgeInsets.only(
+                              top: p20, right: p20, left: p20, bottom: p8),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: TableImmobilier(
+                              immobilierList: controller.immobilierList,
+                              controller: controller))),
+                ],
+              ))),
     );
   }
 
-newFicheDialog() {
+  newFicheDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return StatefulBuilder(builder: (context, StateSetter setState) { 
+          return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
               scrollable: true,
               title:
@@ -85,12 +84,11 @@ newFicheDialog() {
                             children: [
                               const SizedBox(height: 20),
                               ResponsiveChildWidget(
-                                child1: typeAllocationWidget(), 
-                                child2: adresseWidget()
-                              ),
+                                  child1: typeAllocationWidget(),
+                                  child2: adresseWidget()),
                               ResponsiveChildWidget(
                                   child1: numeroCertificatWidget(),
-                                  child2: superficieWidget()), 
+                                  child2: superficieWidget()),
                               dateAcquisitionWidget(),
                               const SizedBox(
                                 height: p20,
@@ -103,7 +101,7 @@ newFicheDialog() {
                   child: const Text('Annuler'),
                 ),
                 TextButton(
-                  onPressed: () { 
+                  onPressed: () {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
                       controller.submit();

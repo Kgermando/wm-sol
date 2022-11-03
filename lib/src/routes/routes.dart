@@ -197,67 +197,71 @@ class ExploitationRoutes {
   static const expDD = "/exp-dd";
 }
 
-class ComMarketingRoutes {
-  static const comMarketingDD = "/com-marketing-dd";
-  static const comMarketingDashboard = "/com-marketing-dashboard";
+class MarketingRoutes {
   // Marketing
-  static const comMarketingAnnuaire = "/com-marketing-annuaire";
-  static const comMarketingAnnuaireAdd = "/com-marketing-annuaire-add";
-  static const comMarketingAnnuaireDetail = "/com-marketing-annuaire-detail";
-  static const comMarketingAnnuaireEdit = "/com-marketing-annuaire-edit";
-  static const comMarketingAgenda = "/com-marketing-agenda";
-  static const comMarketingAgendaAdd = "/com-marketing-agenda-add";
-  static const comMarketingAgendaDetail = "/com-marketing-agenda-detail";
-  static const comMarketingAgendaUpdate = "/com-marketing-agenda-update";
-  static const comMarketingCampaign = "/com-marketing-campaign";
-  static const comMarketingCampaignAdd = "/com-marketing-campaign-add";
-  static const comMarketingCampaignDetail = "/com-marketing-campaign-detail";
-  static const comMarketingCampaignUpdate = "/com-marketing-campaign-update";
+  static const marketingDD = "/marketing-dd";
+  static const marketingDashboard = "/marketing-dashboard";
+  static const marketingAnnuaire = "/marketing-annuaire";
+  static const marketingAnnuaireAdd = "/marketing-annuaire-add";
+  static const marketingAnnuaireDetail = "/marketing-annuaire-detail";
+  static const marketingAnnuaireEdit = "/marketing-annuaire-edit";
+  static const marketingAgenda = "/marketing-agenda";
+  static const marketingAgendaAdd = "/marketing-agenda-add";
+  static const marketingAgendaDetail = "/marketing-agenda-detail";
+  static const marketingAgendaUpdate = "/marketing-agenda-update";
+  static const marketingCampaign = "/marketing-campaign";
+  static const marketingCampaignAdd = "/marketing-campaign-add";
+  static const marketingCampaignDetail = "/marketing-campaign-detail";
+  static const marketingCampaignUpdate = "/marketing-campaign-update";
+}
 
+class ComRoutes {
   // Commercial
-  static const comMarketingProduitModel = "/com-marketing-produit-model";
-  static const comMarketingProduitModelDetail =
-      "/com-marketing-produit-model-detail";
-  static const comMarketingProduitModelAdd = "/com-marketing-produit-model-add";
-  static const comMarketingProduitModelUpdate =
-      "/com-marketing-produit-model-update";
-  static const comMarketingStockGlobal = "/com-marketing-stock-global";
-  static const comMarketingStockGlobalDetail =
-      "/com-marketing-stock-global-detail";
-  static const comMarketingStockGlobalAdd = "/com-marketing-stock-global-add";
-  static const comMarketingStockGlobalRavitaillement =
-      "/com-marketing-stock-global-ravitaillement";
-  static const comMarketingStockGlobalLivraisonStock =
-      "/com-marketing-stock-global-livraisonStock";
-  static const comMarketingSuccursale = "/com-marketing-succursale";
-  static const comMarketingSuccursaleDetail =
-      "/com-marketing-succursale-detail";
-  static const comMarketingSuccursaleAdd = "/com-marketing-succursale-add";
-  static const comMarketingSuccursaleUpdate =
-      "/com-marketing-succursale-update";
-  static const comMarketingAchat = "/com-marketing-achat";
-  static const comMarketingAchatDetail = "/com-marketing-achat-detail";
-  static const comMarketingBonLivraison = "/com-marketing-bon-livraison";
-  static const comMarketingBonLivraisonDetail =
-      "/com-marketing-bon-livraison-detail";
-  static const comMarketingcart = "/com-marketing-cart";
-  static const comMarketingcartDetail = "/com-marketing-cart-detail";
-  static const comMarketingCreance = "/com-marketing-creance";
-  static const comMarketingCreanceDetail = "/com-marketing-creance-detail";
-  static const comMarketingFacture = "/com-marketing-facture";
-  static const comMarketingFactureDetail = "/com-marketing-facture-detail";
-  static const comMarketingGain = "/com-marketing-gain";
-  static const comMarketingHistoryRavitaillement =
-      "/com-marketing-history-ravitaillement";
-  static const comMarketingHistoryLivraison =
-      "/com-marketing-history-livraison";
-  static const comMarketingnumberFact = "/com-marketing-number-fact";
-  static const comMarketingRestitutionStock =
-      "/com-marketing-restitution-stock";
-  static const comMarketingRestitution = "/com-marketing-restitution";
-  static const comMarketingRestitutionDetail =
-      "/com-marketing-restitution-detail";
-  static const comMarketingVente = "/com-marketing-vente";
+  static const comDD = "/com-dd";
+  static const comDashboard = "/com-dashboard";
+  static const comProduitModel = "/com-produit-model";
+  static const comProduitModelDetail =
+      "/com-produit-model-detail";
+  static const comProduitModelAdd = "/com-produit-model-add";
+  static const comProduitModelUpdate =
+      "/com-produit-model-update";
+  static const comStockGlobal = "/com-stock-global";
+  static const comStockGlobalDetail =
+      "/com-stock-global-detail";
+  static const comStockGlobalAdd = "/com-stock-global-add";
+  static const comStockGlobalRavitaillement =
+      "/com-stock-global-ravitaillement";
+  static const comStockGlobalLivraisonStock =
+      "/com-stock-global-livraisonStock";
+  static const comSuccursale = "/com-succursale";
+  static const comSuccursaleDetail =
+      "/com-succursale-detail";
+  static const comSuccursaleAdd = "/com-succursale-add";
+  static const comSuccursaleUpdate =
+      "/com-succursale-update";
+  static const comAchat = "/com-achat";
+  static const comAchatDetail = "/com-achat-detail";
+  static const comBonLivraison = "/com-bon-livraison";
+  static const comBonLivraisonDetail =
+      "/com-bon-livraison-detail";
+  static const comCart = "/com-cart";
+  static const comCartDetail = "/com-cart-detail";
+  static const comCreance = "/com-creance";
+  static const comCreanceDetail = "/com-creance-detail";
+  static const comFacture = "/com-facture";
+  static const comFactureDetail = "/com-facture-detail";
+  static const comGain = "/com-gain";
+  static const comHistoryRavitaillement =
+      "/com-history-ravitaillement";
+  static const comHistoryLivraison =
+      "/com-history-livraison";
+  static const comnumberFact = "/com-number-fact";
+  static const comRestitutionStock =
+      "/com-restitution-stock";
+  static const comRestitution = "/com-restitution";
+  static const comRestitutionDetail =
+      "/com-restitution-detail";
+  static const comVente = "/com-vente";
 }
 
 class ArchiveRoutes {

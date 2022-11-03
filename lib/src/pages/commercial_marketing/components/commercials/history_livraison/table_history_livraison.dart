@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart'; 
+import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/history_livraison/history_livraison_xlsx.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/history_livraison/history_livraison_xlsx.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableHistoryLivraison extends StatefulWidget {
-    const TableHistoryLivraison(
+  const TableHistoryLivraison(
       {super.key,
       required this.livraisonHistoryList,
       required this.profilController});
@@ -21,7 +21,7 @@ class TableHistoryLivraison extends StatefulWidget {
 }
 
 class _TableHistoryLivraisonState extends State<TableHistoryLivraison> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -52,12 +52,12 @@ class _TableHistoryLivraisonState extends State<TableHistoryLivraison> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, ComMarketingRoutes.comMarketingBonLivraison);
+                      Navigator.pushNamed(context, ComRoutes.comBonLivraison);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  HistoriqueLivraisonXlsx().exportToExcel(widget.livraisonHistoryList);
+                  HistoriqueLivraisonXlsx()
+                      .exportToExcel(widget.livraisonHistoryList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -123,7 +123,7 @@ class _TableHistoryLivraisonState extends State<TableHistoryLivraison> {
             element.succursale == widget.profilController.user.succursale ||
             int.parse(widget.profilController.user.role) <= 2)
         .toSet()
-        .toList(); 
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {

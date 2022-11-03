@@ -30,15 +30,14 @@ class _DetailCarburantState extends State<DetailCarburant> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.carburantModel.fournisseur),
-              drawer: const DrawerMenu(), 
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.carburantModel.fournisseur),
+              drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -58,65 +57,71 @@ class _DetailCarburantState extends State<DetailCarburant> {
                                     BorderRadius.all(Radius.circular(20))),
                             child: Column(
                               children: [
-                    Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: p20),
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                TitleWidget(
-                                    title:
-                                        (widget.carburantModel
-                                                .operationEntreSortie ==
-                                                'Entrer')
-                                            ? 'Ravitaillement'
-                                            : 'Consommation'),
-                                Column(
-                                  children: [
-                        if (int.parse(profilController.user.role) <= 3 &&
-                                        widget.carburantModel
-                                                .approbationDD == "-")
-                                      IconButton(
-                                          tooltip: 'Supprimer',
-                                          onPressed: () async {
-                                            alertDeleteDialog(controller);
-                                          },
-                                          icon: const Icon(
-                                              Icons.delete),
-                                          color:
-                                              Colors.red.shade700),
-                                    SelectableText(
-                                        DateFormat(
-                                                "dd-MM-yyyy HH:mm")
-                                            .format(widget.carburantModel
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TitleWidget(
+                                                title: (widget.carburantModel
+                                                            .operationEntreSortie ==
+                                                        'Entrer')
+                                                    ? 'Ravitaillement'
+                                                    : 'Consommation'),
+                                            Column(
+                                              children: [
+                                                if (int.parse(profilController
+                                                            .user.role) <=
+                                                        3 &&
+                                                    widget.carburantModel
+                                                            .approbationDD ==
+                                                        "-")
+                                                  IconButton(
+                                                      tooltip: 'Supprimer',
+                                                      onPressed: () async {
+                                                        alertDeleteDialog(
+                                                            controller);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color:
+                                                          Colors.red.shade700),
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .carburantModel
                                                             .created),
-                                        textAlign: TextAlign.start),
-                                  ],
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                        const SizedBox(height: p20),
+                                        ApprobationCarburant(
+                                            data: widget.carburantModel,
+                                            controller: controller,
+                                            profilController: profilController)
+                                      ],
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
-                            dataWidget(),
-                            const SizedBox(height: p20),
-                            ApprobationCarburant(data: widget.carburantModel, controller: controller, profilController: profilController)
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )))
-    ],
+                          )))
+                ],
               ),
             ));
   }
-
 
   alertDeleteDialog(CarburantController controller) {
     return showDialog(
@@ -170,9 +175,10 @@ class _DetailCarburantState extends State<DetailCarburant> {
                         ? 'Ravitaillement'
                         : 'Consommation',
                     textAlign: TextAlign.start,
-                    style: (widget.carburantModel.operationEntreSortie == 'Entrer')
-                        ? bodyMedium.copyWith(color: Colors.green.shade700)
-                        : bodyMedium.copyWith(color: Colors.red.shade700)),
+                    style:
+                        (widget.carburantModel.operationEntreSortie == 'Entrer')
+                            ? bodyMedium.copyWith(color: Colors.green.shade700)
+                            : bodyMedium.copyWith(color: Colors.red.shade700)),
               )
             ],
           ),

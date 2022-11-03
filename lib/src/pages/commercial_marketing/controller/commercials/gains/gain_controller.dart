@@ -6,7 +6,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class GainController extends GetxController with StateMixin<List<GainModel>> {
   final GainApi gainApi = GainApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var gainList = <GainModel>[].obs;
 

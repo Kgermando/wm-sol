@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart'; 
+import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/logistiques/objet_remplace_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -31,10 +31,9 @@ class _AddEntretienState extends State<AddEntretien> {
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -331,7 +330,8 @@ class _AddEntretienState extends State<AddEntretien> {
   Widget tableWidget() {
     int? id = controller.entretienList.map((element) => element.id).last;
     var dataList = objetRemplaceController.objetRemplaceList
-        .where((p0) => p0.reference == id! + 1).toList();
+        .where((p0) => p0.reference == id! + 1)
+        .toList();
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/transport_restaurant_api.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class TransportRestController extends GetxController
     with StateMixin<List<TransportRestaurationModel>> {
   final TransportRestaurationApi transportRestaurationApi =
       TransportRestaurationApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var transportRestaurationList = <TransportRestaurationModel>[].obs;
 
@@ -49,7 +49,7 @@ class TransportRestController extends GetxController
 
   void getList() async {
     await transportRestaurationApi.getAllData().then((response) {
-      transportRestaurationList.assignAll(response); 
+      transportRestaurationList.assignAll(response);
       change(transportRestaurationList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

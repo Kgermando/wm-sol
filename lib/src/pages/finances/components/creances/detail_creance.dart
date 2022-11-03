@@ -35,14 +35,12 @@ class _DetailCreanceState extends State<DetailCreance> {
     final CreanceController controller = Get.put(CreanceController());
     final CreanceDetteController creanceDetteController =
         Get.put(CreanceDetteController());
-    final ProfilController profilController = Get.find();
-
+    final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -94,7 +92,9 @@ class _DetailCreanceState extends State<DetailCreance> {
                                                 SelectableText(
                                                     DateFormat(
                                                             "dd-MM-yyyy HH:mm")
-                                                        .format(widget.creanceModel.created),
+                                                        .format(widget
+                                                            .creanceModel
+                                                            .created),
                                                     textAlign: TextAlign.start),
                                               ],
                                             )
@@ -105,7 +105,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                                             creanceDetteController,
                                             profilController),
                                         totalMontant(
-                                            controller, creanceDetteController), 
+                                            controller, creanceDetteController),
                                       ],
                                     ),
                                   ),
@@ -138,8 +138,8 @@ class _DetailCreanceState extends State<DetailCreance> {
             flex1: 3,
             flex2: 1,
             child1: Text("TOTAL RESTANT :",
-              textAlign: TextAlign.start,
-              style: headline6!.copyWith(fontWeight: FontWeight.bold)),
+                textAlign: TextAlign.start,
+                style: headline6!.copyWith(fontWeight: FontWeight.bold)),
             child2: Container(
               decoration: BoxDecoration(
                   border: Border(
@@ -152,18 +152,18 @@ class _DetailCreanceState extends State<DetailCreance> {
                   "${NumberFormat.decimalPattern('fr').format(total)} \$",
                   textAlign: TextAlign.center,
                   style: headline6.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red.shade700)),
+                      fontWeight: FontWeight.bold, color: Colors.red.shade700)),
             ),
-          ) 
+          )
         ],
       ),
     );
   }
 
-  Widget dataWidget(CreanceController controller,
-    CreanceDetteController creanceDetteController,
-    ProfilController profilController) {
+  Widget dataWidget(
+      CreanceController controller,
+      CreanceDetteController creanceDetteController,
+      ProfilController profilController) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     double totalCreanceDette = 0.0;
     double total = 0.0;
@@ -180,10 +180,10 @@ class _DetailCreanceState extends State<DetailCreance> {
         children: [
           ResponsiveChildWidget(
             child1: Text('Nom Complet :',
-              textAlign: TextAlign.start,
-              style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+                textAlign: TextAlign.start,
+                style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.creanceModel.nomComplet,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                textAlign: TextAlign.start, style: bodyMedium),
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
@@ -192,7 +192,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.creanceModel.pieceJustificative,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ), 
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Libellé :',
@@ -200,7 +200,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.creanceModel.libelle,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ),  
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Montant :',
@@ -208,8 +208,9 @@ class _DetailCreanceState extends State<DetailCreance> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
                 "${NumberFormat.decimalPattern('fr').format(double.parse(widget.creanceModel.montant))} \$",
-                textAlign: TextAlign.start, style: bodyMedium),
-          ), 
+                textAlign: TextAlign.start,
+                style: bodyMedium),
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Numéro d\'opération :',
@@ -217,7 +218,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.creanceModel.numeroOperation,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ),   
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Signature :',
@@ -225,24 +226,25 @@ class _DetailCreanceState extends State<DetailCreance> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.creanceModel.signature,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ), 
+          ),
           Divider(color: mainColor),
           ResponsiveChild3Widget(
             child1: Text('Statut :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-            child2: (total == 0.0 && widget.creanceModel.statutPaie == 'false' &&
-                profilController.user.departement == "Finances") 
-                ? checkboxRead(controller) : Container(),
-            child3: (widget.creanceModel.statutPaie == 'true') 
-              ? SelectableText('Payé',
-                          textAlign: TextAlign.start,
-                          style:
-                              bodyMedium.copyWith(color: Colors.blue.shade700))
-              : SelectableText('Non Payé',
+            child2: (total == 0.0 &&
+                    widget.creanceModel.statutPaie == 'false' &&
+                    profilController.user.departement == "Finances")
+                ? checkboxRead(controller)
+                : Container(),
+            child3: (widget.creanceModel.statutPaie == 'true')
+                ? SelectableText('Payé',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(color: Colors.blue.shade700))
+                : SelectableText('Non Payé',
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(color: Colors.orange.shade700)),
-          ), 
+          ),
           Divider(color: mainColor),
         ],
       ),

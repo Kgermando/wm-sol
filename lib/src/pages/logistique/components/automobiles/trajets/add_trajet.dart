@@ -22,101 +22,102 @@ class AddTrajet extends StatefulWidget {
 class _AddTrajetState extends State<AddTrajet> {
   final TrajetController controller = Get.put(TrajetController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Logistique"; 
+  String title = "Logistique";
 
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(context, scaffoldKey, title, widget.anguinModel.nom),
-      drawer: const DrawerMenu(),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: p20),
-                            child: Form(
-                              key: controller.formKey,
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  const TitleWidget(
-                                      title: "Indiquer le Trajet"),
-                                  const SizedBox(
-                                    height: p20,
+              key: scaffoldKey,
+              appBar: headerBar(
+                  context, scaffoldKey, title, widget.anguinModel.nom),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Form(
+                                      key: controller.formKey,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleWidget(
+                                              title: "Indiquer le Trajet"),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          conducteurWidget(),
+                                          Responsive.isMobile(context)
+                                              ? Column(
+                                                  children: [
+                                                    trajetDeWidget(),
+                                                    trajetAWidget()
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child:
+                                                            trajetDeWidget()),
+                                                    const SizedBox(
+                                                      width: p10,
+                                                    ),
+                                                    Expanded(
+                                                        child: trajetAWidget())
+                                                  ],
+                                                ),
+                                          missionWidget(),
+                                          kilometrageSoriteWidget(),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          BtnWidget(
+                                              title: 'Soumettre',
+                                              isLoading: controller.isLoading,
+                                              press: () {
+                                                final form = controller
+                                                    .formKey.currentState!;
+                                                if (form.validate()) {
+                                                  controller.submit(
+                                                      widget.anguinModel);
+                                                  form.reset();
+                                                }
+                                              })
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  conducteurWidget(),
-                                  Responsive.isMobile(context)
-                                      ? Column(
-                                          children: [
-                                            trajetDeWidget(),
-                                            trajetAWidget()
-                                          ],
-                                        )
-                                      : Row(
-                                          children: [
-                                            Expanded(
-                                                child:
-                                                    trajetDeWidget()),
-                                            const SizedBox(
-                                              width: p10,
-                                            ),
-                                            Expanded(
-                                                child: trajetAWidget())
-                                          ],
-                                        ),
-                                  missionWidget(),
-                                  kilometrageSoriteWidget(),
-                                  const SizedBox(
-                                    height: p20,
-                                  ),
-                                  BtnWidget(
-                                      title: 'Soumettre',
-                                      isLoading: controller.isLoading,
-                                      press: () {
-                                        final form = controller
-                                            .formKey.currentState!;
-                                        if (form.validate()) {
-                                          controller.submit(widget.anguinModel);
-                                          form.reset();
-                                        }
-                                      })
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
-        ],
-      ),
-    ));
+                          )))
+                ],
+              ),
+            ));
   }
 
   Widget conducteurWidget() {

@@ -12,7 +12,7 @@ import 'package:wm_solution/src/utils/info_system.dart';
 class UpdateController extends GetxController
     with StateMixin<List<UpdateModel>> {
   final UpdateVersionApi updateVersionApi = UpdateVersionApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var updateList = <UpdateModel>[].obs;
 
@@ -23,13 +23,16 @@ class UpdateController extends GetxController
   TextEditingController versionController = TextEditingController();
   TextEditingController motifController = TextEditingController();
 
-  String isUpdateVersion = InfoSystem().version();
-  double sumVersion = 0.0;
-  double sumVersionCloud = 0.0; // Version mis en ligne
+  String isUpdateLocalVersion = InfoSystem().version();
+
+  final _sumLocalVersion = 0.0.obs; // Local
+  double get sumLocalVersion => _sumLocalVersion.value;
+
+  final _sumVersionCloud = 0.0.obs; // Version mis en ligne
+  double get sumVersionCloud => _sumVersionCloud.value;
 
   bool downloading = false;
   String progressString = '0';
-
 
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
@@ -56,7 +59,7 @@ class UpdateController extends GetxController
       Get.snackbar("Téléchargement en cours", "Patientez svp...",
           backgroundColor: Colors.blue,
           icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP); 
+          snackPosition: SnackPosition.TOP);
       await dio.download(url, fileName, onReceiveProgress: (received, total) {
         downloading = true;
         progressString = "${((received / total) * 100).toStringAsFixed(0)}%";
@@ -91,24 +94,23 @@ class UpdateController extends GetxController
   void getList() async {
     await updateVersionApi.getAllData().then((response) {
       updateList.assignAll(response);
-       var isUpdateVersionCloud = updateList
-          .where((element) => element.isActive == "true")
-          .toList();
-      // Version actuel
-      var isVersion = isUpdateVersion.split('.');
-      for (var e in isVersion) {
-        sumVersion += double.parse(e);
-      } 
-      // Version Cloud
-      var isVersionCloud = isUpdateVersionCloud.last.version.split('.');
-      for (var e in isVersionCloud) {
-        sumVersionCloud += double.parse(e);
-      }
-
       change(updateList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
+  }
+
+  void getData() async {
+    // Version actuel
+    var isVersion = isUpdateLocalVersion.split('.');
+    for (var e in isVersion) {
+      _sumLocalVersion.value += double.parse(e);
+    }
+    // Version Cloud
+    var isVersionCloud = updateList.last.version.split('.');
+    for (var e in isVersionCloud) {
+      _sumVersionCloud.value += double.parse(e);
+    }
   }
 
   detailView(int id) async {

@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class BalanceRefController extends GetxController
     with StateMixin<List<CompteBalanceRefModel>> {
   final CompteBalanceRefApi compteBalanceRefApi = CompteBalanceRefApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var compteBalanceRefList = <CompteBalanceRefModel>[].obs;
 
@@ -27,7 +27,6 @@ class BalanceRefController extends GetxController
     getList();
   }
 
- 
   @override
   void dispose() {
     montantDebitController.dispose();
@@ -91,7 +90,7 @@ class BalanceRefController extends GetxController
           solde: solde.toString());
       await compteBalanceRefApi.insertData(compteBalanceRefModel).then((value) {
         compteBalanceRefList.clear();
-        getList(); 
+        getList();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -130,7 +129,7 @@ class BalanceRefController extends GetxController
           solde: solde.toString());
       await compteBalanceRefApi.updateData(compteBalanceRefModel).then((value) {
         compteBalanceRefList.clear();
-        getList(); 
+        getList();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

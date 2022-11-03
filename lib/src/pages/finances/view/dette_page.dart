@@ -23,16 +23,15 @@ class _DettePageState extends State<DettePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "dettes";
-  
+
   @override
   Widget build(BuildContext context) {
     final DetteController controller = Get.put(DetteController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -57,7 +56,9 @@ class _DettePageState extends State<DettePage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableDette(detteList: controller.detteList, controller: controller))),
+                          child: TableDette(
+                              detteList: controller.detteList,
+                              controller: controller))),
                 ],
               ))),
     );
@@ -96,7 +97,7 @@ class _DettePageState extends State<DettePage> {
                                   child2: pieceJustificativeWidget(controller)),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(controller),
-                                  child2: montantWidget(controller)), 
+                                  child2: montantWidget(controller)),
                               const SizedBox(
                                 height: p20,
                               ),

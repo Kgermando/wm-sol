@@ -8,7 +8,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class CampaignController extends GetxController
     with StateMixin<List<CampaignModel>> {
   final CampaignApi campaignApi = CampaignApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var campaignList = <CampaignModel>[].obs;
 

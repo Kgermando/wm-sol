@@ -43,10 +43,9 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
       width = MediaQuery.of(context).size.width / 1.2;
     }
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -73,77 +72,77 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
                               children: [
                                 Card(
                                   elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: p20),
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
-                              children: [
-                                Card(
-                                    elevation: 10,
-                                    child: Container(
-                                      margin:
-                                          const EdgeInsets.all(p16),
-                                      width: width,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(
-                                                p10),
-                                        border: Border.all(
-                                          color: Colors
-                                              .blueGrey.shade700,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Container(
-                                                color: widget
-                                                    .annuaireColor
-                                                    .color,
-                                                height: 200,
-                                                width:
-                                                    double.infinity,
-                                              ),
-                                              Positioned(
-                                                top: 130,
-                                                left: (Responsive
-                                                        .isDesktop(
-                                                            context))
-                                                    ? 50
-                                                    : 10,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Card(
+                                                elevation: 10,
                                                 child: Container(
-                                                  width: 100,
-                                                  height: 100,
+                                                  margin:
+                                                      const EdgeInsets.all(p16),
+                                                  width: width,
                                                   decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            p10),
+                                                    border: Border.all(
                                                       color: Colors
-                                                          .green
-                                                          .shade700,
-                                                      shape: BoxShape
-                                                          .circle,
-                                                      border: Border.all(
-                                                          width: 2.0,
-                                                          color:
-                                                              mainColor)),
-                                                  child:
-                                                      CircleAvatar(
-                                                          radius: 50,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .white,
-                                                          child: Image
-                                                              .asset(
-                                                            "assets/images/avatar.jpg",
-                                                            width: 80,
-                                                            height: 80)),
+                                                          .blueGrey.shade700,
+                                                      width: 2.0,
+                                                    ),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      Stack(
+                                                        clipBehavior: Clip.none,
+                                                        children: [
+                                                          Container(
+                                                            color: widget
+                                                                .annuaireColor
+                                                                .color,
+                                                            height: 200,
+                                                            width:
+                                                                double.infinity,
+                                                          ),
+                                                          Positioned(
+                                                            top: 130,
+                                                            left: (Responsive
+                                                                    .isDesktop(
+                                                                        context))
+                                                                ? 50
+                                                                : 10,
+                                                            child: Container(
+                                                              width: 100,
+                                                              height: 100,
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .green
+                                                                      .shade700,
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  border: Border.all(
+                                                                      width:
+                                                                          2.0,
+                                                                      color:
+                                                                          mainColor)),
+                                                              child: CircleAvatar(
+                                                                  radius: 50,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  child: Image.asset(
+                                                                      "assets/images/avatar.jpg",
+                                                                      width: 80,
+                                                                      height:
+                                                                          80)),
                                                             ),
                                                           ),
                                                           Positioned(
@@ -425,7 +424,7 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
       color: Colors.purple,
       tooltip: "Modifiaction",
       onPressed: () {
-        Get.toNamed(ComMarketingRoutes.comMarketingAnnuaireEdit,
+        Get.toNamed(MarketingRoutes.marketingAnnuaireEdit,
             arguments: annuaireColor.annuaireModel);
       });
 

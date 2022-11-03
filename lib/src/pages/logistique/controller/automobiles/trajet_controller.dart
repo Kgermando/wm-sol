@@ -8,7 +8,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class TrajetController extends GetxController
     with StateMixin<List<TrajetModel>> {
   final TrajetApi trajetApi = TrajetApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var trajetList = <TrajetModel>[].obs;
 

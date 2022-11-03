@@ -32,10 +32,9 @@ class _DetailTrajetState extends State<DetailTrajet> {
     final ProfilController profilController = Get.put(ProfilController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
@@ -44,7 +43,7 @@ class _DetailTrajetState extends State<DetailTrajet> {
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter une personne"),
                 tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.add),
                 onPressed: () {},
               ),
               body: Row(
@@ -133,10 +132,9 @@ class _DetailTrajetState extends State<DetailTrajet> {
                                         dataWidget(),
                                         const SizedBox(height: p20),
                                         ApprobationTrajet(
-                                          data: widget.trajetModel,
-                                          controller: controller,
-                                          profilController: profilController
-                                        )
+                                            data: widget.trajetModel,
+                                            controller: controller,
+                                            profilController: profilController)
                                       ],
                                     ),
                                   ),

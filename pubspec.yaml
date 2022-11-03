@@ -54,6 +54,7 @@ dependencies:
   flutter_slidable: ^2.0.0
   flutter_phoenix: ^1.1.0
   flutter_breadcrumb: ^1.0.1
+  connectivity_plus: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -100,7 +101,7 @@ msix_config:
   display_name: Work Management
   publisher_display_name: Work_Management
   identity_name: com.eventdrcTechnology.WorkManagement
-  msix_version: 3.0.0.2
+  msix_version: 3.0.0.3
   certificate_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\CERTIFICAT\astrid_v2\CERTIFICATE.pfx
   certificate_password: gk0813530838
   publisher: CN=Germain kataku, O=Eventdrc Technology

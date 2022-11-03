@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class BtnWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class BtnWidget extends StatelessWidget {
         Container(
           height: 1.4 * (MediaQuery.of(context).size.height / 20),
           width: 5 * (MediaQuery.of(context).size.width / 10),
-          margin: const EdgeInsets.only(bottom: 5),
+          margin: const EdgeInsets.only(bottom: p20),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               textStyle: const TextStyle(fontSize: 10),

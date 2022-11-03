@@ -13,7 +13,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/
 import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
 
-class DashboardComMarketingController extends GetxController {
+class DashboardcomController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
   final VenteCartController venteCartController =
       Get.put(VenteCartController());
@@ -116,7 +116,6 @@ class DashboardComMarketingController extends GetxController {
     venteMouthList.assignAll(getAllDataVenteMouth);
     gainMouthList.assignAll(getAllDataGainMouth);
     venteYearList.assignAll(getAllDataVenteYear);
-    gainYearList.assignAll(getAllDataGainYear); 
-
+    gainYearList.assignAll(getAllDataGainYear);
   }
 }

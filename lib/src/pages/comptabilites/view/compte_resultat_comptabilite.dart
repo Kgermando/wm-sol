@@ -25,13 +25,13 @@ class _CompteResultatComptabiliteState
 
   @override
   Widget build(BuildContext context) {
-    final CompteResultatController controller = Get.put(CompteResultatController());
+    final CompteResultatController controller =
+        Get.put(CompteResultatController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),

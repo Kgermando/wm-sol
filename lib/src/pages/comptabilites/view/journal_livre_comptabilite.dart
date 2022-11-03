@@ -28,10 +28,9 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
     final JournalLivreController controller = Get.put(JournalLivreController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -68,7 +67,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
     return showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (dialogContext) { 
+        builder: (dialogContext) {
           bool isLoading = false;
           String getPlageDate() {
             if (controller.dateRange == null) {

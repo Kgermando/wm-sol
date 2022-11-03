@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class CompteResultatController extends GetxController
     with StateMixin<List<CompteResulatsModel>> {
   final CompteResultatApi compteResultatApi = CompteResultatApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var compteResultatList = <CompteResulatsModel>[].obs;
 

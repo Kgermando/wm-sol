@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class TransportRestPersonnelsController extends GetxController
     with StateMixin<List<TransRestAgentsModel>> {
   final TransRestAgentsApi transRestAgentsApi = TransRestAgentsApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var transRestAgentList = <TransRestAgentsModel>[].obs;
 

@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class BalanceController extends GetxController
     with StateMixin<List<BalanceCompteModel>> {
   final BalanceCompteApi balanceCompteApi = BalanceCompteApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var balanceList = <BalanceCompteModel>[].obs;
 

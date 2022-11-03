@@ -12,7 +12,7 @@ import 'package:wm_solution/src/pages/commercial_marketing/controller/commercial
 class RestitutionController extends GetxController
     with StateMixin<List<RestitutionModel>> {
   final RestitutionApi restitutionApi = RestitutionApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final StockGlobalController stockGlobalController =
       Get.put(StockGlobalController());
   final AchatController achatController = Get.put(AchatController());

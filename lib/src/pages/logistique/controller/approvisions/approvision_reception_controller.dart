@@ -10,7 +10,7 @@ class ApprovisionReceptionController extends GetxController
     with StateMixin<List<ApprovisionReceptionModel>> {
   final ApprovisionReceptionApi approvisionReceptionApi =
       ApprovisionReceptionApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var approvisionReceptionList = <ApprovisionReceptionModel>[].obs;
 

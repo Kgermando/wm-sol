@@ -10,7 +10,7 @@ import 'package:wm_solution/src/utils/type_operation.dart';
 class BanqueController extends GetxController
     with StateMixin<List<BanqueModel>> {
   final BanqueApi banqueApi = BanqueApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var banqueList = <BanqueModel>[].obs;
 
@@ -33,7 +33,6 @@ class BanqueController extends GetxController
   void onInit() {
     super.onInit();
     getList();
-    
   }
 
   // @override
@@ -53,14 +52,13 @@ class BanqueController extends GetxController
 
   void getList() async {
     await banqueApi.getAllData().then((response) {
-      banqueList.assignAll(response); 
+      banqueList.assignAll(response);
       change(banqueList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
- 
   detailView(int id) async {
     final data = await banqueApi.getOneData(id);
     return data;

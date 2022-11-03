@@ -74,11 +74,17 @@ class MyApp extends StatelessWidget {
         } else {
           homeRoute = TacheRoutes.tachePage;
         }
-      } else if (departement.first == "Commercial et Marketing") {
+      } else if (departement.first == "Marketing") {
         if (int.parse(user.role) <= 2) {
-          homeRoute = ComMarketingRoutes.comMarketingDashboard;
+          homeRoute = MarketingRoutes.marketingDashboard;
         } else {
-          homeRoute = ComMarketingRoutes.comMarketingAnnuaire;
+          homeRoute = MarketingRoutes.marketingAnnuaire;
+        }
+      } else if (departement.first == "Commercial") {
+        if (int.parse(user.role) <= 2) {
+          homeRoute = ComRoutes.comDashboard;
+        } else {
+          homeRoute = ComRoutes.comVente;
         }
       } else if (departement.first == "Logistique") {
         if (int.parse(user.role) <= 2) {

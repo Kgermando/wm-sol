@@ -21,42 +21,40 @@ class UpdateAnnuaire extends StatefulWidget {
 class _UpdateAnnuaireState extends State<UpdateAnnuaire> {
   final AnnuaireController controller = Get.put(AnnuaireController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing"; 
+  String title = "Commercial & Marketing";
 
-    @override
-  void initState() { 
-   controller.categorie = widget.annuaireModel.categorie;
-   controller.nomPostnomPrenomController = TextEditingController(
-        text: widget.annuaireModel.nomPostnomPrenom);
-   controller.emailController =
+  @override
+  void initState() {
+    controller.categorie = widget.annuaireModel.categorie;
+    controller.nomPostnomPrenomController =
+        TextEditingController(text: widget.annuaireModel.nomPostnomPrenom);
+    controller.emailController =
         TextEditingController(text: widget.annuaireModel.email);
-   controller.mobile1Controller =
+    controller.mobile1Controller =
         TextEditingController(text: widget.annuaireModel.mobile1);
     controller.mobile2Controller =
         TextEditingController(text: widget.annuaireModel.mobile2);
-    controller.secteurActiviteController = TextEditingController(
-        text: widget.annuaireModel.secteurActivite);
-    controller.nomEntrepriseController = TextEditingController(
-        text: widget.annuaireModel.nomEntreprise);
+    controller.secteurActiviteController =
+        TextEditingController(text: widget.annuaireModel.secteurActivite);
+    controller.nomEntrepriseController =
+        TextEditingController(text: widget.annuaireModel.nomEntreprise);
     controller.gradeController =
         TextEditingController(text: widget.annuaireModel.grade);
-   controller.adresseEntrepriseController = TextEditingController(
-        text: widget.annuaireModel.adresseEntreprise);
+    controller.adresseEntrepriseController =
+        TextEditingController(text: widget.annuaireModel.adresseEntreprise);
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, widget.annuaireModel.nomPostnomPrenom),
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.annuaireModel.nomPostnomPrenom),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,8 +86,7 @@ class _UpdateAnnuaireState extends State<UpdateAnnuaire> {
                                       children: [
                                         categorieField(),
                                         ResponsiveChildWidget(
-                                          child1:
-                                              nomPostnomPrenomField(),
+                                          child1: nomPostnomPrenomField(),
                                           child2: emailField(),
                                         ),
                                         ResponsiveChildWidget(
@@ -99,8 +96,7 @@ class _UpdateAnnuaireState extends State<UpdateAnnuaire> {
                                         ResponsiveChildWidget(
                                           child1:
                                               secteurActiviteField(controller),
-                                          child2:
-                                              nomEntrepriseField(),
+                                          child2: nomEntrepriseField(),
                                         ),
                                         gradeField(),
                                         adresseEntrepriseField(),

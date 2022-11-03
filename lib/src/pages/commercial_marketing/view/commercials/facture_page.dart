@@ -6,7 +6,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/factures/table_facture.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/facture_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/factures/facture_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class FacturePage extends StatefulWidget {
@@ -27,10 +27,9 @@ class _FacturePageState extends State<FacturePage> {
     final ProfilController profilController = Get.put(ProfilController());
     return SafeArea(
       child: controller.obx(
-          onLoading: loading(),
+          onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+          onError: (error) => loadingError(context, error!),
           (data) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -48,7 +47,10 @@ class _FacturePageState extends State<FacturePage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableFacture(factureList: controller.factureList, controller: controller, profilController: profilController) )),
+                          child: TableFacture(
+                              factureList: controller.factureList,
+                              controller: controller,
+                              profilController: profilController))),
                 ],
               ))),
     );

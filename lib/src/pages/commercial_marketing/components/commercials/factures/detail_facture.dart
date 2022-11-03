@@ -27,78 +27,79 @@ class DetailFacture extends StatefulWidget {
 
 class _DetailFactureState extends State<DetailFacture> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing"; 
+  String title = "Commercial & Marketing";
 
   @override
   Widget build(BuildContext context) {
     final FactureController controller = Get.put(FactureController());
 
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(
-              context, scaffoldKey, title, widget.factureCartModel.client),
-          drawer: const DrawerMenu(),
-          floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Ajouter une personne"),
-            tooltip: "Ajout personne à la liste",
-            icon: const Icon(Icons.person_add),
-            onPressed: () {},
-          ),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      physics: const ScrollPhysics(),
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, bottom: p8, right: p20, left: p20),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Column(
-                          children: [
-                            Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: p20),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(
+                  context, scaffoldKey, title, widget.factureCartModel.client),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter une personne"),
+                tooltip: "Ajout personne à la liste",
+                icon: const Icon(Icons.add),
+                onPressed: () {},
+              ),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             TitleWidget(
                                                 title:
-                                            'Facture n° ${widget.factureCartModel.client}'),
+                                                    'Facture n° ${widget.factureCartModel.client}'),
                                             Column(
                                               children: [
                                                 Row(
                                                   children: [
                                                     PrintWidget(
-                                                  tooltip:
-                                                      'Imprimer le document',
-                                                  onPressed: () async {
-                                                    final pdfFile =
-                                                      await FactureCartPDF
-                                                            .generate(widget.factureCartModel,
-                                                                "\$");
-                                                    PdfApi.openFile(
-                                                        pdfFile);
-                                                  })
+                                                        tooltip:
+                                                            'Imprimer le document',
+                                                        onPressed: () async {
+                                                          final pdfFile =
+                                                              await FactureCartPDF
+                                                                  .generate(
+                                                                      widget
+                                                                          .factureCartModel,
+                                                                      "\$");
+                                                          PdfApi.openFile(
+                                                              pdfFile);
+                                                        })
                                                   ],
                                                 ),
                                                 SelectableText(
@@ -125,15 +126,15 @@ class _DetailFactureState extends State<DetailFacture> {
                                         const SizedBox(height: p20),
                                         totalCart()
                                       ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )))
-            ],
-          ),
-        ));
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
 
   Widget dataWidget() {
@@ -208,5 +209,4 @@ class _DetailFactureState extends State<DetailFacture> {
       ),
     );
   }
-
 }

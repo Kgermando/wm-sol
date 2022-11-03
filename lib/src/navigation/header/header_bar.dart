@@ -85,16 +85,13 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
 
        if (Platform.isWindows &&
           updateController.updateList.isNotEmpty &&
-          updateController.sumVersionCloud > updateController.sumVersion)
+          updateController.sumVersionCloud > updateController.sumLocalVersion)
         IconButton(
             iconSize: 40,
             tooltip: 'Téléchargement',
             onPressed: () {
-              if (updateController.sumVersionCloud >
-                  updateController.sumVersion) {
-                updateController
-                  .downloadNetworkSoftware(url: updateController.updateList.last.urlUpdate);
-              }
+              updateController.downloadNetworkSoftware(
+                  url: updateController.updateList.last.urlUpdate);
             },
             icon: (updateController.downloading)
                 ? (updateController.progressString == "100%")
@@ -119,7 +116,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
       IconButton(
           tooltip: 'Panier',
           onPressed: () {
-            Get.toNamed(ComMarketingRoutes.comMarketingcart);
+            Get.toNamed(ComRoutes.comCart);
           },
           icon: Badge(
             showBadge:
@@ -131,7 +128,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
       IconButton(
           tooltip: 'Agenda',
           onPressed: () {
-            Get.toNamed(ComMarketingRoutes.comMarketingAgenda);
+            Get.toNamed(MarketingRoutes.marketingAgenda);
           },
           icon: Badge(
             showBadge:

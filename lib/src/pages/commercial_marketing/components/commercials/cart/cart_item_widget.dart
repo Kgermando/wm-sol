@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart'; 
-import 'package:wm_solution/src/constants/responsive.dart'; 
+import 'package:flutter/material.dart';
+import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';  
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 
 class CartItemWidget extends StatefulWidget {
-  const CartItemWidget({Key? key, required this.cart, required this.controller}) : super(key: key);
-  final CartModel cart; 
+  const CartItemWidget({Key? key, required this.cart, required this.controller})
+      : super(key: key);
+  final CartModel cart;
   final CartController controller;
 
   @override
@@ -34,8 +35,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             ? Card(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, ComMarketingRoutes.comMarketingcartDetail,
+                    Navigator.pushNamed(context, ComRoutes.comCartDetail,
                         arguments: widget.cart);
                   },
                   child: ListTile(
@@ -133,15 +133,12 @@ class _CartItemWidgetState extends State<CartItemWidget> {
 
   Widget onCancel() {
     return IconButton(
-      tooltip: 'Annuler',
-      onPressed: () {
-        setState(() {
-          widget.controller.updateAchat(widget.cart);
-        });
-      },
-      icon: const Icon(Icons.cancel, color: Colors.red)
-    );
+        tooltip: 'Annuler',
+        onPressed: () {
+          setState(() {
+            widget.controller.updateAchat(widget.cart);
+          });
+        },
+        icon: const Icon(Icons.cancel, color: Colors.red));
   }
-
-  
 }

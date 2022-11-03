@@ -28,10 +28,9 @@ class _DetailCaisseState extends State<DetailCaisse> {
     final CaisseController controller = Get.put(CaisseController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
@@ -69,7 +68,9 @@ class _DetailCaisseState extends State<DetailCaisse> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TitleWidget(title: widget.caisseModel.caisseName),
+                                            TitleWidget(
+                                                title: widget
+                                                    .caisseModel.caisseName),
                                             Column(
                                               children: [
                                                 SelectableText(
@@ -148,7 +149,8 @@ class _DetailCaisseState extends State<DetailCaisse> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.caisseModel.typeOperation,
-                textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.purple)),
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(color: Colors.purple)),
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(

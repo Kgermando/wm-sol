@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/campaign_xlxs.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart'; 
-import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart'; 
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -44,7 +44,7 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
           final CampaignModel campaignModel =
               await widget.campaignController.detailView(idPlutoRow.value);
 
-          Get.toNamed(ComMarketingRoutes.comMarketingCampaignDetail, 
+          Get.toNamed(MarketingRoutes.marketingCampaignDetail, 
             arguments: campaignModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -62,7 +62,7 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ComMarketingRoutes.comMarketingCampaign);
+                            context, MarketingRoutes.marketingCampaign);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

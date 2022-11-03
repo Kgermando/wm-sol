@@ -28,48 +28,53 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/sal
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
-class AdminDashboardController extends GetxController { 
-  final ProfilController profilController = Get.find(); 
+class AdminDashboardController extends GetxController {
+  final ProfilController profilController = Get.put(ProfilController());
 
-   // RH
-    final PersonnelsController personnelsController = Get.put(PersonnelsController());
-    final SalaireController salaireController = Get.put(SalaireController());
-    final TransportRestController transportRestController =
-        Get.put(TransportRestController());
-    final TransportRestPersonnelsController transportRestPersonnelsController =
+  // RH
+  final PersonnelsController personnelsController =
+      Get.put(PersonnelsController());
+  final SalaireController salaireController = Get.put(SalaireController());
+  final TransportRestController transportRestController =
+      Get.put(TransportRestController());
+  final TransportRestPersonnelsController transportRestPersonnelsController =
       Get.put(TransportRestPersonnelsController());
 
-    // Budgets
-    final BudgetPrevisionnelController budgetPrevisionnelController = Get.put(BudgetPrevisionnelController());
-    final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
+  // Budgets
+  final BudgetPrevisionnelController budgetPrevisionnelController =
+      Get.put(BudgetPrevisionnelController());
+  final LignBudgetaireController lignBudgetaireController =
+      Get.put(LignBudgetaireController());
 
-    // Comm & Marketing
-    final CampaignController campaignController = Get.put(CampaignController());
+  // Comm & Marketing
+  final CampaignController campaignController = Get.put(CampaignController());
 
-    // Logistique
-    final DevisController devisController = Get.put(DevisController());
-    final DevisListObjetController devisListObjetController = Get.put(DevisListObjetController());
+  // Logistique
+  final DevisController devisController = Get.put(DevisController());
+  final DevisListObjetController devisListObjetController =
+      Get.put(DevisListObjetController());
 
+  // Exploitation
+  final ProjetController projetController = Get.put(ProjetController());
 
-    // Exploitation
-    final ProjetController projetController = Get.put(ProjetController());
+  // Comptabilite
+  final BilanController bilanController = Get.put(BilanController());
+  final JournalLivreController journalLivreController =
+      Get.put(JournalLivreController());
+  final JournalController journalController = Get.put(JournalController());
 
-    // Comptabilite
-    final BilanController bilanController = Get.put(BilanController());
-    final JournalLivreController journalLivreController = Get.put(JournalLivreController()); 
-    final JournalController journalController = Get.put(JournalController()); 
+  // Finances
+  final BanqueController banqueController = Get.put(BanqueController());
+  final CaisseController caisseController = Get.put(CaisseController());
+  final CreanceController creanceController = Get.put(CreanceController());
+  final DetteController detteController = Get.put(DetteController());
+  final CreanceDetteController creanceDetteController =
+      Get.put(CreanceDetteController());
+  final FinExterieurController finExterieurController =
+      Get.put(FinExterieurController());
 
-    // Finances
-     final BanqueController banqueController = Get.put(BanqueController());
-     final CaisseController caisseController = Get.put(CaisseController());
-     final CreanceController creanceController = Get.put(CreanceController());
-     final DetteController detteController = Get.put(DetteController());
-     final CreanceDetteController creanceDetteController = Get.put(CreanceDetteController());
-     final FinExterieurController finExterieurController = Get.put(FinExterieurController());
+  // var actionnaireCotisationList = await ActionnaireCotisationApi().getAllData();
 
-    // var actionnaireCotisationList = await ActionnaireCotisationApi().getAllData();
-
-  
   var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
   var dataCampaignList = <CampaignModel>[].obs;
   var dataDevisList = <DevisModel>[].obs;
@@ -131,7 +136,6 @@ class AdminDashboardController extends GetxController {
   // Campaigns
   int campaignCount = 0;
 
-
   @override
   void onInit() {
     super.onInit();
@@ -145,35 +149,40 @@ class AdminDashboardController extends GetxController {
   }
 
   Future<void> getData() async {
-   
     _agentsCount.value = personnelsController.personnelsList.length;
-    _agentActifCount.value =
-        personnelsController.personnelsList
-        .where((element) => element.statutAgent == 'true').length;
+
+    _agentActifCount.value = personnelsController.personnelsList
+        .where((element) => element.statutAgent == 'true')
+        .length;
 
     // Exploitations
     projetsApprouveCount = projetController.projetList
         .where((element) =>
             element.approbationDG == 'Approved' &&
-            element.approbationDD == 'Approved')
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == 'Approved' &&
+            element.approbationFin == 'Approved')
         .length;
 
     // Comm & Marketing
     campaignCount = campaignController.campaignList
         .where((element) =>
             element.approbationDG == 'Approved' &&
-            element.approbationDD == 'Approved')
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == 'Approved' &&
+            element.approbationFin == 'Approved')
         .length;
 
     // Budgets
     devisListObjetsList = devisListObjetController.devisListObjetList;
     tansRestAgentList = transportRestPersonnelsController.transRestAgentList;
-    departementsList.assignAll(budgetPrevisionnelController.departementBudgetList
+    departementsList.assignAll(budgetPrevisionnelController
+        .departementBudgetList
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
             DateTime.now().isBefore(element.periodeFin))
-        .toList()); 
+        .toList());
 
     for (var i in departementsList) {
       ligneBudgetaireList.assignAll(lignBudgetaireController.ligneBudgetaireList
@@ -217,14 +226,17 @@ class AdminDashboardController extends GetxController {
               element.createdAt.year == DateTime.now().year &&
               element.approbationDD == 'Approved' &&
               element.approbationBudget == 'Approved' &&
+              element.approbationFin == 'Approved' &&
               element.observation == 'true' &&
               element.createdAt.isBefore(item.periodeBudgetFin))
           .toList());
-      dataTransRestList.assignAll(transportRestController.transportRestaurationList
+      dataTransRestList.assignAll(transportRestController
+          .transportRestaurationList
           .where((element) =>
               element.approbationDG == 'Approved' &&
               element.approbationDD == 'Approved' &&
               element.approbationBudget == 'Approved' &&
+              element.approbationFin == 'Approved' &&
               element.observation == 'true' &&
               element.created.isBefore(item.periodeBudgetFin))
           .toList());
@@ -232,14 +244,15 @@ class AdminDashboardController extends GetxController {
 
     // Comptabilite
     bilanCount = bilanController.bilanList
-        .where((element) => element.approbationDD == 'Approved').length;
+        .where((element) => element.approbationDD == 'Approved')
+        .length;
 
     for (var journal in journalLivreController.journalLivreList
         .where((element) => element.approbationDD == 'Approved')) {
       journalCount = journalController.journalList
-        .where((element) => element.reference == journal.id).length;
+          .where((element) => element.reference == journal.id)
+          .length;
     }
-    
 
     // FINANCE
     // Banque
@@ -270,8 +283,8 @@ class AdminDashboardController extends GetxController {
     }
 
     // Creance remboursement
-    var creancePaiementList =
-        creanceDetteController.creanceDetteList.where((element) => element.creanceDette == 'creances');
+    var creancePaiementList = creanceDetteController.creanceDetteList
+        .where((element) => element.creanceDette == 'creances');
 
     // Creance
     var nonPayeCreanceList = creanceController.creanceList
@@ -289,8 +302,7 @@ class AdminDashboardController extends GetxController {
     }
 
     // Dette paiement
-    var detteRemboursementList =
-        creanceDetteController.creanceDetteList
+    var detteRemboursementList = creanceDetteController.creanceDetteList
         .where((element) => element.creanceDette == 'dettes');
     var nonPayeDetteList = detteController.detteList
         .where((element) =>
@@ -346,7 +358,8 @@ class AdminDashboardController extends GetxController {
     }
     for (var item in dataDevisList) {
       var devisCaisseList = devisListObjetsList
-          .where((element) => element.reference == item.id).toList();
+          .where((element) => element.reference == item.id)
+          .toList();
       for (var element in devisCaisseList) {
         totalDevis += double.parse(element.montantGlobal);
       }
@@ -359,8 +372,7 @@ class AdminDashboardController extends GetxController {
     }
     for (var item in dataTransRestList) {
       var devisCaisseList = tansRestAgentList
-          .where((element) =>
-              element.reference == item.id)
+          .where((element) => element.reference == item.id)
           .toList();
       for (var element in devisCaisseList) {
         totalTransRest += double.parse(element.montant);
@@ -375,6 +387,4 @@ class AdminDashboardController extends GetxController {
     sommeRestantes = coutTotal - sommeEnCours;
     poursentExecution = sommeRestantes * 100 / coutTotal;
   }
-
-   
 }

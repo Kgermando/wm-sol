@@ -72,11 +72,17 @@ class _MailsNAvState extends State<MailsNAv> {
                   } else {
                     Get.toNamed(TacheRoutes.tachePage);
                   }
-                } else if (departement.first == "Commercial et Marketing") {
+                } else if (departement.first == "Marketing") {
                   if (int.parse(profilController.user.role) <= 2) {
-                    Get.toNamed(ComMarketingRoutes.comMarketingDashboard);
+                    Get.toNamed(MarketingRoutes.marketingDashboard);
                   } else {
-                    Get.toNamed(ComMarketingRoutes.comMarketingAnnuaire);
+                    Get.toNamed(MarketingRoutes.marketingAnnuaire);
+                  }
+                } else if (departement.first == "Commercial") {
+                  if (int.parse(profilController.user.role) <= 2) {
+                    Get.toNamed(ComRoutes.comDashboard);
+                  } else {
+                    Get.toNamed(ComRoutes.comVente);
                   }
                 } else if (departement.first == "Logistique") {
                   if (int.parse(profilController.user.role) <= 2) {

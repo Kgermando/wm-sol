@@ -200,9 +200,9 @@ class _TableUpdateState extends State<TableUpdate> {
         renderer: (rendererContext) {
           return IconButton(
               onPressed: () {
-                int id = int.parse(rendererContext.cell.value.toString());
-                widget.controller.deleteData(id);
-                Navigator.pushNamed(context, UpdateRoutes.updatePage);
+                // int id = int.parse(rendererContext.cell.value.toString());
+                // widget.controller.deleteData(id);
+                // Navigator.pushNamed(context, UpdateRoutes.updatePage);
               },
               icon: const Icon(Icons.delete, color: Colors.red));
         },

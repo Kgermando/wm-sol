@@ -45,7 +45,7 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
           final SuccursaleModel succursaleModel =
               await widget.succursaleController.detailView(idPlutoRow.value);
 
-          Get.toNamed(ComMarketingRoutes.comMarketingSuccursaleDetail,
+          Get.toNamed(ComRoutes.comSuccursaleDetail,
               arguments: succursaleModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -63,7 +63,7 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ComMarketingRoutes.comMarketingSuccursale);
+                            context, ComRoutes.comSuccursale);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

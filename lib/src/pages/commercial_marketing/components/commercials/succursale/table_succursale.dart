@@ -4,14 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
 import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/succursale_xlsx.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/succursale/succursale_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableSuccursale extends StatefulWidget {
-  const TableSuccursale({super.key, 
-    required this.succursaleList, required this.controller});
+  const TableSuccursale(
+      {super.key, required this.succursaleList, required this.controller});
   final List<SuccursaleModel> succursaleList;
   final SuccursaleController controller;
 
@@ -44,8 +44,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
         final SuccursaleModel succursaleModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComMarketingRoutes.comMarketingSuccursaleDetail,
-            arguments: succursaleModel);
+        Get.toNamed(ComRoutes.comSuccursaleDetail, arguments: succursaleModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -61,8 +60,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, ComMarketingRoutes.comMarketingSuccursale);
+                      Navigator.pushNamed(context, ComRoutes.comSuccursale);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -251,5 +249,4 @@ class _TableSuccursaleState extends State<TableSuccursale> {
       ),
     ];
   }
-
 }

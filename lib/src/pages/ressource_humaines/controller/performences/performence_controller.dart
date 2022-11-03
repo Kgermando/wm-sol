@@ -9,7 +9,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class PerformenceController extends GetxController
     with StateMixin<List<PerformenceModel>> {
   PerformenceApi performenceApi = PerformenceApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   var performenceList = <PerformenceModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -25,7 +25,8 @@ class PerformenceController extends GetxController
   void getList() async {
     await performenceApi.getAllData().then((response) {
       var departement = jsonDecode(profilController.user.departement);
-      performenceList.assignAll(response.where((element) => element.departement == departement.first));
+      performenceList.assignAll(response
+          .where((element) => element.departement == departement.first));
       change(performenceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

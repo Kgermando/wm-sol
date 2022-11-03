@@ -21,22 +21,21 @@ class DetailBanque extends StatefulWidget {
 
 class _DetailBanqueState extends State<DetailBanque> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Finances"; 
+  String title = "Finances";
 
   @override
   Widget build(BuildContext context) {
     final BanqueController controller = Get.put(BanqueController());
 
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.banqueModel.numeroOperation),
-              drawer: const DrawerMenu(), 
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.banqueModel.numeroOperation),
+              drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -77,7 +76,9 @@ class _DetailBanqueState extends State<DetailBanque> {
                                                 SelectableText(
                                                     DateFormat(
                                                             "dd-MM-yyyy HH:mm")
-                                                        .format(widget.banqueModel.created),
+                                                        .format(widget
+                                                            .banqueModel
+                                                            .created),
                                                     textAlign: TextAlign.start),
                                               ],
                                             )
@@ -101,30 +102,30 @@ class _DetailBanqueState extends State<DetailBanque> {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
-        children: [ 
+        children: [
           ResponsiveChildWidget(
             child1: Text('Banque :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.banqueName,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ), 
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Nom Complet :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)), 
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.nomComplet,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                textAlign: TextAlign.start, style: bodyMedium),
           ),
-          Divider(color: mainColor), 
+          Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Pièce justificative :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)), 
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.pieceJustificative,
-                    textAlign: TextAlign.start, style: bodyMedium),
-          ),  
+                textAlign: TextAlign.start, style: bodyMedium),
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Libellé :',
@@ -132,7 +133,7 @@ class _DetailBanqueState extends State<DetailBanque> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.libelle,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ), 
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Montant :',
@@ -140,18 +141,18 @@ class _DetailBanqueState extends State<DetailBanque> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
                 "${NumberFormat.decimalPattern('fr').format(double.parse(widget.banqueModel.montant))} \$",
-                textAlign: TextAlign.start, style: bodyMedium),
-          ),  
+                textAlign: TextAlign.start,
+                style: bodyMedium),
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Type d\'opération :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(
-                widget.banqueModel.typeOperation,
+            child2: SelectableText(widget.banqueModel.typeOperation,
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(color: Colors.purple)),
-          ),  
+          ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
             child1: Text('Numéro d\'opération :',
@@ -167,7 +168,7 @@ class _DetailBanqueState extends State<DetailBanque> {
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.signature,
                 textAlign: TextAlign.start, style: bodyMedium),
-          ),  
+          ),
         ],
       ),
     );

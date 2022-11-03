@@ -2,7 +2,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
@@ -12,7 +12,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/regex.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -75,7 +75,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title,
@@ -130,7 +130,8 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                             servicesAffectationWidget(controller),
                             ResponsiveChildWidget(
                                 child1: matriculeWidget(controller),
-                                child2: numeroSecuriteSocialeWidget(controller)),
+                                child2:
+                                    numeroSecuriteSocialeWidget(controller)),
                             ResponsiveChildWidget(
                                 child1: fonctionOccupeWidget(controller),
                                 child2: roleWidget(controller)),
@@ -153,7 +154,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                                   if (form.validate()) {
                                     controller.submitUpdate(widget.personne);
                                     form.reset();
-                                  } 
+                                  }
                                 })
                           ]),
                         ),
@@ -165,7 +166,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     );
   }
 
- Widget fichierWidget() {
+  Widget fichierWidget() {
     return Container(
         padding: const EdgeInsets.all(2),
         margin: const EdgeInsets.all(2),
@@ -364,7 +365,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
   }
 
   Widget roleWidget(PersonnelsController controller) {
-    final ProfilController profilController = Get.find();
+    final ProfilController profilController = Get.put(ProfilController());
     List<String> roleList = [];
     if (int.parse(profilController.user.role) == 0) {
       roleList = Dropdown().roleAdmin;
@@ -373,7 +374,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     } else if (int.parse(profilController.user.role) > 3) {
       roleList = Dropdown().roleAgent;
     }
- 
+
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: Row(

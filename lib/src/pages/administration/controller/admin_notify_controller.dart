@@ -33,12 +33,12 @@ class AdminNotifyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-     getCountBudget();
+    getCountBudget();
     getCountRh();
     getCountFinance();
     getCountComptabilite();
     getCountExploitation();
-    getCountComMarketing();
+    getCountcom();
     getCountLogistique();
     getCountDevis();
   }
@@ -50,7 +50,7 @@ class AdminNotifyController extends GetxController {
     getCountFinance();
     getCountComptabilite();
     getCountExploitation();
-    getCountComMarketing();
+    getCountcom();
     getCountLogistique();
     getCountDevis();
     super.refresh();
@@ -83,7 +83,7 @@ class AdminNotifyController extends GetxController {
     _exploitationCount.value = int.parse(notifySum.sum);
   }
 
-  void getCountComMarketing() async {
+  void getCountcom() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
     _commMarketingCount.value = int.parse(notifySum.sum);
   }

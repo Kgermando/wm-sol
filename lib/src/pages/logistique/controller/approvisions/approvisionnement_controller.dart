@@ -8,7 +8,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 class ApprovisionnementController extends GetxController
     with StateMixin<List<ApprovisionnementModel>> {
   final ApprovisionnementApi approvisionnementApi = ApprovisionnementApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var approvisionnementList = <ApprovisionnementModel>[].obs;
 

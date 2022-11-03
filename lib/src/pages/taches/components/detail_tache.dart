@@ -33,10 +33,9 @@ class _DetailTacheState extends State<DetailTache> {
     final ProfilController profilController = Get.put(ProfilController());
     final RapportController rapportController = Get.put(RapportController());
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
               appBar:
@@ -47,7 +46,8 @@ class _DetailTacheState extends State<DetailTache> {
                 tooltip: "Ajouter le rapport",
                 icon: const Icon(Icons.edit_note),
                 onPressed: () {
-                  Get.toNamed(TacheRoutes.rapportAdd, arguments: widget.tacheModel);
+                  Get.toNamed(TacheRoutes.rapportAdd,
+                      arguments: widget.tacheModel);
                 },
               ),
               body: Row(
@@ -117,7 +117,10 @@ class _DetailTacheState extends State<DetailTache> {
                                         Divider(
                                           color: mainColor,
                                         ),
-                                        TableRapport(rapportController: rapportController, tacheModel: widget.tacheModel),
+                                        TableRapport(
+                                            rapportController:
+                                                rapportController,
+                                            tacheModel: widget.tacheModel),
                                       ],
                                     ),
                                   ),

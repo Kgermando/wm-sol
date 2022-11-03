@@ -4,12 +4,12 @@ import 'package:wm_solution/src/api/archives/archive_api.dart';
 import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/utils/dropdown.dart'; 
+import 'package:wm_solution/src/utils/dropdown.dart';
 
 class ArchiveController extends GetxController
     with StateMixin<List<ArchiveModel>> {
   final ArchiveApi archiveApi = ArchiveApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var archiveList = <ArchiveModel>[].obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -30,7 +30,6 @@ class ArchiveController extends GetxController
 
   String? uploadedFileUrl;
 
- 
   void uploadFile(String file) async {
     _isUploading.value = true;
     await FileApi().uploadFiled(file).then((value) {

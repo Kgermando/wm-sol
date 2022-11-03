@@ -21,7 +21,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 class LignBudgetaireController extends GetxController
     with StateMixin<List<LigneBudgetaireModel>> {
   LIgneBudgetaireApi lIgneBudgetaireApi = LIgneBudgetaireApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final CampaignController campaignController = Get.put(CampaignController());
   final DevisController devisController = Get.put(DevisController());
   final DevisListObjetController devisListObjetController =

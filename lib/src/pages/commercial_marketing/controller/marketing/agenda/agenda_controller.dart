@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class AgendaController extends GetxController
     with StateMixin<List<AgendaModel>> {
   final AgendaApi agendaApi = AgendaApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var agendaList = <AgendaModel>[].obs;
 
@@ -35,7 +35,8 @@ class AgendaController extends GetxController
 
   void getList() async {
     await agendaApi.getAllData().then((response) {
-      agendaList.assignAll(response.where((element) => element.signature == profilController.user.matricule));
+      agendaList.assignAll(response.where(
+          (element) => element.signature == profilController.user.matricule));
       change(agendaList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

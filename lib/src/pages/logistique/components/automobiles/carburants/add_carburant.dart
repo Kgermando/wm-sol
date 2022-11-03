@@ -25,141 +25,143 @@ class _AddCarburantState extends State<AddCarburant> {
   String subTitle = "Ajout carburant";
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(
-              context, scaffoldKey, title, subTitle),
-          drawer: const DrawerMenu(),
-          floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Ajouter une personne"),
-            tooltip: "Ajout personne à la liste",
-            icon: const Icon(Icons.person_add),
-            onPressed: () {},
-          ),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-          flex: 5,
-          child: SingleChildScrollView(
-              controller: ScrollController(),
-              physics: const ScrollPhysics(),
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: p20, bottom: p8, right: p20, left: p20),
-                decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(20))),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: p20),
-                        child: Form(
-                          key: controller.formKey,
-                          child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                            children: [
-                              const TitleWidget(
-                                  title: "Ajout Carburant"),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child:
-                                          operationEntreSortieWidget()),
-                                  const SizedBox(
-                                    width: p10,
-                                  ),
-                                  Expanded(
-                                      child: typeCaburantWidget())
-                                ],
-                              ),
-                              if (controller.operationEntreSortie == 'Entrer')
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: fournisseurWidget()),
-                                    const SizedBox(
-                                      width: p10,
-                                    ),
-                                    Expanded(
-                                        child:
-                                            nomeroFactureAchatWidget())
-                                  ],
-                                ),
-                              Row(
-                                children: [
-                                  if (controller.operationEntreSortie ==
-                                      'Entrer')
-                                    Expanded(
-                                        child:
-                                            prixAchatParLitreWidget()),
-                                  const SizedBox(
-                                    width: p10,
-                                  ),
-                              if (controller.operationEntreSortie == 'Sortie')
-                                Expanded(
-                                  child: nomReceptionisteWidget())
-                                ],
-                              ),
-                              if (controller.operationEntreSortie == 'Sortie')
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child:
-                                            numeroPlaqueWidget()),
-                                    const SizedBox(
-                                      width: p10,
-                                    ),
-                                    Expanded(
-                                        child:
-                                            dateDebutEtFinWidget())
-                                  ],
-                                ),
-                              qtyAchatControllerWidget(),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              BtnWidget(
-                                  title: 'Soumettre',
-                                  isLoading: controller.isLoading,
-                                  press: () {
-                                    final form =
-                                        controller
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter une personne"),
+                tooltip: "Ajout personne à la liste",
+                icon: const Icon(Icons.add),
+                onPressed: () {},
+              ),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Form(
+                                      key: controller.formKey,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const TitleWidget(
+                                              title: "Ajout Carburant"),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                  child:
+                                                      operationEntreSortieWidget()),
+                                              const SizedBox(
+                                                width: p10,
+                                              ),
+                                              Expanded(
+                                                  child: typeCaburantWidget())
+                                            ],
+                                          ),
+                                          if (controller.operationEntreSortie ==
+                                              'Entrer')
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                    child: fournisseurWidget()),
+                                                const SizedBox(
+                                                  width: p10,
+                                                ),
+                                                Expanded(
+                                                    child:
+                                                        nomeroFactureAchatWidget())
+                                              ],
+                                            ),
+                                          Row(
+                                            children: [
+                                              if (controller
+                                                      .operationEntreSortie ==
+                                                  'Entrer')
+                                                Expanded(
+                                                    child:
+                                                        prixAchatParLitreWidget()),
+                                              const SizedBox(
+                                                width: p10,
+                                              ),
+                                              if (controller
+                                                      .operationEntreSortie ==
+                                                  'Sortie')
+                                                Expanded(
+                                                    child:
+                                                        nomReceptionisteWidget())
+                                            ],
+                                          ),
+                                          if (controller.operationEntreSortie ==
+                                              'Sortie')
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                    child:
+                                                        numeroPlaqueWidget()),
+                                                const SizedBox(
+                                                  width: p10,
+                                                ),
+                                                Expanded(
+                                                    child:
+                                                        dateDebutEtFinWidget())
+                                              ],
+                                            ),
+                                          qtyAchatControllerWidget(),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
+                                          BtnWidget(
+                                              title: 'Soumettre',
+                                              isLoading: controller.isLoading,
+                                              press: () {
+                                                final form = controller
                                                     .formKey.currentState!;
-                                    if (form.validate()) {
-                                      controller.submit();
-                                      form.reset();
-                                    }
-                                  })
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )))
-            ],
-          ),
-        ));
+                                                if (form.validate()) {
+                                                  controller.submit();
+                                                  form.reset();
+                                                }
+                                              })
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
-
 
   Widget operationEntreSortieWidget() {
     List<String> typeList = ['Entrer', 'Sortie'];
@@ -328,7 +330,8 @@ class _AddCarburantState extends State<AddCarburant> {
   }
 
   Widget numeroPlaqueWidget() {
-    List<String> numPlaque = controller.enginList.map((e) => e.nomeroPLaque).toList();
+    List<String> numPlaque =
+        controller.enginList.map((e) => e.nomeroPLaque).toList();
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(

@@ -39,7 +39,7 @@ class _TableHistoryRavitaillementState
   Widget build(BuildContext context) {
     return PlutoGrid(
       columns: columns,
-      rows: rows, 
+      rows: rows,
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
@@ -54,12 +54,13 @@ class _TableHistoryRavitaillementState
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context,
-                          ComMarketingRoutes.comMarketingHistoryRavitaillement);
+                      Navigator.pushNamed(
+                          context, ComRoutes.comHistoryRavitaillement);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  HistoriqueRavitaillementXlsx().exportToExcel(widget.historyRavitaillementList);
+                  HistoriqueRavitaillementXlsx()
+                      .exportToExcel(widget.historyRavitaillementList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -119,7 +120,8 @@ class _TableHistoryRavitaillementState
     var dataList = widget.historyRavitaillementList
         .where((element) =>
             element.succursale == widget.profilController.user.succursale ||
-            int.parse(widget.profilController.user.role) <= 2).toSet()
+            int.parse(widget.profilController.user.role) <= 2)
+        .toSet()
         .toList();
     var i = dataList.length;
     for (var item in dataList) {
@@ -135,7 +137,7 @@ class _TableHistoryRavitaillementState
           'tva': PlutoCell(value: item.tva),
           'qtyRavitailler': PlutoCell(value: item.qtyRavitailler),
           'created': PlutoCell(
-                value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'id': PlutoCell(value: item.id)
         }));
       });

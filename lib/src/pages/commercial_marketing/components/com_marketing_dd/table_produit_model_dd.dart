@@ -44,7 +44,7 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
           final ProductModel productionModel =
               await widget.produitModelController.detailView(idPlutoRow.value);
 
-          Get.toNamed(ComMarketingRoutes.comMarketingProduitModelDetail,
+          Get.toNamed(ComRoutes.comProduitModelDetail,
               arguments: productionModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -62,7 +62,7 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ComMarketingRoutes.comMarketingProduitModel);
+                            context, ComRoutes.comProduitModel);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

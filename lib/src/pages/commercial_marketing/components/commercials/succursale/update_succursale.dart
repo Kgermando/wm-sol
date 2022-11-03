@@ -22,27 +22,27 @@ class UpdateSuccursale extends StatefulWidget {
 class _UpdateSuccursaleState extends State<UpdateSuccursale> {
   final SuccursaleController controller = Get.put(SuccursaleController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing"; 
+  String title = "Commercial & Marketing";
 
   @override
   initState() {
-    controller.nameController = TextEditingController(text: widget.succursaleModel.name);
-    controller.adresseController = TextEditingController(text: widget.succursaleModel.adresse);
+    controller.nameController =
+        TextEditingController(text: widget.succursaleModel.name);
+    controller.adresseController =
+        TextEditingController(text: widget.succursaleModel.adresse);
     super.initState();
   }
 
-
   @override
-  Widget build(BuildContext context) { 
-
+  Widget build(BuildContext context) {
     return controller.obx(
-        onLoading: loading(),
+        onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
-        onError: (error) => Text(
-            "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
+        onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, widget.succursaleModel.name),
+              appBar: headerBar(
+                  context, scaffoldKey, title, widget.succursaleModel.name),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +100,8 @@ class _UpdateSuccursaleState extends State<UpdateSuccursale> {
                                                 final form = controller
                                                     .formKey.currentState!;
                                                 if (form.validate()) {
-                                                  controller.submitUpdate(widget.succursaleModel);
+                                                  controller.submitUpdate(
+                                                      widget.succursaleModel);
                                                   form.reset();
                                                 }
                                               })

@@ -26,7 +26,7 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
   String title = "Comptabilités";
   String subTitle = "compte résultat";
   final CompteResultatController controller = Get.find();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   @override
   void initState() {
@@ -90,54 +90,52 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
   }
 
   @override
-  Widget build(BuildContext context) { 
-
+  Widget build(BuildContext context) {
     return controller.obx(
-      onLoading: loading(),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => Text(
-          "Une erreur s'est produite $error veiller actualiser votre logiciel. Merçi."),
-      (state) => Scaffold(
-            key: scaffoldKey,
-            appBar: headerBar(
-                context, scaffoldKey, title, widget.compteResulatsModel.intitule),
-            drawer: const DrawerMenu(),
-            floatingActionButton: FloatingActionButton.extended(
-              label: const Text("Ajouter une personne"),
-              tooltip: "Ajout personne à la liste",
-              icon: const Icon(Icons.person_add),
-              onPressed: () {},
-            ),
-            body: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Visibility(
-                    visible: !Responsive.isMobile(context),
-                    child: const Expanded(flex: 1, child: DrawerMenu())),
-                Expanded(
-                    flex: 5,
-                    child: SingleChildScrollView(
-                        controller: ScrollController(),
-                        physics: const ScrollPhysics(),
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, bottom: p8, right: p20, left: p20),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Column(
-                            children: [
-                              Card(
-                                elevation: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: p20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                       const TitleWidget(
-                                                title: "Compte resultats"),
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Scaffold(
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.compteResulatsModel.intitule),
+              drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Ajouter une personne"),
+                tooltip: "Ajout personne à la liste",
+                icon: const Icon(Icons.add),
+                onPressed: () {},
+              ),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const TitleWidget(
+                                            title: "Compte resultats"),
                                         const SizedBox(
                                           height: p20,
                                         ),
@@ -157,24 +155,24 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
                                             title: 'Soumettre',
                                             isLoading: controller.isLoading,
                                             press: () {
-                                              final form =
-                                                  controller
+                                              final form = controller
                                                   .formKey.currentState!;
                                               if (form.validate()) {
-                                                controller.submitUpdate(widget.compteResulatsModel);
+                                                controller.submitUpdate(
+                                                    widget.compteResulatsModel);
                                                 form.reset();
                                               }
                                             })
                                       ],
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )))
-              ],
-            ),
-          ));
+                                )
+                              ],
+                            ),
+                          )))
+                ],
+              ),
+            ));
   }
 
   Widget chargesWidget() {
@@ -369,8 +367,7 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
         ));
   }
 
-  Widget impotsTaxesVersementsAssimilesWidget(
-      ) {
+  Widget impotsTaxesVersementsAssimilesWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p10, left: p5),
         child: TextFormField(
@@ -660,8 +657,7 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
     );
   }
 
-  Widget productionVendueBienEtSericesWidget(
-      ) {
+  Widget productionVendueBienEtSericesWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p10, left: p5),
         child: TextFormField(
@@ -839,23 +835,23 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
 
   Widget soldeDebiteurWidget() {
     return Container(
-      margin: const EdgeInsets.only(bottom: p10, left: p5),
-      child: TextFormField(
-        controller: controller.soldeDebiteurController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Solde Debiteur',
-          hintText: 'Solde Debiteur',
-        ),
-        keyboardType: TextInputType.text,
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
+        margin: const EdgeInsets.only(bottom: p10, left: p5),
+        child: TextFormField(
+          controller: controller.soldeDebiteurController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Solde Debiteur',
+            hintText: 'Solde Debiteur',
+          ),
+          keyboardType: TextInputType.text,
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 }
