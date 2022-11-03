@@ -6,8 +6,8 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart';
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/notify/notify_exp.dart';
@@ -49,8 +49,8 @@ class _DDFinanceState extends State<DDFinance> {
   final FinanceNotifyController financeNotifyController =
       Get.put(FinanceNotifyController());
   final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
-  final ComMarketingNotifyController comMarketingNotifyController =
-      Get.put(ComMarketingNotifyController());
+    final MarketingNotifyController marketingNotifyController =
+      Get.put(MarketingNotifyController());
   final SalaireController salaireController = Get.put(SalaireController());
   final TransportRestController transportRestController =
       Get.put(TransportRestController());
@@ -185,7 +185,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle: Text(
-                                      "Vous avez ${comMarketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
+                                      "Vous avez ${marketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
                                       style: bodyMedium.copyWith(
                                           color: Colors.white70)),
                                   initiallyExpanded: false,

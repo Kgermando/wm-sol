@@ -46,7 +46,8 @@ class AdminRoutes {
   static const adminComptabilite = "/admin-comptabilite";
   static const adminFinance = "/admin-finances";
   static const adminExploitation = "/admin-exploitations";
-  static const adminCommMarketing = "/admin-commercial-marketing";
+  static const adminMarketing = "/admin-marketing";
+  static const adminComm = "/admin-commercial";
   static const adminLogistique = "/admin-logistiques";
 }
 

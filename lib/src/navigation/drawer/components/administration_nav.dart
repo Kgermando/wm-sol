@@ -114,10 +114,10 @@ class _AdministrationNavState extends State<AdministrationNav> {
               Get.toNamed(AdminRoutes.adminExploitation);
             }),
         DrawerWidget(
-            selected: widget.currentRoute == AdminRoutes.adminCommMarketing,
+            selected: widget.currentRoute == AdminRoutes.adminMarketing,
             icon: Icons.add_business,
             sizeIcon: 20.0,
-            title: 'Comm. & Marketing',
+            title: 'Marketing',
             style: bodyText1,
             badge: Badge(
               showBadge: (controller.commMarketingCount >= 1) ? true : false,
@@ -127,7 +127,23 @@ class _AdministrationNavState extends State<AdministrationNav> {
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
-              Get.toNamed(AdminRoutes.adminCommMarketing);
+              Get.toNamed(AdminRoutes.adminMarketing);
+            }),
+        DrawerWidget(
+            selected: widget.currentRoute == AdminRoutes.adminComm,
+            icon: Icons.add_business,
+            sizeIcon: 20.0,
+            title: 'Commercial',
+            style: bodyText1,
+            badge: Badge(
+              showBadge: (controller.commMarketingCount >= 1) ? true : false,
+              badgeColor: Colors.teal,
+              badgeContent: Text('${controller.commMarketingCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              child: const Icon(Icons.notifications),
+            ),
+            onTap: () {
+              Get.toNamed(AdminRoutes.adminComm);
             }),
         DrawerWidget(
             selected: widget.currentRoute == AdminRoutes.adminLogistique,

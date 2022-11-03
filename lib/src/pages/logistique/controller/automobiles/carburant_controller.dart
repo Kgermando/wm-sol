@@ -5,7 +5,7 @@ import 'package:wm_solution/src/models/comm_maketing/annuaire_model.dart';
 import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/carburant_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/annuaire/annuaire_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
 import 'package:wm_solution/src/utils/carburant_dropdown.dart';
 

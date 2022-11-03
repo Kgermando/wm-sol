@@ -10,7 +10,7 @@ import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_livre_controller.dart';

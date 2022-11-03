@@ -50,11 +50,12 @@ import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_budget.dart';
-import 'package:wm_solution/src/pages/administration/view/admin_comm_marketing.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_comm.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_dashboard.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_exploitation.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_finance.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_logistique.dart';
+import 'package:wm_solution/src/pages/administration/view/admin_marketing.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_rh.dart';
 import 'package:wm_solution/src/pages/archives/components/add_archive.dart';
 import 'package:wm_solution/src/pages/archives/components/archive_pdf_viewer.dart';
@@ -72,47 +73,47 @@ import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart
 import 'package:wm_solution/src/pages/budgets/view/dashboard_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/historique_budgets.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/achats/detail_achat.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/bon_livraison/detail_bon_livraison.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/cart/detail_cart.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/factures/detail_facture.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/factures/detail_facture_creance.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/ajout_product_model.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/detail_product_model.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/produit_model/update_product_modele_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/restitution/detail_restitution.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/add_stock_global.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/detail_stock_global.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/livraison_stock.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/stock_global/ravitaillement_stock.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/add_succursale.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/detail_succursale.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/commercials/succursale/update_succursale.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/agenda/detail_agenda.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/agenda/update_agenda.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/add_annuaire.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/detail_anniuaire.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/annuaire/update_annuaire.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/add_campaign.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/detail_campaign.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/marketing/campaigns/update_campaign.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/com_marketing_dd/comm_marketing_dd.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/achat_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/bon_livraison_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/cart_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/facture_creance_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/facture_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/history_livraison_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/history_ravitaillement_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/produit_model_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/restitution_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/stock_global_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/succursale_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/commercials/vente_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/dashboard/dashboard_comm_marketing_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/agenda_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/annuaire_page.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/view/marketing/campaign_page.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/achats/detail_achat.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/bon_livraison/detail_bon_livraison.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/cart/detail_cart.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/factures/detail_facture.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/factures/detail_facture_creance.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/ajout_product_model.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/detail_product_model.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/update_product_modele_controller.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/restitution/detail_restitution.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/add_stock_global.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/detail_stock_global.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/livraison_stock.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/ravitaillement_stock.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/add_succursale.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/detail_succursale.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/update_succursale.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/agenda/detail_agenda.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/agenda/update_agenda.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/annuaire/add_annuaire.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/annuaire/detail_anniuaire.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/annuaire/update_annuaire.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/campaigns/add_campaign.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/campaigns/detail_campaign.dart';
+import 'package:wm_solution/src/pages/commercial/components/marketing/campaigns/update_campaign.dart';
+import 'package:wm_solution/src/pages/commercial/view/comm_dd.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/achat_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/bon_livraison_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/cart_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/facture_creance_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/facture_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/history_livraison_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/history_ravitaillement_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/produit_model_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/restitution_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/stock_global_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/succursale_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/vente_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/dashboard_comm_page.dart';
+import 'package:wm_solution/src/pages/marketing/view/agenda_page.dart';
+import 'package:wm_solution/src/pages/marketing/view/annuaire_page.dart';
+import 'package:wm_solution/src/pages/marketing/view/campaign_page.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/balance/detail_balance.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/detail_bilan.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/add_compte_resultat.dart';
@@ -186,6 +187,8 @@ import 'package:wm_solution/src/pages/mailling/components/new_mail.dart';
 import 'package:wm_solution/src/pages/mailling/components/repondre_mail.dart';
 import 'package:wm_solution/src/pages/mailling/components/tranfert_mail.dart';
 import 'package:wm_solution/src/pages/mailling/view/mails_page.dart';
+import 'package:wm_solution/src/pages/marketing/view/marketing_dahsboard.dart';
+import 'package:wm_solution/src/pages/marketing/view/marketing_dd.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -760,13 +763,13 @@ List<GetPage<dynamic>>? getPages = [
 
   // Marketing
   GetPage(
-      name: MarketingRoutes.marketingDD,
-      page: () => const CampaignPage(),
+      name: MarketingRoutes.marketingDashboard,
+      page: () => const MarketingDahboard(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingDD,
-      page: () => const AddCampaign(),
+      page: () => const MarketingDD(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
@@ -1338,8 +1341,13 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: AdminRoutes.adminCommMarketing,
-      page: () => const AdminCommMarketing(),
+      name: AdminRoutes.adminMarketing,
+      page: () => const AdminMarketing(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: AdminRoutes.adminComm,
+      page: () => const AdminComm(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(

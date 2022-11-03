@@ -7,9 +7,9 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/dashboard/courbe_vente_gain_mounth.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/components/dashboard/courbe_vente_gain_year.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/dashboard/dashboard_com_marketing_controller.dart';
+import 'package:wm_solution/src/pages/commercial/components/dashboard/courbe_vente_gain_mounth.dart';
+import 'package:wm_solution/src/pages/commercial/components/dashboard/courbe_vente_gain_year.dart';
+import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dashboard/dash_pie_wdget.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -28,8 +28,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       Get.put(AdminDashboardController());
   final PersonnelsController personnelsController =
       Get.put(PersonnelsController());
-  final DashboardcomController dashboardcomController =
-      Get.put(DashboardcomController());
+  final DashboardComController dashboardcomController =
+      Get.put(DashboardComController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Administration";
   String subTitle = "Dashboard";

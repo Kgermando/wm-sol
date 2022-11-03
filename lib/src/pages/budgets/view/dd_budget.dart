@@ -12,8 +12,8 @@ import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_salaire
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_transport_rest_budget.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/marketing/compaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/notify/commercial_marketing_notify.dart';
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/notify/notify_exp.dart';
@@ -49,8 +49,8 @@ class _DDBudgetState extends State<DDBudget> {
     final BudgetNotifyController budgetNotifyController =
         Get.put(BudgetNotifyController()); 
     final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
-     final ComMarketingNotifyController comMarketingNotifyController =
-        Get.put(ComMarketingNotifyController());
+      final MarketingNotifyController marketingNotifyController =
+        Get.put(MarketingNotifyController());
     final NotifyExpController expController = Get.put(NotifyExpController()); 
     final SalaireController salaireController = Get.put(SalaireController());
     final TransportRestController transportRestController =
@@ -159,7 +159,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle: Text(
-                          "Vous avez ${comMarketingNotifyController.campaignCountBudget} dossiers necessitent votre approbation",
+                          "Vous avez ${marketingNotifyController.campaignCountBudget} dossiers necessitent votre approbation",
                           style: bodyMedium.copyWith(
                               color: Colors.white70)),
                       initiallyExpanded: false,
