@@ -5,7 +5,8 @@ const String mainUrl = "http://192.168.100.200/api";
 // Notifications departements
 var adminDepartementNotifyUrl = "$mainUrl/counts/departement-admin";
 var budgetsDepartementNotifyUrl = "$mainUrl/counts/departement-budgets";
-var commMarketingDepartementNotifyUrl = "$mainUrl/counts/departement-comm-marketing";
+var marketingDepartementNotifyUrl = "$mainUrl/counts/departement-marketing";
+var commDepartementNotifyUrl = "$mainUrl/counts/departement-commmercials";
 var comptabiliteDepartementNotifyUrl = "$mainUrl/counts/departement-comptabilite";
 var exploitationsDepartementNotifyUrl = "$mainUrl/counts/departement-exploitations";
 var financesDepartementNotifyUrl = "$mainUrl/counts/departement-finances";

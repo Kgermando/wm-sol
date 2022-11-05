@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/notifications/comm_marketing/campaign_notify_api.dart'; 
-import 'package:wm_solution/src/api/notifications/departements/comm_marketing_departement.dart';
+import 'package:wm_solution/src/api/notifications/comm_marketing/campaign_notify_api.dart';  
+import 'package:wm_solution/src/api/notifications/departements/marketing_departement.dart';
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 
 class MarketingNotifyController extends GetxController {
-  ComMarketingDepartementNotifyApi comMarketingDepartementNotifyApi =
-      ComMarketingDepartementNotifyApi();
+  MarketingDepartementNotifyApi marketingDepartementNotifyApi =
+      MarketingDepartementNotifyApi();
   CampaignNotifyApi campaignNotifyApi = CampaignNotifyApi();  
 
   final _itemCount = '0'.obs;
@@ -46,7 +46,7 @@ class MarketingNotifyController extends GetxController {
 
   void getCountComMarketing() async {
     NotifySumModel notifySum =
-        await comMarketingDepartementNotifyApi.getCountComMarketing();
+        await marketingDepartementNotifyApi.getCountMarketing();
     _itemCount.value = notifySum.sum;
   }
 

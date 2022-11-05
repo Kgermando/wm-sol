@@ -8,13 +8,13 @@ import 'package:wm_solution/src/api/route_api.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 import 'package:http/http.dart' as http;
 
-class ComDepartementNotifyApi extends GetConnect {
+class MarketingDepartementNotifyApi extends GetConnect {
   var client = http.Client();
 
   var comMarketingUrl = Uri.parse(
-      "$commDepartementNotifyUrl/get-count-departement-commercial/");
+      "$marketingDepartementNotifyUrl/get-count-departement-marketing/");
 
-  Future<NotifySumModel> getCountCom() async {
+  Future<NotifySumModel> getCountMarketing() async {
     Map<String, String> header = headers;
 
     var resp = await client.get(comMarketingUrl, headers: header);
@@ -26,4 +26,3 @@ class ComDepartementNotifyApi extends GetConnect {
     }
   }
 }
-

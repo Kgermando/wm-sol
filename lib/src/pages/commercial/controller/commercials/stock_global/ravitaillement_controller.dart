@@ -4,7 +4,7 @@ import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_mode
 import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial_marketing/controller/commercials/history/History_ravitaillement_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_ravitaillement_controller.dart'; 
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
 
 class RavitaillementController extends GetxController {

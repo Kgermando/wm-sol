@@ -4,10 +4,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
-import 'package:wm_solution/src/pages/administration/components/markeing/table_campaigns_dg.dart';
-import 'package:wm_solution/src/pages/administration/components/commercial/table_succursale_dg.dart';  
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_notify.dart';
+import 'package:wm_solution/src/pages/administration/components/markeing/table_campaigns_dg.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart'; 
 

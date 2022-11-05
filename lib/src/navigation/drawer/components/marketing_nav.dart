@@ -4,8 +4,8 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class MaketingNav extends StatefulWidget {
@@ -19,8 +19,8 @@ class MaketingNav extends StatefulWidget {
 }
 
 class _MaketingNavState extends State<MaketingNav> {
-      final ComptabiliteNotifyController controller =
-      Get.put(ComptabiliteNotifyController());
+    final MarketingNotifyController controller =
+      Get.put(MarketingNotifyController());
   bool isOpen = false; 
 
   @override

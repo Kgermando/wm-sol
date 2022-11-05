@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:wm_solution/src/api/comm_marketing/marketing/campaign_api.dart';
+import 'package:wm_solution/src/api/marketing/campaign_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 

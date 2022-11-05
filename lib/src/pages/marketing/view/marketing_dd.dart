@@ -4,11 +4,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/commercial/components/com_marketing_dd/table_campaigns_dd.dart';
-import 'package:wm_solution/src/pages/commercial/components/com_marketing_dd/table_produit_model_dd.dart';
-import 'package:wm_solution/src/pages/commercial/components/com_marketing_dd/table_succursale_dd.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
+import 'package:wm_solution/src/pages/marketing/components/dd/table_campaigns_dd.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';  
 

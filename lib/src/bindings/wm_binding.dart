@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:wm_solution/src/helpers/network_controller.dart';
 import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_notify_controller.dart';
@@ -90,7 +91,9 @@ import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 
 class WMBindings extends Bindings {
   @override
-  void dependencies() {  
+  void dependencies() {
+    Get.lazyPut<NetworkController>(() => NetworkController());
+    
     // Authentification
     Get.lazyPut<LoginController>(() => LoginController());
     Get.lazyPut<ProfilController>(() => ProfilController());

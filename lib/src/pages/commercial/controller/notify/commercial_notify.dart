@@ -1,5 +1,4 @@
-import 'package:get/get.dart';
-import 'package:wm_solution/src/api/notifications/comm_marketing/campaign_notify_api.dart';
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/api/notifications/comm_marketing/prod_model_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/comm_marketing/succursale_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/departements/comm_marketing_departement.dart';
@@ -7,8 +6,8 @@ import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 
 class ComNotifyController extends GetxController {
-  ComMarketingDepartementNotifyApi comMarketingDepartementNotifyApi =
-      ComMarketingDepartementNotifyApi(); 
+  ComDepartementNotifyApi comDepartementNotifyApi =
+      ComDepartementNotifyApi(); 
   SuccursaleNotifyApi succursaleNotifyApi = SuccursaleNotifyApi();
   ProdModelNotifyApi prodModelNotifyApi = ProdModelNotifyApi();
 
@@ -27,7 +26,7 @@ class ComNotifyController extends GetxController {
     @override
   void onInit() {
     super.onInit();
-    getCountComMarketing();  
+    getCountCom();  
     getCountSuccursalesDG();
     getCountSuccursalesDD();
     getCountProdModelDD();
@@ -35,16 +34,16 @@ class ComNotifyController extends GetxController {
 
   @override
   void refresh() {
-    getCountComMarketing();
+    getCountCom();
     getCountSuccursalesDG();
     getCountSuccursalesDD();
     getCountProdModelDD();
     super.refresh();
   }
 
-  void getCountComMarketing() async {
+  void getCountCom() async {
     NotifySumModel notifySum =
-        await comMarketingDepartementNotifyApi.getCountComMarketing();
+        await comDepartementNotifyApi.getCountCom();
     _itemCount.value = notifySum.sum;
   } 
 

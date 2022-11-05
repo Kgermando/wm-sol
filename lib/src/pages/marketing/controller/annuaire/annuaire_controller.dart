@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:wm_solution/src/api/comm_marketing/marketing/annuaire_api.dart';
+import 'package:wm_solution/src/api/marketing/annuaire_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/annuaire_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 

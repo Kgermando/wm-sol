@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/commercial/components/dashboard/arcticle_plus_vendus.dart';
-import 'package:wm_solution/src/pages/commercial/components/dashboard/courbe_vente_gain_mounth.dart';
-import 'package:wm_solution/src/pages/commercial/components/dashboard/courbe_vente_gain_year.dart'; 
+import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_widget.dart'; 

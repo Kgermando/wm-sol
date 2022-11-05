@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
+import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_notify.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class CommercialNav extends StatefulWidget {
@@ -19,8 +19,8 @@ class CommercialNav extends StatefulWidget {
 }
 
 class _CommercialNavState extends State<CommercialNav> {
-      final ComptabiliteNotifyController controller =
-      Get.put(ComptabiliteNotifyController());
+      final ComNotifyController controller =
+      Get.put(ComNotifyController());
   bool isOpen = false;
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/achat_api.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/cart_api.dart';
+import 'package:wm_solution/src/api/commerciale/achat_api.dart';
+import 'package:wm_solution/src/api/commerciale/cart_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';

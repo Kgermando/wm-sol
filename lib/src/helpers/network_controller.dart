@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 class NetworkController extends GetxController {
   static NetworkController to = Get.find();
 
-  //this variable 0 = No Internet, 1 = connected to WIFI ,2 = connected to Mobile Data.
-  //Instance of Flutter Connectivity
+  // this variable 0 = No Internet, 1 = connected to WIFI ,2 = connected to Mobile Data.
+  // Instance of Flutter Connectivity
 
   int connectionType = 0;
   final Connectivity _connectivity = Connectivity();

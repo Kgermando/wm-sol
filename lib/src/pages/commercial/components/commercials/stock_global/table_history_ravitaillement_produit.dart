@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/history_rabitaillement_api.dart';
+import 'package:wm_solution/src/api/commerciale/history_rabitaillement_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';

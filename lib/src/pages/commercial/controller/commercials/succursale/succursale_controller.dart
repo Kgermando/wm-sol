@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/succursale_api.dart';
+import 'package:wm_solution/src/api/commerciale/succursale_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/province.dart';

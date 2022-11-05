@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comm_marketing/commerciale/bon_livraison_api.dart';
+import 'package:wm_solution/src/api/commerciale/bon_livraison_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
 import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart';
