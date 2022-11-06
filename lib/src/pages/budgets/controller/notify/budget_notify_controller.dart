@@ -15,27 +15,36 @@ class BudgetNotifyController extends GetxController {
   final _itemCountDG = 0.obs;
   int get itemCountDG => _itemCountDG.value;
 
+  final _itemCountDD = 0.obs;
+  int get itemCountDD => _itemCountDD.value;
 
   @override
   void onInit() {
     super.onInit();
     getCountBudget();
+    getCountDG();
   }
 
   @override
   void refresh() {
     getCountBudget();
+    getCountDG();
     super.refresh();
   }
 
   void getCountBudget() async {
     NotifySumModel notifySum =
         await budgetDepartementNotifyApi.getCountBudget();
-    _itemCount.value = notifySum.sum;
+    _itemCount.value = notifySum.sum; 
   }
 
   void getCountDG() async {
     NotifyModel notifySum = await budgetNotifyApi.getCountDG();
     _itemCountDG.value = notifySum.count;
+  }
+
+  void getCountDD() async {
+    NotifyModel notifySum = await budgetNotifyApi.getCountDD();
+    _itemCountDD.value = notifySum.count;
   }
 }

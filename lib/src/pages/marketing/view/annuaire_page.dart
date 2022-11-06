@@ -5,7 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/comm_maketing/annuaire_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/commercial/components/marketing/annuaire/annuaire_xlsx.dart';
+import 'package:wm_solution/src/pages/marketing/components/annuaire/annuaire_xlsx.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';

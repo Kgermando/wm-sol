@@ -246,7 +246,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle: Text(
-                          "Vous avez ${budgetNotifyController.itemCount} dossiers necessitent votre approbation",
+                          "Vous avez ${budgetNotifyController.itemCountDD} dossiers necessitent votre approbation",
                           style: bodyMedium.copyWith(
                               color: Colors.white70)),
                       initiallyExpanded: false,

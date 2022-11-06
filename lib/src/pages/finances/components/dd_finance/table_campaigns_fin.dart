@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
-import 'package:wm_solution/src/pages/commercial/components/marketing/campaigns/campaign_xlxs.dart';
+import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart'; 
 import 'package:wm_solution/src/widgets/print_widget.dart';

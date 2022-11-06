@@ -10,7 +10,7 @@ import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/marketing/agenda/agenda_card_widget.dart';
+import 'package:wm_solution/src/pages/marketing/components/agenda/agenda_card_widget.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -101,8 +101,7 @@ class _AgendaPageState extends State<AgendaPage> {
           child: AgendaCardWidget(
               agendaModel: agenda,
               index: index,
-              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                  .withOpacity(1.0)),
+              color: color),
         );
       }),
     );

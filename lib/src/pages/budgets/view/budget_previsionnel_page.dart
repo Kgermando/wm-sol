@@ -49,17 +49,17 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
                       visible: !Responsive.isMobile(context),
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableBudgetPrevisionnel(
-                              departementBudgetList:
-                                  controller.departementBudgetList,
-                              controller: controller))),
+                  flex: 5,
+                  child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, right: p20, left: p20, bottom: p8),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: TableBudgetPrevisionnel(
+                          departementBudgetList:
+                              controller.departementBudgetList,
+                          controller: controller))),
                 ],
               ))),
     );
