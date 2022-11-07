@@ -43,7 +43,7 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final TransportRestaurationModel transportRestaurationModel =
@@ -75,7 +75,8 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    TransportRestXlsx().exportToExcel(widget.transportRestController.transportRestaurationList);
+                    TransportRestXlsx().exportToExcel(widget
+                        .transportRestController.transportRestaurationList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),

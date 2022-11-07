@@ -40,7 +40,7 @@ class AgendaCardWidget extends StatelessWidget {
                     style: TextStyle(fontSize: 10, color: Colors.grey.shade700),
                   ),
                 ),
-                if (DateTime.now().day == agendaModel.dateRappel.day)
+                if (DateTime.now().day == agendaModel.dateRappel.day) 
                   Container(
                     width: 15,
                     height: 15,

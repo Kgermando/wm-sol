@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/compte_resultat_xlsx.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableCompteResultatDD extends StatefulWidget {
-  const TableCompteResultatDD({super.key, required this.compteResultatController}); 
+  const TableCompteResultatDD(
+      {super.key, required this.compteResultatController});
   final CompteResultatController compteResultatController;
 
   @override
@@ -38,11 +39,12 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
-          final CompteResulatsModel compteResulatsModel =
-              await widget.compteResultatController.detailView(idPlutoRow.value);
+          final CompteResulatsModel compteResulatsModel = await widget
+              .compteResultatController
+              .detailView(idPlutoRow.value);
 
           Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail,
               arguments: compteResulatsModel);
@@ -66,7 +68,8 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    CompteResulatXlsx().exportToExcel(widget.compteResultatController.compteResultatList);
+                    CompteResulatXlsx().exportToExcel(
+                        widget.compteResultatController.compteResultatList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -92,7 +95,7 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'created') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              }  else if (column.field == 'approbationDD') {
+              } else if (column.field == 'approbationDD') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'id') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -110,9 +113,9 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-     var dataList = widget.compteResultatController.compteResultatList
-        .where((element) =>
-            element.approbationDD == "-").toList();
+    var dataList = widget.compteResultatController.compteResultatList
+        .where((element) => element.approbationDD == "-")
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {
@@ -179,7 +182,7 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

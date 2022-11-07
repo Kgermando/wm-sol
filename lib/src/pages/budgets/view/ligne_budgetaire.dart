@@ -11,9 +11,9 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 class LigneBudgetaire extends StatefulWidget {
   const LigneBudgetaire(
       {super.key,
-      required this.departementBudgetModel, 
+      required this.departementBudgetModel,
       required this.lignBudgetaireController});
-  final DepartementBudgetModel departementBudgetModel; 
+  final DepartementBudgetModel departementBudgetModel;
   final LignBudgetaireController lignBudgetaireController;
 
   @override
@@ -41,11 +41,11 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
-          final LigneBudgetaireModel ligneBudgetaireModel =
-              await widget.lignBudgetaireController
+          final LigneBudgetaireModel ligneBudgetaireModel = await widget
+              .lignBudgetaireController
               .detailView(idPlutoRow.value);
 
           Get.toNamed(BudgetRoutes.budgetLignebudgetaireDetail,

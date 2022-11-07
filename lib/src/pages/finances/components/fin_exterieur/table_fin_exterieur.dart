@@ -5,17 +5,20 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart';
 import 'package:wm_solution/src/pages/finances/components/fin_exterieur/fin_autre_xlsx.dart';
-import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class TableFinExterieur extends StatefulWidget {
-  const TableFinExterieur({super.key, required this.finExterieurList, required this.controller, required this.finExterieurNameModel}); 
-   final List<FinanceExterieurModel> finExterieurList;
-  final FinExterieurController controller; 
+  const TableFinExterieur(
+      {super.key,
+      required this.finExterieurList,
+      required this.controller,
+      required this.finExterieurNameModel});
+  final List<FinanceExterieurModel> finExterieurList;
+  final FinExterieurController controller;
   final FinExterieurNameModel finExterieurNameModel;
 
   @override
@@ -44,7 +47,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
             columns: columns,
             rows: rows,
             onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-              final dataId = tapEvent.row!.cells.values;
+              final dataId = tapEvent.row.cells.values;
               final idPlutoRow = dataId.last;
 
               final FinanceExterieurModel financeExterieurModel =
@@ -66,13 +69,13 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context,
-                            '/transactions-financement-externe/${widget.finExterieurNameModel.id}', 
-                            arguments: widget.finExterieurNameModel);
-                        },
-                        icon: Icon(Icons.refresh,
-                          color: Colors.green.shade700)),
+                          onPressed: () {
+                            Navigator.pushNamed(context,
+                                '/transactions-financement-externe/${widget.finExterieurNameModel.id}',
+                                arguments: widget.finExterieurNameModel);
+                          },
+                          icon: Icon(Icons.refresh,
+                              color: Colors.green.shade700)),
                       PrintWidget(onPressed: () {
                         FinAutreXlsx().exportToExcel(widget.finExterieurList);
                         if (!mounted) return;
@@ -276,12 +279,16 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
     double recette = 0.0;
     double depenses = 0.0;
     List<FinanceExterieurModel?> recetteList = widget.finExterieurList
-        .where((element) => element.financeExterieurName == widget.finExterieurNameModel.nomComplet &&
-           element.typeOperation == "Depot")
+        .where((element) =>
+            element.financeExterieurName ==
+                widget.finExterieurNameModel.nomComplet &&
+            element.typeOperation == "Depot")
         .toList();
     List<FinanceExterieurModel?> depensesList = widget.finExterieurList
-        .where((element) => element.financeExterieurName == widget.finExterieurNameModel.nomComplet &&
-           element.typeOperation == "Retrait")
+        .where((element) =>
+            element.financeExterieurName ==
+                widget.finExterieurNameModel.nomComplet &&
+            element.typeOperation == "Retrait")
         .toList();
     for (var item in recetteList) {
       recette += double.parse(item!.montant);
@@ -294,7 +301,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ResponsiveChild3Widget(
-              child1: Row( 
+              child1: Row(
                 children: [
                   SelectableText('Total recette: ',
                       style: bodyMedium!.copyWith(

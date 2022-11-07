@@ -10,7 +10,8 @@ import 'package:wm_solution/src/models/logistiques/carburant_model.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/carburant_controller.dart';
 
 class TableCarburant extends StatefulWidget {
-  const TableCarburant({super.key, required this.carburantList, required this.controller});
+  const TableCarburant(
+      {super.key, required this.carburantList, required this.controller});
   final List<CarburantModel> carburantList;
   final CarburantController controller;
 
@@ -37,7 +38,7 @@ class _TableCarburantState extends State<TableCarburant> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final CarburantModel carburantModel =
@@ -280,7 +281,7 @@ class _TableCarburantState extends State<TableCarburant> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

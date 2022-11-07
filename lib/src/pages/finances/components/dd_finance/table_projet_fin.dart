@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableProjetFin extends StatefulWidget {
@@ -16,7 +16,7 @@ class TableProjetFin extends StatefulWidget {
 }
 
 class _TableProjetFinState extends State<TableProjetFin> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -36,7 +36,7 @@ class _TableProjetFinState extends State<TableProjetFin> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final ProjetModel projetModel =

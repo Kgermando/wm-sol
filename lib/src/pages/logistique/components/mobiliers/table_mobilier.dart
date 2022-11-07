@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/mobiliers/mobilier_xlsx.dart';
-import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableMobilier extends StatefulWidget {
-  const TableMobilier({super.key, required this.mobilierList, required this.controller});
+  const TableMobilier(
+      {super.key, required this.mobilierList, required this.controller});
   final List<MobilierModel> mobilierList;
   final MobilierController controller;
 
@@ -37,7 +38,7 @@ class _TableMobilierState extends State<TableMobilier> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final MobilierModel mobilierModel =
@@ -202,7 +203,7 @@ class _TableMobilierState extends State<TableMobilier> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 150,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

@@ -39,64 +39,111 @@ class _UpdatePageState extends State<UpdatePage> {
                 tooltip: "Add Update",
                 icon: const Icon(Icons.download),
                 onPressed: () {
-                  setState(() {
-                    showModalBottomSheet<void>(
-                      context: context,
-                      constraints: BoxConstraints(
-                        maxWidth: Responsive.isDesktop(context)
-                            ? sized.width / 1.3
-                            : sized.width,
-                      ),
-                      builder: (BuildContext context) {
-                        return Container(
-                          // color: Colors.amber.shade100,
-                          padding: const EdgeInsets.all(p20),
-                          child: Form(
-                            key: controller.formKey,
-                            child: ListView(
-                              shrinkWrap: true,
-                              children: <Widget>[
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text("Nouvelle mise à jour",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall)),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: p20,
-                                ),
-                                versionWidget(),
-                                motifWidget(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    fichierWidget(),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: p20,
-                                ),
-                                BtnWidget(
-                                    title: 'Ajouter maintenant',
-                                    press: () {
-                                      final form =
-                                          controller.formKey.currentState!;
-                                      if (form.validate()) {
-                                        controller.submit();
-                                        form.reset();
-                                      }
-                                    },
-                                    isLoading: controller.isLoading)
+                  Get.bottomSheet(Scaffold(
+                    body: Container(
+                      // color: Colors.amber.shade100,
+                      padding: const EdgeInsets.all(p20),
+                      child: Form(
+                        key: controller.formKey,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text("Nouvelle mise à jour",
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall)),
                               ],
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  });
+                            const SizedBox(
+                              height: p20,
+                            ),
+                            versionWidget(),
+                            motifWidget(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                fichierWidget(),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: p20,
+                            ),
+                            BtnWidget(
+                                title: 'Ajouter maintenant',
+                                press: () {
+                                  final form = controller.formKey.currentState!;
+                                  if (form.validate()) {
+                                    controller.submit();
+                                    form.reset();
+                                  }
+                                },
+                                isLoading: controller.isLoading)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ));
+                  // setState(() {
+                  //   showModalBottomSheet<void>(
+                  //     context: context,
+                  //     constraints: BoxConstraints(
+                  //       maxWidth: Responsive.isDesktop(context)
+                  //           ? sized.width / 1.3
+                  //           : sized.width,
+                  //     ),
+                  //     builder: (BuildContext context) {
+                  //       return Container(
+                  //         // color: Colors.amber.shade100,
+                  //         padding: const EdgeInsets.all(p20),
+                  //         child: Form(
+                  //           key: controller.formKey,
+                  //           child: ListView(
+                  //             shrinkWrap: true,
+                  //             children: <Widget>[
+                  //               Row(
+                  //                 children: [
+                  //                   Expanded(
+                  //                       child: Text("Nouvelle mise à jour",
+                  //                           style: Theme.of(context)
+                  //                               .textTheme
+                  //                               .headlineSmall)),
+                  //                 ],
+                  //               ),
+                  //               const SizedBox(
+                  //                 height: p20,
+                  //               ),
+                  //               versionWidget(),
+                  //               motifWidget(),
+                  //               Row(
+                  //                 mainAxisAlignment: MainAxisAlignment.start,
+                  //                 children: [
+                  //                   fichierWidget(),
+                  //                 ],
+                  //               ),
+                  //               const SizedBox(
+                  //                 height: p20,
+                  //               ),
+                  //               BtnWidget(
+                  //                   title: 'Ajouter maintenant',
+                  //                   press: () {
+                  //                     final form =
+                  //                         controller.formKey.currentState!;
+                  //                     if (form.validate()) {
+                  //                       controller.submit();
+                  //                       form.reset();
+                  //                     }
+                  //                   },
+                  //                   isLoading: controller.isLoading)
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   );
+                  // });
                 },
               ),
               body: Row(

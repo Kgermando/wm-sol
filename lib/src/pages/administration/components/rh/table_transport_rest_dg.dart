@@ -43,7 +43,7 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final TransportRestaurationModel transportRestaurationModel =
@@ -75,7 +75,8 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    TransportRestXlsx().exportToExcel(widget.transportRestController.transportRestaurationList);
+                    TransportRestXlsx().exportToExcel(widget
+                        .transportRestController.transportRestaurationList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -129,7 +130,7 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.transportRestController.transportRestaurationList
         .where((element) =>
-             element.approbationDG == '-' && element.approbationDD == 'Approved')
+            element.approbationDG == '-' && element.approbationDD == 'Approved')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

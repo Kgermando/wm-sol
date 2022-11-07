@@ -4,16 +4,16 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/immobiliers/immobilier_xlsx.dart';
-import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableImmobilier extends StatefulWidget {
-  const TableImmobilier({super.key, required this.immobilierList, required this.controller});
+  const TableImmobilier(
+      {super.key, required this.immobilierList, required this.controller});
   final List<ImmobilierModel> immobilierList;
   final ImmobilierController controller;
-
 
   @override
   State<TableImmobilier> createState() => _TableImmobilierState();
@@ -38,7 +38,7 @@ class _TableImmobilierState extends State<TableImmobilier> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final ImmobilierModel immobilierModel =

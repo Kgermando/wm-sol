@@ -648,14 +648,23 @@ class _AddPersonnelState extends State<AddPersonnel> {
           controller.servicesAffectation =
               controller.serviceAffectationEXp.first;
         } else if (controller.departementSelectedList.first ==
-            'Commercial et Marketing') {
+            'Marketing') {
+          controller.matricule =
+              "${prefix}MKT$date-${widget.personnelList.length + 1}";
+          controller.fonctionList = controller.fonctioncommList;
+          controller.servAffectList = controller.serviceAffectationMark;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationMark.first;
+        } else if (controller.departementSelectedList.first ==
+            'Commercial') {
           controller.matricule =
               "${prefix}COM$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctioncommList;
-          controller.servAffectList = controller.serviceAffectationComm;
+          controller.servAffectList = controller.serviceAffectationCom;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
-              controller.serviceAffectationComm.first;
+              controller.serviceAffectationCom.first;
         } else if (controller.departementSelectedList.first == 'Logistique') {
           controller.matricule =
               "${prefix}LOG$date-${widget.personnelList.length + 1}";

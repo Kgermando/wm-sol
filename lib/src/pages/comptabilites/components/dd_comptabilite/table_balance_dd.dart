@@ -10,7 +10,7 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableBalanceCompteDD extends StatefulWidget {
-  const TableBalanceCompteDD({super.key, required this.balanceController}); 
+  const TableBalanceCompteDD({super.key, required this.balanceController});
   final BalanceController balanceController;
 
   @override
@@ -38,7 +38,7 @@ class _TableBalanceCompteDDState extends State<TableBalanceCompteDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final BalanceCompteModel balanceCompteModel =
@@ -66,7 +66,8 @@ class _TableBalanceCompteDDState extends State<TableBalanceCompteDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    BalanceXlsx().exportToExcel(widget.balanceController.balanceList);
+                    BalanceXlsx()
+                        .exportToExcel(widget.balanceController.balanceList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -122,7 +123,7 @@ class _TableBalanceCompteDDState extends State<TableBalanceCompteDD> {
           'title': PlutoCell(value: item.title),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)), 
+              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));

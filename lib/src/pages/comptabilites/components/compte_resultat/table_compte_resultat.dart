@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/compte_resultat_xlsx.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableCompteResultat extends StatefulWidget {
-  const TableCompteResultat({super.key, required this.compteResultatList, required this.controller});
+  const TableCompteResultat(
+      {super.key, required this.compteResultatList, required this.controller});
   final List<CompteResulatsModel> compteResultatList;
   final CompteResultatController controller;
 
@@ -37,7 +38,7 @@ class _TableCompteResultatState extends State<TableCompteResultat> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final CompteResulatsModel compteResulatsModel =
@@ -91,7 +92,7 @@ class _TableCompteResultatState extends State<TableCompteResultat> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }  else if (column.field == 'approbationDD') {
+            } else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -174,7 +175,7 @@ class _TableCompteResultatState extends State<TableCompteResultat> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

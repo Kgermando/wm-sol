@@ -41,19 +41,10 @@ class ResponsiveChildWidget extends StatelessWidget {
       );
     } else {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              child1,
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              child2,
-            ],
-          ),
+          child1,
+          child2
         ],
       );
     }

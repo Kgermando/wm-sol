@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
-import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/journals/journal_xksx.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_livre_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableJournalComptabiliteDD extends StatefulWidget {
-  const TableJournalComptabiliteDD({super.key, required this.journalLivreController});
+  const TableJournalComptabiliteDD(
+      {super.key, required this.journalLivreController});
   final JournalLivreController journalLivreController;
 
   @override
-  State<TableJournalComptabiliteDD> createState() => _TableJournalComptabiliteDDState();
+  State<TableJournalComptabiliteDD> createState() =>
+      _TableJournalComptabiliteDDState();
 }
 
-class _TableJournalComptabiliteDDState extends State<TableJournalComptabiliteDD> {
+class _TableJournalComptabiliteDDState
+    extends State<TableJournalComptabiliteDD> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -38,7 +41,7 @@ class _TableJournalComptabiliteDDState extends State<TableJournalComptabiliteDD>
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final JournalLivreModel journalLivreModel =
@@ -61,12 +64,13 @@ class _TableJournalComptabiliteDDState extends State<TableJournalComptabiliteDD>
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, ComptabiliteRoutes.comptabiliteJournalLivre);
+                        Navigator.pushNamed(context,
+                            ComptabiliteRoutes.comptabiliteJournalLivre);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    JournalXlsx().exportToExcel(widget.journalLivreController.journalLivreList);
+                    JournalXlsx().exportToExcel(
+                        widget.journalLivreController.journalLivreList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -113,10 +117,11 @@ class _TableJournalComptabiliteDDState extends State<TableJournalComptabiliteDD>
     );
   }
 
-  Future<List<PlutoRow>> agentsRow() async { 
+  Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.journalLivreController.journalLivreList
-        .where((element) =>  element.approbationDD == "-" && 
-        element.isSubmit == "true") .toList();
+        .where((element) =>
+            element.approbationDD == "-" && element.isSubmit == "true")
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {

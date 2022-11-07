@@ -105,15 +105,19 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(achatController),
-                                        ApprobationSuccursale(
-                                            data: widget.succursaleModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        headerTitle(achatController), 
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                StatsSuccursale(
+                                    succursaleModel: widget.succursaleModel),
+                                const SizedBox(height: p20),
+                                ApprobationSuccursale(
+                                    data: widget.succursaleModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
@@ -151,21 +155,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
     );
   }
 
-  Widget dataWidget(AchatController achatController) {
-    return Padding(
-      padding: const EdgeInsets.all(p10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          headerTitle(achatController),
-          StatsSuccursale(succursaleModel: widget.succursaleModel),
-          const SizedBox(
-            height: 40.0,
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget headerTitle(AchatController achatController) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;

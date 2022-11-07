@@ -4,24 +4,24 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/creances_model.dart';
 import 'package:wm_solution/src/pages/finances/components/creances/creance_xlsx.dart';
-import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableCreance extends StatefulWidget {
-  const TableCreance({super.key, required this.creanceList, required this.controller});
+  const TableCreance(
+      {super.key, required this.creanceList, required this.controller});
   final List<CreanceModel> creanceList;
   final CreanceController controller;
-
 
   @override
   State<TableCreance> createState() => _TableCreanceState();
 }
 
 class _TableCreanceState extends State<TableCreance> {
-List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -42,7 +42,7 @@ List<PlutoColumn> columns = [];
             columns: columns,
             rows: rows,
             onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-              final dataId = tapEvent.row!.cells.values;
+              final dataId = tapEvent.row.cells.values;
               final idPlutoRow = dataId.last;
 
               final CreanceModel creanceModel =
@@ -323,20 +323,20 @@ List<PlutoColumn> columns = [];
     return Card(
       color: Colors.red.shade700,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ResponsiveChild3Widget( 
-          child1: Row(
-            children: [
-              SelectableText('Total: ',
-                  style: bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white)),
-              SelectableText(
-                  '${NumberFormat.decimalPattern('fr').format(widget.controller.nonPaye)} \$',
-                  style: bodyMedium.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white))
-            ],
-          ),
-          child2: Row(
+          padding: const EdgeInsets.all(8.0),
+          child: ResponsiveChild3Widget(
+            child1: Row(
+              children: [
+                SelectableText('Total: ',
+                    style: bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.white)),
+                SelectableText(
+                    '${NumberFormat.decimalPattern('fr').format(widget.controller.nonPaye)} \$',
+                    style: bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.white))
+              ],
+            ),
+            child2: Row(
               children: [
                 SelectableText('Payé: ',
                     style: bodyMedium.copyWith(
@@ -347,7 +347,7 @@ List<PlutoColumn> columns = [];
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
             ),
-          child3: Row(
+            child3: Row(
               children: [
                 SelectableText('Non Payé: ',
                     style: bodyMedium.copyWith(
@@ -358,8 +358,7 @@ List<PlutoColumn> columns = [];
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
             ),
-        ) 
-      ),
+          )),
     );
   }
 }

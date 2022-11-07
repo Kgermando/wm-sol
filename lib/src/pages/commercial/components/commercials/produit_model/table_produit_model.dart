@@ -38,7 +38,7 @@ class _TableProduitModelState extends State<TableProduitModel> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final ProductModel productionModel =
@@ -213,7 +213,7 @@ class _TableProduitModelState extends State<TableProduitModel> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Sous Categorie 4',
+        title: 'Unité',
         field: 'sousCategorie4',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

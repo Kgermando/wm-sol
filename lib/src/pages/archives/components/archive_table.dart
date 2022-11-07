@@ -12,7 +12,10 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableArchive extends StatefulWidget {
   const TableArchive(
-      {super.key, required this.archiveFolderModel, required this.controller, required this.controllerFolder});
+      {super.key,
+      required this.archiveFolderModel,
+      required this.controller,
+      required this.controllerFolder});
   final ArchiveFolderModel archiveFolderModel;
   final ArchiveController controller;
   final ArchiveFolderController controllerFolder;
@@ -40,7 +43,7 @@ class _TableArchiveState extends State<TableArchive> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final ArchiveModel archiveModel =

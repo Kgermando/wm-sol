@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
@@ -12,7 +12,11 @@ import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class Tablecaisse extends StatefulWidget {
-  const Tablecaisse({super.key, required this.caisseList, required this.controller, required this.caisseNameModel});
+  const Tablecaisse(
+      {super.key,
+      required this.caisseList,
+      required this.controller,
+      required this.caisseNameModel});
   final List<CaisseModel> caisseList;
   final CaisseController controller;
   final CaisseNameModel caisseNameModel;
@@ -43,7 +47,7 @@ class _TablecaisseState extends State<Tablecaisse> {
             columns: columns,
             rows: rows,
             onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-              final dataId = tapEvent.row!.cells.values;
+              final dataId = tapEvent.row.cells.values;
               final idPlutoRow = dataId.last;
 
               final CaisseModel caisseModel =
@@ -66,9 +70,9 @@ class _TablecaisseState extends State<Tablecaisse> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            Navigator.pushNamed(
-                            context, '/transactions-caisse/${widget.caisseNameModel.id}',
-                             arguments: widget.caisseNameModel);
+                            Navigator.pushNamed(context,
+                                '/transactions-caisse/${widget.caisseNameModel.id}',
+                                arguments: widget.caisseNameModel);
                           },
                           icon: Icon(Icons.refresh,
                               color: Colors.green.shade700)),
@@ -145,7 +149,7 @@ class _TablecaisseState extends State<Tablecaisse> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"), 
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
@@ -218,7 +222,7 @@ class _TablecaisseState extends State<Tablecaisse> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Type d\'operation',
@@ -275,12 +279,14 @@ class _TablecaisseState extends State<Tablecaisse> {
     double recette = 0.0;
     double depenses = 0.0;
     List<CaisseModel?> recetteList = widget.caisseList
-        .where((element) => element.caisseName == widget.caisseNameModel.nomComplet &&
-          element.typeOperation == "Encaissement")
+        .where((element) =>
+            element.caisseName == widget.caisseNameModel.nomComplet &&
+            element.typeOperation == "Encaissement")
         .toList();
     List<CaisseModel?> depensesList = widget.caisseList
-        .where((element) => element.caisseName == widget.caisseNameModel.nomComplet &&
-           element.typeOperation == "Decaissement")
+        .where((element) =>
+            element.caisseName == widget.caisseNameModel.nomComplet &&
+            element.typeOperation == "Decaissement")
         .toList();
     for (var item in recetteList) {
       recette += double.parse(item!.montant);

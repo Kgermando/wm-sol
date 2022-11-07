@@ -74,37 +74,32 @@ class _AnnuairePageState extends State<AnnuairePage> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     const TitleWidget(title: "Annuaire"),
-                                    Row(
-                                      children: [
-                                        PrintWidget(onPressed: () {
-                                          AnnuaireXlsx().exportToExcel(
-                                              controller.annuaireList);
-                                          if (!mounted) return;
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: const Text(
-                                                "Exportation effectué!"),
-                                            backgroundColor: Colors.green[700],
-                                          ));
-                                        }),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: ListView.builder(
-                                          itemCount:
-                                              controller.annuaireList.length,
-                                          itemBuilder: (context, index) {
-                                            final annuaireModel =
-                                                controller.annuaireList[index];
-                                            return buildAnnuaire(
-                                                annuaireModel, index);
-                                          }),
-                                    )
+                                    PrintWidget(onPressed: () {
+                                      AnnuaireXlsx().exportToExcel(
+                                          controller.annuaireList);
+                                      if (!mounted) return;
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: const Text(
+                                            "Exportation effectué!"),
+                                        backgroundColor: Colors.green[700],
+                                      ));
+                                    }),
                                   ],
                                 ),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                    itemCount:
+                                        controller.annuaireList.length,
+                                    itemBuilder: (context, index) {
+                                      final annuaireModel =
+                                          controller.annuaireList[index];
+                                      return buildAnnuaire(
+                                          annuaireModel, index);
+                                    }),
                               ],
                             ),
                           )))

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
-import 'package:wm_solution/src/pages/logistique/components/entretiens/entretien_xlsx.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/entretiens/entretien_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -18,7 +18,7 @@ class TableEntretienDD extends StatefulWidget {
 }
 
 class _TableEntretienDDState extends State<TableEntretienDD> {
- List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -38,7 +38,7 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final EntretienModel entretienModel =
@@ -66,7 +66,8 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    EntretienXlsx().exportToExcel(widget.entretienController.entretienList);
+                    EntretienXlsx().exportToExcel(
+                        widget.entretienController.entretienList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -123,7 +124,7 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nom': PlutoCell(value: item.nom),
-          'typeObjet': PlutoCell(value: item.typeObjet), 
+          'typeObjet': PlutoCell(value: item.typeObjet),
           'typeMaintenance': PlutoCell(value: item.typeMaintenance),
           'dureeTravaux': PlutoCell(value: item.dureeTravaux),
           'created': PlutoCell(
@@ -173,7 +174,7 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Type de maintenance',
@@ -209,7 +210,7 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

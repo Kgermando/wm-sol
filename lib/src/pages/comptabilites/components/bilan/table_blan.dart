@@ -10,7 +10,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableBilan extends StatefulWidget {
-  const TableBilan({super.key, required this.bilanList, required this.controller});
+  const TableBilan(
+      {super.key, required this.bilanList, required this.controller});
   final List<BilanModel> bilanList;
   final BilanController controller;
 
@@ -37,7 +38,7 @@ class _TableBilanState extends State<TableBilan> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final BilanModel bilanModel =

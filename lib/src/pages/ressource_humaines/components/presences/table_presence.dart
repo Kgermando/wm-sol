@@ -37,7 +37,7 @@ class _TablePresenceState extends State<TablePresence> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final PresenceModel presenceModel =
@@ -63,7 +63,7 @@ class _TablePresenceState extends State<TablePresence> {
             Row(
               children: [
                 IconButton(
-                    onPressed: () { 
+                    onPressed: () {
                       Navigator.of(context).pushNamed(RhRoutes.rhPresence);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),

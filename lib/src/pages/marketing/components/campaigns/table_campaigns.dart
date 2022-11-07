@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
-import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableCampaign extends StatefulWidget {
-  const TableCampaign({super.key, required this.campaignList, required this.controller});
+  const TableCampaign(
+      {super.key, required this.campaignList, required this.controller});
   final List<CampaignModel> campaignList;
   final CampaignController controller;
 
@@ -19,7 +20,7 @@ class TableCampaign extends StatefulWidget {
 }
 
 class _TableCampaignState extends State<TableCampaign> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -37,14 +38,14 @@ class _TableCampaignState extends State<TableCampaign> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final CampaignModel campaignModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(MarketingRoutes.marketingCampaignDetail, 
-          arguments: campaignModel);
+        Get.toNamed(MarketingRoutes.marketingCampaignDetail,
+            arguments: campaignModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;

@@ -8,6 +8,7 @@ import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_con
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class AddAnnuaire extends StatefulWidget {
   const AddAnnuaire({super.key});
@@ -50,54 +51,54 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
                             decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        categorieField(controller),
-                                        ResponsiveChildWidget(
-                                          child1:
-                                              nomPostnomPrenomField(controller),
-                                          child2: emailField(controller),
-                                        ),
-                                        ResponsiveChildWidget(
-                                          child1: mobile1Field(controller),
-                                          child2: mobile2Field(controller),
-                                        ),
-                                        ResponsiveChildWidget(
-                                          child1:
-                                              secteurActiviteField(controller),
-                                          child2:
-                                              nomEntrepriseField(controller),
-                                        ),
-                                        gradeField(controller),
-                                        adresseEntrepriseField(controller),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                        BtnWidget(
-                                            title: 'Soumettre',
-                                            isLoading: controller.isLoading,
-                                            press: () {
-                                              final form = controller
-                                                  .formKey.currentState!;
-                                              if (form.validate()) {
-                                                controller.submit();
-                                                form.reset();
-                                              }
-                                            })
-                                      ],
-                                    ),
+                            child: Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(p20),
+                                child: Form(
+                                  key: controller.formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const TitleWidget(title: 'Nouveau contact'),
+                                      const SizedBox(height: p20),
+                                      categorieField(controller),
+                                      ResponsiveChildWidget(
+                                        child1:
+                                            nomPostnomPrenomField(controller),
+                                        child2: emailField(controller),
+                                      ),
+                                      ResponsiveChildWidget(
+                                        child1: mobile1Field(controller),
+                                        child2: mobile2Field(controller),
+                                      ),
+                                      ResponsiveChildWidget(
+                                        child1:
+                                            secteurActiviteField(controller),
+                                        child2:
+                                            nomEntrepriseField(controller),
+                                      ),
+                                      gradeField(controller),
+                                      adresseEntrepriseField(controller),
+                                      const SizedBox(
+                                        height: p20,
+                                      ),
+                                      BtnWidget(
+                                          title: 'Soumettre',
+                                          isLoading: controller.isLoading,
+                                          press: () {
+                                            final form = controller
+                                                .formKey.currentState!;
+                                            if (form.validate()) {
+                                              controller.submit();
+                                              form.reset();
+                                            }
+                                          })
+                                    ],
                                   ),
-                                )
-                              ],
+                                ),
+                              ),
                             ),
                           )))
                 ],

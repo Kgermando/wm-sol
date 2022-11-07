@@ -41,7 +41,7 @@ class _TableFactureCreanceState extends State<TableFactureCreance> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final CreanceCartModel creanceCartModel =

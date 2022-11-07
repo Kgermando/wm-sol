@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -12,7 +12,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TablePerformence extends StatefulWidget {
-  const TablePerformence({super.key, required this.performenceList, required this.controller});
+  const TablePerformence(
+      {super.key, required this.performenceList, required this.controller});
   final List<PerformenceModel> performenceList;
   final PerformenceController controller;
 
@@ -33,14 +34,13 @@ class _TablePerformenceState extends State<TablePerformence> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return PlutoGrid(
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final PerformenceModel dataItem =
@@ -63,7 +63,7 @@ class _TablePerformenceState extends State<TablePerformence> {
                 IconButton(
                     tooltip: 'Rafraichir',
                     onPressed: () {
-                      Navigator.pushNamed(context, RhRoutes.rhPerformence); 
+                      Navigator.pushNamed(context, RhRoutes.rhPerformence);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -85,7 +85,7 @@ class _TablePerformenceState extends State<TablePerformence> {
             ...FilterHelper.defaultFilters,
           ],
           resolveDefaultColumnFilter: (column, resolver) {
-           if (column.field == 'numero') {
+            if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'departement') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -115,7 +115,6 @@ class _TablePerformenceState extends State<TablePerformence> {
     );
   }
 
-
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.performenceList.length;
     for (var item in widget.performenceList) {
@@ -130,7 +129,7 @@ class _TablePerformenceState extends State<TablePerformence> {
           'prenom': PlutoCell(value: item.prenom),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
-            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -138,8 +137,7 @@ class _TablePerformenceState extends State<TablePerformence> {
     return rows;
   }
 
-
-    void agentsColumn() {
+  void agentsColumn() {
     columns = [
       PlutoColumn(
         readOnly: true,
@@ -251,5 +249,4 @@ class _TablePerformenceState extends State<TablePerformence> {
       ),
     ];
   }
-
 }

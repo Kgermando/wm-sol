@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/immobiliers/immobilier_xlsx.dart';
-import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -12,7 +12,6 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 class TableImmobilierDG extends StatefulWidget {
   const TableImmobilierDG({super.key, required this.immobilierController});
   final ImmobilierController immobilierController;
-
 
   @override
   State<TableImmobilierDG> createState() => _TableImmobilierDGState();
@@ -39,7 +38,7 @@ class _TableImmobilierDGState extends State<TableImmobilierDG> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final ImmobilierModel immobilierModel =
@@ -67,7 +66,8 @@ class _TableImmobilierDGState extends State<TableImmobilierDG> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    ImmobilierXlsx().exportToExcel(widget.immobilierController.immobilierList);
+                    ImmobilierXlsx().exportToExcel(
+                        widget.immobilierController.immobilierList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -117,7 +117,7 @@ class _TableImmobilierDGState extends State<TableImmobilierDG> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-     var dataList = widget.immobilierController.immobilierList
+    var dataList = widget.immobilierController.immobilierList
         .where((element) =>
             element.approbationDG == '-' && element.approbationDD == 'Approved')
         .toList();

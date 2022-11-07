@@ -4,14 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/succursale_xlsx.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class TableSuccursaleDG extends StatefulWidget {
-  const TableSuccursaleDG({super.key, required this.succursaleController}); 
+  const TableSuccursaleDG({super.key, required this.succursaleController});
   final SuccursaleController succursaleController;
 
   @override
@@ -19,7 +18,7 @@ class TableSuccursaleDG extends StatefulWidget {
 }
 
 class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -39,7 +38,7 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final SuccursaleModel succursaleModel =
@@ -62,12 +61,12 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, ComRoutes.comSuccursale);
+                        Navigator.pushNamed(context, ComRoutes.comSuccursale);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    SuccursaleXlsx().exportToExcel(widget.succursaleController.succursaleList);
+                    SuccursaleXlsx().exportToExcel(
+                        widget.succursaleController.succursaleList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -113,8 +112,7 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList =
-        widget.succursaleController.succursaleList
+    var dataList = widget.succursaleController.succursaleList
         .where((element) =>
             element.approbationDG == '-' && element.approbationDD == 'Approved')
         .toList();
@@ -185,7 +183,7 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DG',

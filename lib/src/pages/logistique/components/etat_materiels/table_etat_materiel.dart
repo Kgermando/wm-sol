@@ -4,13 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/etat_material_xlsx.dart';
-import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableEtatMateriel extends StatefulWidget {
-  const TableEtatMateriel({super.key, required this.etatMaterielList, required this.controller});
+  const TableEtatMateriel(
+      {super.key, required this.etatMaterielList, required this.controller});
   final List<EtatMaterielModel> etatMaterielList;
   final EtatMaterielController controller;
 
@@ -37,7 +38,7 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final EtatMaterielModel etatMaterielModel =
@@ -189,7 +190,7 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

@@ -5,12 +5,12 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableCampaignFin extends StatefulWidget {
-  const TableCampaignFin({super.key, required this.campaignController}); 
+  const TableCampaignFin({super.key, required this.campaignController});
   final CampaignController campaignController;
 
   @override
@@ -18,7 +18,7 @@ class TableCampaignFin extends StatefulWidget {
 }
 
 class _TableCampaignFinState extends State<TableCampaignFin> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -38,14 +38,14 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final CampaignModel campaignModel =
               await widget.campaignController.detailView(idPlutoRow.value);
 
-          Get.toNamed(MarketingRoutes.marketingCampaignDetail, 
-            arguments: campaignModel);
+          Get.toNamed(MarketingRoutes.marketingCampaignDetail,
+              arguments: campaignModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;
@@ -66,7 +66,8 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    CampagneXlsx().exportToExcel(widget.campaignController.campaignList);
+                    CampagneXlsx()
+                        .exportToExcel(widget.campaignController.campaignList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -124,10 +125,11 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-     var dataList = widget.campaignController.campaignList
-        .where((element) => element.approbationDG == 'Approved' &&
+    var dataList = widget.campaignController.campaignList
+        .where((element) =>
+            element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
-            element.approbationBudget == 'Approved' && 
+            element.approbationBudget == 'Approved' &&
             element.approbationFin == "-")
         .toList();
     var i = dataList.length;

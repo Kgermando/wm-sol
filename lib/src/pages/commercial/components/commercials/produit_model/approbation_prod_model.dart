@@ -36,7 +36,7 @@ class _ApprobationProdModelState extends State<ApprobationProdModel> {
       child: Card(
         elevation: 3,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: p20),
+          padding: const EdgeInsets.symmetric(horizontal: p20, vertical: p20),
           child: Column(
             children: [
               Row(

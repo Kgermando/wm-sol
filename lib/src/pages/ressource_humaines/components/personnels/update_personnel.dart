@@ -668,13 +668,18 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationEXp.first;
-        } else if (controller.departementSelectedList.first ==
-            'Commercial et Marketing') {
+        } else if (controller.departementSelectedList.first == 'Marketing') {
           controller.fonctionList = controller.fonctioncommList;
-          controller.servAffectList = controller.serviceAffectationComm;
+          controller.servAffectList = controller.serviceAffectationMark;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
-              controller.serviceAffectationComm.first;
+              controller.serviceAffectationMark.first;
+        } else if (controller.departementSelectedList.first == 'Commercial') {
+          controller.fonctionList = controller.fonctioncommList;
+          controller.servAffectList = controller.serviceAffectationCom;
+          controller.fonctionOccupe = controller.fonctionList.first;
+          controller.servicesAffectation =
+              controller.serviceAffectationCom.first;
         } else if (controller.departementSelectedList.first == 'Logistique') {
           controller.fonctionList = controller.fonctionlogList;
           controller.servAffectList = controller.serviceAffectationLog;

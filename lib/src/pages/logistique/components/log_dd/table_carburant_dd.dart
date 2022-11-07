@@ -38,7 +38,7 @@ class _TableCarburantDDState extends State<TableCarburantDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final CarburantModel carburantModel =
@@ -66,7 +66,8 @@ class _TableCarburantDDState extends State<TableCarburantDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    CarburantXlsx().exportToExcel(widget.carburantController.carburantList);
+                    CarburantXlsx().exportToExcel(
+                        widget.carburantController.carburantList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -125,7 +126,8 @@ class _TableCarburantDDState extends State<TableCarburantDD> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.carburantController.carburantList
-      .where((element) => element.approbationDD == '-').toList();
+        .where((element) => element.approbationDD == '-')
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {
@@ -284,7 +286,7 @@ class _TableCarburantDDState extends State<TableCarburantDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

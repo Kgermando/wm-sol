@@ -99,15 +99,16 @@ class _DetailProductModelState extends State<DetailProductModel> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(),
-                                        ApprobationProdModel(
-                                            data: widget.productModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        dataWidget() 
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                ApprobationProdModel(
+                                    data: widget.productModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))

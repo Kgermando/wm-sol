@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
-import 'package:wm_solution/src/models/users/user_model.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableUsersActifs extends StatefulWidget {
-  const TableUsersActifs({super.key, required this.usersController}); 
+  const TableUsersActifs({super.key, required this.usersController});
   final UsersController usersController;
 
   @override
@@ -36,12 +36,12 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
-          final idPlutoRow = dataId.last; 
+          final dataId = tapEvent.row.cells.values;
+          final idPlutoRow = dataId.last;
 
           final UserModel user =
               await widget.usersController.detailView(idPlutoRow.value);
-      
+
           Get.toNamed(RhRoutes.rhdetailUser, arguments: user);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -60,7 +60,7 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
                       onPressed: () {
                         Navigator.pushNamed(context, RhRoutes.rhDD);
                       },
-                      icon: Icon(Icons.refresh, color: Colors.green.shade700)), 
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 ],
               ),
             ],
@@ -69,20 +69,20 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
         configuration: PlutoGridConfiguration(
           columnFilter: PlutoGridColumnFilterConfig(
             filters: const [
-              ...FilterHelper.defaultFilters, 
+              ...FilterHelper.defaultFilters,
             ],
             resolveDefaultColumnFilter: (column, resolver) {
               if (column.field == 'numero') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'nom') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              }  else if (column.field == 'prenom') {
+              } else if (column.field == 'prenom') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'email') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'telephone') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              }  else if (column.field == 'role') {
+              } else if (column.field == 'role') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'matricule') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -110,12 +110,12 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
   Future agentsRow() async {
     var i = widget.usersController.usersList.length;
     for (var item in widget.usersController.usersList) {
-      rows.add(PlutoRow(cells: { 
-        'numero': PlutoCell(value: i--), 
-        'nom': PlutoCell(value: item.nom), 
+      rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
         'prenom': PlutoCell(value: item.prenom),
         'email': PlutoCell(value: item.email),
-        'telephone': PlutoCell(value: item.telephone), 
+        'telephone': PlutoCell(value: item.telephone),
         'role': PlutoCell(value: "Niveau ${item.role}"),
         'matricule': PlutoCell(value: item.matricule),
         'createdAt':
@@ -140,7 +140,7 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Nom',
@@ -152,7 +152,7 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Prénom',
@@ -188,7 +188,7 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 150,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Acréditation',

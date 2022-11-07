@@ -43,7 +43,7 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final PerformenceModel dataItem =
@@ -66,7 +66,7 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
                   IconButton(
                       tooltip: 'Rafraichir',
                       onPressed: () {
-                        Navigator.pushNamed(context, RhRoutes.rhPerformence); 
+                        Navigator.pushNamed(context, RhRoutes.rhPerformence);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

@@ -9,7 +9,8 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableRapport extends StatefulWidget {
-  const TableRapport({super.key, required this.rapportController, required this.tacheModel});
+  const TableRapport(
+      {super.key, required this.rapportController, required this.tacheModel});
   final RapportController rapportController;
   final TacheModel tacheModel;
 
@@ -36,7 +37,7 @@ class _TableRapportState extends State<TableRapport> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final RapportModel rapportModel =
@@ -58,8 +59,7 @@ class _TableRapportState extends State<TableRapport> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context,
-                          TacheRoutes.tachePage);
+                      Navigator.pushNamed(context, TacheRoutes.tachePage);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
               ],

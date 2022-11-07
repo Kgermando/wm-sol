@@ -47,7 +47,7 @@ class _TableBanqueState extends State<TableBanque> {
             columns: columns,
             rows: rows,
             onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-              final dataId = tapEvent.row!.cells.values;
+              final dataId = tapEvent.row.cells.values;
               final idPlutoRow = dataId.last;
 
               final BanqueModel banqueModel =
@@ -70,9 +70,9 @@ class _TableBanqueState extends State<TableBanque> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            Navigator.pushNamed(
-                            context, '/transactions-banque/${widget.banqueNameModel.id}',
-                            arguments: widget.banqueNameModel);
+                            Navigator.pushNamed(context,
+                                '/transactions-banque/${widget.banqueNameModel.id}',
+                                arguments: widget.banqueNameModel);
                           },
                           icon: Icon(Icons.refresh,
                               color: Colors.green.shade700)),

@@ -264,7 +264,7 @@ var addProductionUrl =
 
 var fournisseursUrl = Uri.parse("$mainUrl/fournisseurs/");
 var addFournisseursUrl =
-    Uri.parse("$mainUrl/agents-roles/insert-fournisseurs");
+    Uri.parse("$mainUrl/fournisseurs/insert-new-fournisseur");
 
 // COMMERCIAL
 var prodModelsUrl = Uri.parse("$mainUrl/produit-models/");

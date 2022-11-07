@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/taches/tache_model.dart'; 
+import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/pages/taches/components/tache_xlsx.dart';
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -14,8 +14,10 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 class TableTachesDetail extends StatefulWidget {
   const TableTachesDetail(
       {super.key,
-      required this.tachesController, required this.id, required this.departement});
-  final TachesController tachesController; 
+      required this.tachesController,
+      required this.id,
+      required this.departement});
+  final TachesController tachesController;
   final int id;
   final String departement;
 
@@ -44,7 +46,7 @@ class _TableTachesDetailState extends State<TableTachesDetail> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final TacheModel tacheModel =
@@ -116,7 +118,8 @@ class _TableTachesDetailState extends State<TableTachesDetail> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.tachesController.tachesList
         .where((element) =>
-            element.reference == widget.id && element.departement == widget.departement)
+            element.reference == widget.id &&
+            element.departement == widget.departement)
         .toList();
 
     var i = dataList.length;
@@ -124,7 +127,7 @@ class _TableTachesDetailState extends State<TableTachesDetail> {
       bool read = false;
       if (item.read == 'true') {
         read = true;
-      } else if(item.read == 'false') {
+      } else if (item.read == 'false') {
         read = false;
       }
       setState(() {

@@ -36,7 +36,7 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
       child: Card(
         elevation: 3,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: p20),
+          padding: const EdgeInsets.only(right: p20, left: p20, top: p20, bottom: p20),
           child: Column(
             children: [
               Row(

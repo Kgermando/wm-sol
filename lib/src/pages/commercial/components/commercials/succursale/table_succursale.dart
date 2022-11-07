@@ -38,7 +38,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final SuccursaleModel succursaleModel =
@@ -180,7 +180,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DG',
-        field: 'approbationDD',
+        field: 'approbationDG',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,

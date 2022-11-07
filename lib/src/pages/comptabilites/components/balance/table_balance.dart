@@ -10,7 +10,8 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableBalance extends StatefulWidget {
-  const TableBalance({super.key, required this.balanceList, required this.controller});
+  const TableBalance(
+      {super.key, required this.balanceList, required this.controller});
   final List<BalanceCompteModel> balanceList;
   final BalanceController controller;
 
@@ -37,7 +38,7 @@ class _TableBalanceState extends State<TableBalance> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final BalanceCompteModel balanceCompteModel =
@@ -116,7 +117,7 @@ class _TableBalanceState extends State<TableBalance> {
           'title': PlutoCell(value: item.title),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)), 
+              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));

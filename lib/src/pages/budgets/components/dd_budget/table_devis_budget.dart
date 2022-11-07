@@ -8,8 +8,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableDevisBudget extends StatefulWidget {
-  const TableDevisBudget(
-      {super.key, required this.devisController});
+  const TableDevisBudget({super.key, required this.devisController});
   final DevisController devisController;
 
   @override
@@ -37,14 +36,13 @@ class _TableDevisBudgetState extends State<TableDevisBudget> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final DevisModel devisModel =
               await widget.devisController.detailView(idPlutoRow.value);
 
-          Get.toNamed(DevisRoutes.devisDetail,
-              arguments: devisModel);
+          Get.toNamed(DevisRoutes.devisDetail, arguments: devisModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;
@@ -94,7 +92,7 @@ class _TableDevisBudgetState extends State<TableDevisBudget> {
     var dataList = widget.devisController.devisList
         .where((element) =>
             element.approbationDG == 'Approved' &&
-            element.approbationDD == 'Approved' && 
+            element.approbationDD == 'Approved' &&
             element.approbationBudget == '-')
         .toList();
     var i = dataList.length;

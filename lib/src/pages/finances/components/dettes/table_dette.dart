@@ -4,15 +4,16 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/pages/finances/components/dettes/dette_xlsx.dart';
-import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableDette extends StatefulWidget {
-  const TableDette({super.key, required this.detteList, required this.controller});
-   final List<DetteModel> detteList;
+  const TableDette(
+      {super.key, required this.detteList, required this.controller});
+  final List<DetteModel> detteList;
   final DetteController controller;
 
   @override
@@ -41,7 +42,7 @@ class _TableDetteState extends State<TableDette> {
             columns: columns,
             rows: rows,
             onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-              final dataId = tapEvent.row!.cells.values;
+              final dataId = tapEvent.row.cells.values;
               final idPlutoRow = dataId.last;
 
               final DetteModel detteModel =
@@ -323,7 +324,7 @@ class _TableDetteState extends State<TableDette> {
       color: Colors.red.shade700,
       child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ResponsiveChild3Widget( 
+          child: ResponsiveChild3Widget(
             child1: Row(
               children: [
                 SelectableText('Total: ',

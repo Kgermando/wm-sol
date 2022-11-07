@@ -42,7 +42,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final TransportRestaurationModel transportRestaurationModel =
@@ -69,8 +69,8 @@ class _TableTransportRestState extends State<TableTransportRest> {
             Row(
               children: [
                 IconButton(
-                    onPressed: () {  
-                       Navigator.pushNamed(context, RhRoutes.rhTransportRest);
+                    onPressed: () {
+                      Navigator.pushNamed(context, RhRoutes.rhTransportRest);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -89,7 +89,7 @@ class _TableTransportRestState extends State<TableTransportRest> {
       configuration: PlutoGridConfiguration(
         columnFilter: PlutoGridColumnFilterConfig(
           filters: const [
-            ...FilterHelper.defaultFilters, 
+            ...FilterHelper.defaultFilters,
           ],
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {

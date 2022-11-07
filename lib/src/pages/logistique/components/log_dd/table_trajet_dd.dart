@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart'; 
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart'; 
+import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -18,7 +18,7 @@ class TableTrajetDD extends StatefulWidget {
 }
 
 class _TableTrajetDDState extends State<TableTrajetDD> {
- List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -38,7 +38,7 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final AnguinModel anguinModel =
@@ -66,7 +66,8 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    TrajetXlsx().exportToExcel(widget.trajetController.trajetList);
+                    TrajetXlsx()
+                        .exportToExcel(widget.trajetController.trajetList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -118,7 +119,7 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-  var dataList = widget.trajetController.trajetList
+    var dataList = widget.trajetController.trajetList
         .where((element) => element.approbationDD == '-')
         .toList();
     var i = dataList.length;
@@ -137,7 +138,7 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
               PlutoCell(value: "${item.kilometrageRetour} km/h"),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD), 
+          'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -159,7 +160,7 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
         width: 100,
         minWidth: 80,
       ),
-     PlutoColumn(
+      PlutoColumn(
         readOnly: true,
         title: 'Nom Utilisateur(chauffeur)',
         field: 'conducteur',

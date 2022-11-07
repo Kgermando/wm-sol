@@ -62,13 +62,25 @@ class ServiceAffectation {
     'Gestion de la Rentabilité'
   ];
 
-  List<String> commDropdown = [
+  List<String> markDropdown = [
     'Supervision',
     'Marketing projet',
     'Experience utilisateurs',
     'Benchmark',
+    'Support analytique',
+    'Créativité',
     'Media et réseaux sociaux',
     'Mapping terrain'
+  ];
+  List<String> comDropdown = [
+    'Supervision', 
+    'Organisation et management',   
+    'Management commercial',
+    'Gestion operationnelle',
+    'Agent commercial',
+    'Suivi et controle',
+    'Support aux vendeurs',
+    'Agent commercial',
   ];
 
   List<String> logDropdown = [

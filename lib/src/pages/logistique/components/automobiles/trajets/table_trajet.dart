@@ -4,14 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableTrajet extends StatefulWidget {
-  const TableTrajet({super.key, required this.trajetList, required this.controller});
+  const TableTrajet(
+      {super.key, required this.trajetList, required this.controller});
   final List<TrajetModel> trajetList;
   final TrajetController controller;
 
@@ -20,7 +21,7 @@ class TableTrajet extends StatefulWidget {
 }
 
 class _TableTrajetState extends State<TableTrajet> {
- List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -38,7 +39,7 @@ class _TableTrajetState extends State<TableTrajet> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final AnguinModel anguinModel =
@@ -133,7 +134,7 @@ class _TableTrajetState extends State<TableTrajet> {
               PlutoCell(value: "${item.kilometrageRetour} km/h"),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD), 
+          'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -155,7 +156,7 @@ class _TableTrajetState extends State<TableTrajet> {
         width: 100,
         minWidth: 80,
       ),
-     PlutoColumn(
+      PlutoColumn(
         readOnly: true,
         title: 'Nom Utilisateur(chauffeur)',
         field: 'conducteur',

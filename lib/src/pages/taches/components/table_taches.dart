@@ -43,7 +43,7 @@ class _TableTachesState extends State<TableTaches> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final TacheModel tacheModel =
@@ -61,13 +61,13 @@ class _TableTachesState extends State<TableTaches> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const TitleWidget(title: "Vos taches"),
-            Column(
+            Row(
               children: [
                 IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, TacheRoutes.tachePage);
                     },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)), 
+                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
                   TacheXlsx().exportToExcel(widget.tachesController.tachesList);
                   if (!mounted) return;
@@ -78,7 +78,6 @@ class _TableTachesState extends State<TableTaches> {
                 })
               ],
             ),
-            
           ],
         );
       },
@@ -127,7 +126,7 @@ class _TableTachesState extends State<TableTaches> {
       bool read = false;
       if (item.read == 'true') {
         read = true;
-      } else if(item.read == 'false') {
+      } else if (item.read == 'false') {
         read = false;
       }
       setState(() {

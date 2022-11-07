@@ -8,8 +8,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableDevisDG extends StatefulWidget {
-  const TableDevisDG(
-      {super.key,required this.devisController}); 
+  const TableDevisDG({super.key, required this.devisController});
   final DevisController devisController;
 
   @override
@@ -37,14 +36,13 @@ class _TableDevisDGState extends State<TableDevisDG> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final DevisModel devisModel =
               await widget.devisController.detailView(idPlutoRow.value);
 
-          Get.toNamed(DevisRoutes.devisDetail,
-              arguments: devisModel);
+          Get.toNamed(DevisRoutes.devisDetail, arguments: devisModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;
@@ -99,10 +97,9 @@ class _TableDevisDGState extends State<TableDevisDG> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-     var dataList = widget.devisController.devisList
+    var dataList = widget.devisController.devisList
         .where((element) =>
-            element.approbationDG == '-' &&
-            element.approbationDD == 'Approved')
+            element.approbationDG == '-' && element.approbationDD == 'Approved')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

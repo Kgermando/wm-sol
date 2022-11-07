@@ -93,7 +93,7 @@ class SuccursaleController extends GetxController
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
-      await succursaleApi.updateData(dataItem).then((value) {
+      await succursaleApi.insertData(dataItem).then((value) {
         succursaleList.clear();
         getList();
         Get.back();

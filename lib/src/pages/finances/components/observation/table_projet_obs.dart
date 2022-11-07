@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableProjetObs extends StatefulWidget {
@@ -16,7 +16,7 @@ class TableProjetObs extends StatefulWidget {
 }
 
 class _TableProjetObsState extends State<TableProjetObs> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -36,7 +36,7 @@ class _TableProjetObsState extends State<TableProjetObs> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final ProjetModel projetModel =
@@ -107,13 +107,13 @@ class _TableProjetObsState extends State<TableProjetObs> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.controller.projetList
-      .where((element) =>
-          element.approbationDG == 'Approved' &&
-          element.approbationDD == 'Approved' &&
-          element.approbationBudget == 'Approved' &&
-          element.approbationFin == 'Approved' &&
-          element.observation == "false")
-      .toList();
+        .where((element) =>
+            element.approbationDG == 'Approved' &&
+            element.approbationDD == 'Approved' &&
+            element.approbationBudget == 'Approved' &&
+            element.approbationFin == 'Approved' &&
+            element.observation == "false")
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {

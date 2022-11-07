@@ -50,30 +50,10 @@ class ResponsiveChild4Widget extends StatelessWidget {
     } else {
       return Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              child1,
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              child2,
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              child3,
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              child4,
-            ],
-          ),
+          child1,
+          child2,
+          child3,
+          child4 
         ],
       );
     }

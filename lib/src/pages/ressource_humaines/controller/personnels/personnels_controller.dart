@@ -52,7 +52,8 @@ class PersonnelsController extends GetxController
   List<String> serviceAffectationBud = ServiceAffectation().budgetDropdown;
   List<String> serviceAffectationCompt = ServiceAffectation().comptableDropdown;
   List<String> serviceAffectationEXp = ServiceAffectation().expDropdown;
-  List<String> serviceAffectationComm = ServiceAffectation().commDropdown;
+  List<String> serviceAffectationCom = ServiceAffectation().comDropdown;
+  List<String> serviceAffectationMark = ServiceAffectation().markDropdown;
   List<String> serviceAffectationLog = ServiceAffectation().logDropdown;
 
   TextEditingController nomController = TextEditingController();

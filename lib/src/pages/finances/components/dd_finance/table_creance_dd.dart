@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/creances_model.dart';
 import 'package:wm_solution/src/pages/finances/components/creances/creance_xlsx.dart';
-import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
@@ -14,13 +14,12 @@ class TableCreanceDD extends StatefulWidget {
   const TableCreanceDD({super.key, required this.creanceController});
   final CreanceController creanceController;
 
-
   @override
   State<TableCreanceDD> createState() => _TableCreanceDDState();
 }
 
 class _TableCreanceDDState extends State<TableCreanceDD> {
-List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -43,7 +42,7 @@ List<PlutoColumn> columns = [];
               columns: columns,
               rows: rows,
               onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-                final dataId = tapEvent.row!.cells.values;
+                final dataId = tapEvent.row.cells.values;
                 final idPlutoRow = dataId.last;
 
                 final CreanceModel creanceModel =
@@ -72,7 +71,8 @@ List<PlutoColumn> columns = [];
                             icon: Icon(Icons.refresh,
                                 color: Colors.green.shade700)),
                         PrintWidget(onPressed: () {
-                          CreanceXlsx().exportToExcel(widget.creanceController.creanceList);
+                          CreanceXlsx().exportToExcel(
+                              widget.creanceController.creanceList);
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: const Text("Exportation effectué!"),
@@ -121,7 +121,8 @@ List<PlutoColumn> columns = [];
                       return resolver<PlutoFilterTypeContains>()
                           as PlutoFilterType;
                     }
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   },
                 ),
               ),
@@ -328,21 +329,21 @@ List<PlutoColumn> columns = [];
     return Card(
       color: Colors.red.shade700,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ResponsiveChild3Widget(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          child1: Row(
-            children: [
-              SelectableText('Total: ',
-                  style: bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white)),
-              SelectableText(
-                  '${NumberFormat.decimalPattern('fr').format(widget.creanceController.nonPaye)} \$',
-                  style: bodyMedium.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.white))
-            ],
-          ),
-          child2: Row(
+          padding: const EdgeInsets.all(8.0),
+          child: ResponsiveChild3Widget(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child1: Row(
+              children: [
+                SelectableText('Total: ',
+                    style: bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.white)),
+                SelectableText(
+                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.nonPaye)} \$',
+                    style: bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.white))
+              ],
+            ),
+            child2: Row(
               children: [
                 SelectableText('Payé: ',
                     style: bodyMedium.copyWith(
@@ -353,7 +354,7 @@ List<PlutoColumn> columns = [];
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
             ),
-          child3: Row(
+            child3: Row(
               children: [
                 SelectableText('Non Payé: ',
                     style: bodyMedium.copyWith(
@@ -364,8 +365,7 @@ List<PlutoColumn> columns = [];
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
             ),
-        ) 
-      ),
+          )),
     );
   }
 }

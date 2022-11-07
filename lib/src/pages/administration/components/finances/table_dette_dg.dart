@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/pages/finances/components/dettes/dette_xlsx.dart';
-import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
@@ -42,7 +42,7 @@ class _TableDetteDGState extends State<TableDetteDG> {
               columns: columns,
               rows: rows,
               onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-                final dataId = tapEvent.row!.cells.values;
+                final dataId = tapEvent.row.cells.values;
                 final idPlutoRow = dataId.last;
 
                 final DetteModel detteModel =
@@ -71,7 +71,8 @@ class _TableDetteDGState extends State<TableDetteDG> {
                             icon: Icon(Icons.refresh,
                                 color: Colors.green.shade700)),
                         PrintWidget(onPressed: () {
-                          DetteXlsx().exportToExcel(widget.detteController.detteList);
+                          DetteXlsx()
+                              .exportToExcel(widget.detteController.detteList);
                           if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: const Text("Exportation effectué!"),
@@ -120,7 +121,8 @@ class _TableDetteDGState extends State<TableDetteDG> {
                       return resolver<PlutoFilterTypeContains>()
                           as PlutoFilterType;
                     }
-                    return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   },
                 ),
               ),
@@ -137,11 +139,9 @@ class _TableDetteDGState extends State<TableDetteDG> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList =
-        widget.detteController.detteList
+    var dataList = widget.detteController.detteList
         .where((element) =>
-            element.approbationDG == '-' &&
-            element.approbationDD == 'Approved')
+            element.approbationDG == '-' && element.approbationDD == 'Approved')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

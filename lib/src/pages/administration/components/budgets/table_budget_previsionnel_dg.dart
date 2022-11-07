@@ -38,7 +38,7 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final DepartementBudgetModel departementBudgetModel = await widget

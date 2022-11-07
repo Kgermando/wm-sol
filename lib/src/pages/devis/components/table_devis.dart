@@ -36,14 +36,13 @@ class _TableDevisState extends State<TableDevis> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final DevisModel devisModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(DevisRoutes.devisDetail,
-            arguments: devisModel);
+        Get.toNamed(DevisRoutes.devisDetail, arguments: devisModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;

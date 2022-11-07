@@ -7,7 +7,10 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/table_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class SuccursalePage extends StatefulWidget {
   const SuccursalePage({super.key});
@@ -38,7 +41,60 @@ class _SuccursalePageState extends State<SuccursalePage> {
                   tooltip: "Nouveau succursale",
                   icon: const Icon(Icons.add),
                   onPressed: () {
-                    Get.toNamed(ComRoutes.comSuccursaleAdd);
+                    setState(() {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        // constraints: BoxConstraints(
+                        //   maxWidth: MediaQuery.of(context).size.width /4,
+                        // ),
+                        builder: (BuildContext context) {
+                          return Container(
+                            // color: Colors.amber.shade100,
+                            padding: const EdgeInsets.all(p20),
+                            child: Form(
+                                key: controller.formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: const [
+                                        TitleWidget(title: "Ajout Succursale")
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: p20,
+                                    ),
+                                    ResponsiveChildWidget(
+                                        child1: nameWidget(),
+                                        child2: provinceWidget()),
+                                        // nameWidget(),
+                                        // provinceWidget(),
+                                    adresseWidget(),
+                                    const SizedBox(
+                                      height: p20,
+                                    ),
+                                    BtnWidget(
+                                        title: 'Soumettre',
+                                        isLoading: controller.isLoading,
+                                        press: () {
+                                          final form =
+                                              controller.formKey.currentState!;
+                                          if (form.validate()) {
+                                            controller.submit();
+                                            form.reset();
+                                          }
+                                        })
+                                  ],
+                                ),
+                              )
+                          );
+                        },
+                      );
+                    });
+                     
+                    // Get.toNamed(ComRoutes.comSuccursaleAdd);
                   }),
               body: Row(
                 children: [
@@ -58,6 +114,80 @@ class _SuccursalePageState extends State<SuccursalePage> {
                               controller: controller))),
                 ],
               ))),
+    );
+  }
+
+
+  Widget nameWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.nameController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Nom de la succursale',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget adresseWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          maxLines: 3,
+          controller: controller.adresseController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Adresse',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget provinceWidget() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Province',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.province,
+        isExpanded: true,
+        items: controller.provinceList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select province" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.province = value!;
+          });
+        },
+      ),
     );
   }
 }

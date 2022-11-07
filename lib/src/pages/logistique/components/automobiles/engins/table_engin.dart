@@ -9,9 +9,9 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class TableEngin extends StatefulWidget {
-  const TableEngin({super.key, required this.enginList, required this.controller});
+  const TableEngin(
+      {super.key, required this.enginList, required this.controller});
   final List<AnguinModel> enginList;
   final EnginController controller;
 
@@ -38,13 +38,14 @@ class _TableEnginState extends State<TableEngin> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final AnguinModel anguinModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logAnguinAutoDetail, arguments: anguinModel);
+        Get.toNamed(LogistiqueRoutes.logAnguinAutoDetail,
+            arguments: anguinModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;

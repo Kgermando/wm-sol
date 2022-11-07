@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
-import 'package:wm_solution/src/pages/logistique/components/entretiens/entretien_xlsx.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/entretiens/entretien_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableEntretien extends StatefulWidget {
-  const TableEntretien({super.key, required this.entretienList, required this.controller});
+  const TableEntretien(
+      {super.key, required this.entretienList, required this.controller});
   final List<EntretienModel> entretienList;
   final EntretienController controller;
 
@@ -19,7 +20,7 @@ class TableEntretien extends StatefulWidget {
 }
 
 class _TableEntretienState extends State<TableEntretien> {
- List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -37,7 +38,7 @@ class _TableEntretienState extends State<TableEntretien> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final EntretienModel entretienModel =
@@ -118,7 +119,7 @@ class _TableEntretienState extends State<TableEntretien> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nom': PlutoCell(value: item.nom),
-          'typeObjet': PlutoCell(value: item.typeObjet), 
+          'typeObjet': PlutoCell(value: item.typeObjet),
           'typeMaintenance': PlutoCell(value: item.typeMaintenance),
           'dureeTravaux': PlutoCell(value: item.dureeTravaux),
           'created': PlutoCell(
@@ -168,7 +169,7 @@ class _TableEntretienState extends State<TableEntretien> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Type de maintenance',
@@ -204,7 +205,7 @@ class _TableEntretienState extends State<TableEntretien> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',

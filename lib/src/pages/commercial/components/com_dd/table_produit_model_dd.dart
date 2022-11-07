@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart'; 
+import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/prod_model_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -38,7 +38,7 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final ProductModel productionModel =
@@ -61,12 +61,12 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, ComRoutes.comProduitModel);
+                        Navigator.pushNamed(context, ComRoutes.comProduitModel);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    ProdModelXlsx().exportToExcel(widget.produitModelController.produitModelList);
+                    ProdModelXlsx().exportToExcel(
+                        widget.produitModelController.produitModelList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -118,7 +118,7 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-     var dataList = widget.produitModelController.produitModelList
+    var dataList = widget.produitModelController.produitModelList
         .where((element) => element.approbationDD == "-")
         .toList();
     var i = dataList.length;
@@ -218,7 +218,7 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Sous Categorie 4',
+        title: 'Unité',
         field: 'sousCategorie4',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

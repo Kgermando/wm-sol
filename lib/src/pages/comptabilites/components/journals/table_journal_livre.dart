@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart'; 
-import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart'; 
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/journals/journal_xksx.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_livre_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableJournalLivre extends StatefulWidget {
-  const TableJournalLivre({super.key, required this.journalLivreList, required this.controller});
+  const TableJournalLivre(
+      {super.key, required this.journalLivreList, required this.controller});
   final List<JournalLivreModel> journalLivreList;
   final JournalLivreController controller;
 
@@ -37,7 +38,7 @@ class _TableJournalLivreState extends State<TableJournalLivre> {
       columns: columns,
       rows: rows,
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row!.cells.values;
+        final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
         final JournalLivreModel journalLivreModel =

@@ -15,11 +15,12 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 class TableTransportRestBudget extends StatefulWidget {
   const TableTransportRestBudget(
       {Key? key, required this.transportRestController})
-      : super(key: key); 
+      : super(key: key);
   final TransportRestController transportRestController;
 
   @override
-  State<TableTransportRestBudget> createState() => _TableTransportRestBudgetState();
+  State<TableTransportRestBudget> createState() =>
+      _TableTransportRestBudgetState();
 }
 
 class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
@@ -43,7 +44,7 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final TransportRestaurationModel transportRestaurationModel =
@@ -70,12 +71,13 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
               Row(
                 children: [
                   IconButton(
-                      onPressed: () { 
+                      onPressed: () {
                         Get.toNamed(RhRoutes.rhTransportRest);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    TransportRestXlsx().exportToExcel(widget.transportRestController.transportRestaurationList);
+                    TransportRestXlsx().exportToExcel(widget
+                        .transportRestController.transportRestaurationList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -90,7 +92,7 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
         configuration: PlutoGridConfiguration(
           columnFilter: PlutoGridColumnFilterConfig(
             filters: const [
-              ...FilterHelper.defaultFilters, 
+              ...FilterHelper.defaultFilters,
             ],
             resolveDefaultColumnFilter: (column, resolver) {
               if (column.field == 'numero') {

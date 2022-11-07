@@ -8,8 +8,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableDevisObs extends StatefulWidget {
-  const TableDevisObs(
-      {super.key, required this.devisController});
+  const TableDevisObs({super.key, required this.devisController});
   final DevisController devisController;
 
   @override
@@ -37,14 +36,13 @@ class _TableDevisObsState extends State<TableDevisObs> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final DevisModel devisModel =
               await widget.devisController.detailView(idPlutoRow.value);
 
-          Get.toNamed(DevisRoutes.devisDetail,
-              arguments: devisModel);
+          Get.toNamed(DevisRoutes.devisDetail, arguments: devisModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;

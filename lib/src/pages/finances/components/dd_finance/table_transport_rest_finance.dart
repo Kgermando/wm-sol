@@ -15,11 +15,12 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 class TableTransportRestFinance extends StatefulWidget {
   const TableTransportRestFinance(
       {Key? key, required this.transportRestController})
-      : super(key: key); 
+      : super(key: key);
   final TransportRestController transportRestController;
 
   @override
-  State<TableTransportRestFinance> createState() => _TableTransportRestFinanceState();
+  State<TableTransportRestFinance> createState() =>
+      _TableTransportRestFinanceState();
 }
 
 class _TableTransportRestFinanceState extends State<TableTransportRestFinance> {
@@ -43,7 +44,7 @@ class _TableTransportRestFinanceState extends State<TableTransportRestFinance> {
         columns: columns,
         rows: rows,
         onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-          final dataId = tapEvent.row!.cells.values;
+          final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
           final TransportRestaurationModel transportRestaurationModel =
@@ -70,12 +71,13 @@ class _TableTransportRestFinanceState extends State<TableTransportRestFinance> {
               Row(
                 children: [
                   IconButton(
-                      onPressed: () { 
+                      onPressed: () {
                         Get.toNamed(RhRoutes.rhTransportRest);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    TransportRestXlsx().exportToExcel(widget.transportRestController.transportRestaurationList);
+                    TransportRestXlsx().exportToExcel(widget
+                        .transportRestController.transportRestaurationList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -90,7 +92,7 @@ class _TableTransportRestFinanceState extends State<TableTransportRestFinance> {
         configuration: PlutoGridConfiguration(
           columnFilter: PlutoGridColumnFilterConfig(
             filters: const [
-              ...FilterHelper.defaultFilters, 
+              ...FilterHelper.defaultFilters,
             ],
             resolveDefaultColumnFilter: (column, resolver) {
               if (column.field == 'numero') {
@@ -129,7 +131,7 @@ class _TableTransportRestFinanceState extends State<TableTransportRestFinance> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.transportRestController.transportRestaurationList
         .where((element) =>
-           element.approbationDG == 'Approved' &&
+            element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
             element.approbationBudget == 'Approved' &&
             element.approbationFin == '-' &&

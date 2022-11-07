@@ -98,7 +98,7 @@ class ProduitModelController extends GetxController
               : sousCategorie3Controller.text,
           sousCategorie4: (uniteController.text == "")
               ? '-'
-              : sousCategorie3Controller.text,
+              : uniteController.text,
           idProduct: idProductform,
           signature: profilController.user.matricule,
           created: DateTime.now(),
