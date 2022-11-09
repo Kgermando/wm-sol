@@ -3,7 +3,7 @@ class InfoSystem {
   String namelong() => "Solution Work Management";
   String description() => "Work Management pour entreprise priveée et public";
   String nameAdress() => "Avenue Lukusa No 1, Commune de Gombe - Kinshasa - RDC";
-  String version() => "3.0.0.3";
+  String version() => "3.0.0.4";
   String logoSansFond() => "assets/images/logo_sans_fond.png";
   String logo() => "assets/images/logo.png";
   String prefix() => "WM";
