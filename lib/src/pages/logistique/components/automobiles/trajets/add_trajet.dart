@@ -33,7 +33,7 @@ class _AddTrajetState extends State<AddTrajet> {
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
-                  context, scaffoldKey, title, widget.anguinModel.nom),
+                  context, scaffoldKey, title, widget.anguinModel.nomeroPLaque),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +218,7 @@ class _AddTrajetState extends State<AddTrajet> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Kilometrage sorite',
+            labelText: 'Kilometrage avant départ',
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -233,30 +233,5 @@ class _AddTrajetState extends State<AddTrajet> {
             }
           },
         ));
-  }
-
-  Widget kilometrageRetourWidget() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.kilometrageRetourController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'kilometrage retour',
-          ),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
-          ],
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
+  } 
 }

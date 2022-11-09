@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -41,11 +41,11 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
           final dataId = tapEvent.row.cells.values;
           final idPlutoRow = dataId.last;
 
-          final AnguinModel anguinModel =
+          final TrajetModel trajetModel =
               await widget.trajetController.detailView(idPlutoRow.value);
 
-          Get.toNamed(LogistiqueRoutes.logAnguinAutoDetail,
-              arguments: anguinModel);
+          Get.toNamed(LogistiqueRoutes.logTrajetAutoDetail,
+              arguments: trajetModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;
@@ -61,8 +61,7 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, LogistiqueRoutes.logTrajetAuto);
+                        Navigator.pushNamed(context, LogistiqueRoutes.logDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

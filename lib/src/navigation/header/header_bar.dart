@@ -74,7 +74,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                       direction: Axis.horizontal),
                   items: <BreadCrumbItem>[
                     BreadCrumbItem(content: BreadCrumbWidget(title: title)),
-                    BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
+                  (Responsive.isMobile(context)) 
+                    ? BreadCrumbItem(content: Container()) 
+                    : BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
                   ],
                   divider: const Icon(Icons.chevron_right),
                 ),
@@ -82,7 +84,6 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             ),
           ),
     actions: [
-
        if (Platform.isWindows &&
           updateController.updateList.isNotEmpty &&
           updateController.sumVersionCloud > updateController.sumLocalVersion)
@@ -91,13 +92,13 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             tooltip: 'Téléchargement',
             onPressed: () {
               updateController.downloadNetworkSoftware(
-                  url: updateController.updateList.last.urlUpdate);
+                url: updateController.updateList.last.urlUpdate);
             },
             icon: (updateController.downloading)
                 ? (updateController.progressString == "100%")
                     ? const Icon(Icons.check)
-                    : AutoSizeText(updateController.progressString,
-                        maxLines: 1, style: const TextStyle(fontSize: 12.0))
+                    : Obx(() => AutoSizeText(updateController.progressString,
+                        maxLines: 1, style: const TextStyle(fontSize: 12.0))) 
                 : Icon(Icons.download, color: Colors.red.shade700)),
 
       if(departement == 'Exploitations')

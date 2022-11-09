@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
@@ -9,7 +10,6 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/approbation_trajet.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -23,138 +23,109 @@ class DetailTrajet extends StatefulWidget {
 }
 
 class _DetailTrajetState extends State<DetailTrajet> {
+  final TrajetController controller = Get.put(TrajetController());
+  final ProfilController profilController = Get.put(ProfilController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
   @override
   Widget build(BuildContext context) {
-    final TrajetController controller = Get.put(TrajetController());
-    final ProfilController profilController = Get.put(ProfilController());
-
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.trajetModel.conducteur),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.add),
-                onPressed: () {},
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.trajetModel.conducteur),
+        drawer: const DrawerMenu(),
+        floatingActionButton: addKMRetourButton(),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    physics: const ScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: p20),
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TitleWidget(
+                                          title: widget
+                                              .trajetModel.conducteur),
+                                      Column(
+                                        children: [
+                                          if (int.parse(profilController
+                                                      .user.role) <= 3 &&
+                                              widget.trajetModel
+                                                      .approbationDD == "-")
+                                            IconButton(
+                                                tooltip: 'Supprimer',
+                                                onPressed: () async {
+                                                  alertDeleteDialog();
+                                                },
+                                                icon: const Icon(
+                                                    Icons.delete),
+                                                color: Colors
+                                                    .red.shade700),
+                            SelectableText(
+                                DateFormat("dd-MM-yy HH:mm")
+                                    .format(widget
+                                        .trajetModel
+                                        .created),
+                                textAlign: TextAlign.start),
+                          ],
+                        )
+                      ],
+                    ),
+                    dataWidget()
+                  ],
+                ),
               ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TitleWidget(
-                                                title: widget
-                                                    .trajetModel.conducteur),
-                                            Column(
-                                              children: [
-                                                if (int.parse(profilController
-                                                            .user.role) <=
-                                                        3 &&
-                                                    widget.trajetModel
-                                                            .approbationDD ==
-                                                        "-")
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          tooltip:
-                                                              "Mettre à jour kilometrage retour",
-                                                          onPressed: () {
-                                                            Get.toNamed(
-                                                                LogistiqueRoutes
-                                                                    .logTrajetAutoUpdate,
-                                                                arguments: widget
-                                                                    .trajetModel);
-                                                          },
-                                                          icon: Icon(
-                                                            Icons
-                                                                .traffic_outlined,
-                                                            color: Colors
-                                                                .green.shade700,
-                                                          )),
-                                                      IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog(
-                                                                controller);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color: Colors
-                                                              .red.shade700),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yy HH:mm")
-                                                        .format(widget
-                                                            .trajetModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget(),
-                                        const SizedBox(height: p20),
-                                        ApprobationTrajet(
-                                            data: widget.trajetModel,
-                                            controller: controller,
-                                            profilController: profilController)
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )))
-                ],
-              ),
-            ));
+            ),
+            const SizedBox(height: p20),
+            ApprobationTrajet(
+                data: widget.trajetModel,
+                controller: controller,
+                profilController: profilController)
+          ],
+        ),
+      )))
+  ],
+),
+));
   }
 
-  alertDeleteDialog(TrajetController controller) {
+  alertDeleteDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?'),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?', style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -162,13 +133,14 @@ class _DetailTrajetState extends State<DetailTrajet> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () async {
                     controller.trajetApi.deleteData(widget.trajetModel.id!);
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );
@@ -228,7 +200,7 @@ class _DetailTrajetState extends State<DetailTrajet> {
             color: mainColor,
           ),
           ResponsiveChildWidget(
-              child1: Text('Kilometrage de sorite :',
+              child1: Text('Kilometrage de départ :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(
@@ -256,6 +228,85 @@ class _DetailTrajetState extends State<DetailTrajet> {
               child2: SelectableText(widget.trajetModel.signature,
                   textAlign: TextAlign.start, style: bodyMedium)),
         ],
+      ),
+    );
+  }
+
+  Widget kilometrageRetourWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.kilometrageRetourController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'kilometrage retour',
+          ),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly
+          ],
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+
+  Widget addKMRetourButton() {
+    return (widget.trajetModel.kilometrageRetour != '-') 
+      ? Container() 
+      : FloatingActionButton.extended(
+        tooltip: "Indiquez le kilometrage de retour",
+        label: const Text("kilometrage retour"),
+        icon: const Icon(Icons.traffic_outlined),
+        onPressed: () => showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text('Indiquez le kilometrage de retour',
+                style: TextStyle(color: mainColor)),
+            content: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) { 
+              return SizedBox(
+                height: 100,
+                width: 500,
+                child: controller.isLoading
+                    ? loading()
+                    : Form(
+                        key: controller.formKey,
+                        child: Column(
+                          children: [
+                            kilometrageRetourWidget(),  
+                          ],
+                        ),
+                      ),
+              );
+            }
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler'),
+            ),
+            TextButton(
+              onPressed: () {
+                 final form = controller.formKey.currentState!;
+                if (form.validate()) {
+                  controller.submitUpdate(widget.trajetModel);
+                  form.reset();
+                }
+              },
+              child: controller.isLoading
+                  ? loadingMini()
+                  : const Text('OK'),
+            ),
+          ],
+        ),
       ),
     );
   }

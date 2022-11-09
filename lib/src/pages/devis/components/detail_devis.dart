@@ -27,6 +27,10 @@ class DetailDevis extends StatefulWidget {
 }
 
 class _DetailDevisState extends State<DetailDevis> {
+  final DevisController controller = Get.put(DevisController());
+  final DevisListObjetController devisListObjetController =
+      Get.put(DevisListObjetController());
+  final ProfilController profilController = Get.put(ProfilController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Devis";
 
@@ -34,12 +38,7 @@ class _DetailDevisState extends State<DetailDevis> {
 
   @override
   Widget build(BuildContext context) {
-    final DevisController controller = Get.put(DevisController());
-    final DevisListObjetController devisListObjetController =
-        Get.put(DevisListObjetController());
-    final ProfilController profilController = Get.put(ProfilController());
-
-    return controller.obx(
+    return devisListObjetController.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
@@ -48,8 +47,7 @@ class _DetailDevisState extends State<DetailDevis> {
               appBar: headerBar(
                   context, scaffoldKey, title, widget.devisModel.title),
               drawer: const DrawerMenu(),
-              floatingActionButton:
-                  addObjetDevisButton(devisListObjetController),
+              floatingActionButton: addObjetDevisButton(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -118,20 +116,21 @@ class _DetailDevisState extends State<DetailDevis> {
                                         dataWidget(
                                             controller, profilController),
                                         SizedBox(
-                                          height: 300,
+                                          height: 400,
                                           width: double.infinity,
                                           child: SingleChildScrollView(
                                               child: tableDevisListObjet(
                                                   devisListObjetController)),
                                         ),
-                                        ApprobationDevis(
-                                            devisModel: widget.devisModel,
-                                            controller: controller,
-                                            profilController: profilController)
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                ApprobationDevis(
+                                    devisModel: widget.devisModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
@@ -267,8 +266,7 @@ class _DetailDevisState extends State<DetailDevis> {
     );
   }
 
-  FloatingActionButton addObjetDevisButton(
-      DevisListObjetController devisListObjetController) {
+  FloatingActionButton addObjetDevisButton() {
     return FloatingActionButton.extended(
       tooltip: "Ajout objet",
       label: const Text("Ajouter états de besoin"),
@@ -276,7 +274,7 @@ class _DetailDevisState extends State<DetailDevis> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Ajout votre devis'),
+          title: Text('Ajout votre devis', style: TextStyle(color: mainColor)),
           content: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             devisListObjetController.montantGlobal =
@@ -403,6 +401,7 @@ class _DetailDevisState extends State<DetailDevis> {
         1: FlexColumnWidth(300.0),
         2: FixedColumnWidth(150.0), //fixed to 100 width
         3: FixedColumnWidth(150.0),
+        4: FixedColumnWidth(50.0),
       },
       children: [
         tableDevisHeader(),
@@ -461,6 +460,14 @@ class _DetailDevisState extends State<DetailDevis> {
             style: bodyMedium,
           ),
         ),
+        Container(
+          padding: const EdgeInsets.all(16.0 * 0.75),
+          child: IconButton(
+              onPressed: () {
+                devisListObjetController.deleteData(devisListObjetsModel.id!);
+              },
+              icon: const Icon(Icons.delete, color: Colors.red)),
+        ),
       ],
     );
   }
@@ -507,6 +514,15 @@ class _DetailDevisState extends State<DetailDevis> {
         //     BoxDecoration(border: Border.all(color: mainColor)),
         child: AutoSizeText(
           "Montant global".toUpperCase(),
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(16.0 * 0.75), 
+        child: AutoSizeText(
+          "-",
           maxLines: 1,
           textAlign: TextAlign.center,
           style: bodyMedium.copyWith(fontWeight: FontWeight.bold),

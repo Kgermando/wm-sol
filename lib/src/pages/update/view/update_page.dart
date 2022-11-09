@@ -24,7 +24,6 @@ class _UpdatePageState extends State<UpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final sized = MediaQuery.of(context).size;
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),
@@ -233,12 +232,12 @@ class _UpdatePageState extends State<UpdatePage> {
                         color: Colors.green.shade700)
                     : const Icon(Icons.upload_file),
                 label: controller.isUploadingDone
-                    ? Text("Téléchargement terminé",
+                    ? Obx(() => Text("Téléchargement terminé",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(color: Colors.green.shade700))
-                    : Text("Selectionner le fichier",
-                        style: Theme.of(context).textTheme.bodyLarge)));
+                            .copyWith(color: Colors.green.shade700))) 
+                    : Obx(() => Text("Selectionner le fichier",
+                        style: Theme.of(context).textTheme.bodyLarge)) ));
   }
 }

@@ -24,14 +24,14 @@ class _AdministrationNavState extends State<AdministrationNav> {
 
   @override
   Widget build(BuildContext context) {
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1; 
     return ExpansionTile(
       leading: const Icon(
         Icons.admin_panel_settings,
         size: 30.0,
       ),
-      title: AutoSizeText('Administration', maxLines: 1, style: bodyLarge),
+      title: AutoSizeText('Administration', maxLines: 1, style: bodyMedium),
       initiallyExpanded: (widget.departement.first == 'Administration') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
@@ -171,11 +171,22 @@ class _AdministrationNavState extends State<AdministrationNav> {
               Get.toNamed(RhRoutes.rhPerformence);
             }),
         DrawerWidget(
+            selected:
+                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
+            icon: Icons.handyman,
+            sizeIcon: 20.0,
+            title: 'Fournitures',
+            style: bodyText1,
+            onTap: () {
+              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
+              // Navigator.of(context).pop();
+            }),
+        DrawerWidget(
             selected: widget.currentRoute == ArchiveRoutes.archives,
             icon: Icons.archive,
             sizeIcon: 20.0,
             title: 'Archives',
-            style: bodyLarge!,
+            style: bodyMedium!,
             onTap: () {
               Get.toNamed(ArchiveRoutes.archives);
             }),

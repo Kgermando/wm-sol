@@ -28,13 +28,14 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
 
   @override
   Widget build(BuildContext context) {
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    // final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.brightness_low, size: 30.0),
-      title: AutoSizeText('Logistique', maxLines: 1, style: bodyLarge),
+      title: AutoSizeText('Logistique', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
           (widget.departement.first == 'Logistique')
               ? true
@@ -90,7 +91,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
                 selected: widget.currentRoute == LogistiqueRoutes.logAnguinAuto,
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
-                title: 'Angins',
+                title: 'Engins',
                 style: bodyText2!,
                 onTap: () {
                   Navigator.pushNamed(context, LogistiqueRoutes.logAnguinAuto);
@@ -101,7 +102,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
                     widget.currentRoute == LogistiqueRoutes.logCarburantAuto,
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
-                title: 'Carburant',
+                title: 'Carburants',
                 style: bodyText2,
                 onTap: () {
                   Navigator.pushNamed(
@@ -204,7 +205,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
             }),
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhPerformence,
-            icon: Icons.multiline_chart_sharp,
+            icon: Icons.handyman,
             sizeIcon: 20.0,
             title: 'Performences',
             style: bodyText1,
@@ -212,11 +213,22 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
               Get.toNamed(RhRoutes.rhPerformence);
             }),
         DrawerWidget(
+            selected:
+                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
+            icon: Icons.multiline_chart_sharp,
+            sizeIcon: 20.0,
+            title: 'Fournitures',
+            style: bodyText1,
+            onTap: () {
+              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
+              // Navigator.of(context).pop();
+            }),
+        DrawerWidget(
             selected: widget.currentRoute == ArchiveRoutes.archives,
             icon: Icons.archive,
             sizeIcon: 20.0,
             title: 'Archives',
-            style: bodyLarge!,
+            style: bodyMedium!,
             onTap: () {
               Get.toNamed(ArchiveRoutes.archives);
             }),

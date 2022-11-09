@@ -105,16 +105,16 @@ class _DetailCarburantState extends State<DetailCarburant> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(),
-                                        const SizedBox(height: p20),
-                                        ApprobationCarburant(
-                                            data: widget.carburantModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        dataWidget()
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                ApprobationCarburant(
+                                    data: widget.carburantModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))

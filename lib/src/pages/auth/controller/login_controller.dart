@@ -6,12 +6,15 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 
 class LoginController extends GetxController {
   final AuthApi authController = AuthApi();
   final UserApi userController = UserApi();
+
+  final ProfilController profilController = Get.find();                                                                        
 
   final _loadingLogin = false.obs;
   bool get isLoadingLogin => _loadingLogin.value;
@@ -20,24 +23,6 @@ class LoginController extends GetxController {
 
   final TextEditingController matriculeController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  final _user = UserModel(
-          nom: '-',
-          prenom: '-',
-          email: '-',
-          telephone: '-',
-          matricule: '-',
-          departement: '-',
-          servicesAffectation: '-',
-          fonctionOccupe: '-',
-          role: '5',
-          isOnline: 'false',
-          createdAt: DateTime.now(),
-          passwordHash: '-',
-          succursale: '-')
-      .obs;
-
-  UserModel get user => _user.value;
 
   @override
   void dispose() {
@@ -61,9 +46,9 @@ class LoginController extends GetxController {
         await authController
             .login(matriculeController.text, passwordController.text)
             .then((value) {
+          _loadingLogin.value = false;
           if (value) {
             authController.getUserId().then((user) async {
-              _user.value = user;
               final userModel = UserModel(
                   id: user.id,
                   nom: user.nom,
@@ -97,7 +82,8 @@ class LoginController extends GetxController {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(ComptabiliteRoutes.comptabiliteDashboard);
                   } else {
-                    Get.offAllNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
+                    Get.offAllNamed(
+                        ComptabiliteRoutes.comptabiliteJournalLivre);
                   }
                 } else if (departement.first == "Budgets") {
                   if (int.parse(userData.role) <= 2) {
@@ -138,6 +124,8 @@ class LoginController extends GetxController {
                 } else if (departement.first == "Support") {
                   Get.offAllNamed(AdminRoutes.adminDashboard);
                 }
+
+                // GetLocalStorage().saveUser(userData);
               });
               _loadingLogin.value = false;
               Get.snackbar("Authentification réussie",
@@ -166,45 +154,42 @@ class LoginController extends GetxController {
   }
 
   void logout() async {
-    
     try {
       _loadingLogin.value = true;
       authController.getUserId().then((user) async {
-      final userModel = UserModel(
-        id: user.id,
-        nom: user.nom,
-        prenom: user.prenom,
-        email: user.email,
-        telephone: user.telephone,
-        matricule: user.matricule,
-        departement: user.departement,
-        servicesAffectation: user.servicesAffectation,
-        fonctionOccupe: user.fonctionOccupe,
-        role: user.role,
-        isOnline: 'false',
-        createdAt: user.createdAt,
-        passwordHash: user.passwordHash,
-        succursale: user.succursale
-      ); 
-      await userController.updateData(userModel).then((value) {
+        final userModel = UserModel(
+            id: user.id,
+            nom: user.nom,
+            prenom: user.prenom,
+            email: user.email,
+            telephone: user.telephone,
+            matricule: user.matricule,
+            departement: user.departement,
+            servicesAffectation: user.servicesAffectation,
+            fonctionOccupe: user.fonctionOccupe,
+            role: user.role,
+            isOnline: 'false',
+            createdAt: user.createdAt,
+            passwordHash: user.passwordHash,
+            succursale: user.succursale);
+        await userController.updateData(userModel).then((value) {
           GetStorage box = GetStorage();
           box.remove('idToken');
           box.remove('accessToken');
           box.remove('refreshToken');
-        Get.offAllNamed(UserRoutes.logout);
-        Get.snackbar("Déconnexion réussie!", "",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-      });
+          Get.offAllNamed(UserRoutes.logout);
+          Get.snackbar("Déconnexion réussie!", "",
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+        });
       });
     } catch (e) {
-      _loadingLogin.value = false; 
+      _loadingLogin.value = false;
       Get.snackbar("Erreur lors de la connection", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.close),
           snackPosition: SnackPosition.TOP);
     }
   }
- 
 }

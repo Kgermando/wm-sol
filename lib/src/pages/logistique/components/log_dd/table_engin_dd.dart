@@ -61,8 +61,7 @@ class _TableEnginDDState extends State<TableEnginDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, LogistiqueRoutes.logAnguinAuto);
+                        Navigator.pushNamed(context, LogistiqueRoutes.logDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
@@ -84,13 +83,13 @@ class _TableEnginDDState extends State<TableEnginDD> {
               ...FilterHelper.defaultFilters,
             ],
             resolveDefaultColumnFilter: (column, resolver) {
-              if (column.field == 'numero') {
+               if (column.field == 'numero') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              } else if (column.field == 'nom') {
-                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              } else if (column.field == 'modele') {
+              } else if (column.field == 'nomeroPLaque') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'marque') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'modele') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'genre') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -99,8 +98,6 @@ class _TableEnginDDState extends State<TableEnginDD> {
               } else if (column.field == 'qtyMaxReservoir') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'dateFabrication') {
-                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              } else if (column.field == 'nomeroPLaque') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'nomeroEntreprise') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -134,15 +131,14 @@ class _TableEnginDDState extends State<TableEnginDD> {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'modele': PlutoCell(value: item.modele),
+          'nomeroPlaque': PlutoCell(value: item.nomeroPLaque),
           'marque': PlutoCell(value: item.marque),
+          'modele': PlutoCell(value: item.modele),
           'genre': PlutoCell(value: item.genre),
           'numeroChassie': PlutoCell(value: item.numeroChassie),
           'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
           'dateFabrication': PlutoCell(
               value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
-          'nomeroPlaque': PlutoCell(value: item.nomeroPLaque),
           'nomeroEntreprise': PlutoCell(value: item.nomeroEntreprise),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -171,20 +167,8 @@ class _TableEnginDDState extends State<TableEnginDD> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
-        field: 'nom',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Modèle',
-        field: 'modele',
+        title: 'Numero Plaque',
+        field: 'nomeroPlaque',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -197,6 +181,18 @@ class _TableEnginDDState extends State<TableEnginDD> {
         readOnly: true,
         title: 'Marque',
         field: 'marque',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Modèle',
+        field: 'modele',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -233,18 +229,6 @@ class _TableEnginDDState extends State<TableEnginDD> {
         readOnly: true,
         title: 'Date de fabrication',
         field: 'dateFabrication',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Numero Plaque',
-        field: 'nomeroPlaque',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,

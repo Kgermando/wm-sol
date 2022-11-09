@@ -1,6 +1,5 @@
 class AnguinModel {
   late int? id;
-  late String nom; // nom de l'anguin
   late String modele;
   late String marque;
   late String numeroChassie;
@@ -10,7 +9,7 @@ class AnguinModel {
   late DateTime dateFabrication;
   late String nomeroPLaque;
   // numero que l'entreprise donne donne a ses anguins
-  late String nomeroEntreprise; 
+  late String nomeroEntreprise;
   late String kilometrageInitiale;
   late String provenance;
   late String typeCaburant;
@@ -19,7 +18,7 @@ class AnguinModel {
   late String signature; // celui qui fait le document
   late DateTime created;
 
-   // Approbations DG
+  // Approbations DG
   late String approbationDG;
   late String motifDG;
   late String signatureDG;
@@ -28,10 +27,8 @@ class AnguinModel {
   late String motifDD;
   late String signatureDD;
 
-
   AnguinModel(
       {this.id,
-      required this.nom,
       required this.modele,
       required this.marque,
       required this.numeroChassie,
@@ -45,48 +42,44 @@ class AnguinModel {
       required this.provenance,
       required this.typeCaburant,
       required this.typeMoteur,
-      required this.signature, 
+      required this.signature,
       required this.created,
       required this.approbationDG,
       required this.motifDG,
       required this.signatureDG,
       required this.approbationDD,
       required this.motifDD,
-      required this.signatureDD
-    });
+      required this.signatureDD});
 
   factory AnguinModel.fromSQL(List<dynamic> row) {
     return AnguinModel(
         id: row[0],
-        nom: row[1],
-        modele: row[2],
-        marque: row[3],
-        numeroChassie: row[4],
-        couleur: row[5],
-        genre: row[6],
-        qtyMaxReservoir: row[7],
-        dateFabrication: row[8],
-        nomeroPLaque: row[9],
-        nomeroEntreprise: row[10],
-        kilometrageInitiale: row[11],
-        provenance: row[12],
-        typeCaburant: row[13],
-        typeMoteur: row[14],
-        signature: row[15],
-        created: row[16],
-        approbationDG: row[17],
-        motifDG: row[18],
-        signatureDG: row[19],
-        approbationDD: row[20],
-        motifDD: row[21],
-        signatureDD: row[22] 
-    );
+        modele: row[1],
+        marque: row[2],
+        numeroChassie: row[3],
+        couleur: row[4],
+        genre: row[5],
+        qtyMaxReservoir: row[6],
+        dateFabrication: row[7],
+        nomeroPLaque: row[8],
+        nomeroEntreprise: row[9],
+        kilometrageInitiale: row[10],
+        provenance: row[11],
+        typeCaburant: row[12],
+        typeMoteur: row[13],
+        signature: row[14],
+        created: row[15],
+        approbationDG: row[16],
+        motifDG: row[17],
+        signatureDG: row[18],
+        approbationDD: row[19],
+        motifDD: row[20],
+        signatureDD: row[21]);
   }
 
   factory AnguinModel.fromJson(Map<String, dynamic> json) {
     return AnguinModel(
         id: json['id'],
-        nom: json['nom'],
         modele: json['modele'],
         marque: json['marque'],
         numeroChassie: json['numeroChassie'],
@@ -100,21 +93,19 @@ class AnguinModel {
         provenance: json['provenance'],
         typeCaburant: json['typeCaburant'],
         typeMoteur: json['typeMoteur'],
-        signature: json['signature'], 
+        signature: json['signature'],
         created: DateTime.parse(json['created']),
         approbationDG: json['approbationDG'],
         motifDG: json['motifDG'],
         signatureDG: json['signatureDG'],
         approbationDD: json['approbationDD'],
         motifDD: json['motifDD'],
-        signatureDD: json['signatureDD']
-    );
+        signatureDD: json['signatureDD']);
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nom': nom,
       'modele': modele,
       'marque': marque,
       'numeroChassie': numeroChassie,
@@ -128,7 +119,7 @@ class AnguinModel {
       'provenance': provenance,
       'typeCaburant': typeCaburant,
       'typeMoteur': typeMoteur,
-      'signature': signature, 
+      'signature': signature,
       'created': created.toIso8601String(),
       'approbationDG': approbationDG,
       'motifDG': motifDG,

@@ -49,7 +49,6 @@ class EtatMaterielController extends GetxController
   @override
   void dispose() {
     motifDDController.dispose();
-
     super.dispose();
   }
 

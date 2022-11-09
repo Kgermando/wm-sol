@@ -23,7 +23,10 @@ class DrawerMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProfilController profilController = Get.find();
     final currentRoute = Get.currentRoute;
-    var departement = (profilController.user.departement == '-') ? ["Support"] : jsonDecode(profilController.user.departement);
+    var departement = (profilController.user.departement == '-') 
+      ? ["Support"] : jsonDecode(profilController.user.departement);
+    // var departement = jsonDecode(profilController.user.departement);
+
     return Drawer(
       // backgroundColor: Colors.amber[50],
       child: ListView(

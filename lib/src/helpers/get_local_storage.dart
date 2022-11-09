@@ -41,7 +41,7 @@ class GetLocalStorage extends GetxController {
       return user;
     }
   }
-
+ 
   saveUser(value) async {
     box.write(_keyUser, json.encode(value));
   }

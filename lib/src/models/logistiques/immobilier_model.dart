@@ -1,6 +1,5 @@
 class ImmobilierModel {
   late int? id;
-  late String title;
   late String typeAllocation;
   late String adresse;
   late String numeroCertificat;
@@ -20,7 +19,6 @@ class ImmobilierModel {
 
   ImmobilierModel(
       {this.id,
-      required this.title,
       required this.typeAllocation,
       required this.adresse,
       required this.numeroCertificat,
@@ -38,26 +36,24 @@ class ImmobilierModel {
   factory ImmobilierModel.fromSQL(List<dynamic> row) {
     return ImmobilierModel(
         id: row[0],
-        title: row[1],
-        typeAllocation: row[2],
-        adresse: row[3],
-        numeroCertificat: row[4],
-        superficie: row[5],
-        dateAcquisition: row[6],
-        signature: row[7],
-        created: row[8],
-        approbationDG: row[9],
-        motifDG: row[10],
-        signatureDG: row[11],
-        approbationDD: row[12],
-        motifDD: row[13],
-        signatureDD: row[14]);
+        typeAllocation: row[1],
+        adresse: row[2],
+        numeroCertificat: row[3],
+        superficie: row[4],
+        dateAcquisition: row[5],
+        signature: row[6],
+        created: row[7],
+        approbationDG: row[8],
+        motifDG: row[9],
+        signatureDG: row[10],
+        approbationDD: row[11],
+        motifDD: row[12],
+        signatureDD: row[13]);
   }
 
   factory ImmobilierModel.fromJson(Map<String, dynamic> json) {
     return ImmobilierModel(
         id: json['id'],
-        title: json['title'],
         typeAllocation: json['typeAllocation'],
         adresse: json['adresse'],
         numeroCertificat: json['numeroCertificat'],
@@ -76,7 +72,6 @@ class ImmobilierModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
       'typeAllocation': typeAllocation,
       'adresse': adresse,
       'numeroCertificat': numeroCertificat,

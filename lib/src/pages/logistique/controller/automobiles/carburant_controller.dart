@@ -60,6 +60,16 @@ class CarburantController extends GetxController
     super.dispose();
   }
 
+  void clearTextEditingControllers() {
+    motifDDController.clear();
+    nomeroFactureAchatController.clear();
+    prixAchatParLitreController.clear();
+    nomReceptionisteController.clear();
+    qtyAchatController.clear();
+    dateHeureSortieAnguinController.clear();
+ 
+  }
+
   void getData() async {
     enginList = enginController.enginList
         .where((element) =>

@@ -12,13 +12,13 @@ class UpdateNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return DrawerWidget(
       selected: currentRoute == UpdateRoutes.updatePage,
       icon: Icons.update,
       sizeIcon: 20.0,
       title: 'Update',
-      style: bodyLarge!,
+      style: bodyMedium!,
       onTap: () {
         Get.toNamed(UpdateRoutes.updatePage);
       });

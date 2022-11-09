@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
@@ -42,11 +41,11 @@ class _TableTrajetState extends State<TableTrajet> {
         final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
-        final AnguinModel anguinModel =
+        final TrajetModel trajetModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logAnguinAutoDetail,
-            arguments: anguinModel);
+        Get.toNamed(LogistiqueRoutes.logTrajetAutoDetail,
+            arguments: trajetModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -165,7 +164,7 @@ class _TableTrajetState extends State<TableTrajet> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 150,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -177,7 +176,7 @@ class _TableTrajetState extends State<TableTrajet> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -189,7 +188,7 @@ class _TableTrajetState extends State<TableTrajet> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -249,7 +248,7 @@ class _TableTrajetState extends State<TableTrajet> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
         renderer: (rendererContext) {
           Color textColor = Colors.black;

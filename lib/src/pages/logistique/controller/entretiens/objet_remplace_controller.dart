@@ -40,6 +40,13 @@ class ObjetRemplaceController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomObjetController.clear();
+    coutController.clear();
+    caracteristiqueController.clear();
+    observationController.clear();
+  }
+
   void getList() async {
     await objetRemplaceApi.getAllData().then((response) {
       objetRemplaceList.assignAll(response);
@@ -58,6 +65,7 @@ class ObjetRemplaceController extends GetxController
     try {
       _isLoading.value = true;
       await objetRemplaceApi.deleteData(id).then((value) {
+        clear();
         objetRemplaceList.clear();
         getList();
         Get.back();
@@ -87,6 +95,7 @@ class ObjetRemplaceController extends GetxController
           caracteristique: caracteristiqueController.text,
           observation: observationController.text);
       await objetRemplaceApi.insertData(objetRemplace).then((value) {
+        clear();
         objetRemplaceList.clear();
         getList();
         Get.back();
@@ -115,6 +124,7 @@ class ObjetRemplaceController extends GetxController
           caracteristique: caracteristiqueController.text,
           observation: observationController.text);
       await objetRemplaceApi.updateData(dataItem).then((value) {
+        clear();
         objetRemplaceList.clear();
         getList();
         Get.back();

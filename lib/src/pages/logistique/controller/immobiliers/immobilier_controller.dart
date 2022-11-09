@@ -21,7 +21,6 @@ class ImmobilierController extends GetxController
   TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
 
-  TextEditingController titleController = TextEditingController();
   TextEditingController typeAllocationController = TextEditingController();
   TextEditingController adresseController = TextEditingController();
   TextEditingController numeroCertificatController = TextEditingController();
@@ -38,7 +37,6 @@ class ImmobilierController extends GetxController
   void dispose() {
     motifDGController.dispose();
     motifDDController.dispose();
-    titleController.dispose();
     typeAllocationController.dispose();
     adresseController.dispose();
     numeroCertificatController.dispose();
@@ -46,6 +44,16 @@ class ImmobilierController extends GetxController
     dateAcquisitionController.dispose();
 
     super.dispose();
+  }
+
+  void clear() {
+    motifDGController.clear();
+    motifDDController.clear();
+    typeAllocationController.clear();
+    adresseController.clear();
+    numeroCertificatController.clear();
+    superficieController.clear();
+    dateAcquisitionController.clear();
   }
 
   void getList() async {
@@ -87,7 +95,6 @@ class ImmobilierController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ImmobilierModel(
-          title: titleController.text,
           typeAllocation: typeAllocationController.text,
           adresse: adresseController.text,
           numeroCertificat: numeroCertificatController.text,
@@ -102,6 +109,7 @@ class ImmobilierController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await immobilierApi.insertData(dataItem).then((value) {
+        clear();
         immobilierList.clear();
         getList();
         Get.back();
@@ -125,7 +133,6 @@ class ImmobilierController extends GetxController
       _isLoading.value = true;
       final dataItem = ImmobilierModel(
           id: data.id,
-          title: titleController.text,
           typeAllocation: typeAllocationController.text,
           adresse: adresseController.text,
           numeroCertificat: numeroCertificatController.text,
@@ -140,6 +147,7 @@ class ImmobilierController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await immobilierApi.updateData(dataItem).then((value) {
+        clear();
         immobilierList.clear();
         getList();
         Get.back();
@@ -163,7 +171,6 @@ class ImmobilierController extends GetxController
       _isLoading.value = true;
       final dataItem = ImmobilierModel(
           id: data.id!,
-          title: data.title,
           typeAllocation: data.typeAllocation,
           adresse: data.adresse,
           numeroCertificat: data.numeroCertificat,
@@ -179,6 +186,7 @@ class ImmobilierController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await immobilierApi.updateData(dataItem).then((value) {
+        clear();
         immobilierList.clear();
         getList();
         Get.back();
@@ -202,7 +210,6 @@ class ImmobilierController extends GetxController
       _isLoading.value = true;
       final dataItem = ImmobilierModel(
           id: data.id!,
-          title: data.title,
           typeAllocation: data.typeAllocation,
           adresse: data.adresse,
           numeroCertificat: data.numeroCertificat,
@@ -218,6 +225,7 @@ class ImmobilierController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await immobilierApi.updateData(dataItem).then((value) {
+        clear();
         immobilierList.clear();
         getList();
         Get.back();

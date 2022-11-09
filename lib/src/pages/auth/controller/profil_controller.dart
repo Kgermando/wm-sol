@@ -6,8 +6,6 @@ import 'package:wm_solution/src/models/users/user_model.dart';
 class ProfilController extends GetxController with StateMixin<UserModel> {
   final AuthApi authController = AuthApi();
 
-  UserModel get user => _user.value;
-
   final _loadingProfil = false.obs;
   bool get isLoadingProfil => _loadingProfil.value;
 
@@ -24,8 +22,9 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
     isOnline: 'false',
     createdAt: DateTime.now(),
     passwordHash: '-',
-    succursale: '-')
-      .obs;
+    succursale: '-').obs;
+
+  UserModel get user => _user.value;
 
   @override
   void onInit() { 
@@ -39,6 +38,7 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
     });
     // print("Profil ${user.fonctionOccupe}");
   }
+
 
 
 }

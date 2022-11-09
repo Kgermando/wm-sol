@@ -8,6 +8,8 @@ class EnguinsDropdown {
     "Dépanneuse",
     "Tricar",
     "Véhicule",
+    "Pick Up",
+    "SUV",
     "Véhicule de liaison",
     "Voiture à moteur de moto",
     "Voiture solaire",

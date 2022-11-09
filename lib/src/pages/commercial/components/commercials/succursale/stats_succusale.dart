@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/commerciale/achat_api.dart';
 import 'package:wm_solution/src/api/commerciale/creance_facture_api.dart';
 import 'package:wm_solution/src/api/commerciale/gain_api.dart';
@@ -11,8 +10,7 @@ import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/gain_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/vente_cart_model.dart'; 
-import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/vente_cart_model.dart';
 import 'package:wm_solution/src/widgets/button_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -60,9 +58,7 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
   // Gain par succursale
   List<GainModel> gainList = [];
 
-  UserModel? user;
   Future<void> getData() async {
-    UserModel data = await AuthApi().getUserId();
     List<AchatModel>? dataAchat = await AchatApi().getAllData();
     List<CreanceCartModel>? dataCreance =
         await CreanceFactureApi().getAllData();
@@ -70,7 +66,6 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
     List<GainModel>? dataGain = await GainApi().getAllData();
     if (mounted) {
       setState(() {
-        user = data;
         achatList = dataAchat
             .where(
                 (element) => element.succursale == widget.succursaleModel.name)
@@ -142,7 +137,7 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 100,
+        width: 200,
         minWidth: 80,
       ),
       PlutoColumn(
@@ -164,7 +159,7 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -186,7 +181,7 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -208,7 +203,7 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 200,
         minWidth: 150,
       ),
     ];

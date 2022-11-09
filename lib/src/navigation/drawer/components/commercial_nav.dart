@@ -25,14 +25,14 @@ class _CommercialNavState extends State<CommercialNav> {
 
   @override
   Widget build(BuildContext context) {  
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
       title:
-          AutoSizeText('Commercial', maxLines: 2, style: bodyLarge),
+          AutoSizeText('Commercial', maxLines: 2, style: bodyMedium),
       initiallyExpanded:
           (widget.departement.first == 'Commercial')
               ? true
@@ -214,11 +214,22 @@ class _CommercialNavState extends State<CommercialNav> {
                 Get.toNamed(RhRoutes.rhPerformence);  
               }),
         DrawerWidget(
+            selected:
+                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
+            icon: Icons.handyman,
+            sizeIcon: 20.0,
+            title: 'Fournitures',
+            style: bodyText1!,
+            onTap: () {
+              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
+              // Navigator.of(context).pop();
+            }),
+        DrawerWidget(
             selected: widget.currentRoute == ArchiveRoutes.archives,
             icon: Icons.archive,
             sizeIcon: 20.0,
             title: 'Archives',
-            style: bodyLarge!,
+            style: bodyMedium!,
             onTap: () {
               Get.toNamed(ArchiveRoutes.archives);  
             }),

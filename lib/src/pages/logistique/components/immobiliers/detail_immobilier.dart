@@ -24,8 +24,7 @@ class DetailImmobilier extends StatefulWidget {
 
 class _DetailImmobilierState extends State<DetailImmobilier> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines";
-  String subTitle = "Présences";
+  String title = "Logistiqe";
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
-                  context, scaffoldKey, title, widget.immobilierModel.title),
+                  context, scaffoldKey, title, widget.immobilierModel.typeAllocation),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,16 +117,16 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(),
+                                        dataWidget()
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                         const SizedBox(height: p20),
                                         ApprobationImmobilier(
                                             data: widget.immobilierModel,
                                             controller: controller,
                                             profilController: profilController)
-                                      ],
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           )))
@@ -143,7 +142,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?'),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?', style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -151,14 +150,14 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler', style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {
                     controller.immobilierApi
                         .deleteData(widget.immobilierModel.id!);
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );

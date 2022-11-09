@@ -23,6 +23,7 @@ import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
 import 'package:wm_solution/src/models/exploitations/production_model.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
+import 'package:wm_solution/src/models/exploitations/versement_projet_model.dart';
 import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/approvision_reception_model.dart';
 import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart';
@@ -89,6 +90,10 @@ import 'package:wm_solution/src/pages/commercial/components/commercials/stock_gl
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/add_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/detail_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/update_succursale.dart';
+import 'package:wm_solution/src/pages/exploitations/components/versements/add_versement.dart';
+import 'package:wm_solution/src/pages/exploitations/components/versements/detail_vesement.dart';
+import 'package:wm_solution/src/pages/exploitations/view/versement_page.dart';
+import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/update_engin.dart';
 import 'package:wm_solution/src/pages/marketing/components/agenda/detail_agenda.dart';
 import 'package:wm_solution/src/pages/marketing/components/agenda/update_agenda.dart';
 import 'package:wm_solution/src/pages/marketing/components/annuaire/add_annuaire.dart';
@@ -1134,6 +1139,28 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
+  GetPage(
+      name: ExploitationRoutes.expVersement,
+      page: () => const VersementPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ExploitationRoutes.expVersementAdd,
+      page: () {
+        final ProjetModel projetModel = Get.arguments as ProjetModel;
+        return AddVersement(projetModel: projetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ExploitationRoutes.expVersementDetail,
+      page: () {
+        final VersementProjetModel versementProjetModel = Get.arguments as VersementProjetModel;
+        return DetailVersement(versementProjetModel: versementProjetModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
   // Logistique
     GetPage(
       name: LogistiqueRoutes.logDashboard,
@@ -1161,6 +1188,14 @@ List<GetPage<dynamic>>? getPages = [
       page: () {
         final AnguinModel anguinModel = Get.arguments as AnguinModel;
         return DetailEngin(anguinModel: anguinModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: LogistiqueRoutes.logAnguinAutoUpdate,
+      page: () {
+        final AnguinModel anguinModel = Get.arguments as AnguinModel;
+        return UpdateEngin(anguinModel: anguinModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1198,7 +1233,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logAddTrajetAuto,
+      name: LogistiqueRoutes.logTrajetAutoDetail,
       page: () {
         final TrajetModel trajetModel = Get.arguments as TrajetModel;
         return DetailTrajet(trajetModel: trajetModel);
@@ -1317,9 +1352,10 @@ List<GetPage<dynamic>>? getPages = [
       name: LogistiqueRoutes.logApprovisionReception,
       page: () => const AccuseReceptionPage(),
       transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+      transitionDuration: const Duration(seconds: 1)
+    ),
   GetPage(
-      name: LogistiqueRoutes.logApprovisionnementDetail,
+      name: LogistiqueRoutes.logApprovisionReceptionDetail,
       page: () {
         final ApprovisionReceptionModel approvisionReceptionModel =
             Get.arguments as ApprovisionReceptionModel;

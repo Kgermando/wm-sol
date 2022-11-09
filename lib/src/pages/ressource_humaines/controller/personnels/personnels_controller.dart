@@ -1,4 +1,4 @@
-import 'dart:convert'; 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/performence_api.dart';
@@ -11,7 +11,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/country.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/fonction_occupe.dart';
-import 'package:wm_solution/src/utils/service_affectation.dart'; 
+import 'package:wm_solution/src/utils/service_affectation.dart';
 
 class PersonnelsController extends GetxController
     with StateMixin<List<AgentModel>> {
@@ -62,8 +62,7 @@ class PersonnelsController extends GetxController
   TextEditingController emailController = TextEditingController();
   TextEditingController telephoneController = TextEditingController();
   TextEditingController adresseController = TextEditingController();
-  TextEditingController numeroSecuriteSocialeController =
-      TextEditingController();
+  TextEditingController numeroSecuriteSocialeController = TextEditingController();
   TextEditingController dateNaissanceController = TextEditingController();
   TextEditingController lieuNaissanceController = TextEditingController();
   TextEditingController dateDebutContratController = TextEditingController();
@@ -86,22 +85,23 @@ class PersonnelsController extends GetxController
   List<String> servAffectList = [];
   List<String> fonctionList = [];
 
-   final _isUploading = false.obs;
+  final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
   final _isUploadingDone = false.obs;
   bool get isUploadingDone => _isUploadingDone.value;
 
-  String? uploadedFileUrl;
+  final _uploadedFileUrl = ''.obs;
+  String get uploadedFileUrl => _uploadedFileUrl.value;
 
   void uploadFile(String file) async {
     _isUploading.value = true;
     await FileApi().uploadFiled(file).then((value) {
-      uploadedFileUrl = value;
+      _uploadedFileUrl.value = value;
       _isUploading.value = false;
-      _isUploadingDone.value = true; 
+      _isUploadingDone.value = true;
     });
   }
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -155,72 +155,79 @@ class PersonnelsController extends GetxController
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
     try {
-        _isLoading.value = true;
-        final agentModel = AgentModel(
-            nom: (nomController.text == '') ? '-' : nomController.text,
-            postNom:
-                (postNomController.text == '') ? '-' : postNomController.text,
-            prenom: (prenomController.text == '') ? '-' : prenomController.text,
-            email: (emailController.text == '') ? '-' : emailController.text,
-            telephone: (telephoneController.text == '')
-                ? '-'
-                : telephoneController.text,
-            adresse:
-                (adresseController.text == '') ? '-' : adresseController.text,
-            sexe: (sexe.toString() == '') ? '-' : sexe.toString(),
-            role: (role.toString() == '') ? '-' : role.toString(),
-            matricule: (matricule == '') ? '-' : matricule,
-            numeroSecuriteSociale: (numeroSecuriteSocialeController.text == "")
-                ? "-"
-                : numeroSecuriteSocialeController.text,
-            dateNaissance: (dateNaissanceController.text == '')
-                ? DateTime.now()
-                : DateTime.parse(dateNaissanceController.text),
-            lieuNaissance: (lieuNaissanceController.text == '')
-                ? '-'
-                : lieuNaissanceController.text,
-            nationalite:
-                (nationalite.toString() == '') ? '-' : nationalite.toString(),
-            typeContrat:
-                (typeContrat.toString() == '') ? '-' : typeContrat.toString(),
-            departement: departement,
-            servicesAffectation: (servicesAffectation.toString() == '')
-                ? '-'
-                : servicesAffectation.toString(),
-            dateDebutContrat: (dateDebutContratController.text == '')
-                ? DateTime.now()
-                : DateTime.parse(dateDebutContratController.text),
-            dateFinContrat: DateTime.parse((dateFinContratController.text == "")
-                ? "2099-12-31 00:00:00"
-                : dateFinContratController.text),
-            fonctionOccupe: (fonctionOccupe.toString() == '')
-                ? '-'
-                : fonctionOccupe.toString(),
-            competance: (competanceController.text == '')
-                ? '-'
-                : competanceController.text,
-            experience: (experienceController.text == '')
-                ? '-'
-                : experienceController.text,
-            statutAgent: 'false',
-            createdAt: DateTime.now(),
-            photo: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-            salaire:
-                (salaireController.text == '') ? '-' : salaireController.text,
-            signature: profilController.user.matricule,
-            created: DateTime.now());
-        await personnelsApi.insertData(agentModel).then((value) async {
-          await submitPerformence();
-        });
-        _isLoading.value = false;
-      } catch (e) {
-        _isLoading.value = false;
+      _isLoading.value = true;
+      final agentModel = AgentModel(
+          nom: (nomController.text == '') ? '-' : nomController.text,
+          postNom:
+              (postNomController.text == '') ? '-' : postNomController.text,
+          prenom: (prenomController.text == '') ? '-' : prenomController.text,
+          email: (emailController.text == '') ? '-' : emailController.text,
+          telephone:
+              (telephoneController.text == '') ? '-' : telephoneController.text,
+          adresse:
+              (adresseController.text == '') ? '-' : adresseController.text,
+          sexe: (sexe.toString() == '') ? '-' : sexe.toString(),
+          role: (role.toString() == '') ? '-' : role.toString(),
+          matricule: (matricule == '') ? '-' : matricule,
+          numeroSecuriteSociale: (numeroSecuriteSocialeController.text == "")
+              ? "-"
+              : numeroSecuriteSocialeController.text,
+          dateNaissance: (dateNaissanceController.text == '')
+              ? DateTime.now()
+              : DateTime.parse(dateNaissanceController.text),
+          lieuNaissance: (lieuNaissanceController.text == '')
+              ? '-'
+              : lieuNaissanceController.text,
+          nationalite:
+              (nationalite.toString() == '') ? '-' : nationalite.toString(),
+          typeContrat:
+              (typeContrat.toString() == '') ? '-' : typeContrat.toString(),
+          departement: departement,
+          servicesAffectation: (servicesAffectation.toString() == '')
+              ? '-'
+              : servicesAffectation.toString(),
+          dateDebutContrat: (dateDebutContratController.text == '')
+              ? DateTime.now()
+              : DateTime.parse(dateDebutContratController.text),
+          dateFinContrat: DateTime.parse((dateFinContratController.text == "")
+              ? "2099-12-31 00:00:00"
+              : dateFinContratController.text),
+          fonctionOccupe: (fonctionOccupe.toString() == '')
+              ? '-'
+              : fonctionOccupe.toString(),
+          competance: (competanceController.text == '')
+              ? '-'
+              : competanceController.text,
+          experience: (experienceController.text == '')
+              ? '-'
+              : experienceController.text,
+          statutAgent: 'false',
+          createdAt: DateTime.now(),
+          photo: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+          salaire:
+              (salaireController.text == '') ? '-' : salaireController.text,
+          signature: profilController.user.matricule,
+          created: DateTime.now());
+      await personnelsApi.insertData(agentModel).then((value) async {
+        submitPerformence();
+        personnelsList.clear();
+        getList();
+        Get.back();
         Get.snackbar(
-          "Erreur s'est produite",
-          "$e",
-          backgroundColor: Colors.red,
-        );
-      } 
+            "Enregistrement effectué!", "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+      });
+      _isLoading.value = false;
+    } catch (e) {
+      _isLoading.value = false;
+      Get.snackbar(
+        "Erreur s'est produite",
+        "$e",
+        backgroundColor: Colors.red,
+      );
+    }
   }
 
   Future submitPerformence() async {

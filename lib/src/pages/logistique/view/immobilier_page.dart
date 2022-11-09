@@ -68,7 +68,7 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return StatefulBuilder(builder: (context, StateSetter setState) {
+          return StatefulBuilder(builder: (context, StateSetter setState) { 
             return AlertDialog(
               scrollable: true,
               title:
@@ -76,9 +76,7 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
               content: SizedBox(
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
-                  child: controller.isLoading
-                      ? loading()
-                      : Form(
+                  child: Form(
                           key: controller.formKey,
                           child: Column(
                             children: [
@@ -106,7 +104,6 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
                     if (form.validate()) {
                       controller.submit();
                       form.reset();
-                      Navigator.pop(context, 'ok');
                     }
                   },
                   child: const Text('OK'),
@@ -169,7 +166,7 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Numéro certificat',
+            labelText: 'Certificat',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
@@ -191,7 +188,8 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Superficie',
+            labelText: 'Superficie en m²',
+            hintText: 'M²'
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),

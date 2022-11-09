@@ -39,6 +39,12 @@ class ApprovisionReceptionController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    provisionController.clear();
+    quantityController.clear();
+    uniteController.clear();
+  }
+
   void getList() async {
     await approvisionReceptionApi.getAllData().then((response) {
       approvisionReceptionList.assignAll(response);
@@ -78,16 +84,17 @@ class ApprovisionReceptionController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
-          provision: data.provision,
-          departement: departement.toString(),
-          quantity: quantityController.text,
-          unite: data.unite,
-          signatureLivraison: profilController.user.matricule,
-          created: DateTime.now(),
-          accuseReception: 'false',
-          signatureReception: '-',
-          createdReception: DateTime.now());
+        provision: data.provision,
+        departement: departement.toString(),
+        quantity: quantityController.text,
+        unite: data.unite,
+        signatureLivraison: profilController.user.matricule,
+        created: DateTime.now(),
+        accuseReception: 'false',
+        signatureReception: '-',
+        createdReception: DateTime.now());
       await approvisionReceptionApi.insertData(dataItem).then((value) {
+        clear();
         approvisionReceptionList.clear();
         getList();
         Get.back();
@@ -120,6 +127,7 @@ class ApprovisionReceptionController extends GetxController
           signatureReception: profilController.user.matricule,
           createdReception: DateTime.now());
       await approvisionReceptionApi.updateData(dataItem).then((value) {
+        clear();
         approvisionReceptionList.clear();
         getList();
         Get.back();

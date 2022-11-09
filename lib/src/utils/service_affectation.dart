@@ -10,7 +10,8 @@ class ServiceAffectation {
     'Administration',
     'Membre de FOKAD',
     'Conseiller juridique',
-    'Participant'
+    'Participant',
+    'Autre'
   ];
 
 
@@ -19,14 +20,16 @@ class ServiceAffectation {
     'Secretariat',
     'Reception',
     'Consultant(e)',
-    'Aucun poste occupé'
+    'Aucun poste occupé',
+    'Autre'
   ];
 
   List<String> rhDropdown = [
     'Supervision',
     'Recrutement',
     'Rémunération du personnel',
-    'Restoration et Transport'
+    'Restoration et Transport',
+    'Autre'
   ];
 
    List<String> finDropdown = [
@@ -34,13 +37,15 @@ class ServiceAffectation {
     'Caisse',
     'Banque',
     'Créances',
-    'Dettes'
+    'Dettes',
+    'Autre'
   ];
 
   List<String> budgetDropdown = [
     'Supervision',
     'Verification',
-    'Création budget'
+    'Création budget',
+    'Autre'
   ];
 
   List<String> comptableDropdown = [
@@ -49,7 +54,8 @@ class ServiceAffectation {
     'Ecriture des comptes journal',
     'Ecriture des comptes résultats',
     'Ecriture des balances',
-    'Verification'
+    'Verification',
+    'Autre'
   ];
 
   List<String> expDropdown = [
@@ -59,7 +65,8 @@ class ServiceAffectation {
     'Production',
     'Fournisseurs',
     'Gestion des ressources des projets',
-    'Gestion de la Rentabilité'
+    'Gestion de la Rentabilité',
+    'Autre'
   ];
 
   List<String> markDropdown = [
@@ -70,7 +77,8 @@ class ServiceAffectation {
     'Support analytique',
     'Créativité',
     'Media et réseaux sociaux',
-    'Mapping terrain'
+    'Mapping terrain',
+    'Autre'
   ];
   List<String> comDropdown = [
     'Supervision', 
@@ -81,6 +89,7 @@ class ServiceAffectation {
     'Suivi et controle',
     'Support aux vendeurs',
     'Agent commercial',
+    'Autre'
   ];
 
   List<String> logDropdown = [
@@ -90,6 +99,7 @@ class ServiceAffectation {
     'Maintenance preventive',
     'Maintenance curative',
     'Controle et qualité',
-    'Commande et livraison materiels'
+    'Commande et livraison materiels',
+    'Autre'
   ];
 }

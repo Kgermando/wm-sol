@@ -181,9 +181,9 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: CircleAvatar(
-                          child: (controller.uploadedFileUrl == null)
+                          child: (controller.uploadedFileUrl == '-')
                               ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(controller.uploadedFileUrl!)),
+                              : Image.network(controller.uploadedFileUrl)),
                     ),
                   ),
                   Positioned(

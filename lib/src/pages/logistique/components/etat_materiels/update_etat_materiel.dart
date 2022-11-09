@@ -107,7 +107,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
     var mobiliers = controller.mobilierList.map((e) => e.nom).toList();
     var immobiliers =
         controller.immobilierList.map((e) => e.numeroCertificat).toList();
-    var enguins = controller.enguinsList.map((e) => e.nom).toList();
+    var enguins = controller.enguinsList.map((e) => e.nomeroPLaque).toList();
 
     return Container(
       margin: const EdgeInsets.only(bottom: p20),

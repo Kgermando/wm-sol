@@ -87,6 +87,8 @@ class _TablePersonnelsState extends State<TablePersonnels> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'statutAgent') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'matricule') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'nom') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'postNom') {
@@ -100,8 +102,6 @@ class _TablePersonnelsState extends State<TablePersonnels> {
             } else if (column.field == 'sexe') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'role') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'matricule') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'createdAt') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -131,14 +131,14 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         'numero': PlutoCell(value: i--),
         'statutAgent': PlutoCell(
             value: (item.statutAgent == "true") ? 'Actif' : 'Inactif'),
+        'matricule': PlutoCell(value: item.matricule),
         'nom': PlutoCell(value: item.nom),
         'postNom': PlutoCell(value: item.postNom),
         'prenom': PlutoCell(value: item.prenom),
         'email': PlutoCell(value: item.email),
         'telephone': PlutoCell(value: item.telephone),
         'sexe': PlutoCell(value: item.sexe),
-        'role': PlutoCell(value: "Niveau ${item.role}"),
-        'matricule': PlutoCell(value: item.matricule),
+        'role': PlutoCell(value: "Niveau ${item.role}"), 
         'createdAt':
             PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
         'departement': PlutoCell(value: item.departement),
@@ -163,7 +163,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         minWidth: 80,
       ),
       PlutoColumn(
-        title: 'Statut Agent',
+        title: 'Statut',
         field: 'statutAgent',
         minWidth: 150,
         type: PlutoColumnType.text(),
@@ -182,6 +182,18 @@ class _TablePersonnelsState extends State<TablePersonnels> {
             ),
           );
         },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Matricule',
+        field: 'matricule',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
@@ -266,19 +278,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Matricule',
-        field: 'matricule',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
+      ), 
       PlutoColumn(
         readOnly: true,
         title: 'createdAt',

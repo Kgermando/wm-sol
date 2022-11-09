@@ -24,12 +24,12 @@ class _RhNavState extends State<RhNav> {
   Widget build(BuildContext context) { 
     final RHNotifyController controller = Get.put(RHNotifyController());
 
-    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;  
 
     return ExpansionTile(
       leading: const Icon(Icons.group, size: 30.0),
-      title: AutoSizeText('RH', maxLines: 1, style: bodyLarge),
+      title: AutoSizeText('RH', maxLines: 1, style: bodyMedium),
       initiallyExpanded: (widget.departement.first == 'Ressources Humaines') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
@@ -116,11 +116,21 @@ class _RhNavState extends State<RhNav> {
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
+            selected:
+                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
+            icon: Icons.multiline_chart_sharp,
+            sizeIcon: 20.0,
+            title: 'Fournitures',
+            style: bodyText1,
+            onTap: () {
+              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
+            }),
+        DrawerWidget(
             selected: widget.currentRoute == ArchiveRoutes.archives,
             icon: Icons.archive,
             sizeIcon: 20.0,
             title: 'Archives',
-            style: bodyLarge!,
+            style: bodyMedium!,
             onTap: () {
               Navigator.pushNamed(context, ArchiveRoutes.archives);
               // Navigator.of(context).pop();

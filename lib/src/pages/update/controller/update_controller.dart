@@ -16,6 +16,8 @@ class UpdateController extends GetxController
 
   var updateList = <UpdateModel>[].obs;
 
+  List<UpdateModel> updateVersionList = [];
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -32,7 +34,8 @@ class UpdateController extends GetxController
   double get sumVersionCloud => _sumVersionCloud.value;
 
   bool downloading = false;
-  String progressString = '0';
+  final _progressString = '0'.obs;
+  String get progressString => _progressString.value;
 
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
@@ -62,7 +65,8 @@ class UpdateController extends GetxController
           snackPosition: SnackPosition.TOP);
       await dio.download(url, fileName, onReceiveProgress: (received, total) {
         downloading = true;
-        progressString = "${((received / total) * 100).toStringAsFixed(0)}%";
+        _progressString.value = "${((received / total) * 100).toStringAsFixed(0)}%";
+        update();
       }).then((value) {
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
@@ -85,6 +89,13 @@ class UpdateController extends GetxController
   }
 
   @override
+  void refresh() {
+    getList();
+    super.refresh();
+  }
+
+ 
+  @override
   void dispose() {
     versionController.dispose();
     motifController.dispose();
@@ -94,24 +105,35 @@ class UpdateController extends GetxController
   void getList() async {
     await updateVersionApi.getAllData().then((response) {
       updateList.assignAll(response);
-      change(updateList, status: RxStatus.success());
+      updateVersionList.addAll(updateList);
+      // Version actuel
+      var isVersion = isUpdateLocalVersion.split('.');
+      for (var e in isVersion) {
+        _sumLocalVersion.value += double.parse(e);
+      }
+      // Version Cloud
+      var isVersionCloud = updateVersionList.last.version.split('.');
+      for (var e in isVersionCloud) {
+        _sumVersionCloud.value += double.parse(e);
+      }
+      // change(updateList, status: RxStatus.success());
     }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
+      // change(null, status: RxStatus.error(err.toString()));
     });
   }
 
-  void getData() async {
-    // Version actuel
-    var isVersion = isUpdateLocalVersion.split('.');
-    for (var e in isVersion) {
-      _sumLocalVersion.value += double.parse(e);
-    }
-    // Version Cloud
-    var isVersionCloud = updateList.last.version.split('.');
-    for (var e in isVersionCloud) {
-      _sumVersionCloud.value += double.parse(e);
-    }
-  }
+  // void getData() async {
+  //   // Version actuel
+  //   var isVersion = isUpdateLocalVersion.split('.');
+  //   for (var e in isVersion) {
+  //     _sumLocalVersion.value += double.parse(e);
+  //   }
+  //   // Version Cloud
+  //   var isVersionCloud = updateList.last.version.split('.');
+  //   for (var e in isVersionCloud) {
+  //     _sumVersionCloud.value += double.parse(e);
+  //   }
+  // }
 
   detailView(int id) async {
     final data = await updateVersionApi.getOneData(id);

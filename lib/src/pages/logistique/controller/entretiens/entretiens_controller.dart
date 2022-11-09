@@ -53,6 +53,12 @@ class EntretienController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    motifDDController.clear();
+    dureeTravauxController.clear();
+    super.dispose();
+  }
+
   void getData() async {
     mobilierList = mobilierController.mobilierList
         .where((element) => element.approbationDD == "Approved")
@@ -86,7 +92,7 @@ class EntretienController extends GetxController
   void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await entretienApi.deleteData(id).then((value) {
+      await entretienApi.deleteData(id).then((value) { 
         entretienList.clear();
         getList();
         Get.back();
@@ -118,6 +124,7 @@ class EntretienController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await entretienApi.insertData(dataItem).then((value) {
+        clear();
         entretienList.clear();
         getList();
         Get.back();
@@ -151,6 +158,7 @@ class EntretienController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await entretienApi.updateData(dataItem).then((value) {
+        clear();
         entretienList.clear();
         getList();
         Get.back();
@@ -185,6 +193,7 @@ class EntretienController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await entretienApi.updateData(entretienModel).then((value) {
+        clear();
         entretienList.clear();
         getList();
         Get.back();

@@ -36,7 +36,7 @@ class _DetailEnginState extends State<DetailEngin> {
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
-                  context, scaffoldKey, title, widget.anguinModel.nom),
+                  context, scaffoldKey, title, widget.anguinModel.nomeroPLaque),
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter un trajet"),
@@ -84,7 +84,7 @@ class _DetailEnginState extends State<DetailEngin> {
                                               children: [
                                                 if (int.parse(profilController
                                                             .user.role) <=
-                                                        3 &&
+                                                        2 &&
                                                     widget.anguinModel
                                                             .approbationDD ==
                                                         "-")
@@ -123,16 +123,16 @@ class _DetailEnginState extends State<DetailEngin> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(),
-                                        const SizedBox(height: p20),
-                                        ApprobationEngin(
-                                            data: widget.anguinModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        dataWidget() 
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                ApprobationEngin(
+                                    data: widget.anguinModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
@@ -181,27 +181,9 @@ class _DetailEnginState extends State<DetailEngin> {
             children: [
               Expanded(
                 flex: 2,
-                child: Text('Type engin :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                flex: 3,
-                child: SelectableText(widget.anguinModel.nom,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
-          ),
-          Divider(
-            color: mainColor,
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
                 child: Text('Modèle :',
                     textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                    style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
                 flex: 3,

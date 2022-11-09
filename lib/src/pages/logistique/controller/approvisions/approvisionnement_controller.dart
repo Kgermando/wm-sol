@@ -35,6 +35,11 @@ class ApprovisionnementController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    provisionController.clear();
+    quantityController.clear();
+  }
+
   void getList() async {
     await approvisionnementApi.getAllData().then((response) {
       approvisionnementList.assignAll(response);
@@ -74,13 +79,14 @@ class ApprovisionnementController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionnementModel(
-          provision: provisionController.text,
-          quantityTotal: quantityController.text,
-          quantity: quantityController.text,
-          unite: unite.toString(),
-          signature: profilController.user.matricule,
-          created: DateTime.now());
+        provision: provisionController.text,
+        quantityTotal: quantityController.text,
+        quantity: quantityController.text,
+        unite: unite.toString(),
+        signature: profilController.user.matricule,
+        created: DateTime.now());
       await approvisionnementApi.insertData(dataItem).then((value) {
+        clear();
         approvisionnementList.clear();
         getList();
         Get.back();
@@ -114,6 +120,7 @@ class ApprovisionnementController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await approvisionnementApi.updateData(dataItem).then((value) {
+        clear();
         approvisionnementList.clear();
         getList();
         Get.back();
@@ -145,6 +152,7 @@ class ApprovisionnementController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await approvisionnementApi.updateData(dataItem).then((value) {
+        clear();
         approvisionnementList.clear();
         getList();
         Get.back();

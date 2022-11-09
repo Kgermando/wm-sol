@@ -73,39 +73,39 @@ class _AddPersonnelState extends State<AddPersonnel> {
                               ),
                               const SizedBox(height: p20),
                               ResponsiveChildWidget(
-                                  child1: nomWidget(controller),
-                                  child2: postNomWidget(controller)),
+                                  child1: nomWidget(),
+                                  child2: postNomWidget()),
                               ResponsiveChildWidget(
-                                  child1: prenomWidget(controller),
-                                  child2: sexeWidget(controller)),
+                                  child1: prenomWidget(),
+                                  child2: sexeWidget()),
                               ResponsiveChildWidget(
-                                  child1: dateNaissanceWidget(controller),
-                                  child2: lieuNaissanceWidget(controller)),
+                                  child1: dateNaissanceWidget(),
+                                  child2: lieuNaissanceWidget()),
                               ResponsiveChildWidget(
-                                  child1: nationaliteWidget(controller),
-                                  child2: adresseWidget(controller)),
+                                  child1: nationaliteWidget(),
+                                  child2: adresseWidget()),
                               ResponsiveChildWidget(
-                                  child1: emailWidget(controller),
-                                  child2: telephoneWidget(controller)),
-                              departmentWidget(controller),
-                              servicesAffectationWidget(controller),
+                                  child1: emailWidget(),
+                                  child2: telephoneWidget()),
+                              departmentWidget(),
+                              servicesAffectationWidget(),
                               ResponsiveChildWidget(
-                                  child1: matriculeWidget(controller),
+                                  child1: matriculeWidget(),
                                   child2:
-                                      numeroSecuriteSocialeWidget(controller)),
+                                      numeroSecuriteSocialeWidget()),
                               ResponsiveChildWidget(
-                                  child1: fonctionOccupeWidget(controller),
-                                  child2: roleWidget(controller)),
+                                  child1: fonctionOccupeWidget(),
+                                  child2: roleWidget()),
                               ResponsiveChildWidget(
-                                  child1: typeContratWidget(controller),
-                                  child2: salaireWidget(controller)),
+                                  child1: typeContratWidget(),
+                                  child2: salaireWidget()),
                               ResponsiveChildWidget(
-                                  child1: dateDebutContratWidget(controller),
+                                  child1: dateDebutContratWidget(),
                                   child2: (controller.typeContrat == 'CDD')
-                                      ? dateFinContratWidget(controller)
+                                      ? dateFinContratWidget()
                                       : Container()),
-                              competanceWidget(controller),
-                              experienceWidget(controller),
+                              competanceWidget(),
+                              experienceWidget(),
                               const SizedBox(height: p20),
                               BtnWidget(
                                   title: 'Soumettre',
@@ -114,9 +114,9 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                     final form =
                                         controller.formKey.currentState!;
                                     if (form.validate()) {
-                                      controller.submit();
-                                      form.reset();
+                                      controller.submit(); 
                                     }
+                                    form.reset();
                                   })
                             ],
                           ),
@@ -143,10 +143,10 @@ class _AddPersonnelState extends State<AddPersonnel> {
                     child: SizedBox(
                       height: 100.0,
                       width: 100.0,
-                      child: CircleAvatar(
-                          child: (controller.uploadedFileUrl == null)
-                              ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(controller.uploadedFileUrl!)),
+                      child: Obx(() => CircleAvatar(
+                        child: (controller.uploadedFileUrl == '')
+                          ? Image.asset('assets/images/avatar.jpg')
+                          : Image.network(controller.uploadedFileUrl))),
                     ),
                   ),
                   Positioned(
@@ -173,7 +173,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
               ));
   }
 
-  Widget nomWidget(PersonnelsController controller) {
+  Widget nomWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -195,7 +195,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget postNomWidget(PersonnelsController controller) {
+  Widget postNomWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -217,7 +217,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget prenomWidget(PersonnelsController controller) {
+  Widget prenomWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -239,7 +239,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget emailWidget(PersonnelsController controller) {
+  Widget emailWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -255,7 +255,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget telephoneWidget(PersonnelsController controller) {
+  Widget telephoneWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -277,7 +277,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget adresseWidget(PersonnelsController controller) {
+  Widget adresseWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -299,7 +299,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget sexeWidget(PersonnelsController controller) {
+  Widget sexeWidget() {
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
@@ -327,7 +327,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     );
   }
 
-  Widget roleWidget(PersonnelsController controller) {
+  Widget roleWidget() {
     final ProfilController profilController = Get.put(ProfilController());
     List<String> roleList = [];
     if (int.parse(profilController.user.role) == 0) {
@@ -376,7 +376,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                   tooltip: "Besoin d'aide ?",
                   color: Colors.red.shade700,
                   onPressed: () {
-                    helpDialog(controller);
+                    helpDialog();
                   },
                   icon: const Icon(Icons.help)))
         ],
@@ -384,7 +384,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     );
   }
 
-  Widget matriculeWidget(PersonnelsController controller) {
+  Widget matriculeWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -401,7 +401,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget numeroSecuriteSocialeWidget(PersonnelsController controller) {
+  Widget numeroSecuriteSocialeWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -423,7 +423,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget dateNaissanceWidget(PersonnelsController controller) {
+  Widget dateNaissanceWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: DateTimePicker(
@@ -447,7 +447,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget lieuNaissanceWidget(PersonnelsController controller) {
+  Widget lieuNaissanceWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -469,7 +469,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget nationaliteWidget(PersonnelsController controller) {
+  Widget nationaliteWidget() {
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
@@ -497,7 +497,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     );
   }
 
-  Widget typeContratWidget(PersonnelsController controller) {
+  Widget typeContratWidget() {
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
@@ -525,7 +525,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     );
   }
 
-  Widget departmentWidget(PersonnelsController controller) {
+  Widget departmentWidget() {
     double width = 100;
     if (MediaQuery.of(context).size.width >= 1100) {
       width = 300;
@@ -565,7 +565,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                             .contains(depName),
                         onChanged: (bool? value) {
                           setState(() {
-                            onSelectedDep(controller, value!, depName);
+                            onSelectedDep(value!, depName);
                           });
                         },
                       ),
@@ -579,8 +579,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  void onSelectedDep(
-      PersonnelsController controller, bool selected, String dataName) {
+  void onSelectedDep(bool selected, String dataName) {
     if (selected == true) {
       setState(() {
         controller.departementSelectedList.add(dataName);
@@ -694,7 +693,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
     return Colors.green;
   }
 
-  Widget servicesAffectationWidget(PersonnelsController controller) {
+  Widget servicesAffectationWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: DropdownButtonFormField<String>(
@@ -725,7 +724,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget dateDebutContratWidget(PersonnelsController controller) {
+  Widget dateDebutContratWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: DateTimePicker(
@@ -749,7 +748,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget dateFinContratWidget(PersonnelsController controller) {
+  Widget dateFinContratWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: DateTimePicker(
@@ -773,7 +772,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget fonctionOccupeWidget(PersonnelsController controller) {
+  Widget fonctionOccupeWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: DropdownButtonFormField<String>(
@@ -804,7 +803,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget competanceWidget(PersonnelsController controller) {
+  Widget competanceWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -828,7 +827,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget experienceWidget(PersonnelsController controller) {
+  Widget experienceWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -852,7 +851,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget salaireWidget(PersonnelsController controller) {
+  Widget salaireWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: Row(
@@ -889,7 +888,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  helpDialog(PersonnelsController controller) {
+  helpDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,

@@ -21,14 +21,12 @@ class TrajetController extends GetxController
   TextEditingController motifDDController = TextEditingController();
 
   TextEditingController nomeroEntrepriseController = TextEditingController();
-  final TextEditingController conducteurController = TextEditingController();
-  final TextEditingController trajetDeController = TextEditingController();
-  final TextEditingController trajetAController = TextEditingController();
-  final TextEditingController missionController = TextEditingController();
-  final TextEditingController kilometrageSoriteController =
-      TextEditingController();
-  final TextEditingController kilometrageRetourController =
-      TextEditingController();
+  TextEditingController conducteurController = TextEditingController();
+  TextEditingController trajetDeController = TextEditingController();
+  TextEditingController trajetAController = TextEditingController();
+  TextEditingController missionController = TextEditingController();
+  TextEditingController kilometrageSoriteController = TextEditingController();
+  TextEditingController kilometrageRetourController = TextEditingController();
 
   @override
   void onInit() {
@@ -47,6 +45,16 @@ class TrajetController extends GetxController
     kilometrageRetourController.dispose();
 
     super.dispose();
+  }
+
+  void clearTextEditingControllers() {
+    motifDDController.clear();
+    conducteurController.clear();
+    trajetDeController.clear();
+    trajetAController.clear();
+    missionController.clear();
+    kilometrageSoriteController.clear();
+    kilometrageRetourController.clear();
   }
 
   void getList() async {
@@ -102,6 +110,7 @@ class TrajetController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await trajetApi.insertData(trajetModel).then((value) {
+        clearTextEditingControllers();
         trajetList.clear();
         getList();
         Get.back();
@@ -131,7 +140,8 @@ class TrajetController extends GetxController
           trajetA: data.trajetA,
           mission: data.mission,
           kilometrageSorite: data.kilometrageSorite,
-          kilometrageRetour: kilometrageRetourController.text,
+          kilometrageRetour:
+              kilometrageRetourController.text, // Retour de l'engin
           signature: profilController.user.matricule,
           reference: data.reference,
           created: DateTime.now(),
@@ -139,6 +149,7 @@ class TrajetController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await trajetApi.updateData(dataItem).then((value) {
+        clearTextEditingControllers();
         trajetList.clear();
         getList();
         Get.back();

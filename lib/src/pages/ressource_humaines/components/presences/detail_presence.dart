@@ -542,7 +542,7 @@ class _DetailPresenceState extends State<DetailPresence> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Motif',
+            labelText: 'Observation',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),

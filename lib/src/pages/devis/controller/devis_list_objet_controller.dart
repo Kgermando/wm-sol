@@ -45,7 +45,7 @@ class DevisListObjetController extends GetxController
       await devisListObjetsApi.deleteData(id).then((value) {
         devisListObjetList.clear();
         getList();
-        Get.back();
+        // Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -71,12 +71,42 @@ class DevisListObjetController extends GetxController
         montantUnitaire: montantUnitaire.toString(),
         montantGlobal: montantGlobal.toString(),
       );
+      await devisListObjetsApi.insertData(devisListObjetsModel).then((value) {
+        devisListObjetList.clear();
+        getList();
+        Get.back();
+        Get.snackbar(
+            "Objet ajoutée avec succès!", "Le document a bien été soumis",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur lors de la soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  Future<void> submitUpdateObjet(DevisListObjetsModel data) async {
+    try {
+      montantGlobal = quantity * montantUnitaire;
+      final devisListObjetsModel = DevisListObjetsModel(
+        reference: data.reference,
+        title: data.title,
+        quantity: quantity.toString(),
+        designation: designationController.text,
+        montantUnitaire: montantUnitaire.toString(),
+        montantGlobal: montantGlobal.toString(),
+      );
       await devisListObjetsApi.updateData(devisListObjetsModel).then((value) {
         devisListObjetList.clear();
         getList();
         Get.back();
         Get.snackbar(
-            "Succursale ajoutée avec succès!", "Le document a bien été soumis",
+            "objet Modifié avec succès!", "Le document a bien été soumis",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

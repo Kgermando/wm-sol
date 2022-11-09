@@ -27,8 +27,6 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
 
   @override
   initState() {
-    controller.titleController =
-        TextEditingController(text: widget.immobilierModel.title);
     controller.typeAllocationController =
         TextEditingController(text: widget.immobilierModel.typeAllocation);
     controller.adresseController =
@@ -52,7 +50,7 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
-                  context, scaffoldKey, title, widget.immobilierModel.title),
+                  context, scaffoldKey, title, widget.immobilierModel.typeAllocation),
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
                 label: const Text("Ajouter une personne"),

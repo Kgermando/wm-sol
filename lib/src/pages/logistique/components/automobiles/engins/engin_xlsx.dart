@@ -11,15 +11,14 @@ class EnginXlsx {
     String title = "Engins";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([ 
-      "Nom",
-      "Modèle",
+      "Nomero PLaque",
       "Marque",
+      "Modèle",
       "Numero Chassie",
       "Couleur",
       "Genre",
       "Qty Max Reservoir",
       "Date Fabrication",
-      "Nomero PLaque",
       "Nomero Entreprise",
       "Kilometrage Initiale",
       "Provenance",
@@ -31,15 +30,14 @@ class EnginXlsx {
 
     for (int i = 0; i < dataList.length; i++) {
       List<String> data = [ 
-        dataList[i].nom,
-        dataList[i].modele,
         dataList[i].marque,
+        dataList[i].nomeroPLaque,
+        dataList[i].modele,
         dataList[i].numeroChassie,
         dataList[i].couleur,
         dataList[i].genre,
         dataList[i].qtyMaxReservoir,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].dateFabrication),
-        dataList[i].nomeroPLaque,
         dataList[i].nomeroEntreprise,
         dataList[i].kilometrageInitiale,
         dataList[i].provenance,

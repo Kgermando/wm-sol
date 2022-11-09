@@ -121,22 +121,23 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(),
-                                        TableObjetRemplace(
-                                            objetRemplaceList:
-                                                objetRemplaceController
-                                                    .objetRemplaceList,
-                                            entretienModel:
-                                                widget.entretienModel),
-                                        const SizedBox(height: p20),
-                                        ApprobationEntretien(
-                                            data: widget.entretienModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        dataWidget()
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                TableObjetRemplace(
+                                    objetRemplaceList:
+                                        objetRemplaceController
+                                            .objetRemplaceList,
+                                    entretienModel:
+                                        widget.entretienModel),
+                                const SizedBox(height: p20),
+                                ApprobationEntretien(
+                                    data: widget.entretienModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
@@ -152,7 +153,8 @@ class _DetailEntretienState extends State<DetailEntretien> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?'),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -160,14 +162,15 @@ class _DetailEntretienState extends State<DetailEntretien> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {
                     controller.entretienApi
                         .deleteData(widget.entretienModel.id!);
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );

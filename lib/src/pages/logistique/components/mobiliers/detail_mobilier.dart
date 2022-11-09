@@ -118,16 +118,16 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                             )
                                           ],
                                         ),
-                                        dataWidget(),
-                                        const SizedBox(height: p20),
-                                        ApprobationMobilier(
-                                            data: widget.mobilierModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        dataWidget()
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                ApprobationMobilier(
+                                    data: widget.mobilierModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
@@ -143,7 +143,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?'),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?', style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -151,13 +151,13 @@ class _DetailMobilerState extends State<DetailMobiler> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler', style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {
                     controller.deleteData(widget.mobilierModel.id!);
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );

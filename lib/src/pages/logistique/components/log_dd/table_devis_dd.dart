@@ -51,9 +51,14 @@ class _TableDevisDDState extends State<TableDevisDD> {
         },
         createHeader: (PlutoGridStateManager header) {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              TitleWidget(title: "Etat de besoin"),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: "Devis"),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, LogistiqueRoutes.logDD);
+                  },
+                  icon: Icon(Icons.refresh, color: Colors.green.shade700)),
             ],
           );
         },
@@ -98,7 +103,7 @@ class _TableDevisDDState extends State<TableDevisDD> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.devisController.devisList
-        .where((element) => element.approbationDD == '-')
+        .where((element) => element.approbationDD == '-' && element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

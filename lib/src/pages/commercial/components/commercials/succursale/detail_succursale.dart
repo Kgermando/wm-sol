@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/approbation_succursale.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/stats_succusale.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/stats_succusale.dart'; 
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -113,7 +113,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                                 const SizedBox(height: p20),
                                 StatsSuccursale(
                                     succursaleModel: widget.succursaleModel),
-                                const SizedBox(height: p20),
+                                const SizedBox(height: p20), 
                                 ApprobationSuccursale(
                                     data: widget.succursaleModel,
                                     controller: controller,

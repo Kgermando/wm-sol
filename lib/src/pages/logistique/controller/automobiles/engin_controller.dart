@@ -16,7 +16,7 @@ class EnginController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  int numberPlaque = 0;
+  int numberPlaque = 1;
 
   final genreDrop = EnguinsDropdown().enginDropdown;
 
@@ -26,22 +26,18 @@ class EnginController extends GetxController
   TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
 
-  final TextEditingController nomController = TextEditingController();
-  final TextEditingController modeleController = TextEditingController();
-  final TextEditingController marqueController = TextEditingController();
-  final TextEditingController numeroChassieController = TextEditingController();
-  final TextEditingController couleurController = TextEditingController();
+  TextEditingController modeleController = TextEditingController();
+  TextEditingController marqueController = TextEditingController();
+  TextEditingController numeroChassieController = TextEditingController();
+  TextEditingController couleurController = TextEditingController();
   String? genre;
-  final TextEditingController qtyMaxReservoirController =
-      TextEditingController();
-  final TextEditingController dateFabricationController =
-      TextEditingController();
-  final TextEditingController nomeroPLaqueController = TextEditingController();
-  final TextEditingController kilometrageInitialeController =
-      TextEditingController();
-  final TextEditingController provenanceController = TextEditingController();
-  final TextEditingController typeCaburantController = TextEditingController();
-  final TextEditingController typeMoteurController = TextEditingController();
+  TextEditingController qtyMaxReservoirController = TextEditingController();
+  TextEditingController dateFabricationController = TextEditingController();
+  TextEditingController nomeroPLaqueController = TextEditingController();
+  TextEditingController kilometrageInitialeController = TextEditingController();
+  TextEditingController provenanceController = TextEditingController();
+  TextEditingController typeCaburantController = TextEditingController();
+  TextEditingController typeMoteurController = TextEditingController();
 
   @override
   void onInit() {
@@ -53,7 +49,6 @@ class EnginController extends GetxController
   void dispose() {
     motifDGController.dispose();
     motifDDController.dispose();
-    nomController.dispose();
     modeleController.dispose();
     marqueController.dispose();
     numeroChassieController.dispose();
@@ -69,9 +64,26 @@ class EnginController extends GetxController
     super.dispose();
   }
 
+  void clearTextEditingControllers() {
+    motifDGController.clear();
+    motifDDController.clear();
+    modeleController.clear();
+    marqueController.clear();
+    numeroChassieController.clear();
+    couleurController.clear();
+    qtyMaxReservoirController.clear();
+    dateFabricationController.clear();
+    nomeroPLaqueController.clear();
+    kilometrageInitialeController.clear();
+    provenanceController.clear();
+    typeCaburantController.clear();
+    typeMoteurController.clear();
+  }
+
   void getList() async {
     await enginsApi.getAllData().then((response) {
       enginList.assignAll(response);
+      numberPlaque = enginList.length + 1;
       change(enginList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -116,7 +128,6 @@ class EnginController extends GetxController
         numero = "$numberPlaque";
       }
       final dataItem = AnguinModel(
-          nom: nomController.text,
           modele: modeleController.text,
           marque: marqueController.text,
           numeroChassie: numeroChassieController.text,
@@ -139,6 +150,7 @@ class EnginController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await enginsApi.insertData(dataItem).then((value) {
+        clearTextEditingControllers();
         enginList.clear();
         getList();
         Get.back();
@@ -162,7 +174,6 @@ class EnginController extends GetxController
       _isLoading.value = true;
       final dataItem = AnguinModel(
           id: data.id!,
-          nom: nomController.text,
           modele: modeleController.text,
           marque: marqueController.text,
           numeroChassie: numeroChassieController.text,
@@ -185,6 +196,7 @@ class EnginController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await enginsApi.updateData(dataItem).then((value) {
+        clearTextEditingControllers();
         enginList.clear();
         getList();
         Get.back();
@@ -208,7 +220,6 @@ class EnginController extends GetxController
       _isLoading.value = true;
       final dataItem = AnguinModel(
           id: data.id!,
-          nom: data.nom,
           modele: data.modele,
           marque: data.marque,
           numeroChassie: data.numeroChassie,
@@ -255,7 +266,6 @@ class EnginController extends GetxController
       _isLoading.value = true;
       final dataItem = AnguinModel(
           id: data.id!,
-          nom: data.nom,
           modele: data.modele,
           marque: data.marque,
           numeroChassie: data.numeroChassie,

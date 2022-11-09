@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart';
@@ -32,80 +33,72 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
+    return approvisionReceptionController.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.approvisionnementModel.provision),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter le ravitaillement"),
-                tooltip: "Ajout le ravitaillement",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  newDialog();
-                },
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title,
+          widget.approvisionnementModel.provision),
+      drawer: const DrawerMenu(),
+      floatingActionButton: speedialWidget(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: p20),
                             child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                  children: [
+                                    Column(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .approvisionnementModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget(),
-                                        qtyQtock()
+                                        SelectableText(
+                                            DateFormat(
+                                                    "dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .approvisionnementModel
+                                                    .created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+                                dataWidget()
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    ));
   }
 
   Widget dataWidget() {
@@ -141,7 +134,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
               child2: SelectableText(
                   '${double.parse(widget.approvisionnementModel.quantity).toStringAsFixed(0)} ${widget.approvisionnementModel.unite}',
                   textAlign: TextAlign.start,
-                  style: bodyMedium)),
+                  style: bodyMedium.copyWith(color: Colors.blueGrey))),
           Divider(
             color: mainColor,
           ),
@@ -159,21 +152,80 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
     );
   }
 
-  Widget qtyQtock() {
-    return ListTile(
-      leading: const Icon(Icons.shopping_cart_checkout),
-      title: Text(widget.approvisionnementModel.provision),
-      subtitle: Text(widget.approvisionnementModel.unite),
-      trailing: Form(
-        key: approvisionReceptionController.receptionFormKey,
-        child: Row(
-          children: [
-            Expanded(child: qtyReceptionWidget()),
-            Expanded(child: departementWidget()),
-          ],
+  SpeedDial speedialWidget() {
+    return SpeedDial(
+      closedForegroundColor: themeColor,
+      openForegroundColor: Colors.white,
+      closedBackgroundColor: themeColor,
+      openBackgroundColor: themeColor,
+      speedDialChildren: <SpeedDialChild>[
+        SpeedDialChild(
+          child: const Icon(Icons.shopping_cart_checkout),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.teal.shade700,
+          label: 'Livraison',
+          onPressed: () {
+            qtyQtockDialog();
+          },
         ),
+        SpeedDialChild(
+          child: const Icon(Icons.add_shopping_cart),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue.shade700,
+          label: 'Ravitaillement',
+          onPressed: () {
+            newDialog();
+          },
+        ),
+      ],
+      child: const Icon(
+        Icons.menu,
+        color: Colors.white,
       ),
     );
+  }
+
+  qtyQtockDialog() {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return AlertDialog(
+              title: Text(
+                  "${widget.approvisionnementModel.provision} ${widget.approvisionnementModel.unite}"),
+              content: Form(
+                key: approvisionReceptionController.receptionFormKey,
+                child: SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: Column(
+                    children: [qtyReceptionWidget(), departementWidget()],
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Annuler'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    final form = approvisionReceptionController
+                        .receptionFormKey.currentState!;
+                    if (form.validate()) {
+                      approvisionReceptionController
+                          .submit(widget.approvisionnementModel);
+                      form.reset();
+                      Navigator.pop(context, 'ok');
+                    }
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          });
+        });
   }
 
   newDialog() {
@@ -236,7 +288,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
           child: Container(
               margin: const EdgeInsets.only(bottom: p20),
               child: TextFormField(
-                controller: controller.quantityController,
+                controller: approvisionReceptionController.quantityController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -286,15 +338,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
         validator: (value) => value == null ? "Select département" : null,
         onChanged: (value) {
           setState(() {
-            approvisionReceptionController.departement = value!;
-            final form =
-                approvisionReceptionController.receptionFormKey.currentState!;
-            if (form.validate()) {
-              approvisionReceptionController
-                  .submit(widget.approvisionnementModel);
-              form.reset();
-              Navigator.pop(context, 'ok');
-            }
+            approvisionReceptionController.departement = value!; 
           });
         },
       ),
@@ -305,11 +349,11 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
-          controller: controller.quantityController,
+          controller: approvisionReceptionController.quantityController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Adresse',
+            labelText: 'Qty',
           ),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [

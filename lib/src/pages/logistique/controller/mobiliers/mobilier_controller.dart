@@ -42,6 +42,15 @@ class MobilierController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    motifDDController.clear();
+    nomController.clear();
+    modeleController.clear();
+    marqueController.clear();
+    descriptionMobilierController.clear();
+    nombreController.clear();
+  }
+
   void getList() async {
     await mobilierApi.getAllData().then((response) {
       mobilierList.assignAll(response);
@@ -92,6 +101,7 @@ class MobilierController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await mobilierApi.insertData(dataItem).then((value) {
+        clear();
         mobilierList.clear();
         getList();
         Get.back();
@@ -126,6 +136,7 @@ class MobilierController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await mobilierApi.updateData(dataItem).then((value) {
+        clear();
         mobilierList.clear();
         getList();
         Get.back();
@@ -161,6 +172,7 @@ class MobilierController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await mobilierApi.updateData(dataItem).then((value) {
+        clear();
         mobilierList.clear();
         getList();
         Get.back();
