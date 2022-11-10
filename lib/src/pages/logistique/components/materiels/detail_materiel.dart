@@ -3,26 +3,26 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/approbation_engin.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/approbation_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class DetailEngin extends StatefulWidget {
-  const DetailEngin({super.key, required this.anguinModel});
-  final AnguinModel anguinModel;
+class DetailMateriel extends StatefulWidget {
+  const DetailMateriel({super.key, required this.materielModel});
+  final MaterielModel materielModel;
 
   @override
-  State<DetailEngin> createState() => _DetailEnginState();
+  State<DetailMateriel> createState() => _DetailMaterielState();
 }
 
-class _DetailEnginState extends State<DetailEngin> {
-  final EnginController controller = Get.put(EnginController());
+class _DetailMaterielState extends State<DetailMateriel> {
+  final MaterielController controller = Get.put(MaterielController());
   final ProfilController profilController = Get.put(ProfilController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
@@ -36,17 +36,20 @@ class _DetailEnginState extends State<DetailEngin> {
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
-                  context, scaffoldKey, title, widget.anguinModel.nomeroPLaque),
+                  context, scaffoldKey, title, widget.materielModel.identifiant),
               drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter un trajet"),
-                tooltip: "Ajouter un nouveau trajet",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Get.toNamed(LogistiqueRoutes.logAddTrajetAuto,
-                      arguments: widget.anguinModel);
-                },
-              ),
+              floatingActionButton: (profilController.user.fonctionOccupe !=
+                      'Directeur de departement')
+                  ? FloatingActionButton.extended(
+                      label: const Text("Ajouter un trajet"),
+                      tooltip: "Ajouter un nouveau trajet",
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        Get.toNamed(LogistiqueRoutes.logAddTrajetAuto,
+                            arguments: widget.materielModel);
+                      },
+                    )
+                  : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,7 +88,7 @@ class _DetailEnginState extends State<DetailEngin> {
                                                 if (int.parse(profilController
                                                             .user.role) <=
                                                         2 &&
-                                                    widget.anguinModel
+                                                    widget.materielModel
                                                             .approbationDD ==
                                                         "-")
                                                   Row(
@@ -95,9 +98,9 @@ class _DetailEnginState extends State<DetailEngin> {
                                                           onPressed: () {
                                                             Get.toNamed(
                                                                 LogistiqueRoutes
-                                                                    .logAnguinAutoUpdate,
+                                                                    .logMaterielUpdate,
                                                                 arguments: widget
-                                                                    .anguinModel);
+                                                                    .materielModel);
                                                           },
                                                           icon: const Icon(
                                                               Icons.edit)),
@@ -116,21 +119,21 @@ class _DetailEnginState extends State<DetailEngin> {
                                                     DateFormat(
                                                             "dd-MM-yyyy HH:mm")
                                                         .format(widget
-                                                            .anguinModel
+                                                            .materielModel
                                                             .created),
                                                     textAlign: TextAlign.start),
                                               ],
                                             )
                                           ],
                                         ),
-                                        dataWidget() 
+                                        dataWidget()
                                       ],
                                     ),
                                   ),
                                 ),
                                 const SizedBox(height: p20),
-                                ApprobationEngin(
-                                    data: widget.anguinModel,
+                                ApprobationMateriel(
+                                    data: widget.materielModel,
                                     controller: controller,
                                     profilController: profilController)
                               ],
@@ -148,22 +151,22 @@ class _DetailEnginState extends State<DetailEngin> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: Text('Etes-vous sûr de vouloir faire ceci ?',
-                  style: TextStyle(color: mainColor)),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   width: 100,
                   child: Text("Cette action permet de supprimer le document")),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.enginsApi.deleteData(widget.anguinModel.id!);
-                    Navigator.pop(context, 'ok');
+                    controller.materielsApi.deleteData(widget.materielModel.id!); 
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );
@@ -181,14 +184,32 @@ class _DetailEnginState extends State<DetailEngin> {
             children: [
               Expanded(
                 flex: 2,
-                child: Text('Modèle :',
+                child: Text('Type materiel :',
                     textAlign: TextAlign.start,
                     style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.modele,
+                child: SelectableText(widget.materielModel.typeMateriel,
                     textAlign: TextAlign.start, style: bodyMedium),
+              )
+            ],
+          ),
+          Divider(
+            color: mainColor,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text('Identifiant :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+              ),
+              Expanded(
+                flex: 3,
+                child: SelectableText(widget.materielModel.identifiant,
+                    textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.blueGrey)),
               )
             ],
           ),
@@ -205,7 +226,7 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.marque,
+                child: SelectableText(widget.materielModel.marque,
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
@@ -217,14 +238,33 @@ class _DetailEnginState extends State<DetailEngin> {
             children: [
               Expanded(
                 flex: 2,
-                child: Text('Numero chassie :',
+                child: Text('Modèle :',
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.numeroChassie,
+                child: SelectableText(widget.materielModel.modele,
                     textAlign: TextAlign.start, style: bodyMedium),
+              )
+            ],
+          ),
+          Divider(
+            color: mainColor,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text('Numéro Reference :',
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+              ),
+              Expanded(
+                flex: 3,
+                child: SelectableText(widget.materielModel.numeroRef,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -241,7 +281,7 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.couleur,
+                child: SelectableText(widget.materielModel.couleur,
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
@@ -259,7 +299,7 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.genre,
+                child: SelectableText(widget.materielModel.genre,
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
@@ -277,8 +317,10 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText("${widget.anguinModel.qtyMaxReservoir} L",
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    "${widget.materielModel.qtyMaxReservoir} L",
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -296,15 +338,18 @@ class _DetailEnginState extends State<DetailEngin> {
               Expanded(
                 flex: 3,
                 child: SelectableText(
-                    DateFormat("dd-MM-yyyy").format(widget.anguinModel.created),
+                    DateFormat("dd-MM-yyyy")
+                        .format(widget.materielModel.dateFabrication),
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
             ],
           ),
+          if (widget.materielModel.typeMateriel == "Materiel roulant")
           Divider(
             color: mainColor,
           ),
+          if (widget.materielModel.typeMateriel == "Materiel roulant")
           Row(
             children: [
               Expanded(
@@ -315,33 +360,16 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.nomeroPLaque,
+                child: SelectableText(widget.materielModel.numeroPLaque,
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
-          ),
+          ),  
+          if (widget.materielModel.typeMateriel == "Materiel roulant")
           Divider(
             color: mainColor,
           ),
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text('Numéro engin :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                flex: 3,
-                child: SelectableText(widget.anguinModel.nomeroEntreprise,
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(color: Colors.blueGrey)),
-              )
-            ],
-          ),
-          Divider(
-            color: mainColor,
-          ),
+          if (widget.materielModel.typeMateriel == "Materiel roulant")
           Row(
             children: [
               Expanded(
@@ -353,7 +381,7 @@ class _DetailEnginState extends State<DetailEngin> {
               Expanded(
                 flex: 3,
                 child: SelectableText(
-                    "${widget.anguinModel.kilometrageInitiale} km",
+                    "${widget.materielModel.kilometrageInitiale} KM",
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -366,13 +394,13 @@ class _DetailEnginState extends State<DetailEngin> {
             children: [
               Expanded(
                 flex: 2,
-                child: Text('Provenance (Pays) :',
+                child: Text('Fournisseur :',
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.provenance,
+                child: SelectableText(widget.materielModel.fournisseur,
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
@@ -390,7 +418,7 @@ class _DetailEnginState extends State<DetailEngin> {
               ),
               Expanded(
                 flex: 3,
-                child: SelectableText(widget.anguinModel.signature,
+                child: SelectableText(widget.materielModel.signature,
                     textAlign: TextAlign.start, style: bodyMedium),
               )
             ],

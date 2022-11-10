@@ -147,13 +147,10 @@ class ComptabiliteRoutes {
 
 class LogistiqueRoutes {
   static const logDashboard = "/log-dashboard";
-  static const logAnguinAuto = "/log-anguin-auto";
-  static const logAnguinAutoDetail = "/log-anguin-auto-detail";
-  static const logAnguinAutoUpdate = "/log-anguin-auto-update";
-  static const logAddAnguinAuto = "/log-add-anguin-auto";
-  static const logAddCarburantAuto = "/log-add-carburant-auto";
-  static const logCarburantAuto = "/log-carburant-auto";
-  static const logCarburantAutoDetail = "/log-carburant-auto-detail";
+  static const logMateriel = "/log-materiel";
+  static const logMaterielDetail = "/log-materiel-detail";
+  static const logMaterielAdd = "/log-materiel-add";
+  static const logMaterielUpdate = "/log-materiel-update";
   static const logAddTrajetAuto = "/log-add-trajet-auto";
   static const logTrajetAuto = "/log-trajet-auto";
   static const logTrajetAutoDetail = "/log-trajet-auto-detail";

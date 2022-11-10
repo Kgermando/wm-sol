@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/logistiques/anguin_api.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/api/logistiques/materiels_api.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/utils/enguins_dropdown.dart';
 
-class EnginController extends GetxController
-    with StateMixin<List<AnguinModel>> {
-  final AnguinApi enginsApi = AnguinApi();
+class MaterielController extends GetxController
+    with StateMixin<List<MaterielModel>> {
+  final MaterielsApi materielsApi = MaterielsApi();
   final ProfilController profilController = Get.put(ProfilController());
 
-  var enginList = <AnguinModel>[].obs;
+  var materielList = <MaterielModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  int numberPlaque = 1;
+  int identifiant = 1;
 
-  final genreDrop = EnguinsDropdown().enginDropdown;
+  // final genreDrop = EnguinsDropdown().enginDropdown;
 
   // Approbations
-  String approbationDG = '-';
-  String approbationDD = '-';
+  String? approbationDG;
+  String? approbationDD;
   TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
 
-  TextEditingController modeleController = TextEditingController();
+  String? typeMateriel;
   TextEditingController marqueController = TextEditingController();
-  TextEditingController numeroChassieController = TextEditingController();
+  TextEditingController modeleController = TextEditingController();
+  TextEditingController numeroRefController = TextEditingController();
   TextEditingController couleurController = TextEditingController();
-  String? genre;
+  TextEditingController genreController = TextEditingController();
   TextEditingController qtyMaxReservoirController = TextEditingController();
   TextEditingController dateFabricationController = TextEditingController();
-  TextEditingController nomeroPLaqueController = TextEditingController();
+  TextEditingController numeroPLaqueController = TextEditingController();
   TextEditingController kilometrageInitialeController = TextEditingController();
-  TextEditingController provenanceController = TextEditingController();
-  TextEditingController typeCaburantController = TextEditingController();
-  TextEditingController typeMoteurController = TextEditingController();
-
+  TextEditingController fournisseurController = TextEditingController();
+  String? alimentation;
+ 
   @override
   void onInit() {
     super.onInit();
@@ -51,15 +50,14 @@ class EnginController extends GetxController
     motifDDController.dispose();
     modeleController.dispose();
     marqueController.dispose();
-    numeroChassieController.dispose();
+    numeroRefController.dispose();
     couleurController.dispose();
+    genreController.dispose();
     qtyMaxReservoirController.dispose();
     dateFabricationController.dispose();
-    nomeroPLaqueController.dispose();
+    numeroPLaqueController.dispose();
     kilometrageInitialeController.dispose();
-    provenanceController.dispose();
-    typeCaburantController.dispose();
-    typeMoteurController.dispose();
+    fournisseurController.dispose();  
 
     super.dispose();
   }
@@ -69,37 +67,36 @@ class EnginController extends GetxController
     motifDDController.clear();
     modeleController.clear();
     marqueController.clear();
-    numeroChassieController.clear();
+    numeroRefController.clear();
     couleurController.clear();
+    genreController.clear();
     qtyMaxReservoirController.clear();
     dateFabricationController.clear();
-    nomeroPLaqueController.clear();
+    numeroPLaqueController.clear();
     kilometrageInitialeController.clear();
-    provenanceController.clear();
-    typeCaburantController.clear();
-    typeMoteurController.clear();
+    fournisseurController.clear();  
   }
 
   void getList() async {
-    await enginsApi.getAllData().then((response) {
-      enginList.assignAll(response);
-      numberPlaque = enginList.length + 1;
-      change(enginList, status: RxStatus.success());
+    await materielsApi.getAllData().then((response) {
+      materielList.assignAll(response);
+      identifiant = materielList.length + 1;
+      change(materielList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
   detailView(int id) async {
-    final data = await enginsApi.getOneData(id);
+    final data = await materielsApi.getOneData(id);
     return data;
   }
 
   void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await enginsApi.deleteData(id).then((value) {
-        enginList.clear();
+      await materielsApi.deleteData(id).then((value) {
+        materielList.clear();
         getList();
         Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
@@ -120,27 +117,27 @@ class EnginController extends GetxController
     try {
       _isLoading.value = true;
       String numero = '';
-      if (numberPlaque < 10) {
-        numero = "00$numberPlaque";
-      } else if (numberPlaque < 99) {
-        numero = "0$numberPlaque";
+      if (identifiant < 10) {
+        numero = "00$identifiant";
+      } else if (identifiant < 99) {
+        numero = "0$identifiant";
       } else {
-        numero = "$numberPlaque";
+        numero = "$identifiant";
       }
-      final dataItem = AnguinModel(
-          modele: modeleController.text,
+      final dataItem = MaterielModel(
+          typeMateriel: typeMateriel.toString(),
           marque: marqueController.text,
-          numeroChassie: numeroChassieController.text,
+          modele: modeleController.text,
+          numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre: genre.toString(),
+          genre: genreController.text,
           qtyMaxReservoir: qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
-          nomeroPLaque: nomeroPLaqueController.text,
-          nomeroEntreprise: numero,
+          numeroPLaque: numeroPLaqueController.text,
+          identifiant: numero,
           kilometrageInitiale: kilometrageInitialeController.text,
-          provenance: provenanceController.text,
-          typeCaburant: typeCaburantController.text,
-          typeMoteur: typeMoteurController.text,
+          fournisseur: fournisseurController.text,
+          alimentation: alimentation.toString(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDG: '-',
@@ -149,9 +146,9 @@ class EnginController extends GetxController
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
-      await enginsApi.insertData(dataItem).then((value) {
+      await materielsApi.insertData(dataItem).then((value) {
         clearTextEditingControllers();
-        enginList.clear();
+        materielList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -168,25 +165,25 @@ class EnginController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-  void submitUpdate(AnguinModel data) async {
+ 
+  void submitUpdate(MaterielModel data) async {
     try {
       _isLoading.value = true;
-      final dataItem = AnguinModel(
+      final dataItem = MaterielModel(
           id: data.id!,
+          typeMateriel: typeMateriel.toString(),
           modele: modeleController.text,
           marque: marqueController.text,
-          numeroChassie: numeroChassieController.text,
+          numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre: genre.toString(),
+          genre: genreController.text,
           qtyMaxReservoir: qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
-          nomeroPLaque: nomeroPLaqueController.text,
-          nomeroEntreprise: data.nomeroEntreprise,
+          numeroPLaque: numeroPLaqueController.text,
+          identifiant: data.identifiant,
           kilometrageInitiale: kilometrageInitialeController.text,
-          provenance: provenanceController.text,
-          typeCaburant: typeCaburantController.text,
-          typeMoteur: typeMoteurController.text,
+          fournisseur: fournisseurController.text,
+          alimentation: alimentation.toString(), 
           signature: profilController.user.matricule,
           created: data.created,
           approbationDG: '-',
@@ -195,9 +192,9 @@ class EnginController extends GetxController
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-');
-      await enginsApi.updateData(dataItem).then((value) {
+      await materielsApi.updateData(dataItem).then((value) {
         clearTextEditingControllers();
-        enginList.clear();
+        materielList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -215,35 +212,35 @@ class EnginController extends GetxController
     }
   }
 
-  void submitDG(AnguinModel data) async {
+  void submitDG(MaterielModel data) async {
     try {
       _isLoading.value = true;
-      final dataItem = AnguinModel(
+      final dataItem = MaterielModel(
           id: data.id!,
+          typeMateriel: data.typeMateriel,
           modele: data.modele,
           marque: data.marque,
-          numeroChassie: data.numeroChassie,
+          numeroRef: data.numeroRef,
           couleur: data.couleur,
           genre: data.genre,
           qtyMaxReservoir: data.qtyMaxReservoir,
           dateFabrication: data.dateFabrication,
-          nomeroPLaque: data.nomeroPLaque,
-          nomeroEntreprise: data.nomeroEntreprise,
+          numeroPLaque: data.numeroPLaque,
+          identifiant: data.identifiant,
           kilometrageInitiale: data.kilometrageInitiale,
-          provenance: data.provenance,
-          typeCaburant: data.typeCaburant,
-          typeMoteur: data.typeMoteur,
+          fournisseur: data.fournisseur,
+          alimentation: data.alimentation, 
           signature: data.signature,
           created: data.created,
-          approbationDG: approbationDG,
+          approbationDG: approbationDG.toString(),
           motifDG:
               (motifDGController.text == '') ? '-' : motifDGController.text,
           signatureDG: profilController.user.matricule,
           approbationDD: data.approbationDD,
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
-      await enginsApi.updateData(dataItem).then((value) {
-        enginList.clear();
+      await materielsApi.updateData(dataItem).then((value) {
+        materielList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -261,35 +258,36 @@ class EnginController extends GetxController
     }
   }
 
-  void submitDD(AnguinModel data) async {
+  void submitDD(MaterielModel data) async {
     try {
+      print("approbationDD $approbationDD");
       _isLoading.value = true;
-      final dataItem = AnguinModel(
+      final dataItem = MaterielModel(
           id: data.id!,
+          typeMateriel: data.typeMateriel,
           modele: data.modele,
           marque: data.marque,
-          numeroChassie: data.numeroChassie,
+          numeroRef: data.numeroRef,
           couleur: data.couleur,
           genre: data.genre,
           qtyMaxReservoir: data.qtyMaxReservoir,
           dateFabrication: data.dateFabrication,
-          nomeroPLaque: data.nomeroPLaque,
-          nomeroEntreprise: data.nomeroEntreprise,
+          numeroPLaque: data.numeroPLaque,
+          identifiant: data.identifiant,
           kilometrageInitiale: data.kilometrageInitiale,
-          provenance: data.provenance,
-          typeCaburant: data.typeCaburant,
-          typeMoteur: data.typeMoteur,
+          fournisseur: data.fournisseur,
+          alimentation: data.alimentation, 
           signature: data.signature,
           created: data.created,
           approbationDG: '-',
           motifDG: '-',
           signatureDG: '-',
-          approbationDD: approbationDD,
+          approbationDD: approbationDD.toString(),
           motifDD:
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
-      await enginsApi.updateData(dataItem).then((value) {
-        enginList.clear();
+      await materielsApi.updateData(dataItem).then((value) {
+        materielList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",

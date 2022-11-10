@@ -77,120 +77,75 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
                 Navigator.pushNamed(context, LogistiqueRoutes.logDD);
                 // Navigator.of(context).pop();
               }),
-        ExpansionTile(
-          leading: const Icon(Icons.car_rental, size: 20.0),
-          title: Text('Automobile', style: bodyText1),
-          initiallyExpanded: false,
-          onExpansionChanged: (val) {
-            setState(() {
-              isOpen1 = !val;
-            });
-          },
-          children: [
-            DrawerWidget(
-                selected: widget.currentRoute == LogistiqueRoutes.logAnguinAuto,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Engins',
-                style: bodyText2!,
-                onTap: () {
-                  Navigator.pushNamed(context, LogistiqueRoutes.logAnguinAuto);
-                  // Navigator.of(context).pop();
-                }),
-            DrawerWidget(
-                selected:
-                    widget.currentRoute == LogistiqueRoutes.logCarburantAuto,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Carburants',
-                style: bodyText2,
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, LogistiqueRoutes.logCarburantAuto);
-                  // Navigator.of(context).pop();
-                }),
-            DrawerWidget(
-                selected: widget.currentRoute == LogistiqueRoutes.logTrajetAuto,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Trajets',
-                style: bodyText2,
-                onTap: () {
-                  Navigator.pushNamed(context, LogistiqueRoutes.logTrajetAuto);
-                  // Navigator.of(context).pop();
-                }),
-          ],
-        ),
-        ExpansionTile(
-          leading: const Icon(Icons.laptop_windows, size: 20.0),
-          title: Text('Materiels', style: bodyText1),
-          initiallyExpanded: false,
-          onExpansionChanged: (val) {
-            setState(() {
-              isOpen2 = !val;
-            });
-          },
-          children: [
-            DrawerWidget(
-                selected:
-                    widget.currentRoute == LogistiqueRoutes.logMobilierMateriel,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Mobiliers',
-                style: bodyText2,
-                onTap: () {
-                  Get.toNamed(LogistiqueRoutes.logMobilierMateriel);
-                }),
-            DrawerWidget(
-                selected: widget.currentRoute ==
-                    LogistiqueRoutes.logImmobilierMateriel,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Immobiliers',
-                style: bodyText2,
-                onTap: () {
-                  Get.toNamed(LogistiqueRoutes.logImmobilierMateriel);
-                }),
-            DrawerWidget(
-                selected:
-                    widget.currentRoute == LogistiqueRoutes.logEtatMateriel,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Etat materiels',
-                style: bodyText2,
-                onTap: () {
-                  Get.toNamed(LogistiqueRoutes.logEtatMateriel);
-                }),
-          ],
-        ),
-        ExpansionTile(
-          leading: const Icon(Icons.settings, size: 20.0),
-          title: Text('Entretiens & Maintenance', style: bodyText1),
-          initiallyExpanded: false,
-          onExpansionChanged: (val) {
-            setState(() {
-              isOpen3 = !val;
-            });
-          },
-          children: [
-            DrawerWidget(
-                selected: widget.currentRoute == LogistiqueRoutes.logEntretien,
-                icon: Icons.arrow_right,
-                sizeIcon: 15.0,
-                title: 'Entretiens',
-                style: bodyText2,
-                onTap: () {
-                  Get.toNamed(LogistiqueRoutes.logEntretien);
-                }),
-          ],
-        ),
+        DrawerWidget(
+            selected:
+                widget.currentRoute == LogistiqueRoutes.logImmobilierMateriel,
+            icon: Icons.store,
+            sizeIcon: 20.0,
+            title: 'Immobiliers',
+            style: bodyText1!,
+            onTap: () {
+              Navigator.pushNamed(
+                  context, LogistiqueRoutes.logImmobilierMateriel);
+            }),
+        DrawerWidget(
+          selected:
+              widget.currentRoute == LogistiqueRoutes.logMobilierMateriel,
+          icon: Icons.chair_alt,
+          sizeIcon: 20.0,
+          title: 'Mobiliers',
+          style: bodyText1,
+          onTap: () {
+            Navigator.pushNamed(
+                context, LogistiqueRoutes.logMobilierMateriel);
+          }),
+        DrawerWidget(
+            selected: widget.currentRoute == LogistiqueRoutes.logMateriel,
+            icon: Icons.car_crash,
+            sizeIcon: 20.0,
+            title: 'Matieriels',
+            style: bodyText1  ,
+            onTap: () {
+              Navigator.pushNamed(context, LogistiqueRoutes.logMateriel);
+              // Navigator.of(context).pop();
+            }),
+        DrawerWidget(
+          selected: widget.currentRoute == LogistiqueRoutes.logTrajetAuto,
+          icon: Icons.place,
+          sizeIcon: 20.0,
+          title: 'Trajets',
+          style: bodyText1,
+          onTap: () {
+            Navigator.pushNamed(context, LogistiqueRoutes.logTrajetAuto); 
+          }
+        ), 
+        DrawerWidget(
+            selected:
+                widget.currentRoute == LogistiqueRoutes.logEtatMateriel,
+            icon: Icons.settings_suggest,
+            sizeIcon: 20.0,
+            title: 'Etat materiels',
+            style: bodyText1,
+            onTap: () {
+              Navigator.pushNamed(
+                  context, LogistiqueRoutes.logEtatMateriel);
+            }),
+        DrawerWidget(
+          selected: widget.currentRoute == LogistiqueRoutes.logEntretien,
+          icon: Icons.settings,
+          sizeIcon: 20.0,
+          title: 'Entretiens',
+          style: bodyText1,
+          onTap: () {
+            Navigator.pushNamed(context, LogistiqueRoutes.logEntretien);
+          }), 
         DrawerWidget(
             selected:
                 widget.currentRoute == LogistiqueRoutes.logApprovisionnement,
             icon: Icons.production_quantity_limits,
             sizeIcon: 20.0,
             title: 'Matières & fournitures',
-            style: bodyText1!,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(LogistiqueRoutes.logApprovisionnement);
             }),
@@ -217,7 +172,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
                 widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
             icon: Icons.multiline_chart_sharp,
             sizeIcon: 20.0,
-            title: 'Fournitures',
+            title: 'Acc. Reception',
             style: bodyText1,
             onTap: () {
               Get.toNamed(LogistiqueRoutes.logApprovisionReception);

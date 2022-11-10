@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/etat_materiel_api.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
-import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
-import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 
 class EtatMaterielController extends GetxController
     with StateMixin<List<EtatMaterielModel>> {
   final EtatMaterielApi etatMaterielApi = EtatMaterielApi();
   final ProfilController profilController = Get.put(ProfilController());
-  final EnginController enginController = Get.put(EnginController());
-  final ImmobilierController immobilierController =
-      Get.put(ImmobilierController());
-  final MobilierController mobilierController = Get.put(MobilierController());
+  final MaterielController materielController = Get.put(MaterielController()); 
 
   var etatMaterielList = <EtatMaterielModel>[].obs;
 
@@ -36,14 +29,13 @@ class EtatMaterielController extends GetxController
   String? statutObjet;
 
   List<String> nomList = [];
-  List<MobilierModel> mobilierList = [];
-  List<ImmobilierModel> immobilierList = [];
-  List<AnguinModel> enguinsList = [];
+  List<MaterielModel> materielList = [];
 
   @override
   void onInit() {
     super.onInit();
     getList();
+    getData();
   }
 
   @override
@@ -53,15 +45,7 @@ class EtatMaterielController extends GetxController
   }
 
   void getData() async {
-    mobilierList = mobilierController.mobilierList
-        .where((element) => element.approbationDD == "Approved")
-        .toList();
-    immobilierList = immobilierController.immobilierList
-        .where((element) =>
-            element.approbationDG == "Approved" &&
-            element.approbationDD == "Approved")
-        .toList();
-    enguinsList = enginController.enginList
+    materielList = materielController.materielList
         .where((element) =>
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")

@@ -38,67 +38,67 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(context, scaffoldKey, title,
-          widget.approvisionnementModel.provision),
-      drawer: const DrawerMenu(),
-      floatingActionButton: speedialWidget(),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: p20),
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.approvisionnementModel.provision),
+              drawer: const DrawerMenu(),
+              floatingActionButton: speedialWidget(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.end,
-                                  children: [
-                                    Column(
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        SelectableText(
-                                            DateFormat(
-                                                    "dd-MM-yyyy HH:mm")
-                                                .format(widget
-                                                    .approvisionnementModel
-                                                    .created),
-                                            textAlign: TextAlign.start),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                SelectableText(
+                                                    DateFormat(
+                                                            "dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .approvisionnementModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget()
                                       ],
-                                    )
-                                  ],
-                                ),
-                                dataWidget()
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
-        ],
-      ),
-    ));
+                          )))
+                ],
+              ),
+            ));
   }
 
   Widget dataWidget() {
@@ -163,7 +163,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
           child: const Icon(Icons.shopping_cart_checkout),
           foregroundColor: Colors.white,
           backgroundColor: Colors.teal.shade700,
-          label: 'Livraison',
+          label: 'Sortie',
           onPressed: () {
             qtyQtockDialog();
           },
@@ -172,7 +172,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
           child: const Icon(Icons.add_shopping_cart),
           foregroundColor: Colors.white,
           backgroundColor: Colors.blue.shade700,
-          label: 'Ravitaillement',
+          label: 'Entrée',
           onPressed: () {
             newDialog();
           },
@@ -215,9 +215,12 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                         .receptionFormKey.currentState!;
                     if (form.validate()) {
                       approvisionReceptionController
-                          .submit(widget.approvisionnementModel);
+                          .submit(widget.approvisionnementModel).then(() {
+                              controller.submitReste(widget.approvisionnementModel,
+                            approvisionReceptionController.qtyController);
+                          });
+                      
                       form.reset();
-                      Navigator.pop(context, 'ok');
                     }
                   },
                   child: const Text('OK'),
@@ -240,23 +243,19 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
               content: SizedBox(
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
-                  child: controller.isLoading
-                      ? loading()
-                      : Form(
-                          key: controller.formKey,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              Text(widget.approvisionnementModel.provision,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall),
-                              quantityWidget(),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                            ],
-                          ))),
+                  child: Form(
+                      key: controller.formKey,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          Text(widget.approvisionnementModel.provision,
+                              style: Theme.of(context).textTheme.headlineSmall),
+                          quantityWidget(),
+                          const SizedBox(
+                            height: p20,
+                          ),
+                        ],
+                      ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -266,9 +265,9 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                   onPressed: () {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
-                      controller.submit();
+                      controller
+                          .submitRavitaillement(widget.approvisionnementModel);
                       form.reset();
-                      Navigator.pop(context, 'ok');
                     }
                   },
                   child: const Text('OK'),
@@ -288,11 +287,11 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
           child: Container(
               margin: const EdgeInsets.only(bottom: p20),
               child: TextFormField(
-                controller: approvisionReceptionController.quantityController,
+                controller: controller.quantityController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'Adresse',
+                  labelText: 'Quantité',
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -338,7 +337,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
         validator: (value) => value == null ? "Select département" : null,
         onChanged: (value) {
           setState(() {
-            approvisionReceptionController.departement = value!; 
+            approvisionReceptionController.departement = value!;
           });
         },
       ),
@@ -349,7 +348,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
-          controller: approvisionReceptionController.quantityController,
+          controller: approvisionReceptionController.qtyController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),

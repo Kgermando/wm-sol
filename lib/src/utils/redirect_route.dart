@@ -71,7 +71,7 @@ String redirectRoute(UserModel user) {
       if (int.parse(user.role) <= 2) {
         homeRoute = LogistiqueRoutes.logDashboard;
       } else {
-        homeRoute = LogistiqueRoutes.logAnguinAuto;
+        homeRoute = LogistiqueRoutes.logMateriel;
       }
     } else if (departement.first == "Support") {
       homeRoute = AdminRoutes.adminDashboard;

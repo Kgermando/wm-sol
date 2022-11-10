@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/engin_xlsx.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/materiel_xlsx.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableEngin extends StatefulWidget {
-  const TableEngin(
-      {super.key, required this.enginList, required this.controller});
-  final List<AnguinModel> enginList;
-  final EnginController controller;
+class TableMaterielDD extends StatefulWidget {
+  const TableMaterielDD(
+      {super.key, required this.controller}); 
+  final MaterielController controller;
 
   @override
-  State<TableEngin> createState() => _TableEnginState();
+  State<TableMaterielDD> createState() => _TableMaterielDDState();
 }
 
-class _TableEnginState extends State<TableEngin> {
+class _TableMaterielDDState extends State<TableMaterielDD> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -41,11 +40,11 @@ class _TableEnginState extends State<TableEngin> {
         final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
-        final AnguinModel anguinModel =
+        final MaterielModel materielModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logAnguinAutoDetail,
-            arguments: anguinModel);
+        Get.toNamed(LogistiqueRoutes.logMaterielDetail,
+            arguments: materielModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -62,11 +61,11 @@ class _TableEnginState extends State<TableEngin> {
                 IconButton(
                     onPressed: () {
                       Navigator.pushNamed(
-                          context, LogistiqueRoutes.logAnguinAuto);
+                          context, LogistiqueRoutes.logMateriel);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  EnginXlsx().exportToExcel(widget.enginList);
+                  MaterielXlsx().exportToExcel(widget.controller.materielList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -86,21 +85,29 @@ class _TableEnginState extends State<TableEngin> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nomeroPLaque') {
+            } else if (column.field == 'identifiant') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'marque') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'modele') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'genre') {
+            } else if (column.field == 'couleur') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'numeroChassie') {
+            } else if (column.field == 'numeroRef') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'numeroPLaque') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'genre') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'qtyMaxReservoir') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'dateFabrication') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nomeroEntreprise') {
+            } else if (column.field == 'kilometrageInitiale') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'fournisseur') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'alimentation') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -123,20 +130,27 @@ class _TableEnginState extends State<TableEngin> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.enginList.length;
-    for (var item in widget.enginList) {
+    var dataList = widget.controller.materielList
+        .where((element) => element.approbationDD == '-')
+        .toList();
+    var i = dataList.length;
+    for (var item in dataList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'nomeroPlaque': PlutoCell(value: item.nomeroPLaque),
+          'identifiant': PlutoCell(value: item.identifiant),
           'marque': PlutoCell(value: item.marque),
           'modele': PlutoCell(value: item.modele),
-          'genre': PlutoCell(value: item.genre),
-          'numeroChassie': PlutoCell(value: item.numeroChassie),
+          'couleur': PlutoCell(value: item.couleur),
+          'numeroRef': PlutoCell(value: item.numeroRef),
+          'numeroPLaque': PlutoCell(value: item.numeroPLaque),
+          'genre': PlutoCell(value: item.genre), 
           'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
           'dateFabrication': PlutoCell(
               value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
-          'nomeroEntreprise': PlutoCell(value: item.nomeroEntreprise),
+          'kilometrageInitiale': PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
+          'fournisseur': PlutoCell(value: item.fournisseur),
+          'alimentation': PlutoCell(value: item.alimentation),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'approbationDG': PlutoCell(value: item.approbationDG),
@@ -164,8 +178,8 @@ class _TableEnginState extends State<TableEngin> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Numero Plaque',
-        field: 'nomeroPlaque',
+        title: 'Identifiant',
+        field: 'identifiant',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -198,7 +212,42 @@ class _TableEnginState extends State<TableEngin> {
         width: 200,
         minWidth: 150,
       ),
-      
+      PlutoColumn(
+        readOnly: true,
+        title: 'Couleur',
+        field: 'couleur',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Numero Reference',
+        field: 'numeroRef',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Numero PLaque',
+        field: 'numeroPLaque',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Genre',
@@ -235,11 +284,34 @@ class _TableEnginState extends State<TableEngin> {
         width: 200,
         minWidth: 150,
       ),
-      
       PlutoColumn(
         readOnly: true,
-        title: 'Numero engin',
-        field: 'nomeroEntreprise',
+        title: 'Kilometrage Initiale',
+        field: 'kilometrageInitiale',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Fournisseur',
+        field: 'fournisseur',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Alimentation source',
+        field: 'alimentation',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';  
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart'; 
+import 'package:wm_solution/src/constants/app_theme.dart'; 
+import 'package:wm_solution/src/models/logistiques/trajet_model.dart';  
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';  
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class ApprobationEngin extends StatefulWidget {
-  const ApprobationEngin(
+class ApprobationTrajet extends StatefulWidget {
+  const ApprobationTrajet(
       {super.key,
       required this.data,
       required this.controller,
       required this.profilController});
-  final AnguinModel data;
-  final EnginController controller;
+  final TrajetModel data;
+  final TrajetController controller;
   final ProfilController profilController;
 
   @override
-  State<ApprobationEngin> createState() => _ApprobationEnginState();
+  State<ApprobationTrajet> createState() => _ApprobationTrajetState();
 }
 
-class _ApprobationEnginState extends State<ApprobationEngin> {
+class _ApprobationTrajetState extends State<ApprobationTrajet> {
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
@@ -122,76 +122,7 @@ class _ApprobationEnginState extends State<ApprobationEngin> {
     );
   } 
 
-  Widget approbationDGWidget(EnginController controller) {
-    List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
-      margin: const EdgeInsets.only(bottom: p10),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          labelText: 'Approbation',
-          labelStyle: const TextStyle(),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          contentPadding: const EdgeInsets.only(left: 5.0),
-        ),
-        value: controller.approbationDG,
-        isExpanded: true,
-        items: approbationList.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            controller.approbationDG = value!;
-            if (controller.approbationDG == "Approved") {
-              controller.submitDG(widget.data);
-            }
-          });
-        },
-      ),
-    );
-  }
-
-  Widget motifDGWidget(EnginController controller) {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p10),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: TextFormField(
-                controller: controller.motifDGController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'Ecrivez le motif...',
-                ),
-                keyboardType: TextInputType.text,
-                validator: (value) {
-                  if (value != null && value.isEmpty) {
-                    return 'Ce champs est obligatoire';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: IconButton(
-                  tooltip: 'Soumettre le Motif',
-                  onPressed: () {
-                    controller.submitDG(widget.data);
-                  },
-                  icon: Icon(Icons.send, color: Colors.red.shade700)),
-            )
-          ],
-        ));
-  }
-
-
-  Widget approbationDDWidget(EnginController controller) {
+  Widget approbationDDWidget(TrajetController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -222,7 +153,7 @@ class _ApprobationEnginState extends State<ApprobationEngin> {
     );
   }
 
-  Widget motifDDWidget(EnginController controller) {
+  Widget motifDDWidget(TrajetController controller) {
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: Row(

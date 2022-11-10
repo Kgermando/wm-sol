@@ -6,6 +6,7 @@ class ApprovisionnementModel {
   late String unite;
   late String signature;
   late DateTime created;
+  late String fournisseur;
 
   ApprovisionnementModel({
     this.id,
@@ -14,7 +15,8 @@ class ApprovisionnementModel {
     required this.quantity,
     required this.unite, 
     required this.signature, 
-    required this.created
+    required this.created,
+    required this.fournisseur
     });
 
   factory ApprovisionnementModel.fromSQL(List<dynamic> row) {
@@ -25,7 +27,8 @@ class ApprovisionnementModel {
       quantity: row[3],
       unite: row[4],
       signature: row[5],
-      created: row[6] 
+      created: row[6],
+      fournisseur: row[7],
     );
   }
 
@@ -37,7 +40,8 @@ class ApprovisionnementModel {
       quantity: json['quantity'],
       unite: json['unite'], 
       signature: json["signature"], 
-      created: DateTime.parse(json['created'])
+      created: DateTime.parse(json['created']),
+      fournisseur: json["fournisseur"]
     );
   }
 
@@ -49,7 +53,8 @@ class ApprovisionnementModel {
       'quantity': quantity,
       'unite': unite,
       'signature': signature,  
-      'created': created.toIso8601String()
+      'created': created.toIso8601String(),
+      'fournisseur': fournisseur,
     };
   }
 }

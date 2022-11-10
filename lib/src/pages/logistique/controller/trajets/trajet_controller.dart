@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/trajet_api.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart'; 
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -92,11 +92,11 @@ class TrajetController extends GetxController
     }
   }
 
-  void submit(AnguinModel data) async {
+  void submit(MaterielModel data) async {
     try {
       _isLoading.value = true;
       final trajetModel = TrajetModel(
-          nomeroEntreprise: data.nomeroEntreprise,
+          nomeroEntreprise: data.identifiant,
           conducteur: conducteurController.text,
           trajetDe: trajetDeController.text,
           trajetA: trajetAController.text,

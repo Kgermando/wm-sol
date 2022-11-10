@@ -22,7 +22,7 @@ class ApprovisionReceptionController extends GetxController
 
   String? departement;
   TextEditingController provisionController = TextEditingController();
-  TextEditingController quantityController = TextEditingController();
+  TextEditingController qtyController = TextEditingController();
   TextEditingController uniteController = TextEditingController();
 
   @override
@@ -34,14 +34,14 @@ class ApprovisionReceptionController extends GetxController
   @override
   void dispose() {
     provisionController.dispose();
-    quantityController.dispose();
+    qtyController.dispose();
     uniteController.dispose();
     super.dispose();
   }
 
   void clear() {
     provisionController.clear();
-    quantityController.clear();
+    qtyController.clear();
     uniteController.clear();
   }
 
@@ -80,13 +80,13 @@ class ApprovisionReceptionController extends GetxController
     }
   }
 
-  void submit(ApprovisionnementModel data) async {
+   submit(ApprovisionnementModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
         provision: data.provision,
         departement: departement.toString(),
-        quantity: quantityController.text,
+        quantity: qtyController.text,
         unite: data.unite,
         signatureLivraison: profilController.user.matricule,
         created: DateTime.now(),

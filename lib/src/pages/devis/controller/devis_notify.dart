@@ -41,25 +41,30 @@ class DevisNotifyController extends GetxController {
   void getCountDevisDG() async {
     NotifyModel notifySum = await devisNotifyApi.getCountDG();
     _itemCountDevisDG.value = notifySum.count;
+    update();
   }
 
   void getCountDevisBudget() async {
     NotifyModel notifySum = await devisNotifyApi.getCountBudget();
     _itemCountDevisBudget.value = notifySum.count;
+    update();
   }
 
   void getCountDevisSalaireDD() async {
     NotifyModel notifySum = await devisNotifyApi.getCountDD();
     _itemCountDevisDD.value = notifySum.count;
+    update();
   }
 
   void getCountDevisFin() async {
     NotifyModel notifySum = await devisNotifyApi.getCountFin();
     _itemCountDevisFin.value = notifySum.count;
+    update();
   }
 
   void getCountDeviseObs() async {
     NotifyModel notifySum = await devisNotifyApi.getCountObs();
     _itemCountDevisObs.value = notifySum.count;
+    update();
   }
 }

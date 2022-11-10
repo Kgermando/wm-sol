@@ -158,7 +158,8 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?'),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                      style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -166,14 +167,16 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {
                     controller.etatMaterielApi
                         .deleteData(widget.etatMaterielModel.id!);
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK',
+                      style: TextStyle(color: Colors.red)),
                 ),
               ],
             );
@@ -188,7 +191,7 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-              child1: Text('Nom Complet :',
+              child1: Text('Identifiant :',
                   textAlign: TextAlign.start,
                   style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.etatMaterielModel.nom,

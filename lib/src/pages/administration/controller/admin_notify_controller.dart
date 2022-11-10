@@ -59,42 +59,50 @@ class AdminNotifyController extends GetxController {
   void getCountBudget() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
     _budgetCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountRh() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountRh();
     _rhCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountFinance() async {
     NotifySumModel notifySum =
         await adminDepartementNotifyApi.getCountFinance();
     _financeCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountComptabilite() async {
     NotifySumModel notifySum =
         await adminDepartementNotifyApi.getCountComptabilite();
     _comptabiliteCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountExploitation() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
     _exploitationCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountcom() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
     _commMarketingCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountLogistique() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
     _logistiqueCount.value = int.parse(notifySum.sum);
+    update();
   }
 
   void getCountDevis() async {
     NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
     _devisCount.value = int.parse(notifySum.sum);
+    update();
   }
 }

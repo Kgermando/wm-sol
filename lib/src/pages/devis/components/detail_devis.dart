@@ -88,6 +88,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                                 Row(
                                                   children: [
                                                     IconButton(
+                                                      tooltip: 'Soumettre chez le DD',
                                                         color: Colors
                                                             .green.shade700,
                                                         onPressed: () {

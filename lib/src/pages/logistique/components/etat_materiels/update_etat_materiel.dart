@@ -102,12 +102,16 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
             ));
   }
 
-  Widget typeObjetWidget() {
-    List<String> typeObjetList = ["Mobilier", "Immobilier", "Enguins"];
-    var mobiliers = controller.mobilierList.map((e) => e.nom).toList();
-    var immobiliers =
-        controller.immobilierList.map((e) => e.numeroCertificat).toList();
-    var enguins = controller.enguinsList.map((e) => e.nomeroPLaque).toList();
+Widget typeObjetWidget() {
+    List<String> typeObjetList = ["Materiel", "Materiel roulant"];
+    var materielList = controller.materielList
+        .where((e) => e.typeMateriel == 'Materiel')
+        .map((e) => e.identifiant)
+        .toList();
+    var materielRoulantList = controller.materielList
+        .where((e) => e.typeMateriel == 'Materiel roulant')
+        .map((e) => e.identifiant)
+        .toList();
 
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
@@ -135,16 +139,12 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
             controller.typeObjet = value!;
             controller.nomList.clear();
             switch (value) {
-              case 'Mobilier':
-                controller.nomList = mobiliers;
+              case 'Materiel':
+                controller.nomList = materielList;
                 controller.nom = controller.nomList.first;
                 break;
-              case 'Immobilier':
-                controller.nomList = immobiliers;
-                controller.nom = controller.nomList.first;
-                break;
-              case 'Enguins':
-                controller.nomList = enguins;
+              case 'Materiel roulant':
+                controller.nomList = materielRoulantList;
                 controller.nom = controller.nomList.first;
                 break;
               default:
@@ -160,7 +160,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
-          labelText: 'Nom',
+          labelText: 'Identifiant',
           labelStyle: const TextStyle(),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           contentPadding: const EdgeInsets.only(left: 5.0),
@@ -176,7 +176,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
             })
             .toSet()
             .toList(),
-        validator: (value) => value == null ? "Champs obligatoire" : null,
+        validator: (value) => value == null ? "Select Identifiant" : null,
         onChanged: (value) {
           setState(() {
             controller.nom = value!;
@@ -205,7 +205,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
             child: Text(value),
           );
         }).toList(),
-        validator: (value) => value == null ? "Champs obligatoire" : null,
+        validator: (value) => value == null ? "Select Statut" : null,
         onChanged: (value) {
           setState(() {
             controller.statut = value!;

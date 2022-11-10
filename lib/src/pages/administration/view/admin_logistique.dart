@@ -4,13 +4,13 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/administration/components/logistique/table_devis_dg.dart';
-import 'package:wm_solution/src/pages/administration/components/logistique/table_engin_dg.dart';
+import 'package:wm_solution/src/pages/administration/components/logistique/table_devis_dg.dart'; 
 import 'package:wm_solution/src/pages/administration/components/logistique/table_immobilier_dg.dart';
+import 'package:wm_solution/src/pages/administration/components/logistique/table_materiel_dg.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/notify/notify_log.dart'; 
 
 class AdminLogistique extends StatefulWidget {
@@ -23,8 +23,8 @@ class AdminLogistique extends StatefulWidget {
 class _AdminLogistiqueState extends State<AdminLogistique> {
   final NotifyLogController controller = Get.put(NotifyLogController());
   final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
-  final EnginController enginController =
-      Get.put(EnginController());
+  final MaterielController materielController =
+      Get.put(MaterielController());
   final ImmobilierController immobilierController =
       Get.put(ImmobilierController());
   final DevisController devisController =
@@ -76,11 +76,11 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                                 child: ExpansionTile(
                                   leading: const Icon(Icons.folder,
                                       color: Colors.white),
-                                  title: Text('Dossier Engins',
+                                  title: Text('Dossier Materiels',
                                       style: headline6!
                                           .copyWith(color: Colors.white)),
                                   subtitle: Text(
-                                      "Vous avez ${controller.itemCountEnginDG} dossiers necessitent votre approbation",
+                                      "Vous avez ${controller.itemCountMaterielDG} dossiers necessitent votre approbation",
                                       style: bodyMedium!
                                           .copyWith(color: Colors.white)),
                                   initiallyExpanded: false,
@@ -91,7 +91,7 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                                   },
                                   trailing: const Icon(Icons.arrow_drop_down,
                                       color: Colors.white),
-                                  children: [TableEnginDG(enginController: enginController)],
+                                  children: [TableMaterielDG(controller: materielController)],
                                 ),
                               ),
                               Card(

@@ -209,7 +209,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
             icon: Icons.handyman,
             sizeIcon: 20.0,
-            title: 'Fournitures',
+            title: 'Acc. Reception',
             style: bodyText1,
             onTap: () {
               Get.toNamed(LogistiqueRoutes.logApprovisionReception);

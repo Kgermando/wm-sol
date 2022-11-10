@@ -1,48 +1,33 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
-import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
+import 'package:wm_solution/src/widgets/loading.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 
-class UpdateEngin extends StatefulWidget {
-  const UpdateEngin({super.key, required this.anguinModel});
-  final AnguinModel anguinModel;
+class AddMateriel extends StatefulWidget {
+  const AddMateriel({super.key});
 
   @override
-  State<UpdateEngin> createState() => _UpdateEnginState();
+  State<AddMateriel> createState() => _AddMaterielState();
 }
 
-class _UpdateEnginState extends State<UpdateEngin> {
- final EnginController controller = Get.put(EnginController());
+class _AddMaterielState extends State<AddMateriel> {
+  final MaterielController controller = Get.put(MaterielController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Logistique"; 
+  String title = "Logistique";
+  String subTitle = "Nouvel fiche technique";
 
-  @override
-  void initState() {
-     controller.modeleController = TextEditingController(text: widget.anguinModel.modele);
-     controller.marqueController = TextEditingController(text: widget.anguinModel.marque);
-     controller.numeroChassieController = TextEditingController(text: widget.anguinModel.numeroChassie);
-     controller.couleurController = TextEditingController(text: widget.anguinModel.couleur); 
-     controller.qtyMaxReservoirController = TextEditingController(text: widget.anguinModel.qtyMaxReservoir); 
-     controller.nomeroPLaqueController = TextEditingController(text: widget.anguinModel.nomeroPLaque);
-     controller.kilometrageInitialeController = TextEditingController(text: widget.anguinModel.kilometrageInitiale);
-     controller.provenanceController = TextEditingController(text: widget.anguinModel.provenance);
-     controller.typeCaburantController = TextEditingController(text: widget.anguinModel.typeCaburant);
-     controller.typeMoteurController = TextEditingController(text: widget.anguinModel.typeMoteur);
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return controller.obx(
@@ -51,7 +36,7 @@ class _UpdateEnginState extends State<UpdateEngin> {
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, widget.anguinModel.nomeroEntreprise),
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,27 +69,29 @@ class _UpdateEnginState extends State<UpdateEngin> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const TitleWidget(
-                                              title: "Nouvel Engin"),
+                                              title: "Nouvel Fiche technique"),
                                           const SizedBox(
                                             height: p20,
-                                          ),
-                                          ResponsiveChild3Widget(
+                                          ), 
+                                          typeMaterielWidget(),
+                                          ResponsiveChildWidget(
                                               child1: marqueWidget(),
-                                              child2: modeleWidget(),
-                                              child3: numeroChassieWidget()),
+                                              child2: modeleWidget()),
                                           ResponsiveChildWidget(
-                                              child1: couleurNomWidget(),
-                                              child2: genreWidget()),
+                                              child1: numeroRefWidget(),
+                                              child2: couleurNomWidget()),
                                           ResponsiveChildWidget(
-                                              child1: qtyMaxReservoirWidget(),
-                                              child2: dateFabricationWidget()),
+                                              child1: genreWidget(),
+                                              child2: qtyMaxReservoirWidget()),
                                           ResponsiveChildWidget(
-                                              child1: nomeroPLaqueWidget(),
-                                              child2: nomeroEntrepriseWidget()),
+                                              child1: dateFabricationWidget(),
+                                              child2: numeroPLaqueWidget()),
                                           ResponsiveChildWidget(
-                                              child1:
-                                                  kilometrageInitialeWidget(),
-                                              child2: provenanceWidget()),
+                                              child1: identifiantWidget(),
+                                              child2: kilometrageInitialeWidget()),
+                                          ResponsiveChildWidget(
+                                              child1: fournisseurWidget(),
+                                              child2: alimentationWidget()),
                                           const SizedBox(
                                             height: p20,
                                           ),
@@ -115,7 +102,7 @@ class _UpdateEnginState extends State<UpdateEngin> {
                                                 final form = controller
                                                     .formKey.currentState!;
                                                 if (form.validate()) {
-                                                  controller.submitUpdate(widget.anguinModel);
+                                                  controller.submit();
                                                   form.reset();
                                                 }
                                               })
@@ -130,6 +117,36 @@ class _UpdateEnginState extends State<UpdateEngin> {
                 ],
               ),
             ));
+  }
+
+  Widget typeMaterielWidget() {
+    List<String> suggestionList = ['Materiel', 'Materiel roulant'];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Type',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.typeMateriel,
+        isExpanded: true,
+        validator: (value) =>
+            value == null ? "Select Type Materiel" : null,
+        items: suggestionList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            controller.typeMateriel = value;
+          });
+        },
+      ),
+    );
   }
 
   Widget modeleWidget() {
@@ -176,11 +193,11 @@ class _UpdateEnginState extends State<UpdateEngin> {
         ));
   }
 
-  Widget numeroChassieWidget() {
+  Widget numeroRefWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
-          controller: controller.numeroChassieController,
+          controller: controller.numeroRefController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -221,33 +238,32 @@ class _UpdateEnginState extends State<UpdateEngin> {
   }
 
   Widget genreWidget() {
+    List<String> suggestionList = controller.materielList
+        .map((e) => e.genre)
+        .toSet()
+        .toList();
     return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          labelText: 'Type',
-          labelStyle: const TextStyle(),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          contentPadding: const EdgeInsets.only(left: 5.0),
-        ),
-        value: controller.genre,
-        isExpanded: true,
-        validator: (value) => value == null ? "Select Type" : null,
-        items: controller.genreDrop.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            controller.genre = value;
-          });
-        },
-      ),
-    );
+        margin: const EdgeInsets.only(bottom: p20),
+        child: EasyAutocomplete(
+          controller: controller.genreController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: "Genre",
+          ),
+          keyboardType: TextInputType.text,
+          suggestions: suggestionList,
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 
+ 
   Widget qtyMaxReservoirWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -298,11 +314,11 @@ class _UpdateEnginState extends State<UpdateEngin> {
         ));
   }
 
-  Widget nomeroPLaqueWidget() {
+  Widget numeroPLaqueWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
-          controller: controller.nomeroPLaqueController,
+          controller: controller.numeroPLaqueController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -320,11 +336,19 @@ class _UpdateEnginState extends State<UpdateEngin> {
         ));
   }
 
-  Widget nomeroEntrepriseWidget() {
+  Widget identifiantWidget() {
+    String numero = '';
+    if (controller.identifiant < 10) {
+      numero = "00${controller.identifiant}";
+    } else if (controller.identifiant < 99) {
+      numero = "0${controller.identifiant}";
+    } else {
+      numero = "${controller.identifiant}";
+    }
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: Text(
-          widget.anguinModel.numeroChassie,
+          "Identifiant N° $numero",
           style: Theme.of(context).textTheme.headline6,
         ));
   }
@@ -354,25 +378,55 @@ class _UpdateEnginState extends State<UpdateEngin> {
         ));
   }
 
-  Widget provenanceWidget() {
+  Widget fournisseurWidget() {
     return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.provenanceController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Provenance(Pays)',
-          ),
-          keyboardType: TextInputType.text,
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
+      margin: const EdgeInsets.only(bottom: p20),
+      child: TextFormField(
+        controller: controller.fournisseurController,
+        decoration: InputDecoration(
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          labelText: 'Provenance(Pays)',
+        ),
+        keyboardType: TextInputType.text,
+        style: const TextStyle(),
+        validator: (value) {
+          if (value != null && value.isEmpty) {
+            return 'Ce champs est obligatoire';
+          } else {
+            return null;
+          }
+        },
+      ));
+  }
+
+  Widget alimentationWidget() {
+    List<String> suggestionList =
+        controller.materielList.map((e) => e.alimentation).toSet().toList();
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Type',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.alimentation,
+        isExpanded: true,
+        validator: (value) => value == null ? "Select alimentation source" : null,
+        items: suggestionList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            controller.alimentation = value;
+          });
+        },
+      ),
+    );
   }
 }

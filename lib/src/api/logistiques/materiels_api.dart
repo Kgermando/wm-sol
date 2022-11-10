@@ -4,24 +4,24 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
-import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/charts/pie_chart_model.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/api/route_api.dart'; 
 import 'package:http/http.dart' as http;
+import 'package:wm_solution/src/models/charts/pie_chart_model.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 
-class AnguinApi extends GetConnect {
+class MaterielsApi extends GetConnect {
   var client = http.Client();
 
-  Future<List<AnguinModel>> getAllData() async {
+  Future<List<MaterielModel>> getAllData() async {
     Map<String, String> header = headers;
 
     var resp = await client.get(anguinsUrl, headers: header);
 
     if (resp.statusCode == 200) {
       List<dynamic> bodyList = json.decode(resp.body);
-      List<AnguinModel> data = [];
+      List<MaterielModel> data = [];
       for (var u in bodyList) {
-        data.add(AnguinModel.fromJson(u));
+        data.add(MaterielModel.fromJson(u));
       }
       return data;
     } else {
@@ -29,45 +29,45 @@ class AnguinApi extends GetConnect {
     }
   }
 
-  Future<AnguinModel> getOneData(int id) async {
+  Future<MaterielModel> getOneData(int id) async {
     Map<String, String> header = headers;
 
-    var getUrl = Uri.parse("$mainUrl/anguins/$id");
+    var getUrl = Uri.parse("$mainUrl/materiels/$id");
     var resp = await client.get(getUrl, headers: header);
     if (resp.statusCode == 200) {
-      return AnguinModel.fromJson(json.decode(resp.body));
+      return MaterielModel.fromJson(json.decode(resp.body));
     } else {
       throw Exception(json.decode(resp.body)['message']);
     }
   }
 
-  Future<AnguinModel> insertData(AnguinModel anguinModel) async {
+  Future<MaterielModel> insertData(MaterielModel dataItem) async {
     Map<String, String> header = headers;
 
-    var data = anguinModel.toJson();
+    var data = dataItem.toJson();
     var body = jsonEncode(data);
 
     var resp = await client.post(aaddAnguinsUrl, headers: header, body: body);
     if (resp.statusCode == 200) {
-      return AnguinModel.fromJson(json.decode(resp.body));
+      return MaterielModel.fromJson(json.decode(resp.body));
     } else if (resp.statusCode == 401) {
       // await AuthApi().refreshAccessToken();
-      return insertData(anguinModel);
+      return insertData(dataItem);
     } else {
       throw Exception(json.decode(resp.body)['message']);
     }
   }
 
-  Future<AnguinModel> updateData(AnguinModel anguinModel) async {
+  Future<MaterielModel> updateData(MaterielModel dataItem) async {
     Map<String, String> header = headers;
 
-    var data = anguinModel.toJson();
+    var data = dataItem.toJson();
     var body = jsonEncode(data);
-    var updateUrl = Uri.parse("$mainUrl/anguins/update-anguin/");
+    var updateUrl = Uri.parse("$mainUrl/materiels/update-materiel/");
 
     var res = await client.put(updateUrl, headers: header, body: body);
     if (res.statusCode == 200) {
-      return AnguinModel.fromJson(json.decode(res.body));
+      return MaterielModel.fromJson(json.decode(res.body));
     } else {
       throw Exception(json.decode(res.body)['message']);
     }
@@ -76,7 +76,7 @@ class AnguinApi extends GetConnect {
   Future<void> deleteData(int id) async {
     Map<String, String> header = headers;
 
-    var deleteUrl = Uri.parse("$mainUrl/anguins/delete-anguin/$id");
+    var deleteUrl = Uri.parse("$mainUrl/materiels/delete-materiel/$id");
 
     var res = await client.delete(deleteUrl, headers: header);
     if (res.statusCode == 200) {
@@ -100,4 +100,5 @@ class AnguinApi extends GetConnect {
       throw Exception(jsonDecode(resp.body)['message']);
     }
   }
+ 
 }

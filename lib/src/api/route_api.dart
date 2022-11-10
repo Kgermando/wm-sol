@@ -31,7 +31,7 @@ var tachesNotifyUrl = "$mainUrl/counts/taches";
 var creancesNotifyUrl = "$mainUrl/counts/creances";
 var dettesNotifyUrl = "$mainUrl/counts/dettes";
 var carburantsNotifyUrl = "$mainUrl/counts/carburants";
-var enginsNotifyUrl = "$mainUrl/counts/engins";
+var materielNotifyUrl = "$mainUrl/counts/materiels";
 var entretiensNotifyUrl = "$mainUrl/counts/entretiens";
 var etatMaterielsNotifyUrl = "$mainUrl/counts/etat-materiels";
 var immobiliersNotifyUrl = "$mainUrl/counts/immobiliers";
@@ -199,9 +199,9 @@ var addbudgetLigneBudgetairesUrl =
     Uri.parse("$mainUrl/budgets/ligne-budgetaires/insert-new-ligne-budgetaire");
 
 // Logistiques
-var anguinsUrl = Uri.parse("$mainUrl/anguins/");
-var aaddAnguinsUrl = Uri.parse("$mainUrl/anguins/insert-new-anguin");
-var anguinsChartPieUrl = Uri.parse("$mainUrl/anguins/chart-pie-genre/");
+var anguinsUrl = Uri.parse("$mainUrl/materiels/");
+var aaddAnguinsUrl = Uri.parse("$mainUrl/materiels/insert-new-materiel");
+var anguinsChartPieUrl = Uri.parse("$mainUrl/materiels/chart-pie-genre/");
 
 var carburantsUrl = Uri.parse("$mainUrl/carburants/");
 var addCarburantsUrl = Uri.parse("$mainUrl/carburants/insert-new-carburant");

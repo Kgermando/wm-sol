@@ -120,7 +120,7 @@ class _RhNavState extends State<RhNav> {
                 widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
             icon: Icons.multiline_chart_sharp,
             sizeIcon: 20.0,
-            title: 'Fournitures',
+            title: 'Acc. Reception',
             style: bodyText1,
             onTap: () {
               Get.toNamed(LogistiqueRoutes.logApprovisionReception);

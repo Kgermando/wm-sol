@@ -4,26 +4,26 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/table_engin.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/table_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
-class EnginPage extends StatefulWidget {
-  const EnginPage({super.key});
+class MaterielPage extends StatefulWidget {
+  const MaterielPage({super.key});
 
   @override
-  State<EnginPage> createState() => _EnginPageState();
+  State<MaterielPage> createState() => _MaterielPageState();
 }
 
-class _EnginPageState extends State<EnginPage> {
+class _MaterielPageState extends State<MaterielPage> {
+  final MaterielController controller = Get.put(MaterielController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
-  String subTitle = "Engins";
+  String subTitle = "Materiels";
 
   @override
-  Widget build(BuildContext context) {
-    final EnginController controller = Get.put(EnginController());
+  Widget build(BuildContext context) { 
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),
@@ -34,11 +34,11 @@ class _EnginPageState extends State<EnginPage> {
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
               floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Nouvel engin"),
-                tooltip: "Ajouter un nouveau engin",
+                label: const Text("Nouveau materiel"),
+                tooltip: "Ajouter un nouveau materiel",
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  Get.toNamed(LogistiqueRoutes.logAddAnguinAuto);
+                  Get.toNamed(LogistiqueRoutes.logMaterielAdd);
                 },
               ),
               body: Row(
@@ -54,9 +54,7 @@ class _EnginPageState extends State<EnginPage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableEngin(
-                              enginList: controller.enginList,
-                              controller: controller))),
+                          child: TableMateriel(materielList: controller.materielList, controller: controller))),
                 ],
               ))),
     );

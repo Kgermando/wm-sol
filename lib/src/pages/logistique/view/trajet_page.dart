@@ -4,8 +4,8 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/table_trajet.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/components/trajets/table_trajet.dart';
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class TrajetPage extends StatefulWidget {

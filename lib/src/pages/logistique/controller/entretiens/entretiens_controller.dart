@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/logistiques/entretien_api.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/api/logistiques/entretien_api.dart'; 
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 
 class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {
   final EntretienApi entretienApi = EntretienApi();
   final ProfilController profilController = Get.put(ProfilController());
-  final EnginController enginController = Get.put(EnginController());
+  final MaterielController materielController = Get.put(MaterielController());
   final ImmobilierController immobilierController =
       Get.put(ImmobilierController());
   final MobilierController mobilierController = Get.put(MobilierController());
@@ -35,9 +35,7 @@ class EntretienController extends GetxController
   TextEditingController dureeTravauxController = TextEditingController();
 
   List<String> nomList = [];
-  List<MobilierModel> mobilierList = [];
-  List<ImmobilierModel> immobilierList = [];
-  List<AnguinModel> enguinsList = [];
+  List<MaterielModel> materielList = [];
 
   @override
   void onInit() {
@@ -59,16 +57,8 @@ class EntretienController extends GetxController
     super.dispose();
   }
 
-  void getData() async {
-    mobilierList = mobilierController.mobilierList
-        .where((element) => element.approbationDD == "Approved")
-        .toList();
-    immobilierList = immobilierController.immobilierList
-        .where((element) =>
-            element.approbationDG == "Approved" &&
-            element.approbationDD == "Approved")
-        .toList();
-    enguinsList = enginController.enginList
+  void getData() async { 
+    materielList = materielController.materielList
         .where((element) =>
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")

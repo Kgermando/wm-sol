@@ -5,18 +5,16 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
-import 'package:wm_solution/src/pages/logistique/components/log_dd/table_carburant_dd.dart';
-import 'package:wm_solution/src/pages/logistique/components/log_dd/table_devis_dd.dart';
-import 'package:wm_solution/src/pages/logistique/components/log_dd/table_engin_dd.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/log_dd/table_devis_dd.dart'; 
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_entretien_dd.dart';
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_etat_materiel_dd.dart';
-import 'package:wm_solution/src/pages/logistique/components/log_dd/table_immobilier_dd.dart';
+import 'package:wm_solution/src/pages/logistique/components/log_dd/table_immobilier_dd.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/log_dd/table_materiel_dd.dart';
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_mobilier_dd.dart';
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_trajet_dd.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/carburant_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';  
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
@@ -48,8 +46,7 @@ class _LogDDState extends State<LogDD> {
   Widget build(BuildContext context) {
     final NotifyLogController controller = Get.put(NotifyLogController());
     final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
-    final EnginController enginController = Get.put(EnginController());
-    final CarburantController carburantController = Get.put(CarburantController());
+    final MaterielController materielController = Get.put(MaterielController()); 
     final TrajetController trajetController = Get.put(TrajetController());
     final ImmobilierController immobilierController = Get.put(ImmobilierController());
     final MobilierController mobilierController = Get.put(MobilierController());
@@ -92,14 +89,14 @@ class _LogDDState extends State<LogDD> {
                               child: ExpansionTile(
                                 leading: const Icon(Icons.folder,
                                     color: Colors.white),
-                                title: Text('Dossier engins',
+                                title: Text('Dossier materiels',
                                     style: (Responsive.isDesktop(context))
                                         ? headline6!
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
                                 subtitle: Text(
-                                    "Vous avez ${controller.itemCountEnginDD} dossiers necessitent votre approbation",
+                                    "Vous avez ${controller.itemCountMaterielDD} dossiers necessitent votre approbation",
                                     style: bodyMedium!
                                         .copyWith(color: Colors.white70)),
                                 initiallyExpanded: false,
@@ -110,35 +107,9 @@ class _LogDDState extends State<LogDD> {
                                 },
                                 trailing: const Icon(Icons.arrow_drop_down,
                                     color: Colors.white),
-                                children: [TableEnginDD(enginController: enginController)],
+                                children: [TableMaterielDD(controller: materielController)],
                               ),
-                            ),
-                            Card(
-                              color: Colors.orange.shade700,
-                              child: ExpansionTile(
-                                leading: const Icon(Icons.folder,
-                                    color: Colors.white),
-                                title: Text('Dossier Carburants',
-                                    style: (Responsive.isDesktop(context))
-                                        ? headline6!
-                                            .copyWith(color: Colors.white)
-                                        : bodyLarge!
-                                            .copyWith(color: Colors.white)),
-                                subtitle: Text(
-                                    "Vous avez ${controller.itemCountCarburantDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
-                                initiallyExpanded: false,
-                                onExpansionChanged: (val) {
-                                  setState(() {
-                                    isOpenLog2 = !val;
-                                  });
-                                },
-                                trailing: const Icon(Icons.arrow_drop_down,
-                                    color: Colors.white),
-                                children: [TableCarburantDD(carburantController: carburantController)],
-                              ),
-                            ),
+                            ), 
                             Card(
                               color: Colors.teal.shade700,
                               child: ExpansionTile(

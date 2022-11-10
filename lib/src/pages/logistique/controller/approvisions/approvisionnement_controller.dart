@@ -21,7 +21,8 @@ class ApprovisionnementController extends GetxController
   TextEditingController provisionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   String? unite;
-
+  String? fournisseur;
+ 
   @override
   void onInit() {
     super.onInit();
@@ -84,7 +85,9 @@ class ApprovisionnementController extends GetxController
         quantity: quantityController.text,
         unite: unite.toString(),
         signature: profilController.user.matricule,
-        created: DateTime.now());
+        created: DateTime.now(),
+        fournisseur: fournisseur.toString()
+      );
       await approvisionnementApi.insertData(dataItem).then((value) {
         clear();
         approvisionnementList.clear();
@@ -105,7 +108,7 @@ class ApprovisionnementController extends GetxController
     }
   }
 
-  void submiRavitaillement(ApprovisionnementModel data) async {
+  void submitRavitaillement(ApprovisionnementModel data) async {
     try {
       _isLoading.value = true;
       double qtyTotal = double.parse(data.quantityTotal) +
@@ -118,7 +121,8 @@ class ApprovisionnementController extends GetxController
           quantity: qtyDisponible.toString(),
           unite: unite.toString(),
           signature: profilController.user.matricule,
-          created: DateTime.now());
+          created: DateTime.now(),
+          fournisseur: fournisseur.toString());
       await approvisionnementApi.updateData(dataItem).then((value) {
         clear();
         approvisionnementList.clear();
@@ -139,18 +143,21 @@ class ApprovisionnementController extends GetxController
     }
   }
 
-  void submiReste(ApprovisionnementModel data) async {
+  void submitReste(ApprovisionnementModel data, 
+      TextEditingController qtyController) async {
     try {
       _isLoading.value = true;
       double qtyRestante =
-          double.parse(data.quantity) - double.parse(quantityController.text);
+          double.parse(data.quantity) - double.parse(qtyController.text);
       final dataItem = ApprovisionnementModel(
-          provision: data.provision,
-          quantityTotal: data.quantityTotal,
-          quantity: qtyRestante.toString(),
-          unite: unite.toString(),
-          signature: profilController.user.matricule,
-          created: DateTime.now());
+        provision: data.provision,
+        quantityTotal: data.quantityTotal,
+        quantity: qtyRestante.toString(),
+        unite: data.unite,
+        signature: data.signature,
+        created: data.created,
+        fournisseur: data.fournisseur
+      );
       await approvisionnementApi.updateData(dataItem).then((value) {
         clear();
         approvisionnementList.clear();

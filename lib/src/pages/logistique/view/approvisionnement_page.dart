@@ -8,6 +8,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/list_approvisionnement.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
@@ -22,6 +23,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
   final ApprovisionnementController controller =
       Get.put(ApprovisionnementController());
   final ProfilController profilController = Get.put(ProfilController());
+  final AnnuaireController annuaireController = Get.put(AnnuaireController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Matières et fournitures";
@@ -90,22 +92,22 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
               content: SizedBox(
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
-                  child: controller.isLoading
-                      ? loading()
-                      : Form(
-                          key: controller.formKey,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              provisionWidget(),
-                              ResponsiveChildWidget(
-                                  child1: quantityWidget(),
-                                  child2: uniteWidget()),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                            ],
-                          ))),
+                  child: Form(
+                    key: controller.formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20), 
+                        ResponsiveChildWidget(
+                            child1: provisionWidget(),
+                            child2: fournisseurWidget()),
+                        ResponsiveChildWidget(
+                            child1: quantityWidget(),
+                            child2: uniteWidget()),
+                        const SizedBox(
+                          height: p20,
+                        ),
+                      ],
+                    ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -116,8 +118,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
                       controller.submit();
-                      form.reset();
-                      Navigator.pop(context, 'ok');
+                      form.reset(); 
                     }
                   },
                   child: const Text('OK'),
@@ -197,6 +198,37 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
         onChanged: (value) {
           setState(() {
             controller.unite = value!;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget fournisseurWidget() {
+    List<String> dataList = annuaireController.annuaireList
+    .where((p0) => p0.categorie == "Fournisseur")
+    .map((element) => element.nomPostnomPrenom).toList();
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Fournisseur',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.fournisseur,
+        isExpanded: true,
+        items: dataList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) => value == null ? "Select fournisseur" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.fournisseur = value!;
           });
         },
       ),

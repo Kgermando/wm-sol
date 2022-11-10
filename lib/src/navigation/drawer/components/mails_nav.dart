@@ -88,7 +88,7 @@ class _MailsNAvState extends State<MailsNAv> {
                   if (int.parse(profilController.user.role) <= 2) {
                     Get.toNamed(LogistiqueRoutes.logDashboard);
                   } else {
-                    Get.toNamed(LogistiqueRoutes.logAnguinAuto);
+                    Get.toNamed(LogistiqueRoutes.logMateriel);
                   }
                 } else if (departement.first == "Support") {
                   Get.toNamed(AdminRoutes.adminDashboard);

@@ -23,14 +23,13 @@ import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
 import 'package:wm_solution/src/models/exploitations/production_model.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
-import 'package:wm_solution/src/models/exploitations/versement_projet_model.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/models/exploitations/versement_projet_model.dart'; 
 import 'package:wm_solution/src/models/logistiques/approvision_reception_model.dart';
-import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart';
-import 'package:wm_solution/src/models/logistiques/carburant_model.dart';
+import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart'; 
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
 import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/models/mail/mail_model.dart';
@@ -93,7 +92,10 @@ import 'package:wm_solution/src/pages/commercial/components/commercials/succursa
 import 'package:wm_solution/src/pages/exploitations/components/versements/add_versement.dart';
 import 'package:wm_solution/src/pages/exploitations/components/versements/detail_vesement.dart';
 import 'package:wm_solution/src/pages/exploitations/view/versement_page.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/update_engin.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/add_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/detail_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/update_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/view/materiel_page.dart';
 import 'package:wm_solution/src/pages/marketing/components/agenda/detail_agenda.dart';
 import 'package:wm_solution/src/pages/marketing/components/agenda/update_agenda.dart';
 import 'package:wm_solution/src/pages/marketing/components/annuaire/add_annuaire.dart';
@@ -159,13 +161,9 @@ import 'package:wm_solution/src/pages/finances/view/dette_page.dart';
 import 'package:wm_solution/src/pages/finances/view/fin_exterieur_page.dart';
 import 'package:wm_solution/src/pages/finances/view/observation_page.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_accuse_reception.dart';
-import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_approvisionnement.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/carburants/add_carburant.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/carburants/detail_carburant.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/add_engin.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/engins/detail_engin.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/add_trajet.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/detail_trajet.dart';
+import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_approvisionnement.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/trajets/add_trajet.dart';
+import 'package:wm_solution/src/pages/logistique/components/trajets/detail_trajet.dart';
 import 'package:wm_solution/src/pages/logistique/components/entretiens/add_entretien.dart';
 import 'package:wm_solution/src/pages/logistique/components/entretiens/detail_entretien.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/add_etat_materiel.dart';
@@ -176,10 +174,8 @@ import 'package:wm_solution/src/pages/logistique/components/immobiliers/update_i
 import 'package:wm_solution/src/pages/logistique/components/mobiliers/detail_mobilier.dart';
 import 'package:wm_solution/src/pages/logistique/components/mobiliers/update_mobilier.dart';
 import 'package:wm_solution/src/pages/logistique/view/accuser_reception_page.dart';
-import 'package:wm_solution/src/pages/logistique/view/approvisionnement_page.dart';
-import 'package:wm_solution/src/pages/logistique/view/carburant_page.dart';
+import 'package:wm_solution/src/pages/logistique/view/approvisionnement_page.dart'; 
 import 'package:wm_solution/src/pages/logistique/view/dahsboard_log.dart';
-import 'package:wm_solution/src/pages/logistique/view/engin_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/entretiens_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/etat_materiel_page.dart';
 import 'package:wm_solution/src/pages/logistique/view/immobilier_page.dart';
@@ -1174,50 +1170,32 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
     GetPage(
-      name: LogistiqueRoutes.logAnguinAuto,
-      page: () => const EnginPage(),
+      name: LogistiqueRoutes.logMateriel,
+      page: () => const MaterielPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logAddAnguinAuto,
-      page: () => const AddEngin(),
+      name: LogistiqueRoutes.logMaterielAdd,
+      page: () => const AddMateriel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logAnguinAutoDetail,
+      name: LogistiqueRoutes.logMaterielDetail,
       page: () {
-        final AnguinModel anguinModel = Get.arguments as AnguinModel;
-        return DetailEngin(anguinModel: anguinModel);
+        final MaterielModel materielModel = Get.arguments as MaterielModel;
+        return DetailMateriel(materielModel: materielModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logAnguinAutoUpdate,
+      name: LogistiqueRoutes.logMaterielUpdate,
       page: () {
-        final AnguinModel anguinModel = Get.arguments as AnguinModel;
-        return UpdateEngin(anguinModel: anguinModel);
+        final MaterielModel materielModel = Get.arguments as MaterielModel;
+        return UpdateMateriel(materielModel: materielModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
-  GetPage(
-    name: LogistiqueRoutes.logCarburantAuto,
-    page: () => const CarburantPage(),
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: LogistiqueRoutes.logAddCarburantAuto,
-      page: () => const AddCarburant(),
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: LogistiqueRoutes.logCarburantAutoDetail,
-      page: () {
-        final CarburantModel carburantModel = Get.arguments as CarburantModel;
-        return DetailCarburant(carburantModel: carburantModel);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)), 
+ 
 
    GetPage(
       name: LogistiqueRoutes.logTrajetAuto,
@@ -1227,8 +1205,8 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: LogistiqueRoutes.logAddTrajetAuto,
       page: () {
-        final AnguinModel anguinModel = Get.arguments as AnguinModel;
-        return AddTrajet(anguinModel: anguinModel);
+        final MaterielModel materielModel = Get.arguments as MaterielModel;
+        return AddTrajet(materielModel: materielModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

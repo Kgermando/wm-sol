@@ -1,7 +1,7 @@
 name: wm_solution
 description: Solution Work Management.
  
-version: 3.0.0+2
+version: 3.0.0+4
 
 environment:
   sdk: '>=2.18.2 <3.0.0'

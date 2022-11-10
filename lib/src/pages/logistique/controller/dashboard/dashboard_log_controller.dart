@@ -1,22 +1,21 @@
- import 'package:get/get.dart';
-import 'package:wm_solution/src/models/logistiques/carburant_model.dart'; 
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/carburant_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:get/get.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';  
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 
 class DashboardLogController extends GetxController {
-  final EnginController enginController = Get.put(EnginController());
-  final TrajetController trajetController = Get.put(TrajetController());
-  final CarburantController carburantController = Get.put(CarburantController());
+  final MaterielController materielController = Get.put(MaterielController());
+  final TrajetController trajetController = Get.put(TrajetController()); 
   final EtatMaterielController etatMaterielController = Get.put(EtatMaterielController());
   final ImmobilierController immobilierController = Get.put(ImmobilierController());
   final MobilierController mobilierController = Get.put(MobilierController());
     
-  final _anguinsCount = 0.obs;
-  int get anguinsCount => _anguinsCount.value;
+  final _materielCount = 0.obs;
+  int get materielCount => _materielCount.value;
+  final _materielCountRoulant = 0.obs;
+  int get materielCountRoulant => _materielCountRoulant.value;
     
   final _mobilierCount = 0.obs;
   int get mobilierCount => _mobilierCount.value;
@@ -66,8 +65,13 @@ class DashboardLogController extends GetxController {
 
  Future<void> getData() async {
 
-    _anguinsCount.value = enginController.enginList
-        .where((element) =>
+    _materielCount.value = materielController.materielList
+        .where((element) => element.typeMateriel == 'Materiel' &&
+            element.approbationDG == "Approved" &&
+            element.approbationDD == "Approved")
+        .length;
+    _materielCountRoulant.value = materielController.materielList
+        .where((element) => element.typeMateriel == 'Materiel roulant' &&
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")
         .length;
@@ -79,9 +83,7 @@ class DashboardLogController extends GetxController {
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")
         .length;
-    var carburantsList = carburantController.carburantList
-        .where((element) => element.approbationDD == "Approved")
-        .toList();
+    
     _etatMaterielActif.value = etatMaterielController.etatMaterielList
         .where((element) =>
             element.statut == "Actif" && element.approbationDD == "Approved")
@@ -95,72 +97,6 @@ class DashboardLogController extends GetxController {
             element.statut == "Declaser" && element.approbationDD == "Approved")
         .length;
 
-    List<CarburantModel?> entreListEssence = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Entrer" &&
-            element.typeCaburant == "Essence")
-        .toList();
-    List<CarburantModel?> sortieListEssence = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Sortie" &&
-            element.typeCaburant == "Essence")
-        .toList();
-    for (var item in entreListEssence) {
-      _entrerEssence.value += double.parse(item!.qtyAchat);
-    }
-    for (var item in sortieListEssence) {
-      _sortieEssence.value += double.parse(item!.qtyAchat);
-    }
-
-    List<CarburantModel> entrerListMazoute = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Entrer" &&
-            element.typeCaburant == "Mazoutte")
-        .toList();
-    List<CarburantModel?> sortieListMazoute = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Sortie" &&
-            element.typeCaburant == "Mazoutte")
-        .toList();
-    for (var item in entrerListMazoute) {
-      _entrerMazoute.value += double.parse(item.qtyAchat);
-    }
-    for (var item in sortieListMazoute) {
-      _sortieMazoute.value += double.parse(item!.qtyAchat);
-    }
-
-    List<CarburantModel?> entrerListHuilleMoteur = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Entrer" &&
-            element.typeCaburant == "Huille moteur")
-        .toList();
-    List<CarburantModel?> sortieListHuilleMoteur = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Sortie" &&
-            element.typeCaburant == "Huille moteur")
-        .toList();
-    for (var item in entrerListHuilleMoteur) {
-      _entrerHuilleMoteur.value += double.parse(item!.qtyAchat);
-    }
-    for (var item in sortieListHuilleMoteur) {
-      _sortieHuilleMoteur.value += double.parse(item!.qtyAchat);
-    }
-
-    List<CarburantModel> entrerListPetrole = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Entrer" &&
-            element.typeCaburant == "Pétrole")
-        .toList();
-    List<CarburantModel> sortieListPetrole = carburantsList
-        .where((element) =>
-            element.operationEntreSortie == "Sortie" &&
-            element.typeCaburant == "Pétrole")
-        .toList();
-    for (var item in entrerListPetrole) {
-      _entrerPetrole.value += double.parse(item.qtyAchat);
-    }
-    for (var item in sortieListPetrole) {
-      _sortiePetrole.value += double.parse(item.qtyAchat);
-    }
+     update();
   }
 }

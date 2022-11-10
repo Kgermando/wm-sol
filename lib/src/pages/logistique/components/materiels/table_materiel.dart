@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/trajet_xlsx.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/materiel_xlsx.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableTrajet extends StatefulWidget {
-  const TableTrajet(
-      {super.key, required this.trajetList, required this.controller});
-  final List<TrajetModel> trajetList;
-  final TrajetController controller;
+class TableMateriel extends StatefulWidget {
+  const TableMateriel(
+      {super.key, required this.materielList, required this.controller});
+  final List<MaterielModel> materielList;
+  final MaterielController controller;
 
   @override
-  State<TableTrajet> createState() => _TableTrajetState();
+  State<TableMateriel> createState() => _TableMaterielState();
 }
 
-class _TableTrajetState extends State<TableTrajet> {
+class _TableMaterielState extends State<TableMateriel> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -41,11 +41,11 @@ class _TableTrajetState extends State<TableTrajet> {
         final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
-        final TrajetModel trajetModel =
+        final MaterielModel materielModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(LogistiqueRoutes.logTrajetAutoDetail,
-            arguments: trajetModel);
+        Get.toNamed(LogistiqueRoutes.logMaterielDetail,
+            arguments: materielModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -56,17 +56,17 @@ class _TableTrajetState extends State<TableTrajet> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Trajets"),
+            const TitleWidget(title: "Engins"),
             Row(
               children: [
                 IconButton(
                     onPressed: () {
                       Navigator.pushNamed(
-                          context, LogistiqueRoutes.logTrajetAuto);
+                          context, LogistiqueRoutes.logMateriel);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  TrajetXlsx().exportToExcel(widget.trajetList);
+                  MaterielXlsx().exportToExcel(widget.materielList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -86,19 +86,33 @@ class _TableTrajetState extends State<TableTrajet> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'nomeroEntreprise') {
+            } else if (column.field == 'identifiant') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'conducteur') {
+            } else if (column.field == 'marque') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'trajetA') {
+            } else if (column.field == 'modele') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'mission') {
+            } else if (column.field == 'couleur') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'kilometrageSorite') {
+            } else if (column.field == 'numeroRef') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'kilometrageRetour') {
+            } else if (column.field == 'numeroPLaque') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'genre') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'qtyMaxReservoir') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'dateFabrication') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'kilometrageInitiale') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'fournisseur') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'alimentation') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'approbationDG') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -117,22 +131,27 @@ class _TableTrajetState extends State<TableTrajet> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.trajetList.length;
-    for (var item in widget.trajetList) {
+    var i = widget.materielList.length;
+    for (var item in widget.materielList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'nomeroEntreprise': PlutoCell(value: item.nomeroEntreprise),
-          'conducteur': PlutoCell(value: item.conducteur),
-          'trajetDe': PlutoCell(value: item.trajetDe),
-          'trajetA': PlutoCell(value: item.trajetA),
-          'mission': PlutoCell(value: item.mission),
-          'kilometrageSorite':
-              PlutoCell(value: "${item.kilometrageSorite} km/h"),
-          'kilometrageRetour':
-              PlutoCell(value: "${item.kilometrageRetour} km/h"),
+          'identifiant': PlutoCell(value: item.identifiant),
+          'marque': PlutoCell(value: item.marque),
+          'modele': PlutoCell(value: item.modele),
+          'couleur': PlutoCell(value: item.couleur),
+          'numeroRef': PlutoCell(value: item.numeroRef),
+          'numeroPLaque': PlutoCell(value: item.numeroPLaque),
+          'genre': PlutoCell(value: item.genre), 
+          'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
+          'dateFabrication': PlutoCell(
+              value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
+          'kilometrageInitiale': PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
+          'fournisseur': PlutoCell(value: item.fournisseur),
+          'alimentation': PlutoCell(value: item.alimentation),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+          'approbationDG': PlutoCell(value: item.approbationDG),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
@@ -157,20 +176,8 @@ class _TableTrajetState extends State<TableTrajet> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom Utilisateur(chauffeur)',
-        field: 'conducteur',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'De',
-        field: 'trajetDe',
+        title: 'Identifiant',
+        field: 'identifiant',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -181,8 +188,8 @@ class _TableTrajetState extends State<TableTrajet> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'A',
-        field: 'trajetA',
+        title: 'Marque',
+        field: 'marque',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -193,8 +200,8 @@ class _TableTrajetState extends State<TableTrajet> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Mission',
-        field: 'mission',
+        title: 'Modèle',
+        field: 'modele',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -205,8 +212,8 @@ class _TableTrajetState extends State<TableTrajet> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'kilometrage Soritie',
-        field: 'kilometrageSorite',
+        title: 'Couleur',
+        field: 'couleur',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -217,8 +224,92 @@ class _TableTrajetState extends State<TableTrajet> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'kilometrage Retour',
-        field: 'kilometrageRetour',
+        title: 'Numero Reference',
+        field: 'numeroRef',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Numero PLaque',
+        field: 'numeroPLaque',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Genre',
+        field: 'genre',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Qté max reservoir',
+        field: 'qtyMaxReservoir',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Date de fabrication',
+        field: 'dateFabrication',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Kilometrage Initiale',
+        field: 'kilometrageInitiale',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Fournisseur',
+        field: 'fournisseur',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Alimentation source',
+        field: 'alimentation',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -242,13 +333,42 @@ class _TableTrajetState extends State<TableTrajet> {
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DD',
+        field: 'approbationDG',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Approbation DD',
         field: 'approbationDD',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 300,
         minWidth: 150,
         renderer: (rendererContext) {
           Color textColor = Colors.black;

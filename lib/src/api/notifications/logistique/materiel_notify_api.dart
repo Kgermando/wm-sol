@@ -8,11 +8,11 @@ import 'package:wm_solution/src/api/route_api.dart';
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:http/http.dart' as http;
 
-class EnginNotifyApi extends GetConnect {
+class MaterielNotifyApi extends GetConnect {
   var client = http.Client();
 
-  var getDGUrl = Uri.parse("$enginsNotifyUrl/get-count-dg/");
-  var getDDUrl = Uri.parse("$enginsNotifyUrl/get-count-dd/");
+  var getDGUrl = Uri.parse("$materielNotifyUrl/get-count-dg/");
+  var getDDUrl = Uri.parse("$materielNotifyUrl/get-count-dd/");
 
   Future<NotifyModel> getCountDG() async {
     Map<String, String> header = headers;

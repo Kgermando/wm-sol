@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:wm_solution/src/constants/app_theme.dart'; 
 import 'package:wm_solution/src/constants/responsive.dart';
 
 class ResponsiveChild5Widget extends StatelessWidget {
@@ -34,10 +35,14 @@ class ResponsiveChild5Widget extends StatelessWidget {
       return Row(
         mainAxisAlignment: (mainAxisAlignment == null) ? MainAxisAlignment.start : mainAxisAlignment!,
         children: [
-          Expanded(flex: (flex1 == null) ? 1 : flex1!, child: child1), 
+          Expanded(flex: (flex1 == null) ? 1 : flex1!, child: child1),
+          const SizedBox(width: p20),
           Expanded(flex: (flex2 == null) ? 1 : flex2!, child: child2),
+          const SizedBox(width: p20),
           Expanded(flex: (flex3 == null) ? 1 : flex3!, child: child3),
+          const SizedBox(width: p20),
           Expanded(flex: (flex4 == null) ? 1 : flex4!, child: child4),
+          const SizedBox(width: p20),
           Expanded(flex: (flex5 == null) ? 1 : flex5!, child: child5),
         ],
       );
@@ -47,9 +52,14 @@ class ResponsiveChild5Widget extends StatelessWidget {
             ? MainAxisAlignment.start
             : mainAxisAlignment!,
         children: [
-          Expanded(flex: (flex1 == null) ? 1 : flex1!, child: child1), 
+          Expanded(flex: (flex1 == null) ? 1 : flex1!, child: child1),
+          const SizedBox(width: p20),
           Expanded(flex: (flex2 == null) ? 1 : flex2!, child: child2),
+          const SizedBox(width: p20),
+          Expanded(flex: (flex3 == null) ? 1 : flex3!, child: child3),
+          const SizedBox(width: p20),
           Expanded(flex: (flex4 == null) ? 1 : flex4!, child: child4),
+          const SizedBox(width: p20),
           Expanded(flex: (flex5 == null) ? 1 : flex5!, child: child5),
         ],
       );

@@ -1,48 +1,48 @@
 import 'dart:io';
 
-import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:excel/excel.dart'; 
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 
-class EnginXlsx {
-  Future<void> exportToExcel(List<AnguinModel> dataList) async {
+class MaterielXlsx {
+  Future<void> exportToExcel(List<MaterielModel> dataList) async {
     var excel = Excel.createExcel();
     String title = "Engins";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([ 
-      "Nomero PLaque",
+      'Type materiel',
+      "Identifiant",
       "Marque",
       "Modèle",
-      "Numero Chassie",
-      "Couleur",
+      "Couleur", 
+      "Numero Reference",
+      "Numero PLaque",   
       "Genre",
       "Qty Max Reservoir",
-      "Date Fabrication",
-      "Nomero Entreprise",
+      "Date Fabrication", 
       "Kilometrage Initiale",
-      "Provenance",
-      "Type Caburant",
-      "Type Moteur",
+      "Fournisseur",
+      "Alimentation source", 
       "Signature",
       "Date"
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
       List<String> data = [ 
+        dataList[i].typeMateriel,
+        dataList[i].identifiant,
         dataList[i].marque,
-        dataList[i].nomeroPLaque,
         dataList[i].modele,
-        dataList[i].numeroChassie,
         dataList[i].couleur,
+        dataList[i].numeroRef,
+        dataList[i].numeroPLaque, 
         dataList[i].genre,
         dataList[i].qtyMaxReservoir,
-        DateFormat("dd/MM/yy HH-mm").format(dataList[i].dateFabrication),
-        dataList[i].nomeroEntreprise,
+        DateFormat("dd/MM/yy HH-mm").format(dataList[i].dateFabrication), 
         dataList[i].kilometrageInitiale,
-        dataList[i].provenance,
-        dataList[i].typeCaburant,
-        dataList[i].typeMoteur,
+        dataList[i].fournisseur,
+        dataList[i].alimentation, 
         dataList[i].signature,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].created)
       ];

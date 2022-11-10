@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:wm_solution/src/api/logistiques/anguin_api.dart';
+import 'package:wm_solution/src/api/logistiques/materiels_api.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/charts/pie_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -22,7 +22,7 @@ class _EnguinPieState extends State<EnguinPie> {
 
   List<PieChartEnguinModel> dataList = [];
   Future<void> getData() async {
-    var data = await AnguinApi().getChartPie();
+    var data = await MaterielsApi().getChartPie();
     if (mounted) {
       setState(() {
         dataList = data;
@@ -38,7 +38,7 @@ class _EnguinPieState extends State<EnguinPie> {
         elevation: 10.0,
         child: SfCircularChart(
             title: ChartTitle(
-                text: "Type d'engins",
+                text: "Materiel",
                 textStyle: const TextStyle(fontWeight: FontWeight.bold)),
             legend: Legend(isVisible: true, isResponsive: true),
             series: <CircularSeries>[

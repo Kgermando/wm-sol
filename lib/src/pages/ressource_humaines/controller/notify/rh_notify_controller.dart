@@ -56,6 +56,7 @@ class RHNotifyController extends GetxController {
     getCountTransResteObs();
   }
 
+ 
   @override
   void refresh() {
     getCountRh();

@@ -116,12 +116,16 @@ class _AddEntretienState extends State<AddEntretien> {
             ));
   }
 
-  Widget typeObjetWidget() {
-    List<String> typeObjetList = ["Mobilier", "Immobilier", "Enguins"];
-    var mobiliers = controller.mobilierList.map((e) => e.nom).toList();
-    var immobiliers =
-        controller.immobilierList.map((e) => e.numeroCertificat).toList();
-    var enguins = controller.enguinsList.map((e) => e.nomeroPLaque).toList();
+   Widget typeObjetWidget() {
+    List<String> typeObjetList = ["Materiel", "Materiel roulant"];
+    var materielList = controller.materielList
+        .where((e) => e.typeMateriel == 'Materiel')
+        .map((e) => e.identifiant)
+        .toList();
+    var materielRoulantList = controller.materielList
+        .where((e) => e.typeMateriel == 'Materiel roulant')
+        .map((e) => e.identifiant)
+        .toList();
 
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
@@ -149,16 +153,12 @@ class _AddEntretienState extends State<AddEntretien> {
             controller.typeObjet = value!;
             controller.nomList.clear();
             switch (value) {
-              case 'Mobilier':
-                controller.nomList = mobiliers;
+              case 'Materiel':
+                controller.nomList = materielList;
                 controller.nom = controller.nomList.first;
                 break;
-              case 'Immobilier':
-                controller.nomList = immobiliers;
-                controller.nom = controller.nomList.first;
-                break;
-              case 'Enguins':
-                controller.nomList = enguins;
+              case 'Materiel roulant':
+                controller.nomList = materielRoulantList;
                 controller.nom = controller.nomList.first;
                 break;
               default:
@@ -328,17 +328,16 @@ class _AddEntretienState extends State<AddEntretien> {
   }
 
   Widget tableWidget() {
-    int? id = controller.entretienList.map((element) => element.id).last;
+    var id = controller.entretienList.map((element) => element.id).last;
     var dataList = objetRemplaceController.objetRemplaceList
-        .where((p0) => p0.reference == id! + 1)
-        .toList();
+        .where((p0) => p0.reference == id! + 1).toList();
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           TitleWidget(
-              title: Responsive.isDesktop(context)
-                  ? "Ajouter les objets remplacés"
-                  : "Add objet"),
+            title: Responsive.isDesktop(context)
+                ? "Ajouter les objets remplacés"
+                : "Add objet"),
         ]),
         if (!Responsive.isMobile(context)) tableWidgetDesktop(dataList),
         if (Responsive.isMobile(context))

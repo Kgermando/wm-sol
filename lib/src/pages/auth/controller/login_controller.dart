@@ -119,7 +119,7 @@ class LoginController extends GetxController {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAllNamed(LogistiqueRoutes.logDashboard);
                   } else {
-                    Get.offAllNamed(LogistiqueRoutes.logAnguinAuto);
+                    Get.offAllNamed(LogistiqueRoutes.logMateriel);
                   }
                 } else if (departement.first == "Support") {
                   Get.offAllNamed(AdminRoutes.adminDashboard);

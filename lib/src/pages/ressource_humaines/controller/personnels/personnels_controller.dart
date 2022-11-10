@@ -62,7 +62,8 @@ class PersonnelsController extends GetxController
   TextEditingController emailController = TextEditingController();
   TextEditingController telephoneController = TextEditingController();
   TextEditingController adresseController = TextEditingController();
-  TextEditingController numeroSecuriteSocialeController = TextEditingController();
+  TextEditingController numeroSecuriteSocialeController =
+      TextEditingController();
   TextEditingController dateNaissanceController = TextEditingController();
   TextEditingController lieuNaissanceController = TextEditingController();
   TextEditingController dateDebutContratController = TextEditingController();
@@ -127,6 +128,24 @@ class PersonnelsController extends GetxController
     salaireController.dispose();
 
     super.dispose();
+  }
+
+  void clear() {
+    departementSelectedList = [];
+    nomController.clear();
+    postNomController.clear();
+    prenomController.clear();
+    emailController.clear();
+    telephoneController.clear();
+    adresseController.clear();
+    numeroSecuriteSocialeController.clear();
+    dateNaissanceController.clear();
+    lieuNaissanceController.clear();
+    dateDebutContratController.clear();
+    dateFinContratController.clear();
+    competanceController.clear();
+    experienceController.clear();
+    salaireController.clear();
   }
 
   void getList() async {
@@ -209,6 +228,7 @@ class PersonnelsController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await personnelsApi.insertData(agentModel).then((value) async {
+        clear();
         submitPerformence();
         personnelsList.clear();
         getList();
@@ -322,6 +342,7 @@ class PersonnelsController extends GetxController
         signature: profilController.user.matricule.toString(),
         created: DateTime.now());
     await personnelsApi.updateData(agentModel).then((value) {
+      clear();
       personnelsList.clear();
       getList();
       Get.back();
@@ -364,6 +385,7 @@ class PersonnelsController extends GetxController
         signature: personne.signature,
         created: personne.created);
     await personnelsApi.updateData(agentModel).then((value) {
+      clear();
       // detailView(value.id!);
       Get.back();
       Get.snackbar("Modification du statut effectué!",

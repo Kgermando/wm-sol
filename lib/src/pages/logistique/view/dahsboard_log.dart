@@ -6,7 +6,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/logistique/components/dashboard/enguin_pie.dart';
+import 'package:wm_solution/src/pages/logistique/components/dashboard/materiel_pie.dart';
 import 'package:wm_solution/src/pages/logistique/components/dashboard/etat_materiel_pie.dart';
 import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -63,12 +63,21 @@ class _DashboardLogState extends State<DashboardLog> {
                                     DashNumberWidget(
                                         gestureTapCallback: () {
                                           Get.toNamed(LogistiqueRoutes
-                                              .logAnguinAuto);  
+                                              .logMateriel);  
                                         },
-                                        number: '${controller.anguinsCount}',
-                                        title: 'Total anguins',
+                                        number: '${controller.materielCount}',
+                                        title: 'Total Materiel',
                                         icon: Icons.car_rental,
                                         color: Colors.blue.shade700),
+                                    DashNumberWidget(
+                                        gestureTapCallback: () {
+                                          Get.toNamed(
+                                              LogistiqueRoutes.logMateriel);
+                                        },
+                                        number: '${controller.materielCountRoulant}',
+                                        title: 'Materiel roulant',
+                                        icon: Icons.car_rental,
+                                        color: Colors.blueGrey.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
                                           Get.toNamed(LogistiqueRoutes
@@ -119,44 +128,7 @@ class _DashboardLogState extends State<DashboardLog> {
                                         icon: Icons.not_interested,
                                         color: Colors.red.shade700),
                                   ],
-                                ),
-                                const SizedBox(height: p30),
-                                const TitleWidget(title: "Tableau carburants"),
-                                const SizedBox(height: p10),
-                                if (!Responsive.isMobile(context))
-                                  Table(
-                                    children: <TableRow>[
-                                      tableCarburant(),
-                                      tableCellEssence(),
-                                      tableCellMazoute(),
-                                      tableCellPetrole(),
-                                      tableCellHuileMoteur()
-                                    ],
-                                  ),
-                                if (Responsive.isMobile(context))
-                                  Scrollbar(
-                                    controller: controllerTable,
-                                    child: SingleChildScrollView(
-                                      controller: controllerTable,
-                                      scrollDirection: Axis.horizontal,
-                                      child: Container(
-                                        constraints: BoxConstraints(
-                                            minWidth: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                2),
-                                        child: Table(
-                                          children: <TableRow>[
-                                            tableCarburant(),
-                                            tableCellEssence(),
-                                            tableCellMazoute(),
-                                            tableCellPetrole(),
-                                            tableCellHuileMoteur()
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                ), 
                                 const SizedBox(
                                   height: 20.0,
                                 ),

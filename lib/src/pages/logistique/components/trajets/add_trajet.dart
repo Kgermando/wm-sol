@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/logistiques/anguin_model.dart';
+import 'package:wm_solution/src/constants/responsive.dart'; 
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class AddTrajet extends StatefulWidget {
-  const AddTrajet({super.key, required this.anguinModel});
-  final AnguinModel anguinModel;
+  const AddTrajet({super.key, required this.materielModel});
+  final MaterielModel materielModel;
 
   @override
   State<AddTrajet> createState() => _AddTrajetState();
@@ -33,7 +33,7 @@ class _AddTrajetState extends State<AddTrajet> {
         (state) => Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
-                  context, scaffoldKey, title, widget.anguinModel.nomeroPLaque),
+                  context, scaffoldKey, title, widget.materielModel.identifiant),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +103,7 @@ class _AddTrajetState extends State<AddTrajet> {
                                                     .formKey.currentState!;
                                                 if (form.validate()) {
                                                   controller.submit(
-                                                      widget.anguinModel);
+                                                      widget.materielModel);
                                                   form.reset();
                                                 }
                                               })

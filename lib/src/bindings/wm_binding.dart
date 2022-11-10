@@ -20,6 +20,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/restitut
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/livraison_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/ravitaillement_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
@@ -55,10 +56,8 @@ import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exte
 import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/notify/observation_notify_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/carburant_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/engin_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';  
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/objet_remplace_controller.dart';
@@ -198,13 +197,12 @@ class WMBindings extends Bindings {
   Get.lazyPut<LivraisonController>(() => LivraisonController());
   Get.lazyPut<RavitaillementController>(() => RavitaillementController());
   Get.lazyPut<StockGlobalController>(() => StockGlobalController());  
-    
+
 
   // Logistique
   Get.lazyPut<ApprovisionReceptionController>(() => ApprovisionReceptionController());  
-  Get.lazyPut<ApprovisionnementController>(() => ApprovisionnementController());  
-  Get.lazyPut<CarburantController>(() => CarburantController());  
-  Get.lazyPut<EnginController>(() => EnginController());  
+  Get.lazyPut<ApprovisionnementController>(() => ApprovisionnementController());
+  Get.lazyPut<MaterielController>(() => MaterielController());  
   Get.lazyPut<TrajetController>(() => TrajetController());  
   Get.lazyPut<DashboardLogController>(() => DashboardLogController());  
   Get.lazyPut<EntretienController>(() => EntretienController());  

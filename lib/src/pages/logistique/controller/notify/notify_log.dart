@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/notifications/departements/logistique_departement.dart';
 import 'package:wm_solution/src/api/notifications/logistique/carburant_notify_api.dart';
-import 'package:wm_solution/src/api/notifications/logistique/engin_notify_api.dart';
+import 'package:wm_solution/src/api/notifications/logistique/materiel_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/logistique/entretien_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/logistique/etat_materiel_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/logistique/immobilier_notify_api.dart';
@@ -11,7 +11,7 @@ import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 
 class NotifyLogController extends GetxController {
-  final EnginNotifyApi enginNotifyApi = EnginNotifyApi();
+  final MaterielNotifyApi materielNotifyApi = MaterielNotifyApi();
   final CarburantNotifyApi carburantNotifyApi = CarburantNotifyApi();
   final TrajetNotifyApi trajetNotifyApi = TrajetNotifyApi();
   final ImmobilierNotifyApi immobilierNotifyApi = ImmobilierNotifyApi();
@@ -20,14 +20,14 @@ class NotifyLogController extends GetxController {
   final EtatMaterielNotifyApi etatMaterielNotifyApi = EtatMaterielNotifyApi();
   final LogistiqueDepartementNotifyApi logistiqueDepartementNotifyApi =
       LogistiqueDepartementNotifyApi();
- 
+
   final _itemCount = '0'.obs;
   String get itemCount => _itemCount.value;
 
-  final _itemCountEnginDG = 0.obs;
-  int get itemCountEnginDG => _itemCountEnginDG.value;
-  final _itemCountEnginDD = 0.obs;
-  int get itemCountEnginDD => _itemCountEnginDD.value;
+  final _itemCountMaterielDG = 0.obs;
+  int get itemCountMaterielDG => _itemCountMaterielDG.value;
+  final _itemCountMaterielDD = 0.obs;
+  int get itemCountMaterielDD => _itemCountMaterielDD.value;
 
   final _itemCountCarburantDD = 0.obs;
   int get itemCountCarburantDD => _itemCountCarburantDD.value;
@@ -50,7 +50,7 @@ class NotifyLogController extends GetxController {
   int get itemCounEtatmaterielDD => _itemCounEtatmaterielDD.value;
 
   @override
-  void onInit() { 
+  void onInit() {
     super.onInit();
     getCount();
     getCountEnginDG();
@@ -80,52 +80,63 @@ class NotifyLogController extends GetxController {
   }
 
   void getCount() async {
-    NotifySumModel notifySum = await logistiqueDepartementNotifyApi.getCountLogistique();
+    NotifySumModel notifySum =
+        await logistiqueDepartementNotifyApi.getCountLogistique();
     _itemCount.value = notifySum.sum;
+    update();
   }
 
   void getCountEnginDG() async {
-    NotifyModel notifySum = await enginNotifyApi.getCountDG();
-    _itemCountEnginDG.value = notifySum.count;
+    NotifyModel notifySum = await materielNotifyApi.getCountDG();
+    _itemCountMaterielDG.value = notifySum.count;
+    update();
   }
 
   void getCountEnginDD() async {
-    NotifyModel notifySum = await enginNotifyApi.getCountDD();
-    _itemCountEnginDD.value = notifySum.count;
+    NotifyModel notifySum = await materielNotifyApi.getCountDD();
+    _itemCountMaterielDD.value = notifySum.count;
+    update();
   }
 
   void getCountCarburantDD() async {
     NotifyModel notifySum = await carburantNotifyApi.getCountDD();
     _itemCountCarburantDD.value = notifySum.count;
+    update();
   }
 
   void getCountTrajetsDD() async {
     NotifyModel notifySum = await trajetNotifyApi.getCountDD();
     _itemCountTrajetsDD.value = notifySum.count;
+    update();
   }
 
   void getCountImmobilierDG() async {
     NotifyModel notifySum = await immobilierNotifyApi.getCountDG();
     _itemCountImmobilierDG.value = notifySum.count;
+    update();
   }
 
   void getCountImmobilierDD() async {
     NotifyModel notifySum = await immobilierNotifyApi.getCountDD();
     _itemCountImmobilierDD.value = notifySum.count;
+    update();
   }
 
   void getCountMobilierDD() async {
     NotifyModel notifySum = await mobilierNotifyApi.getCountDD();
     _itemCountMobilierDD.value = notifySum.count;
+    update();
   }
 
   void getCountEntretienDD() async {
     NotifyModel notifySum = await entretienNotifyApi.getCountDD();
     _itemCounEntretienDD.value = notifySum.count;
+    update();
   }
 
   void getCountEtatmaterielDD() async {
     NotifyModel notifySum = await etatMaterielNotifyApi.getCountDD();
     _itemCounEtatmaterielDD.value = notifySum.count;
+    update();
   }
 }

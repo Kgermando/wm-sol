@@ -1,19 +1,21 @@
-class AnguinModel {
+class MaterielModel {
   late int? id;
-  late String modele;
+  late String typeMateriel; // typeMateriel de mateiriel roulant ou autres
   late String marque;
-  late String numeroChassie;
+  late String modele;
+  late String numeroRef; // Numero Chassie
   late String couleur;
-  late String genre; // Form viture(voiture, camion, bus, mini-bus...)
-  late String qtyMaxReservoir;
+  late String genre; // textField typeMaterielHead voiture(voiture, camion, bus, mini-bus...)
+
+  late String qtyMaxReservoir; // Pour autres materiel laisser vide
   late DateTime dateFabrication;
-  late String nomeroPLaque;
-  // numero que l'entreprise donne donne a ses anguins
-  late String nomeroEntreprise;
-  late String kilometrageInitiale;
-  late String provenance;
-  late String typeCaburant;
-  late String typeMoteur;
+  late String numeroPLaque; // Pour autres materiel laisser vide
+
+  late String identifiant; // Identifiant interne entreprise
+  late String kilometrageInitiale; // Pour autres materiel laisser vide
+  late String fournisseur; // provenance
+  late String alimentation;  // Essence, Gasoil, Pétrole, Gaz, AC, DC, Autres
+  // late String typeMaterielMoteur;
 
   late String signature; // celui qui fait le document
   late DateTime created;
@@ -27,21 +29,22 @@ class AnguinModel {
   late String motifDD;
   late String signatureDD;
 
-  AnguinModel(
+  
+  MaterielModel(
       {this.id,
-      required this.modele,
+      required this.typeMateriel,
       required this.marque,
-      required this.numeroChassie,
+      required this.modele,
+      required this.numeroRef,
       required this.couleur,
       required this.genre,
       required this.qtyMaxReservoir,
       required this.dateFabrication,
-      required this.nomeroPLaque,
-      required this.nomeroEntreprise,
+      required this.numeroPLaque,
+      required this.identifiant,
       required this.kilometrageInitiale,
-      required this.provenance,
-      required this.typeCaburant,
-      required this.typeMoteur,
+      required this.fournisseur,
+      required this.alimentation, 
       required this.signature,
       required this.created,
       required this.approbationDG,
@@ -51,22 +54,22 @@ class AnguinModel {
       required this.motifDD,
       required this.signatureDD});
 
-  factory AnguinModel.fromSQL(List<dynamic> row) {
-    return AnguinModel(
+  factory MaterielModel.fromSQL(List<dynamic> row) {
+    return MaterielModel(
         id: row[0],
-        modele: row[1],
+        typeMateriel: row[1],
         marque: row[2],
-        numeroChassie: row[3],
-        couleur: row[4],
-        genre: row[5],
-        qtyMaxReservoir: row[6],
-        dateFabrication: row[7],
-        nomeroPLaque: row[8],
-        nomeroEntreprise: row[9],
-        kilometrageInitiale: row[10],
-        provenance: row[11],
-        typeCaburant: row[12],
-        typeMoteur: row[13],
+        modele: row[3],
+        numeroRef: row[4],
+        couleur: row[5],
+        genre: row[6],
+        qtyMaxReservoir: row[7],
+        dateFabrication: row[8],
+        numeroPLaque: row[9],
+        identifiant: row[10],
+        kilometrageInitiale: row[11],
+        fournisseur: row[12],
+        alimentation: row[13],
         signature: row[14],
         created: row[15],
         approbationDG: row[16],
@@ -74,25 +77,26 @@ class AnguinModel {
         signatureDG: row[18],
         approbationDD: row[19],
         motifDD: row[20],
-        signatureDD: row[21]);
+        signatureDD: row[21]
+    );
   }
 
-  factory AnguinModel.fromJson(Map<String, dynamic> json) {
-    return AnguinModel(
+  factory MaterielModel.fromJson(Map<String, dynamic> json) {
+    return MaterielModel(
         id: json['id'],
-        modele: json['modele'],
+        typeMateriel: json['typeMateriel'],
         marque: json['marque'],
-        numeroChassie: json['numeroChassie'],
+        modele: json['modele'],
+        numeroRef: json['numeroRef'],
         couleur: json['couleur'],
         genre: json['genre'],
         qtyMaxReservoir: json['qtyMaxReservoir'],
         dateFabrication: DateTime.parse(json['dateFabrication']),
-        nomeroPLaque: json['nomeroPLaque'],
-        nomeroEntreprise: json['nomeroEntreprise'],
+        numeroPLaque: json['numeroPLaque'],
+        identifiant: json['identifiant'],
         kilometrageInitiale: json['kilometrageInitiale'],
-        provenance: json['provenance'],
-        typeCaburant: json['typeCaburant'],
-        typeMoteur: json['typeMoteur'],
+        fournisseur: json['fournisseur'],
+        alimentation: json['alimentation'],
         signature: json['signature'],
         created: DateTime.parse(json['created']),
         approbationDG: json['approbationDG'],
@@ -106,19 +110,19 @@ class AnguinModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'modele': modele,
+      'typeMateriel': typeMateriel,
       'marque': marque,
-      'numeroChassie': numeroChassie,
+      'modele': modele,
+      'numeroRef': numeroRef,
       'couleur': couleur,
       'genre': genre,
       'qtyMaxReservoir': qtyMaxReservoir,
       'dateFabrication': dateFabrication.toIso8601String(),
-      'nomeroPLaque': nomeroPLaque,
-      'nomeroEntreprise': nomeroEntreprise,
+      'numeroPLaque': numeroPLaque,
+      'identifiant': identifiant,
       'kilometrageInitiale': kilometrageInitiale,
-      'provenance': provenance,
-      'typeCaburant': typeCaburant,
-      'typeMoteur': typeMoteur,
+      'fournisseur': fournisseur,
+      'alimentation': alimentation,
       'signature': signature,
       'created': created.toIso8601String(),
       'approbationDG': approbationDG,

@@ -8,8 +8,8 @@ import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/components/automobiles/trajets/approbation_trajet.dart';
-import 'package:wm_solution/src/pages/logistique/controller/automobiles/trajet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/components/trajets/approbation_trajet.dart';
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -155,7 +155,7 @@ class _DetailTrajetState extends State<DetailTrajet> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-              child1: Text('Numero attribué :',
+              child1: Text('Identifiant :',
                   textAlign: TextAlign.start,
                   style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.trajetModel.nomeroEntreprise,

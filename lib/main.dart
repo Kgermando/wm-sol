@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             builders: {
               TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
               TargetPlatform.android: ZoomPageTransitionsBuilder(),
-              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
             },
           ),
           scaffoldBackgroundColor: Colors.blue.shade50,
