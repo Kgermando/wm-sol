@@ -7,7 +7,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class ChangePasswordAuth extends StatefulWidget {
@@ -24,14 +24,14 @@ class _ChangePasswordAuthState extends State<ChangePasswordAuth> {
 
   @override
   Widget build(BuildContext context) {
-    final ChangePasswordController controller = Get.put(ChangePasswordController());
-    final ProfilController profilController =
-        Get.put(ProfilController());
+    final ChangePasswordController controller =
+        Get.put(ChangePasswordController());
+    final ProfilController profilController = Get.find();
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
-      drawer: const DrawerMenu(), 
+      drawer: const DrawerMenu(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +50,7 @@ class _ChangePasswordAuthState extends State<ChangePasswordAuth> {
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Column(
                       children: [
-                        Card( 
+                        Card(
                           child: Padding(
                             padding: const EdgeInsets.all(p20),
                             child: Column(
@@ -116,4 +116,3 @@ class _ChangePasswordAuthState extends State<ChangePasswordAuth> {
         ));
   }
 }
- 

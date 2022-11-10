@@ -23,12 +23,12 @@ class DetailProductModel extends StatefulWidget {
 
 class _DetailProductModelState extends State<DetailProductModel> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final ProduitModelController controller = Get.put(ProduitModelController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProduitModelController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -99,7 +99,7 @@ class _DetailProductModelState extends State<DetailProductModel> {
                                             )
                                           ],
                                         ),
-                                        dataWidget() 
+                                        dataWidget()
                                       ],
                                     ),
                                   ),

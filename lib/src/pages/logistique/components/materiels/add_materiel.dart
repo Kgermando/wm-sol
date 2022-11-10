@@ -22,7 +22,7 @@ class AddMateriel extends StatefulWidget {
 }
 
 class _AddMaterielState extends State<AddMateriel> {
-  final MaterielController controller = Get.put(MaterielController());
+  final MaterielController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Nouvel fiche technique";
@@ -250,6 +250,7 @@ class _AddMaterielState extends State<AddMateriel> {
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
             labelText: "Genre",
+            hintText: 'voiture, camion, bus, Desktop...'
           ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
@@ -401,13 +402,12 @@ class _AddMaterielState extends State<AddMateriel> {
   }
 
   Widget alimentationWidget() {
-    List<String> suggestionList =
-        controller.materielList.map((e) => e.alimentation).toSet().toList();
+    List<String> suggestionList = ['Essence', 'Gasoil', 'Pétrole', 'Gaz', 'AC', 'DC', 'Autres'];
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
-          labelText: 'Type',
+          labelText: 'Alimentation',
           labelStyle: const TextStyle(),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           contentPadding: const EdgeInsets.only(left: 5.0),

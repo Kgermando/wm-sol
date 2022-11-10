@@ -10,7 +10,7 @@ import 'package:wm_solution/src/utils/type_operation.dart';
 class BanqueController extends GetxController
     with StateMixin<List<BanqueModel>> {
   final BanqueApi banqueApi = BanqueApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var banqueList = <BanqueModel>[].obs;
 
@@ -35,11 +35,7 @@ class BanqueController extends GetxController
     getList();
   }
 
-  // @override
-  // void refresh() {
-  //   getList();
-  //   super.refresh();
-  // }
+ 
 
   @override
   void dispose() {

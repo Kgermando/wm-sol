@@ -23,7 +23,7 @@ class _EntretiensPageState extends State<EntretiensPage> {
 
   @override
   Widget build(BuildContext context) {
-    final EntretienController controller = Get.put(EntretienController());
+    final EntretienController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

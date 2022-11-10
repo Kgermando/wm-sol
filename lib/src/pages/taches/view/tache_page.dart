@@ -23,7 +23,7 @@ class _TachePageState extends State<TachePage> {
   @override
   Widget build(BuildContext context) {
     final TachesController controller = Get.put(TachesController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

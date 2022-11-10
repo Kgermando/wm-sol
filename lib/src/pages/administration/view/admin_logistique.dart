@@ -21,14 +21,12 @@ class AdminLogistique extends StatefulWidget {
 }
 
 class _AdminLogistiqueState extends State<AdminLogistique> {
-  final NotifyLogController controller = Get.put(NotifyLogController());
-  final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
-  final MaterielController materielController =
-      Get.put(MaterielController());
-  final ImmobilierController immobilierController =
-      Get.put(ImmobilierController());
-  final DevisController devisController =
-      Get.put(DevisController());
+  final NotifyLogController controller = Get.find();
+  final DevisNotifyController devisNotifyController = Get.find();
+  final MaterielController materielController = Get.find();
+  final ImmobilierController immobilierController = Get.find();
+  final DevisController devisController = Get.find();
+  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
    String subTitle = "Direteur de génerale";

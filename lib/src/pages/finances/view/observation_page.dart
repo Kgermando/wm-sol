@@ -24,14 +24,12 @@ class ObservationPage extends StatefulWidget {
 }
 
 class _ObservationPageState extends State<ObservationPage> {
-  final ObservationNotifyController controller =
-      Get.put(ObservationNotifyController());
-  final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController());
-  final DevisController devisController = Get.put(DevisController());
-  final CampaignController campaignController = Get.put(CampaignController());
-  final ProjetController projetController = Get.put(ProjetController());
+  final ObservationNotifyController controller = Get.find();
+  final SalaireController salaireController = Get.find();
+  final TransportRestController transportRestController = Get.find();
+  final DevisController devisController = Get.find();
+  final CampaignController campaignController = Get.find();
+  final ProjetController projetController = Get.find();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finance";

@@ -23,7 +23,7 @@ class _CampaignPageState extends State<CampaignPage> {
 
   @override
   Widget build(BuildContext context) {
-    final CampaignController controller = Get.put(CampaignController());
+    final CampaignController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

@@ -20,7 +20,7 @@ class AddTrajet extends StatefulWidget {
 }
 
 class _AddTrajetState extends State<AddTrajet> {
-  final TrajetController controller = Get.put(TrajetController());
+  final TrajetController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 

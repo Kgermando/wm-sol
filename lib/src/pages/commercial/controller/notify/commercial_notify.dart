@@ -31,39 +31,30 @@ class ComNotifyController extends GetxController {
     getCountSuccursalesDD();
     getCountProdModelDD();
   }
-
-  @override
-  void refresh() {
-    getCountCom();
-    getCountSuccursalesDG();
-    getCountSuccursalesDD();
-    getCountProdModelDD();
-    super.refresh();
-  }
-
+ 
   void getCountCom() async {
     NotifySumModel notifySum =
         await comDepartementNotifyApi.getCountCom();
     _itemCount.value = notifySum.sum;
-    update();
+     
   } 
 
   void getCountSuccursalesDG() async {
     NotifyModel notifyModel = await succursaleNotifyApi.getCountDG(); 
     _succursaleCountDG.value = notifyModel.count;
-    update();
+     
   }
 
   void getCountSuccursalesDD() async {
     NotifyModel notifyModel = await succursaleNotifyApi.getCountDD();
     _succursaleCountDD.value = notifyModel.count;
-    update();
+     
   } 
 
    void getCountProdModelDD() async { 
     NotifyModel notifyModel = await prodModelNotifyApi.getCountDD();
     _prodModelCount.value = notifyModel.count;
-    update();
+     
   } 
 
 }

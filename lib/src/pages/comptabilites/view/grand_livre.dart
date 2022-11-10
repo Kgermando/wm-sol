@@ -24,7 +24,7 @@ class GrandLivre extends StatefulWidget {
 class _GrandLivreState extends State<GrandLivre> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
-  String subTitle = "grand livre";
+  String subTitle = "Grand Livre";
 
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -41,8 +41,8 @@ class _GrandLivreState extends State<GrandLivre> {
 
   @override
   Widget build(BuildContext context) {
-    final JournalLivreController controller = Get.put(JournalLivreController());
-    final JournalController journalController = Get.put(JournalController());
+    final JournalLivreController controller = Get.find();
+    final JournalController journalController = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

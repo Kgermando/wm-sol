@@ -20,9 +20,9 @@ class UpdateAnnuaire extends StatefulWidget {
 }
 
 class _UpdateAnnuaireState extends State<UpdateAnnuaire> {
-  final AnnuaireController controller = Get.put(AnnuaireController());
+  final AnnuaireController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
 
   @override
   void initState() {

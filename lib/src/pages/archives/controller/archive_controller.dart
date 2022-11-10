@@ -9,7 +9,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 class ArchiveController extends GetxController
     with StateMixin<List<ArchiveModel>> {
   final ArchiveApi archiveApi = ArchiveApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var archiveList = <ArchiveModel>[].obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

@@ -18,8 +18,7 @@ class AccuseReceptionPage extends StatefulWidget {
 }
 
 class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
-  final ApprovisionReceptionController controller =
-      Get.put(ApprovisionReceptionController());
+  final ApprovisionReceptionController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Accusé receptions";

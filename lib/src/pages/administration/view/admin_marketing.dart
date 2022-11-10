@@ -16,9 +16,8 @@ class AdminMarketing extends StatefulWidget {
 }
 
 class _AdminMarketingState extends State<AdminMarketing> {
-  final MarketingNotifyController marketingNotifyController =
-      Get.put(MarketingNotifyController()); 
-  final CampaignController campaignController = Get.put(CampaignController()); 
+  final MarketingNotifyController marketingNotifyController = Get.find();
+  final CampaignController campaignController = Get.find();
    
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";

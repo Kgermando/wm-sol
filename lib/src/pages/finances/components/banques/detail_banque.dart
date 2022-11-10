@@ -25,7 +25,7 @@ class _DetailBanqueState extends State<DetailBanque> {
 
   @override
   Widget build(BuildContext context) {
-    final BanqueController controller = Get.put(BanqueController());
+    final BanqueController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

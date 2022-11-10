@@ -19,10 +19,10 @@ class AddCampaign extends StatefulWidget {
 }
 
 class _AddCampaignState extends State<AddCampaign> {
-  final CampaignController controller = Get.put(CampaignController());
+  final CampaignController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines";
-  String subTitle = "Présences";
+  String title = "Marketing";
+  String subTitle = "Nouvelle campaigne";
 
   @override
   Widget build(BuildContext context) { 

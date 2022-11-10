@@ -8,9 +8,8 @@ import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance
 
 class DetteController extends GetxController with StateMixin<List<DetteModel>> {
   final DetteApi detteApi = DetteApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final CreanceDetteController creanceDetteController =
-      Get.put(CreanceDetteController());
+  final ProfilController profilController = Get.find();
+  final CreanceDetteController creanceDetteController = Get.find();
 
   var detteList = <DetteModel>[].obs;
 

@@ -34,8 +34,8 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   @override
   Widget build(BuildContext context) {
-    final SalaireController controller = Get.put(SalaireController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final SalaireController controller = Get.find();
+    final ProfilController profilController = Get.find();
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
@@ -157,7 +157,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   }
 
   Widget agentWidget(SalaireController controller) {
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Column(
       children: [

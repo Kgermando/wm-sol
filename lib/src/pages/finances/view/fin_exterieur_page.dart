@@ -23,7 +23,7 @@ class FinExterieurPage extends StatefulWidget {
 }
 
 class _FinExterieurPageState extends State<FinExterieurPage> {
-  final FinExterieurController controller = Get.put(FinExterieurController());
+  final FinExterieurController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Autres finances";

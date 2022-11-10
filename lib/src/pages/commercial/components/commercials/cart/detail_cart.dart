@@ -20,11 +20,11 @@ class DetailCart extends StatefulWidget {
 
 class _DetailCartState extends State<DetailCart> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final CartController controller = Get.put(CartController());
+    final CartController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

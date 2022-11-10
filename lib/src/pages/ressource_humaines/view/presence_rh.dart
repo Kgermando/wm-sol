@@ -24,7 +24,7 @@ class _PresenceRHState extends State<PresenceRH> {
 
   @override
   Widget build(BuildContext context) {
-    final PresenceController controller = Get.put(PresenceController());
+    final PresenceController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

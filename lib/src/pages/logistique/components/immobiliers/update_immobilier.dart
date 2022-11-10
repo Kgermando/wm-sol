@@ -21,7 +21,7 @@ class UpdateImmobimier extends StatefulWidget {
 }
 
 class _UpdateImmobimierState extends State<UpdateImmobimier> {
-  final ImmobilierController controller = Get.put(ImmobilierController());
+  final ImmobilierController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 

@@ -9,13 +9,10 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 
 class LivraisonController extends GetxController {
-  final StockGlobalController stockGlobalController =
-      Get.put(StockGlobalController());
-  final SuccursaleController succursaleController =
-      Get.put(SuccursaleController());
-  final BonLivraisonController bonLivraisonController =
-      Get.put(BonLivraisonController());
-  final ProfilController profilController = Get.put(ProfilController());
+  final StockGlobalController stockGlobalController = Get.find();
+  final SuccursaleController succursaleController = Get.find();
+  final BonLivraisonController bonLivraisonController = Get.find();
+  final ProfilController profilController = Get.find();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;

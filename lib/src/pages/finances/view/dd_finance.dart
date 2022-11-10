@@ -39,30 +39,22 @@ class DDFinance extends StatefulWidget {
 }
 
 class _DDFinanceState extends State<DDFinance> {
-  final BanqueNameController banqueNameController =
-      Get.put(BanqueNameController());
-  final CaisseNameController caisseNameController =
-      Get.put(CaisseNameController());
-  final FinExterieurNameController finExterieurNameController =
-      Get.put(FinExterieurNameController());
-  final ProfilController profilController = Get.put(ProfilController());
-  final FinanceNotifyController financeNotifyController =
-      Get.put(FinanceNotifyController());
-  final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
-    final MarketingNotifyController marketingNotifyController =
-      Get.put(MarketingNotifyController());
-  final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController());
-  final DevisNotifyController devisNotifyController =
-      Get.put(DevisNotifyController());
-  final DevisController devisController = Get.put(DevisController());
-  final CreanceController creanceController = Get.put(CreanceController());
-  final DetteController detteController = Get.put(DetteController());
-  final CampaignController campaignController = Get.put(CampaignController());
-  final ProjetController projetController = Get.put(ProjetController());
-  final NotifyExpController expController = Get.put(NotifyExpController());
-
+  final BanqueNameController banqueNameController = Get.find();
+  final CaisseNameController caisseNameController = Get.find();
+  final FinExterieurNameController finExterieurNameController = Get.find();
+  final ProfilController profilController = Get.find();
+  final FinanceNotifyController financeNotifyController = Get.find();
+  final RHNotifyController rhNotifyController = Get.find();
+  final MarketingNotifyController marketingNotifyController =Get.find();
+  final SalaireController salaireController = Get.find();
+  final TransportRestController transportRestController = Get.find();
+  final DevisNotifyController devisNotifyController = Get.find();
+  final DevisController devisController = Get.find();
+  final CreanceController creanceController = Get.find();
+  final DetteController detteController = Get.find();
+  final CampaignController campaignController = Get.find();
+  final ProjetController projetController = Get.find();
+  final NotifyExpController expController = Get.find();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finance";
@@ -78,8 +70,6 @@ class _DDFinanceState extends State<DDFinance> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
@@ -90,7 +80,7 @@ class _DDFinanceState extends State<DDFinance> {
           key: scaffoldKey,
           appBar: headerBar(context, scaffoldKey, title, subTitle),
           drawer: const DrawerMenu(),
-          floatingActionButton: (userRole < 2 ) ? speedialWidget() : Container(),
+          floatingActionButton: (userRole < 2) ? speedialWidget() : Container(),
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -200,8 +190,7 @@ class _DDFinanceState extends State<DDFinance> {
                                   ),
                                   children: [
                                     TableCampaignFin(
-                                        campaignController:
-                                            campaignController)
+                                        campaignController: campaignController)
                                   ],
                                 ),
                               ),
@@ -536,7 +525,9 @@ class _DDFinanceState extends State<DDFinance> {
                               : MediaQuery.of(context).size.width,
                           child: ListView(
                             children: [
-                              const TitleWidget(title: "Création d'une banque pour Fin. Exterieur"),
+                              const TitleWidget(
+                                  title:
+                                      "Création d'une banque pour Fin. Exterieur"),
                               const SizedBox(
                                 height: p20,
                               ),

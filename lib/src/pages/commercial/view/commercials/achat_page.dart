@@ -18,13 +18,13 @@ class AchatPage extends StatefulWidget {
 
 class _AchatPageState extends State<AchatPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Stocks succursale";
 
   @override
   Widget build(BuildContext context) {
-    final AchatController controller = Get.put(AchatController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final AchatController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

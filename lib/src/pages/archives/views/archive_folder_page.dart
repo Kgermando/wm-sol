@@ -48,7 +48,7 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
   Widget build(BuildContext context) {
     final ArchiveFolderController controller =
         Get.put(ArchiveFolderController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),

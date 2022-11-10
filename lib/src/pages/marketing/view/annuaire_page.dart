@@ -30,12 +30,12 @@ class AnnuairePage extends StatefulWidget {
 
 class _AnnuairePageState extends State<AnnuairePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
   String subTitle = "Annuaire";
 
   @override
   Widget build(BuildContext context) {
-    final AnnuaireController controller = Get.put(AnnuaireController());
+    final AnnuaireController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

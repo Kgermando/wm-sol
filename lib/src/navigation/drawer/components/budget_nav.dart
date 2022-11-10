@@ -19,7 +19,7 @@ class BudgetNav extends StatefulWidget {
 }
 
 class _BudgetNavState extends State<BudgetNav> {
-  final BudgetNotifyController controller = Get.put(BudgetNotifyController()); 
+  final BudgetNotifyController controller = Get.find();
   bool isOpen = false;
 
   @override

@@ -20,9 +20,9 @@ class UpdateSuccursale extends StatefulWidget {
 }
 
 class _UpdateSuccursaleState extends State<UpdateSuccursale> {
-  final SuccursaleController controller = Get.put(SuccursaleController());
+  final SuccursaleController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   initState() {

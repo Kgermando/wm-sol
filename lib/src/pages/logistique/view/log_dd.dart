@@ -44,15 +44,15 @@ class _LogDDState extends State<LogDD> {
 
   @override
   Widget build(BuildContext context) {
-    final NotifyLogController controller = Get.put(NotifyLogController());
-    final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
-    final MaterielController materielController = Get.put(MaterielController()); 
-    final TrajetController trajetController = Get.put(TrajetController());
-    final ImmobilierController immobilierController = Get.put(ImmobilierController());
-    final MobilierController mobilierController = Get.put(MobilierController());
-    final EntretienController entretienController = Get.put(EntretienController());
-    final EtatMaterielController etatMaterielController = Get.put(EtatMaterielController());
-    final DevisController devisController = Get.put(DevisController());
+    final NotifyLogController controller = Get.find();
+    final DevisNotifyController devisNotifyController = Get.find();
+    final MaterielController materielController = Get.find();
+    final TrajetController trajetController = Get.find();
+    final ImmobilierController immobilierController = Get.find();
+    final MobilierController mobilierController = Get.find();
+    final EntretienController entretienController = Get.find();
+    final EtatMaterielController etatMaterielController = Get.find();
+    final DevisController devisController = Get.find();
     
 
     final headline6 = Theme.of(context).textTheme.headline6;

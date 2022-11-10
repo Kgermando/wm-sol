@@ -21,11 +21,11 @@ class DetailAgenda extends StatefulWidget {
 
 class _DetailAgendaState extends State<DetailAgenda> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
 
   @override
   Widget build(BuildContext context) {
-    final AgendaController controller = Get.put(AgendaController());
+    final AgendaController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

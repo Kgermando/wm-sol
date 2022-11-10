@@ -27,7 +27,7 @@ class AddPersonnel extends StatefulWidget {
 }
 
 class _AddPersonnelState extends State<AddPersonnel> {
-  final PersonnelsController controller = Get.put(PersonnelsController());
+  final PersonnelsController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Add profil";
@@ -73,11 +73,9 @@ class _AddPersonnelState extends State<AddPersonnel> {
                               ),
                               const SizedBox(height: p20),
                               ResponsiveChildWidget(
-                                  child1: nomWidget(),
-                                  child2: postNomWidget()),
+                                  child1: nomWidget(), child2: postNomWidget()),
                               ResponsiveChildWidget(
-                                  child1: prenomWidget(),
-                                  child2: sexeWidget()),
+                                  child1: prenomWidget(), child2: sexeWidget()),
                               ResponsiveChildWidget(
                                   child1: dateNaissanceWidget(),
                                   child2: lieuNaissanceWidget()),
@@ -91,8 +89,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                               servicesAffectationWidget(),
                               ResponsiveChildWidget(
                                   child1: matriculeWidget(),
-                                  child2:
-                                      numeroSecuriteSocialeWidget()),
+                                  child2: numeroSecuriteSocialeWidget()),
                               ResponsiveChildWidget(
                                   child1: fonctionOccupeWidget(),
                                   child2: roleWidget()),
@@ -114,7 +111,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                     final form =
                                         controller.formKey.currentState!;
                                     if (form.validate()) {
-                                      controller.submit(); 
+                                      controller.submit();
                                     }
                                     form.reset();
                                   })
@@ -144,9 +141,9 @@ class _AddPersonnelState extends State<AddPersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: Obx(() => CircleAvatar(
-                        child: (controller.uploadedFileUrl == '')
-                          ? Image.asset('assets/images/avatar.jpg')
-                          : Image.network(controller.uploadedFileUrl))),
+                          child: (controller.uploadedFileUrl == '')
+                              ? Image.asset('assets/images/avatar.jpg')
+                              : Image.network(controller.uploadedFileUrl))),
                     ),
                   ),
                   Positioned(
@@ -328,7 +325,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
   }
 
   Widget roleWidget() {
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     List<String> roleList = [];
     if (int.parse(profilController.user.role) == 0) {
       roleList = Dropdown().roleAdmin;
@@ -646,8 +643,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationEXp.first;
-        } else if (controller.departementSelectedList.first ==
-            'Marketing') {
+        } else if (controller.departementSelectedList.first == 'Marketing') {
           controller.matricule =
               "${prefix}MKT$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctioncommList;
@@ -655,8 +651,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationMark.first;
-        } else if (controller.departementSelectedList.first ==
-            'Commercial') {
+        } else if (controller.departementSelectedList.first == 'Commercial') {
           controller.matricule =
               "${prefix}COM$date-${widget.personnelList.length + 1}";
           controller.fonctionList = controller.fonctioncommList;

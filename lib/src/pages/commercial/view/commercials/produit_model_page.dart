@@ -18,13 +18,12 @@ class ProduitModelPage extends StatefulWidget {
 
 class _ProduitModelPageState extends State<ProduitModelPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Produit modèle";
 
   @override
   Widget build(BuildContext context) {
-    final ProduitModelController controller = Get.put(ProduitModelController());
-
+    final ProduitModelController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

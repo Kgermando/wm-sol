@@ -24,12 +24,10 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-  final AdminDashboardController controller =
-      Get.put(AdminDashboardController());
-  final PersonnelsController personnelsController =
-      Get.put(PersonnelsController());
-  final DashboardComController dashboardcomController =
-      Get.put(DashboardComController());
+  final AdminDashboardController controller = Get.find();
+  final PersonnelsController personnelsController = Get.find();
+  final DashboardComController dashboardcomController = Get.find();
+  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Administration";
   String subTitle = "Dashboard";

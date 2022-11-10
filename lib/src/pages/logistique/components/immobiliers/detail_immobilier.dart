@@ -28,8 +28,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
 
   @override
   Widget build(BuildContext context) {
-    final ImmobilierController controller = Get.put(ImmobilierController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final ImmobilierController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -37,8 +37,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.immobilierModel.typeAllocation),
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.immobilierModel.typeAllocation),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,11 +122,11 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                     ),
                                   ),
                                 ),
-                                        const SizedBox(height: p20),
-                                        ApprobationImmobilier(
-                                            data: widget.immobilierModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                const SizedBox(height: p20),
+                                ApprobationImmobilier(
+                                    data: widget.immobilierModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
@@ -142,7 +142,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?', style: TextStyle(color: Colors.red)),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -150,7 +151,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler', style: TextStyle(color: Colors.red)),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {

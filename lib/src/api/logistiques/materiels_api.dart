@@ -15,7 +15,7 @@ class MaterielsApi extends GetConnect {
   Future<List<MaterielModel>> getAllData() async {
     Map<String, String> header = headers;
 
-    var resp = await client.get(anguinsUrl, headers: header);
+    var resp = await client.get(materielsUrl, headers: header);
 
     if (resp.statusCode == 200) {
       List<dynamic> bodyList = json.decode(resp.body);
@@ -47,7 +47,7 @@ class MaterielsApi extends GetConnect {
     var data = dataItem.toJson();
     var body = jsonEncode(data);
 
-    var resp = await client.post(aaddAnguinsUrl, headers: header, body: body);
+    var resp = await client.post(aaddMaterielsUrl, headers: header, body: body);
     if (resp.statusCode == 200) {
       return MaterielModel.fromJson(json.decode(resp.body));
     } else if (resp.statusCode == 401) {
@@ -88,7 +88,7 @@ class MaterielsApi extends GetConnect {
   Future<List<PieChartEnguinModel>> getChartPie() async {
     Map<String, String> header = headers;
 
-    var resp = await client.get(anguinsChartPieUrl, headers: header);
+    var resp = await client.get(materielsChartPieUrl, headers: header);
     if (resp.statusCode == 200) {
       List<dynamic> bodyList = json.decode(resp.body);
       List<PieChartEnguinModel> data = [];

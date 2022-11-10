@@ -6,11 +6,11 @@ import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobili
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 
 class DashboardLogController extends GetxController {
-  final MaterielController materielController = Get.put(MaterielController());
-  final TrajetController trajetController = Get.put(TrajetController()); 
-  final EtatMaterielController etatMaterielController = Get.put(EtatMaterielController());
-  final ImmobilierController immobilierController = Get.put(ImmobilierController());
-  final MobilierController mobilierController = Get.put(MobilierController());
+  final MaterielController materielController = Get.find();
+  final TrajetController trajetController = Get.find();
+  final EtatMaterielController etatMaterielController = Get.find();
+  final ImmobilierController immobilierController = Get.find();
+  final MobilierController mobilierController = Get.find();
     
   final _materielCount = 0.obs;
   int get materielCount => _materielCount.value;

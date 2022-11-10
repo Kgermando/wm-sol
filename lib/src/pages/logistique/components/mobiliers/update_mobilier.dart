@@ -20,10 +20,9 @@ class UpdateMobilier extends StatefulWidget {
 }
 
 class _UpdateMobilierState extends State<UpdateMobilier> {
-  final MobilierController controller = Get.put(MobilierController());
+  final MobilierController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Ressources Humaines";
-  String subTitle = "Présences";
+  String title = "Logistique"; 
 
   @override
   initState() {

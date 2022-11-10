@@ -30,11 +30,10 @@ class _DDRHState extends State<DDRH> {
 
   @override
   Widget build(BuildContext context) {
-    final RHNotifyController controller = Get.put(RHNotifyController());
-    final SalaireController salaireController = Get.put(SalaireController());
-    final TransportRestController transportRestController =
-        Get.put(TransportRestController()); 
-    final UsersController usersController = Get.put(UsersController());
+    final RHNotifyController controller = Get.find();
+    final SalaireController salaireController = Get.find();
+    final TransportRestController transportRestController = Get.find();
+    final UsersController usersController = Get.find();
 
 
     final headline6 = Theme.of(context).textTheme.headline6;

@@ -18,7 +18,7 @@ class UpdatePage extends StatefulWidget {
 }
 
 class _UpdatePageState extends State<UpdatePage> {
-  final UpdateController controller = Get.put(UpdateController());
+  final UpdateController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Mise à jours";
 

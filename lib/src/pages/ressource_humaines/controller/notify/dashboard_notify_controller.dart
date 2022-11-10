@@ -5,12 +5,9 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/sal
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
 class DashobardNotifyController extends GetxController { 
-  final PersonnelsController personnelsController =
-      Get.put(PersonnelsController());
-  final SalaireController salaireController =
-      Get.put(SalaireController());
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController());  
+  final PersonnelsController personnelsController = Get.find();
+  final SalaireController salaireController = Get.find();
+  final TransportRestController transportRestController = Get.find();
 
   List<PaiementSalaireModel> salaireList = []; 
  
@@ -42,15 +39,9 @@ class DashobardNotifyController extends GetxController {
     super.onInit();
     getData();
   }
-
-  @override
-  void refresh() {
-    getData();
-    super.refresh();
-  }
  
   Future<void> getData() async {
-     _agentsCount.value = personnelsController.personnelsList.length;
+    _agentsCount.value = personnelsController.personnelsList.length;
     _agentActifCount.value =
         personnelsController.personnelsList
         .where((element) => element.statutAgent == 'true').length;

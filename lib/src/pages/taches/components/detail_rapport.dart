@@ -23,7 +23,7 @@ class _DetailRapportState extends State<DetailRapport> {
 
   @override
   Widget build(BuildContext context) {
-    final RapportController controller = Get.put(RapportController());
+    final RapportController controller = Get.find();
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(

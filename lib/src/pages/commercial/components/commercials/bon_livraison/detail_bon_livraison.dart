@@ -23,14 +23,14 @@ class DetailBonLivraison extends StatefulWidget {
 
 class _DetailBonLivraisonState extends State<DetailBonLivraison> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
-    final BonLivraisonController controller = Get.put(BonLivraisonController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final BonLivraisonController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

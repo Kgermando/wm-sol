@@ -22,7 +22,7 @@ class _SalairesRHState extends State<SalairesRH> {
 
   @override
   Widget build(BuildContext context) {
-    final SalaireController controller = Get.put(SalaireController());
+    final SalaireController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

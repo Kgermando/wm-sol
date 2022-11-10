@@ -9,7 +9,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class CreanceDetteController extends GetxController
     with StateMixin<List<CreanceDetteModel>> {
   final CreanceDetteApi creanceDetteApi = CreanceDetteApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var creanceDetteList = <CreanceDetteModel>[].obs;
 

@@ -22,8 +22,7 @@ class _HistoriqueBudgetState extends State<HistoriqueBudget> {
 
   @override
   Widget build(BuildContext context) {
-    final BudgetPrevisionnelController controller =
-        Get.put(BudgetPrevisionnelController());
+    final BudgetPrevisionnelController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

@@ -25,7 +25,7 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
 
   @override
   Widget build(BuildContext context) {
-    final FinExterieurController controller = Get.put(FinExterieurController());
+    final FinExterieurController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

@@ -9,7 +9,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   final AchatApi achatApi = AchatApi();
   final CartApi cartApi = CartApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var achatList = <AchatModel>[].obs;
 

@@ -21,9 +21,9 @@ class AddStockGlobal extends StatefulWidget {
 }
 
 class _AddStockGlobalState extends State<AddStockGlobal> {
-  final StockGlobalController controller = Get.put(StockGlobalController());
+  final StockGlobalController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Ajout stock global";
 
   @override

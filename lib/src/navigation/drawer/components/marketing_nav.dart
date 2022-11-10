@@ -19,8 +19,7 @@ class MaketingNav extends StatefulWidget {
 }
 
 class _MaketingNavState extends State<MaketingNav> {
-    final MarketingNotifyController controller =
-      Get.put(MarketingNotifyController());
+    final MarketingNotifyController controller = Get.find();
   bool isOpen = false; 
 
   @override

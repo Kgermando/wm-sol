@@ -12,7 +12,7 @@ import 'package:wm_solution/src/utils/info_system.dart';
 class UpdateController extends GetxController
     with StateMixin<List<UpdateModel>> {
   final UpdateVersionApi updateVersionApi = UpdateVersionApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var updateList = <UpdateModel>[].obs;
 
@@ -65,7 +65,8 @@ class UpdateController extends GetxController
           snackPosition: SnackPosition.TOP);
       await dio.download(url, fileName, onReceiveProgress: (received, total) {
         downloading = true;
-        _progressString.value = "${((received / total) * 100).toStringAsFixed(0)}%";
+        _progressString.value =
+            "${((received / total) * 100).toStringAsFixed(0)}%";
         update();
       }).then((value) {
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
@@ -94,7 +95,6 @@ class UpdateController extends GetxController
     super.refresh();
   }
 
- 
   @override
   void dispose() {
     versionController.dispose();

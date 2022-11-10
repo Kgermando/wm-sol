@@ -22,12 +22,12 @@ class LivraisonStock extends StatefulWidget {
 }
 
 class _LivraisonStockState extends State<LivraisonStock> {
-  final LivraisonController controller = Get.put(LivraisonController());
+  final LivraisonController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing"; 
+  String title = "Commercial";
 
-    @override
-  void initState() { 
+  @override
+  void initState() {
     setState(() {
       controller.controllerPrixVenteUnit =
           TextEditingController(text: widget.stocksGlobalMOdel.prixVenteUnit);
@@ -36,7 +36,7 @@ class _LivraisonStockState extends State<LivraisonStock> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(
@@ -179,7 +179,8 @@ class _LivraisonStockState extends State<LivraisonStock> {
                 }
                 return null;
               },
-              onChanged: (value) => setState(() => controller.quantityStock = value),
+              onChanged: (value) =>
+                  setState(() => controller.quantityStock = value),
             ),
           ),
           Expanded(
@@ -226,7 +227,8 @@ class _LivraisonStockState extends State<LivraisonStock> {
                 return null;
               },
               onChanged: (value) => setState(() {
-                controller.prixVenteUnit = (value == "") ? 0.0 : double.parse(value);
+                controller.prixVenteUnit =
+                    (value == "") ? 0.0 : double.parse(value);
               }),
             ),
           ),
@@ -248,37 +250,37 @@ class _LivraisonStockState extends State<LivraisonStock> {
 
   Widget remiseField(LivraisonController controller) {
     return ResponsiveChildWidget(
-      flex1: 3,
-      flex2: 1,
-      child1: Container(
-        margin: const EdgeInsets.only(bottom: 20.0),
-        child: TextFormField(
-          // controller: priceController,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-          ],
-          decoration: InputDecoration(
-            labelText: 'Remise en % (Facultatif) ',
-            // hintText: 'Mettez "1" si vide',
-            labelStyle: const TextStyle(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
+        flex1: 3,
+        flex2: 1,
+        child1: Container(
+          margin: const EdgeInsets.only(bottom: 20.0),
+          child: TextFormField(
+            // controller: priceController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+            ],
+            decoration: InputDecoration(
+              labelText: 'Remise en % (Facultatif) ',
+              // hintText: 'Mettez "1" si vide',
+              labelStyle: const TextStyle(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
             ),
+            validator: (value) {
+              if (RegExpIsValide().isValideVente.hasMatch(value!)) {
+                return 'chiffres obligatoire';
+              } else {
+                return null;
+              }
+            },
+            onChanged: (value) => setState(() {
+              controller.remise = (value == "") ? 1 : double.parse(value);
+            }),
           ),
-          validator: (value) {
-            if (RegExpIsValide().isValideVente.hasMatch(value!)) {
-              return 'chiffres obligatoire';
-            } else {
-              return null;
-            }
-          },
-          onChanged: (value) => setState(() {
-            controller.remise = (value == "") ? 1 : double.parse(value);
-          }),
         ),
-      ),
-      child2: remiseValeur(controller));
+        child2: remiseValeur(controller));
   }
 
   Widget qtyRemiseField(LivraisonController controller) {

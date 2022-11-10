@@ -27,9 +27,8 @@ class DetailBilan extends StatefulWidget {
 }
 
 class _DetailBilanState extends State<DetailBilan> {
-  final CompteBilanRefController controller =
-      Get.put(CompteBilanRefController());
-  final BilanController bilanController = Get.put(BilanController());
+  final CompteBilanRefController controller = Get.find();
+  final BilanController bilanController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabiliés";
 

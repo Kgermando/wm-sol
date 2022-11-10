@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class AgendaController extends GetxController
     with StateMixin<List<AgendaModel>> {
   final AgendaApi agendaApi = AgendaApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var agendaList = <AgendaModel>[].obs;
 

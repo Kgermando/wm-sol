@@ -19,20 +19,16 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
 class DashboardBudgetController extends GetxController {
-  final BudgetPrevisionnelController budgetPrevisionnelController =
-      Get.put(BudgetPrevisionnelController());
-  final LignBudgetaireController lignBudgetaireController =
-      Get.put(LignBudgetaireController());
-  final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController());
+  final BudgetPrevisionnelController budgetPrevisionnelController = Get.find();
+  final LignBudgetaireController lignBudgetaireController = Get.find();
+  final SalaireController salaireController = Get.find();
+  final TransportRestController transportRestController = Get.find();
   final TransportRestPersonnelsController transportRestPersonnelsController =
-      Get.put(TransportRestPersonnelsController());
-  final ProjetController projetController = Get.put(ProjetController());
-  final CampaignController campaignController = Get.put(CampaignController());
-  final DevisController devisController = Get.put(DevisController());
-  final DevisListObjetController devisListObjetController =
-      Get.put(DevisListObjetController());
+      Get.find();
+  final ProjetController projetController = Get.find();
+  final CampaignController campaignController = Get.find();
+  final DevisController devisController = Get.find();
+  final DevisListObjetController devisListObjetController = Get.find();
  
   final ScrollController controllerTable = ScrollController();
   

@@ -18,10 +18,10 @@ class AdminFinance extends StatefulWidget {
 }
 
 class _AdminFinanceState extends State<AdminFinance> {
-  final FinanceNotifyController financeNotifyController =
-      Get.put(FinanceNotifyController());
-  final CreanceController creanceController = Get.put(CreanceController());
-  final DetteController detteController = Get.put(DetteController()); 
+  final FinanceNotifyController financeNotifyController = Get.find();
+  final CreanceController creanceController = Get.find();
+  final DetteController detteController = Get.find();
+  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finance";
   String subTitle = "Direteur de génerale";

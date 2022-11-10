@@ -35,7 +35,7 @@ class _DetailPerformenceState extends State<DetailPerformence> {
 
   @override
   Widget build(BuildContext context) {
-    final PerformenceNoteController controllerNote = Get.put(PerformenceNoteController());
+    final PerformenceNoteController controllerNote = Get.find();
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,

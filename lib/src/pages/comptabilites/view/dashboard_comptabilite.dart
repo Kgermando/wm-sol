@@ -22,7 +22,7 @@ class _DashboardComptabiliteState extends State<DashboardComptabilite> {
 
   @override
   Widget build(BuildContext context) {
-    final DashboardComptabiliteController controller = Get.put(DashboardComptabiliteController());
+    final DashboardComptabiliteController controller = Get.find();
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,

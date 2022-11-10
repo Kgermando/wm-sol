@@ -24,8 +24,7 @@ class _TransportRestaurationRHState extends State<TransportRestaurationRH> {
 
   @override
   Widget build(BuildContext context) {
-    final TransportRestController controller =
-        Get.put(TransportRestController());
+    final TransportRestController controller = Get.find();
     final sized = MediaQuery.of(context).size;
     return SafeArea(
       child: controller.obx(

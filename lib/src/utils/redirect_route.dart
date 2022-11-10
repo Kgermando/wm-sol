@@ -5,7 +5,7 @@ import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 String redirectRoute(UserModel user) {
-  // final ProfilController profilController = Get.put(ProfilController());
+  // final ProfilController profilController = Get.find();
 
   String homeRoute = '';
 

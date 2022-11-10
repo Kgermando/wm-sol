@@ -26,7 +26,7 @@ class _CreancePageState extends State<CreancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final CreanceController controller = Get.put(CreanceController());
+    final CreanceController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

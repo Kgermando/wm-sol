@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class MaterielController extends GetxController
     with StateMixin<List<MaterielModel>> {
   final MaterielsApi materielsApi = MaterielsApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var materielList = <MaterielModel>[].obs;
 
@@ -37,7 +37,7 @@ class MaterielController extends GetxController
   TextEditingController kilometrageInitialeController = TextEditingController();
   TextEditingController fournisseurController = TextEditingController();
   String? alimentation;
- 
+
   @override
   void onInit() {
     super.onInit();
@@ -57,7 +57,7 @@ class MaterielController extends GetxController
     dateFabricationController.dispose();
     numeroPLaqueController.dispose();
     kilometrageInitialeController.dispose();
-    fournisseurController.dispose();  
+    fournisseurController.dispose();
 
     super.dispose();
   }
@@ -74,7 +74,7 @@ class MaterielController extends GetxController
     dateFabricationController.clear();
     numeroPLaqueController.clear();
     kilometrageInitialeController.clear();
-    fournisseurController.clear();  
+    fournisseurController.clear();
   }
 
   void getList() async {
@@ -165,7 +165,7 @@ class MaterielController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
- 
+
   void submitUpdate(MaterielModel data) async {
     try {
       _isLoading.value = true;
@@ -183,7 +183,7 @@ class MaterielController extends GetxController
           identifiant: data.identifiant,
           kilometrageInitiale: kilometrageInitialeController.text,
           fournisseur: fournisseurController.text,
-          alimentation: alimentation.toString(), 
+          alimentation: alimentation.toString(),
           signature: profilController.user.matricule,
           created: data.created,
           approbationDG: '-',
@@ -229,7 +229,7 @@ class MaterielController extends GetxController
           identifiant: data.identifiant,
           kilometrageInitiale: data.kilometrageInitiale,
           fournisseur: data.fournisseur,
-          alimentation: data.alimentation, 
+          alimentation: data.alimentation,
           signature: data.signature,
           created: data.created,
           approbationDG: approbationDG.toString(),
@@ -276,7 +276,7 @@ class MaterielController extends GetxController
           identifiant: data.identifiant,
           kilometrageInitiale: data.kilometrageInitiale,
           fournisseur: data.fournisseur,
-          alimentation: data.alimentation, 
+          alimentation: data.alimentation,
           signature: data.signature,
           created: data.created,
           approbationDG: '-',

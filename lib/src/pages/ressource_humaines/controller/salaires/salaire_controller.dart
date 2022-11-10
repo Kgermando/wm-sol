@@ -11,7 +11,7 @@ import 'package:wm_solution/src/utils/salaire_dropsown.dart';
 class SalaireController extends GetxController
     with StateMixin<List<PaiementSalaireModel>> {
   final PaiementSalaireApi paiementSalaireApi = PaiementSalaireApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
   final MailApi mailApi = MailApi();
 
   var paiementSalaireList = <PaiementSalaireModel>[].obs;

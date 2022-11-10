@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/notifications/departements/logistique_departement.dart';
-import 'package:wm_solution/src/api/notifications/logistique/carburant_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/logistique/materiel_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/logistique/entretien_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/logistique/etat_materiel_notify_api.dart';
@@ -12,7 +11,6 @@ import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 
 class NotifyLogController extends GetxController {
   final MaterielNotifyApi materielNotifyApi = MaterielNotifyApi();
-  final CarburantNotifyApi carburantNotifyApi = CarburantNotifyApi();
   final TrajetNotifyApi trajetNotifyApi = TrajetNotifyApi();
   final ImmobilierNotifyApi immobilierNotifyApi = ImmobilierNotifyApi();
   final MobilierNotifyApi mobilierNotifyApi = MobilierNotifyApi();
@@ -55,7 +53,6 @@ class NotifyLogController extends GetxController {
     getCount();
     getCountEnginDG();
     getCountEnginDD();
-    getCountCarburantDD();
     getCountTrajetsDD();
     getCountImmobilierDG();
     getCountImmobilierDD();
@@ -63,80 +60,60 @@ class NotifyLogController extends GetxController {
     getCountEntretienDD();
     getCountEtatmaterielDD();
   }
-
-  @override
-  void refresh() {
-    getCount();
-    getCountEnginDG();
-    getCountEnginDD();
-    getCountCarburantDD();
-    getCountTrajetsDD();
-    getCountImmobilierDG();
-    getCountImmobilierDD();
-    getCountMobilierDD();
-    getCountEntretienDD();
-    getCountEtatmaterielDD();
-    super.refresh();
-  }
+ 
 
   void getCount() async {
     NotifySumModel notifySum =
         await logistiqueDepartementNotifyApi.getCountLogistique();
     _itemCount.value = notifySum.sum;
-    update();
+     
   }
 
   void getCountEnginDG() async {
     NotifyModel notifySum = await materielNotifyApi.getCountDG();
     _itemCountMaterielDG.value = notifySum.count;
-    update();
+     
   }
 
   void getCountEnginDD() async {
     NotifyModel notifySum = await materielNotifyApi.getCountDD();
     _itemCountMaterielDD.value = notifySum.count;
-    update();
-  }
-
-  void getCountCarburantDD() async {
-    NotifyModel notifySum = await carburantNotifyApi.getCountDD();
-    _itemCountCarburantDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountTrajetsDD() async {
     NotifyModel notifySum = await trajetNotifyApi.getCountDD();
     _itemCountTrajetsDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountImmobilierDG() async {
     NotifyModel notifySum = await immobilierNotifyApi.getCountDG();
     _itemCountImmobilierDG.value = notifySum.count;
-    update();
+     
   }
 
   void getCountImmobilierDD() async {
     NotifyModel notifySum = await immobilierNotifyApi.getCountDD();
     _itemCountImmobilierDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountMobilierDD() async {
     NotifyModel notifySum = await mobilierNotifyApi.getCountDD();
     _itemCountMobilierDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountEntretienDD() async {
     NotifyModel notifySum = await entretienNotifyApi.getCountDD();
     _itemCounEntretienDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountEtatmaterielDD() async {
     NotifyModel notifySum = await etatMaterielNotifyApi.getCountDD();
     _itemCounEtatmaterielDD.value = notifySum.count;
-    update();
+     
   }
 }

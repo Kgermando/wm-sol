@@ -23,7 +23,7 @@ class _EtatMaterielPageState extends State<EtatMaterielPage> {
 
   @override
   Widget build(BuildContext context) {
-    final EtatMaterielController controller = Get.put(EtatMaterielController());
+    final EtatMaterielController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

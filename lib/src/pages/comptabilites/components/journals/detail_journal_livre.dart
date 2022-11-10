@@ -27,16 +27,14 @@ class DetailJournalLivre extends StatefulWidget {
 }
 
 class _DetailJournalLivreState extends State<DetailJournalLivre> {
-  final JournalLivreController journalLivreController =
-      Get.put(JournalLivreController());
+  final JournalLivreController journalLivreController = Get.find();
+  final JournalController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
 
   @override
-  Widget build(BuildContext context) {
-    final JournalController controller = Get.put(JournalController());
-
-    final ProfilController profilController = Get.put(ProfilController());
+  Widget build(BuildContext context) { 
+    final ProfilController profilController = Get.find();
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(
         onLoading: loadingPage(context),

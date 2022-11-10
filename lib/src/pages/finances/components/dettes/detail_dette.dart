@@ -32,10 +32,9 @@ class _DetailDetteState extends State<DetailDette> {
 
   @override
   Widget build(BuildContext context) {
-    final DetteController controller = Get.put(DetteController());
-    final CreanceDetteController creanceDetteController =
-        Get.put(CreanceDetteController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final DetteController controller = Get.find();
+    final CreanceDetteController creanceDetteController = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

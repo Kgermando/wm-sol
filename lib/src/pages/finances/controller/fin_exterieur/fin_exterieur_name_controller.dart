@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class FinExterieurNameController extends GetxController
     with StateMixin<List<FinExterieurNameModel>> {
   final FinExterieurNameApi finExterieurNameApi = FinExterieurNameApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var finExterieurNameList = <FinExterieurNameModel>[].obs;
 

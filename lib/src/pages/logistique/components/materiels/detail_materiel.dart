@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/components/materiels/approbation_materiel.dart';
-import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -22,8 +22,8 @@ class DetailMateriel extends StatefulWidget {
 }
 
 class _DetailMaterielState extends State<DetailMateriel> {
-  final MaterielController controller = Get.put(MaterielController());
-  final ProfilController profilController = Get.put(ProfilController());
+  final MaterielController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
@@ -35,8 +35,8 @@ class _DetailMaterielState extends State<DetailMateriel> {
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.materielModel.identifiant),
+              appBar: headerBar(context, scaffoldKey, title,
+                  widget.materielModel.identifiant),
               drawer: const DrawerMenu(),
               floatingActionButton: (profilController.user.fonctionOccupe !=
                       'Directeur de departement')
@@ -164,7 +164,8 @@ class _DetailMaterielState extends State<DetailMateriel> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.materielsApi.deleteData(widget.materielModel.id!); 
+                    controller.materielsApi
+                        .deleteData(widget.materielModel.id!);
                   },
                   child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
@@ -209,7 +210,8 @@ class _DetailMaterielState extends State<DetailMateriel> {
               Expanded(
                 flex: 3,
                 child: SelectableText(widget.materielModel.identifiant,
-                    textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.blueGrey)),
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(color: Colors.blueGrey)),
               )
             ],
           ),
@@ -263,8 +265,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
               Expanded(
                 flex: 3,
                 child: SelectableText(widget.materielModel.numeroRef,
-                    textAlign: TextAlign.start,
-                    style: bodyMedium),
+                    textAlign: TextAlign.start, style: bodyMedium),
               )
             ],
           ),
@@ -346,47 +347,47 @@ class _DetailMaterielState extends State<DetailMateriel> {
             ],
           ),
           if (widget.materielModel.typeMateriel == "Materiel roulant")
-          Divider(
-            color: mainColor,
-          ),
+            Divider(
+              color: mainColor,
+            ),
           if (widget.materielModel.typeMateriel == "Materiel roulant")
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text('Numéro plaque :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                flex: 3,
-                child: SelectableText(widget.materielModel.numeroPLaque,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
-          ),  
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text('Numéro plaque :',
+                      textAlign: TextAlign.start,
+                      style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: SelectableText(widget.materielModel.numeroPLaque,
+                      textAlign: TextAlign.start, style: bodyMedium),
+                )
+              ],
+            ),
           if (widget.materielModel.typeMateriel == "Materiel roulant")
-          Divider(
-            color: mainColor,
-          ),
+            Divider(
+              color: mainColor,
+            ),
           if (widget.materielModel.typeMateriel == "Materiel roulant")
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text('kilometrage Initiale :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                flex: 3,
-                child: SelectableText(
-                    "${widget.materielModel.kilometrageInitiale} KM",
-                    textAlign: TextAlign.start,
-                    style: bodyMedium),
-              )
-            ],
-          ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text('kilometrage Initiale :',
+                      textAlign: TextAlign.start,
+                      style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: SelectableText(
+                      "${widget.materielModel.kilometrageInitiale} KM",
+                      textAlign: TextAlign.start,
+                      style: bodyMedium),
+                )
+              ],
+            ),
           Divider(
             color: mainColor,
           ),

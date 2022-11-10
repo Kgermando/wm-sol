@@ -190,22 +190,13 @@ class _TableUpdateState extends State<TableUpdate> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Supprimer',
+        title: 'Id',
         field: 'id',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        renderer: (rendererContext) {
-          return IconButton(
-              onPressed: () {
-                // int id = int.parse(rendererContext.cell.value.toString());
-                // widget.controller.deleteData(id);
-                // Navigator.pushNamed(context, UpdateRoutes.updatePage);
-              },
-              icon: const Icon(Icons.delete, color: Colors.red));
-        },
         minWidth: 80,
       ),
     ];

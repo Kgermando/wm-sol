@@ -29,7 +29,7 @@ class _DashboardCommMarketingPageState
 
   @override
   Widget build(BuildContext context) {
-    final DashboardComController controller = Get.put(DashboardComController());
+    final DashboardComController controller = Get.find();
 
     return SafeArea(
       child: Scaffold(

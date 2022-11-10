@@ -31,17 +31,15 @@ class DetailCampaign extends StatefulWidget {
 
 class _DetailCampaignState extends State<DetailCampaign> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
 
   @override
   Widget build(BuildContext context) {
-    final CampaignController controller = Get.put(CampaignController());
-    final ProfilController profilController = Get.put(ProfilController());
-    final PersonnelsRolesController personnelsRolesController =
-        Get.put(PersonnelsRolesController());
-    final PersonnelsController personnelsController =
-        Get.put(PersonnelsController());
-    final TachesController tachesController = Get.put(TachesController());
+    final CampaignController controller = Get.find();
+    final ProfilController profilController = Get.find();
+    final PersonnelsRolesController personnelsRolesController = Get.find();
+    final PersonnelsController personnelsController = Get.find();
+    final TachesController tachesController = Get.find();
     int userRole = int.parse(profilController.user.role);
     final sized = MediaQuery.of(context).size;
     return controller.obx(

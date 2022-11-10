@@ -13,8 +13,8 @@ import 'package:wm_solution/src/routes/routes.dart';
 class MaillingController extends GetxController
     with StateMixin<List<MailModel>> {
   final MailApi mailApi = MailApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final UsersController usersController = Get.put(UsersController());
+  final ProfilController profilController = Get.find();
+  final UsersController usersController = Get.find();
 
   var mailList = <MailModel>[].obs;
   var mailSendList = <MailModel>[].obs;

@@ -31,13 +31,13 @@ class AgendaPage extends StatefulWidget {
 
 class _AgendaPageState extends State<AgendaPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
   String subTitle = "Agenda";
 
   @override
   Widget build(BuildContext context) {
-    final AgendaController controller = Get.put(AgendaController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final AgendaController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -96,10 +96,8 @@ class _AgendaPageState extends State<AgendaPage> {
             Get.toNamed(MarketingRoutes.marketingAgendaDetail,
                 arguments: AgendaColor(agendaModel: agenda, color: color));
           },
-          child: AgendaCardWidget(
-              agendaModel: agenda,
-              index: index,
-              color: color),
+          child:
+              AgendaCardWidget(agendaModel: agenda, index: index, color: color),
         );
       }),
     );

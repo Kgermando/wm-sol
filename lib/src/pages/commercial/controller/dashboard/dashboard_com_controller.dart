@@ -14,15 +14,12 @@ import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_con
 
 class DashboardComController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
-  final VenteCartController venteCartController =
-      Get.put(VenteCartController());
-  final GainController gainController = Get.put(GainController());
-  final FactureCreanceController factureCreanceController =
-      Get.put(FactureCreanceController()); 
-  final AnnuaireController annuaireController = Get.put(AnnuaireController());
-  final AgendaController agendaController = Get.put(AgendaController());
-  final SuccursaleController succursaleController =
-      Get.put(SuccursaleController());
+  final VenteCartController venteCartController = Get.find();
+  final GainController gainController = Get.find();
+  final FactureCreanceController factureCreanceController = Get.find();
+  final AnnuaireController annuaireController = Get.find();
+  final AgendaController agendaController = Get.find();
+  final SuccursaleController succursaleController = Get.find();
 
   List<VenteChartModel> venteChartModel = [];
   List<CourbeVenteModel> venteMouthList = [];

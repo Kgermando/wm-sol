@@ -25,9 +25,8 @@ class _DetailUserState extends State<DetailUser> {
 
   @override
   Widget build(BuildContext context) {
-    final UsersController controller = Get.put(UsersController());
-    final SuccursaleController succursaleController =
-        Get.put(SuccursaleController());
+    final UsersController controller = Get.find();
+    final SuccursaleController succursaleController = Get.find();
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     // List<dynamic> depList = jsonDecode(widget.user.departement);
     // print("depList $depList");

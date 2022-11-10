@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/logistiques/entretien_api.dart'; 
-import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
-import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
-import 'package:wm_solution/src/models/logistiques/material_model.dart';
-import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/api/logistiques/entretien_api.dart';
+import 'package:wm_solution/src/models/logistiques/entretien_model.dart'; 
+import 'package:wm_solution/src/models/logistiques/material_model.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
@@ -13,11 +11,10 @@ import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_c
 class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {
   final EntretienApi entretienApi = EntretienApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final MaterielController materielController = Get.put(MaterielController());
-  final ImmobilierController immobilierController =
-      Get.put(ImmobilierController());
-  final MobilierController mobilierController = Get.put(MobilierController());
+  final ProfilController profilController = Get.find();
+  final MaterielController materielController = Get.find();
+  final ImmobilierController immobilierController = Get.find();
+  final MobilierController mobilierController = Get.find();
 
   var entretienList = <EntretienModel>[].obs;
 
@@ -57,7 +54,7 @@ class EntretienController extends GetxController
     super.dispose();
   }
 
-  void getData() async { 
+  void getData() async {
     materielList = materielController.materielList
         .where((element) =>
             element.approbationDG == "Approved" &&
@@ -82,7 +79,7 @@ class EntretienController extends GetxController
   void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await entretienApi.deleteData(id).then((value) { 
+      await entretienApi.deleteData(id).then((value) {
         entretienList.clear();
         getList();
         Get.back();

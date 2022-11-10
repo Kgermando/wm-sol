@@ -18,11 +18,11 @@ class VentePage extends StatefulWidget {
 }
 
 class _VentePageState extends State<VentePage> {
-  final AchatController controller = Get.put(AchatController());
-  final ProfilController profilController = Get.put(ProfilController());
-  final CartController cartController = Get.put(CartController());
+  final AchatController controller = Get.find();
+  final ProfilController profilController = Get.find();
+  final CartController cartController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Ventes";
 
   @override

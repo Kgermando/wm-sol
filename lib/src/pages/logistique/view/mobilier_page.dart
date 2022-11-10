@@ -17,7 +17,7 @@ class MobilierPage extends StatefulWidget {
 }
 
 class _MobilierPageState extends State<MobilierPage> {
-  final MobilierController controller = Get.put(MobilierController());
+  final MobilierController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Mobiliers";
@@ -82,9 +82,10 @@ class _MobilierPageState extends State<MobilierPage> {
                             children: [
                               const SizedBox(height: 20),
                               ResponsiveChildWidget(
-                                  child1: nomWidget(), child2: modeleWidget()),
+                                child1: nomWidget(), 
+                                child2: marqueWidget()),
                               ResponsiveChildWidget(
-                                  child1: marqueWidget(),
+                                  child1: modeleWidget(),
                                   child2: nombreWidget()),
                               descriptionWidget(),
                               const SizedBox(

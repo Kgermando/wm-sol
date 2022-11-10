@@ -32,9 +32,8 @@ class _DetailPersonneState extends State<DetailPersonne> {
 
   @override
   Widget build(BuildContext context) {
-    final PersonnelsController personnelsController =
-        Get.put(PersonnelsController());
-    final UsersController usersController = Get.put(UsersController());
+    final PersonnelsController personnelsController = Get.find();
+    final UsersController usersController = Get.find();
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title,

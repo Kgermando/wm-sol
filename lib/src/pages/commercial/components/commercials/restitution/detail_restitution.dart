@@ -24,14 +24,14 @@ class DetailRestitution extends StatefulWidget {
 
 class _DetailRestitutionState extends State<DetailRestitution> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
-    final RestitutionController controller = Get.put(RestitutionController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final RestitutionController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

@@ -19,8 +19,7 @@ class DashboardBudget extends StatefulWidget {
 }
 
 class _DashboardBudgetState extends State<DashboardBudget> {
-  final DashboardBudgetController controller =
-      Get.put(DashboardBudgetController());
+  final DashboardBudgetController controller = Get.find();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";

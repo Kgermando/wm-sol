@@ -19,8 +19,7 @@ class CommercialNav extends StatefulWidget {
 }
 
 class _CommercialNavState extends State<CommercialNav> {
-      final ComNotifyController controller =
-      Get.put(ComNotifyController());
+      final ComNotifyController controller = Get.find();
   bool isOpen = false;
 
   @override

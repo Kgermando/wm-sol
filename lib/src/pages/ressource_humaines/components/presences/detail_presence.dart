@@ -36,11 +36,9 @@ class _DetailPresenceState extends State<DetailPresence> {
 
   @override
   Widget build(BuildContext context) {
-    final PresenceController controller = Get.put(PresenceController());
-    final PresencePersonneController controllerPresencePersonne =
-        Get.put(PresencePersonneController());
-    final PersonnelsController controllerPersonnels =
-        Get.put(PersonnelsController());
+    final PresenceController controller = Get.find();
+    final PresencePersonneController controllerPresencePersonne =Get.find();
+    final PersonnelsController controllerPersonnels = Get.find();
 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return controller.obx(

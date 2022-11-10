@@ -18,12 +18,12 @@ class RestitutionPage extends StatefulWidget {
 
 class _RestitutionPageState extends State<RestitutionPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Restitution stock";
 
   @override
   Widget build(BuildContext context) {
-    final RestitutionController controller = Get.put(RestitutionController());
+    final RestitutionController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

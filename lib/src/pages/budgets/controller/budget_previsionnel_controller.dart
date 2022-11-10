@@ -8,7 +8,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 class BudgetPrevisionnelController extends GetxController
     with StateMixin<List<DepartementBudgetModel>> {
   DepeartementBudgetApi depeartementBudgetApi = DepeartementBudgetApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var departementBudgetList = <DepartementBudgetModel>[].obs;
 

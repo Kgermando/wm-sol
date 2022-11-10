@@ -8,7 +8,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class RapportController extends GetxController
     with StateMixin<List<RapportModel>> {
   final RapportApi rapportApi = RapportApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var rapportList = <RapportModel>[].obs;
 

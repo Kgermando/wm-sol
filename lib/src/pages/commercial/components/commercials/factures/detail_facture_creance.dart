@@ -27,12 +27,11 @@ class DetailFactureCreance extends StatefulWidget {
 
 class _DetailFactureCreanceState extends State<DetailFactureCreance> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final FactureCreanceController controller =
-        Get.put(FactureCreanceController());
+    final FactureCreanceController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

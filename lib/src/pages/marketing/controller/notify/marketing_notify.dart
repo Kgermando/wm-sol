@@ -34,51 +34,43 @@ class MarketingNotifyController extends GetxController {
     getCountCampaignObs();
   }
 
-  @override
-  void refresh() {
-    getCountComMarketing();
-    getCountCampaignDD();
-    getCountCampaignBudget();
-    getCountCampaignFin();
-    getCountCampaignObs();
-    super.refresh();
-  }
+ 
 
   void getCountComMarketing() async {
     NotifySumModel notifySum =
         await marketingDepartementNotifyApi.getCountMarketing();
     _itemCount.value = notifySum.sum;
-    update();
+     
   }
 
   void getCountCampaignDG() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountDG();
     _campaignCountDG.value = notifyModel.count;
-    update();
+     
   }
 
   void getCountCampaignDD() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountDD(); 
     _campaignCountDD.value = notifyModel.count;
-    update();
+     
   }
 
   void getCountCampaignBudget() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountBudget();
     _campaignCountBudget.value = notifyModel.count;
-    update();
+     
   }
 
   void getCountCampaignFin() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountFin();
     _campaignCountFin.value = notifyModel.count;
-    update();
+     
   }
 
   void getCountCampaignObs() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountObs();
     _campaignCountObs.value = notifyModel.count;
-    update();
+     
   }
 
  

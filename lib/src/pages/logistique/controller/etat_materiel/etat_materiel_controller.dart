@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/etat_materiel_api.dart';
 import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
 import 'package:wm_solution/src/models/logistiques/material_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
-import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 
 class EtatMaterielController extends GetxController
     with StateMixin<List<EtatMaterielModel>> {
   final EtatMaterielApi etatMaterielApi = EtatMaterielApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final MaterielController materielController = Get.put(MaterielController()); 
+  final ProfilController profilController = Get.find();
+  final MaterielController materielController = Get.find();
 
   var etatMaterielList = <EtatMaterielModel>[].obs;
 

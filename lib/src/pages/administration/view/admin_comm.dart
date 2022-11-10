@@ -16,10 +16,8 @@ class AdminComm extends StatefulWidget {
 }
 
 class _AdminCommState extends State<AdminComm> { 
-  final ComNotifyController comNotifyController =
-      Get.put(ComNotifyController());  
-  final SuccursaleController succursaleController =
-      Get.put(SuccursaleController()); 
+  final ComNotifyController comNotifyController = Get.find();
+  final SuccursaleController succursaleController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
   String subTitle = "Direteur de génerale";

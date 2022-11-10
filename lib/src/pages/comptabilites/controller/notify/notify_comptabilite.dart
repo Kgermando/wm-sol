@@ -41,30 +41,30 @@ class ComptabiliteNotifyController extends GetxController {
     NotifySumModel notifySum =
         await comptabiliteDepartementNotifyApi.getCountComptabilite();
     _itemCount.value = notifySum.sum;
-    update();
+     
   }
 
   void getCountBilanDD() async {
     NotifyModel notifySum = await bilanNotifyApi.getCountDD();
     _bilanCount.value = notifySum.count;
-    update();
+     
   }
 
   void getCountJournalDD() async {
     NotifyModel notifySum = await journalNotifyApi.getCountDD();
     _journalCount.value = notifySum.count;
-    update();
+     
   }
 
   void getCountCompteResultatDD() async {
     NotifyModel notifySum = await compteResultatNotifyApi.getCountDD();
     _compteResultatCount.value = notifySum.count;
-    update();
+     
   }
 
   void getCountBalanceDD() async {
     NotifyModel notifySum = await balanceNotifyApi.getCountDD();
     _balanceCount.value = notifySum.count;
-    update();
+     
   }
 }

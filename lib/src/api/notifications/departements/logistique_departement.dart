@@ -26,3 +26,4 @@ class LogistiqueDepartementNotifyApi extends GetConnect {
     }
   }
 }
+

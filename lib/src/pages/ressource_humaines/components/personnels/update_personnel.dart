@@ -365,7 +365,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
   }
 
   Widget roleWidget(PersonnelsController controller) {
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     List<String> roleList = [];
     if (int.parse(profilController.user.role) == 0) {
       roleList = Dropdown().roleAdmin;

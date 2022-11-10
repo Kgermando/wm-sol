@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class ProduitModelController extends GetxController
     with StateMixin<List<ProductModel>> {
   final ProduitModelApi produitModelApi = ProduitModelApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var produitModelList = <ProductModel>[].obs;
 
@@ -96,9 +96,8 @@ class ProduitModelController extends GetxController
           sousCategorie3: (sousCategorie3Controller.text == "")
               ? '-'
               : sousCategorie3Controller.text,
-          sousCategorie4: (uniteController.text == "")
-              ? '-'
-              : uniteController.text,
+          sousCategorie4:
+              (uniteController.text == "") ? '-' : uniteController.text,
           idProduct: idProductform,
           signature: profilController.user.matricule,
           created: DateTime.now(),

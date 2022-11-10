@@ -22,7 +22,7 @@ class _TrajetPageState extends State<TrajetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final TrajetController controller = Get.put(TrajetController());
+    final TrajetController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

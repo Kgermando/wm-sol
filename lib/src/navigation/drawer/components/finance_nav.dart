@@ -22,14 +22,10 @@ class FinanceNav extends StatefulWidget {
 }
 
 class _FinanceNavState extends State<FinanceNav> {
-  final FinanceNotifyController financeNotifyController =
-      Get.put(FinanceNotifyController());
-  final BanqueNameController banqueNameController =
-      Get.put(BanqueNameController());
-  final CaisseNameController caisseNameController =
-      Get.put(CaisseNameController());
-  final FinExterieurNameController finExterieurNameController =
-      Get.put(FinExterieurNameController());
+  final FinanceNotifyController financeNotifyController = Get.find();
+  final BanqueNameController banqueNameController = Get.find();
+  final CaisseNameController caisseNameController = Get.find();
+  final FinExterieurNameController finExterieurNameController = Get.find();
   bool isOpen = false;
   bool isOpenBanque = false;
   bool isOpenCaisse = false;

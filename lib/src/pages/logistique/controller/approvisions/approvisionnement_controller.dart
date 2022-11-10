@@ -8,7 +8,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 class ApprovisionnementController extends GetxController
     with StateMixin<List<ApprovisionnementModel>> {
   final ApprovisionnementApi approvisionnementApi = ApprovisionnementApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var approvisionnementList = <ApprovisionnementModel>[].obs;
 
@@ -22,7 +22,7 @@ class ApprovisionnementController extends GetxController
   TextEditingController quantityController = TextEditingController();
   String? unite;
   String? fournisseur;
- 
+
   @override
   void onInit() {
     super.onInit();
@@ -80,14 +80,13 @@ class ApprovisionnementController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionnementModel(
-        provision: provisionController.text,
-        quantityTotal: quantityController.text,
-        quantity: quantityController.text,
-        unite: unite.toString(),
-        signature: profilController.user.matricule,
-        created: DateTime.now(),
-        fournisseur: fournisseur.toString()
-      );
+          provision: provisionController.text,
+          quantityTotal: quantityController.text,
+          quantity: quantityController.text,
+          unite: unite.toString(),
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          fournisseur: fournisseur.toString());
       await approvisionnementApi.insertData(dataItem).then((value) {
         clear();
         approvisionnementList.clear();
@@ -116,6 +115,7 @@ class ApprovisionnementController extends GetxController
       double qtyDisponible =
           double.parse(data.quantity) + double.parse(quantityController.text);
       final dataItem = ApprovisionnementModel(
+        id: data.id,
           provision: data.provision,
           quantityTotal: qtyTotal.toString(),
           quantity: qtyDisponible.toString(),
@@ -143,21 +143,21 @@ class ApprovisionnementController extends GetxController
     }
   }
 
-  void submitReste(ApprovisionnementModel data, 
-      TextEditingController qtyController) async {
+  void submitReste(
+      ApprovisionnementModel data, TextEditingController qtyController) async {
     try {
       _isLoading.value = true;
       double qtyRestante =
           double.parse(data.quantity) - double.parse(qtyController.text);
       final dataItem = ApprovisionnementModel(
-        provision: data.provision,
-        quantityTotal: data.quantityTotal,
-        quantity: qtyRestante.toString(),
-        unite: data.unite,
-        signature: data.signature,
-        created: data.created,
-        fournisseur: data.fournisseur
-      );
+        id: data.id,
+          provision: data.provision,
+          quantityTotal: data.quantityTotal,
+          quantity: qtyRestante.toString(),
+          unite: data.unite,
+          signature: data.signature,
+          created: data.created,
+          fournisseur: data.fournisseur);
       await approvisionnementApi.updateData(dataItem).then((value) {
         clear();
         approvisionnementList.clear();

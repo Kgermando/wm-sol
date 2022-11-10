@@ -199,9 +199,9 @@ var addbudgetLigneBudgetairesUrl =
     Uri.parse("$mainUrl/budgets/ligne-budgetaires/insert-new-ligne-budgetaire");
 
 // Logistiques
-var anguinsUrl = Uri.parse("$mainUrl/materiels/");
-var aaddAnguinsUrl = Uri.parse("$mainUrl/materiels/insert-new-materiel");
-var anguinsChartPieUrl = Uri.parse("$mainUrl/materiels/chart-pie-genre/");
+var materielsUrl = Uri.parse("$mainUrl/materiels/");
+var aaddMaterielsUrl = Uri.parse("$mainUrl/materiels/insert-new-materiel");
+var materielsChartPieUrl = Uri.parse("$mainUrl/materiels/chart-pie-genre/");
 
 var carburantsUrl = Uri.parse("$mainUrl/carburants/");
 var addCarburantsUrl = Uri.parse("$mainUrl/carburants/insert-new-carburant");

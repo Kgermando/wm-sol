@@ -32,10 +32,9 @@ class _DetailCreanceState extends State<DetailCreance> {
 
   @override
   Widget build(BuildContext context) {
-    final CreanceController controller = Get.put(CreanceController());
-    final CreanceDetteController creanceDetteController =
-        Get.put(CreanceDetteController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final CreanceController controller = Get.find();
+    final CreanceDetteController creanceDetteController = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

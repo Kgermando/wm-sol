@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class TachesController extends GetxController
     with StateMixin<List<TacheModel>> {
   final TachesApi tachesApi = TachesApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var tachesList = <TacheModel>[].obs;
 

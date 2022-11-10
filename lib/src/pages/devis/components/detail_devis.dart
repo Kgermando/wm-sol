@@ -27,10 +27,9 @@ class DetailDevis extends StatefulWidget {
 }
 
 class _DetailDevisState extends State<DetailDevis> {
-  final DevisController controller = Get.put(DevisController());
-  final DevisListObjetController devisListObjetController =
-      Get.put(DevisListObjetController());
-  final ProfilController profilController = Get.put(ProfilController());
+  final DevisController controller = Get.find();
+  final DevisListObjetController devisListObjetController = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Devis";
 
@@ -88,7 +87,8 @@ class _DetailDevisState extends State<DetailDevis> {
                                                 Row(
                                                   children: [
                                                     IconButton(
-                                                      tooltip: 'Soumettre chez le DD',
+                                                        tooltip:
+                                                            'Soumettre chez le DD',
                                                         color: Colors
                                                             .green.shade700,
                                                         onPressed: () {
@@ -521,7 +521,7 @@ class _DetailDevisState extends State<DetailDevis> {
         ),
       ),
       Container(
-        padding: const EdgeInsets.all(16.0 * 0.75), 
+        padding: const EdgeInsets.all(16.0 * 0.75),
         child: AutoSizeText(
           "-",
           maxLines: 1,

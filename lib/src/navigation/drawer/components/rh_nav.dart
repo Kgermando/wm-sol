@@ -22,7 +22,7 @@ class _RhNavState extends State<RhNav> {
 
   @override
   Widget build(BuildContext context) { 
-    final RHNotifyController controller = Get.put(RHNotifyController());
+    final RHNotifyController controller = Get.find();
 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;  

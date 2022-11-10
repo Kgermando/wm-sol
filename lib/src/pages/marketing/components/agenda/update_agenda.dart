@@ -19,9 +19,9 @@ class UpdateAgenda extends StatefulWidget {
 }
 
 class _UpdateAgendaState extends State<UpdateAgenda> {
-  final AgendaController controller = Get.put(AgendaController());
+  final AgendaController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Marketing";
 
   @override
   void initState() {

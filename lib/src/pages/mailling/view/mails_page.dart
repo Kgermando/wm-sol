@@ -30,7 +30,7 @@ class MailPages extends StatefulWidget {
 }
 
 class _MailPagesState extends State<MailPages> {
-  final MaillingController controller = Get.put(MaillingController());
+  final MaillingController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Mails";
 

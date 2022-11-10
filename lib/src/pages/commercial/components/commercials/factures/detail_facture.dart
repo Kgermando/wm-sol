@@ -27,12 +27,11 @@ class DetailFacture extends StatefulWidget {
 
 class _DetailFactureState extends State<DetailFacture> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final FactureController controller = Get.put(FactureController());
-
+    final FactureController controller = Get.find();
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),

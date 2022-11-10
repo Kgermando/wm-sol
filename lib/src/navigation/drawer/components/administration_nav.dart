@@ -19,7 +19,7 @@ class AdministrationNav extends StatefulWidget {
 }
 
 class _AdministrationNavState extends State<AdministrationNav> {
-  final AdminNotifyController controller = Get.put(AdminNotifyController());
+  final AdminNotifyController controller = Get.find();
   bool isOpen1 = false;
 
   @override
@@ -120,9 +120,9 @@ class _AdministrationNavState extends State<AdministrationNav> {
             title: 'Marketing',
             style: bodyText1,
             badge: Badge(
-              showBadge: (controller.commMarketingCount >= 1) ? true : false,
+              showBadge: (controller.mrketingCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.commMarketingCount}',
+              badgeContent: Text('${controller.mrketingCount}',
                   style: const TextStyle(fontSize: 10.0, color: Colors.white)),
               child: const Icon(Icons.notifications),
             ),
@@ -136,9 +136,9 @@ class _AdministrationNavState extends State<AdministrationNav> {
             title: 'Commercial',
             style: bodyText1,
             badge: Badge(
-              showBadge: (controller.commMarketingCount >= 1) ? true : false,
+              showBadge: (controller.commCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.commMarketingCount}',
+              badgeContent: Text('${controller.commCount}',
                   style: const TextStyle(fontSize: 10.0, color: Colors.white)),
               child: const Icon(Icons.notifications),
             ),

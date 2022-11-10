@@ -46,7 +46,7 @@ class ListApprovisionnement extends StatelessWidget {
                         fontSize: 12,
                       )),
             subtitle: Text(
-              'Stock: ${double.parse(approvisionnementModel.quantity).toStringAsFixed(0)} ${approvisionnementModel.unite}',
+  'Stock: ${double.parse(approvisionnementModel.quantity).toStringAsFixed(0)} / ${double.parse(approvisionnementModel.quantityTotal).toStringAsFixed(0)} ${approvisionnementModel.unite}',
               overflow: TextOverflow.clip,
               style: const TextStyle(
                   fontWeight: FontWeight.bold,

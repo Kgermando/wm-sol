@@ -19,14 +19,13 @@ class HistoryRavitaillementPage extends StatefulWidget {
 
 class _HistoryRavitaillementPageState extends State<HistoryRavitaillementPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Historique des Ravitaillements";
 
   @override
   Widget build(BuildContext context) {
-    final HistoryRavitaillementController controller =
-        Get.put(HistoryRavitaillementController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final HistoryRavitaillementController controller = Get.find();
+    final ProfilController profilController = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

@@ -29,9 +29,9 @@ class _DetailTacheState extends State<DetailTache> {
 
   @override
   Widget build(BuildContext context) {
-    final TachesController controller = Get.put(TachesController());
-    final ProfilController profilController = Get.put(ProfilController());
-    final RapportController rapportController = Get.put(RapportController());
+    final TachesController controller = Get.find();
+    final ProfilController profilController = Get.find();
+    final RapportController rapportController = Get.find();
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),

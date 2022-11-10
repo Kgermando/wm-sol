@@ -21,7 +21,7 @@ class DetailMail extends StatefulWidget {
 }
 
 class _DetailMailState extends State<DetailMail> {
-  final MaillingController controller = Get.put(MaillingController());
+  final MaillingController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Mails";
 

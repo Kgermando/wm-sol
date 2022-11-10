@@ -11,7 +11,7 @@ import 'package:wm_solution/src/utils/priority_dropdown.dart';
 
 class DevisController extends GetxController with StateMixin<List<DevisModel>> {
   final DevisAPi devisAPi = DevisAPi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var devisList = <DevisModel>[].obs;
 

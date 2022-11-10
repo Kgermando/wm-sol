@@ -27,8 +27,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
 
   @override
   Widget build(BuildContext context) {
-    final DashboardFinanceController controller =
-        Get.put(DashboardFinanceController());
+    final DashboardFinanceController controller = Get.find();
 
     return SafeArea(
       child: Scaffold(

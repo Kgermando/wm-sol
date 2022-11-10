@@ -8,7 +8,7 @@ import 'package:wm_solution/src/utils/province.dart';
 class SuccursaleController extends GetxController
     with StateMixin<List<SuccursaleModel>> {
   final SuccursaleApi succursaleApi = SuccursaleApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var succursaleList = <SuccursaleModel>[].obs;
 

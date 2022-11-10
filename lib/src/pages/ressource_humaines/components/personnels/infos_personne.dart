@@ -16,10 +16,8 @@ class InfosPersonne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PerformenceNoteController controllerNote =
-        Get.put(PerformenceNoteController());
-    final PresencePersonneController presencePersonneController =
-        Get.put(PresencePersonneController()); 
+    final PerformenceNoteController controllerNote = Get.find();
+    final PresencePersonneController presencePersonneController = Get.find();
     return Column(
       children: [
         performenceWideget(context, controllerNote),

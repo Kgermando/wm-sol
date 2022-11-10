@@ -30,8 +30,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
 
   @override
   Widget build(BuildContext context) {
-    final LignBudgetaireController controller =
-        Get.put(LignBudgetaireController());
+    final LignBudgetaireController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

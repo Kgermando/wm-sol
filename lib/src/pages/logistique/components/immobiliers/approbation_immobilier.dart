@@ -47,7 +47,66 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
                       onPressed: () {},
                       icon: Icon(Icons.add_task, color: Colors.green.shade700)),
                 ],
-              ), 
+              ),
+              const SizedBox(height: p20),
+              Divider(color: Colors.red[10]),
+              Padding(
+                padding: const EdgeInsets.all(p10),
+                child: ResponsiveChildWidget(
+                    flex1: 1,
+                    flex2: 4,
+                    child1: Text("Directeur générale", style: bodyLarge),
+                    child2: Column(
+                      children: [
+                        ResponsiveChild3Widget(
+                            flex1: 2,
+                            flex2: 3,
+                            flex3: 2,
+                            child1: Column(
+                              children: [
+                                const Text("Approbation"),
+                                const SizedBox(height: p20),
+                                Text(widget.data.approbationDG,
+                                    style: bodyLarge!.copyWith(
+                                        color: (widget.data.approbationDG ==
+                                                "Unapproved")
+                                            ? Colors.red.shade700
+                                            : Colors.green.shade700)),
+                              ],
+                            ),
+                            child2:
+                                (widget.data.approbationDG == "Unapproved")
+                                    ? Column(
+                                        children: [
+                                          const Text("Motif"),
+                                          const SizedBox(height: p20),
+                                          Text(widget.data.motifDG),
+                                        ],
+                                      )
+                                    : Container(),
+                            child3:
+                                (widget.data.approbationDG == "Unapproved")
+                                    ? Column(
+                                        children: [
+                                          const Text("Signature"),
+                                          const SizedBox(height: p20),
+                                          Text(widget.data.signatureDG),
+                                        ],
+                                      )
+                                    : Container()),
+                        if (widget.data.approbationDG == '-' &&
+                            widget.profilController.user.fonctionOccupe ==
+                                "Directeur générale")
+                          Padding(
+                              padding: const EdgeInsets.all(p10),
+                              child: ResponsiveChildWidget(
+                                  child1: approbationDGWidget(),
+                                  child2: (widget.controller.approbationDG ==
+                                          "Unapproved")
+                                      ? motifDGWidget()
+                                      : Container())),
+                      ],
+                    ))),
               const SizedBox(height: p20),
               Divider(color: Colors.red[10]),
               Padding(
@@ -68,15 +127,15 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
                                 const Text("Approbation"),
                                 const SizedBox(height: p20),
                                 Text(
-                                    widget.data
-                                        .approbationDD,
-                                    style: bodyLarge!.copyWith(
-                                        color:
-                                            (widget.data
-                                                        .approbationDD ==
-                                                    "Unapproved")
-                                                ? Colors.red.shade700
-                                                : Colors.green.shade700)),
+                                  widget.data
+                                      .approbationDD,
+                                  style: bodyLarge.copyWith(
+                                      color:
+                                          (widget.data
+                                                      .approbationDD ==
+                                                  "Unapproved")
+                                              ? Colors.red.shade700
+                                              : Colors.green.shade700)),
                               ],
                             ),
                             child2: (widget.data
@@ -122,7 +181,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
     );
   } 
 
-  Widget approbationDGWidget(ImmobilierController controller) {
+  Widget approbationDGWidget() {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -133,7 +192,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           contentPadding: const EdgeInsets.only(left: 5.0),
         ),
-        value: controller.approbationDG,
+        value: widget.controller.approbationDG,
         isExpanded: true,
         items: approbationList.map((String value) {
           return DropdownMenuItem<String>(
@@ -143,9 +202,9 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
         }).toList(),
         onChanged: (value) {
           setState(() {
-            controller.approbationDG = value!;
-            if (controller.approbationDG == "Approved") {
-              controller.submitDG(widget.data);
+            widget.controller.approbationDG = value!;
+            if (widget.controller.approbationDG == "Approved") {
+              widget.controller.submitDG(widget.data);
             }
           });
         },
@@ -153,7 +212,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
     );
   }
 
-  Widget motifDGWidget(ImmobilierController controller) {
+  Widget motifDGWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: Row(
@@ -161,7 +220,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
             Expanded(
               flex: 3,
               child: TextFormField(
-                controller: controller.motifDGController,
+                controller: widget.controller.motifDGController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -182,7 +241,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
               child: IconButton(
                   tooltip: 'Soumettre le Motif',
                   onPressed: () {
-                    controller.submitDG(widget.data);
+                    widget.controller.submitDG(widget.data);
                   },
                   icon: Icon(Icons.send, color: Colors.red.shade700)),
             )

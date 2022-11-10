@@ -12,12 +12,10 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 class RestitutionController extends GetxController
     with StateMixin<List<RestitutionModel>> {
   final RestitutionApi restitutionApi = RestitutionApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final StockGlobalController stockGlobalController =
-      Get.put(StockGlobalController());
-  final AchatController achatController = Get.put(AchatController());
-  final HistoryLivraisonController historyLivraisonController =
-      Get.put(HistoryLivraisonController());
+  final ProfilController profilController = Get.find();
+  final StockGlobalController stockGlobalController = Get.find();
+  final AchatController achatController = Get.find();
+  final HistoryLivraisonController historyLivraisonController = Get.find();
 
   var restitutionList = <RestitutionModel>[].obs;
 

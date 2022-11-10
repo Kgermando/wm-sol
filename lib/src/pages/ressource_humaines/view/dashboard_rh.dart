@@ -20,8 +20,7 @@ class DashboardRH extends StatefulWidget {
 }
 
 class _DashboardRHState extends State<DashboardRH> {
-  final DashobardNotifyController controller =
-      Get.put(DashobardNotifyController()); 
+  final DashobardNotifyController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Dashboard";

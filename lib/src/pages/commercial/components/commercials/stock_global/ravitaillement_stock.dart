@@ -22,14 +22,13 @@ class RavitaillementStock extends StatefulWidget {
 }
 
 class _RavitaillementStockState extends State<RavitaillementStock> {
-  final RavitaillementController controller =
-      Get.put(RavitaillementController());
+  final RavitaillementController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
- String title = "Commercial & Marketing"; 
+  String title = "Commercial";
 
-   @override
+  @override
   void initState() {
-    super.initState(); 
+    super.initState();
     setState(() {
       controller.modeAchatBool = widget.stocksGlobalMOdel.modeAchat;
       controller.controlleridProduct =
@@ -46,13 +45,13 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
       key: scaffoldKey,
-      appBar:
-          headerBar(context, scaffoldKey, title, widget.stocksGlobalMOdel.idProduct),
-      drawer: const DrawerMenu(), 
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.stocksGlobalMOdel.idProduct),
+      drawer: const DrawerMenu(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -82,20 +81,17 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ResponsiveChildWidget(
-                                    child1: Text('Mode achat :',
-                                      textAlign: TextAlign.start,
-                                      style: bodyMedium!.copyWith(
-                                          fontWeight:
-                                              FontWeight.bold)),
-                                    child2: modeAchatField()
-                                  ),
+                                      child1: Text('Mode achat :',
+                                          textAlign: TextAlign.start,
+                                          style: bodyMedium!.copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                      child2: modeAchatField()),
                                   ResponsiveChildWidget(
-                                    child1: quantityField(), 
-                                    child2: priceAchatUnitField()
-                                  ),
+                                      child1: quantityField(),
+                                      child2: priceAchatUnitField()),
                                   ResponsiveChildWidget(
                                       child1: prixVenteField(),
-                                      child2: tvaField()), 
+                                      child2: tvaField()),
                                   const SizedBox(
                                     height: p20,
                                   ),
@@ -103,9 +99,11 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                                       title: 'Ravitailler',
                                       isLoading: controller.isLoading,
                                       press: () {
-                                        final form = controller.formKey.currentState!;
+                                        final form =
+                                            controller.formKey.currentState!;
                                         if (form.validate()) {
-                                          controller.submit(widget.stocksGlobalMOdel);
+                                          controller
+                                              .submit(widget.stocksGlobalMOdel);
                                           form.reset();
                                         }
                                       })
@@ -122,8 +120,6 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
     );
   }
 
-
-  
   Widget modeAchatField() {
     if (controller.modeAchatBool == "true") {
       controller.modeAchat = true;
@@ -181,7 +177,8 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
               validator: (quantity) => quantity != null && quantity.isEmpty
                   ? 'La Quantité total est obligatoire'
                   : null,
-              onChanged: (value) => setState(() => controller.controllerquantity.text),
+              onChanged: (value) =>
+                  setState(() => controller.controllerquantity.text),
             ),
           ),
           Expanded(
@@ -285,7 +282,8 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                 }
               },
               onChanged: (value) => setState(() {
-                controller.prixVenteUnit = (value == "") ? 0.0 : double.parse(value);
+                controller.prixVenteUnit =
+                    (value == "") ? 0.0 : double.parse(value);
               }),
             ),
           ),
@@ -356,7 +354,6 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
     );
   }
 
-
   tvaValeur() {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
 
@@ -366,7 +363,7 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
 
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-        child: Text('PVU: ${controller.pavTVA.toStringAsFixed(2)} \$', style: bodyText1));
+        child: Text('PVU: ${controller.pavTVA.toStringAsFixed(2)} \$',
+            style: bodyText1));
   }
-
 }

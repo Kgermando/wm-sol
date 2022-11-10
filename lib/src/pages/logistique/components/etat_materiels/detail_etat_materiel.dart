@@ -23,8 +23,8 @@ class DetailEtatMateriel extends StatefulWidget {
 }
 
 class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
-  final EtatMaterielController controller = Get.put(EtatMaterielController());
-  final ProfilController profilController = Get.put(ProfilController());
+  final EtatMaterielController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
@@ -159,7 +159,7 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
               title: const Text('Etes-vous sûr de vouloir faire ceci ?',
-                      style: TextStyle(color: Colors.red)),
+                  style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -175,8 +175,7 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                     controller.etatMaterielApi
                         .deleteData(widget.etatMaterielModel.id!);
                   },
-                  child: const Text('OK',
-                      style: TextStyle(color: Colors.red)),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );

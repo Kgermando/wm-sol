@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/approbation_succursale.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/stats_succusale.dart'; 
+import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/stats_succusale.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -26,13 +26,13 @@ class DetailSuccursale extends StatefulWidget {
 
 class _DetailSuccursaleState extends State<DetailSuccursale> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final SuccursaleController controller = Get.put(SuccursaleController());
-    final AchatController achatController = Get.put(AchatController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final SuccursaleController controller = Get.find();
+    final AchatController achatController = Get.find();
+    final ProfilController profilController = Get.find();
 
     int userRole = int.parse(profilController.user.role);
 
@@ -105,7 +105,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                                             )
                                           ],
                                         ),
-                                        headerTitle(achatController), 
+                                        headerTitle(achatController),
                                       ],
                                     ),
                                   ),
@@ -113,7 +113,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                                 const SizedBox(height: p20),
                                 StatsSuccursale(
                                     succursaleModel: widget.succursaleModel),
-                                const SizedBox(height: p20), 
+                                const SizedBox(height: p20),
                                 ApprobationSuccursale(
                                     data: widget.succursaleModel,
                                     controller: controller,
@@ -154,8 +154,6 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
       ),
     );
   }
-
-
 
   Widget headerTitle(AchatController achatController) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;

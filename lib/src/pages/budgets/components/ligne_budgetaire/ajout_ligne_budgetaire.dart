@@ -28,10 +28,8 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
 
   @override
   Widget build(BuildContext context) {
-    final BudgetPrevisionnelController controller =
-        Get.put(BudgetPrevisionnelController());
-    final LignBudgetaireController lignBudgetaireController =
-        Get.put(LignBudgetaireController());
+    final BudgetPrevisionnelController controller = Get.find();
+    final LignBudgetaireController lignBudgetaireController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

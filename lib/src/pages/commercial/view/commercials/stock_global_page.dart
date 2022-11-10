@@ -19,13 +19,13 @@ class StockGlobalPage extends StatefulWidget {
 
 class _StockGlobalPageState extends State<StockGlobalPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Stocks global";
 
   @override
   Widget build(BuildContext context) {
-    final StockGlobalController controller = Get.put(StockGlobalController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final StockGlobalController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

@@ -24,9 +24,9 @@ class UpdateCompteResultat extends StatefulWidget {
 class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
-  String subTitle = "compte résultat";
+  String subTitle = "Compte Resultat";
   final CompteResultatController controller = Get.find();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   @override
   void initState() {

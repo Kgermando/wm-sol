@@ -7,7 +7,7 @@ import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class NotifyHeaderController extends GetxController {
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
   CartNotifyApi cartNotifyApi = CartNotifyApi();
   TacheNotifyApi tacheNotifyApi = TacheNotifyApi();
   MailsNotifyApi mailsNotifyApi = MailsNotifyApi();

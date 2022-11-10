@@ -21,11 +21,11 @@ class JournalLivreComptabilite extends StatefulWidget {
 class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
-  String subTitle = "journal";
+  String subTitle = "Journal";
 
   @override
   Widget build(BuildContext context) {
-    final JournalLivreController controller = Get.put(JournalLivreController());
+    final JournalLivreController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

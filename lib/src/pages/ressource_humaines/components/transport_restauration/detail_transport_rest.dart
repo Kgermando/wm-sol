@@ -32,10 +32,9 @@ class DetailTransportRest extends StatefulWidget {
 }
 
 class _DetailTransportRestState extends State<DetailTransportRest> {
-  final ProfilController profilController = Get.put(ProfilController());
-  final TransportRestController controller = Get.put(TransportRestController());
-  final TransportRestPersonnelsController controllerAgent =
-      Get.put(TransportRestPersonnelsController());
+  final ProfilController profilController = Get.find();
+  final TransportRestController controller = Get.find();
+  final TransportRestPersonnelsController controllerAgent = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
@@ -210,7 +209,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
   }
 
   Widget dataWidget(TransportRestController controller) {
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
       padding: const EdgeInsets.all(p10),

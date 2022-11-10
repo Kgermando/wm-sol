@@ -9,7 +9,7 @@ class PresencePersonneController extends GetxController
     with StateMixin<List<PresencePersonnelModel>> {
   final PresencePersonnelApi presencePersonnelApi = PresencePersonnelApi();
 
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var presencePersonneList = <PresencePersonnelModel>[].obs;
 

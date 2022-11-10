@@ -21,8 +21,8 @@ class UpdateProductModele extends StatefulWidget {
 
 class _UpdateProductModeleState extends State<UpdateProductModele> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
-  final ProduitModelController controller = Get.put(ProduitModelController());
+  String title = "Commercial";
+  final ProduitModelController controller = Get.find();
 
   @override
   initState() {

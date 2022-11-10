@@ -17,7 +17,7 @@ class MaterielPage extends StatefulWidget {
 }
 
 class _MaterielPageState extends State<MaterielPage> {
-  final MaterielController controller = Get.put(MaterielController());
+  final MaterielController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Materiels";

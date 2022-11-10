@@ -11,46 +11,21 @@ class TransportRestXlsx {
     Sheet sheetObject = excel['Transport & Restauration'];
     sheetObject.insertRowIterables([
       "id",
-      "title",
-      "observation",
-      "signature",
-      "created",
-      "approbationDG",
-      "motifDG",
-      "signatureDG",
-      "approbationBudget",
-      "motifBudget",
-      "signatureBudget",
-      "approbationFin",
-      "motifFin",
-      "signatureFin",
-      "approbationDD",
-      "motifDD",
-      "signatureDD",
-      "ligneBudgetaire",
-      "ressource"
+      "Titre",
+      "Observation", 
+      "Date",  
+      "Ligne Budgetaire",
+      "Ressource"
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
       List<String> data = [
         dataList[i].id.toString(),
         dataList[i].title,
-        dataList[i].observation,
-        dataList[i].signature,
-        DateFormat("dd/MM/yy HH-mm").format(dataList[i].created),
-        dataList[i].approbationDG,
-        dataList[i].motifDG,
-        dataList[i].signatureDG,
-        dataList[i].approbationBudget,
-        dataList[i].motifBudget,
-        dataList[i].signatureBudget,
-        dataList[i].approbationFin,
-        dataList[i].motifFin,
-        dataList[i].signatureFin,
-        dataList[i].approbationDD,
-        dataList[i].motifDD,
-        dataList[i].signatureDD,
-        dataList[i].ligneBudgetaire
+        dataList[i].observation, 
+        DateFormat("dd/MM/yy HH-mm").format(dataList[i].created), 
+        dataList[i].ligneBudgetaire,
+        dataList[i].ressource
       ];
 
       sheetObject.insertRowIterables(data, i + 1);

@@ -19,9 +19,9 @@ class SuccursalePage extends StatefulWidget {
 }
 
 class _SuccursalePageState extends State<SuccursalePage> {
-  final SuccursaleController controller = Get.put(SuccursaleController());
+  final SuccursaleController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Succursales";
 
   @override
@@ -48,9 +48,9 @@ class _SuccursalePageState extends State<SuccursalePage> {
                         // ),
                         builder: (BuildContext context) {
                           return Container(
-                            // color: Colors.amber.shade100,
-                            padding: const EdgeInsets.all(p20),
-                            child: Form(
+                              // color: Colors.amber.shade100,
+                              padding: const EdgeInsets.all(p20),
+                              child: Form(
                                 key: controller.formKey,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +68,8 @@ class _SuccursalePageState extends State<SuccursalePage> {
                                     ResponsiveChildWidget(
                                         child1: nameWidget(),
                                         child2: provinceWidget()),
-                                        // nameWidget(),
-                                        // provinceWidget(),
+                                    // nameWidget(),
+                                    // provinceWidget(),
                                     adresseWidget(),
                                     const SizedBox(
                                       height: p20,
@@ -87,12 +87,11 @@ class _SuccursalePageState extends State<SuccursalePage> {
                                         })
                                   ],
                                 ),
-                              )
-                          );
+                              ));
                         },
                       );
                     });
-                     
+
                     // Get.toNamed(ComRoutes.comSuccursaleAdd);
                   }),
               body: Row(
@@ -115,7 +114,6 @@ class _SuccursalePageState extends State<SuccursalePage> {
               ))),
     );
   }
-
 
   Widget nameWidget() {
     return Container(

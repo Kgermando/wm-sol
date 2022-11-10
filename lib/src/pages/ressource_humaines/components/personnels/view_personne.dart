@@ -345,7 +345,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
   }
 
   Widget serviceWidget() {
-    final ProfilController profilController = Get.put(ProfilController());
+    final ProfilController profilController = Get.find();
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final role = int.parse(profilController.user.role);
     return Padding(

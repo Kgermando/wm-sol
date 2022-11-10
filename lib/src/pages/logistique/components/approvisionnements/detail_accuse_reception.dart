@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +11,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailAccuseReception extends StatefulWidget {
@@ -21,9 +24,8 @@ class DetailAccuseReception extends StatefulWidget {
 }
 
 class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
-  final ApprovisionReceptionController controller =
-      Get.put(ApprovisionReceptionController());
-  final ProfilController profilController = Get.put(ProfilController());
+  final ApprovisionReceptionController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
@@ -100,61 +102,62 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
 
   Widget dataWidget() {
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
+    // List<dynamic> departementList = jsonDecode(widget.approvisionReceptionModel.departement);
+    // List<dynamic> departementUserList = jsonDecode(profilController.user.departement);
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.approvisionReceptionModel.departement ==
-              profilController.user.departement)
-            accRecepetion(),
+          // if (departementList.contains(profilController.user.departement))
+          accRecepetion(),
           const SizedBox(height: p20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text('Produit :',
-                    style: Responsive.isDesktop(context)
-                        ? const TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 20)
-                        : bodyText2,
-                    overflow: TextOverflow.visible),
-              ),
-              Expanded(
-                child: Text(widget.approvisionReceptionModel.provision,
-                    style: Responsive.isDesktop(context)
-                        ? const TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 20)
-                        : bodyText2,
-                    overflow: TextOverflow.visible),
-              ),
-            ],
-          ),
+          ResponsiveChildWidget(
+              child1: Text('Département :',
+                  style: Responsive.isDesktop(context)
+                      ? const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)
+                      : bodyText2,
+                  overflow: TextOverflow.visible),
+              child2: Text(widget.approvisionReceptionModel.departement,
+                  style: Responsive.isDesktop(context)
+                      ? const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)
+                      : bodyText2,
+                  overflow: TextOverflow.visible)),
           Divider(
             color: mainColor,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text('Quantité :',
-                    style: Responsive.isDesktop(context)
-                        ? const TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 20)
-                        : bodyText2,
-                    overflow: TextOverflow.ellipsis),
-              ),
-              Expanded(
-                child: Text(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(widget.approvisionReceptionModel.quantity))} ${widget.approvisionReceptionModel.unite}',
-                    style: Responsive.isDesktop(context)
-                        ? const TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 20)
-                        : bodyText2,
-                    overflow: TextOverflow.ellipsis),
-              ),
-            ],
+          ResponsiveChildWidget(
+              child1: Text('Produit :',
+                  style: Responsive.isDesktop(context)
+                      ? const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)
+                      : bodyText2,
+                  overflow: TextOverflow.visible),
+              child2: Text(widget.approvisionReceptionModel.provision,
+                  style: Responsive.isDesktop(context)
+                      ? const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)
+                      : bodyText2,
+                  overflow: TextOverflow.visible)),
+          Divider(
+            color: mainColor,
           ),
+          ResponsiveChildWidget(
+              child1: Text('Quantité :',
+                  style: Responsive.isDesktop(context)
+                      ? const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)
+                      : bodyText2,
+                  overflow: TextOverflow.ellipsis),
+              child2: Text(
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(widget.approvisionReceptionModel.quantity))} ${widget.approvisionReceptionModel.unite}',
+                  style: Responsive.isDesktop(context)
+                      ? const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)
+                      : bodyText2,
+                  overflow: TextOverflow.ellipsis)),
         ],
       ),
     );
@@ -206,8 +209,7 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
   }
 
   checkboxRead() {
-    bool isChecked = false;
-    isChecked = widget.approvisionReceptionModel.accuseReception == 'true';
+    bool isChecked = false; 
     return Checkbox(
       checkColor: Colors.white,
       fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -218,9 +220,11 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
           if (isChecked) {
             controller.submitReception(
                 widget.approvisionReceptionModel, 'true');
+                print("isChecked1 $isChecked");
           } else {
             controller.submitReception(
-                widget.approvisionReceptionModel, 'false');
+              widget.approvisionReceptionModel, 'false');
+                print("isChecked2 $isChecked");
           }
         });
       },

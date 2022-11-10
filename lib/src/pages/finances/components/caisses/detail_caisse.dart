@@ -25,7 +25,7 @@ class _DetailCaisseState extends State<DetailCaisse> {
 
   @override
   Widget build(BuildContext context) {
-    final CaisseController controller = Get.put(CaisseController());
+    final CaisseController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

@@ -19,12 +19,12 @@ class AjoutProductModel extends StatefulWidget {
 
 class _AjoutProductModelState extends State<AjoutProductModel> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Nouveau produit modèle";
 
   @override
   Widget build(BuildContext context) {
-    final ProduitModelController controller = Get.put(ProduitModelController());
+    final ProduitModelController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

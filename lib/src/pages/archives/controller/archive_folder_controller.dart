@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class ArchiveFolderController extends GetxController
     with StateMixin<List<ArchiveFolderModel>> {
   final ArchiveFolderApi archiveFolderApi = ArchiveFolderApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var archiveFolderList = <ArchiveFolderModel>[].obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

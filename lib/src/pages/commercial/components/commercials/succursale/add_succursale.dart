@@ -19,12 +19,12 @@ class AddSuccursale extends StatefulWidget {
 
 class _AddSuccursaleState extends State<AddSuccursale> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Nouvelle succursale";
 
   @override
   Widget build(BuildContext context) {
-    final SuccursaleController controller = Get.put(SuccursaleController());
+    final SuccursaleController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

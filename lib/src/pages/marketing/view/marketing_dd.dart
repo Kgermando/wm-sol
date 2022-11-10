@@ -17,9 +17,8 @@ class MarketingDD extends StatefulWidget {
 }
 
 class _MarketingDDState extends State<MarketingDD> {
-  final MarketingNotifyController marketingNotifyController =
-      Get.put(MarketingNotifyController());
-  final CampaignController campaignController = Get.put(CampaignController());
+  final MarketingNotifyController marketingNotifyController = Get.find();
+  final CampaignController campaignController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
   String subTitle = "Direteur de département";

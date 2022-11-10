@@ -55,23 +55,7 @@ class RHNotifyController extends GetxController {
     getCountTransRestFin();
     getCountTransResteObs();
   }
-
  
-  @override
-  void refresh() {
-    getCountRh();
-    getCountSalaireBudget();
-    getCountSalaireDD();
-    getCountSalaireFin();
-    getCountSalaireObs();
-    getCountTransRestDG();
-    getCountTransRestBudget();
-    getCountTransRestSalaireDD();
-    getCountTransRestFin();
-    getCountTransResteObs();
-    super.refresh();
-  }
-
   void getCountRh() async {
     NotifySumModel notifySum = await rhDepartementNotifyApi.getCountRh();
     _itemCount.value = notifySum.sum;

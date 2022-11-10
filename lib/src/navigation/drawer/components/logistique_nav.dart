@@ -20,7 +20,7 @@ class LogistiqueNav extends StatefulWidget {
 }
 
 class _LogistiqueNavState extends State<LogistiqueNav> {
-  final NotifyLogController notifyLogController = Get.put(NotifyLogController());
+  final NotifyLogController notifyLogController = Get.find();
   bool isOpen = false;
   bool isOpen1 = false;
   bool isOpen2 = false;

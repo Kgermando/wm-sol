@@ -20,7 +20,7 @@ class UpdateEtatMateriel extends StatefulWidget {
 }
 
 class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
-  final EtatMaterielController controller = Get.put(EtatMaterielController());
+  final EtatMaterielController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Ajout du statut materiel";

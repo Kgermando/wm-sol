@@ -28,10 +28,9 @@ class DetailBalance extends StatefulWidget {
 }
 
 class _DetailBalanceState extends State<DetailBalance> {
-  final BalanceController controller = Get.put(BalanceController());
-  final ProfilController profilController = Get.put(ProfilController());
-  final BalanceRefController balanceRefController =
-      Get.put(BalanceRefController());
+  final BalanceController controller = Get.find();
+  final ProfilController profilController = Get.find();
+  final BalanceRefController balanceRefController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabiliés";
 

@@ -9,9 +9,8 @@ import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance
 class CreanceController extends GetxController
     with StateMixin<List<CreanceModel>> {
   final CreanceApi creanceApi = CreanceApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final CreanceDetteController creanceDetteController =
-      Get.put(CreanceDetteController());
+  final ProfilController profilController = Get.find();
+  final CreanceDetteController creanceDetteController = Get.find();
 
   var creanceList = <CreanceModel>[].obs;
 

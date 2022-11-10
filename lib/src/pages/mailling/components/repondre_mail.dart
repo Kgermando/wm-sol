@@ -21,7 +21,7 @@ class RepondreMail extends StatefulWidget {
 }
 
 class _RepondreMailState extends State<RepondreMail> {
-  final MaillingController controller = Get.put(MaillingController());
+  final MaillingController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Mails";
   String subTitle = "Repondre";

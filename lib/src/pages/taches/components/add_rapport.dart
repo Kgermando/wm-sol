@@ -24,7 +24,7 @@ class _AddRapportState extends State<AddRapport> {
 
   @override
   Widget build(BuildContext context) {
-    final RapportController controller = Get.put(RapportController());
+    final RapportController controller = Get.find();
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),

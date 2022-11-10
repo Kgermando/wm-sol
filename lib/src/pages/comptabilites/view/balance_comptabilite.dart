@@ -18,11 +18,11 @@ class BalanceComptabilite extends StatefulWidget {
 class _BalanceComptabiliteState extends State<BalanceComptabilite> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
-  String subTitle = "balance";
+  String subTitle = "Balance";
 
   @override
   Widget build(BuildContext context) {
-    final BalanceController controller = Get.put(BalanceController());
+    final BalanceController controller = Get.find();
 
     return SafeArea(
       child: controller.obx(

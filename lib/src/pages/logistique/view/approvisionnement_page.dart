@@ -20,10 +20,9 @@ class ApprovisionnementPage extends StatefulWidget {
 }
 
 class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
-  final ApprovisionnementController controller =
-      Get.put(ApprovisionnementController());
-  final ProfilController profilController = Get.put(ProfilController());
-  final AnnuaireController annuaireController = Get.put(AnnuaireController());
+  final ApprovisionnementController controller = Get.find();
+  final ProfilController profilController = Get.find();
+  final AnnuaireController annuaireController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Matières et fournitures";
@@ -93,21 +92,20 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
                   child: Form(
-                    key: controller.formKey,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 20), 
-                        ResponsiveChildWidget(
-                            child1: provisionWidget(),
-                            child2: fournisseurWidget()),
-                        ResponsiveChildWidget(
-                            child1: quantityWidget(),
-                            child2: uniteWidget()),
-                        const SizedBox(
-                          height: p20,
-                        ),
-                      ],
-                    ))),
+                      key: controller.formKey,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          ResponsiveChildWidget(
+                              child1: provisionWidget(),
+                              child2: fournisseurWidget()),
+                          ResponsiveChildWidget(
+                              child1: quantityWidget(), child2: uniteWidget()),
+                          const SizedBox(
+                            height: p20,
+                          ),
+                        ],
+                      ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -118,7 +116,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
                       controller.submit();
-                      form.reset(); 
+                      form.reset();
                     }
                   },
                   child: const Text('OK'),
@@ -206,8 +204,9 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
 
   Widget fournisseurWidget() {
     List<String> dataList = annuaireController.annuaireList
-    .where((p0) => p0.categorie == "Fournisseur")
-    .map((element) => element.nomPostnomPrenom).toList();
+        .where((p0) => p0.categorie == "Fournisseur")
+        .map((element) => element.nomPostnomPrenom)
+        .toList();
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(

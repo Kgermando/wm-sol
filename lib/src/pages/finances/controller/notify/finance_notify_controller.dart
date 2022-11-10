@@ -36,55 +36,45 @@ class FinanceNotifyController extends GetxController {
     getCountDetteDD();
     getCountDetteDG();
   }
-
-  @override
-  void refresh() {
-    getCountDD();
-    getCountObs();
-    getCountCreanceDD();
-    getCountCreanceDG();
-    getCountDetteDD();
-    getCountDetteDG();
-    super.refresh();
-  }
+ 
 
   void getCountDD() async {
     NotifySumModel notifySum =
         await financeDepartementNotifyApi.getCountFinanceDD();
     _itemCount.value = notifySum.sum;
-    update();
+     
   }
 
   void getCountObs() async {
     NotifySumModel notifySum =
         await financeDepartementNotifyApi.getCountFinanceObs();
     _itemCountObs.value = notifySum.sum;
-    update();
+     
   }
 
   void getCountCreanceDD() async {
     NotifyModel notifySum =
         await creanceNotifyApi.getCountDD();
     _creanceCountDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountCreanceDG() async {
     NotifyModel notifySum = await creanceNotifyApi.getCountDG();
     _creanceCountDG.value = notifySum.count;
-    update();
+     
   }
 
   void getCountDetteDD() async {
     NotifyModel notifySum =
         await detteNotifyApi.getCountDD();
     _detteCountDD.value = notifySum.count;
-    update();
+     
   }
 
   void getCountDetteDG() async {
     NotifyModel notifySum = await detteNotifyApi.getCountDG();
     _detteCountDG.value = notifySum.count;
-    update();
+     
   }
 }

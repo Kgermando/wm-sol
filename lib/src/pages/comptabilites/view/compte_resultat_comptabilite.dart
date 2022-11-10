@@ -21,12 +21,11 @@ class _CompteResultatComptabiliteState
     extends State<CompteResultatComptabilite> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
-  String subTitle = "bilan";
+  String subTitle = "Compte Resulats";
 
   @override
   Widget build(BuildContext context) {
-    final CompteResultatController controller =
-        Get.put(CompteResultatController());
+    final CompteResultatController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

@@ -17,7 +17,7 @@ class PersonnelsController extends GetxController
     with StateMixin<List<AgentModel>> {
   PersonnelsApi personnelsApi = PersonnelsApi();
   PerformenceApi performenceApi = PerformenceApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var personnelsList = <AgentModel>[].obs;
   var agentPieChartList = <AgentPieChartModel>[].obs;

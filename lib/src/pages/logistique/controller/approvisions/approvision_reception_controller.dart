@@ -10,7 +10,7 @@ class ApprovisionReceptionController extends GetxController
     with StateMixin<List<ApprovisionReceptionModel>> {
   final ApprovisionReceptionApi approvisionReceptionApi =
       ApprovisionReceptionApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var approvisionReceptionList = <ApprovisionReceptionModel>[].obs;
 
@@ -80,19 +80,19 @@ class ApprovisionReceptionController extends GetxController
     }
   }
 
-   submit(ApprovisionnementModel data) async {
+  submit(ApprovisionnementModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
-        provision: data.provision,
-        departement: departement.toString(),
-        quantity: qtyController.text,
-        unite: data.unite,
-        signatureLivraison: profilController.user.matricule,
-        created: DateTime.now(),
-        accuseReception: 'false',
-        signatureReception: '-',
-        createdReception: DateTime.now());
+          provision: data.provision,
+          departement: departement.toString(),
+          quantity: qtyController.text,
+          unite: data.unite,
+          signatureLivraison: profilController.user.matricule,
+          created: DateTime.now(),
+          accuseReception: 'false',
+          signatureReception: '-',
+          createdReception: DateTime.now());
       await approvisionReceptionApi.insertData(dataItem).then((value) {
         clear();
         approvisionReceptionList.clear();
@@ -117,15 +117,17 @@ class ApprovisionReceptionController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
-          provision: data.provision,
-          departement: data.departement,
-          quantity: data.quantity,
-          unite: data.unite,
-          signatureLivraison: data.signatureLivraison,
-          created: data.created,
-          accuseReception: boolean,
-          signatureReception: profilController.user.matricule,
-          createdReception: DateTime.now());
+        id: data.id,
+        provision: data.provision,
+        departement: data.departement,
+        quantity: data.quantity,
+        unite: data.unite,
+        signatureLivraison: data.signatureLivraison,
+        created: data.created,
+        accuseReception: boolean,
+        signatureReception: profilController.user.matricule,
+        createdReception: DateTime.now()
+      );
       await approvisionReceptionApi.updateData(dataItem).then((value) {
         clear();
         approvisionReceptionList.clear();

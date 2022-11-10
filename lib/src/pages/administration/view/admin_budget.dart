@@ -16,10 +16,8 @@ class AdminBudget extends StatefulWidget {
 }
 
 class _AdminBudgetState extends State<AdminBudget> {
-  final BudgetNotifyController budgetNotifyController =
-      Get.put(BudgetNotifyController()); 
-  final BudgetPrevisionnelController budgetPrevisionnelController =
-      Get.put(BudgetPrevisionnelController()); 
+  final BudgetNotifyController budgetNotifyController = Get.find();
+  final BudgetPrevisionnelController budgetPrevisionnelController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
   String subTitle = "Direteur de génerale";

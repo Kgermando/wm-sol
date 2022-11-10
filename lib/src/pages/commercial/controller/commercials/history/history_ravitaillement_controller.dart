@@ -8,7 +8,7 @@ class HistoryRavitaillementController extends GetxController
     with StateMixin<List<HistoryRavitaillementModel>> {
   final HistoryRavitaillementApi historyRavitaillementApi =
       HistoryRavitaillementApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var historyRavitaillementList = <HistoryRavitaillementModel>[].obs;
 

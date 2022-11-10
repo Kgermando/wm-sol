@@ -18,14 +18,13 @@ class FactureCreancePage extends StatefulWidget {
 
 class _FactureCreancePageState extends State<FactureCreancePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Factures par créances";
 
   @override
   Widget build(BuildContext context) {
-    final FactureCreanceController controller =
-        Get.put(FactureCreanceController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final FactureCreanceController controller = Get.find();
+    final ProfilController profilController = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

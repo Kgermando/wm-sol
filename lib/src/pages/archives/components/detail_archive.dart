@@ -29,7 +29,7 @@ class _DetailArchiveState extends State<DetailArchive> {
 
   @override
   Widget build(BuildContext context) {
-    final ArchiveController controller = Get.put(ArchiveController());
+    final ArchiveController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

@@ -8,7 +8,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class FinExterieurController extends GetxController
     with StateMixin<List<FinanceExterieurModel>> {
   final FinExterieurApi finExterieurApi = FinExterieurApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var finExterieurList = <FinanceExterieurModel>[].obs;
 

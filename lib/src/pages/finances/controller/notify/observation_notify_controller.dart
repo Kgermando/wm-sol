@@ -11,13 +11,12 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/sal
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
 class ObservationNotifyController extends GetxController {
-  final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController());
-  final CampaignController campaignController = Get.put(CampaignController());
-  final DevisController devisController = Get.put(DevisController());
-  final ProjetController projetController = Get.put(ProjetController()); 
-
+  final SalaireController salaireController = Get.find();
+  final TransportRestController transportRestController = Get.find();
+  final CampaignController campaignController = Get.find();
+  final DevisController devisController = Get.find();
+  final ProjetController projetController = Get.find();
+  
   var salaireList = <PaiementSalaireModel>[].obs;
   var transRestList = <TransportRestaurationModel>[].obs;
   var campaignList = <CampaignModel>[].obs;
@@ -30,11 +29,7 @@ class ObservationNotifyController extends GetxController {
     getCount();
   }
 
-  @override
-  void refresh() {
-    getCount();
-    super.refresh();
-  }
+ 
 
   void getCount() async {
     salaireList.assignAll(salaireController.paiementSalaireList
@@ -78,6 +73,6 @@ class ObservationNotifyController extends GetxController {
             element.approbationFin == 'Approved' &&
             element.observation == "false")
         .toList()); 
-    update();
+     
   }
 }

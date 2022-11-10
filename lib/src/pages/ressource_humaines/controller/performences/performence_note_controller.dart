@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class PerformenceNoteController extends GetxController
     with StateMixin<List<PerformenceNoteModel>> {
   PerformenceNoteApi performenceNoteApi = PerformenceNoteApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var performenceNoteList = <PerformenceNoteModel>[].obs;
 

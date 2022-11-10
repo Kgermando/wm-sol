@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class MobilierController extends GetxController
     with StateMixin<List<MobilierModel>> {
   final MobilierApi mobilierApi = MobilierApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var mobilierList = <MobilierModel>[].obs;
 
@@ -43,7 +43,6 @@ class MobilierController extends GetxController
   }
 
   void clear() {
-    motifDDController.clear();
     nomController.clear();
     modeleController.clear();
     marqueController.clear();
@@ -169,7 +168,7 @@ class MobilierController extends GetxController
           created: data.created,
           approbationDD: approbationDD,
           motifDD:
-              (motifDDController.text == '') ? '-' : motifDDController.text,
+            (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await mobilierApi.updateData(dataItem).then((value) {
         clear();

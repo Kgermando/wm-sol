@@ -19,12 +19,12 @@ class BonLivraisonPage extends StatefulWidget {
 
 class _BonLivraisonPageState extends State<BonLivraisonPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
   String subTitle = "Bon de livraison";
 
   @override
   Widget build(BuildContext context) {
-    final BonLivraisonController controller = Get.put(BonLivraisonController());
+    final BonLivraisonController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

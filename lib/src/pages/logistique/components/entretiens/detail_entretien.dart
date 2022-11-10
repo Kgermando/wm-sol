@@ -29,10 +29,9 @@ class _DetailEntretienState extends State<DetailEntretien> {
 
   @override
   Widget build(BuildContext context) {
-    final EntretienController controller = Get.put(EntretienController());
-    final ObjetRemplaceController objetRemplaceController =
-        Get.put(ObjetRemplaceController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final EntretienController controller = Get.find();
+    final ObjetRemplaceController objetRemplaceController = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -128,11 +127,9 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                 ),
                                 const SizedBox(height: p20),
                                 TableObjetRemplace(
-                                    objetRemplaceList:
-                                        objetRemplaceController
-                                            .objetRemplaceList,
-                                    entretienModel:
-                                        widget.entretienModel),
+                                    objetRemplaceList: objetRemplaceController
+                                        .objetRemplaceList,
+                                    entretienModel: widget.entretienModel),
                                 const SizedBox(height: p20),
                                 ApprobationEntretien(
                                     data: widget.entretienModel,

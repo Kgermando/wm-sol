@@ -21,9 +21,8 @@ class AddEntretien extends StatefulWidget {
 }
 
 class _AddEntretienState extends State<AddEntretien> {
-  final EntretienController controller = Get.put(EntretienController());
-  final ObjetRemplaceController objetRemplaceController =
-      Get.put(ObjetRemplaceController());
+  final EntretienController controller = Get.find();
+  final ObjetRemplaceController objetRemplaceController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Nouvel entretien";

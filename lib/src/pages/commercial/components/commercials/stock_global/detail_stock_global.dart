@@ -26,11 +26,11 @@ class DetailStockGlobal extends StatefulWidget {
 
 class _DetailStockGlobalState extends State<DetailStockGlobal> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final StockGlobalController controller = Get.put(StockGlobalController());
+    final StockGlobalController controller = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

@@ -24,10 +24,9 @@ class DetailApprovisionnement extends StatefulWidget {
 }
 
 class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
-  final ApprovisionnementController controller =
-      Get.put(ApprovisionnementController());
+  final ApprovisionnementController controller = Get.find();
   final ApprovisionReceptionController approvisionReceptionController =
-      Get.put(ApprovisionReceptionController());
+      Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
@@ -215,13 +214,13 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                         .receptionFormKey.currentState!;
                     if (form.validate()) {
                       approvisionReceptionController
-                          .submit(widget.approvisionnementModel).then(() {
-                              controller.submitReste(widget.approvisionnementModel,
-                            approvisionReceptionController.qtyController);
-                          });
-                      
+                          .submit(widget.approvisionnementModel);
+                      controller.submitReste(widget.approvisionnementModel,
+                          approvisionReceptionController.qtyController);
+
                       form.reset();
                     }
+                    Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK'),
                 ),

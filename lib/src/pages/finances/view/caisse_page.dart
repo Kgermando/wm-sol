@@ -23,7 +23,7 @@ class CaissePage extends StatefulWidget {
 }
 
 class _CaissePageState extends State<CaissePage> {
-  final CaisseController controller = Get.put(CaisseController());
+  final CaisseController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Caisses";

@@ -21,17 +21,15 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 class LignBudgetaireController extends GetxController
     with StateMixin<List<LigneBudgetaireModel>> {
   LIgneBudgetaireApi lIgneBudgetaireApi = LIgneBudgetaireApi();
-  final ProfilController profilController = Get.put(ProfilController());
-  final CampaignController campaignController = Get.put(CampaignController());
-  final DevisController devisController = Get.put(DevisController());
-  final DevisListObjetController devisListObjetController =
-      Get.put(DevisListObjetController());
-  final ProjetController projetController = Get.put(ProjetController());
-  final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController());
+  final ProfilController profilController = Get.find();
+  final CampaignController campaignController = Get.find();
+  final DevisController devisController = Get.find();
+  final DevisListObjetController devisListObjetController = Get.find();
+  final ProjetController projetController = Get.find();
+  final SalaireController salaireController = Get.find();
+  final TransportRestController transportRestController = Get.find();
   final TransportRestPersonnelsController transportRestPersonnelsController =
-      Get.put(TransportRestPersonnelsController());
+      Get.find();
 
   var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
 

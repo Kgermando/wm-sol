@@ -10,7 +10,7 @@ import 'package:wm_solution/src/utils/type_operation.dart';
 class CaisseController extends GetxController
     with StateMixin<List<CaisseModel>> {
   final CaisseApi caisseApi = CaisseApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var caisseList = <CaisseModel>[].obs;
 

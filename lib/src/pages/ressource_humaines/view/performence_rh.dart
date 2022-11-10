@@ -22,7 +22,7 @@ class _PerformenceRHState extends State<PerformenceRH> {
 
   @override
   Widget build(BuildContext context) {
-    final PerformenceController controller = Get.put(PerformenceController());
+    final PerformenceController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

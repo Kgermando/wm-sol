@@ -26,7 +26,7 @@ class _DettePageState extends State<DettePage> {
 
   @override
   Widget build(BuildContext context) {
-    final DetteController controller = Get.put(DetteController());
+    final DetteController controller = Get.find();
     return SafeArea(
       child: controller.obx(
           onLoading: loadingPage(context),

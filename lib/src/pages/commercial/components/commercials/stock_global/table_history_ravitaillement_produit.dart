@@ -28,9 +28,8 @@ class TableHistoryRavitaillementProduit extends StatefulWidget {
 
 class _TableHistoryRavitaillementProduitState
     extends State<TableHistoryRavitaillementProduit> {
-  final HistoryRavitaillementController historyRavitaillementController =
-      Get.put(HistoryRavitaillementController());
-  final ProfilController profilController = Get.put(ProfilController());
+  final HistoryRavitaillementController historyRavitaillementController = Get.find();
+  final ProfilController profilController = Get.find();
 
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];

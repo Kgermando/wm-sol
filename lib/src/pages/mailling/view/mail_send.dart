@@ -30,7 +30,7 @@ class MailSend extends StatefulWidget {
 }
 
 class _MailSendState extends State<MailSend> {
-  final MaillingController controller = Get.put(MaillingController());
+  final MaillingController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Mails";
   String subTitle = "Mail envoyés";

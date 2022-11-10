@@ -35,12 +35,12 @@ class _DDComptabiliteState extends State<DDComptabilite> {
 
   @override
   Widget build(BuildContext context) {
-    final ComptabiliteNotifyController notify = Get.put(ComptabiliteNotifyController()); 
-    final BalanceController balanceController = Get.put(BalanceController()); 
-    final BilanController bilanController = Get.put(BilanController()); 
-    final CompteResultatController compteResultatController = Get.put(CompteResultatController()); 
-    final JournalLivreController journalLivreController = Get.put(JournalLivreController()); 
-
+    final ComptabiliteNotifyController notify = Get.find();
+    final BalanceController balanceController = Get.find();
+    final BilanController bilanController = Get.find();
+    final CompteResultatController compteResultatController = Get.find();
+    final JournalLivreController journalLivreController = Get.find();
+    
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;

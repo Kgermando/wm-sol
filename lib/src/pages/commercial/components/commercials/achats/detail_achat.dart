@@ -25,14 +25,13 @@ class DetailAchat extends StatefulWidget {
 
 class _DetailAchatState extends State<DetailAchat> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Commercial & Marketing";
+  String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final AchatController controller = Get.put(AchatController());
-    final ProfilController profilController = Get.put(ProfilController());
-    final VenteCartController venteCartController =
-        Get.put(VenteCartController());
+    final AchatController controller = Get.find();
+    final ProfilController profilController = Get.find();
+    final VenteCartController venteCartController = Get.find();
 
     var roleAgent = int.parse(profilController.user.role) <= 3;
     return controller.obx(

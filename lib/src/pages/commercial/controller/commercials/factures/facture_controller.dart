@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class FactureController extends GetxController
     with StateMixin<List<FactureCartModel>> {
   final FactureApi factureApi = FactureApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var factureList = <FactureCartModel>[].obs;
 

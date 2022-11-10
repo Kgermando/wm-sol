@@ -25,9 +25,8 @@ class _ArchiveDataState extends State<ArchiveData> {
 
   @override
   Widget build(BuildContext context) {
-    final ArchiveController controller = Get.put(ArchiveController());
-    final ArchiveFolderController controllerFolder =
-        Get.put(ArchiveFolderController());
+    final ArchiveController controller = Get.find();
+    final ArchiveFolderController controllerFolder = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

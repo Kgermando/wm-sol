@@ -16,10 +16,9 @@ class AdminRH extends StatefulWidget {
 }
 
 class _AdminRHState extends State<AdminRH> {
-  final RHNotifyController controller =
-      Get.put(RHNotifyController()); 
-  final TransportRestController transportRestController =
-      Get.put(TransportRestController()); 
+  final RHNotifyController controller = Get.find();
+  final TransportRestController transportRestController = Get.find();
+  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "RH";
   String subTitle = "Direteur de génerale";

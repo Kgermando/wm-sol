@@ -23,7 +23,7 @@ class BanquePage extends StatefulWidget {
 }
 
 class _BanquePageState extends State<BanquePage> {
-  final BanqueController controller = Get.put(BanqueController());
+  final BanqueController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Banques";

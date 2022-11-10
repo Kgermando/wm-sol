@@ -24,12 +24,12 @@ class DetailMobiler extends StatefulWidget {
 
 class _DetailMobilerState extends State<DetailMobiler> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Logistiqe";
+  String title = "Logistique";
 
   @override
   Widget build(BuildContext context) {
-    final MobilierController controller = Get.put(MobilierController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final MobilierController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -143,7 +143,8 @@ class _DetailMobilerState extends State<DetailMobiler> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Etes-vous sûr de vouloir faire ceci ?', style: TextStyle(color: Colors.red)),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   height: 100,
                   width: 100,
@@ -151,7 +152,8 @@ class _DetailMobilerState extends State<DetailMobiler> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler', style: TextStyle(color: Colors.red)),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {

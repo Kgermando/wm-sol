@@ -5,11 +5,10 @@ import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/c
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_livre_controller.dart';
 
 class DashboardComptabiliteController extends GetxController {
-  final BalanceController balanceController = Get.put(BalanceController());
-  final BilanController bilanController = Get.put(BilanController());
-  final CompteResultatController compteResultatController =
-      Get.put(CompteResultatController());
-  final JournalLivreController journalController = Get.put(JournalLivreController());
+  final BalanceController balanceController = Get.find();
+  final BilanController bilanController = Get.find();
+  final CompteResultatController compteResultatController = Get.find();
+  final JournalLivreController journalController = Get.find();
 
   final _bilanCount = 0.obs;
   int get bilanCount => _bilanCount.value;

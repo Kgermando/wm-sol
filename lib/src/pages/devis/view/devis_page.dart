@@ -19,7 +19,7 @@ class DevisPage extends StatefulWidget {
 }
 
 class _DevisPageState extends State<DevisPage> {
-  final DevisController controller = Get.put(DevisController());
+  final DevisController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Devis";

@@ -13,8 +13,10 @@ class AdminDepartementNotifyApi extends GetConnect {
 
   var budgetUrl = Uri.parse(
       "$adminDepartementNotifyUrl/get-count-admin-departement-budget/");
-  var comMarketingUrl = Uri.parse(
-      "$adminDepartementNotifyUrl/get-count-admin-departement-comm-marketing/");
+  var commUrl = Uri.parse(
+      "$adminDepartementNotifyUrl/get-count-admin-departement-comm/");
+  var marketingUrl = Uri.parse(
+      "$adminDepartementNotifyUrl/get-count-admin-departement-marketing/");
   var comptabiliteUrl = Uri.parse(
       "$adminDepartementNotifyUrl/get-count-admin-departement-comptabilite/");
   var exploitationUrl = Uri.parse(
@@ -40,10 +42,22 @@ class AdminDepartementNotifyApi extends GetConnect {
     }
   }
 
-  Future<NotifySumModel> getCountComMarketing() async {
+  Future<NotifySumModel> getCountCom() async {
     Map<String, String> header = headers;
 
-    var resp = await client.get(comMarketingUrl, headers: header);
+    var resp = await client.get(commUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      return NotifySumModel.fromJson(json.decode(resp.body));
+    } else {
+      throw Exception(resp.statusCode);
+    }
+  }
+
+  Future<NotifySumModel> getCountMarketing() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(marketingUrl, headers: header);
 
     if (resp.statusCode == 200) {
       return NotifySumModel.fromJson(json.decode(resp.body));

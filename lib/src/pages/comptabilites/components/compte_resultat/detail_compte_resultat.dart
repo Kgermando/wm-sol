@@ -27,8 +27,7 @@ class DetailCompteResultat extends StatefulWidget {
 
 class _DetailCompteResultatState extends State<DetailCompteResultat> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Comptabilités";
-  String subTitle = "compte résultat";
+  String title = "Comptabilités"; 
 
   double totalCharges1 = 0.0;
   double totalCharges123 = 0.0;
@@ -40,9 +39,8 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
 
   @override
   Widget build(BuildContext context) {
-    final CompteResultatController controller =
-        Get.put(CompteResultatController());
-    final ProfilController profilController = Get.put(ProfilController());
+    final CompteResultatController controller = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),

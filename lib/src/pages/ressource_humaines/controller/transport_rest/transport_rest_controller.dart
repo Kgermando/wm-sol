@@ -8,7 +8,7 @@ class TransportRestController extends GetxController
     with StateMixin<List<TransportRestaurationModel>> {
   final TransportRestaurationApi transportRestaurationApi =
       TransportRestaurationApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var transportRestaurationList = <TransportRestaurationModel>[].obs;
 

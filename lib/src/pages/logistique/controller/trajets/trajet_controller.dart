@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/trajet_api.dart';
-import 'package:wm_solution/src/models/logistiques/material_model.dart'; 
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class TrajetController extends GetxController
     with StateMixin<List<TrajetModel>> {
   final TrajetApi trajetApi = TrajetApi();
-  final ProfilController profilController = Get.put(ProfilController());
+  final ProfilController profilController = Get.find();
 
   var trajetList = <TrajetModel>[].obs;
 

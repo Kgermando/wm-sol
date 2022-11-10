@@ -11,8 +11,8 @@ import 'package:wm_solution/src/constants/reponsiveness.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
-import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart'; 
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -22,11 +22,14 @@ import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
-  final ProfilController userController = Get.put(ProfilController());
+  final ProfilController userController = Get.find();
   final UpdateController updateController = Get.put(UpdateController());
-  final NotifyHeaderController notifyHeaderController = Get.put(NotifyHeaderController());
+  final NotifyHeaderController notifyHeaderController =
+      Get.put(NotifyHeaderController());
 
-  var departementList = (notifyHeaderController.profilController.user.departement == '-')
+  var departementList = (notifyHeaderController
+              .profilController.user.departement ==
+          '-')
       ? ["Support"]
       : jsonDecode(notifyHeaderController.profilController.user.departement);
   String departement = departementList.first;
@@ -74,9 +77,10 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                       direction: Axis.horizontal),
                   items: <BreadCrumbItem>[
                     BreadCrumbItem(content: BreadCrumbWidget(title: title)),
-                  (Responsive.isMobile(context)) 
-                    ? BreadCrumbItem(content: Container()) 
-                    : BreadCrumbItem(content: BreadCrumbWidget(title: subTitle)),
+                    (Responsive.isMobile(context))
+                        ? BreadCrumbItem(content: Container())
+                        : BreadCrumbItem(
+                            content: BreadCrumbWidget(title: subTitle)),
                   ],
                   divider: const Icon(Icons.chevron_right),
                 ),
@@ -84,7 +88,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             ),
           ),
     actions: [
-       if (Platform.isWindows &&
+      if (Platform.isWindows &&
           updateController.updateList.isNotEmpty &&
           updateController.sumVersionCloud > updateController.sumLocalVersion)
         IconButton(
@@ -92,40 +96,42 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             tooltip: 'Téléchargement',
             onPressed: () {
               updateController.downloadNetworkSoftware(
-                url: updateController.updateList.last.urlUpdate);
+                  url: updateController.updateList.last.urlUpdate);
             },
             icon: (updateController.downloading)
                 ? (updateController.progressString == "100%")
                     ? const Icon(Icons.check)
                     : Obx(() => AutoSizeText(updateController.progressString,
-                        maxLines: 1, style: const TextStyle(fontSize: 12.0))) 
+                        maxLines: 1, style: const TextStyle(fontSize: 12.0)))
                 : Icon(Icons.download, color: Colors.red.shade700)),
-
-      if(departement == 'Exploitations')
-      IconButton(
-          tooltip: 'Tâches',
-          onPressed: () {
-            Get.toNamed(TacheRoutes.tachePage);
-          },
-          icon: Badge(
-            showBadge: (notifyHeaderController.tacheItemCount >= 1) ? true : false,
-            badgeContent:
-               Text(notifyHeaderController.tacheItemCount.toString(), style: const TextStyle(color: Colors.white)),
-            child: const Icon(Icons.work_outline),
-          )),
+      if (departement == 'Exploitations')
+        IconButton(
+            tooltip: 'Tâches',
+            onPressed: () {
+              Get.toNamed(TacheRoutes.tachePage);
+            },
+            icon: Badge(
+              showBadge:
+                  (notifyHeaderController.tacheItemCount >= 1) ? true : false,
+              badgeContent: Text(
+                  notifyHeaderController.tacheItemCount.toString(),
+                  style: const TextStyle(color: Colors.white)),
+              child: const Icon(Icons.work_outline),
+            )),
       if (departement == 'Commercial et Marketing')
-      IconButton(
-          tooltip: 'Panier',
-          onPressed: () {
-            Get.toNamed(ComRoutes.comCart);
-          },
-          icon: Badge(
-            showBadge:
+        IconButton(
+            tooltip: 'Panier',
+            onPressed: () {
+              Get.toNamed(ComRoutes.comCart);
+            },
+            icon: Badge(
+              showBadge:
                   (notifyHeaderController.cartItemCount >= 1) ? true : false,
-            badgeContent: Text(notifyHeaderController.cartItemCount.toString(),
-                style: const TextStyle(color: Colors.white)),
-            child: const Icon(Icons.shopping_cart_outlined),
-          )),
+              badgeContent: Text(
+                  notifyHeaderController.cartItemCount.toString(),
+                  style: const TextStyle(color: Colors.white)),
+              child: const Icon(Icons.shopping_cart_outlined),
+            )),
       IconButton(
           tooltip: 'Agenda',
           onPressed: () {
@@ -134,8 +140,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           icon: Badge(
             showBadge:
                 (notifyHeaderController.agendaItemCount >= 1) ? true : false,
-            badgeContent:
-             Text(notifyHeaderController.agendaItemCount.toString(), style: const TextStyle(color: Colors.white)),
+            badgeContent: Text(
+                notifyHeaderController.agendaItemCount.toString(),
+                style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.note_alt_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
           )),
@@ -147,12 +154,11 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           icon: Badge(
             showBadge:
                 (notifyHeaderController.mailsItemCount >= 1) ? true : false,
-            badgeContent:
-             Text(notifyHeaderController.mailsItemCount.toString(), style: const TextStyle(color: Colors.white)),
+            badgeContent: Text(notifyHeaderController.mailsItemCount.toString(),
+                style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.mail_outline_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
           )),
-      
       if (!Responsive.isMobile(context))
         const SizedBox(
           width: p10,
