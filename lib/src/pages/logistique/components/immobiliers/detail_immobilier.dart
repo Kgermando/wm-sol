@@ -24,7 +24,7 @@ class DetailImmobilier extends StatefulWidget {
 
 class _DetailImmobilierState extends State<DetailImmobilier> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Logistiqe";
+  String title = "Logistique";
 
   @override
   Widget build(BuildContext context) {

@@ -20,6 +20,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/restitut
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/livraison_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/ravitaillement_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_notify.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
@@ -65,6 +66,7 @@ import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_m
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/notify/notify_log.dart';
+import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_notify_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
@@ -176,11 +178,13 @@ class WMBindings extends Bindings {
 
 
   // Marketing
+  Get.lazyPut<MarketingNotifyController>(() => MarketingNotifyController());
   Get.lazyPut<CampaignController>(() => CampaignController());
   Get.lazyPut<AnnuaireController>(() => AnnuaireController());
   Get.lazyPut<AgendaController>(() => AgendaController());
 
   // Commercial
+  Get.lazyPut<ComNotifyController>(() => ComNotifyController());
   Get.lazyPut<SuccursaleController>(() => SuccursaleController());
   Get.lazyPut<AchatController>(() => AchatController());
   Get.lazyPut<BonLivraisonController>(() => BonLivraisonController());
