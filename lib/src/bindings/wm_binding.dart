@@ -96,16 +96,16 @@ class WMBindings extends Bindings {
     Get.lazyPut<NetworkController>(() => NetworkController());
     
     // Authentification
-    Get.lazyPut<LoginController>(() => LoginController());
-    Get.lazyPut<ProfilController>(() => ProfilController());
-    Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
-    Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
+    // Get.lazyPut<LoginController>(() => LoginController());
+    // Get.lazyPut<ProfilController>(() => ProfilController());
+    // Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
+    // Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
 
     // Header
     Get.lazyPut<NotifyHeaderController>(() => NotifyHeaderController());
 
     // Mail
-    Get.lazyPut<MaillingController>(() => MaillingController());
+    // Get.lazyPut<MaillingController>(() => MaillingController());
 
     // Personnels & Roles
     Get.lazyPut<PersonnelsRolesController>(() => PersonnelsRolesController());
