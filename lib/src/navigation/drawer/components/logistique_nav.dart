@@ -31,7 +31,6 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
     // final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.brightness_low, size: 30.0),

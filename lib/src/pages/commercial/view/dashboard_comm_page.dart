@@ -13,16 +13,16 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
-class DashboardCommMarketingPage extends StatefulWidget {
-  const DashboardCommMarketingPage({super.key});
+class DashboardCommPage extends StatefulWidget {
+  const DashboardCommPage({super.key});
 
   @override
-  State<DashboardCommMarketingPage> createState() =>
-      _DashboardCommMarketingPageState();
+  State<DashboardCommPage> createState() =>
+      _DashboardCommPageState();
 }
 
-class _DashboardCommMarketingPageState
-    extends State<DashboardCommMarketingPage> {
+class _DashboardCommPageState
+    extends State<DashboardCommPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
   String subTitle = "Dashboard";

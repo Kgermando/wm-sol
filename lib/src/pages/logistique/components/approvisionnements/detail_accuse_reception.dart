@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -220,11 +218,9 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
           if (isChecked) {
             controller.submitReception(
                 widget.approvisionReceptionModel, 'true');
-                print("isChecked1 $isChecked");
           } else {
             controller.submitReception(
               widget.approvisionReceptionModel, 'false');
-                print("isChecked2 $isChecked");
           }
         });
       },
