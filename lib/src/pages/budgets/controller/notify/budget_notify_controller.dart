@@ -30,18 +30,21 @@ class BudgetNotifyController extends GetxController {
     NotifySumModel notifySum =
         await budgetDepartementNotifyApi.getCountBudget();
     _itemCount.value = notifySum.sum;
+    update();
      
   }
 
   void getCountDG() async {
     NotifyModel notifySum = await budgetNotifyApi.getCountDG();
     _itemCountDG.value = notifySum.count;
+    update();
      
   }
 
   void getCountDD() async {
     NotifyModel notifySum = await budgetNotifyApi.getCountDD();
     _itemCountDD.value = notifySum.count;
+    update();
      
   }
 }

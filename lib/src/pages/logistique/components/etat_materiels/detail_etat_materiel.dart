@@ -39,12 +39,6 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
               appBar: headerBar(
                   context, scaffoldKey, title, widget.etatMaterielModel.nom),
               drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              ),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,14 +77,12 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                               children: [
                                                 Column(
                                                   children: [
-                                                    if (int.parse(
-                                                                profilController
-                                                                    .user
-                                                                    .role) <=
-                                                            3 &&
-                                                        widget.etatMaterielModel
-                                                                .approbationDD ==
-                                                            "Approved")
+                                                    if (int.parse(profilController
+                                                            .user.role) <=
+                                                        3 ||
+                                                    widget.etatMaterielModel
+                                                            .approbationDD ==
+                                                        "Unapproved")
                                                       Row(
                                                         children: [
                                                           IconButton(
@@ -226,7 +218,7 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
             color: mainColor,
           ),
           if (profilController.user.fonctionOccupe ==
-              "Directeur de departement")
+              "Directeur de departement" && widget.etatMaterielModel.approbationDD == "Approved")
             ResponsiveChildWidget(
                 child1: Text('Changez Statut :',
                     textAlign: TextAlign.start,

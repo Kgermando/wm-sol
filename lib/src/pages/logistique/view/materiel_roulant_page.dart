@@ -3,24 +3,24 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/logistique/components/materiels/table_materiel.dart';
+import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/materiels/table_materiel_roulant.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
-class MaterielPage extends StatefulWidget {
-  const MaterielPage({super.key});
+class MaterielRoulantPage extends StatefulWidget {
+  const MaterielRoulantPage({super.key});
 
   @override
-  State<MaterielPage> createState() => _MaterielPageState();
+  State<MaterielRoulantPage> createState() => _MaterielRoulantPageState();
 }
 
-class _MaterielPageState extends State<MaterielPage> {
+class _MaterielRoulantPageState extends State<MaterielRoulantPage> {
   final MaterielController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
-  String subTitle = "Materiels";
+  String subTitle = "Materiels roulant";
 
   @override
   Widget build(BuildContext context) { 
@@ -54,12 +54,10 @@ class _MaterielPageState extends State<MaterielPage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: TableMateriel(
+                          child: TableMaterielRoulant(
                             materielList: controller.materielList
-                            .where((p0) =>
-                                      p0.typeMateriel == 'Materiel')
-                                  .toList(), 
-                              controller: controller))),
+                            .where((p0) => p0.typeMateriel == 'Materiel roulant').toList(), 
+                            controller: controller))),
                 ],
               ))),
     );

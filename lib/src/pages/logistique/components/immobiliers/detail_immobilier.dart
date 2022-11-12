@@ -78,10 +78,10 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                               children: [
                                                 if (int.parse(profilController
                                                             .user.role) <=
-                                                        3 &&
+                                                        3 ||
                                                     widget.immobilierModel
                                                             .approbationDD ==
-                                                        "Approved")
+                                                        "Unapproved")
                                                   Row(
                                                     children: [
                                                       IconButton(

@@ -59,33 +59,39 @@ class RHNotifyController extends GetxController {
   void getCountRh() async {
     NotifySumModel notifySum = await rhDepartementNotifyApi.getCountRh();
     _itemCount.value = notifySum.sum;
+    update();
   }
 
   // salaire
   void getCountSalaireBudget() async {
     NotifyModel notifySum = await salaireNotifyApi.getCountBudget();
     _itemCountSalaireBudget.value = notifySum.count;
+    update();
   }
 
   void getCountSalaireDD() async {
     NotifyModel notifySum = await salaireNotifyApi.getCountDD();
     _itemCountSalaireDD.value = notifySum.count;
+    update();
   }
 
   void getCountSalaireFin() async {
     NotifyModel notifySum = await salaireNotifyApi.getCountFin();
     _itemCountSalaireFin.value = notifySum.count;
+    update();
   }
 
   void getCountSalaireObs() async {
     NotifyModel notifySum = await salaireNotifyApi.getCountObs();
     _itemCountSalaireObs.value = notifySum.count;
+    update();
   }
 
   // transRest
   void getCountTransRestDG() async {
     NotifyModel notifySum = await transRestNotifyApi.getCountDG();
     _itemCountTransRestDG.value = notifySum.count;
+    update();
   }
 
   void getCountTransRestBudget() async {
@@ -96,15 +102,18 @@ class RHNotifyController extends GetxController {
   void getCountTransRestSalaireDD() async {
     NotifyModel notifySum = await transRestNotifyApi.getCountDD();
     _itemCountTransRestDD.value = notifySum.count;
+    update();
   }
 
   void getCountTransRestFin() async {
     NotifyModel notifySum = await transRestNotifyApi.getCountFin();
     _itemCountTransRestFin.value = notifySum.count;
+    update();
   }
 
   void getCountTransResteObs() async {
     NotifyModel notifySum = await transRestNotifyApi.getCountObs();
     _itemCountTransRestObs.value = notifySum.count;
+    update();
   }
 }

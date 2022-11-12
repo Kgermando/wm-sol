@@ -94,11 +94,19 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
                                               child1: numeroRefWidget(),
                                               child2: couleurNomWidget()),
                                           ResponsiveChildWidget(
-                                              child1: genreWidget(),
+                                              child1:
+                                                  (controller.typeMateriel ==
+                                                          'Materiel roulant')
+                                                      ? genreWidget()
+                                                      : Container(),
                                               child2: qtyMaxReservoirWidget()),
-                                          ResponsiveChildWidget(
+                                           ResponsiveChildWidget(
                                               child1: dateFabricationWidget(),
-                                              child2: numeroPLaqueWidget()),
+                                              child2:
+                                                  (controller.typeMateriel ==
+                                                          'Materiel roulant')
+                                                      ? numeroPLaqueWidget()
+                                                      : Container()),
                                           ResponsiveChildWidget(
                                               child1: identifiantWidget(),
                                               child2:
@@ -163,6 +171,28 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
   }
 
 
+Widget marqueWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.marqueController,
+          decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              labelText: 'Marque',
+              hintText: 'Toyoka, Mercedes, ..'),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
   Widget modeleWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -185,28 +215,6 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
         ));
   }
 
-  Widget marqueWidget() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.marqueController,
-          decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: 'Marque',
-              hintText: 'Toyoka, Mercedes, ..'),
-          keyboardType: TextInputType.text,
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
-
   Widget numeroRefWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -215,7 +223,9 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Numéro chassie',
+            labelText: (controller.typeMateriel == 'Materiel roulant')
+                ? 'Numéro chassie'
+                : 'Numéro reference',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
@@ -253,7 +263,9 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
 
   Widget genreWidget() {
     List<String> suggestionList =
-        controller.materielList.map((e) => e.genre).toSet().toList();
+        controller.materielList
+        .where((p0) => p0.typeMateriel == 'Materiel roulant')
+        .map((e) => e.genre).toSet().toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
@@ -372,7 +384,7 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Kilometrage par heure',
+            labelText: 'KM/H initial',
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[

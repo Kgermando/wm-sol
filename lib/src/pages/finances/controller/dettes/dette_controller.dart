@@ -43,13 +43,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
     super.onInit();
     getList();
   }
-
-  @override
-  void refresh() {
-    getList();
-    super.refresh();
-  }
-
+ 
   @override
   void dispose() {
     nomCompletController.dispose();

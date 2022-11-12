@@ -5,6 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -19,6 +20,7 @@ class AddEtatMateriel extends StatefulWidget {
 
 class _AddEtatMaterielState extends State<AddEtatMateriel> {
   final EtatMaterielController controller = Get.find();
+  final MaterielController materielController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Ajout du statut materiel";
@@ -68,9 +70,11 @@ class _AddEtatMaterielState extends State<AddEtatMateriel> {
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          ResponsiveChildWidget(
-                                              child1: typeObjetWidget(),
-                                              child2: nomWidget()),
+                                          if (materielController
+                                              .materielList.isNotEmpty)
+                                            ResponsiveChildWidget(
+                                                child1: typeObjetWidget(),
+                                                child2: nomWidget()),
                                           statutListWidget(),
                                           const SizedBox(
                                             height: p20,
@@ -101,15 +105,29 @@ class _AddEtatMaterielState extends State<AddEtatMateriel> {
 
   Widget typeObjetWidget() {
     List<String> typeObjetList = ["Materiel", "Materiel roulant"];
-    var materielList = controller.materielList
+
+    List<String> etatMaterielListMap = controller.etatMaterielList
+        .map((element) => element.nom)
+        .toList();
+
+    
+    var materielListMap = materielController.materielList
         .where((e) => e.typeMateriel == 'Materiel')
         .map((e) => e.identifiant)
-        .toList(); 
-    var materielRoulantList = controller.materielList
+        .toList();
+    List<String> materielList = materielListMap
+        .toSet()
+        .difference(etatMaterielListMap.toSet())
+        .toList();
+
+    var materielRoulantListMap = materielController.materielList
         .where((e) => e.typeMateriel == 'Materiel roulant')
         .map((e) => e.identifiant)
-        .toList(); 
-
+        .toList();
+    List<String> materielRoulantList = materielRoulantListMap
+        .toSet()
+        .difference(etatMaterielListMap.toSet())
+        .toList();
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
@@ -135,14 +153,18 @@ class _AddEtatMaterielState extends State<AddEtatMateriel> {
           setState(() {
             controller.typeObjet = value!;
             controller.nomList.clear();
-            switch (value) {
+            switch (controller.typeObjet) {
               case 'Materiel':
                 controller.nomList = materielList;
-                controller.nom = controller.nomList.first;
+                if (materielList.isNotEmpty) {
+                  controller.nom = controller.nomList.first;
+                }
                 break;
               case 'Materiel roulant':
                 controller.nomList = materielRoulantList;
-                controller.nom = controller.nomList.first;
+                if (materielRoulantList.isNotEmpty) {
+                  controller.nom = controller.nomList.first;
+                }
                 break;
               default:
             }

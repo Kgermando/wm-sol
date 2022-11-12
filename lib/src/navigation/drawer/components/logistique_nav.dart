@@ -105,8 +105,16 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
             title: 'Matieriels',
             style: bodyText1  ,
             onTap: () {
-              Navigator.pushNamed(context, LogistiqueRoutes.logMateriel);
-              // Navigator.of(context).pop();
+              Navigator.pushNamed(context, LogistiqueRoutes.logMateriel); 
+            }),
+        DrawerWidget(
+            selected: widget.currentRoute == LogistiqueRoutes.logMaterielRoulant,
+            icon: Icons.car_crash,
+            sizeIcon: 20.0,
+            title: 'Matieriels roulant',
+            style: bodyText1,
+            onTap: () {
+              Navigator.pushNamed(context, LogistiqueRoutes.logMaterielRoulant); 
             }),
         DrawerWidget(
           selected: widget.currentRoute == LogistiqueRoutes.logTrajetAuto,

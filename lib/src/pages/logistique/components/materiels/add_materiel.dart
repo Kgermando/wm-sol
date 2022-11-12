@@ -81,11 +81,14 @@ class _AddMaterielState extends State<AddMateriel> {
                                               child1: numeroRefWidget(),
                                               child2: couleurNomWidget()),
                                           ResponsiveChildWidget(
-                                              child1: genreWidget(),
+                                              child1: (controller.typeMateriel == 'Materiel roulant') 
+                                                ? genreWidget() : Container(),
                                               child2: qtyMaxReservoirWidget()),
                                           ResponsiveChildWidget(
                                               child1: dateFabricationWidget(),
-                                              child2: numeroPLaqueWidget()),
+                                              child2: (controller.typeMateriel == 'Materiel roulant') 
+                                                  ?  numeroPLaqueWidget()
+                                                      : Container()),
                                           ResponsiveChildWidget(
                                               child1: identifiantWidget(),
                                               child2: kilometrageInitialeWidget()),
@@ -149,28 +152,6 @@ class _AddMaterielState extends State<AddMateriel> {
     );
   }
 
-  Widget modeleWidget() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.modeleController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Modèle',
-          ),
-          keyboardType: TextInputType.text,
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
-
   Widget marqueWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -193,6 +174,28 @@ class _AddMaterielState extends State<AddMateriel> {
         ));
   }
 
+  Widget modeleWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.modeleController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Modèle',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  } 
+
   Widget numeroRefWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -201,7 +204,8 @@ class _AddMaterielState extends State<AddMateriel> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Numéro chassie',
+            labelText: (controller.typeMateriel == 'Materiel roulant') 
+              ? 'Numéro chassie' : 'Numéro reference',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
@@ -239,6 +243,7 @@ class _AddMaterielState extends State<AddMateriel> {
 
   Widget genreWidget() {
     List<String> suggestionList = controller.materielList
+      .where((p0) => p0.typeMateriel == 'Materiel roulant')
         .map((e) => e.genre)
         .toSet()
         .toList();
@@ -250,7 +255,7 @@ class _AddMaterielState extends State<AddMateriel> {
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
             labelText: "Genre",
-            hintText: 'voiture, camion, bus, Desktop...'
+            hintText: 'voiture, camion, bus,...'
           ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
@@ -362,7 +367,7 @@ class _AddMaterielState extends State<AddMateriel> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Kilometrage par heure',
+            labelText: 'KM/H initial',
           ),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[

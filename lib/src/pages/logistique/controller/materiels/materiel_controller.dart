@@ -130,10 +130,11 @@ class MaterielController extends GetxController
           modele: modeleController.text,
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre: genreController.text,
+          genre:
+              (genreController.text == '') ? '-' :  genreController.text,
           qtyMaxReservoir: qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
-          numeroPLaque: numeroPLaqueController.text,
+          numeroPLaque: (numeroPLaqueController.text == '') ? '-' : numeroPLaqueController.text,
           identifiant: numero,
           kilometrageInitiale: kilometrageInitialeController.text,
           fournisseur: fournisseurController.text,
@@ -161,7 +162,7 @@ class MaterielController extends GetxController
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
+          icon: const Icon(Icons.close),
           snackPosition: SnackPosition.TOP);
     }
   }
@@ -240,6 +241,7 @@ class MaterielController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await materielsApi.updateData(dataItem).then((value) {
+        clearTextEditingControllers();
         materielList.clear();
         getList();
         Get.back();
@@ -260,7 +262,6 @@ class MaterielController extends GetxController
 
   void submitDD(MaterielModel data) async {
     try {
-      print("approbationDD $approbationDD");
       _isLoading.value = true;
       final dataItem = MaterielModel(
           id: data.id!,
@@ -287,6 +288,7 @@ class MaterielController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await materielsApi.updateData(dataItem).then((value) {
+        clearTextEditingControllers();
         materielList.clear();
         getList();
         Get.back();

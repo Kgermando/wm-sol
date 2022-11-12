@@ -36,12 +36,6 @@ class CaisseController extends GetxController
   }
 
   @override
-  void refresh() {
-    getList();
-    super.refresh();
-  }
-
-  @override
   void dispose() {
     nomCompletController.dispose();
     pieceJustificativeController.dispose();

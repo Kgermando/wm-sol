@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
+import 'package:wm_solution/src/models/logistiques/objet_remplace_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/components/entretiens/approbation_entretien.dart';
-import 'package:wm_solution/src/pages/logistique/components/entretiens/table_objet_remplace.dart';
+import 'package:wm_solution/src/pages/logistique/components/entretiens/approbation_entretien.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/objet_remplace_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailEntretien extends StatefulWidget {
@@ -24,123 +26,138 @@ class DetailEntretien extends StatefulWidget {
 }
 
 class _DetailEntretienState extends State<DetailEntretien> {
+  final EntretienController controller = Get.find();
+  final ObjetRemplaceController objetRemplaceController = Get.find();
+  final MaterielController materielController = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
   @override
-  Widget build(BuildContext context) {
-    final EntretienController controller = Get.find();
-    final ObjetRemplaceController objetRemplaceController = Get.find();
-    final ProfilController profilController = Get.find();
-
+  Widget build(BuildContext context) { 
     return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.entretienModel.nom),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+    onLoading: loadingPage(context),
+    onEmpty: const Text('Aucune donnée'),
+    onError: (error) => loadingError(context, error!),
+    (state) => Scaffold(
+          key: scaffoldKey,
+          appBar: headerBar(
+              context, scaffoldKey, title, widget.entretienModel.nom),
+          drawer: const DrawerMenu(),
+          body: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        TitleWidget(
+                                            title:
+                                                widget.entretienModel.nom),
+                                        Column(
                                           children: [
-                                            TitleWidget(
-                                                title:
-                                                    widget.entretienModel.nom),
-                                            Column(
+                                              if (int.parse(profilController
+                                                        .user.role) <=
+                                                    3 ||
+                                                widget.entretienModel
+                                                        .approbationDD ==
+                                                    "Unapproved")
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    IconButton(
-                                                        tooltip: 'Modifier',
-                                                        onPressed: () {
-                                                          Get.toNamed(
-                                                              LogistiqueRoutes
-                                                                  .logEntretienUpdate,
-                                                              arguments: widget
-                                                                  .entretienModel);
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.edit)),
-                                                    IconButton(
-                                                        tooltip: 'Supprimer',
-                                                        onPressed: () async {
-                                                          alertDeleteDialog(
-                                                              controller);
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.delete),
-                                                        color: Colors
-                                                            .red.shade700),
-                                                  ],
-                                                ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yyyy")
-                                                        .format(widget
-                                                            .entretienModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                IconButton(
+                                                  tooltip:
+                                                      'Soumettre chez le DD',
+                                                  color: Colors
+                                                      .green.shade700,
+                                                  onPressed: () {
+                                                    controller.sendDD(
+                                                        widget
+                                                            .entretienModel);
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.send)),
+                                                // IconButton(
+                                                //     tooltip: 'Modifier',
+                                                //     onPressed: () {
+                                                //       Get.toNamed(
+                                                //           LogistiqueRoutes
+                                                //               .logEntretienUpdate,
+                                                //           arguments: widget
+                                                //               .entretienModel);
+                                                //     },
+                                                //     icon: const Icon(
+                                                //         Icons.edit)),
+                                                IconButton(
+                                                    tooltip: 'Supprimer',
+                                                    onPressed: () async {
+                                                      alertDeleteDialog(
+                                                          controller);
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.delete),
+                                                    color: Colors
+                                                        .red.shade700),
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy")
+                                                    .format(widget
+                                                        .entretienModel
+                                                        .created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        dataWidget()
+                                        )
                                       ],
                                     ),
-                                  ),
+                                    dataWidget()
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                TableObjetRemplace(
-                                    objetRemplaceList: objetRemplaceController
-                                        .objetRemplaceList,
-                                    entretienModel: widget.entretienModel),
-                                const SizedBox(height: p20),
-                                ApprobationEntretien(
-                                    data: widget.entretienModel,
-                                    controller: controller,
-                                    profilController: profilController)
-                              ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            ));
+                            const SizedBox(height: p20),
+                            // TableObjetRemplace(
+                            //     objetRemplaceList: objetRemplaceController
+                            //         .objetRemplaceList,
+                            //     entretienModel: widget.entretienModel),
+
+                            objetRemplaceWidget(),
+                            const SizedBox(height: p20),
+                            if(widget.entretienModel.approbationDD == 'Approved')
+                            ApprobationEntretien(
+                                data: widget.entretienModel,
+                                controller: controller,
+                                profilController: profilController)
+                          ],
+                        ),
+                      )))
+            ],
+          ),
+        ));
   }
 
   alertDeleteDialog(EntretienController controller) {
@@ -181,69 +198,343 @@ class _DetailEntretienState extends State<DetailEntretien> {
       padding: const EdgeInsets.all(p10),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text('Nom Complet :',
+          ResponsiveChildWidget(
+            child1: Text('Nom Complet :',
                     textAlign: TextAlign.start,
                     style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                child: SelectableText(widget.entretienModel.nom,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
-          ),
+            child2: SelectableText(widget.entretienModel.nom,
+                    textAlign: TextAlign.start, style: bodyMedium)
+          ), 
           Divider(
             color: mainColor,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Text("Type d'Objet :",
+          ResponsiveChildWidget(
+            child1: Text("Type d'Objet :",
                     textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                child: SelectableText(widget.entretienModel.typeObjet,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
-          ),
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)), 
+            child2: SelectableText(widget.entretienModel.typeObjet,
+                    textAlign: TextAlign.start, style: bodyMedium)
+          ), 
           Divider(
             color: mainColor,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Text('Type de Maintenance :',
+          ResponsiveChildWidget(
+            child1: Text('Type de Maintenance :',
                     textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                child: SelectableText(widget.entretienModel.typeMaintenance,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
-          ),
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)), 
+            child2: SelectableText(widget.entretienModel.typeMaintenance,
+                    textAlign: TextAlign.start, style: bodyMedium)
+          ), 
           Divider(
             color: mainColor,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Text('Signature :',
+          ResponsiveChildWidget(
+            child1: Text('Signature :',
                     textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                child: SelectableText(widget.entretienModel.signature,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
+                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)), 
+            child2: SelectableText(widget.entretienModel.signature,
+                    textAlign: TextAlign.start, style: bodyMedium)
+          ), 
+        ],
+      ),
+    );
+  }
+
+
+  Widget objetRemplaceWidget() {
+    return Container(
+      padding: const EdgeInsets.all(p20),
+      color: Colors.blue[100],
+      child: Column(
+        children: [
+          tableWidget(),
+          const SizedBox(height: p20),
+          if(widget.entretienModel.isSubmit == 'true')
+          Form(
+            key: objetRemplaceController.formObjetKey,
+            child: Column(
+              children: [
+                ResponsiveChildWidget(
+                  child1: nomObjetWidget(), 
+                  child2: coutWidget()
+                ),
+                ResponsiveChildWidget(
+                  child1: caracteristiqueWidget(),
+                  child2: observationWidget()
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          final formObjetKey = objetRemplaceController
+                              .formObjetKey.currentState!;
+                          if (formObjetKey.validate()) {
+                            objetRemplaceController.submitObjetRemplace();
+                            formObjetKey.reset();
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.save,
+                          color: Colors.white,
+                        ),
+                        label: Text("Ajout l'objet",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white))),
+                  ],
+                )
+              ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  Widget tableWidget() {
+    var id = (controller.entretienList.isNotEmpty)
+        ? controller.entretienList.map((element) => element.id).last
+        : 1;
+    var dataList = objetRemplaceController.objetRemplaceList
+        .where((p0) => p0.reference == id! + 1)
+        .toList();
+    return Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          TitleWidget(
+              title: Responsive.isDesktop(context)
+                  ? "Ajouter les objets remplacés"
+                  : "Add objet"),
+        ]),
+        if (!Responsive.isMobile(context)) tableWidgetDesktop(dataList),
+        if (Responsive.isMobile(context))
+          Scrollbar(
+              controller: objetRemplaceController.controllerTable,
+              child: tableWidgetMobile(dataList))
+      ],
+    );
+  }
+
+  Widget tableWidgetDesktop(List<ObjetRemplaceModel> objetRemplace) {
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: p20),
+      child: Table(
+        border: TableBorder.all(color: mainColor),
+        columnWidths: const {
+          0: FlexColumnWidth(1),
+          1: FlexColumnWidth(1),
+          2: FlexColumnWidth(4),
+          3: FlexColumnWidth(4),
+          4: FlexColumnWidth(1),
+        },
+        children: [
+          TableRow(children: [
+            Container(
+              padding: const EdgeInsets.all(p10),
+              child: Text("Nom", textAlign: TextAlign.start, style: bodyMedium),
+            ),
+            Container(
+              padding: const EdgeInsets.all(p10),
+              child:
+                  Text("Coût", textAlign: TextAlign.center, style: bodyMedium),
+            ),
+            Container(
+              padding: const EdgeInsets.all(p10),
+              child: Text("Caracteristique",
+                  textAlign: TextAlign.start, style: bodyMedium),
+            ),
+            Container(
+              padding: const EdgeInsets.all(p10),
+              child: Text("Observation",
+                  textAlign: TextAlign.start, style: bodyMedium),
+            ),
+            Container(
+              padding: const EdgeInsets.all(p10),
+              child: Text("Retirer",
+                  textAlign: TextAlign.start, style: bodyMedium),
+            ),
+          ]),
+          for (var item in objetRemplace)
+            tableDataWidget(item.nom, item.cout, item.caracteristique,
+                item.observation, item.id!)
+        ],
+      ),
+    );
+  }
+
+  Widget tableWidgetMobile(List<ObjetRemplaceModel> objetRemplace) {
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      controller: objetRemplaceController.controllerTable,
+      child: Container(
+        constraints:
+            BoxConstraints(minWidth: MediaQuery.of(context).size.width * 2),
+        child: Table(
+          border: TableBorder.all(color: mainColor),
+          columnWidths: const {
+            0: FlexColumnWidth(1),
+            1: FlexColumnWidth(1),
+            2: FlexColumnWidth(4),
+            3: FlexColumnWidth(4),
+            4: FlexColumnWidth(1),
+          },
+          children: [
+            TableRow(children: [
+              Container(
+                padding: const EdgeInsets.all(p10),
+                child:
+                    Text("Nom", textAlign: TextAlign.start, style: bodyMedium),
+              ),
+              Container(
+                padding: const EdgeInsets.all(p10),
+                child: Text("Coût",
+                    textAlign: TextAlign.center, style: bodyMedium),
+              ),
+              Container(
+                padding: const EdgeInsets.all(p10),
+                child: Text("Caracteristique",
+                    textAlign: TextAlign.start, style: bodyMedium),
+              ),
+              Container(
+                padding: const EdgeInsets.all(p10),
+                child: Text("Observation",
+                    textAlign: TextAlign.start, style: bodyMedium),
+              ),
+              Container(
+                padding: const EdgeInsets.all(p10),
+                child: Text("Retirer",
+                    textAlign: TextAlign.start, style: bodyMedium),
+              ),
+            ]),
+            for (var item in objetRemplace)
+              tableDataWidget(item.nom, item.cout, item.caracteristique,
+                  item.observation, item.id!)
+          ],
+        ),
+      ),
+    );
+  }
+
+  TableRow tableDataWidget(
+      String nom, String cout, String caraterique, String observation, int id) {
+    double coutProduit = (cout == '') ? double.parse('0') : double.parse(cout);
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+
+    return TableRow(children: [
+      Container(
+        padding: const EdgeInsets.all(p10),
+        child:
+            SelectableText(nom, textAlign: TextAlign.start, style: bodyMedium),
+      ),
+      Container(
+        padding: const EdgeInsets.all(p10),
+        child: SelectableText(
+            "${NumberFormat.decimalPattern('fr').format(coutProduit)} \$",
+            textAlign: TextAlign.center,
+            style: bodyMedium),
+      ),
+      Container(
+        padding: const EdgeInsets.all(p10),
+        child: SelectableText(caraterique,
+            textAlign: TextAlign.start, style: bodyMedium),
+      ),
+      Container(
+        padding: const EdgeInsets.all(p10),
+        child: SelectableText(observation,
+            textAlign: TextAlign.start, style: bodyMedium),
+      ),
+      Container(
+          padding: const EdgeInsets.all(p10),
+          child: IconButton(
+              tooltip: "Actualiser après suppression",
+              color: Colors.red,
+              onPressed: () {
+                objetRemplaceController.objetRemplaceApi.deleteData(id);
+              },
+              icon: const Icon(Icons.delete))),
+    ]);
+  }
+
+  Widget nomObjetWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: objetRemplaceController.nomObjetController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Nom',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+        ));
+  }
+
+  Widget coutWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 3,
+          child: Container(
+              margin: const EdgeInsets.only(bottom: p20),
+              child: TextFormField(
+                controller: objetRemplaceController.coutController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Coût',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                ],
+                style: const TextStyle(),
+              )),
+        ),
+        const SizedBox(width: p20),
+        Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: p8),
+              child: Text("\$", style: Theme.of(context).textTheme.headline6),
+            ))
+      ],
+    );
+  }
+
+  Widget caracteristiqueWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: objetRemplaceController.caracteristiqueController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Caracteristique',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+        ));
+  }
+
+  Widget observationWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: objetRemplaceController.observationController,
+          decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              labelText: 'Observation',
+              hintText: 'En etat de marche, pause probleme de compatibilité'),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+        ));
   }
 }

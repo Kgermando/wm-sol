@@ -148,6 +148,7 @@ class ComptabiliteRoutes {
 class LogistiqueRoutes {
   static const logDashboard = "/log-dashboard";
   static const logMateriel = "/log-materiel";
+  static const logMaterielRoulant = "/log-materiel-roulant";
   static const logMaterielDetail = "/log-materiel-detail";
   static const logMaterielAdd = "/log-materiel-add";
   static const logMaterielUpdate = "/log-materiel-update";

@@ -84,8 +84,8 @@ class ObjetRemplaceController extends GetxController
   }
 
   void submitObjetRemplace() async {
-    int? id =
-        entretienController.entretienList.map((element) => element.id).last;
+    int? id = (entretienController.entretienList.isNotEmpty) ?
+        entretienController.entretienList.map((element) => element.id).last : 1;
     try {
       _isLoading.value = true;
       final objetRemplace = ObjetRemplaceModel(
@@ -98,7 +98,7 @@ class ObjetRemplaceController extends GetxController
         clear();
         objetRemplaceList.clear();
         getList();
-        Get.back();
+        // Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

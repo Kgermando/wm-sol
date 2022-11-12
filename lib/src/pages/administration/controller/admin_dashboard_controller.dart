@@ -133,12 +133,7 @@ class AdminDashboardController extends GetxController {
     super.onInit();
     getData();
   }
-
-  @override
-  void refresh() {
-    getData();
-    super.refresh();
-  }
+ 
 
   Future<void> getData() async {
     _agentsCount.value = personnelsController.personnelsList.length;
@@ -378,5 +373,7 @@ class AdminDashboardController extends GetxController {
         totalTransRest;
     sommeRestantes = coutTotal - sommeEnCours;
     poursentExecution = sommeRestantes * 100 / coutTotal;
+
+    update();
   }
 }

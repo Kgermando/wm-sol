@@ -7,6 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {
@@ -109,12 +110,16 @@ class EntretienController extends GetxController
           created: DateTime.now(),
           approbationDD: '-',
           motifDD: '-',
-          signatureDD: '-');
+          signatureDD: '-',
+          isSubmit: 'false'
+      );
       await entretienApi.insertData(dataItem).then((value) {
         clear();
         entretienList.clear();
         getList();
-        Get.back();
+        // Get.back();
+        Get.toNamed(LogistiqueRoutes.logAddEntretien, 
+          arguments: entretienList.last.id);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -143,7 +148,44 @@ class EntretienController extends GetxController
           created: data.created,
           approbationDD: '-',
           motifDD: '-',
-          signatureDD: '-');
+          signatureDD: '-',
+          isSubmit: data.isSubmit
+        );
+      await entretienApi.updateData(dataItem).then((value) {
+        clear();
+        entretienList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été sauvegader",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void sendDD(EntretienModel data) async {
+    try {
+      _isLoading.value = true;
+      final dataItem = EntretienModel(
+          id: data.id,
+          nom: nom.toString(),
+          typeObjet: typeObjet.toString(),
+          typeMaintenance: typeMaintenance.toString(),
+          dureeTravaux: dureeTravauxController.text,
+          signature: profilController.user.matricule,
+          created: data.created,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          isSubmit: 'true');
       await entretienApi.updateData(dataItem).then((value) {
         clear();
         entretienList.clear();
@@ -178,7 +220,8 @@ class EntretienController extends GetxController
           approbationDD: approbationDD,
           motifDD:
               (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule);
+          signatureDD: profilController.user.matricule,
+          isSubmit: data.isSubmit);
       await entretienApi.updateData(entretienModel).then((value) {
         clear();
         entretienList.clear();

@@ -9,12 +9,14 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/objet_remplace_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class AddEntretien extends StatefulWidget {
-  const AddEntretien({super.key});
+  const AddEntretien({super.key, required this.id});
+  final int id;
 
   @override
   State<AddEntretien> createState() => _AddEntretienState();
@@ -23,9 +25,10 @@ class AddEntretien extends StatefulWidget {
 class _AddEntretienState extends State<AddEntretien> {
   final EntretienController controller = Get.find();
   final ObjetRemplaceController objetRemplaceController = Get.find();
+  final MaterielController materielController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
-  String subTitle = "Nouvel entretien";
+  String subTitle = "fiche d'entretien";
 
   @override
   Widget build(BuildContext context) {
@@ -70,23 +73,11 @@ class _AddEntretienState extends State<AddEntretien> {
                                           TitleWidget(
                                               title: Responsive.isDesktop(
                                                       context)
-                                                  ? "Entretiens & Maintenance"
-                                                  : "Entretiens"),
+                                                  ? "Fiche d'Entretiens & Maintenance"
+                                                  : "Fiche"),
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                  child: typeObjetWidget()),
-                                              const SizedBox(
-                                                width: p10,
-                                              ),
-                                              Expanded(child: nomWidget())
-                                            ],
-                                          ),
-                                          etatObjetWidget(),
-                                          dureeTravauxWidget(),
                                           objetRemplaceWidget(),
                                           const SizedBox(
                                             height: p20,
@@ -113,149 +104,6 @@ class _AddEntretienState extends State<AddEntretien> {
                 ],
               ),
             ));
-  }
-
-   Widget typeObjetWidget() {
-    List<String> typeObjetList = ["Materiel", "Materiel roulant"];
-    var materielList = controller.materielList
-        .where((e) => e.typeMateriel == 'Materiel')
-        .map((e) => e.identifiant)
-        .toList();
-    var materielRoulantList = controller.materielList
-        .where((e) => e.typeMateriel == 'Materiel roulant')
-        .map((e) => e.identifiant)
-        .toList();
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          labelText: 'Type d\'Objet',
-          labelStyle: const TextStyle(),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          contentPadding: const EdgeInsets.only(left: 5.0),
-        ),
-        value: controller.typeObjet,
-        isExpanded: true,
-        validator: (value) => value == null ? "Champs obligatoire" : null,
-        items: typeObjetList
-            .map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            })
-            .toSet()
-            .toList(),
-        onChanged: (value) {
-          setState(() {
-            controller.typeObjet = value!;
-            controller.nomList.clear();
-            switch (value) {
-              case 'Materiel':
-                controller.nomList = materielList;
-                controller.nom = controller.nomList.first;
-                break;
-              case 'Materiel roulant':
-                controller.nomList = materielRoulantList;
-                controller.nom = controller.nomList.first;
-                break;
-              default:
-            }
-          });
-        },
-      ),
-    );
-  }
-
-  Widget nomWidget() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          labelText: 'Nom',
-          labelStyle: const TextStyle(),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          contentPadding: const EdgeInsets.only(left: 5.0),
-        ),
-        value: controller.nom,
-        isExpanded: true,
-        items: controller.nomList
-            .map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            })
-            .toSet()
-            .toList(),
-        validator: (value) => value == null ? "Champs obligatoire" : null,
-        onChanged: (value) {
-          setState(() {
-            controller.nom = value!;
-          });
-        },
-      ),
-    );
-  }
-
-  Widget dureeTravauxWidget() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.dureeTravauxController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Durée Travaux',
-          ),
-          keyboardType: TextInputType.text,
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
-
-  Widget etatObjetWidget() {
-    List<String> typeMaintenanceList = [
-      'Maintenance curative',
-      'Maintenance préventive',
-      'Maintenance corrective',
-      'Maintenance améliorative'
-    ];
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: DropdownButtonFormField<String>(
-          decoration: InputDecoration(
-            labelText: 'Type de maintenance',
-            labelStyle: const TextStyle(),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-            contentPadding: const EdgeInsets.only(left: 5.0),
-          ),
-          value: controller.typeMaintenance,
-          isExpanded: true,
-          items: typeMaintenanceList
-              .map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              })
-              .toSet()
-              .toList(),
-          validator: (value) => value == null ? "Select maintenance" : null,
-          onChanged: (value) {
-            setState(() {
-              controller.typeMaintenance = value;
-            });
-          },
-        ));
   }
 
   Widget objetRemplaceWidget() {
@@ -327,16 +175,19 @@ class _AddEntretienState extends State<AddEntretien> {
   }
 
   Widget tableWidget() {
-    var id = controller.entretienList.map((element) => element.id).last;
+    var id = (controller.entretienList.isNotEmpty)
+        ? controller.entretienList.map((element) => element.id).last
+        : 1;
     var dataList = objetRemplaceController.objetRemplaceList
-        .where((p0) => p0.reference == id! + 1).toList();
+        .where((p0) => p0.reference == id! + 1)
+        .toList();
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           TitleWidget(
-            title: Responsive.isDesktop(context)
-                ? "Ajouter les objets remplacés"
-                : "Add objet"),
+              title: Responsive.isDesktop(context)
+                  ? "Ajouter les objets remplacés"
+                  : "Add objet"),
         ]),
         if (!Responsive.isMobile(context)) tableWidgetDesktop(dataList),
         if (Responsive.isMobile(context))

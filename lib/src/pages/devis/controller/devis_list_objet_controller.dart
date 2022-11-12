@@ -25,6 +25,16 @@ class DevisListObjetController extends GetxController
     getList();
   }
 
+  @override
+  void dispose() {
+    designationController.dispose();
+    super.dispose();
+  }
+
+  void clear() {
+    designationController.clear(); 
+  }
+
   void getList() async {
     devisListObjetsApi.getAllData().then((response) {
       devisListObjetList.assignAll(response);
@@ -72,6 +82,7 @@ class DevisListObjetController extends GetxController
         montantGlobal: montantGlobal.toString(),
       );
       await devisListObjetsApi.insertData(devisListObjetsModel).then((value) {
+        clear();
         devisListObjetList.clear();
         getList();
         Get.back();
@@ -102,6 +113,7 @@ class DevisListObjetController extends GetxController
         montantGlobal: montantGlobal.toString(),
       );
       await devisListObjetsApi.updateData(devisListObjetsModel).then((value) {
+        clear();
         devisListObjetList.clear();
         getList();
         Get.back();

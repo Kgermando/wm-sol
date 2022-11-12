@@ -73,6 +73,6 @@ class ObservationNotifyController extends GetxController {
             element.approbationFin == 'Approved' &&
             element.observation == "false")
         .toList()); 
-     
+     update();
   }
 }

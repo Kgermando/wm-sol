@@ -46,12 +46,6 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
   }
 
   @override
-  void refresh() {
-    getList();
-    super.refresh();
-  }
-
-  @override
   void dispose() {
     controllerQuantityCart.dispose();
     super.dispose();

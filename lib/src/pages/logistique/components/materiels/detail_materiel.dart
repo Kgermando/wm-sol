@@ -38,7 +38,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
               appBar: headerBar(context, scaffoldKey, title,
                   widget.materielModel.identifiant),
               drawer: const DrawerMenu(),
-              floatingActionButton: (profilController.user.fonctionOccupe !=
+              floatingActionButton: (widget.materielModel.typeMateriel == 'Materiel roulant') ? (profilController.user.fonctionOccupe !=
                       'Directeur de departement')
                   ? FloatingActionButton.extended(
                       label: const Text("Ajouter un trajet"),
@@ -49,7 +49,8 @@ class _DetailMaterielState extends State<DetailMateriel> {
                             arguments: widget.materielModel);
                       },
                     )
-                  : Container(),
+                  : Container()
+                : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,15 +83,16 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const TitleWidget(title: "Engin"),
+                                            if(!Responsive.isMobile(context))
+                                            TitleWidget(title: widget.materielModel.typeMateriel),
                                             Column(
                                               children: [
                                                 if (int.parse(profilController
                                                             .user.role) <=
-                                                        2 &&
+                                                        3 ||
                                                     widget.materielModel
                                                             .approbationDD ==
-                                                        "-")
+                                                        "Unapproved")
                                                   Row(
                                                     children: [
                                                       IconButton(

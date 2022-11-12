@@ -34,36 +34,31 @@ class NotifyHeaderController extends GetxController {
     getCountAgenda();
   }
 
-  @override
-  void refresh() {
-    getCountCart();
-    getCountTache();
-    getCountMail();
-    getCountAgenda();
-    super.refresh();
-  }
-
   void getCountCart() async {
     NotifyModel notifySum =
         await cartNotifyApi.getCount(profilController.user.matricule);
     _cartItemCount.value = notifySum.count;
+    update();
   }
 
   void getCountTache() async {
     NotifyModel notifySum =
         await tacheNotifyApi.getCount(profilController.user.matricule);
     _tacheItemCount.value = notifySum.count;
+    update();
   }
 
   void getCountMail() async {
     NotifyModel notifySum =
         await mailsNotifyApi.getCount(profilController.user.matricule);
     _mailsItemCount.value = notifySum.count;
+    update();
   }
 
   void getCountAgenda() async {
     NotifyModel notifySum =
         await agendaNotifyApi.getCount(profilController.user.matricule);
     _agendaItemCount.value = notifySum.count;
+    update();
   }
 }

@@ -78,10 +78,10 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                               children: [
                                                 if (int.parse(profilController
                                                             .user.role) <=
-                                                        3 &&
+                                                        3 ||
                                                     widget.mobilierModel
                                                             .approbationDD ==
-                                                        "Approved")
+                                                        "Unapproved")
                                                   Row(
                                                     children: [
                                                       IconButton(

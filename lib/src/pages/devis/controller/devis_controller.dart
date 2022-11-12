@@ -50,11 +50,20 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
 
   @override
   void dispose() {
+    titleController.dispose();
     motifDGController.dispose();
     motifBudgetController.dispose();
     motifFinController.dispose();
     motifDDController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    titleController.clear();
+    motifDGController.clear();
+    motifBudgetController.clear();
+    motifFinController.clear();
+    motifDDController.clear();
   }
 
   void getList() async {
@@ -119,6 +128,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
           ligneBudgetaire: '-',
           ressource: '-');
       await devisAPi.insertData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();
@@ -165,6 +175,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await devisAPi.updateData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();
@@ -211,6 +222,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await devisAPi.updateData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();
@@ -258,6 +270,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         ressource: '-',
       );
       await devisAPi.updateData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();
@@ -304,6 +317,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         ressource: '-',
       );
       await devisAPi.updateData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();
@@ -353,6 +367,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         ressource: (ressource.toString() == '') ? '-' : ressource.toString(),
       );
       await devisAPi.updateData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();
@@ -398,6 +413,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await devisAPi.updateData(devisModel).then((value) {
+        clear();
         devisList.clear();
         getList();
         Get.back();

@@ -52,11 +52,7 @@ class MaillingController extends GetxController
     getList();
   }
 
-  @override
-  void refresh() {
-    getList();
-    super.refresh();
-  }
+ 
 
   @override
   void dispose() {

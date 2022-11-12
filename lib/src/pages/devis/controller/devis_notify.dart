@@ -28,16 +28,6 @@ class DevisNotifyController extends GetxController {
     getCountDeviseObs();
   }
 
-  @override
-  void refresh() {
-    getCountDevisDG();
-    getCountDevisBudget();
-    getCountDevisSalaireDD();
-    getCountDevisFin();
-    getCountDeviseObs();
-    super.refresh();
-  }
-
   void getCountDevisDG() async {
     NotifyModel notifySum = await devisNotifyApi.getCountDG();
     _itemCountDevisDG.value = notifySum.count;

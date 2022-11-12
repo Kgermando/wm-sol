@@ -152,12 +152,12 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'type d\'Objet',
+        title: 'Type d\'Objet',
         field: 'typeObjet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -176,6 +176,23 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Actif') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Inactif') {
+            textColor = Colors.orange;
+          } else if (rendererContext.cell.value == 'Déclasser') {
+            textColor = Colors.red;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

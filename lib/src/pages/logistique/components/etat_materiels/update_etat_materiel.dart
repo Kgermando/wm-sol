@@ -6,6 +6,7 @@ import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -21,9 +22,9 @@ class UpdateEtatMateriel extends StatefulWidget {
 
 class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
   final EtatMaterielController controller = Get.find();
+  final MaterielController materielController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Logistique";
-  String subTitle = "Ajout du statut materiel";
+  String title = "Logistique"; 
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
               key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              appBar: headerBar(context, scaffoldKey, title, widget.etatMaterielModel.nom),
               drawer: const DrawerMenu(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +71,8 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
                                           const SizedBox(
                                             height: p20,
                                           ),
+                                          if (materielController
+                                              .materielList.isNotEmpty)
                                           ResponsiveChildWidget(
                                               child1: typeObjetWidget(),
                                               child2: nomWidget()),
@@ -102,17 +105,30 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
             ));
   }
 
-Widget typeObjetWidget() {
+
+  Widget typeObjetWidget() {
     List<String> typeObjetList = ["Materiel", "Materiel roulant"];
-    var materielList = controller.materielList
+
+    List<String> etatMaterielListMap =
+        controller.etatMaterielList.map((element) => element.nom).toList();
+
+    var materielListMap = materielController.materielList
         .where((e) => e.typeMateriel == 'Materiel')
         .map((e) => e.identifiant)
         .toList();
-    var materielRoulantList = controller.materielList
+    List<String> materielList = materielListMap
+        .toSet()
+        .difference(etatMaterielListMap.toSet())
+        .toList();
+
+    var materielRoulantListMap = materielController.materielList
         .where((e) => e.typeMateriel == 'Materiel roulant')
         .map((e) => e.identifiant)
         .toList();
-
+    List<String> materielRoulantList = materielRoulantListMap
+        .toSet()
+        .difference(etatMaterielListMap.toSet())
+        .toList();
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
@@ -138,14 +154,18 @@ Widget typeObjetWidget() {
           setState(() {
             controller.typeObjet = value!;
             controller.nomList.clear();
-            switch (value) {
+            switch (controller.typeObjet) {
               case 'Materiel':
                 controller.nomList = materielList;
-                controller.nom = controller.nomList.first;
+                if (materielList.isNotEmpty) {
+                  controller.nom = controller.nomList.first;
+                }
                 break;
               case 'Materiel roulant':
                 controller.nomList = materielRoulantList;
-                controller.nom = controller.nomList.first;
+                if (materielRoulantList.isNotEmpty) {
+                  controller.nom = controller.nomList.first;
+                }
                 break;
               default:
             }
