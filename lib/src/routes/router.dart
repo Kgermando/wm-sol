@@ -1385,7 +1385,9 @@ List<GetPage<dynamic>>? getPages = [
         ProjetBinding(),
         VersementBinding(),
         TacheBinding(),
-        RapportBinding()
+        RapportBinding(),
+        ProfilBinding(), 
+        ProduitModelBinding()
       ],
       page: () => const DashboardExp(),
       transition: Transition.cupertino,
@@ -1422,7 +1424,9 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         ProductionExpBinding(),
         FourniseurBinding(),
-        AnnuaireBinding()
+        AnnuaireBinding(),
+        ProfilBinding(), 
+        ProduitModelBinding()
       ],
       page: () => const ProductionExpPage(),
       transition: Transition.cupertino,
@@ -1444,11 +1448,13 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: ExploitationRoutes.expProjet,
-      bindings: [
+      bindings: [ 
         ProjetBinding(),
         VersementBinding(),
         TacheBinding(),
-        RapportBinding()
+        RapportBinding(),
+        ProfilBinding(),
+        ProduitModelBinding()
       ],
       page: () => const ProjetPage(),
       transition: Transition.cupertino,
