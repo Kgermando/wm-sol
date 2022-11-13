@@ -258,6 +258,7 @@ import 'package:wm_solution/src/pages/mailling/components/tranfert_mail.dart';
 import 'package:wm_solution/src/pages/mailling/view/mails_page.dart';
 import 'package:wm_solution/src/pages/marketing/view/marketing_dahsboard.dart';
 import 'package:wm_solution/src/pages/marketing/view/marketing_dd.dart';
+import 'package:wm_solution/src/pages/personnels_roles/bindinfs/personnels_role_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/dashboard_notify_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/performence_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/performence_note_binding.dart';
@@ -1465,13 +1466,21 @@ List<GetPage<dynamic>>? getPages = [
         ProjetBinding(),
         VersementBinding(),
         TacheBinding(),
-        RapportBinding()
+        RapportBinding(),
+        PersonnelsRoleBinding()
       ],
       page: () => const AddProjet(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ExploitationRoutes.expProjetDetail,
+      bindings: [
+        ProjetBinding(),
+        VersementBinding(),
+        TacheBinding(),
+        RapportBinding(),
+        PersonnelsRoleBinding()
+      ],
       binding: ProjetBinding(),
       page: () {
         final ProjetModel projetModel = Get.arguments as ProjetModel;
@@ -1485,7 +1494,8 @@ List<GetPage<dynamic>>? getPages = [
         ProjetBinding(),
         VersementBinding(),
         TacheBinding(),
-        RapportBinding()
+        RapportBinding(),
+        PersonnelsRoleBinding()
       ],
       page: () {
         final ProjetModel projetModel = Get.arguments as ProjetModel;

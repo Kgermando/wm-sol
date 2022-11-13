@@ -70,10 +70,11 @@ class PersonnelsRolesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AgentRoleModel(
-          reference: id,
-          departement: departement,
-          agent: agentController.text,
-          role: roleController.text);
+        reference: id,
+        departement: departement,
+        agent: agentController.text,
+        role: roleController.text,
+        created: DateTime.now());
       await personnelsRoleApi.insertData(dataItem).then((value) {
         personnelsRoleList.clear();
         getList();
@@ -100,7 +101,9 @@ class PersonnelsRolesController extends GetxController
           reference: data.reference,
           departement: data.departement,
           agent: agentController.text,
-          role: roleController.text);
+          role: roleController.text,
+          created: data.created
+        );
       await personnelsRoleApi.updateData(dataItem).then((value) {
         personnelsRoleList.clear();
         getList();
