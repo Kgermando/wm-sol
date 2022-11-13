@@ -10,7 +10,8 @@ import 'package:wm_solution/src/pages/logistique/components/dashboard/materiel_p
 import 'package:wm_solution/src/pages/logistique/components/dashboard/etat_materiel_pie.dart';
 import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/dash_number_widget.dart'; 
+import 'package:wm_solution/src/widgets/dash_number_widget.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart'; 
 
 class DashboardLog extends StatefulWidget {
   const DashboardLog({super.key});
@@ -131,22 +132,10 @@ class _DashboardLogState extends State<DashboardLog> {
                                 const SizedBox(
                                   height: 20.0,
                                 ),
-                                Responsive.isDesktop(context)
-                                    ? Row(
-                                        children: const [
-                                          Expanded(child: EtatMaterielPie()),
-                                          Expanded(child: EnguinPie()),
-                                        ],
-                                      )
-                                    : Column(
-                                        children: const [
-                                          EtatMaterielPie(),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          EnguinPie(),
-                                        ],
-                                      ),
+                                const ResponsiveChildWidget(
+                                  child1: EtatMaterielPie(), 
+                                  child2: MaterielPie()
+                                ) 
                               ]),
                         )),
                   ))

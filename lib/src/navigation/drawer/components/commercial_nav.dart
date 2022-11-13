@@ -66,9 +66,9 @@ class _CommercialNavState extends State<CommercialNav> {
                 showBadge:
                     (int.parse(controller.itemCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent: Text(controller.itemCount,
+                badgeContent: Obx(() => Text(controller.itemCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white)),
+                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {

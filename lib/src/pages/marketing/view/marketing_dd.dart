@@ -70,10 +70,10 @@ class _MarketingDDState extends State<MarketingDD> {
                                                 .copyWith(color: Colors.white)
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
-                                    subtitle: Text(
+                                    subtitle:Obx(() => Text(
                                         "Vous avez ${marketingNotifyController.campaignCountDD} dossiers necessitent votre approbation",
                                         style: bodyMedium!
-                                            .copyWith(color: Colors.white70)),
+                                            .copyWith(color: Colors.white70))) ,
                                     initiallyExpanded: false,
                                     onExpansionChanged: (val) {
                                       setState(() {

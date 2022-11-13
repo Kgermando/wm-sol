@@ -112,10 +112,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${rhNotifyController.itemCountSalaireFin} dossiers necessitent votre approbation",
                                       style: bodyMedium!
-                                          .copyWith(color: Colors.white70)),
+                                          .copyWith(color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -144,10 +144,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${rhNotifyController.itemCountTransRestFin} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -174,10 +174,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${marketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -205,10 +205,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${expController.itemCountProjetFin} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -236,10 +236,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${devisNotifyController.itemCountDevisFin} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -267,10 +267,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${financeNotifyController.detteCountDD} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -298,10 +298,10 @@ class _DDFinanceState extends State<DDFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${financeNotifyController.creanceCountDD} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {

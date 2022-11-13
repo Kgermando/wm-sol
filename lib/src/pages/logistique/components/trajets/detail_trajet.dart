@@ -77,10 +77,7 @@ class _DetailTrajetState extends State<DetailTrajet> {
                                                     .trajetModel.conducteur),
                                             Column(
                                               children: [
-                                                if (int.parse(profilController
-                                                            .user.role) <=
-                                                        3 &&
-                                                    widget.trajetModel
+                                                if (widget.trajetModel
                                                             .approbationDD ==
                                                         "-")
                                                   IconButton(

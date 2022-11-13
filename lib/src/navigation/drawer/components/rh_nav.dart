@@ -57,8 +57,8 @@ class _RhNavState extends State<RhNav> {
             badge: Badge(
               showBadge: (int.parse(controller.itemCount) >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text(controller.itemCount,
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent:Obx(() => Text(controller.itemCount,
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {

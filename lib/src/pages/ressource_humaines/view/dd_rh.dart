@@ -76,10 +76,10 @@ class _DDRHState extends State<DDRH> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${controller.itemCountSalaireDD} dossiers necessitant votre approbation",
                           style: bodyMedium!
-                              .copyWith(color: Colors.white70)),
+                              .copyWith(color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {
@@ -103,10 +103,10 @@ class _DDRHState extends State<DDRH> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${controller.itemCountTransRestDD} dossiers necessitant votre approbation",
-                          style: bodyMedium.copyWith(
-                              color: Colors.white70)),
+                          style: bodyMedium!.copyWith(
+                              color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {

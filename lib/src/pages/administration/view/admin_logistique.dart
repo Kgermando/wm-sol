@@ -77,10 +77,10 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                                   title: Text('Dossier Materiels',
                                       style: headline6!
                                           .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${controller.itemCountMaterielDG} dossiers necessitent votre approbation",
                                       style: bodyMedium!
-                                          .copyWith(color: Colors.white)),
+                                          .copyWith(color: Colors.white))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -103,10 +103,10 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                                               color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${controller.itemCountImmobilierDG} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -124,16 +124,16 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                                   leading: const Icon(Icons.folder,
                                       color: Colors.white),
                                   title: Text(
-                                      'Dossier sur les états de besoin',
+                                      'Dossier sur les Devis',
                                       style: (Responsive.isDesktop(context))
                                           ? headline6.copyWith(
                                               color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle: Obx(() => Text(
                                       "Vous avez ${devisNotifyController.itemCountDevisDG} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {

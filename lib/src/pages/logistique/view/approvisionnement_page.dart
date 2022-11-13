@@ -1,3 +1,4 @@
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -62,17 +63,29 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
                             decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount:
-                                    controller.approvisionnementList.length,
-                                itemBuilder: (context, index) {
-                                  final data =
-                                      controller.approvisionnementList[index];
-                                  return ListApprovisionnement(
-                                      approvisionnementModel: data,
-                                      role: profilController.user.role);
-                                }),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(onPressed: () {
+                                      controller.approvisionnementList;
+                                    }, icon: const Icon(Icons.refresh, color: Colors.green)),
+                                  ],
+                                ),
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        controller.approvisionnementList.length,
+                                    itemBuilder: (context, index) {
+                                      final data =
+                                          controller.approvisionnementList[index];
+                                      return ListApprovisionnement(
+                                          approvisionnementModel: data,
+                                          role: profilController.user.role);
+                                    }),
+                              ],
+                            ),
                           )))
                 ],
               ),
@@ -126,19 +139,25 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
           });
         });
   }
-
+ 
+  
   Widget provisionWidget() {
+    List<String> suggestionList = controller.approvisionnementList
+        .map((e) => e.provision)
+        .toSet()
+        .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
+        child: EasyAutocomplete(
           controller: controller.provisionController,
           decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: 'Provision',
-              hintText: 'Cartouche, Papier,...'),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Provision',
+            hintText: 'Cartouche, Papier,...'
+          ),
           keyboardType: TextInputType.text,
-          style: const TextStyle(),
+          suggestions: suggestionList,
           validator: (value) {
             if (value != null && value.isEmpty) {
               return 'Ce champs est obligatoire';

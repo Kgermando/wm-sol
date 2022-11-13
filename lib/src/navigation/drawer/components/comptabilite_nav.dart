@@ -63,9 +63,9 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
               badge: Badge(
                 showBadge: (int.parse(comptabiliteNotifyController.itemCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent: Text(comptabiliteNotifyController.itemCount,
+                badgeContent: Obx(() => Text(comptabiliteNotifyController.itemCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white)),
+                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {

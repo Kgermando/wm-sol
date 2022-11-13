@@ -87,10 +87,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                             TitleWidget(title: widget.materielModel.typeMateriel),
                                             Column(
                                               children: [
-                                                if (int.parse(profilController
-                                                            .user.role) <=
-                                                        3 ||
-                                                    widget.materielModel
+                                                if (widget.materielModel
                                                             .approbationDD ==
                                                         "Unapproved")
                                                   Row(

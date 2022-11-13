@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/objet_remplace_api.dart';
+import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
 import 'package:wm_solution/src/models/logistiques/objet_remplace_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
@@ -83,13 +84,12 @@ class ObjetRemplaceController extends GetxController
     }
   }
 
-  void submitObjetRemplace() async {
-    int? id = (entretienController.entretienList.isNotEmpty) ?
-        entretienController.entretienList.map((element) => element.id).last : 1;
+  void submitObjetRemplace(EntretienModel data) async {
+    
     try {
       _isLoading.value = true;
       final objetRemplace = ObjetRemplaceModel(
-          reference: id! + 1,
+          reference: data.id!,
           nom: nomObjetController.text,
           cout: coutController.text,
           caracteristique: caracteristiqueController.text,
@@ -118,6 +118,7 @@ class ObjetRemplaceController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ObjetRemplaceModel(
+        id: data.id!,
           reference: data.reference,
           nom: nomObjetController.text,
           cout: coutController.text,

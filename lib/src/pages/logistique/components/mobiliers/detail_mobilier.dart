@@ -76,10 +76,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                                 title: "Mobilier"),
                                             Column(
                                               children: [
-                                                if (int.parse(profilController
-                                                            .user.role) <=
-                                                        3 ||
-                                                    widget.mobilierModel
+                                                if (widget.mobilierModel
                                                             .approbationDD ==
                                                         "Unapproved")
                                                   Row(

@@ -67,10 +67,10 @@ class _AdminMarketingState extends State<AdminMarketing> {
                                           .copyWith(color: Colors.white)
                                       : bodyLarge!
                                           .copyWith(color: Colors.white)),
-                              subtitle: Text(
+                              subtitle: Obx(() => Text(
                                   "Vous avez ${marketingNotifyController.campaignCountDG} dossiers necessitent votre approbation",
                                   style: bodyMedium!
-                                      .copyWith(color: Colors.white70)),
+                                      .copyWith(color: Colors.white70))) ,
                               initiallyExpanded: false,
                               onExpansionChanged: (val) {
                                 setState(() {

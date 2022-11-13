@@ -4,6 +4,7 @@ import 'package:wm_solution/src/api/logistiques/approvion_reception_api.dart';
 import 'package:wm_solution/src/models/logistiques/approvision_reception_model.dart';
 import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 
 class ApprovisionReceptionController extends GetxController
@@ -11,6 +12,7 @@ class ApprovisionReceptionController extends GetxController
   final ApprovisionReceptionApi approvisionReceptionApi =
       ApprovisionReceptionApi();
   final ProfilController profilController = Get.find();
+  final ApprovisionnementController approvisionnementController = Get.find();
 
   var approvisionReceptionList = <ApprovisionReceptionModel>[].obs;
 
@@ -92,7 +94,9 @@ class ApprovisionReceptionController extends GetxController
           created: DateTime.now(),
           accuseReception: 'false',
           signatureReception: '-',
-          createdReception: DateTime.now());
+          createdReception: DateTime.now(),
+          livraisonAnnuler: 'false',
+          reference: data.id!);
       await approvisionReceptionApi.insertData(dataItem).then((value) {
         clear();
         approvisionReceptionList.clear();
@@ -117,17 +121,18 @@ class ApprovisionReceptionController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionReceptionModel(
-        id: data.id,
-        provision: data.provision,
-        departement: data.departement,
-        quantity: data.quantity,
-        unite: data.unite,
-        signatureLivraison: data.signatureLivraison,
-        created: data.created,
-        accuseReception: boolean,
-        signatureReception: profilController.user.matricule,
-        createdReception: DateTime.now()
-      );
+          id: data.id,
+          provision: data.provision,
+          departement: data.departement,
+          quantity: data.quantity,
+          unite: data.unite,
+          signatureLivraison: data.signatureLivraison,
+          created: data.created,
+          accuseReception: boolean,
+          signatureReception: profilController.user.matricule,
+          createdReception: DateTime.now(),
+          livraisonAnnuler: data.livraisonAnnuler,
+          reference: data.reference);
       await approvisionReceptionApi.updateData(dataItem).then((value) {
         clear();
         approvisionReceptionList.clear();
@@ -139,6 +144,61 @@ class ApprovisionReceptionController extends GetxController
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
         _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submitLivraisonAnnuler(ApprovisionReceptionModel data) async {
+    try {
+      _isLoading.value = true;
+      final dataItem = ApprovisionReceptionModel(
+          id: data.id,
+          provision: data.provision,
+          departement: data.departement,
+          quantity: data.quantity,
+          unite: data.unite,
+          signatureLivraison: data.signatureLivraison,
+          created: data.created,
+          accuseReception: data.accuseReception,
+          signatureReception: data.signatureReception,
+          createdReception: DateTime.now(),
+          livraisonAnnuler: 'true',
+          reference: data.reference);
+      await approvisionReceptionApi.updateData(dataItem).then((value) {
+        var approvionnement = approvisionnementController.approvisionnementList
+            .where((p0) => p0.id == value.reference)
+            .last;
+
+        var qtyAdded = double.parse(approvionnement.quantity) +
+            double.parse(data.quantity);
+        final approvionnementItem = ApprovisionnementModel(
+            id: approvionnement.id,
+            provision: approvionnement.provision,
+            quantityTotal: approvionnement.quantityTotal,
+            quantity: qtyAdded.toString(),
+            unite: approvionnement.unite,
+            signature: approvionnement.signature,
+            created: approvionnement.created,
+            fournisseur: approvionnement.fournisseur);
+        approvisionnementController.approvisionnementApi
+            .updateData(approvionnementItem)
+            .then((value) {
+          clear();
+          approvisionReceptionList.clear();
+          getList();
+          Get.back();
+          Get.snackbar("Soumission effectuée avec succès!",
+              "Le document a bien été sauvegader",
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+          _isLoading.value = false;
+        });
       });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",

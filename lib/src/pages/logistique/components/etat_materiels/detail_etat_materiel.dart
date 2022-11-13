@@ -77,10 +77,7 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                               children: [
                                                 Column(
                                                   children: [
-                                                    if (int.parse(profilController
-                                                            .user.role) <=
-                                                        3 ||
-                                                    widget.etatMaterielModel
+                                                    if ( widget.etatMaterielModel
                                                             .approbationDD ==
                                                         "Unapproved")
                                                       Row(
@@ -190,24 +187,24 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
           Divider(
             color: mainColor,
           ),
-          ResponsiveChildWidget(
-              child1: Text('Modèle :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.etatMaterielModel.modele,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(
-            color: mainColor,
-          ),
-          ResponsiveChildWidget(
-              child1: Text('Marque :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.etatMaterielModel.marque,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(
-            color: mainColor,
-          ),
+          // ResponsiveChildWidget(
+          //     child1: Text('Modèle :',
+          //         textAlign: TextAlign.start,
+          //         style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+          //     child2: SelectableText(widget.etatMaterielModel.modele,
+          //         textAlign: TextAlign.start, style: bodyMedium)),
+          // Divider(
+          //   color: mainColor,
+          // ),
+          // ResponsiveChildWidget(
+          //     child1: Text('Marque :',
+          //         textAlign: TextAlign.start,
+          //         style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+          //     child2: SelectableText(widget.etatMaterielModel.marque,
+          //         textAlign: TextAlign.start, style: bodyMedium)),
+          // Divider(
+          //   color: mainColor,
+          // ),
           ResponsiveChildWidget(
               child1: Text('Type d\'Objet :',
                   textAlign: TextAlign.start,

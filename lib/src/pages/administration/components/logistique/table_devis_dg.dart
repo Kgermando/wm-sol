@@ -53,7 +53,7 @@ class _TableDevisDGState extends State<TableDevisDG> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: const [
-              TitleWidget(title: "Etat de besoin"),
+              TitleWidget(title: "Devis"),
             ],
           );
         },

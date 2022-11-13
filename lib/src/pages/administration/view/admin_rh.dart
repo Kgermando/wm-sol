@@ -73,10 +73,10 @@ class _AdminRHState extends State<AdminRH> {
                                                 .copyWith(color: Colors.white)
                                             : bodyLarge!.copyWith(
                                                 color: Colors.white)),
-                                    subtitle: Text(
+                                    subtitle: Obx(() => Text(
                                         "Vous avez ${controller.itemCountTransRestDG} dossiers necessitent votre approbation",
                                         style: bodyMedium!
-                                            .copyWith(color: Colors.white70)),
+                                            .copyWith(color: Colors.white70))) ,
                                     initiallyExpanded: false,
                                     onExpansionChanged: (val) {
                                       setState(() {

@@ -6,14 +6,14 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/charts/pie_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class EnguinPie extends StatefulWidget {
-  const EnguinPie({Key? key}) : super(key: key);
+class MaterielPie extends StatefulWidget {
+  const MaterielPie({Key? key}) : super(key: key);
 
   @override
-  State<EnguinPie> createState() => _EnguinPieState();
+  State<MaterielPie> createState() => _MaterielPieState();
 }
 
-class _EnguinPieState extends State<EnguinPie> {
+class _MaterielPieState extends State<MaterielPie> {
   @override
   void initState() {
     getData();
@@ -38,7 +38,7 @@ class _EnguinPieState extends State<EnguinPie> {
         elevation: 10.0,
         child: SfCircularChart(
             title: ChartTitle(
-                text: "Materiel",
+                text: "Materiels",
                 textStyle: const TextStyle(fontWeight: FontWeight.bold)),
             legend: Legend(isVisible: true, isResponsive: true),
             series: <CircularSeries>[

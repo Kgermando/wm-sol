@@ -67,10 +67,10 @@ class _AdminCommState extends State<AdminComm> {
                                           .copyWith(color: Colors.white)
                                       : bodyLarge!
                                           .copyWith(color: Colors.white)),
-                              subtitle: Text(
+                              subtitle:Obx(() => Text(
                                   "Vous avez ${comNotifyController.succursaleCountDG} dossiers necessitent votre approbation",
                                   style: bodyMedium!.copyWith(
-                                      color: Colors.white70)),
+                                      color: Colors.white70))) ,
                               initiallyExpanded: false,
                               onExpansionChanged: (val) {
                                 setState(() {

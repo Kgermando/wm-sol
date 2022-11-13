@@ -232,8 +232,7 @@ import 'package:wm_solution/src/pages/finances/view/observation_page.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_accuse_reception.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_approvisionnement.dart';
 import 'package:wm_solution/src/pages/logistique/components/trajets/add_trajet.dart';
-import 'package:wm_solution/src/pages/logistique/components/trajets/detail_trajet.dart';
-import 'package:wm_solution/src/pages/logistique/components/entretiens/add_entretien.dart';
+import 'package:wm_solution/src/pages/logistique/components/trajets/detail_trajet.dart'; 
 import 'package:wm_solution/src/pages/logistique/components/entretiens/detail_entretien.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/add_etat_materiel.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/detail_etat_materiel.dart';
@@ -1629,18 +1628,10 @@ List<GetPage<dynamic>>? getPages = [
       page: () => const EntretiensPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: LogistiqueRoutes.logAddEntretien,
-      bindings: [EntretienBinding(), ObjetRemplaceBinding()],
-      page: () {
-        final int id = Get.arguments as int;
-        return AddEntretien(id: id);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+  
   GetPage(
       name: LogistiqueRoutes.logEntretienDetail,
-      bindings: [EntretienBinding(), ObjetRemplaceBinding()],
+      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding()],
       page: () {
         final EntretienModel entretienModel = Get.arguments as EntretienModel;
         return DetailEntretien(entretienModel: entretienModel);
@@ -1739,14 +1730,22 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logApprovisionnement,
-      binding: ApprovisionnementBinding(),
+      name: LogistiqueRoutes.logApprovisionnement, 
+      bindings: [
+        ApprovisionnementBinding(),
+        AnnuaireBinding(),
+        ApprovisionReceptionBinding()
+      ],
       page: () => const ApprovisionnementPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logApprovisionnementDetail,
-      bindings: [ApprovisionnementBinding(), ApprovisionReceptionBinding()],
+      bindings: [
+        ApprovisionnementBinding(),
+        ApprovisionReceptionBinding(),
+        AnnuaireBinding(),
+      ],
       page: () {
         final ApprovisionnementModel approvisionnementModel =
             Get.arguments as ApprovisionnementModel;

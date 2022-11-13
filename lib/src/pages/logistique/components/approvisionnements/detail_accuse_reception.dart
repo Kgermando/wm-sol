@@ -99,16 +99,15 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
   }
 
   Widget dataWidget() {
-    final bodyText2 = Theme.of(context).textTheme.bodyText2;
-    // List<dynamic> departementList = jsonDecode(widget.approvisionReceptionModel.departement);
-    // List<dynamic> departementUserList = jsonDecode(profilController.user.departement);
+    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
+ 
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // if (departementList.contains(profilController.user.departement))
-          accRecepetion(),
+          accRecepetion(), 
           const SizedBox(height: p20),
           ResponsiveChildWidget(
               child1: Text('Département :',
@@ -163,6 +162,14 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
 
   Widget accRecepetion() {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
+        var isCancelYear = widget.approvisionReceptionModel.createdReception.year ==
+        DateTime.now().year;
+    var isCancelMonth =
+        widget.approvisionReceptionModel.createdReception.month ==
+            DateTime.now().month;
+    var isCancelDay = widget.approvisionReceptionModel.createdReception.day ==
+        DateTime.now().day; 
+
     return Card(
       child: SizedBox(
           width: double.infinity,
@@ -188,6 +195,24 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
                                 fontSize: 16,
                                 color: Colors.green)
                             : bodyText1!.copyWith(color: Colors.green)),
+                
+                 const SizedBox(width: p20),
+                if (widget.approvisionReceptionModel.accuseReception ==
+                        'true' &&
+                    isCancelYear &&
+                    isCancelMonth &&
+                    isCancelDay)
+                  (widget.approvisionReceptionModel.livraisonAnnuler == 'false')
+                      ? TextButton(
+                          onPressed: () {
+                            setState(() {
+                              controller.submitLivraisonAnnuler(
+                                  widget.approvisionReceptionModel);
+                            });
+                          },
+                          child: const Text("Annuler la livraison"))
+                      : const Text("Livraison annuler",
+                          style: TextStyle(color: Colors.orange)),
               ],
             ),
           )),
@@ -207,7 +232,7 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
   }
 
   checkboxRead() {
-    bool isChecked = false; 
+    bool isChecked = false;
     return Checkbox(
       checkColor: Colors.white,
       fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -220,7 +245,7 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
                 widget.approvisionReceptionModel, 'true');
           } else {
             controller.submitReception(
-              widget.approvisionReceptionModel, 'false');
+                widget.approvisionReceptionModel, 'false');
           }
         });
       },

@@ -30,36 +30,36 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
         (state) => Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(context, scaffoldKey, title, subTitle),
-          drawer: const DrawerMenu(),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                      controller: ScrollController(),
-                      physics: const ScrollPhysics(),
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, bottom: p8, right: p20, left: p20),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                            itemCount:
-                                controller.approvisionReceptionList.length,
-                            itemBuilder: (context, index) {
-                              final data = controller
-                                  .approvisionReceptionList[index];
-                              return bonLivraisonItemWidget(data);
-                            }),
-                      )))
+              key: scaffoldKey,
+              appBar: headerBar(context, scaffoldKey, title, subTitle),
+              drawer: const DrawerMenu(),
+              body: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller.approvisionReceptionList.length,
+                                itemBuilder: (context, index) {
+                                  final data = controller
+                                      .approvisionReceptionList[index];
+                                  return bonLivraisonItemWidget(data);
+                                }),
+                          )))
                 ],
               ),
             ));
@@ -67,10 +67,14 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
 
   Widget bonLivraisonItemWidget(
       ApprovisionReceptionModel approvisionReceptionModel) {
-    Color? nonRecu;
+    Color? nonRecu; 
     if (approvisionReceptionModel.accuseReception == 'false') {
       nonRecu = const Color(0xFFFFC400);
-    }
+    } else if (approvisionReceptionModel.livraisonAnnuler == 'true') {
+      nonRecu = Colors.blueGrey[100];
+    } 
+    
+
     return GestureDetector(
       onTap: () {
         Get.toNamed(LogistiqueRoutes.logApprovisionReceptionDetail,
@@ -105,9 +109,16 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
               fontSize: 10,
             ),
           ),
-          trailing: Text(
-            DateFormat("dd-MM-yyyy HH:mm")
-                .format(approvisionReceptionModel.created),
+          trailing: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (approvisionReceptionModel.livraisonAnnuler == 'true')
+              const Text('Annulé', style: TextStyle(color: Colors.red)),
+              Text(
+                DateFormat("dd-MM-yyyy HH:mm")
+                    .format(approvisionReceptionModel.created),
+              ),
+            ],
           ),
         ),
       ),

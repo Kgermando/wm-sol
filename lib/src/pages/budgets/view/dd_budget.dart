@@ -97,10 +97,10 @@ class _DDBudgetState extends State<DDBudget> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${rhNotifyController.itemCountSalaireBudget} dossiers necessitent votre approbation",
                           style: bodyMedium!
-                              .copyWith(color: Colors.white70)),
+                              .copyWith(color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {
@@ -126,10 +126,10 @@ class _DDBudgetState extends State<DDBudget> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous ${rhNotifyController.itemCountTransRestBudget} dossiers necessitent votre approbation",
-                          style: bodyMedium.copyWith(
-                              color: Colors.white70)),
+                          style: bodyMedium!.copyWith(
+                              color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {
@@ -154,10 +154,10 @@ class _DDBudgetState extends State<DDBudget> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${marketingNotifyController.campaignCountBudget} dossiers necessitent votre approbation",
-                          style: bodyMedium.copyWith(
-                              color: Colors.white70)),
+                          style: bodyMedium!.copyWith(
+                              color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {
@@ -183,10 +183,10 @@ class _DDBudgetState extends State<DDBudget> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${devisNotifyController.itemCountDevisBudget} dossiers necessitent votre approbation",
-                          style: bodyMedium.copyWith(
-                              color: Colors.white70)),
+                          style: bodyMedium!.copyWith(
+                              color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {
@@ -213,10 +213,10 @@ class _DDBudgetState extends State<DDBudget> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${expController.itemCountProjetBudget} dossiers necessitent votre approbation",
-                          style: bodyMedium.copyWith(
-                              color: Colors.white70)),
+                          style: bodyMedium!.copyWith(
+                              color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {
@@ -241,10 +241,10 @@ class _DDBudgetState extends State<DDBudget> {
                                   .copyWith(color: Colors.white)
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
-                      subtitle: Text(
+                      subtitle:Obx(() => Text(
                           "Vous avez ${budgetNotifyController.itemCountDD} dossiers necessitent votre approbation",
-                          style: bodyMedium.copyWith(
-                              color: Colors.white70)),
+                          style: bodyMedium!.copyWith(
+                              color: Colors.white70))) ,
                       initiallyExpanded: false,
                       onExpansionChanged: (val) {
                         setState(() {

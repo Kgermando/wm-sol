@@ -58,8 +58,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.budgetCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.budgetCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.budgetCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -74,8 +74,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.financeCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.financeCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.financeCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -90,8 +90,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.rhCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.rhCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.rhCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -106,8 +106,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.exploitationCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.exploitationCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.exploitationCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -122,8 +122,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.mrketingCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.mrketingCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.mrketingCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -138,8 +138,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.commCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.commCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.commCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -154,8 +154,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (controller.logistiqueCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Text('${controller.logistiqueCount}',
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent: Obx(() => Text('${controller.logistiqueCount}',
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {

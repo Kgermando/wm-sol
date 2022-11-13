@@ -76,10 +76,10 @@ class _AdminFinanceState extends State<AdminFinance> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle: Obx(() => Text(
                                       "Vous avez ${financeNotifyController.creanceCountDG} dossiers necessitent votre approbation",
                                       style: bodyMedium!
-                                          .copyWith(color: Colors.white70)),
+                                          .copyWith(color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -101,10 +101,10 @@ class _AdminFinanceState extends State<AdminFinance> {
                                   title: Text('Dossier Dettes',
                                       style: headline6!
                                           .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle: Obx(() => Text(
                                       "Vous avez ${financeNotifyController.detteCountDG} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {

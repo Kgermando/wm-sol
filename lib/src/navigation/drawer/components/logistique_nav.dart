@@ -67,9 +67,9 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
               badge: Badge(
                 showBadge: (int.parse(notifyLogController.itemCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent: Text(notifyLogController.itemCount,
+                badgeContent: Obx(() => Text(notifyLogController.itemCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white)),
+                        const TextStyle(fontSize: 10.0, color: Colors.white))),
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {

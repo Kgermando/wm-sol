@@ -76,10 +76,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                                 title: "Immobilier"),
                                             Column(
                                               children: [
-                                                if (int.parse(profilController
-                                                            .user.role) <=
-                                                        3 ||
-                                                    widget.immobilierModel
+                                                if (widget.immobilierModel
                                                             .approbationDD ==
                                                         "Unapproved")
                                                   Row(

@@ -23,12 +23,7 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
   String subTitle = "Direteur de département";
 
   bool isOpen1 = false;
-  bool isOpen2 = false;
-  bool isOpen3 = false;
-  bool isOpen4 = false;
-  bool isOpen5 = false;
-  bool isOpen6 = false;
-  bool isOpen7 = false;
+  bool isOpen2 = false; 
 
 
   @override
@@ -78,14 +73,14 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
                                                 .copyWith(color: Colors.white)
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
-                                    subtitle: Text(
+                                    subtitle:Obx(() => Text(
                                         "Vous avez ${comNotifyController.succursaleCountDD} dossiers necessitent votre approbation",
                                         style: bodyMedium!.copyWith(
-                                            color: Colors.white70)),
+                                            color: Colors.white70))) ,
                                     initiallyExpanded: false,
                                     onExpansionChanged: (val) {
                                       setState(() {
-                                        isOpen2 = !val;
+                                        isOpen1 = !val;
                                       });
                                     },
                                     trailing: const Icon(
@@ -106,14 +101,14 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
                                                 .copyWith(color: Colors.white)
                                             : bodyLarge!
                                                 .copyWith(color: Colors.white)),
-                                    subtitle: Text(
+                                    subtitle:Obx(() => Text(
                                         "Vous avez ${comNotifyController.prodModelCount} dossiers necessitent votre approbation",
-                                        style: bodyMedium.copyWith(
-                                            color: Colors.white70)),
+                                        style: bodyMedium!.copyWith(
+                                            color: Colors.white70))) ,
                                     initiallyExpanded: false,
                                     onExpansionChanged: (val) {
                                       setState(() {
-                                        isOpen3 = !val;
+                                        isOpen2 = !val;
                                       });
                                     },
                                     trailing: const Icon(

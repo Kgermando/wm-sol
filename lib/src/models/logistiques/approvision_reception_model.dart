@@ -9,6 +9,8 @@ class ApprovisionReceptionModel {
   late String accuseReception; // True ou False
   late String signatureReception;
   late DateTime createdReception;
+  late String livraisonAnnuler;
+  late int reference;
 
   ApprovisionReceptionModel(
       {this.id,
@@ -20,7 +22,9 @@ class ApprovisionReceptionModel {
       required this.created,
       required this.accuseReception,
       required this.signatureReception,
-      required this.createdReception});
+      required this.createdReception,
+      required this.livraisonAnnuler,
+      required this.reference});
 
   factory ApprovisionReceptionModel.fromSQL(List<dynamic> row) {
     return ApprovisionReceptionModel(
@@ -33,22 +37,25 @@ class ApprovisionReceptionModel {
         created: row[6],
         accuseReception: row[7],
         signatureReception: row[8],
-        createdReception: row[9]);
+        createdReception: row[9],
+        livraisonAnnuler: row[10],
+        reference: row[11]);
   }
 
   factory ApprovisionReceptionModel.fromJson(Map<String, dynamic> json) {
     return ApprovisionReceptionModel(
-      id: json['id'],
-      provision: json['provision'],
-      departement: json['departement'],
-      quantity: json['quantity'],
-      unite: json['unite'],
-      signatureLivraison: json["signatureLivraison"],
-      created: DateTime.parse(json['created']),
-      accuseReception: json["accuseReception"],
-      signatureReception: json["signatureReception"],
-      createdReception: DateTime.parse(json['createdReception']),
-    );
+        id: json['id'],
+        provision: json['provision'],
+        departement: json['departement'],
+        quantity: json['quantity'],
+        unite: json['unite'],
+        signatureLivraison: json["signatureLivraison"],
+        created: DateTime.parse(json['created']),
+        accuseReception: json["accuseReception"],
+        signatureReception: json["signatureReception"],
+        createdReception: DateTime.parse(json['createdReception']),
+        livraisonAnnuler: json["livraisonAnnuler"],
+        reference: json["reference"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +70,8 @@ class ApprovisionReceptionModel {
       'accuseReception': accuseReception,
       'signatureReception': signatureReception,
       'createdReception': createdReception.toIso8601String(),
+      'livraisonAnnuler': livraisonAnnuler,
+      'reference': reference,
     };
   }
 }

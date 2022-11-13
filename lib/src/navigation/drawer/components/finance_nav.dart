@@ -73,9 +73,9 @@ class _FinanceNavState extends State<FinanceNav> {
                     ? true
                     : false,
                 badgeColor: Colors.teal,
-                badgeContent: Text(financeNotifyController.itemCount,
+                badgeContent:Obx(() => Text(financeNotifyController.itemCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white)),
+                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {
@@ -93,8 +93,8 @@ class _FinanceNavState extends State<FinanceNav> {
                   ? true
                   : false,
               badgeColor: Colors.purple,
-              badgeContent: Text(financeNotifyController.itemCountObs,
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white)),
+              badgeContent:Obx(() => Text(financeNotifyController.itemCountObs,
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),
             onTap: () {

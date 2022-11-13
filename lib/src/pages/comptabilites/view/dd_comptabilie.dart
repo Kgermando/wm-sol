@@ -83,10 +83,10 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${notify.balanceCount} dossiers necessitent votre approbation",
                                       style: bodyMedium!
-                                          .copyWith(color: Colors.white70)),
+                                          .copyWith(color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -113,10 +113,10 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${notify.bilanCount} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -143,10 +143,10 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${notify.compteResultatCount} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -173,10 +173,10 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                               .copyWith(color: Colors.white)
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
-                                  subtitle: Text(
+                                  subtitle:Obx(() => Text(
                                       "Vous avez ${notify.journalCount} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
-                                          color: Colors.white70)),
+                                      style: bodyMedium!.copyWith(
+                                          color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {

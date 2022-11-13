@@ -46,7 +46,8 @@ class _DetailDevisState extends State<DetailDevis> {
               appBar: headerBar(
                   context, scaffoldKey, title, widget.devisModel.title),
               drawer: const DrawerMenu(),
-              floatingActionButton: addObjetDevisButton(),
+              floatingActionButton: (widget.devisModel.isSubmit == 'false') 
+                ? addObjetDevisButton() : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -84,8 +85,24 @@ class _DetailDevisState extends State<DetailDevis> {
                                                     "Ticket n° ${widget.devisModel.id}"),
                                             Column(
                                               children: [
+                                                 if (widget.devisModel
+                                                            .approbationDD ==
+                                                        "Unapproved")
                                                 Row(
-                                                  children: [
+                                                  children: [ 
+                                                    IconButton(
+                                                          tooltip: 'Actualiser',
+                                                          color: Colors
+                                                              .green.shade700,
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.refresh)),
+                                                    if (widget.devisModel
+                                                              .isSubmit ==
+                                                          'false')
                                                     IconButton(
                                                         tooltip:
                                                             'Soumettre chez le DD',
@@ -98,9 +115,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                                         },
                                                         icon: const Icon(
                                                             Icons.send)),
-                                                    if (widget.devisModel
-                                                            .approbationDD ==
-                                                        '-')
+                                                    
                                                       deleteButton(controller),
                                                   ],
                                                 ),
@@ -461,6 +476,7 @@ class _DetailDevisState extends State<DetailDevis> {
             style: bodyMedium,
           ),
         ),
+        if (widget.devisModel.isSubmit == 'false')
         Container(
           padding: const EdgeInsets.all(16.0 * 0.75),
           child: IconButton(
@@ -469,6 +485,14 @@ class _DetailDevisState extends State<DetailDevis> {
               },
               icon: const Icon(Icons.delete, color: Colors.red)),
         ),
+        if (widget.devisModel.isSubmit =='true')
+        Container(
+          padding: const EdgeInsets.all(16.0 * 0.75),
+            child: const Icon(
+              Icons.check_box,
+              color: Colors.green,
+          ),
+        )
       ],
     );
   }

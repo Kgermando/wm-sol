@@ -95,10 +95,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${controller.itemCountMaterielDD} dossiers necessitent votre approbation",
                                     style: bodyMedium!
-                                        .copyWith(color: Colors.white70)),
+                                        .copyWith(color: Colors.white70))) ,
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {
@@ -121,10 +121,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${controller.itemCountTrajetsDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
+                                    style: bodyMedium!.copyWith(
+                                        color: Colors.white70))),
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {
@@ -147,10 +147,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${controller.itemCountImmobilierDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
+                                    style: bodyMedium!.copyWith(
+                                        color: Colors.white70))) ,
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {
@@ -173,10 +173,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${controller.itemCountMobilierDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
+                                    style: bodyMedium!.copyWith(
+                                        color: Colors.white70))),
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {
@@ -199,10 +199,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${controller.itemCounEntretienDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
+                                    style: bodyMedium!.copyWith(
+                                        color: Colors.white70))) ,
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {
@@ -225,10 +225,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${controller.itemCounEtatmaterielDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
+                                    style: bodyMedium!.copyWith(
+                                        color: Colors.white70))) ,
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {
@@ -251,10 +251,10 @@ class _LogDDState extends State<LogDD> {
                                             .copyWith(color: Colors.white)
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
-                                subtitle: Text(
+                                subtitle: Obx(() => Text(
                                     "Vous avez ${devisNotifyController.itemCountDevisDD} dossiers necessitent votre approbation",
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.white70)),
+                                    style: bodyMedium!.copyWith(
+                                        color: Colors.white70))) ,
                                 initiallyExpanded: false,
                                 onExpansionChanged: (val) {
                                   setState(() {

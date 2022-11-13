@@ -51,8 +51,7 @@ class EntretienController extends GetxController
 
   void clear() {
     motifDDController.clear();
-    dureeTravauxController.clear();
-    super.dispose();
+    dureeTravauxController.clear(); 
   }
 
   void getData() async {
@@ -176,11 +175,11 @@ class EntretienController extends GetxController
       _isLoading.value = true;
       final dataItem = EntretienModel(
           id: data.id,
-          nom: nom.toString(),
-          typeObjet: typeObjet.toString(),
-          typeMaintenance: typeMaintenance.toString(),
-          dureeTravaux: dureeTravauxController.text,
-          signature: profilController.user.matricule,
+          nom: data.nom,
+          typeObjet: data.typeObjet,
+          typeMaintenance: data.typeMaintenance,
+          dureeTravaux: data.dureeTravaux,
+          signature: data.signature,
           created: data.created,
           approbationDD: data.approbationDD,
           motifDD: data.motifDD,
