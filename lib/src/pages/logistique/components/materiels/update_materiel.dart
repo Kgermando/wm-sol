@@ -94,11 +94,7 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
                                               child1: numeroRefWidget(),
                                               child2: couleurNomWidget()),
                                           ResponsiveChildWidget(
-                                              child1:
-                                                  (controller.typeMateriel ==
-                                                          'Materiel roulant')
-                                                      ? genreWidget()
-                                                      : Container(),
+                                              child1: genreWidget(),
                                               child2: qtyMaxReservoirWidget()),
                                            ResponsiveChildWidget(
                                               child1: dateFabricationWidget(),

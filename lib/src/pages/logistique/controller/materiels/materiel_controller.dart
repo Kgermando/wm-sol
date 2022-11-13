@@ -131,12 +131,16 @@ class MaterielController extends GetxController
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
           genre:
-              (genreController.text == '') ? '-' :  genreController.text,
-          qtyMaxReservoir: qtyMaxReservoirController.text,
+              (genreController.text == '') ? 'Autres' :  genreController.text,
+          qtyMaxReservoir: (qtyMaxReservoirController.text == '')
+              ? '0'
+              :   qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
           numeroPLaque: (numeroPLaqueController.text == '') ? '-' : numeroPLaqueController.text,
           identifiant: numero,
-          kilometrageInitiale: kilometrageInitialeController.text,
+          kilometrageInitiale: (kilometrageInitialeController.text == '')
+              ? '0'
+              : kilometrageInitialeController.text,
           fournisseur: fournisseurController.text,
           alimentation: alimentation.toString(),
           signature: profilController.user.matricule,
@@ -178,11 +182,15 @@ class MaterielController extends GetxController
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
           genre: genreController.text,
-          qtyMaxReservoir: qtyMaxReservoirController.text,
+          qtyMaxReservoir: (qtyMaxReservoirController.text == '')
+              ? '0'
+              : qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
           numeroPLaque: numeroPLaqueController.text,
           identifiant: data.identifiant,
-          kilometrageInitiale: kilometrageInitialeController.text,
+          kilometrageInitiale: (kilometrageInitialeController.text == '')
+              ? '0'
+              :  kilometrageInitialeController.text,
           fournisseur: fournisseurController.text,
           alimentation: alimentation.toString(),
           signature: profilController.user.matricule,

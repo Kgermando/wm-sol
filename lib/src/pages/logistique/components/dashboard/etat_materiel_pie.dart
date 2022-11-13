@@ -37,6 +37,7 @@ class _EtatMaterielPieState extends State<EtatMaterielPie> {
       child: Material(
         elevation: 10.0,
         child: SfCircularChart(
+          palette: _lightColors,
             title: ChartTitle(
                 text: 'Statut materiels',
                 textStyle: const TextStyle(fontWeight: FontWeight.bold)),
@@ -52,4 +53,24 @@ class _EtatMaterielPieState extends State<EtatMaterielPie> {
       ),
     );
   }
+
+  
+final _lightColors = [
+    Colors.amber.shade700,
+    Colors.lightGreen.shade700,
+    Colors.lightBlue.shade700,
+    Colors.orange.shade700,
+    Colors.pinkAccent.shade700,
+    Colors.tealAccent.shade700,
+    Colors.purpleAccent.shade700,
+    Colors.limeAccent.shade700,
+    Colors.blueAccent.shade700,
+    Colors.brown.shade700,
+    Colors.cyanAccent.shade700,
+    Colors.grey.shade700,
+    Colors.indigoAccent.shade700,
+    Colors.redAccent.shade700,
+    Colors.deepPurple.shade700
+  ];
+
 }
