@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/entretien_api.dart';
-import 'package:wm_solution/src/models/logistiques/entretien_model.dart'; 
-import 'package:wm_solution/src/models/logistiques/material_model.dart'; 
+import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
+import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
@@ -17,7 +17,7 @@ class EntretienController extends GetxController
   final ImmobilierController immobilierController = Get.find();
   final MobilierController mobilierController = Get.find();
 
-  var entretienList = <EntretienModel>[].obs;
+  List<EntretienModel> entretienList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -51,7 +51,7 @@ class EntretienController extends GetxController
 
   void clear() {
     motifDDController.clear();
-    dureeTravauxController.clear(); 
+    dureeTravauxController.clear();
   }
 
   void getData() async {
@@ -64,7 +64,8 @@ class EntretienController extends GetxController
 
   void getList() async {
     await entretienApi.getAllData().then((response) {
-      entretienList.assignAll(response);
+      entretienList.clear();
+      entretienList.addAll(response);
       change(entretienList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -110,15 +111,14 @@ class EntretienController extends GetxController
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-',
-          isSubmit: 'false'
-      );
+          isSubmit: 'false');
       await entretienApi.insertData(dataItem).then((value) {
         clear();
         entretienList.clear();
         getList();
         // Get.back();
-        Get.toNamed(LogistiqueRoutes.logAddEntretien, 
-          arguments: entretienList.last.id);
+        Get.toNamed(LogistiqueRoutes.logAddEntretien,
+            arguments: entretienList.last.id);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,
@@ -148,8 +148,7 @@ class EntretienController extends GetxController
           approbationDD: '-',
           motifDD: '-',
           signatureDD: '-',
-          isSubmit: data.isSubmit
-        );
+          isSubmit: data.isSubmit);
       await entretienApi.updateData(dataItem).then((value) {
         clear();
         entretienList.clear();

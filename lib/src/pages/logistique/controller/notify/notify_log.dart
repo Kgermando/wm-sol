@@ -61,6 +61,7 @@ class NotifyLogController extends GetxController {
     getCountEtatmaterielDD();
   }
 
+
   void getCount() async {
     NotifySumModel notifySum =
         await logistiqueDepartementNotifyApi.getCountLogistique();

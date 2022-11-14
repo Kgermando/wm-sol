@@ -14,7 +14,7 @@ class ObjetRemplaceController extends GetxController
 
   ScrollController controllerTable = ScrollController();
 
-  var objetRemplaceList = <ObjetRemplaceModel>[].obs;
+  List<ObjetRemplaceModel> objetRemplaceList = [];
 
   final GlobalKey<FormState> formObjetKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -50,7 +50,8 @@ class ObjetRemplaceController extends GetxController
 
   void getList() async {
     await objetRemplaceApi.getAllData().then((response) {
-      objetRemplaceList.assignAll(response);
+      objetRemplaceList.clear();
+      objetRemplaceList.addAll(response);
       change(objetRemplaceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

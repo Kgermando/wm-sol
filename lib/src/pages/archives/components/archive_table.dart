@@ -60,7 +60,7 @@ class _TableArchiveState extends State<TableArchive> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Archives"),
+            TitleWidget(title: widget.archiveFolderModel.folderName),
             Row(
               children: [
                 deleteButton(),

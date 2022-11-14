@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -49,15 +50,7 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
     final ArchiveFolderController controller =
         Get.put(ArchiveFolderController());
     final ProfilController profilController = Get.find();
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!), (state) {
-      var archiveFolderList = controller.archiveFolderList
-          .where((element) =>
-              element.departement == profilController.user.departement)
-          .toList();
-      return Scaffold(
+    return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, ""),
         drawer: const DrawerMenu(),
@@ -69,38 +62,41 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
             detailAgentDialog(controller);
           },
         ),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Wrap(
-                          alignment: WrapAlignment.start,
-                          spacing: p20,
-                          runSpacing: p20,
-                          children:
-                              List.generate(archiveFolderList.length, (index) {
-                            final data = archiveFolderList[index];
-                            final color =
-                                _lightColors[index % _lightColors.length];
-                            return cardFolder(data, color);
-                          })),
-                    )))
-          ],
-        ),
-      );
-    });
+        body: controller.obx(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!), (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Wrap(
+                            alignment: WrapAlignment.start,
+                            spacing: p20,
+                            runSpacing: p20,
+                            children: List.generate(state!.length,
+                                (index) {
+                              final data = state[index];
+                              final color =
+                                  _lightColors[index % _lightColors.length];
+                              return cardFolder(data, color);
+                            })),
+                      )))
+            ],
+          )
+        ));
   }
 
   Widget cardFolder(ArchiveFolderModel data, Color color) {
@@ -115,7 +111,7 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
               color: color,
               size: 100.0,
             ),
-            Text(data.folderName)
+            Text(data.folderName.toUpperCase())
           ],
         ));
   }

@@ -21,7 +21,6 @@ import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 class WMBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NetworkController>(() => NetworkController());
 
     // Authentification
     // Get.lazyPut<LoginController>(() => LoginController());
@@ -31,6 +30,9 @@ class WMBindings extends Bindings {
 
     // Header
     Get.lazyPut<NotifyHeaderController>(() => NotifyHeaderController());
+    // Administration 
+    Get.lazyPut<AdminNotifyController>(() => AdminNotifyController());
+
 
     // Mail
     // Get.lazyPut<MaillingController>(() => MaillingController());
@@ -151,9 +153,6 @@ class WMBindings extends Bindings {
     // Get.lazyPut<MobilierController>(() => MobilierController());
     Get.lazyPut<NotifyLogController>(() => NotifyLogController());
 
-    // Administration
-    // Get.lazyPut<AdminDashboardController>(() => AdminDashboardController());
-    Get.lazyPut<AdminNotifyController>(() => AdminNotifyController());
 
     // Update Version
     Get.lazyPut<UpdateController>(() => UpdateController());

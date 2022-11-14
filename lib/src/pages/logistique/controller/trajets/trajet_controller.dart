@@ -10,7 +10,7 @@ class TrajetController extends GetxController
   final TrajetApi trajetApi = TrajetApi();
   final ProfilController profilController = Get.find();
 
-  var trajetList = <TrajetModel>[].obs;
+  List<TrajetModel> trajetList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -59,7 +59,8 @@ class TrajetController extends GetxController
 
   void getList() async {
     await trajetApi.getAllData().then((response) {
-      trajetList.assignAll(response);
+      trajetList.clear();
+      trajetList.addAll(response);
       change(trajetList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

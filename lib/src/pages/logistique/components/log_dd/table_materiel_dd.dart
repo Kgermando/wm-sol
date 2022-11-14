@@ -63,7 +63,7 @@ class _TableMaterielDDState extends State<TableMaterielDD> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, LogistiqueRoutes.logMateriel);
+                            context, LogistiqueRoutes.logDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

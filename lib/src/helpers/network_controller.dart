@@ -16,10 +16,10 @@ class NetworkController extends GetxController {
   //Stream to keep listening to network change state
   late StreamSubscription _streamSubscription;
 
+  final _connectionStatus = 0.obs;
+  int get connectionStatus => _connectionStatus.value;
 
-  var connectionStatus = 0.obs;
   late StreamSubscription<InternetConnectionStatus> _listener;
-
 
   @override
   void onInit() {
@@ -28,15 +28,15 @@ class NetworkController extends GetxController {
     _streamSubscription =
         _connectivity.onConnectivityChanged.listen(_updateState);
 
-     _listener = InternetConnectionChecker()
+    _listener = InternetConnectionChecker()
         .onStatusChange
         .listen((InternetConnectionStatus status) {
       switch (status) {
         case InternetConnectionStatus.connected:
-          connectionStatus.value = 1;
+          _connectionStatus.value = 1;
           break;
         case InternetConnectionStatus.disconnected:
-          connectionStatus.value = 0;
+          _connectionStatus.value = 0;
           break;
       }
     });
@@ -79,7 +79,7 @@ class NetworkController extends GetxController {
   void onClose() {
     //stop listening to network state when app is closed
     _streamSubscription.cancel();
-     _listener.cancel();
+    _listener.cancel();
     super.onClose();
   }
 }

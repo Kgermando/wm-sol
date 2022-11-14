@@ -12,7 +12,7 @@ class EtatMaterielController extends GetxController
   final ProfilController profilController = Get.find();
   final MaterielController materielController = Get.find();
 
-  var etatMaterielList = <EtatMaterielModel>[].obs;
+  List<EtatMaterielModel> etatMaterielList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -54,7 +54,8 @@ class EtatMaterielController extends GetxController
 
   void getList() async {
     await etatMaterielApi.getAllData().then((response) {
-      etatMaterielList.assignAll(response);
+      etatMaterielList.clear();
+      etatMaterielList.addAll(response);
       change(etatMaterielList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

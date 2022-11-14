@@ -9,7 +9,7 @@ class MobilierController extends GetxController
   final MobilierApi mobilierApi = MobilierApi();
   final ProfilController profilController = Get.find();
 
-  var mobilierList = <MobilierModel>[].obs;
+  List<MobilierModel> mobilierList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -52,6 +52,7 @@ class MobilierController extends GetxController
 
   void getList() async {
     await mobilierApi.getAllData().then((response) {
+      mobilierList.clear();
       mobilierList.assignAll(response);
       change(mobilierList, status: RxStatus.success());
     }, onError: (err) {

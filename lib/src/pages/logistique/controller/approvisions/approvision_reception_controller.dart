@@ -14,9 +14,9 @@ class ApprovisionReceptionController extends GetxController
   final ProfilController profilController = Get.find();
   final ApprovisionnementController approvisionnementController = Get.find();
 
-  var approvisionReceptionList = <ApprovisionReceptionModel>[].obs;
+  List<ApprovisionReceptionModel> approvisionReceptionList = [];
 
-   ScrollController scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
 
   final GlobalKey<FormState> receptionFormKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -52,12 +52,11 @@ class ApprovisionReceptionController extends GetxController
   void getList() async {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-     
-      }
+          scrollController.position.maxScrollExtent) {}
     });
     await approvisionReceptionApi.getAllData().then((response) {
-      approvisionReceptionList.assignAll(response);
+      approvisionReceptionList.clear();
+      approvisionReceptionList.addAll(response);
       change(approvisionReceptionList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

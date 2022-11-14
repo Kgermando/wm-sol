@@ -10,7 +10,7 @@ class ApprovisionnementController extends GetxController
   final ApprovisionnementApi approvisionnementApi = ApprovisionnementApi();
   final ProfilController profilController = Get.find();
 
-  var approvisionnementList = <ApprovisionnementModel>[].obs;
+  List<ApprovisionnementModel> approvisionnementList = [];
 
   ScrollController scrollController = ScrollController();
 
@@ -46,11 +46,11 @@ class ApprovisionnementController extends GetxController
   void getList() async {
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-      }
+          scrollController.position.maxScrollExtent) {}
     });
     await approvisionnementApi.getAllData().then((response) {
-      approvisionnementList.assignAll(response);
+      approvisionnementList.clear();
+      approvisionnementList.addAll(response);
       change(approvisionnementList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -122,7 +122,7 @@ class ApprovisionnementController extends GetxController
       double qtyDisponible =
           double.parse(data.quantity) + double.parse(quantityController.text);
       final dataItem = ApprovisionnementModel(
-        id: data.id,
+          id: data.id,
           provision: data.provision,
           quantityTotal: qtyTotal.toString(),
           quantity: qtyDisponible.toString(),
@@ -157,7 +157,7 @@ class ApprovisionnementController extends GetxController
       double qtyRestante =
           double.parse(data.quantity) - double.parse(qtyController.text);
       final dataItem = ApprovisionnementModel(
-        id: data.id,
+          id: data.id,
           provision: data.provision,
           quantityTotal: data.quantityTotal,
           quantity: qtyRestante.toString(),

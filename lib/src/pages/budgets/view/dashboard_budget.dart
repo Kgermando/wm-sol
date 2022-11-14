@@ -573,7 +573,7 @@ class _DashboardBudgetState extends State<DashboardBudget> {
           color: Colors.purple.shade700,
           padding: const EdgeInsets.all(16.0 * 0.75),
           child: AutoSizeText(
-            "Etat de besoin",
+            "Devis",
             maxLines: 1,
             style: headline6!.copyWith(color: Colors.white),
           ),

@@ -9,7 +9,7 @@ class ImmobilierController extends GetxController
   final ImmobilierApi immobilierApi = ImmobilierApi();
   final ProfilController profilController = Get.find();
 
-  var immobilierList = <ImmobilierModel>[].obs;
+  List<ImmobilierModel> immobilierList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -58,7 +58,8 @@ class ImmobilierController extends GetxController
 
   void getList() async {
     await immobilierApi.getAllData().then((response) {
-      immobilierList.assignAll(response);
+      immobilierList.clear();
+      immobilierList.addAll(response);
       change(immobilierList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

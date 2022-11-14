@@ -9,7 +9,7 @@ class MaterielController extends GetxController
   final MaterielsApi materielsApi = MaterielsApi();
   final ProfilController profilController = Get.find();
 
-  var materielList = <MaterielModel>[].obs;
+  List<MaterielModel> materielList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -79,7 +79,8 @@ class MaterielController extends GetxController
 
   void getList() async {
     await materielsApi.getAllData().then((response) {
-      materielList.assignAll(response);
+      materielList.clear();
+      materielList.addAll(response);
       identifiant = materielList.length + 1;
       change(materielList, status: RxStatus.success());
     }, onError: (err) {
