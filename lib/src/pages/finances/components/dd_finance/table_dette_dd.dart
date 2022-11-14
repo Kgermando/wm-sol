@@ -65,8 +65,7 @@ class _TableDetteDDState extends State<TableDetteDD> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, FinanceRoutes.transactionsDettes);
+                              Navigator.pushNamed(context, FinanceRoutes.finDD);
                             },
                             icon: Icon(Icons.refresh,
                                 color: Colors.green.shade700)),

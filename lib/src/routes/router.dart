@@ -642,6 +642,13 @@ List<GetPage<dynamic>>? getPages = [
         DashboardBudgetBinding(),
         BudgetPrevisionnelBinding(),
         LignBudgetaireBinding(),
+        SalaireBinding(),
+        CampaignBinding(),
+        DevisBinding(),
+        DevisListObjetBinding(),
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProjetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const DashboardBudget(),
@@ -889,6 +896,13 @@ List<GetPage<dynamic>>? getPages = [
         DetteBinding(),
         FinExterieurBinding(),
         FinExterieurNameBinding(),
+        SalaireBinding(),
+        CampaignBinding(),
+        DevisBinding(),
+        DevisListObjetBinding(),
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProjetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const DashboadFinance(),
@@ -1160,6 +1174,8 @@ List<GetPage<dynamic>>? getPages = [
         AchatBinding(),
         GainBinding(),
         VenteCartBinding(),
+        FactureCreanceBinding(),
+        SuccursaleBinding(), 
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const DashboardCommPage(),
@@ -1167,7 +1183,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comDD,
-      bindings: [SuccursaleBinding(), ProduitModelBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        SuccursaleBinding(),
+        ProduitModelBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const CommMarketingDD(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1931,6 +1952,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: AdminRoutes.adminBudget,
       bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        CampaignBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const AdminBudget(),

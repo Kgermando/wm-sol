@@ -22,17 +22,12 @@ class DettePage extends StatefulWidget {
 class _DettePageState extends State<DettePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
-  String subTitle = "dettes";
+  String subTitle = "Dettes";
 
   @override
   Widget build(BuildContext context) {
     final DetteController controller = Get.find();
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
@@ -43,7 +38,11 @@ class _DettePageState extends State<DettePage> {
                   onPressed: () {
                     transactionsDialogDette(controller);
                   }),
-              body: Row(
+              body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -60,8 +59,7 @@ class _DettePageState extends State<DettePage> {
                               detteList: controller.detteList,
                               controller: controller))),
                 ],
-              ))),
-    );
+              )) ); 
   }
 
   transactionsDialogDette(DetteController controller) {

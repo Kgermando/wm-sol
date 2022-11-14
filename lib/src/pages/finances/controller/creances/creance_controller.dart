@@ -56,6 +56,15 @@ class CreanceController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomCompletController.clear();
+    pieceJustificativeController.clear();
+    libelleController.clear();
+    montantController.clear();
+    motifDGController.clear();
+    motifDDController.clear();
+  }
+
   void getList() async {
     await creanceApi.getAllData().then((response) {
       creanceList.assignAll(response);
@@ -126,6 +135,7 @@ class CreanceController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await creanceApi.insertData(dataItem).then((value) {
+        clear();
         creanceList.clear();
         getList();
         Get.back();
@@ -164,6 +174,7 @@ class CreanceController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await creanceApi.updateData(dataItem).then((value) {
+        clear();
         creanceList.clear();
         getList();
         Get.back();
@@ -202,6 +213,7 @@ class CreanceController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await creanceApi.updateData(dataItem).then((value) {
+        clear();
         creanceList.clear();
         getList();
         Get.back();
@@ -225,13 +237,13 @@ class CreanceController extends GetxController
       _isLoading.value = true;
       final dataItem = CreanceModel(
           id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montant: montantController.text,
+          nomComplet: data.nomComplet,
+          pieceJustificative: data.pieceJustificative,
+          libelle: data.libelle,
+          montant: data.montant,
           numeroOperation: data.numeroOperation,
           statutPaie: data.statutPaie,
-          signature: profilController.user.matricule,
+          signature: data.signature,
           created: data.created,
           approbationDG: approbationDG,
           motifDG:
@@ -241,6 +253,7 @@ class CreanceController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await creanceApi.updateData(dataItem).then((value) {
+        clear();
         creanceList.clear();
         getList();
         Get.back();
@@ -264,13 +277,13 @@ class CreanceController extends GetxController
       _isLoading.value = true;
       final dataItem = CreanceModel(
           id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montant: montantController.text,
+          nomComplet: data.nomComplet,
+          pieceJustificative: data.pieceJustificative,
+          libelle: data.libelle,
+          montant: data.montant,
           numeroOperation: data.numeroOperation,
           statutPaie: data.statutPaie,
-          signature: profilController.user.matricule,
+          signature: data.signature,
           created: data.created,
           approbationDG: '-',
           motifDG: '-',
@@ -280,6 +293,7 @@ class CreanceController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await creanceApi.updateData(dataItem).then((value) {
+        clear();
         creanceList.clear();
         getList();
         Get.back();

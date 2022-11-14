@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
@@ -605,6 +607,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   Widget approbationWidget(
       TransportRestController controller, ProfilController profilController) {
+    List<dynamic> depList = jsonDecode(profilController.user.departement);
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(
@@ -834,12 +837,25 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
                                 ],
-                              )),
-                          if (widget.transportRestaurationModel
-                                      .approbationBudget ==
-                                  '-' &&
-                              profilController.user.fonctionOccupe ==
-                                  "Directeur de budget")
+                              )), 
+                  if (widget.transportRestaurationModel.approbationBudget == '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur de budget" ||
+                                depList.contains('Budgets') &&
+                                    widget.transportRestaurationModel.approbationBudget ==
+                                        '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur de finance" ||
+                                depList.contains('Budgets') &&
+                                    widget.transportRestaurationModel.approbationBudget ==
+                                        '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur de departement" ||
+                                depList.contains('Budgets') &&
+                                    widget.transportRestaurationModel.approbationBudget ==
+                                        '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur générale")
                             Padding(
                               padding: const EdgeInsets.all(p10),
                               child: Form(
@@ -912,11 +928,23 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                 Text(widget
                                     .transportRestaurationModel.signatureFin),
                               ],
-                            )),
-                        if (widget.transportRestaurationModel.approbationFin ==
-                                '-' &&
-                            profilController.user.fonctionOccupe ==
-                                "Directeur de finance")
+                            )), 
+                      if (widget.transportRestaurationModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Finances') &&
+                                  widget.transportRestaurationModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de budget" ||
+                              depList.contains('Finances') &&
+                                  widget.transportRestaurationModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Finances') &&
+                                  widget.transportRestaurationModel
+                                        .approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(

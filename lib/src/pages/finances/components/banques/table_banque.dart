@@ -65,7 +65,7 @@ class _TableBanqueState extends State<TableBanque> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.banqueNameModel.nomComplet),
+                  TitleWidget(title: widget.banqueNameModel.nomComplet.toUpperCase()),
                   Row(
                     children: [
                       IconButton(

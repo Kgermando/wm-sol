@@ -56,7 +56,7 @@ class _TableProjetFinState extends State<TableProjetFin> {
               const TitleWidget(title: "Projets"),
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, ExploitationRoutes.expProjet);
+                    Navigator.pushNamed(context, FinanceRoutes.finDD);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700))
             ],

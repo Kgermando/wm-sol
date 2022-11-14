@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -8,8 +7,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -48,8 +46,7 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
   @override
   Widget build(BuildContext context) {
     final ArchiveFolderController controller =
-        Get.put(ArchiveFolderController());
-    final ProfilController profilController = Get.find();
+        Get.put(ArchiveFolderController()); 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, ""),
@@ -101,19 +98,19 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
 
   Widget cardFolder(ArchiveFolderModel data, Color color) {
     return GestureDetector(
-        onDoubleTap: () {
-          Get.toNamed(ArchiveRoutes.archiveTable, arguments: data);
-        },
-        child: Column(
-          children: [
-            Icon(
-              Icons.folder,
-              color: color,
-              size: 100.0,
-            ),
-            Text(data.folderName.toUpperCase())
-          ],
-        ));
+      onDoubleTap: () {
+        Get.toNamed(ArchiveRoutes.archiveTable, arguments: data);
+      },
+      child: Column(
+        children: [
+          Icon(
+            Icons.folder,
+            color: color,
+            size: 100.0,
+          ),
+          Text(data.folderName.toUpperCase())
+        ],
+      ));
   }
 
   detailAgentDialog(ArchiveFolderController controller) {

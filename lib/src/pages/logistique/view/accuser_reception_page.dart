@@ -40,8 +40,7 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
         dataList = controller.approvisionReceptionList
             .where((p0) => p0.departement == element)
             .toList();
-
-        print('dep $element');
+ 
       }
 
       return Scaffold(

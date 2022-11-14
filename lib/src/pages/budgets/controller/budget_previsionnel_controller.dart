@@ -45,6 +45,12 @@ class BudgetPrevisionnelController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    titleController.clear();
+    motifDGController.clear();
+    motifDDController.clear();
+  }
+
   void getList() async {
     await depeartementBudgetApi.getAllData().then((response) {
       departementBudgetList.assignAll(response);
@@ -62,7 +68,7 @@ class BudgetPrevisionnelController extends GetxController
   deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await depeartementBudgetApi.deleteData(id).then((value) {
+      await depeartementBudgetApi.deleteData(id).then((value) { 
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -101,6 +107,7 @@ class BudgetPrevisionnelController extends GetxController
       await depeartementBudgetApi
           .insertData(departementBudgetModel)
           .then((value) {
+        clear();
         departementBudgetList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -131,15 +138,17 @@ class BudgetPrevisionnelController extends GetxController
           createdRef: data.createdRef,
           created: data.created,
           isSubmit: 'true',
-          approbationDG: '-',
-          motifDG: '-',
-          signatureDG: '-',
-          approbationDD: '-',
-          motifDD: '-',
-          signatureDD: '-');
+          approbationDG: data.approbationDG,
+          motifDG: data.motifDG,
+          signatureDG: data.signatureDG,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD
+      );
       await depeartementBudgetApi
           .updateData(departementBudgetModel)
           .then((value) {
+        clear();
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -175,11 +184,12 @@ class BudgetPrevisionnelController extends GetxController
         signatureDG: profilController.user.matricule,
         approbationDD: data.approbationDD,
         motifDD: data.motifDD,
-        signatureDD: data.signatureDD,
+        signatureDD: data.signatureDD
       );
       await depeartementBudgetApi
           .updateData(departementBudgetModel)
           .then((value) {
+        clear();
         departementBudgetList.clear();
         getList();
         Get.back();
@@ -220,6 +230,7 @@ class BudgetPrevisionnelController extends GetxController
       await depeartementBudgetApi
           .updateData(departementBudgetModel)
           .then((value) {
+        clear();
         departementBudgetList.clear();
         getList();
         Get.back();

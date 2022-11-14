@@ -22,46 +22,44 @@ class CreancePage extends StatefulWidget {
 class _CreancePageState extends State<CreancePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
-  String subTitle = "créances";
+  String subTitle = "Créances";
 
   @override
   Widget build(BuildContext context) {
     final CreanceController controller = Get.find();
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                  label: const Text("Nouvelle créance"),
-                  tooltip: "Ajouter la nouvelle créance",
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    transactionsDialogCreance(controller);
-                  }),
-              body: Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableCreance(
-                              creanceList: controller.creanceList,
-                              controller: controller))),
-                ],
-              ))),
-    );
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, subTitle),
+        drawer: const DrawerMenu(),
+        floatingActionButton: FloatingActionButton.extended(
+            label: const Text("Nouvelle créance"),
+            tooltip: "Ajouter la nouvelle créance",
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              transactionsDialogCreance(controller);
+            }),
+        body: controller.obx(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!),
+            (data) => Row(
+                  children: [
+                    Visibility(
+                        visible: !Responsive.isMobile(context),
+                        child: const Expanded(flex: 1, child: DrawerMenu())),
+                    Expanded(
+                        flex: 5,
+                        child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, right: p20, left: p20, bottom: p8),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: TableCreance(
+                                creanceList: controller.creanceList,
+                                controller: controller))),
+                  ],
+                )));
   }
 
   transactionsDialogCreance(CreanceController controller) {

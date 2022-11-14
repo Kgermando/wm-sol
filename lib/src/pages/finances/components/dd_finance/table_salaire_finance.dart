@@ -60,7 +60,7 @@ class _TableSalaireFinanceState extends State<TableSalaireFinance> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPaiement);
+                        Navigator.pushNamed(context, FinanceRoutes.finDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

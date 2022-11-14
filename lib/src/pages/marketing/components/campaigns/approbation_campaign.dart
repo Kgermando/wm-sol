@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
@@ -29,6 +31,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
 
   Widget approbationWidget(
       CampaignController controller, ProfilController profilController) {
+        List<dynamic> depList = jsonDecode(profilController.user.departement);
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(
@@ -258,12 +261,25 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
                                 ],
-                              )),
-                          if (widget.campaignModel
-                                      .approbationBudget ==
-                                  '-' &&
-                              profilController.user.fonctionOccupe ==
-                                  "Directeur de budget")
+                              )), 
+                          if (widget.campaignModel.approbationBudget == '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur de budget" ||
+                                depList.contains('Budgets') &&
+                                    widget.campaignModel.approbationBudget ==
+                                        '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur de finance" ||
+                                depList.contains('Budgets') &&
+                                    widget.campaignModel.approbationBudget ==
+                                        '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur de departement" ||
+                                depList.contains('Budgets') &&
+                                    widget.campaignModel.approbationBudget ==
+                                        '-' &&
+                                    profilController.user.fonctionOccupe ==
+                                        "Directeur générale")
                             Padding(
                               padding: const EdgeInsets.all(p10),
                               child: Form(
@@ -336,11 +352,22 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 Text(widget
                                     .campaignModel.signatureFin),
                               ],
-                            )),
-                        if (widget.campaignModel.approbationFin ==
-                                '-' &&
-                            profilController.user.fonctionOccupe ==
-                                "Directeur de finance")
+                            )), 
+                        if (widget.campaignModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Finances') &&
+                                  widget.campaignModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de budget" ||
+                              depList.contains('Finances') &&
+                                  widget.campaignModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Finances') &&
+                                  widget.campaignModel.approbationFin == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(

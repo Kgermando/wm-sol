@@ -224,13 +224,13 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
       _isLoading.value = true;
       final dataItem = DetteModel(
           id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montant: montantController.text,
+          nomComplet: data.nomComplet,
+          pieceJustificative: data.pieceJustificative,
+          libelle: data.libelle,
+          montant: data.montant,
           numeroOperation: data.numeroOperation,
           statutPaie: data.statutPaie,
-          signature: profilController.user.matricule,
+          signature: data.signature,
           created: data.created,
           approbationDG: approbationDG,
           motifDG:
@@ -263,13 +263,13 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
       _isLoading.value = true;
       final dataItem = DetteModel(
           id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montant: montantController.text,
+          nomComplet: data.nomComplet,
+          pieceJustificative: data.pieceJustificative,
+          libelle: data.libelle,
+          montant: data.montant,
           numeroOperation: data.numeroOperation,
           statutPaie: data.statutPaie,
-          signature: profilController.user.matricule,
+          signature: data.signature,
           created: data.created,
           approbationDG: '-',
           motifDG: '-',

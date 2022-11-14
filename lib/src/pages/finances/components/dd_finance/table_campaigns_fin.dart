@@ -62,7 +62,7 @@ class _TableCampaignFinState extends State<TableCampaignFin> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, MarketingRoutes.marketingCampaign);
+                            context, FinanceRoutes.finDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

@@ -1,33 +1,30 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
+import 'package:wm_solution/src/models/finances/dette_model.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class ApprobationBudgetPrevisionnel extends StatefulWidget {
-  const ApprobationBudgetPrevisionnel(
+class ApprobationDette extends StatefulWidget {
+  const ApprobationDette(
       {super.key,
       required this.data,
       required this.controller,
       required this.profilController});
-  final DepartementBudgetModel data;
-  final BudgetPrevisionnelController controller;
+  final DetteModel data;
+  final DetteController controller;
   final ProfilController profilController;
 
   @override
-  State<ApprobationBudgetPrevisionnel> createState() => _ApprobationBudgetPrevisionnelState();
+  State<ApprobationDette> createState() => _ApprobationDetteState();
 }
 
-class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisionnel> {
+class _ApprobationDetteState extends State<ApprobationDette> {
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    List<dynamic> depList = jsonDecode(widget.profilController.user.departement);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(p10),
@@ -69,53 +66,44 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
                               children: [
                                 const Text("Approbation"),
                                 const SizedBox(height: p20),
-                                Text(
-                                    widget.data
-                                        .approbationDG,
+                                Text(widget.data.approbationDG,
                                     style: bodyLarge!.copyWith(
-                                        color:
-                                            (widget.data
-                                                        .approbationDG ==
-                                                    "Unapproved")
-                                                ? Colors.red.shade700
-                                                : Colors.green.shade700)),
+                                        color: (widget.data.approbationDG ==
+                                                "Unapproved")
+                                            ? Colors.red.shade700
+                                            : Colors.green.shade700)),
                               ],
                             ),
-                            child2: (widget.data
-                                        .approbationDG ==
-                                    "Unapproved")
-                                ? Column(
-                                    children: [
-                                      const Text("Motif"),
-                                      const SizedBox(height: p20),
-                                      Text(widget.data
-                                          .motifDG),
-                                    ],
-                                  )
-                                : Container(),
-                            child3: (widget.data
-                                        .approbationDG ==
-                                    "Unapproved")
-                                ? Column(
-                                    children: [
-                                      const Text("Signature"),
-                                      const SizedBox(height: p20),
-                                      Text(widget.data
-                                          .signatureDG),
-                                    ],
-                                  )
-                                : Container()),
-                        if (widget.data.approbationDG ==
-                                '-' &&
+                            child2:
+                                (widget.data.approbationDG == "Unapproved")
+                                    ? Column(
+                                        children: [
+                                          const Text("Motif"),
+                                          const SizedBox(height: p20),
+                                          Text(widget.data.motifDG),
+                                        ],
+                                      )
+                                    : Container(),
+                            child3:
+                                (widget.data.approbationDG == "Unapproved")
+                                    ? Column(
+                                        children: [
+                                          const Text("Signature"),
+                                          const SizedBox(height: p20),
+                                          Text(widget.data.signatureDG),
+                                        ],
+                                      )
+                                    : Container()),
+                        if (widget.data.approbationDG == '-' &&
                             widget.profilController.user.fonctionOccupe ==
                                 "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(
-                                  child1: approbationDGWidget(widget.controller),
+                                  child1: approbationDGWidget(),
                                   child2: (widget.controller.approbationDG ==
                                           "Unapproved")
-                                      ? motifDGWidget(widget.controller)
+                                      ? motifDGWidget()
                                       : Container())),
                       ],
                     ))),
@@ -127,7 +115,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
                     flex1: 1,
                     flex2: 4,
                     child1:
-                        Text("Directeur de budget", style: bodyLarge),
+                        Text("Directeur de finance", style: bodyLarge),
                     child2: Column(
                       children: [
                         ResponsiveChild3Widget(
@@ -139,15 +127,15 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
                                 const Text("Approbation"),
                                 const SizedBox(height: p20),
                                 Text(
-                                    widget.data
-                                        .approbationDD,
-                                    style: bodyLarge.copyWith(
-                                        color:
-                                            (widget.data
-                                                        .approbationDD ==
-                                                    "Unapproved")
-                                                ? Colors.red.shade700
-                                                : Colors.green.shade700)),
+                                  widget.data
+                                      .approbationDD,
+                                  style: bodyLarge.copyWith(
+                                      color:
+                                          (widget.data
+                                                      .approbationDD ==
+                                                  "Unapproved")
+                                              ? Colors.red.shade700
+                                              : Colors.green.shade700)),
                               ],
                             ),
                             child2: (widget.data
@@ -173,26 +161,14 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
                         if (widget.data.approbationDD ==
                                 '-' &&
                             widget.profilController.user.fonctionOccupe ==
-                                "Directeur de budget"  ||
-                              depList.contains('Budgets') && 
-                              widget.data.approbationDD == '-' &&
-                              widget.profilController.user.fonctionOccupe ==
-                                      "Directeur de finance" ||
-                              depList.contains('Budgets') &&
-                              widget.data.approbationDD == '-' &&
-                              widget.profilController.user.fonctionOccupe ==
-                                      "Directeur de departement" ||
-                              depList.contains('Budgets') &&
-                              widget.data.approbationDD == '-' &&
-                              widget.profilController.user.fonctionOccupe ==
-                                      "Directeur générale")
+                                "Directeur de finance")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(
-                                  child1: approbationDDWidget(widget.controller),
+                                  child1: approbationDDWidget(),
                                   child2: (widget.controller.approbationDD ==
                                           "Unapproved")
-                                      ? motifDDWidget(widget.controller)
+                                      ? motifDDWidget()
                                       : Container())),
                       ],
                     )
@@ -203,9 +179,9 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
         ),
       ),
     );
-  }
+  } 
 
-  Widget approbationDGWidget(BudgetPrevisionnelController controller) {
+  Widget approbationDGWidget() {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -216,7 +192,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           contentPadding: const EdgeInsets.only(left: 5.0),
         ),
-        value: controller.approbationDG,
+        value: widget.controller.approbationDG,
         isExpanded: true,
         items: approbationList.map((String value) {
           return DropdownMenuItem<String>(
@@ -226,9 +202,9 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
         }).toList(),
         onChanged: (value) {
           setState(() {
-            controller.approbationDG = value!;
-            if (controller.approbationDG == "Approved") {
-              controller.submitDG(widget.data);
+            widget.controller.approbationDG = value!;
+            if (widget.controller.approbationDG == "Approved") {
+              widget.controller.submitDG(widget.data);
             }
           });
         },
@@ -236,7 +212,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
     );
   }
 
-  Widget motifDGWidget(BudgetPrevisionnelController controller) {
+  Widget motifDGWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: Row(
@@ -244,7 +220,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
             Expanded(
               flex: 3,
               child: TextFormField(
-                controller: controller.motifDGController,
+                controller: widget.controller.motifDGController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
@@ -265,7 +241,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
               child: IconButton(
                   tooltip: 'Soumettre le Motif',
                   onPressed: () {
-                    controller.submitDG(widget.data);
+                    widget.controller.submitDG(widget.data);
                   },
                   icon: Icon(Icons.send, color: Colors.red.shade700)),
             )
@@ -273,7 +249,8 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
         ));
   }
 
-  Widget approbationDDWidget(BudgetPrevisionnelController controller) {
+
+  Widget approbationDDWidget() {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
@@ -284,7 +261,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           contentPadding: const EdgeInsets.only(left: 5.0),
         ),
-        value: controller.approbationDD,
+        value: widget.controller.approbationDD,
         isExpanded: true,
         items: approbationList.map((String value) {
           return DropdownMenuItem<String>(
@@ -294,9 +271,9 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
         }).toList(),
         onChanged: (value) {
           setState(() {
-            controller.approbationDD = value!;
-            if (controller.approbationDD == "Approved") {
-              controller.submitDD(widget.data);
+            widget.controller.approbationDD = value!;
+            if (widget.controller.approbationDD == "Approved") {
+              widget.controller.submitDD(widget.data);
             }
           });
         },
@@ -304,7 +281,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
     );
   }
 
-  Widget motifDDWidget(BudgetPrevisionnelController controller) {
+  Widget motifDDWidget() {
     return Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: Row(
@@ -312,7 +289,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
           Expanded(
             flex: 3,
             child: TextFormField(
-              controller: controller.motifDDController,
+              controller: widget.controller.motifDDController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0)),
@@ -333,7 +310,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
             child: IconButton(
                 tooltip: 'Soumettre le Motif',
                 onPressed: () {
-                  controller.submitDD(widget.data);
+                  widget.controller.submitDD(widget.data);
                 },
                 icon: Icon(Icons.send, color: Colors.red.shade700)),
           )

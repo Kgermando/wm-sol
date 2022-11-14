@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/constants/app_theme.dart'; 
 import 'package:wm_solution/src/widgets/custom_text.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();

@@ -65,8 +65,7 @@ class _TableCreanceDDState extends State<TableCreanceDD> {
                       children: [
                         IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, FinanceRoutes.transactionsCreances);
+                              Navigator.pushNamed(context, FinanceRoutes.finDD);
                             },
                             icon: Icon(Icons.refresh,
                                 color: Colors.green.shade700)),

@@ -72,7 +72,7 @@ class _TableTransportRestFinanceState extends State<TableTransportRestFinance> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhTransportRest);
+                        Navigator.pushNamed(context, FinanceRoutes.finDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

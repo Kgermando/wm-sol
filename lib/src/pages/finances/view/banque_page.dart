@@ -30,17 +30,16 @@ class _BanquePageState extends State<BanquePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
               floatingActionButton: speedialWidget(),
-              body: Row(
+              body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -62,8 +61,7 @@ class _BanquePageState extends State<BanquePage> {
                               controller: controller,
                               banqueNameModel: widget.banqueNameModel))),
                 ],
-              ))),
-    );
+              )) ); 
   }
 
   SpeedDial speedialWidget() {

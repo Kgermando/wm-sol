@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -27,6 +29,8 @@ class BulletinSalaire extends StatefulWidget {
 }
 
 class _BulletinSalaireState extends State<BulletinSalaire> {
+  final SalaireController controller = Get.find(); 
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
@@ -34,8 +38,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   @override
   Widget build(BuildContext context) {
-    final SalaireController controller = Get.find();
-    final ProfilController profilController = Get.find();
+    
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
@@ -157,8 +160,10 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   }
 
   Widget agentWidget(SalaireController controller) {
-    final ProfilController profilController = Get.find();
+    
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+
+    List<dynamic> depList = jsonDecode(profilController.user.departement); 
     return Column(
       children: [
         ResponsiveChildWidget(
@@ -257,7 +262,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
               style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
             ),
             child2: (widget.salaire.observation == 'false' &&
-                    profilController.user.departement == "Finances")
+                depList.contains("Finances"))  
                 ? checkboxRead(controller)
                 : Container(),
             child3: (widget.salaire.observation == 'true')
@@ -905,6 +910,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   Widget approbationWidget(
       SalaireController controller, ProfilController profilController) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    List<dynamic> depList = jsonDecode(profilController.user.departement);
     return Card(
       elevation: 3,
       child: Container(
@@ -1044,10 +1050,22 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                                     style: bodyLarge.copyWith(
                                         color: Colors.purple.shade700)),
                               ],
-                            )),
-                        if (widget.salaire.approbationBudget == '-' &&
-                            profilController.user.fonctionOccupe ==
-                                "Directeur de budget")
+                            )), 
+                      if (widget.salaire.approbationBudget == '-' &&
+                          profilController.user.fonctionOccupe ==
+                              "Directeur de budget" ||
+                      depList.contains('Budgets') &&
+                          widget.salaire.approbationBudget == '-' &&
+                          profilController.user.fonctionOccupe ==
+                              "Directeur de finance" ||
+                      depList.contains('Budgets') &&
+                          widget.salaire.approbationBudget == '-' &&
+                          profilController.user.fonctionOccupe ==
+                              "Directeur de departement" ||
+                      depList.contains('Budgets') &&
+                          widget.salaire.approbationBudget == '-' &&
+                          profilController.user.fonctionOccupe ==
+                              "Directeur générale")
                           Padding(
                             padding: const EdgeInsets.all(p10),
                             child: Form(
@@ -1112,10 +1130,22 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                               const SizedBox(height: p20),
                               Text(widget.salaire.signatureFin),
                             ],
-                          )),
+                          )), 
                       if (widget.salaire.approbationFin == '-' &&
-                          profilController.user.fonctionOccupe ==
-                              "Directeur de finance")
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de finance" ||
+                            depList.contains('Finances') &&
+                                widget.salaire.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de budget" ||
+                            depList.contains('Finances') &&
+                                widget.salaire.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de departement" ||
+                            depList.contains('Finances') &&
+                                widget.salaire.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur générale")
                         Padding(
                             padding: const EdgeInsets.all(p10),
                             child: ResponsiveChildWidget(

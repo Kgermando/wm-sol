@@ -65,7 +65,7 @@ class _TablecaisseState extends State<Tablecaisse> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.caisseNameModel.nomComplet),
+                  TitleWidget(title: widget.caisseNameModel.nomComplet.toUpperCase()),
                   Row(
                     children: [
                       IconButton(

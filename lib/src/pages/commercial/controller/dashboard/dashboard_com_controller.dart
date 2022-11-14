@@ -9,16 +9,13 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/factures
 import 'package:wm_solution/src/pages/commercial/controller/commercials/gains/gain_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_vente_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart'; 
+
 
 class DashboardComController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
   final VenteCartController venteCartController = Get.find();
   final GainController gainController = Get.find();
-  final FactureCreanceController factureCreanceController = Get.find();
-  final AnnuaireController annuaireController = Get.find();
-  final AgendaController agendaController = Get.find();
+  final FactureCreanceController factureCreanceController = Get.find(); 
   final SuccursaleController succursaleController = Get.find();
 
   List<VenteChartModel> venteChartModel = [];
@@ -49,10 +46,7 @@ class DashboardComController extends GetxController {
     _succursaleCount.value = succursaleController.succursaleList
         .where((element) => element.approbationDD == "Approved")
         .length;
-
-    _annuaireCount.value = annuaireController.annuaireList.length;
-    _agendaCount.value = agendaController.agendaList.length;
-
+ 
     // Gain
 
     var dataGain = gainController.gainList.map((e) => e.sum).toList();

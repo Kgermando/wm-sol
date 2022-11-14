@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/finances/components/dettes/approbation_dette.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
@@ -36,85 +37,84 @@ class _DetailDetteState extends State<DetailDette> {
     final CreanceDetteController creanceDetteController = Get.find();
     final ProfilController profilController = Get.find();
 
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.detteModel.numeroOperation),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter le Remboursement"),
+        tooltip: "Ajout le Remboursement",
+        icon: const Icon(Icons.add_card),
+        onPressed: () {
+          dialongCreancePaiement(creanceDetteController);
+        },
+      ),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.detteModel.numeroOperation),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter le Remboursement"),
-                tooltip: "Ajout le Remboursement",
-                icon: const Icon(Icons.add_card),
-                onPressed: () {
-                  dialongCreancePaiement(creanceDetteController);
-                },
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+        (state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TitleWidget(title: "Dette"),
+                                    Column(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const TitleWidget(title: "Dette"),
-                                            Column(
-                                              children: [
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .detteModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget(
-                                            controller,
-                                            creanceDetteController,
-                                            profilController),
-                                        totalMontant(
-                                            controller, creanceDetteController),
+                                        SelectableText(
+                                            DateFormat("dd-MM-yyyy HH:mm")
+                                                .format(
+                                                    widget.detteModel.created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+                                dataWidget(controller, creanceDetteController,
+                                    profilController),
+                                totalMontant(
+                                    controller, creanceDetteController),
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        ),
+                        const SizedBox(height: p20),
+                        ApprobationDette(
+                            data: widget.detteModel,
+                            controller: controller,
+                            profilController: profilController)
+                      ],
+                    ),
+                  )))
+        ],
+      ),) 
+    );
   }
 
   Widget totalMontant(DetteController controller,
@@ -331,7 +331,7 @@ class _DetailDetteState extends State<DetailDette> {
                       ),
                       if (widget.detteModel.approbationDG == "-" ||
                           widget.detteModel.approbationDD == "-")
-                        Text('Créance Non approuvé!',
+                        Text('Dette Non approuvé!',
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6!

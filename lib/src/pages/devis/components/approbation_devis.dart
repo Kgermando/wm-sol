@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
@@ -29,6 +31,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
 
   Widget approbationWidget(
       DevisController controller, ProfilController profilController) {
+        List<dynamic> depList = jsonDecode(profilController.user.departement);
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(
@@ -263,7 +266,19 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                       .approbationBudget ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
-                                  "Directeur de budget")
+                                  "Directeur de budget" ||
+                              depList.contains('Budgets') &&
+                              widget.devisModel.approbationBudget == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Budgets') &&
+                              widget.devisModel.approbationBudget == '-' &&
+                              profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Budgets') &&
+                              widget.devisModel.approbationBudget == '-' &&
+                              profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                             Padding(
                               padding: const EdgeInsets.all(p10),
                               child: Form(
@@ -340,7 +355,19 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                         if (widget.devisModel.approbationFin ==
                                 '-' &&
                             profilController.user.fonctionOccupe ==
-                                "Directeur de finance")
+                                "Directeur de finance" ||
+                            depList.contains('Finances') &&
+                            widget.devisModel.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de budget" ||
+                            depList.contains('Finances') &&
+                            widget.devisModel.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de departement" ||
+                            depList.contains('Finances') &&
+                            widget.devisModel.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(

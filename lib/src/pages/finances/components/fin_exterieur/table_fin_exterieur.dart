@@ -65,7 +65,8 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.finExterieurNameModel.nomComplet),
+                  TitleWidget(title: widget.finExterieurNameModel.nomComplet
+                          .toUpperCase()),
                   Row(
                     children: [
                       IconButton(
