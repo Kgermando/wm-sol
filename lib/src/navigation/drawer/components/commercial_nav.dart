@@ -12,7 +12,7 @@ class CommercialNav extends StatefulWidget {
   const CommercialNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<CommercialNav> createState() => _CommercialNavState();
@@ -33,7 +33,7 @@ class _CommercialNavState extends State<CommercialNav> {
       title:
           AutoSizeText('Commercial', maxLines: 2, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement.first == 'Commercial')
+          (widget.departement == 'Commercial')
               ? true
               : false,
       onExpansionChanged: (val) {

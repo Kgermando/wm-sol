@@ -12,7 +12,7 @@ class ComptabiliteNav extends StatefulWidget {
   const ComptabiliteNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<ComptabiliteNav> createState() => _ComptabiliteNavState();
@@ -32,7 +32,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
       leading: const Icon(Icons.table_view, size: 30.0),
       title: AutoSizeText('Comptabilités', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement.first == 'Comptabilites') ? true : false,
+          (widget.departement == 'Comptabilites') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

@@ -12,6 +12,8 @@ class ApprovisionnementController extends GetxController
 
   var approvisionnementList = <ApprovisionnementModel>[].obs;
 
+  ScrollController scrollController = ScrollController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -42,6 +44,11 @@ class ApprovisionnementController extends GetxController
   }
 
   void getList() async {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+      }
+    });
     await approvisionnementApi.getAllData().then((response) {
       approvisionnementList.assignAll(response);
       change(approvisionnementList, status: RxStatus.success());

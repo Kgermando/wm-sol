@@ -11,7 +11,7 @@ class RhNav extends StatefulWidget {
   const RhNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<RhNav> createState() => _RhNavState();
@@ -30,7 +30,7 @@ class _RhNavState extends State<RhNav> {
     return ExpansionTile(
       leading: const Icon(Icons.group, size: 30.0),
       title: AutoSizeText('RH', maxLines: 1, style: bodyMedium),
-      initiallyExpanded: (widget.departement.first == 'Ressources Humaines') ? true : false,
+      initiallyExpanded: (widget.departement == 'Ressources Humaines') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

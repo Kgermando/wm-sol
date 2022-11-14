@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:wm_solution/src/bindings/network_bindings.dart';
+import 'package:wm_solution/src/helpers/network_controller.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
@@ -300,31 +302,31 @@ List<GetPage<dynamic>>? getPages = [
   // UserRoutes
   GetPage(
       name: UserRoutes.login,
-      binding: LoginBinding(),
+      bindings: [LoginBinding(), NetworkBindings()],
       page: () => const LoginAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.logout,
-      binding: LoginBinding(),
+      name: UserRoutes.logout, 
+      bindings: [LoginBinding(), NetworkBindings()],
       page: () => const LoginAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.profil,
-      binding: ProfilBinding(),
+      name: UserRoutes.profil, 
+      bindings: [ProfilBinding(), NetworkBindings()],
       page: () => const ProfileAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.changePassword,
-      binding: ChangePasswordBinding(),
+      name: UserRoutes.changePassword, 
+      bindings: [ChangePasswordBinding(), NetworkBindings()],
       page: () => const ChangePasswordAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.forgotPassword,
-      binding: ForgotPaswordBinding(),
+      name: UserRoutes.forgotPassword, 
+      bindings: [ForgotPaswordBinding(), NetworkBindings()],
       page: () => const ForgotPassword(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -346,25 +348,25 @@ List<GetPage<dynamic>>? getPages = [
   // Mails
   GetPage(
       name: MailRoutes.mails,
-      binding: MailBinding(),
+      bindings: [MailBinding(), NetworkBindings()],
       page: () => const MailPages(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.addMail,
-      binding: MailBinding(),
+      bindings: [MailBinding(), NetworkBindings()],
       page: () => const NewMail(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailSend,
-      binding: MailBinding(),
+      bindings: [MailBinding(), NetworkBindings()],
       page: () => const MailSend(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailDetail,
-      binding: MailBinding(),
+      bindings: [MailBinding(), NetworkBindings()],
       page: () {
         MailColor mailColor = Get.arguments as MailColor;
         return DetailMail(mailColor: mailColor);
@@ -372,8 +374,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MailRoutes.mailRepondre,
-      binding: MailBinding(),
+      name: MailRoutes.mailRepondre, 
+      bindings: [MailBinding(), NetworkBindings()],
       page: () {
         MailModel mailModel = Get.arguments as MailModel;
         return RepondreMail(mailModel: mailModel);
@@ -381,8 +383,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MailRoutes.mailTransfert,
-      binding: MailBinding(),
+      name: MailRoutes.mailTransfert, 
+      bindings: [MailBinding(), NetworkBindings()],
       page: () {
         MailModel mailModel = Get.arguments as MailModel;
         return TransfertMail(mailModel: mailModel);
@@ -393,13 +395,13 @@ List<GetPage<dynamic>>? getPages = [
   // Taches & Rapports
   GetPage(
       name: TacheRoutes.tachePage,
-      binding: TacheBinding(),
+      bindings: [TacheBinding(), NetworkBindings()],
       page: () => const TachePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: TacheRoutes.tacheDetail,
-      binding: TacheBinding(),
+      name: TacheRoutes.tacheDetail, 
+      bindings: [TacheBinding(), NetworkBindings()],
       page: () {
         TacheModel tacheModel = Get.arguments as TacheModel;
         return DetailTache(tacheModel: tacheModel);
@@ -408,7 +410,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: TacheRoutes.rapportDetail,
-      binding: RapportBinding(),
+      bindings: [RapportBinding(), TacheBinding(), NetworkBindings()],
       page: () {
         RapportModel rapportModel = Get.arguments as RapportModel;
         return DetailRapport(rapportModel: rapportModel);
@@ -418,6 +420,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: TacheRoutes.rapportAdd,
       binding: RapportBinding(),
+      bindings: [RapportBinding(), TacheBinding(), NetworkBindings()],
       page: () {
         TacheModel tacheModel = Get.arguments as TacheModel;
         return AddRapport(tacheModel: tacheModel);
@@ -428,13 +431,13 @@ List<GetPage<dynamic>>? getPages = [
   // Archives
   GetPage(
       name: ArchiveRoutes.archives,
-      binding: ArchiveFolderBinding(),
+      bindings: [ArchiveBinding(), ArchiveFolderBinding(), NetworkBindings()],
       page: () => const ArchiveFolderPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ArchiveRoutes.archiveTable,
-      binding: ArchiveFolderBinding(),
+      bindings: [ArchiveBinding(), ArchiveFolderBinding(), NetworkBindings()],
       page: () {
         ArchiveFolderModel archiveFolderModel =
             Get.arguments as ArchiveFolderModel;
@@ -443,8 +446,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.addArchives,
-      binding: ArchiveFolderBinding(),
+      name: ArchiveRoutes.addArchives, 
+      bindings: [ArchiveBinding(), ArchiveFolderBinding(), NetworkBindings()],
       page: () {
         ArchiveFolderModel archiveFolderModel =
             Get.arguments as ArchiveFolderModel;
@@ -453,8 +456,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.archivesDetail,
-      binding: ArchiveBinding(),
+      name: ArchiveRoutes.archivesDetail, 
+      bindings: [ArchiveBinding(), NetworkBindings()],
       page: () {
         ArchiveModel archiveModel = Get.arguments as ArchiveModel;
         return DetailArchive(archiveModel: archiveModel);
@@ -462,8 +465,11 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.archivePdf,
-      binding: ArchiveBinding(),
+      name: ArchiveRoutes.archivePdf, 
+      bindings: [
+        ArchiveBinding(), 
+        NetworkBindings()
+      ],
       page: () {
         String url = Get.arguments as String;
         return ArchivePdfViewer(url: url);
@@ -474,32 +480,35 @@ List<GetPage<dynamic>>? getPages = [
   // RH
   GetPage(
       name: RhRoutes.rhDashboard,
-      bindings: [DashboardNotifyBinding()],
+      bindings: [DashboardNotifyBinding(),
+        PersonnelBinding(),
+        SalaireBinding(),
+        TransportRestBinding(), NetworkBindings()],
       page: () => const DashboardRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhDD,
-      bindings: [SalaireBinding(), TransportRestBinding()],
+      bindings: [SalaireBinding(), TransportRestBinding(), NetworkBindings()],
       page: () => const DDRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsPage,
-      binding: PersonnelBinding(),
+      bindings: [PersonnelBinding(), NetworkBindings()],
       page: () => const PersonnelsPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsAdd,
-      binding: PersonnelBinding(),
+      bindings: [PersonnelBinding(), NetworkBindings()],
       page: () {
         List<AgentModel> personnelList = Get.arguments as List<AgentModel>;
         return AddPersonnel(personnelList: personnelList);
       }),
   GetPage(
       name: RhRoutes.rhPersonnelsDetail,
-      binding: PersonnelBinding(),
+      bindings: [PersonnelBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return DetailPersonne(personne: personne);
@@ -507,8 +516,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: RhRoutes.rhPersonnelsUpdate,
-      binding: PersonnelBinding(),
+      name: RhRoutes.rhPersonnelsUpdate, 
+      bindings: [PersonnelBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return UpdatePersonnel(personne: personne);
@@ -523,7 +532,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPaiementBulletin,
-      binding: SalaireBinding(),
+      bindings: [SalaireBinding(), NetworkBindings()],
       page: () {
         PaiementSalaireModel salaire = Get.arguments as PaiementSalaireModel;
         return BulletinSalaire(salaire: salaire);
@@ -531,8 +540,11 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: RhRoutes.rhPaiementAdd,
-      binding: SalaireBinding(),
+      name: RhRoutes.rhPaiementAdd, 
+      bindings: [ 
+        SalaireBinding(),
+        NetworkBindings()
+      ],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return AddSalaire(personne: personne);
@@ -548,7 +560,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhTransportRestDetail,
-      bindings: [TransportRestBinding(), TransportRestPersonnelBinding()],
+      bindings: [TransportRestBinding(), TransportRestPersonnelBinding(),
+        NetworkBindings()
+      ],
       page: () {
         TransportRestaurationModel transportRestaurationModel =
             Get.arguments as TransportRestaurationModel;
@@ -560,13 +574,13 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: RhRoutes.rhPerformence,
-      binding: PerformenceBinding(),
+      bindings: [PerformenceNoteBinding(), NetworkBindings()],
       page: () => const PerformenceRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPerformenceDetail,
-      binding: PerformenceBinding(),
+      bindings: [PerformenceNoteBinding(), NetworkBindings()],
       page: () {
         PerformenceModel performenceModel = Get.arguments as PerformenceModel;
         return DetailPerformence(performenceModel: performenceModel);
@@ -574,8 +588,11 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: RhRoutes.rhPerformenceAddNote,
-      binding: PerformenceNoteBinding(),
+      name: RhRoutes.rhPerformenceAddNote, 
+      bindings: [ 
+        PerformenceNoteBinding(),
+        NetworkBindings()
+      ],
       page: () {
         PerformenceModel performenceModel = Get.arguments as PerformenceModel;
         return AddPerformenceNote(performenceModel: performenceModel);
@@ -591,7 +608,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPresenceDetail,
-      bindings: [PresenceBinding(), PerformenceNoteBinding()],
+      bindings: [PresenceBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final PresenceModel presenceModel = Get.arguments as PresenceModel;
         return DetailPresence(presenceModel: presenceModel);
@@ -600,8 +619,11 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: RhRoutes.rhdetailUser,
-      binding: UserBinding(),
+      name: RhRoutes.rhdetailUser, 
+      bindings: [ 
+        UserBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final UserModel userModel = Get.arguments as UserModel;
         return DetailUser(user: userModel);
@@ -615,32 +637,41 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         DashboardBudgetBinding(),
         BudgetPrevisionnelBinding(),
-        LignBudgetaireBinding()
+        LignBudgetaireBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardBudget(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetDD,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () => const DDBudget(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetBudgetPrevisionel,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () => const BudgetPrevisionnelPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.historiqueBudgetPrevisionel,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () => const HistoriqueBudget(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetBudgetPrevisionelDetail,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final DepartementBudgetModel departementBudgetModel =
             Get.arguments as DepartementBudgetModel;
@@ -651,7 +682,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetLignebudgetaireDetail,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final LigneBudgetaireModel ligneBudgetaireModel =
             Get.arguments as LigneBudgetaireModel;
@@ -662,7 +695,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetLignebudgetaireAdd,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final DepartementBudgetModel departementBudgetModel =
             Get.arguments as DepartementBudgetModel;
@@ -683,7 +718,8 @@ List<GetPage<dynamic>>? getPages = [
         BilanRefBinding(),
         CompteResultatBinding(),
         JournalBinding(),
-        JournalLivreBinding()
+        JournalLivreBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardComptabilite(),
       transition: Transition.cupertino,
@@ -697,20 +733,21 @@ List<GetPage<dynamic>>? getPages = [
         BilanRefBinding(),
         CompteResultatBinding(),
         JournalBinding(),
-        JournalLivreBinding()
+        JournalLivreBinding(),
+        NetworkBindings()
       ],
       page: () => const DDComptabilite(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComptabiliteRoutes.comptabiliteBalance,
-      binding: BalanceBinding(),
+      name: ComptabiliteRoutes.comptabiliteBalance, 
+      bindings: [BalanceBinding(), BalanceRefBinding(), NetworkBindings()],
       page: () => const BalanceComptabilite(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBalanceDetail,
-      bindings: [BalanceBinding(), BalanceRefBinding()],
+      bindings: [BalanceBinding(), BalanceRefBinding(), NetworkBindings()],
       page: () {
         final BalanceCompteModel balanceCompteModel =
             Get.arguments as BalanceCompteModel;
@@ -729,7 +766,7 @@ List<GetPage<dynamic>>? getPages = [
       name: ComptabiliteRoutes.comptabiliteBilanDetail,
       bindings: [
         BilanBinding(),
-        BilanRefBinding(),
+        BilanRefBinding(), NetworkBindings()
       ],
       page: () {
         final BilanModel bilanModel = Get.arguments as BilanModel;
@@ -740,13 +777,13 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteCompteResultat,
-      binding: CompteResultatBinding(),
+      bindings: [CompteResultatBinding(), NetworkBindings()],
       page: () => const CompteResultatComptabilite(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteCompteResultatDetail,
-      binding: CompteResultatBinding(),
+      bindings: [CompteResultatBinding(), NetworkBindings()],
       page: () {
         final CompteResulatsModel compteResulatsModel =
             Get.arguments as CompteResulatsModel;
@@ -756,13 +793,14 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteCompteResultatAdd,
-      binding: CompteResultatBinding(),
+      bindings: [CompteResultatBinding(), NetworkBindings()],
       page: () => const AddCompteResultat(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteCompteResultatUpdate,
       binding: CompteResultatBinding(),
+      bindings: [CompteResultatBinding(), NetworkBindings()],
       page: () {
         final CompteResulatsModel compteResulatsModel =
             Get.arguments as CompteResulatsModel;
@@ -779,7 +817,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteJournalDetail,
-      bindings: [JournalBinding(), JournalLivreBinding()],
+      bindings: [JournalBinding(), JournalLivreBinding(), NetworkBindings()],
       page: () {
         final JournalLivreModel journalLivreModel =
             Get.arguments as JournalLivreModel;
@@ -796,7 +834,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteGrandLivreSearch,
-      bindings: [JournalBinding(), JournalLivreBinding()],
+      bindings: [JournalBinding(), JournalLivreBinding(), NetworkBindings()],
       page: () {
         final List<JournalModel> search = Get.arguments as List<JournalModel>;
         return SearchGrandLivre(search: search);
@@ -806,14 +844,17 @@ List<GetPage<dynamic>>? getPages = [
 
   // DevisRoutes
   GetPage(
-      name: DevisRoutes.devis,
-      binding: DevisBinding(),
+      name: DevisRoutes.devis, 
+      bindings: [
+        DevisBinding(),
+        NetworkBindings()
+      ],
       page: () => const DevisPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: DevisRoutes.devisDetail,
-      bindings: [DevisBinding(), DevisListObjetBinding()],
+      bindings: [DevisBinding(), DevisListObjetBinding(), NetworkBindings()],
       page: () {
         final DevisModel devisModel = Get.arguments as DevisModel;
         return DetailDevis(devisModel: devisModel);
@@ -835,6 +876,7 @@ List<GetPage<dynamic>>? getPages = [
         DetteBinding(),
         FinExterieurBinding(),
         FinExterieurNameBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboadFinance(),
       transition: Transition.cupertino,
@@ -845,12 +887,17 @@ List<GetPage<dynamic>>? getPages = [
         CreanceBinding(),
         CreanceDetteBinding(),
         DetteBinding(),
+        NetworkBindings()
       ],
       page: () => const DDFinance(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.finObservation,
+      bindings: [ 
+        ObservationNotifyBinding(),
+        NetworkBindings()
+      ],
       binding: ObservationNotifyBinding(),
       page: () => const ObservationPage(),
       transition: Transition.cupertino,
@@ -859,7 +906,7 @@ List<GetPage<dynamic>>? getPages = [
       name: '/transactions-banque/:id',
       bindings: [
         BanqueNameBinding(),
-        BanqueBinding(),
+        BanqueBinding(), NetworkBindings()
       ],
       page: () {
         final BanqueNameModel banqueNameModel =
@@ -872,7 +919,7 @@ List<GetPage<dynamic>>? getPages = [
       name: FinanceRoutes.transactionsBanqueDetail,
       bindings: [
         BanqueNameBinding(),
-        BanqueBinding(),
+        BanqueBinding(), NetworkBindings()
       ],
       page: () {
         final BanqueModel banqueModel = Get.arguments as BanqueModel;
@@ -884,7 +931,7 @@ List<GetPage<dynamic>>? getPages = [
       name: '/transactions-caisse/:id',
       bindings: [
         CaisseNameBinding(),
-        CaisseBinding(),
+        CaisseBinding(), NetworkBindings()
       ],
       page: () {
         final CaisseNameModel caisseNameModel =
@@ -897,7 +944,7 @@ List<GetPage<dynamic>>? getPages = [
       name: FinanceRoutes.transactionsCaisseDetail,
       bindings: [
         CaisseNameBinding(),
-        CaisseBinding(),
+        CaisseBinding(), NetworkBindings()
       ],
       page: () {
         final CaisseModel caisseModel = Get.arguments as CaisseModel;
@@ -907,13 +954,13 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsCreances,
-      bindings: [CreanceBinding(), CreanceDetteBinding()],
+      bindings: [CreanceBinding(), CreanceDetteBinding(), NetworkBindings()],
       page: () => const CreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsCreanceDetail,
-      bindings: [CreanceBinding(), CreanceDetteBinding()],
+      bindings: [CreanceBinding(), CreanceDetteBinding(), NetworkBindings()],
       page: () {
         final CreanceModel creanceModel = Get.arguments as CreanceModel;
         return DetailCreance(creanceModel: creanceModel);
@@ -924,7 +971,7 @@ List<GetPage<dynamic>>? getPages = [
       name: FinanceRoutes.transactionsDettes,
       bindings: [
         CreanceDetteBinding(),
-        DetteBinding(),
+        DetteBinding(), NetworkBindings()
       ],
       page: () => const DettePage(),
       transition: Transition.cupertino,
@@ -933,7 +980,7 @@ List<GetPage<dynamic>>? getPages = [
       name: FinanceRoutes.transactionsDetteDetail,
       bindings: [
         CreanceDetteBinding(),
-        DetteBinding(),
+        DetteBinding(), NetworkBindings()
       ],
       page: () {
         final DetteModel detteModel = Get.arguments as DetteModel;
@@ -946,6 +993,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         FinExterieurNameBinding(),
         FinExterieurBinding(),
+        NetworkBindings()
       ],
       page: () {
         final FinExterieurNameModel finExterieurNameModel =
@@ -959,6 +1007,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         FinExterieurNameBinding(),
         FinExterieurBinding(),
+        NetworkBindings()
       ],
       page: () {
         final FinanceExterieurModel financeExterieurModel =
@@ -975,32 +1024,35 @@ List<GetPage<dynamic>>? getPages = [
         DashboardMarketingBinding(),
         AgendaBinding(),
         AnnuaireBinding(),
-        CampaignBinding()
+        CampaignBinding(),
+        NetworkBindings()
       ],
       page: () => const MarketingDahboard(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingDD,
-      binding: CampaignBinding(),
+      bindings: [CampaignBinding(), NetworkBindings()],
       page: () => const MarketingDD(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingCampaign,
-      binding: CampaignBinding(),
+      bindings: [CampaignBinding(), NetworkBindings()],
       page: () => const CampaignPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingCampaignAdd,
-      binding: CampaignBinding(),
+      name: MarketingRoutes.marketingCampaignAdd, 
+      bindings: [CampaignBinding(), NetworkBindings()],
       page: () => const AddCampaign(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingCampaignDetail,
-      bindings: [CampaignBinding(), TacheBinding(), RapportBinding()],
+      bindings: [CampaignBinding(), TacheBinding(), RapportBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final CampaignModel campaignModel = Get.arguments as CampaignModel;
         return DetailCampaign(campaignModel: campaignModel);
@@ -1008,8 +1060,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingCampaignUpdate,
-      binding: CampaignBinding(),
+      name: MarketingRoutes.marketingCampaignUpdate, 
+      bindings: [CampaignBinding(), NetworkBindings()],
       page: () {
         final CampaignModel campaignModel = Get.arguments as CampaignModel;
         return UpdateCampaign(campaignModel: campaignModel);
@@ -1019,19 +1071,19 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: MarketingRoutes.marketingAnnuaire,
-      binding: AnnuaireBinding(),
+      bindings: [AnnuaireBinding(), NetworkBindings()],
       page: () => const AnnuairePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingAnnuaireAdd,
-      binding: AnnuaireBinding(),
+      bindings: [AnnuaireBinding(), NetworkBindings()],
       page: () => const AddAnnuaire(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAnnuaireDetail,
-      binding: AnnuaireBinding(),
+      name: MarketingRoutes.marketingAnnuaireDetail, 
+      bindings: [AnnuaireBinding(), NetworkBindings()],
       page: () {
         final AnnuaireColor annuaireColor = Get.arguments as AnnuaireColor;
         return DetailAnnuaire(annuaireColor: annuaireColor);
@@ -1039,8 +1091,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAnnuaireEdit,
-      binding: AnnuaireBinding(),
+      name: MarketingRoutes.marketingAnnuaireEdit, 
+      bindings: [AnnuaireBinding(), NetworkBindings()],
       page: () {
         final AnnuaireModel annuaireModel = Get.arguments as AnnuaireModel;
         return UpdateAnnuaire(annuaireModel: annuaireModel);
@@ -1050,13 +1102,13 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: MarketingRoutes.marketingAgenda,
-      binding: AgendaBinding(),
+      bindings: [AgendaBinding(), NetworkBindings()],
       page: () => const AgendaPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAgendaDetail,
-      binding: AgendaBinding(),
+      name: MarketingRoutes.marketingAgendaDetail, 
+      bindings: [AgendaBinding(), NetworkBindings()],
       page: () {
         final AgendaColor agendaColor = Get.arguments as AgendaColor;
         return DetailAgenda(agendaColor: agendaColor);
@@ -1064,8 +1116,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAgendaUpdate,
-      binding: AgendaBinding(),
+      name: MarketingRoutes.marketingAgendaUpdate, 
+      bindings: [AgendaBinding(), NetworkBindings()],
       page: () {
         final AgendaColor agendaColor = Get.arguments as AgendaColor;
         return UpdateAgenda(agendaColor: agendaColor);
@@ -1081,31 +1133,32 @@ List<GetPage<dynamic>>? getPages = [
         AchatBinding(),
         GainBinding(),
         VenteCartBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardCommPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comDD,
-      bindings: [SuccursaleBinding(), ProduitModelBinding()],
+      bindings: [SuccursaleBinding(), ProduitModelBinding(), NetworkBindings()],
       page: () => const CommMarketingDD(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursale,
-      binding: SuccursaleBinding(),
+      bindings: [SuccursaleBinding(), NetworkBindings()],
       page: () => const SuccursalePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursaleAdd,
-      binding: SuccursaleBinding(),
+      bindings: [SuccursaleBinding(), NetworkBindings()],
       page: () => const AddSuccursale(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comSuccursaleDetail,
-      binding: SuccursaleBinding(),
+      name: ComRoutes.comSuccursaleDetail, 
+      bindings: [SuccursaleBinding(), NetworkBindings()],
       page: () {
         final SuccursaleModel succursaleModel =
             Get.arguments as SuccursaleModel;
@@ -1114,8 +1167,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comSuccursaleUpdate,
-      binding: SuccursaleBinding(),
+      name: ComRoutes.comSuccursaleUpdate, 
+      bindings: [SuccursaleBinding(), NetworkBindings()],
       page: () {
         final SuccursaleModel succursaleModel =
             Get.arguments as SuccursaleModel;
@@ -1124,8 +1177,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comVente,
-      binding: VenteCartBinding(),
+      name: ComRoutes.comVente, 
+      bindings: [VenteCartBinding(), NetworkBindings()],
       page: () => const VentePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1136,14 +1189,18 @@ List<GetPage<dynamic>>? getPages = [
         BonLivraisonBinding(),
         RestitutionBinding(),
         RavitaillementBinding(),
-        LivraisonBinding()
+        LivraisonBinding(),
+        NetworkBindings()
       ],
       page: () => const StockGlobalPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comStockGlobalAdd,
-      binding: StockGlobalBinding(),
+      bindings: [
+        StockGlobalBinding(), 
+        NetworkBindings()
+      ],
       page: () => const AddStockGlobal(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1154,7 +1211,8 @@ List<GetPage<dynamic>>? getPages = [
         BonLivraisonBinding(),
         RestitutionBinding(),
         RavitaillementBinding(),
-        LivraisonBinding()
+        LivraisonBinding(),
+        NetworkBindings()
       ],
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
@@ -1168,7 +1226,8 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         StockGlobalBinding(),
         BonLivraisonBinding(),
-        LivraisonBinding()
+        LivraisonBinding(),
+        NetworkBindings()
       ],
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
@@ -1182,6 +1241,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         StockGlobalBinding(),
         RavitaillementBinding(),
+        NetworkBindings()
       ],
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
@@ -1197,6 +1257,7 @@ List<GetPage<dynamic>>? getPages = [
         RestitutionBinding(),
         AchatBinding(),
         StockGlobalBinding(),
+        NetworkBindings()
       ],
       page: () => const RestitutionPage(),
       transition: Transition.cupertino,
@@ -1207,6 +1268,7 @@ List<GetPage<dynamic>>? getPages = [
         RestitutionBinding(),
         AchatBinding(),
         StockGlobalBinding(),
+        NetworkBindings()
       ],
       page: () {
         final RestitutionModel restitutionModel =
@@ -1218,19 +1280,19 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: ComRoutes.comProduitModel,
-      binding: ProduitModelBinding(),
+      bindings: [ProduitModelBinding(), NetworkBindings()],
       page: () => const ProduitModelPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comProduitModelAdd,
-      binding: ProduitModelBinding(),
+      bindings: [ProduitModelBinding(), NetworkBindings()],
       page: () => const AjoutProductModel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comProduitModelDetail,
-      binding: ProduitModelBinding(),
+      name: ComRoutes.comProduitModelDetail, 
+      bindings: [ProduitModelBinding(), NetworkBindings()],
       page: () {
         final ProductModel productModel = Get.arguments as ProductModel;
         return DetailProductModel(productModel: productModel);
@@ -1238,8 +1300,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comProduitModelUpdate,
-      binding: ProduitModelBinding(),
+      name: ComRoutes.comProduitModelUpdate, 
+      bindings: [ProduitModelBinding(), NetworkBindings()], 
       page: () {
         final ProductModel productModel = Get.arguments as ProductModel;
         return UpdateProductModele(productModel: productModel);
@@ -1248,33 +1310,36 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComRoutes.comHistoryRavitaillement,
-      binding: HistoryRavitaillementBinding(),
+      name: ComRoutes.comHistoryRavitaillement, 
+      bindings: [HistoryRavitaillementBinding(), NetworkBindings()], 
       page: () => const HistoryRavitaillementPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comHistoryLivraison,
-      binding: HistoryLivraisonBinding(),
+      name: ComRoutes.comHistoryLivraison, 
+      bindings: [HistoryLivraisonBinding(), NetworkBindings()], 
       page: () => const HistoryLivraisonPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
       name: ComRoutes.comFacture,
-      binding: FactureBinding(),
+      bindings: [FactureBinding(), NetworkBindings()], 
       page: () => const FacturePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comCreance,
-      binding: FactureCreanceBinding(),
+      name: ComRoutes.comCreance, 
+      bindings: [FactureCreanceBinding(), NetworkBindings()], 
       page: () => const FactureCreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comFactureDetail,
-      binding: FactureBinding(),
+      bindings: [
+        FactureBinding(),
+        NetworkBindings()
+      ], 
       page: () {
         final FactureCartModel factureCartModel =
             Get.arguments as FactureCartModel;
@@ -1284,7 +1349,10 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comCreanceDetail,
-      binding: FactureCreanceBinding(),
+      bindings: [
+        FactureCreanceBinding(),
+        NetworkBindings()
+      ], 
       page: () {
         final CreanceCartModel creanceCartModel =
             Get.arguments as CreanceCartModel;
@@ -1302,7 +1370,8 @@ List<GetPage<dynamic>>? getPages = [
         FactureCreanceBinding(),
         GainBinding(),
         NumeroFactureBinding(),
-        VenteCartBinding()
+        VenteCartBinding(),
+        NetworkBindings()
       ],
       page: () => const CartPage(),
       transition: Transition.cupertino,
@@ -1316,7 +1385,8 @@ List<GetPage<dynamic>>? getPages = [
         FactureCreanceBinding(),
         GainBinding(),
         NumeroFactureBinding(),
-        VenteCartBinding()
+        VenteCartBinding(),
+        NetworkBindings()
       ],
       page: () {
         final CartModel cart = Get.arguments as CartModel;
@@ -1331,6 +1401,7 @@ List<GetPage<dynamic>>? getPages = [
         BonLivraisonBinding(),
         AchatBinding(),
         LivraisonBinding(),
+        NetworkBindings()
       ],
       page: () => const BonLivraisonPage(),
       transition: Transition.cupertino,
@@ -1341,6 +1412,7 @@ List<GetPage<dynamic>>? getPages = [
         BonLivraisonBinding(),
         AchatBinding(),
         LivraisonBinding(),
+        NetworkBindings()
       ],
       page: () {
         final BonLivraisonModel bonLivraisonModel =
@@ -1356,7 +1428,8 @@ List<GetPage<dynamic>>? getPages = [
         AchatBinding(),
         BonLivraisonBinding(),
         VenteCartBinding(),
-        SuccursaleBinding()
+        SuccursaleBinding(),
+        NetworkBindings()
       ],
       page: () => const AchatPage(),
       transition: Transition.cupertino,
@@ -1367,7 +1440,8 @@ List<GetPage<dynamic>>? getPages = [
         AchatBinding(),
         BonLivraisonBinding(),
         VenteCartBinding(),
-        SuccursaleBinding()
+        SuccursaleBinding(),
+        NetworkBindings()
       ],
       page: () {
         final AchatModel achatModel = Get.arguments as AchatModel;
@@ -1388,7 +1462,8 @@ List<GetPage<dynamic>>? getPages = [
         TacheBinding(),
         RapportBinding(),
         ProfilBinding(), 
-        ProduitModelBinding()
+        ProduitModelBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardExp(),
       transition: Transition.cupertino,
@@ -1398,6 +1473,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         ProductionExpBinding(),
         ProjetBinding(),
+        NetworkBindings()
       ],
       page: () => const ExpDD(),
       transition: Transition.cupertino,
@@ -1405,13 +1481,16 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: ExploitationRoutes.expFournisseur,
-      binding: FourniseurBinding(),
+      bindings: [FourniseurBinding(), NetworkBindings()],
       page: () => const FournisseursPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ExploitationRoutes.expFournisseurDetail,
-      binding: FourniseurBinding(),
+      bindings: [
+        FourniseurBinding(),
+        NetworkBindings()
+      ], 
       page: () {
         final FournisseurModel fournisseurModel =
             Get.arguments as FournisseurModel;
@@ -1427,7 +1506,8 @@ List<GetPage<dynamic>>? getPages = [
         FourniseurBinding(),
         AnnuaireBinding(),
         ProfilBinding(), 
-        ProduitModelBinding()
+        ProduitModelBinding(),
+        NetworkBindings()
       ],
       page: () => const ProductionExpPage(),
       transition: Transition.cupertino,
@@ -1437,7 +1517,8 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         ProductionExpBinding(),
         FourniseurBinding(),
-        AnnuaireBinding()
+        AnnuaireBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ProductionModel productionModel =
@@ -1455,7 +1536,8 @@ List<GetPage<dynamic>>? getPages = [
         TacheBinding(),
         RapportBinding(),
         ProfilBinding(),
-        ProduitModelBinding()
+        ProduitModelBinding(),
+        NetworkBindings()
       ],
       page: () => const ProjetPage(),
       transition: Transition.cupertino,
@@ -1467,7 +1549,8 @@ List<GetPage<dynamic>>? getPages = [
         VersementBinding(),
         TacheBinding(),
         RapportBinding(),
-        PersonnelsRoleBinding()
+        PersonnelsRoleBinding(),
+        NetworkBindings()
       ],
       page: () => const AddProjet(),
       transition: Transition.cupertino,
@@ -1479,7 +1562,8 @@ List<GetPage<dynamic>>? getPages = [
         VersementBinding(),
         TacheBinding(),
         RapportBinding(),
-        PersonnelsRoleBinding()
+        PersonnelsRoleBinding(),
+        NetworkBindings()
       ],
       binding: ProjetBinding(),
       page: () {
@@ -1495,7 +1579,8 @@ List<GetPage<dynamic>>? getPages = [
         VersementBinding(),
         TacheBinding(),
         RapportBinding(),
-        PersonnelsRoleBinding()
+        PersonnelsRoleBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ProjetModel projetModel = Get.arguments as ProjetModel;
@@ -1509,6 +1594,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         ProjetBinding(),
         VersementBinding(),
+        NetworkBindings()
       ],
       page: () => const VersementPage(),
       transition: Transition.cupertino,
@@ -1517,7 +1603,7 @@ List<GetPage<dynamic>>? getPages = [
       name: ExploitationRoutes.expVersementAdd,
       bindings: [
         ProjetBinding(),
-        VersementBinding(),
+        VersementBinding(), NetworkBindings()
       ],
       page: () {
         final ProjetModel projetModel = Get.arguments as ProjetModel;
@@ -1530,6 +1616,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         ProjetBinding(),
         VersementBinding(),
+        NetworkBindings()
       ],
       page: () {
         final VersementProjetModel versementProjetModel =
@@ -1550,7 +1637,8 @@ List<GetPage<dynamic>>? getPages = [
         ImmobilierBinding(),
         MaterielBinding(),
         MobilierBinding(),
-        TrajetBinding()
+        TrajetBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardLog(),
       transition: Transition.cupertino,
@@ -1564,7 +1652,8 @@ List<GetPage<dynamic>>? getPages = [
         ImmobilierBinding(),
         MaterielBinding(),
         MobilierBinding(),
-        TrajetBinding()
+        TrajetBinding(),
+        NetworkBindings()
       ],
       page: () => const LogDD(),
       transition: Transition.cupertino,
@@ -1573,12 +1662,16 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: LogistiqueRoutes.logMateriel,
       binding: MaterielBinding(),
+      bindings: [ 
+        MaterielBinding(),
+        NetworkBindings()
+      ],
       page: () => const MaterielPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logMaterielRoulant,
-      binding: MaterielBinding(),
+      name: LogistiqueRoutes.logMaterielRoulant, 
+      bindings: [MaterielBinding(), NetworkBindings()],
       page: () => const MaterielRoulantPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1586,14 +1679,14 @@ List<GetPage<dynamic>>? getPages = [
       name: LogistiqueRoutes.logMaterielAdd,
       bindings: [
         MaterielBinding(),
-        AnnuaireBinding(),
+        AnnuaireBinding(), NetworkBindings()
       ],
       page: () => const AddMateriel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMaterielDetail,
-      binding: MaterielBinding(),
+      bindings: [MaterielBinding(), AnnuaireBinding(), NetworkBindings()],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return DetailMateriel(materielModel: materielModel);
@@ -1602,10 +1695,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMaterielUpdate,
-      bindings: [
-        MaterielBinding(),
-        AnnuaireBinding(),
-      ],
+      bindings: [MaterielBinding(), AnnuaireBinding(), NetworkBindings()],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return UpdateMateriel(materielModel: materielModel);
@@ -1615,13 +1705,13 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: LogistiqueRoutes.logTrajetAuto,
-      bindings: [TrajetBinding(), MaterielBinding()],
+      bindings: [TrajetBinding(), MaterielBinding(), NetworkBindings()],
       page: () => const TrajetPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logAddTrajetAuto,
-      bindings: [TrajetBinding(), MaterielBinding()],
+      bindings: [TrajetBinding(), MaterielBinding(), NetworkBindings()],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return AddTrajet(materielModel: materielModel);
@@ -1630,7 +1720,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logTrajetAutoDetail,
-      bindings: [TrajetBinding(), MaterielBinding()],
+      bindings: [TrajetBinding(), MaterielBinding(), NetworkBindings()],
       page: () {
         final TrajetModel trajetModel = Get.arguments as TrajetModel;
         return DetailTrajet(trajetModel: trajetModel);
@@ -1640,14 +1730,18 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: LogistiqueRoutes.logEntretien,
-      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding()],
+      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding(),
+        NetworkBindings()
+      ],
       page: () => const EntretiensPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   
   GetPage(
       name: LogistiqueRoutes.logEntretienDetail,
-      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding()],
+      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final EntretienModel entretienModel = Get.arguments as EntretienModel;
         return DetailEntretien(entretienModel: entretienModel);
@@ -1658,6 +1752,10 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: LogistiqueRoutes.logEtatMateriel,
       binding: EtatMaterielBinding(),
+      bindings: [
+        EtatMaterielBinding(), 
+        NetworkBindings()
+      ],
       page: () => const EtatMaterielPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1666,13 +1764,14 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         EtatMaterielBinding(),
         MaterielBinding(),
+        NetworkBindings()
       ],
       page: () => const AddEtatMateriel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logEtatMaterielDetail,
-      binding: EtatMaterielBinding(),
+      bindings: [EtatMaterielBinding(), MaterielBinding(), NetworkBindings()],
       page: () {
         final EtatMaterielModel etatMaterielModel =
             Get.arguments as EtatMaterielModel;
@@ -1682,10 +1781,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logEtatMaterielUpdate,
-      bindings: [
-        EtatMaterielBinding(),
-        MaterielBinding(),
-      ],
+      bindings: [EtatMaterielBinding(), MaterielBinding(), NetworkBindings()],
       page: () {
         final EtatMaterielModel etatMaterielModel =
             Get.arguments as EtatMaterielModel;
@@ -1695,14 +1791,14 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: LogistiqueRoutes.logImmobilierMateriel,
-      binding: ImmobilierBinding(),
+      name: LogistiqueRoutes.logImmobilierMateriel, 
+      bindings: [ImmobilierBinding(), NetworkBindings()],
       page: () => const ImmobilierPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logImmobilierMaterielDetail,
-      binding: ImmobilierBinding(),
+      bindings: [ImmobilierBinding(), NetworkBindings()],
       page: () {
         final ImmobilierModel immobilierModel =
             Get.arguments as ImmobilierModel;
@@ -1712,7 +1808,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logImmobilierMaterielUpdate,
-      binding: ImmobilierBinding(),
+      bindings: [ImmobilierBinding(), NetworkBindings()],
       page: () {
         final ImmobilierModel immobilierModel =
             Get.arguments as ImmobilierModel;
@@ -1722,14 +1818,14 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: LogistiqueRoutes.logMobilierMateriel,
-      binding: MaterielBinding(),
+      name: LogistiqueRoutes.logMobilierMateriel, 
+      bindings: [MaterielBinding(), NetworkBindings()],
       page: () => const MobilierPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMobilierMaterielDetail,
-      binding: MaterielBinding(),
+      bindings: [MaterielBinding(), NetworkBindings()],
       page: () {
         final MobilierModel mobilierModel = Get.arguments as MobilierModel;
         return DetailMobiler(mobilierModel: mobilierModel);
@@ -1738,7 +1834,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMobilierMaterielUpdate,
-      binding: MaterielBinding(),
+      bindings: [MaterielBinding(), NetworkBindings()],
       page: () {
         final MobilierModel mobilierModel = Get.arguments as MobilierModel;
         return UpdateMobilier(mobilierModel: mobilierModel);
@@ -1750,7 +1846,8 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         ApprovisionnementBinding(),
         AnnuaireBinding(),
-        ApprovisionReceptionBinding()
+        ApprovisionReceptionBinding(),
+        NetworkBindings()
       ],
       page: () => const ApprovisionnementPage(),
       transition: Transition.cupertino,
@@ -1761,6 +1858,8 @@ List<GetPage<dynamic>>? getPages = [
         ApprovisionnementBinding(),
         ApprovisionReceptionBinding(),
         AnnuaireBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ApprovisionnementModel approvisionnementModel =
@@ -1772,13 +1871,20 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logApprovisionReception,
-      bindings: [ApprovisionnementBinding(), ApprovisionReceptionBinding()],
+      bindings: [
+        ApprovisionnementBinding(), 
+        ApprovisionReceptionBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const AccuseReceptionPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logApprovisionReceptionDetail,
-      bindings: [ApprovisionnementBinding(), ApprovisionReceptionBinding()],
+      bindings: [ApprovisionnementBinding(), ApprovisionReceptionBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final ApprovisionReceptionModel approvisionReceptionModel =
             Get.arguments as ApprovisionReceptionModel;
@@ -1791,49 +1897,58 @@ List<GetPage<dynamic>>? getPages = [
   // Administration
   GetPage(
       name: AdminRoutes.adminDashboard,
-      bindings: [AdminDashboardBinding()],
+      bindings: [AdminDashboardBinding(), NetworkBindings()],
       page: () => const AdminDashboard(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminBudget,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding()],
+      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+        NetworkBindings()
+      ],
       page: () => const AdminBudget(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: AdminRoutes.adminMarketing,
-      binding: CampaignBinding(),
+      name: AdminRoutes.adminMarketing, 
+      bindings: [ 
+        CampaignBinding(),
+        NetworkBindings()
+      ],
       page: () => const AdminMarketing(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: AdminRoutes.adminComm,
-      binding: SuccursaleBinding(),
+      name: AdminRoutes.adminComm, 
+      bindings: [SuccursaleBinding(), NetworkBindings()],
       page: () => const AdminComm(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminExploitation,
-      bindings: [ProjetBinding(), ProductionExpBinding()],
+      bindings: [ProjetBinding(), ProductionExpBinding(), NetworkBindings()],
       page: () => const AdminExploitation(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminFinance,
-      bindings: [DetteBinding(), CreanceBinding(), CreanceDetteBinding()],
+      bindings: [DetteBinding(), CreanceBinding(), CreanceDetteBinding(),
+        NetworkBindings()
+      ],
       page: () => const AdminFinance(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminLogistique,
-      bindings: [MaterielBinding(), ImmobilierBinding(), DevisBinding()],
+      bindings: [MaterielBinding(), ImmobilierBinding(), DevisBinding(),
+        NetworkBindings()
+      ],
       page: () => const AdminLogistique(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminRH,
-      bindings: [SalaireBinding(), TransportRestBinding()],
+      bindings: [SalaireBinding(), TransportRestBinding(), NetworkBindings()],
       page: () => const AdminRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1842,6 +1957,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: UpdateRoutes.updatePage,
       page: () => const UpdatePage(),
+      bindings: [NetworkBindings()],
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 ];

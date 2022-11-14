@@ -12,7 +12,7 @@ class AdministrationNav extends StatefulWidget {
       {super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<AdministrationNav> createState() => _AdministrationNavState();
@@ -32,7 +32,7 @@ class _AdministrationNavState extends State<AdministrationNav> {
         size: 30.0,
       ),
       title: AutoSizeText('Administration', maxLines: 1, style: bodyMedium),
-      initiallyExpanded: (widget.departement.first == 'Administration') ? true : false,
+      initiallyExpanded: (widget.departement == 'Administration') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen1 = !val;

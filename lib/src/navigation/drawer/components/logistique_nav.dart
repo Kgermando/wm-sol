@@ -13,7 +13,7 @@ class LogistiqueNav extends StatefulWidget {
       {super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<LogistiqueNav> createState() => _LogistiqueNavState();
@@ -36,7 +36,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
       leading: const Icon(Icons.brightness_low, size: 30.0),
       title: AutoSizeText('Logistique', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement.first == 'Logistique')
+          (widget.departement == 'Logistique')
               ? true
               : false,
       onExpansionChanged: (val) {

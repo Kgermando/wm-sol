@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class NetworkController extends GetxController {
   static NetworkController to = Get.find();
@@ -14,12 +15,31 @@ class NetworkController extends GetxController {
   final Connectivity _connectivity = Connectivity();
   //Stream to keep listening to network change state
   late StreamSubscription _streamSubscription;
+
+
+  var connectionStatus = 0.obs;
+  late StreamSubscription<InternetConnectionStatus> _listener;
+
+
   @override
   void onInit() {
     super.onInit();
     _getConnectionType();
     _streamSubscription =
         _connectivity.onConnectivityChanged.listen(_updateState);
+
+     _listener = InternetConnectionChecker()
+        .onStatusChange
+        .listen((InternetConnectionStatus status) {
+      switch (status) {
+        case InternetConnectionStatus.connected:
+          connectionStatus.value = 1;
+          break;
+        case InternetConnectionStatus.disconnected:
+          connectionStatus.value = 0;
+          break;
+      }
+    });
   }
 
   // a method to get which connection result, if you we connected to internet or no if yes then which network
@@ -59,6 +79,7 @@ class NetworkController extends GetxController {
   void onClose() {
     //stop listening to network state when app is closed
     _streamSubscription.cancel();
+     _listener.cancel();
     super.onClose();
   }
 }

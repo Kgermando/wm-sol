@@ -34,6 +34,8 @@ Widget loadingPage(BuildContext context) => Scaffold(
       ],
     ) 
   );
+
+  
   Widget loadingError(BuildContext context, String error) => Scaffold(
     key: scaffoldKey,
     appBar: headerBar(context, scaffoldKey, '', ''),

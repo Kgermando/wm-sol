@@ -16,6 +16,8 @@ class ApprovisionReceptionController extends GetxController
 
   var approvisionReceptionList = <ApprovisionReceptionModel>[].obs;
 
+   ScrollController scrollController = ScrollController();
+
   final GlobalKey<FormState> receptionFormKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -48,6 +50,12 @@ class ApprovisionReceptionController extends GetxController
   }
 
   void getList() async {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+     
+      }
+    });
     await approvisionReceptionApi.getAllData().then((response) {
       approvisionReceptionList.assignAll(response);
       change(approvisionReceptionList, status: RxStatus.success());

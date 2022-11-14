@@ -12,7 +12,7 @@ class MaketingNav extends StatefulWidget {
   const MaketingNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<MaketingNav> createState() => _MaketingNavState();
@@ -34,7 +34,7 @@ class _MaketingNavState extends State<MaketingNav> {
       title:
           AutoSizeText('Marketing', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement.first == 'Marketing')
+          (widget.departement == 'Marketing')
               ? true
               : false,
       onExpansionChanged: (val) {

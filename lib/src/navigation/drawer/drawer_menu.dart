@@ -23,9 +23,11 @@ class DrawerMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final ProfilController profilController = Get.find();
     final currentRoute = Get.currentRoute;
-    var departement = (profilController.user.departement == '-') 
+    List<dynamic> departementList = (profilController.user.departement == '-') 
       ? ["Support"] : jsonDecode(profilController.user.departement);
     // var departement = jsonDecode(profilController.user.departement);
+
+ 
 
     return Drawer(
       // backgroundColor: Colors.amber[50],
@@ -38,43 +40,62 @@ class DrawerMenu extends StatelessWidget {
             width: 100,
             height: 100,
           )),
-          if (departement.first == 'Administration' || departement.first == 'Support')
-          AdministrationNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Ressources Humaines' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support')
+          for (var departement in departementList)
+          if (departement == 'Administration' || departement == 'Support')
+          AdministrationNav(currentRoute: currentRoute, profilController: profilController, 
+            departement: departement),
+
+          for (var departement in departementList)
+          if (departement == 'Ressources Humaines' ||
+              departement == 'Administration' ||
+              departement == 'Support')
           RhNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Budgets' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support')
+
+          for (var departement in departementList)
+          if (departement == 'Budgets' ||
+              departement == 'Administration' ||
+              departement == 'Support')
           BudgetNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Comptabilites' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support')
+
+          for (var departement in departementList)
+          if (departement == 'Comptabilites' ||
+              departement == 'Administration' ||
+              departement == 'Support')
           ComptabiliteNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Finances' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support') 
+
+          for (var departement in departementList)
+          if (departement == 'Finances' ||
+              departement == 'Administration' ||
+              departement == 'Support') 
           FinanceNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Commercial et Marketing' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support')
+
+          for (var departement in departementList)
+          if (departement == 'Commercial et Marketing' ||
+              departement == 'Administration' ||
+              departement == 'Support')
           MaketingNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Commercial et Marketing' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support')
+
+          for (var departement in departementList)
+          if (departement == 'Commercial et Marketing' ||
+              departement == 'Administration' ||
+              departement == 'Support')
             CommercialNav(
                 currentRoute: currentRoute,
                 profilController: profilController,
                 departement: departement),
-          if (departement.first == 'Exploitations' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support') 
+
+          for (var departement in departementList)
+          if (departement == 'Exploitations' ||
+              departement == 'Administration' ||
+              departement == 'Support') 
           ExploitationNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
-          if (departement.first == 'Logistique' ||
-              departement.first == 'Administration' ||
-              departement.first == 'Support') 
+
+          for (var departement in departementList)
+          if (departement == 'Logistique' ||
+              departement == 'Administration' ||
+              departement == 'Support') 
           LogistiqueNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
+
           if (Platform.isWindows)
           UpdateNav(currentRoute: currentRoute, profilController: profilController)
         ],

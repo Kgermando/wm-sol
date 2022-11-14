@@ -12,7 +12,7 @@ class BudgetNav extends StatefulWidget {
   const BudgetNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<BudgetNav> createState() => _BudgetNavState();
@@ -30,7 +30,7 @@ class _BudgetNavState extends State<BudgetNav> {
     return ExpansionTile(
       leading: const Icon(Icons.fact_check, size: 30.0),
       title: AutoSizeText('Budgets', maxLines: 1, style: bodyMedium),
-      initiallyExpanded: (widget.departement.first == 'Budgets') ? true : false,
+      initiallyExpanded: (widget.departement == 'Budgets') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

@@ -15,7 +15,7 @@ class FinanceNav extends StatefulWidget {
   const FinanceNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
   final String currentRoute;
   final ProfilController profilController;
-  final List<dynamic> departement;
+  final String departement;
 
   @override
   State<FinanceNav> createState() => _FinanceNavState();
@@ -42,7 +42,7 @@ class _FinanceNavState extends State<FinanceNav> {
       leading: const Icon(Icons.account_balance, size: 30.0),
       title: AutoSizeText('Finances', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement.first == 'Finances') ? true : false,
+          (widget.departement == 'Finances') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

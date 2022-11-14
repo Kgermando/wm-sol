@@ -55,7 +55,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
                   Expanded(
                       flex: 5,
                       child: SingleChildScrollView(
-                          controller: ScrollController(),
+                          controller: controller.scrollController,
                           physics: const ScrollPhysics(),
                           child: Container(
                             margin: const EdgeInsets.only(

@@ -10,6 +10,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class UpdateProductModele extends StatefulWidget {
   const UpdateProductModele({super.key, required this.productModel});
@@ -76,12 +77,16 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
                                   Card(
                                     elevation: 3,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: p20),
+                                      padding: const EdgeInsets.all(p20),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          const TitleWidget(
+                                              title: 'Produit Modèle'),
+                                          const SizedBox(
+                                            height: p20,
+                                          ),
                                           categorieWidget(controller),
                                           ResponsiveChildWidget(
                                               child1: sousCategorie1Widget(
