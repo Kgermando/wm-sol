@@ -20,7 +20,7 @@ class DashboardRH extends StatefulWidget {
 }
 
 class _DashboardRHState extends State<DashboardRH> {
-  final DashobardNotifyController controller = Get.find();
+  // final DashobardNotifyController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Dashboard";
@@ -59,8 +59,8 @@ class _DashboardRHState extends State<DashboardRH> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: Obx(
-          () => Row(
+        body: GetX(builder: 
+          (DashobardNotifyController controller) => Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
@@ -153,7 +153,7 @@ class _DashboardRHState extends State<DashboardRH> {
                         )),
                   ))
             ],
-          ),
-        ));
+          ))
+      );
   }
 }

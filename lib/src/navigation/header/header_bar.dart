@@ -33,7 +33,6 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
       ? ["Support"]
       : jsonDecode(notifyHeaderController.profilController.user.departement);
 
-
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
 
   final String firstLettter = profilController.user.prenom[0];
@@ -191,7 +190,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
         Row(
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(UserRoutes.profil);
+              },
               child: AutoSizeText(
                 "${profilController.user.prenom} ${profilController.user.nom}",
                 maxLines: 1,
