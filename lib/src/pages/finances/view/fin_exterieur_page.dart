@@ -132,7 +132,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: pieceJustificativeWidget()),
+                                  child2: montantWidget()),
                               const SizedBox(
                                 height: p20,
                               ),
@@ -195,7 +195,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                                   child2: pieceJustificativeWidget()),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
-                                  child2: pieceJustificativeWidget()),
+                                  child2: montantWidget()),
                               const SizedBox(
                                 height: p20,
                               ),
