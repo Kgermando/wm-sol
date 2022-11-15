@@ -29,6 +29,7 @@ class _MaketingNavState extends State<MaketingNav> {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2; 
     int userRole = int.parse(widget.profilController.user.role);
+
     return ExpansionTile(
       leading: const Icon(Icons.campaign, size: 30.0),
       title:
@@ -126,6 +127,7 @@ class _MaketingNavState extends State<MaketingNav> {
               onTap: () {
                 Get.toNamed(RhRoutes.rhPerformence);  
               }),
+        if (userRole <= 3)
         DrawerWidget(
             selected:
                 widget.currentRoute == LogistiqueRoutes.logApprovisionReception,

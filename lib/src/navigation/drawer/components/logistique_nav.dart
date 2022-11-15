@@ -146,6 +146,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
           onTap: () {
             Navigator.pushNamed(context, LogistiqueRoutes.logEntretien);
           }), 
+        if (userRole <= 3)
         DrawerWidget(
             selected:
                 widget.currentRoute == LogistiqueRoutes.logApprovisionnement,
@@ -165,6 +166,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
             onTap: () {
               Get.toNamed(DevisRoutes.devis);
             }),
+      if (userRole <= 3)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhPerformence,
             icon: Icons.handyman,
@@ -174,6 +176,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
             onTap: () {
               Get.toNamed(RhRoutes.rhPerformence);
             }),
+        if (userRole <= 3)
         DrawerWidget(
             selected:
                 widget.currentRoute == LogistiqueRoutes.logApprovisionReception,

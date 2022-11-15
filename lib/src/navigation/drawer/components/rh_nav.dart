@@ -26,6 +26,7 @@ class _RhNavState extends State<RhNav> {
 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;  
+    int userRole = int.parse(widget.profilController.user.role);
 
     return ExpansionTile(
       leading: const Icon(Icons.group, size: 30.0),
@@ -38,6 +39,7 @@ class _RhNavState extends State<RhNav> {
       },
       trailing: const Icon(Icons.arrow_drop_down),
       children: [
+        if (userRole <= 2)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhDashboard,
             icon: Icons.dashboard,
@@ -48,12 +50,13 @@ class _RhNavState extends State<RhNav> {
               Get.toNamed(RhRoutes.rhDashboard);
               // Navigator.of(context).pop();
             }),
+          if (userRole <= 2)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhDD,
             icon: Icons.manage_accounts,
             sizeIcon: 20.0,
             title: 'Directeur de département',
-            style: bodyText1,
+            style: bodyText1!,
             badge: Badge(
               showBadge: (int.parse(controller.itemCount) >= 1) ? true : false,
               badgeColor: Colors.teal,
@@ -65,32 +68,35 @@ class _RhNavState extends State<RhNav> {
               Navigator.pushNamed(context, RhRoutes.rhDD);
               // Navigator.of(context).pop();
             }),
+        if (userRole <= 3)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhPersonnelsPage,
             icon: Icons.group,
             sizeIcon: 20.0,
             title: 'Personnels',
-            style: bodyText1,
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhPersonnelsPage);
               // Navigator.of(context).pop();
             }),
+        if (userRole <= 3)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhPaiement,
             icon: Icons.real_estate_agent_sharp,
             sizeIcon: 20.0,
             title: 'Salaires',
-            style: bodyText1,
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhPaiement);
               // Navigator.of(context).pop();
             }),
+        if (userRole <= 3)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhTransportRest,
             icon: Icons.restaurant,
             sizeIcon: 20.0,
-            title: 'Transport & Restauration | Autres frais',
-            style: bodyText1,
+            title: 'Transt. & Rest. | Autres frais',
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhTransportRest);
               // Navigator.of(context).pop();
@@ -100,11 +106,12 @@ class _RhNavState extends State<RhNav> {
             icon: Icons.multiline_chart_sharp,
             sizeIcon: 20.0,
             title: 'Presences',
-            style: bodyText1,
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhPresence);
               // Navigator.of(context).pop();
             }),
+        if (userRole <= 3)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhPerformence,
             icon: Icons.checklist_outlined,
@@ -115,6 +122,7 @@ class _RhNavState extends State<RhNav> {
               Get.toNamed(RhRoutes.rhPerformence);
               // Navigator.of(context).pop();
             }),
+        if (userRole <= 3)
         DrawerWidget(
             selected:
                 widget.currentRoute == LogistiqueRoutes.logApprovisionReception,

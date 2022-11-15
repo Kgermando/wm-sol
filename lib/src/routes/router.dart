@@ -268,7 +268,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/bindings/presence_bindi
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/salaire_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/transport_rest_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/transport_rest_personnel_binding.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/bindings/user_binding.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/bindings/users_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/detail._user.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/add_performence_note.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/detail_performence.dart';
@@ -482,33 +482,35 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [DashboardNotifyBinding(),
         PersonnelBinding(),
         SalaireBinding(),
-        TransportRestBinding(),UserBinding(), ProfilBinding(), NetworkBindings()],
+        TransportRestBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const DashboardRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhDD,
-      bindings: [SalaireBinding(), TransportRestBinding(),
-        UserBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        SalaireBinding(), 
+        TransportRestBinding(),
+        UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const DDRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsPage,
-      bindings: [PersonnelBinding(), UserBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const PersonnelsPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsAdd,
-      bindings: [PersonnelBinding(), UserBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         List<AgentModel> personnelList = Get.arguments as List<AgentModel>;
         return AddPersonnel(personnelList: personnelList);
       }),
   GetPage(
       name: RhRoutes.rhPersonnelsDetail,
-      bindings: [PersonnelBinding(), UserBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return DetailPersonne(personne: personne);
@@ -517,7 +519,7 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsUpdate, 
-      bindings: [PersonnelBinding(), UserBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return UpdatePersonnel(personne: personne);
@@ -625,7 +627,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: RhRoutes.rhdetailUser, 
       bindings: [ 
-        UserBinding(),
+        UsersBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {

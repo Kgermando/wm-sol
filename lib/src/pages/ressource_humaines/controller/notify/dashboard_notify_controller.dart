@@ -39,6 +39,8 @@ class DashobardNotifyController extends GetxController {
     super.onInit();
     getData();
   }
+
+
  
   Future<void> getData() async {
     _agentsCount.value = personnelsController.personnelsList.length;

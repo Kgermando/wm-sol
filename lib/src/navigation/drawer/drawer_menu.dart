@@ -70,13 +70,13 @@ class DrawerMenu extends StatelessWidget {
           FinanceNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
 
           for (var departement in departementList)
-          if (departement == 'Commercial et Marketing' ||
+          if (departement == 'Marketing' ||
               departement == 'Administration' ||
               departement == 'Support')
           MaketingNav(currentRoute: currentRoute, profilController: profilController, departement: departement),
 
           for (var departement in departementList)
-          if (departement == 'Commercial et Marketing' ||
+          if (departement == 'Commercial' ||
               departement == 'Administration' ||
               departement == 'Support')
             CommercialNav(
