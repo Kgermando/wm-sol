@@ -35,11 +35,12 @@ class PersonnelsController extends GetxController
   List<String> fonctionActionnaireList = FonctionOccupee().actionnaireDropdown;
   List<String> fonctionAdminList = FonctionOccupee().adminDropdown;
   List<String> fonctionrhList = FonctionOccupee().rhDropdown;
-  List<String> fonctionfinList = FonctionOccupee().finDropdown;
-  List<String> fonctionbudList = FonctionOccupee().budDropdown;
-  List<String> fonctioncompteList = FonctionOccupee().compteDropdown;
-  List<String> fonctionexpList = FonctionOccupee().expDropdown;
-  List<String> fonctioncommList = FonctionOccupee().commDropdown;
+  List<String> fonctionFinList = FonctionOccupee().finDropdown;
+  List<String> fonctionBudList = FonctionOccupee().budDropdown;
+  List<String> fonctionComptabiliteList = FonctionOccupee().comptabiliteDropdown;
+  List<String> fonctionMarketingList = FonctionOccupee().marketingDropdown;
+  List<String> fonctionExpList = FonctionOccupee().expDropdown;
+  List<String> fonctionCommList = FonctionOccupee().commDropdown;
   List<String> fonctionlogList = FonctionOccupee().logDropdown;
 
   // Service d'affectation
@@ -78,6 +79,7 @@ class PersonnelsController extends GetxController
   String? role;
   String? nationalite;
   List<String> departementSelectedList = [];
+  List<String> departementSelectedUpdateList = [];
   // String? departement;
   String? typeContrat;
   String? servicesAffectation;
@@ -273,7 +275,7 @@ class PersonnelsController extends GetxController
   }
 
   Future submitUpdate(AgentModel personne) async {
-    var departement = jsonEncode(departementSelectedList);
+    var departement = jsonEncode(departementSelectedUpdateList);
     final agentModel = AgentModel(
         id: personne.id,
         nom: (nomController.text == '') ? personne.nom : nomController.text,

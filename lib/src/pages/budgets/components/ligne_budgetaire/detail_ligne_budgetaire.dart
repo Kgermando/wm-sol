@@ -339,7 +339,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     campaignCaisseList = controller.dataCampaignList
         .where((element) =>
             widget.ligneBudgetaireModel.departement ==
-                "Commercial et Marketing" &&
+                "Marketing" &&
             element.ligneBudgetaire ==
                 widget.ligneBudgetaireModel.nomLigneBudgetaire &&
             element.created
@@ -349,7 +349,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     campaignBanqueList = controller.dataCampaignList
         .where((element) =>
             widget.ligneBudgetaireModel.departement ==
-                "Commercial et Marketing" &&
+                "Marketing" &&
             element.ligneBudgetaire ==
                 widget.ligneBudgetaireModel.nomLigneBudgetaire &&
             element.created
@@ -358,10 +358,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
         .toList();
     campaignfinExterieurList = controller.dataCampaignList
         .where((element) =>
-            widget.ligneBudgetaireModel.departement ==
-                "Commercial et Marketing" &&
-            "Commercial et Marketing" ==
-                widget.ligneBudgetaireModel.departement &&
+            widget.ligneBudgetaireModel.departement == "Marketing" &&
             element.ligneBudgetaire ==
                 widget.ligneBudgetaireModel.nomLigneBudgetaire &&
             element.created

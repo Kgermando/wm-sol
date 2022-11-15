@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,12 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
   @override
   void initState() {
     // photo = widget.personne.photo!;
-    // departementSelected = jsonDecode(widget.personne.departement);
+    List<dynamic> dep = jsonDecode(widget.personne.departement);
+
+    departementSelected = dep.cast<String>();
+
+    controller.departementSelectedUpdateList.addAll(departementSelected);
+
     controller.matricule = widget.personne.matricule;
     controller.sexe = widget.personne.sexe;
     controller.role = widget.personne.role;
@@ -181,9 +188,9 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: CircleAvatar(
-                          child: (controller.uploadedFileUrl == '-')
+                          child: (widget.personne.photo == null)
                               ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(controller.uploadedFileUrl)),
+                              : Image.network(widget.personne.photo!)),
                     ),
                   ),
                   Positioned(
@@ -598,7 +605,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                     child: ListTile(
                       leading: Checkbox(
                         fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: controller.departementSelectedList
+                        value: controller.departementSelectedUpdateList
                             .contains(depName),
                         onChanged: (bool? value) {
                           setState(() {
@@ -620,67 +627,75 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
       PersonnelsController controller, bool selected, String dataName) {
     if (selected == true) {
       setState(() {
-        controller.departementSelectedList.add(dataName);
+        controller.departementSelectedUpdateList.add(dataName);
 
-        if (controller.departementSelectedList.first == 'Actionnaire') {
+        print('depList ${controller.departementSelectedUpdateList}');
+        print('departementSelected $departementSelected');
+
+        if (controller.departementSelectedUpdateList.first == 'Actionnaire') {
           controller.fonctionList = controller.fonctionActionnaireList;
           controller.servAffectList = controller.serviceAffectationActionnaire;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationActionnaire.first;
-        } else if (controller.departementSelectedList.first ==
+        } else if (controller.departementSelectedUpdateList.first ==
             'Administration') {
           controller.fonctionList = controller.fonctionAdminList;
           controller.servAffectList = controller.serviceAffectationAdmin;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationAdmin.first;
-        } else if (controller.departementSelectedList.first == 'Finances') {
-          controller.fonctionList = controller.fonctionfinList;
+        } else if (controller.departementSelectedUpdateList.first ==
+            'Finances') {
+          controller.fonctionList = controller.fonctionFinList;
           controller.servAffectList = controller.serviceAffectationFin;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationFin.first;
-        } else if (controller.departementSelectedList.first ==
+        } else if (controller.departementSelectedUpdateList.first ==
             'Comptabilites') {
-          controller.fonctionList = controller.fonctioncompteList;
+          controller.fonctionList = controller.fonctionComptabiliteList;
           controller.servAffectList = controller.serviceAffectationCompt;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationCompt.first;
-        } else if (controller.departementSelectedList.first == 'Budgets') {
-          controller.fonctionList = controller.fonctionbudList;
+        } else if (controller.departementSelectedUpdateList.first ==
+            'Budgets') {
+          controller.fonctionList = controller.fonctionBudList;
           controller.servAffectList = controller.serviceAffectationBud;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationBud.first;
-        } else if (controller.departementSelectedList.first ==
+        } else if (controller.departementSelectedUpdateList.first ==
             'Ressources Humaines') {
           controller.fonctionList = controller.fonctionrhList;
           controller.servAffectList = controller.serviceAffectationRH;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationRH.first;
-        } else if (controller.departementSelectedList.first ==
+        } else if (controller.departementSelectedUpdateList.first ==
             'Exploitations') {
-          controller.fonctionList = controller.fonctionexpList;
+          controller.fonctionList = controller.fonctionExpList;
           controller.servAffectList = controller.serviceAffectationEXp;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationEXp.first;
-        } else if (controller.departementSelectedList.first == 'Marketing') {
-          controller.fonctionList = controller.fonctioncommList;
+        } else if (controller.departementSelectedUpdateList.first ==
+            'Marketing') {
+          controller.fonctionList = controller.fonctionMarketingList;
           controller.servAffectList = controller.serviceAffectationMark;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationMark.first;
-        } else if (controller.departementSelectedList.first == 'Commercial') {
-          controller.fonctionList = controller.fonctioncommList;
+        } else if (controller.departementSelectedUpdateList.first ==
+            'Commercial') {
+          controller.fonctionList = controller.fonctionCommList;
           controller.servAffectList = controller.serviceAffectationCom;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationCom.first;
-        } else if (controller.departementSelectedList.first == 'Logistique') {
+        } else if (controller.departementSelectedUpdateList.first ==
+            'Logistique') {
           controller.fonctionList = controller.fonctionlogList;
           controller.servAffectList = controller.serviceAffectationLog;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -690,7 +705,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
       });
     } else {
       setState(() {
-        controller.departementSelectedList.remove(dataName);
+        controller.departementSelectedUpdateList.remove(dataName);
       });
     }
   }

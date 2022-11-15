@@ -25,34 +25,32 @@ class _FactureCreancePageState extends State<FactureCreancePage> {
   Widget build(BuildContext context) {
     final FactureCreanceController controller = Get.find();
     final ProfilController profilController = Get.find();
-    return SafeArea(
-      child: controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      body: controller.obx(
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              body: Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableFactureCreance(
-                              creanceFactureList: controller.creanceFactureList,
-                              controller: controller,
-                              profilController: profilController))),
-                ],
-              ))),
-    );
+          (data) => Row(
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: Container(
+                  margin: const EdgeInsets.only(
+                      top: p20, right: p20, left: p20, bottom: p8),
+                  decoration: const BoxDecoration(
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(20))),
+                  child: TableFactureCreance(
+                      creanceFactureList: controller.creanceFactureList,
+                      controller: controller,
+                      profilController: profilController))),
+        ],
+      )) ); 
   }
 }

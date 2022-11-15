@@ -1,20 +1,19 @@
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
-class DashobardNotifyController extends GetxController { 
+class DashobardNotifyController extends GetxController {
   final PersonnelsController personnelsController = Get.find();
   final SalaireController salaireController = Get.find();
   final TransportRestController transportRestController = Get.find();
 
-  List<PaiementSalaireModel> salaireList = []; 
- 
+  List<PaiementSalaireModel> salaireList = [];
+
   final _totalEnveloppeSalaire = 0.0.obs;
   double get totalEnveloppeSalaire => _totalEnveloppeSalaire.value;
 
- 
   final _agentsCount = 0.obs;
   int get agentsCount => _agentsCount.value;
 
@@ -24,9 +23,8 @@ class DashobardNotifyController extends GetxController {
   final _agentInactifCount = 0.obs;
   int get agentInactifCount => _agentInactifCount.value;
 
-    final _agentFemmeCount = 0.obs;
+  final _agentFemmeCount = 0.obs;
   int get agentFemmeCount => _agentFemmeCount.value;
-
 
   final _agentHommeCount = 0.obs;
   int get agentHommeCount => _agentHommeCount.value;
@@ -41,19 +39,21 @@ class DashobardNotifyController extends GetxController {
   }
 
 
- 
-  Future<void> getData() async {
+  void getData() async {
     _agentsCount.value = personnelsController.personnelsList.length;
-    _agentActifCount.value =
-        personnelsController.personnelsList
-        .where((element) => element.statutAgent == 'true').length;
-    _agentInactifCount.value =
-        personnelsController.personnelsList
-        .where((element) => element.statutAgent == 'false').length;
+    print("agents ${_agentsCount.value} ");
+    _agentActifCount.value = personnelsController.personnelsList
+        .where((element) => element.statutAgent == 'true')
+        .length;
+    _agentInactifCount.value = personnelsController.personnelsList
+        .where((element) => element.statutAgent == 'false')
+        .length;
     _agentFemmeCount.value = personnelsController.personnelsList
-        .where((element) => element.sexe == 'Femme').length;
+        .where((element) => element.sexe == 'Femme')
+        .length;
     _agentHommeCount.value = personnelsController.personnelsList
-        .where((element) => element.sexe == 'Homme').length;
+        .where((element) => element.sexe == 'Homme')
+        .length;
     _agentNonPaye.value = salaireController.paiementSalaireList
         .where((element) =>
             element.observation == 'false' &&
@@ -74,5 +74,7 @@ class DashobardNotifyController extends GetxController {
     for (var element in salaireList) {
       _totalEnveloppeSalaire.value += double.parse(element.salaire);
     }
+
+    update();
   }
 }

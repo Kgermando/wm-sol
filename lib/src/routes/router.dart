@@ -479,7 +479,8 @@ List<GetPage<dynamic>>? getPages = [
   // RH
   GetPage(
       name: RhRoutes.rhDashboard,
-      bindings: [DashboardNotifyBinding(),
+      bindings: [
+        DashboardNotifyBinding(),
         PersonnelBinding(),
         SalaireBinding(),
         TransportRestBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],

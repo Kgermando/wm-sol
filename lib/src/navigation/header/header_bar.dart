@@ -22,22 +22,22 @@ import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
-  final ProfilController userController = Get.find();
-  final UpdateController updateController = Get.put(UpdateController());
+  final ProfilController profilController = Get.find();
+  final UpdateController updateController = Get.find();
   final NotifyHeaderController notifyHeaderController =
       Get.put(NotifyHeaderController());
 
-  var departementList = (notifyHeaderController
+  List<dynamic> departementList = (notifyHeaderController
               .profilController.user.departement ==
           '-')
       ? ["Support"]
       : jsonDecode(notifyHeaderController.profilController.user.departement);
-  String departement = departementList.first;
+
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
 
-  final String firstLettter = userController.user.prenom[0];
-  final String firstLettter2 = userController.user.nom[0];
+  final String firstLettter = profilController.user.prenom[0];
+  final String firstLettter2 = profilController.user.nom[0];
   return AppBar(
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
@@ -104,7 +104,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                     : Obx(() => AutoSizeText(updateController.progressString,
                         maxLines: 1, style: const TextStyle(fontSize: 12.0)))
                 : Icon(Icons.download, color: Colors.red.shade700)),
-      if (departement == 'Exploitations')
+      if (departementList.contains('Exploitations'))
         IconButton(
             tooltip: 'Tâches',
             onPressed: () {
@@ -118,7 +118,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.work_outline),
             )),
-      if (departement == 'Commercial et Marketing')
+      if (departementList.contains('Commercial'))
         IconButton(
             tooltip: 'Panier',
             onPressed: () {
@@ -193,7 +193,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             InkWell(
               onTap: () {},
               child: AutoSizeText(
-                "${userController.user.prenom} ${userController.user.nom}",
+                "${profilController.user.prenom} ${profilController.user.nom}",
                 maxLines: 1,
                 style: bodyLarge,
               ),

@@ -401,7 +401,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText("${widget.personne.salaire} USD",
-                    textAlign: TextAlign.start, style: bodyMedium)),
+                    textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.blueGrey))),
         ],
       ),
     );

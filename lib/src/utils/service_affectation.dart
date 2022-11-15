@@ -73,6 +73,7 @@ class ServiceAffectation {
     'Supervision',
     'Marketing projet',
     'Experience utilisateurs',
+    'Marketing Promotionnelle',
     'Benchmark',
     'Support analytique',
     'Créativité',

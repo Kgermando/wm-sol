@@ -41,17 +41,17 @@ class _DetailPresenceState extends State<DetailPresence> {
     final PersonnelsController controllerPersonnels = Get.find();
 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.presenceModel.title),
+      drawer: const DrawerMenu(),
+      floatingActionButton: speedialWidget(controllerPresencePersonne),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.presenceModel.title),
-              drawer: const DrawerMenu(),
-              floatingActionButton: speedialWidget(controllerPresencePersonne),
-              body: Row(
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -171,8 +171,8 @@ class _DetailPresenceState extends State<DetailPresence> {
                             ),
                           )))
                 ],
-              ),
-            ));
+              )) ,
+            ); 
   }
 
   Widget deleteDialog(PresenceController controller) {

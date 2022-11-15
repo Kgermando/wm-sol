@@ -26,12 +26,7 @@ class _SuccursalePageState extends State<SuccursalePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
+    return  Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
@@ -94,7 +89,11 @@ class _SuccursalePageState extends State<SuccursalePage> {
 
                     // Get.toNamed(ComRoutes.comSuccursaleAdd);
                   }),
-              body: Row(
+              body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -111,8 +110,9 @@ class _SuccursalePageState extends State<SuccursalePage> {
                               succursaleList: controller.succursaleList,
                               controller: controller))),
                 ],
-              ))),
-    );
+              )) );
+    
+     
   }
 
   Widget nameWidget() {

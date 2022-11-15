@@ -25,43 +25,41 @@ class _RestitutionPageState extends State<RestitutionPage> {
   Widget build(BuildContext context) {
     final RestitutionController controller = Get.find();
 
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: controller.restitutionList.length,
-                                itemBuilder: (context, index) {
-                                  final data =
-                                      controller.restitutionList[index];
-                                  return restitutionItemWidget(data);
-                                }),
-                          )))
-                ],
-              ),
-            ));
+        (state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.restitutionList.length,
+                        itemBuilder: (context, index) {
+                          final data = controller.restitutionList[index];
+                          return restitutionItemWidget(data);
+                        }),
+                  )))
+        ],
+      )) ,
+    );
   }
 
   Widget restitutionItemWidget(RestitutionModel restitutionModel) {

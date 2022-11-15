@@ -25,16 +25,15 @@ class _FacturePageState extends State<FacturePage> {
   Widget build(BuildContext context) {
     final FactureController controller = Get.find();
     final ProfilController profilController = Get.find();
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
-              body: Row(
+              body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -52,7 +51,7 @@ class _FacturePageState extends State<FacturePage> {
                               controller: controller,
                               profilController: profilController))),
                 ],
-              ))),
-    );
+              )) );
+    
   }
 }

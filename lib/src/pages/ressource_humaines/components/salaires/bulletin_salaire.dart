@@ -39,38 +39,36 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   @override
   Widget build(BuildContext context) {
     
-    return SafeArea(
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(context, scaffoldKey, title,
-            "${widget.salaire.prenom} ${widget.salaire.nom}"),
-        drawer: const DrawerMenu(),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Column(
-                        children: [
-                          dataWidget(controller),
-                          const SizedBox(height: p30),
-                          approbationWidget(controller, profilController)
-                        ],
-                      )),
-                ))
-          ],
-        ),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title,
+          "${widget.salaire.prenom} ${widget.salaire.nom}"),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                controller: ScrollController(),
+                physics: const ScrollPhysics(),
+                child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        dataWidget(controller),
+                        const SizedBox(height: p30),
+                        approbationWidget(controller, profilController)
+                      ],
+                    )),
+              ))
+        ],
       ),
     );
   }

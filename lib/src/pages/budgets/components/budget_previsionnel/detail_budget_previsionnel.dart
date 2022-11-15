@@ -514,7 +514,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
     campaignCaisseList = campaignList
         .where((element) =>
             widget.departementBudgetModel.departement ==
-                "Commercial et Marketing" &&
+                "Marketing" &&
             element.created
                 .isBefore(widget.departementBudgetModel.periodeFin) &&
             element.ressource == "caisse")
@@ -522,7 +522,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
     campaignBanqueList = campaignList
         .where((element) =>
             widget.departementBudgetModel.departement ==
-                "Commercial et Marketing" &&
+                "Marketing" &&
             element.created
                 .isBefore(widget.departementBudgetModel.periodeFin) &&
             element.ressource == "banque")
@@ -530,9 +530,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
     campaignfinExterieurList = campaignList
         .where((element) =>
             widget.departementBudgetModel.departement ==
-                "Commercial et Marketing" &&
-            "Commercial et Marketing" ==
-                widget.departementBudgetModel.departement &&
+                "Marketing" &&  
             element.created
                 .isBefore(widget.departementBudgetModel.periodeFin) &&
             element.ressource == "finExterieur")

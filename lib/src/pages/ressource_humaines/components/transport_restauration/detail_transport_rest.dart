@@ -46,11 +46,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   @override
   Widget build(BuildContext context) {
-    return controllerAgent.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
                   widget.transportRestaurationModel.title),
@@ -66,7 +62,11 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                             detailAgentDialog(controller, controllerAgent);
                           },
                         ),
-              body: Row(
+              body: controllerAgent.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -174,8 +174,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                             )),
                       ))
                 ],
-              ),
-            ));
+              )) ,
+            ); 
   }
 
   alertDeleteDialog() {

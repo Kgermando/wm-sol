@@ -15,6 +15,7 @@ import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/regex.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -38,92 +39,104 @@ class _AddPersonnelState extends State<AddPersonnel> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: Row(
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        // border: Border.all(
-                        //   // color: Colors.red,
-                        // ),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: p20),
-                        child: Form(
-                          key: controller.formKey,
-                          child: Column(
-                            children: [
-                              const TitleWidget(title: "Nouveau profil"),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  fichierWidget(),
-                                ],
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
+                  children: [
+                    Visibility(
+                        visible: !Responsive.isMobile(context),
+                        child: const Expanded(flex: 1, child: DrawerMenu())),
+                    Expanded(
+                        flex: 5,
+                        child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                // border: Border.all(
+                                //   // color: Colors.red,
+                                // ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Form(
+                                  key: controller.formKey,
+                                  child: Column(
+                                    children: [
+                                      const TitleWidget(
+                                          title: "Nouveau profil"),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          fichierWidget(),
+                                        ],
+                                      ),
+                                      const SizedBox(height: p20),
+                                      ResponsiveChildWidget(
+                                          child1: nomWidget(),
+                                          child2: postNomWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: prenomWidget(),
+                                          child2: sexeWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: dateNaissanceWidget(),
+                                          child2: lieuNaissanceWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: nationaliteWidget(),
+                                          child2: adresseWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: emailWidget(),
+                                          child2: telephoneWidget()),
+                                      departmentWidget(),
+                                      servicesAffectationWidget(),
+                                      ResponsiveChildWidget(
+                                          child1: matriculeWidget(),
+                                          child2:
+                                              numeroSecuriteSocialeWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: fonctionOccupeWidget(),
+                                          child2: roleWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: typeContratWidget(),
+                                          child2: salaireWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: dateDebutContratWidget(),
+                                          child2:
+                                              (controller.typeContrat == 'CDD')
+                                                  ? dateFinContratWidget()
+                                                  : Container()),
+                                      competanceWidget(),
+                                      experienceWidget(),
+                                      const SizedBox(height: p20),
+                                      BtnWidget(
+                                          title: 'Soumettre',
+                                          isLoading: controller.isLoading,
+                                          press: () {
+                                            final form = controller
+                                                .formKey.currentState!;
+                                            if (form.validate()) {
+                                              controller.submit();
+                                            }
+                                            form.reset();
+                                          })
+                                    ],
+                                  ),
+                                ),
                               ),
-                              const SizedBox(height: p20),
-                              ResponsiveChildWidget(
-                                  child1: nomWidget(), child2: postNomWidget()),
-                              ResponsiveChildWidget(
-                                  child1: prenomWidget(), child2: sexeWidget()),
-                              ResponsiveChildWidget(
-                                  child1: dateNaissanceWidget(),
-                                  child2: lieuNaissanceWidget()),
-                              ResponsiveChildWidget(
-                                  child1: nationaliteWidget(),
-                                  child2: adresseWidget()),
-                              ResponsiveChildWidget(
-                                  child1: emailWidget(),
-                                  child2: telephoneWidget()),
-                              departmentWidget(),
-                              servicesAffectationWidget(),
-                              ResponsiveChildWidget(
-                                  child1: matriculeWidget(),
-                                  child2: numeroSecuriteSocialeWidget()),
-                              ResponsiveChildWidget(
-                                  child1: fonctionOccupeWidget(),
-                                  child2: roleWidget()),
-                              ResponsiveChildWidget(
-                                  child1: typeContratWidget(),
-                                  child2: salaireWidget()),
-                              ResponsiveChildWidget(
-                                  child1: dateDebutContratWidget(),
-                                  child2: (controller.typeContrat == 'CDD')
-                                      ? dateFinContratWidget()
-                                      : Container()),
-                              competanceWidget(),
-                              experienceWidget(),
-                              const SizedBox(height: p20),
-                              BtnWidget(
-                                  title: 'Soumettre',
-                                  isLoading: controller.isLoading,
-                                  press: () {
-                                    final form =
-                                        controller.formKey.currentState!;
-                                    if (form.validate()) {
-                                      controller.submit();
-                                    }
-                                    form.reset();
-                                  })
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
-          ],
-        ));
+                        )),
+                  ],
+                )) );
   }
 
   Widget fichierWidget() {
@@ -603,7 +616,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         } else if (controller.departementSelectedList.first == 'Finances') {
           controller.matricule =
               "${prefix}FIN$date-${widget.personnelList.length + 1}";
-          controller.fonctionList = controller.fonctionfinList;
+          controller.fonctionList = controller.fonctionFinList;
           controller.servAffectList = controller.serviceAffectationFin;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
@@ -612,7 +625,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
             'Comptabilites') {
           controller.matricule =
               "${prefix}CPT$date-${widget.personnelList.length + 1}";
-          controller.fonctionList = controller.fonctioncompteList;
+          controller.fonctionList = controller.fonctionComptabiliteList;
           controller.servAffectList = controller.serviceAffectationCompt;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
@@ -620,7 +633,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         } else if (controller.departementSelectedList.first == 'Budgets') {
           controller.matricule =
               "${prefix}BUD$date-${widget.personnelList.length + 1}";
-          controller.fonctionList = controller.fonctionbudList;
+          controller.fonctionList = controller.fonctionBudList;
           controller.servAffectList = controller.serviceAffectationBud;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
@@ -638,7 +651,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
             'Exploitations') {
           controller.matricule =
               "${prefix}EXP$date-${widget.personnelList.length + 1}";
-          controller.fonctionList = controller.fonctionexpList;
+          controller.fonctionList = controller.fonctionExpList;
           controller.servAffectList = controller.serviceAffectationEXp;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
@@ -646,7 +659,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         } else if (controller.departementSelectedList.first == 'Marketing') {
           controller.matricule =
               "${prefix}MKT$date-${widget.personnelList.length + 1}";
-          controller.fonctionList = controller.fonctioncommList;
+          controller.fonctionList = controller.fonctionMarketingList;
           controller.servAffectList = controller.serviceAffectationMark;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
@@ -654,7 +667,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
         } else if (controller.departementSelectedList.first == 'Commercial') {
           controller.matricule =
               "${prefix}COM$date-${widget.personnelList.length + 1}";
-          controller.fonctionList = controller.fonctioncommList;
+          controller.fonctionList = controller.fonctionCommList;
           controller.servAffectList = controller.serviceAffectationCom;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =

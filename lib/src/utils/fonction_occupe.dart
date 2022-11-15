@@ -42,7 +42,7 @@ class FonctionOccupee {
     'Stagiaire academique'
   ];
 
-  List<String> compteDropdown = [
+  List<String> comptabiliteDropdown = [
     'Directeur de departement',
     'Chef de service',
     'Agent',
@@ -50,6 +50,16 @@ class FonctionOccupee {
     'Stagiaire professionnel',
     'Stagiaire academique'
   ];
+
+  List<String> marketingDropdown = [
+    'Directeur de departement',
+    'Chef de service',
+    'Agent',
+    'Expert',
+    'Stagiaire professionnel',
+    'Stagiaire academique'
+  ];
+
 
   List<String> expDropdown = [
     'Directeur de departement',

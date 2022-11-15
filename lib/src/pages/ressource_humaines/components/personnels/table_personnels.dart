@@ -29,9 +29,10 @@ class _TablePersonnelsState extends State<TablePersonnels> {
   @override
   initState() {
     agentsColumn();
-    agentsRow();
+    agentsRow().then((value) => stateManager!.setShowLoading(false));
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
-        stateManager!.notifyListeners();
+        stateManager!.setShowLoading(true);
       },
       createHeader: (PlutoGridStateManager header) {
         return Row(

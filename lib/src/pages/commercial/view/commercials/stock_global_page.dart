@@ -20,18 +20,14 @@ class StockGlobalPage extends StatefulWidget {
 class _StockGlobalPageState extends State<StockGlobalPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
-  String subTitle = "Stocks global";
+  String subTitle = "Stocks Global";
 
   @override
   Widget build(BuildContext context) {
     final StockGlobalController controller = Get.find();
     final ProfilController profilController = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
@@ -43,7 +39,11 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
                   Get.toNamed(ComRoutes.comStockGlobalAdd);
                 },
               ),
-              body: Row(
+              body: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -72,7 +72,8 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
                                 }),
                           )))
                 ],
-              ),
-            ));
+              )) ,
+            );
+     
   }
 }

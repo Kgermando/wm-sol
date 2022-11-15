@@ -25,54 +25,53 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: (controller.cartList.isNotEmpty)
+          ? speedialWidget(controller)
+          : Container(),
+      bottomNavigationBar: SizedBox(
+          width: MediaQuery.of(context).size.width / 2,
+          child: totalCart(controller)),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Le panier est vide.'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: (controller.cartList.isNotEmpty)
-                  ? speedialWidget(controller)
-                  : Container(),
-              bottomNavigationBar: SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: totalCart(controller)),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: controller.cartList.length,
-                                    itemBuilder: (context, index) {
-                                      final cart = controller.cartList[index];
-                                      return CartItemWidget(
-                                          cart: cart, controller: controller);
-                                    }),
-                                const SizedBox(height: p50),
-                              ],
-                            ),
-                          )))
-                ],
-              ),
-            ));
+        (state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.cartList.length,
+                            itemBuilder: (context, index) {
+                              final cart = controller.cartList[index];
+                              return CartItemWidget(
+                                  cart: cart, controller: controller);
+                            }),
+                        const SizedBox(height: p50),
+                      ],
+                    ),
+                  )))
+        ],
+      )) ,
+    );
   }
 
   Widget totalCart(CartController controller) {

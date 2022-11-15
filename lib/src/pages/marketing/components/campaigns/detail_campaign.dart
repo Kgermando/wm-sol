@@ -107,7 +107,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                           widget.campaignModel.typeProduit,
                                           tachesController.tachesList.length,
                                           widget.campaignModel.id!,
-                                          'Commercial et Marketing');
+                                          'Marketing');
                                       form.reset();
                                     }
                                   },
@@ -210,12 +210,12 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                                 .campaignModel.approbationDD,
                                             id: widget.campaignModel.id!,
                                             departement:
-                                                'Commercial et Marketing'),
+                                                'Marketing'),
                                         TableTachesDetail(
                                             tachesController: tachesController,
                                             id: widget.campaignModel.id!,
                                             departement:
-                                                'Commercial et Marketing'),
+                                                'Marketing'),
                                         const SizedBox(height: p20),
                                         ApprobationCampaign(
                                             campaignModel: widget.campaignModel,

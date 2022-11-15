@@ -48,10 +48,12 @@ class Dropdown {
     'Logistique',
     'Actionnaire'
   ]; 
+
+
   List<String> departementBudget = [ 
     'Ressources Humaines',
     'Exploitations',
-    'Commercial et Marketing',
+    'Marketing',
     'Logistique'
   ];
  

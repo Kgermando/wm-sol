@@ -19,17 +19,12 @@ class ProduitModelPage extends StatefulWidget {
 class _ProduitModelPageState extends State<ProduitModelPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
-  String subTitle = "Produit modèle";
+  String subTitle = "Produit Modèle";
 
   @override
   Widget build(BuildContext context) {
     final ProduitModelController controller = Get.find();
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
@@ -40,7 +35,11 @@ class _ProduitModelPageState extends State<ProduitModelPage> {
                   onPressed: () {
                     Get.toNamed(ComRoutes.comProduitModelAdd);
                   }),
-              body: Row(
+              body:controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -57,7 +56,10 @@ class _ProduitModelPageState extends State<ProduitModelPage> {
                               produitModelList: controller.produitModelList,
                               controller: controller))),
                 ],
-              ))),
-    );
+              )
+    ) );
+    
+    
+    
   }
 }
