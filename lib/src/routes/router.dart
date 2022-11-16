@@ -265,6 +265,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/bindings/performence_bi
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/performence_note_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/personnel_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/presence_binding.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/bindings/presence_personne_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/salaire_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/transport_rest_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/transport_rest_personnel_binding.dart';
@@ -511,7 +512,13 @@ List<GetPage<dynamic>>? getPages = [
       }),
   GetPage(
       name: RhRoutes.rhPersonnelsDetail,
-      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [PersonnelBinding(), 
+        PerformenceBinding(),
+        PerformenceNoteBinding(), 
+        UsersBinding(), 
+        PresenceBinding(),
+        PrersencePersonneBinding(),
+        ProfilBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return DetailPersonne(personne: personne);

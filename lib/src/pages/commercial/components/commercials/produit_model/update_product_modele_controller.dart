@@ -44,86 +44,82 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.productModel.idProduct),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Form(
-                              key: controller.formKey,
-                              child: Column(
-                                children: [
-                                  Card(
-                                    elevation: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(p20),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleWidget(
-                                              title: 'Produit Modèle'),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          categorieWidget(controller),
-                                          ResponsiveChildWidget(
-                                              child1: sousCategorie1Widget(
-                                                  controller),
-                                              child2: sousCategorie2Widget(
-                                                  controller)),
-                                          ResponsiveChildWidget(
-                                              child1: sousCategorie3Widget(
-                                                  controller),
-                                              child2: sousCategorie4Widget(
-                                                  controller)),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          BtnWidget(
-                                              title: 'Soumettre',
-                                              isLoading: controller.isLoading,
-                                              press: () {
-                                                final form = controller
-                                                    .formKey.currentState!;
-                                                if (form.validate()) {
-                                                  controller.submitUpdate(
-                                                      widget.productModel);
-                                                  form.reset();
-                                                }
-                                              })
-                                        ],
-                                      ),
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.productModel.idProduct),
+        drawer: const DrawerMenu(),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                    controller: ScrollController(),
+                    physics: const ScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: Form(
+                        key: controller.formKey,
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(p20),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    const TitleWidget(
+                                        title: 'Produit Modèle'),
+                                    const SizedBox(
+                                      height: p20,
                                     ),
-                                  )
-                                ],
+                                    categorieWidget(controller),
+                                    ResponsiveChildWidget(
+                                        child1: sousCategorie1Widget(
+                                            controller),
+                                        child2: sousCategorie2Widget(
+                                            controller)),
+                                    ResponsiveChildWidget(
+                                        child1: sousCategorie3Widget(
+                                            controller),
+                                        child2: sousCategorie4Widget(
+                                            controller)),
+                                    const SizedBox(
+                                      height: p20,
+                                    ),
+                                    BtnWidget(
+                                        title: 'Soumettre',
+                                        isLoading: controller.isLoading,
+                                        press: () {
+                                          final form = controller
+                                              .formKey.currentState!;
+                                          if (form.validate()) {
+                                            controller.submitUpdate(
+                                                widget.productModel);
+                                            form.reset();
+                                          }
+                                        })
+                                  ],
+                                ),
                               ),
-                            ),
-                          )))
-                ],
-              ),
-            ));
+                            )
+                          ],
+                        ),
+                      ),
+                    )))
+          ],
+        ),
+      );
   }
 
   Widget categorieWidget(ProduitModelController controller) {

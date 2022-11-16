@@ -21,8 +21,7 @@ class DashboardCommPage extends StatefulWidget {
       _DashboardCommPageState();
 }
 
-class _DashboardCommPageState
-    extends State<DashboardCommPage> {
+class _DashboardCommPageState extends State<DashboardCommPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
   String subTitle = "Dashboard";
@@ -62,14 +61,14 @@ class _DashboardCommPageState
                                   alignment: WrapAlignment.spaceEvenly,
                                   children: [
                                     DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(ComRoutes.comVente);
-                                        },
-                                        number:
-                                            '${NumberFormat.decimalPattern('fr').format(controller.sumVente)} \$',
-                                        title: 'Ventes',
-                                        icon: Icons.shopping_cart,
-                                        color: Colors.purple.shade700),
+                                      gestureTapCallback: () {
+                                        Get.toNamed(ComRoutes.comVente);
+                                      },
+                                      number:
+                                          '${NumberFormat.decimalPattern('fr').format(controller.sumVente)} \$',
+                                      title: 'Ventes',
+                                      icon: Icons.shopping_cart,
+                                      color: Colors.purple.shade700),
                                     DashNumberWidget(
                                         gestureTapCallback: () {
                                           Get.toNamed(ComRoutes.comVente);

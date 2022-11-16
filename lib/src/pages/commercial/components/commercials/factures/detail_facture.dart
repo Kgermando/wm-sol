@@ -32,22 +32,16 @@ class _DetailFactureState extends State<DetailFacture> {
   @override
   Widget build(BuildContext context) {
     final FactureController controller = Get.find();
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, widget.factureCartModel.client),
               drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              ),
-              body: Row(
+              body: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -132,8 +126,8 @@ class _DetailFactureState extends State<DetailFacture> {
                             ),
                           )))
                 ],
-              ),
-            ));
+              ),) 
+            ); 
   }
 
   Widget dataWidget() {

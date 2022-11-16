@@ -11,6 +11,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
+// Ce format n'est pas utiliser
 class FacturePDF {
   static Future<File> generate(
       FactureCartModel creanceCartModel, monnaie) async {

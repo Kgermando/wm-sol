@@ -1,9 +1,11 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
+import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:intl/intl.dart';
@@ -11,30 +13,29 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
-// Ce format n'est pas utiliser
-class CreancePDF {
+class FactureCartPDF {
   static Future<File> generate(
-      CreanceCartModel creanceCartModel, monnaie) async {
+      FactureCartModel factureCartModel, monnaie) async {
     final pdf = Document();
 
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
       build: (context) => [
-        buildHeader(creanceCartModel, user),
+        buildHeader(factureCartModel, user, monnaie),
         SizedBox(height: 3 * PdfPageFormat.cm),
-        buildTitle(creanceCartModel),
-        buildInvoice(creanceCartModel, monnaie),
+        buildTitle(factureCartModel),
+        buildInvoice(factureCartModel, monnaie),
         Divider(),
-        buildTotal(creanceCartModel, monnaie),
+        buildTotal(factureCartModel, monnaie),
       ],
       footer: (context) => buildFooter(user),
     ));
-    return PdfApi.saveDocument(name: 'creance', pdf: pdf);
+    return PdfApi.saveDocument(name: 'facture', pdf: pdf);
   }
 
   static Widget buildHeader(
-          CreanceCartModel creanceCartModel, UserModel user) =>
+          FactureCartModel factureCartModel, UserModel user, monnaie) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,7 +49,7 @@ class CreancePDF {
                 width: 50,
                 child: BarcodeWidget(
                   barcode: Barcode.qrCode(),
-                  data: user.succursale,
+                  data: "\$",
                 ),
               ),
             ],
@@ -59,7 +60,7 @@ class CreancePDF {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildCustomerAddress(user),
-              buildInvoiceInfo(creanceCartModel, user),
+              buildInvoiceInfo(factureCartModel, user, monnaie),
             ],
           ),
         ],
@@ -75,20 +76,22 @@ class CreancePDF {
       );
 
   static Widget buildInvoiceInfo(
-      CreanceCartModel creanceCartModel, UserModel user) {
+      FactureCartModel factureCartModel, UserModel user, monnaie) {
     final titles = <String>[
       'RCCM:',
       'N° Impôt:',
       'ID Nat.:',
-      'Créance numero:',
-      'Créance prise le:',
+      'Facture numero:',
+      'Date de payement:',
+      'Monnaie:',
     ];
     final data = <String>[
       InfoSystem().rccm(),
       InfoSystem().nImpot(),
       InfoSystem().iDNat(),
-      creanceCartModel.client,
-      DateFormat("dd/MM/yy HH:mm").format(creanceCartModel.created),
+      factureCartModel.client,
+      DateFormat("dd/MM/yy HH:mm").format(factureCartModel.created),
+      monnaie
     ];
 
     return Column(
@@ -108,15 +111,15 @@ class CreancePDF {
           Text(user.succursale.toUpperCase(),
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
-          Text("Adresse ...."),
+          Text(InfoSystem().nameAdress()),
         ],
       );
 
-  static Widget buildTitle(CreanceCartModel creanceCartModel) => Column(
+  static Widget buildTitle(FactureCartModel factureCartModel) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Facture créance'.toUpperCase(),
+            'FACTURE',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           // SizedBox(height: 0.8 * PdfPageFormat.cm),
@@ -125,7 +128,7 @@ class CreancePDF {
         ],
       );
 
-  static Widget buildInvoice(CreanceCartModel creanceCartModel, monnaie) {
+  static Widget buildInvoice(FactureCartModel creanceCartModel, monnaie) {
     final headers = ['Quantité', 'Designation', 'PVU', 'TVA', 'Montant'];
 
     final jsonList = jsonDecode(creanceCartModel.cart) as List;
@@ -178,9 +181,8 @@ class CreancePDF {
     );
   }
 
-  static Widget buildTotal(CreanceCartModel creanceCartModel, monnaie) {
-    // ignore: prefer_typing_uninitialized_variables, unused_local_variable
-    var tva;
+  static Widget buildTotal(FactureCartModel creanceCartModel, monnaie) {
+    var tva = 0.0;
     double sumCart = 0;
     final jsonList = jsonDecode(creanceCartModel.cart) as List;
 
@@ -190,7 +192,7 @@ class CreancePDF {
       cartItemList.add(CartModel.fromJson(element));
     }
 
-    for (var item in jsonList) {
+    for (var item in cartItemList) {
       // TVA
       tva = double.parse(item.tva);
 

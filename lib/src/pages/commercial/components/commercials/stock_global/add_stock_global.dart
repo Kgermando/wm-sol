@@ -29,11 +29,7 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
   @override
   Widget build(BuildContext context) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
@@ -118,7 +114,7 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
                           )))
                 ],
               ),
-            ));
+            );
   }
 
   Widget modeAchatField() {

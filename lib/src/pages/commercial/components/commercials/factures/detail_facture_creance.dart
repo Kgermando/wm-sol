@@ -33,108 +33,102 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
   Widget build(BuildContext context) {
     final FactureCreanceController controller = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.creanceCartModel.client),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+    return Scaffold(
+          key: scaffoldKey,
+          appBar: headerBar(
+              context, scaffoldKey, title, widget.creanceCartModel.client),
+          drawer: const DrawerMenu(),
+          body: controller.obx(
+    onLoading: loadingPage(context),
+    onEmpty: const Text('Aucune donnée'),
+    onError: (error) => loadingError(context, error!),
+    (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        TitleWidget(
+                                            title:
+                                                'Facture n° ${widget.creanceCartModel.client}'),
+                                        Column(
                                           children: [
-                                            TitleWidget(
-                                                title:
-                                                    'Facture n° ${widget.creanceCartModel.client}'),
-                                            Column(
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    PrintWidget(
-                                                        tooltip:
-                                                            'Imprimer le document',
-                                                        onPressed: () async {
-                                                          final pdfFile =
-                                                              await CreanceCartPDF
-                                                                  .generate(
-                                                                      widget
-                                                                          .creanceCartModel,
-                                                                      "\$");
-                                                          PdfApi.openFile(
-                                                              pdfFile);
-                                                        })
-                                                  ],
-                                                ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yy HH:mm")
-                                                        .format(widget
-                                                            .creanceCartModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                PrintWidget(
+                                                    tooltip:
+                                                        'Imprimer le document',
+                                                    onPressed: () async {
+                                                      final pdfFile =
+                                                          await CreanceCartPDF
+                                                              .generate(
+                                                                  widget
+                                                                      .creanceCartModel,
+                                                                  "\$");
+                                                      PdfApi.openFile(
+                                                          pdfFile);
+                                                    })
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yy HH:mm")
+                                                    .format(widget
+                                                        .creanceCartModel
+                                                        .created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        Divider(
-                                          color: mainColor,
-                                        ),
-                                        dataWidget(),
-                                        Divider(
-                                          color: mainColor,
-                                        ),
-                                        TableCreanceCart(
-                                            factureList: jsonDecode(widget
-                                                .creanceCartModel
-                                                .cart) as List),
-                                        const SizedBox(height: p20),
-                                        totalCart()
+                                        )
                                       ],
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )))
-                ],
-              ),
-            ));
+                                    Divider(
+                                      color: mainColor,
+                                    ),
+                                    dataWidget(),
+                                    Divider(
+                                      color: mainColor,
+                                    ),
+                                    TableCreanceCart(
+                                        factureList: jsonDecode(widget
+                                            .creanceCartModel
+                                            .cart) as List),
+                                    const SizedBox(height: p20),
+                                    totalCart()
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )))
+            ],
+          ),) 
+        ); 
   }
 
   Widget dataWidget() {

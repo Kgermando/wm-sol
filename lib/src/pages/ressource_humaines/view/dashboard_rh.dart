@@ -20,7 +20,7 @@ class DashboardRH extends StatefulWidget {
 }
 
 class _DashboardRHState extends State<DashboardRH> {
-  // final DashobardNotifyController controller = Get.find();
+  final DashobardNotifyController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Dashboard";
@@ -59,101 +59,100 @@ class _DashboardRHState extends State<DashboardRH> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: GetX(builder: 
-          (DashobardNotifyController controller) => Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, bottom: p8, right: p20, left: p20),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Wrap(
-                                  alignment: WrapAlignment.spaceEvenly,
-                                  children: [
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentsCount}',
-                                        title: 'Total agents',
-                                        icon: Icons.group,
-                                        color: Colors.blue.shade700),
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentActifCount}',
-                                        title: 'Agents Actifs',
-                                        icon: Icons.person,
-                                        color: Colors.green.shade700),
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentInactifCount}',
-                                        title: 'Agents inactifs',
-                                        icon: Icons.person_off,
-                                        color: Colors.red.shade700),
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentFemmeCount}',
-                                        title: 'Femmes',
-                                        icon: Icons.female,
-                                        color: Colors.purple.shade700),
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentHommeCount}',
-                                        title: 'Hommes',
-                                        icon: Icons.male,
-                                        color: Colors.grey.shade700),
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPaiement);
-                                        },
-                                        number:
-                                            "${NumberFormat.decimalPattern('fr').format(controller.totalEnveloppeSalaire)} \$",
-                                        title: 'Enveloppe salariale',
-                                        icon: Icons.monetization_on,
-                                        color: Colors.teal.shade700),
-                                    DashNumberRHWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(RhRoutes.rhPersonnelsPage);
-                                        },
-                                        number: '${controller.agentNonPaye}',
-                                        title: 'Non payés $isMonth',
-                                        icon: Icons.person_remove,
-                                        color: Colors.pink.shade700),
-                                  ],
-                                ),
-                                const SizedBox(height: p20),
-                                ResponsiveChildWidget(
-                                    child1: DashRHPieWidget(
-                                        controller:
-                                            controller.personnelsController),
-                                    child2: const CalendarWidget())
-                              ]),
-                        )),
-                  ))
-            ],
-          ))
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: p20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                alignment: WrapAlignment.spaceEvenly,
+                                children: [
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentsCount}',
+                                      title: 'Total agents',
+                                      icon: Icons.group,
+                                      color: Colors.blue.shade700)) ,
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentActifCount}',
+                                      title: 'Agents Actifs',
+                                      icon: Icons.person,
+                                      color: Colors.green.shade700))  ,
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentInactifCount}',
+                                      title: 'Agents inactifs',
+                                      icon: Icons.person_off,
+                                      color: Colors.red.shade700))  ,
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentFemmeCount}',
+                                      title: 'Femmes',
+                                      icon: Icons.female,
+                                      color: Colors.purple.shade700))  ,
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentHommeCount}',
+                                      title: 'Hommes',
+                                      icon: Icons.male,
+                                      color: Colors.grey.shade700))  ,
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPaiement);
+                                      },
+                                      number:
+                                          "${NumberFormat.decimalPattern('fr').format(controller.totalEnveloppeSalaire)} \$",
+                                      title: 'Enveloppe salariale',
+                                      icon: Icons.monetization_on,
+                                      color: Colors.teal.shade700))  ,
+                                  Obx(() => DashNumberRHWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                      },
+                                      number: '${controller.agentNonPaye}',
+                                      title: 'Non payés $isMonth',
+                                      icon: Icons.person_remove,
+                                      color: Colors.pink.shade700))  ,
+                                ],
+                              ),
+                              const SizedBox(height: p20),
+                              ResponsiveChildWidget(
+                                  child1: DashRHPieWidget(
+                                      controller:
+                                          controller.personnelsController),
+                                  child2: const CalendarWidget())
+                            ]),
+                      )),
+                ))
+          ],
+        )
       );
   }
 }

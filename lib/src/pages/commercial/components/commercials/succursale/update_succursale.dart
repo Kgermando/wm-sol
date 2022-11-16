@@ -35,87 +35,83 @@ class _UpdateSuccursaleState extends State<UpdateSuccursale> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.succursaleModel.name),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Form(
-                                      key: controller.formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: const [
-                                              TitleWidget(
-                                                  title: "Ajout Succursale")
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          ResponsiveChildWidget(
-                                              child1: nameWidget(controller),
-                                              child2:
-                                                  provinceWidget(controller)),
-                                          adresseWidget(controller),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          BtnWidget(
-                                              title: 'Soumettre',
-                                              isLoading: controller.isLoading,
-                                              press: () {
-                                                final form = controller
-                                                    .formKey.currentState!;
-                                                if (form.validate()) {
-                                                  controller.submitUpdate(
-                                                      widget.succursaleModel);
-                                                  form.reset();
-                                                }
-                                              })
-                                        ],
-                                      ),
-                                    ),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.succursaleModel.name),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: p20),
+                            child: Form(
+                              key: controller.formKey,
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    children: const [
+                                      TitleWidget(
+                                          title: "Ajout Succursale")
+                                    ],
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  ResponsiveChildWidget(
+                                      child1: nameWidget(controller),
+                                      child2:
+                                          provinceWidget(controller)),
+                                  adresseWidget(controller),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  BtnWidget(
+                                      title: 'Soumettre',
+                                      isLoading: controller.isLoading,
+                                      press: () {
+                                        final form = controller
+                                            .formKey.currentState!;
+                                        if (form.validate()) {
+                                          controller.submitUpdate(
+                                              widget.succursaleModel);
+                                          form.reset();
+                                        }
+                                      })
+                                ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget nameWidget(SuccursaleController controller) {

@@ -36,11 +36,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
 
     int userRole = int.parse(profilController.user.role);
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, widget.succursaleModel.name),
@@ -123,7 +119,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                           )))
                 ],
               ),
-            ));
+            );
   }
 
   Widget deleteButton(SuccursaleController controller) {

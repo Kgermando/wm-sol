@@ -32,11 +32,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
     final BonLivraisonController controller = Get.find();
     final ProfilController profilController = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
                   widget.bonLivraisonModel.idProduct),
@@ -109,7 +105,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                           )))
                 ],
               ),
-            ));
+            );
   }
 
   Widget dataWidget(

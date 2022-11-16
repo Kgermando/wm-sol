@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
@@ -11,22 +13,25 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
-// Ce format n'est pas utiliser
-class CreancePDF {
+// Local import
+// import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
+//     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
+
+class CreanceCartPDF {
   static Future<File> generate(
-      CreanceCartModel creanceCartModel, monnaie) async {
+      CreanceCartModel factureCartModel, monnaie) async {
     final pdf = Document();
 
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
       build: (context) => [
-        buildHeader(creanceCartModel, user),
+        buildHeader(factureCartModel, user, monnaie),
         SizedBox(height: 3 * PdfPageFormat.cm),
-        buildTitle(creanceCartModel),
-        buildInvoice(creanceCartModel, monnaie),
+        buildTitle(factureCartModel),
+        buildInvoice(factureCartModel, monnaie),
         Divider(),
-        buildTotal(creanceCartModel, monnaie),
+        buildTotal(factureCartModel, monnaie),
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -34,7 +39,7 @@ class CreancePDF {
   }
 
   static Widget buildHeader(
-          CreanceCartModel creanceCartModel, UserModel user) =>
+          CreanceCartModel factureCartModel, UserModel user, monnaie) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,7 +53,7 @@ class CreancePDF {
                 width: 50,
                 child: BarcodeWidget(
                   barcode: Barcode.qrCode(),
-                  data: user.succursale,
+                  data: "\$",
                 ),
               ),
             ],
@@ -59,7 +64,7 @@ class CreancePDF {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildCustomerAddress(user),
-              buildInvoiceInfo(creanceCartModel, user),
+              buildInvoiceInfo(factureCartModel, user, monnaie),
             ],
           ),
         ],
@@ -75,20 +80,22 @@ class CreancePDF {
       );
 
   static Widget buildInvoiceInfo(
-      CreanceCartModel creanceCartModel, UserModel user) {
+      CreanceCartModel factureCartModel, UserModel user, monnaie) {
     final titles = <String>[
       'RCCM:',
       'N° Impôt:',
       'ID Nat.:',
-      'Créance numero:',
-      'Créance prise le:',
+      'Facture numero:',
+      'Date de payement:',
+      'Monnaie:',
     ];
     final data = <String>[
       InfoSystem().rccm(),
       InfoSystem().nImpot(),
       InfoSystem().iDNat(),
-      creanceCartModel.client,
-      DateFormat("dd/MM/yy HH:mm").format(creanceCartModel.created),
+      factureCartModel.client,
+      DateFormat("dd/MM/yy HH:mm").format(factureCartModel.created),
+      monnaie
     ];
 
     return Column(
@@ -108,11 +115,11 @@ class CreancePDF {
           Text(user.succursale.toUpperCase(),
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
-          Text("Adresse ...."),
+          Text(InfoSystem().nameAdress()),
         ],
       );
 
-  static Widget buildTitle(CreanceCartModel creanceCartModel) => Column(
+  static Widget buildTitle(CreanceCartModel factureCartModel) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -179,8 +186,7 @@ class CreancePDF {
   }
 
   static Widget buildTotal(CreanceCartModel creanceCartModel, monnaie) {
-    // ignore: prefer_typing_uninitialized_variables, unused_local_variable
-    var tva;
+    var tva = 0.0;
     double sumCart = 0;
     final jsonList = jsonDecode(creanceCartModel.cart) as List;
 
@@ -190,7 +196,7 @@ class CreancePDF {
       cartItemList.add(CartModel.fromJson(element));
     }
 
-    for (var item in jsonList) {
+    for (var item in cartItemList) {
       // TVA
       tva = double.parse(item.tva);
 
