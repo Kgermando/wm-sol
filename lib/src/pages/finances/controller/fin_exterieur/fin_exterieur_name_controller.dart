@@ -26,7 +26,6 @@ class FinExterieurNameController extends GetxController
     getList();
   }
 
- 
   @override
   void dispose() {
     nomCompletController.dispose();
@@ -34,6 +33,13 @@ class FinExterieurNameController extends GetxController
     idNatController.dispose();
     addresseController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    nomCompletController.clear();
+    rccmController.clear();
+    idNatController.clear();
+    addresseController.clear();
   }
 
   void getList() async {
@@ -82,6 +88,7 @@ class FinExterieurNameController extends GetxController
               (addresseController.text == '') ? '-' : addresseController.text,
           created: DateTime.now());
       await finExterieurNameApi.insertData(dataItem).then((value) {
+        clear();
         finExterieurNameList.clear();
         getList();
         Get.back();
@@ -116,6 +123,7 @@ class FinExterieurNameController extends GetxController
               : addresseController.text,
           created: data.created);
       await finExterieurNameApi.updateData(dataItem).then((value) {
+        clear();
         finExterieurNameList.clear();
         getList();
         Get.back();

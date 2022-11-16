@@ -43,7 +43,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
     super.onInit();
     getList();
   }
- 
+
   @override
   void dispose() {
     nomCompletController.dispose();
@@ -53,6 +53,15 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
     motifDGController.dispose();
     motifDDController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    nomCompletController.clear();
+    pieceJustificativeController.clear();
+    libelleController.clear();
+    montantController.clear();
+    motifDGController.clear();
+    motifDDController.clear();
   }
 
   void getList() async {
@@ -125,6 +134,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
           motifDD: '-',
           signatureDD: '-');
       await detteApi.insertData(dataItem).then((value) {
+        clear();
         detteList.clear();
         getList();
         Get.back();
@@ -163,6 +173,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await detteApi.updateData(dataItem).then((value) {
+        clear();
         detteList.clear();
         getList();
         Get.back();
@@ -201,6 +212,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await detteApi.updateData(dataItem).then((value) {
+        clear();
         detteList.clear();
         // getList();
         Get.back();
@@ -240,6 +252,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await detteApi.updateData(dataItem).then((value) {
+        clear();
         detteList.clear();
         getList();
         Get.back();
@@ -279,6 +292,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await detteApi.updateData(dataItem).then((value) {
+        clear();
         detteList.clear();
         getList();
         Get.back();

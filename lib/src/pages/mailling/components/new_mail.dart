@@ -223,7 +223,7 @@ class _NewMailState extends State<NewMail> {
   Widget fichierWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: controller.isUploading
+        child: Obx(() => controller.isUploading
             ? const SizedBox(height: 50.0, width: 50.0, child: LinearProgressIndicator())
             : TextButton.icon(
                 onPressed: () async {
@@ -257,6 +257,6 @@ class _NewMailState extends State<NewMail> {
                             .bodyLarge!
                             .copyWith(color: Colors.green.shade700))
                     : Text("Pièce jointe",
-                        style: Theme.of(context).textTheme.bodyLarge)));
+                        style: Theme.of(context).textTheme.bodyLarge)) ));
   }
 }

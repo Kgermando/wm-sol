@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 
 class UpdateNav extends StatelessWidget {
   const UpdateNav(
-      {super.key, required this.currentRoute, required this.profilController});
+      {super.key, required this.currentRoute, required this.user});
   final String currentRoute;
-  final ProfilController profilController;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {

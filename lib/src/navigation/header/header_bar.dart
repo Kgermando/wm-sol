@@ -22,8 +22,8 @@ import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
-  final ProfilController profilController = Get.find();
-  final UpdateController updateController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
+  final UpdateController updateController = Get.put(UpdateController());
   final NotifyHeaderController notifyHeaderController =
       Get.put(NotifyHeaderController());
 
@@ -88,14 +88,14 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           ),
     actions: [
       if (Platform.isWindows &&
-          updateController.updateList.isNotEmpty &&
+          updateController.updateVersionList.isNotEmpty &&
           updateController.sumVersionCloud > updateController.sumLocalVersion)
         IconButton(
             iconSize: 40,
             tooltip: 'Téléchargement',
             onPressed: () {
               updateController.downloadNetworkSoftware(
-                  url: updateController.updateList.last.urlUpdate);
+                  url: updateController.updateVersionList.last.urlUpdate);
             },
             icon: (updateController.downloading)
                 ? (updateController.progressString == "100%")

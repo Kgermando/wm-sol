@@ -56,6 +56,7 @@ class ArchiveModel {
   late String fichier;
   late String signature;
   late DateTime created;
+  late int reference;
 
   ArchiveModel({
     this.id,
@@ -65,7 +66,8 @@ class ArchiveModel {
     required this.description,
     required this.fichier,
     required this.signature,
-    required this.created
+    required this.created,
+    required this.reference
   });
 
   factory ArchiveModel.fromSQL(List<dynamic> row) {
@@ -77,7 +79,8 @@ class ArchiveModel {
       description: row[4],
       fichier: row[5],
       signature: row[6],
-      created: row[7]
+      created: row[7],
+       reference: row[8]
     );
   }
 
@@ -90,7 +93,8 @@ class ArchiveModel {
       description: json['description'],
       fichier: json['fichier'],
       signature: json['signature'],
-      created: DateTime.parse(json['created'])
+      created: DateTime.parse(json['created']),
+      reference: json['reference'],
     );
   }
 
@@ -103,7 +107,8 @@ class ArchiveModel {
       'description': description,
       'fichier': fichier,
       'signature': signature,
-      'created': created.toIso8601String()
+      'created': created.toIso8601String(),
+      'reference': reference,
     };
   }
 }

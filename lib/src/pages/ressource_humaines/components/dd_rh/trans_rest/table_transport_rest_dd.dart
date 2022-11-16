@@ -71,7 +71,7 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhTransportRest);
+                        Get.toNamed(RhRoutes.rhDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

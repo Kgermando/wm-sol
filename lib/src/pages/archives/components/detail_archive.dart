@@ -29,62 +29,53 @@ class _DetailArchiveState extends State<DetailArchive> {
 
   @override
   Widget build(BuildContext context) {
-    final ArchiveController controller = Get.find();
-
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.archiveModel.folderName),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: p20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        SelectableText(
-                                            DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(widget
-                                                    .archiveModel.created),
-                                            textAlign: TextAlign.start)
-                                      ],
-                                    ),
-                                    const SizedBox(height: p20),
-                                    dataWidget()
-                                  ],
-                                ),
-                              ),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.archiveModel.folderName),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: p20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SelectableText(
+                                    DateFormat("dd-MM-yyyy HH:mm")
+                                        .format(widget.archiveModel.created),
+                                    textAlign: TextAlign.start)
+                              ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                            const SizedBox(height: p20),
+                            dataWidget()
+                          ],
+                        ),
+                      ),
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget dataWidget() {
@@ -132,7 +123,7 @@ class _DetailArchiveState extends State<DetailArchive> {
                 ? const Text('-')
                 : TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, ArchiveRoutes.archivePdf,
+                      Get.toNamed(ArchiveRoutes.archivePdf,
                           arguments: widget.archiveModel.fichier);
                       pdfViewerKey.currentState?.openBookmarkView();
                     },

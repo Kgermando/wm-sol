@@ -2,16 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
-import 'package:wm_solution/src/pages/administration/controller/admin_notify_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/administration/controller/admin_notify_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 
 class AdministrationNav extends StatefulWidget {
   const AdministrationNav(
-      {super.key, required this.currentRoute, required this.profilController, required this.departement});
+      {super.key, required this.currentRoute, required this.user, required this.departement});
   final String currentRoute;
-  final ProfilController profilController;
+  final UserModel user;
   final String departement;
 
   @override
@@ -161,35 +161,7 @@ class _AdministrationNavState extends State<AdministrationNav> {
             onTap: () {
               Get.toNamed(AdminRoutes.adminLogistique);
             }),
-        DrawerWidget(
-            selected: widget.currentRoute == RhRoutes.rhPerformence,
-            icon: Icons.multiline_chart_sharp,
-            sizeIcon: 20.0,
-            title: 'Performences',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(RhRoutes.rhPerformence);
-            }),
-        DrawerWidget(
-            selected:
-                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
-            icon: Icons.handyman,
-            sizeIcon: 20.0,
-            title: 'Acc. Reception',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
-              // Navigator.of(context).pop();
-            }),
-        DrawerWidget(
-            selected: widget.currentRoute == ArchiveRoutes.archives,
-            icon: Icons.archive,
-            sizeIcon: 20.0,
-            title: 'Archives',
-            style: bodyMedium!,
-            onTap: () {
-              Get.toNamed(ArchiveRoutes.archives);
-            }),
+         
       ],
     );
   }

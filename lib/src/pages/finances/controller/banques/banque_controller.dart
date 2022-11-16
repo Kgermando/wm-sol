@@ -35,8 +35,6 @@ class BanqueController extends GetxController
     getList();
   }
 
- 
-
   @override
   void dispose() {
     nomCompletController.dispose();
@@ -44,6 +42,13 @@ class BanqueController extends GetxController
     libelleController.dispose();
     montantController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    nomCompletController.clear();
+    pieceJustificativeController.clear();
+    libelleController.clear();
+    montantController.clear();
   }
 
   void getList() async {
@@ -98,6 +103,7 @@ class BanqueController extends GetxController
           banqueName: data.nomComplet,
           created: DateTime.now());
       await banqueApi.insertData(dataItem).then((value) {
+        clear();
         banqueList.clear();
         getList();
         Get.back();
@@ -133,6 +139,7 @@ class BanqueController extends GetxController
           banqueName: data.nomComplet,
           created: DateTime.now());
       await banqueApi.insertData(dataItem).then((value) {
+        clear();
         banqueList.clear();
         getList();
         Get.back();
@@ -169,6 +176,7 @@ class BanqueController extends GetxController
           banqueName: data.nomComplet,
           created: data.created);
       await banqueApi.updateData(dataItem).then((value) {
+        clear();
         banqueList.clear();
         getList();
         Get.back();

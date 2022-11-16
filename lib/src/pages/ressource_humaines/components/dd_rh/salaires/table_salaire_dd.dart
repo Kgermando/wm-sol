@@ -60,7 +60,7 @@ class _TableSalaireDDState extends State<TableSalaireDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPaiement);
+                        Get.toNamed(RhRoutes.rhDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

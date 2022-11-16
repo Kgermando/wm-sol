@@ -9,7 +9,7 @@ class PerformenceNoteController extends GetxController
   PerformenceNoteApi performenceNoteApi = PerformenceNoteApi();
   final ProfilController profilController = Get.find();
 
-  var performenceNoteList = <PerformenceNoteModel>[].obs;
+  List<PerformenceNoteModel> performenceNoteList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -35,9 +35,15 @@ class PerformenceNoteController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    hospitaliteController.clear();
+    ponctualiteController.clear();
+    travailleController.clear();
+  }
+
   void getList() async {
     await performenceNoteApi.getAllData().then((response) {
-      performenceNoteList.assignAll(response);
+      performenceNoteList.addAll(response);
       change(performenceNoteList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -72,31 +78,28 @@ class PerformenceNoteController extends GetxController
 
   void submit(PerformenceModel data) async {
     try {
-      final form = formKey.currentState!;
-      if (form.validate()) {
-        _isLoading.value = true;
-        final performenceNoteModel = PerformenceNoteModel(
-            agent: data.agent,
-            departement: data.departement,
-            hospitalite: hospitaliteController.text,
-            ponctualite: ponctualiteController.text,
-            travaille: travailleController.text,
-            note: noteController.text,
-            signature: profilController.user.matricule,
-            created: DateTime.now());
-        await performenceNoteApi.insertData(performenceNoteModel).then((value) {
-          performenceNoteList.clear();
-          getList();
-          Get.back();
-          Get.snackbar("Noté avec succès!", "Vous avez noté ${data.agent}",
-              duration: const Duration(seconds: 5),
-              backgroundColor: Colors.green,
-              icon: const Icon(Icons.check),
-              snackPosition: SnackPosition.TOP);
-          _isLoading.value = false;
-        });
-        form.reset();
-      }
+      _isLoading.value = true;
+      final performenceNoteModel = PerformenceNoteModel(
+          agent: data.agent,
+          departement: data.departement,
+          hospitalite: hospitaliteController.text,
+          ponctualite: ponctualiteController.text,
+          travaille: travailleController.text,
+          note: noteController.text,
+          signature: profilController.user.matricule,
+          created: DateTime.now());
+      await performenceNoteApi.insertData(performenceNoteModel).then((value) {
+        clear();
+        performenceNoteList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Noté avec succès!", "Vous avez noté ${data.agent}",
+            duration: const Duration(seconds: 5),
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,

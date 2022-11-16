@@ -29,52 +29,50 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!), (state) {
-      var dataList = [];
-      List<dynamic> departementList =
-          jsonDecode(profilController.user.departement);
-      for (var element in departementList) {
-        dataList = controller.approvisionReceptionList
-            .where((p0) => p0.departement == element)
-            .toList();
- 
-      }
-
-      return Scaffold(
+    return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: controller.scrollController,
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: dataList.length,
-                          itemBuilder: (context, index) {
-                            final data = dataList[index];
-                            return bonLivraisonItemWidget(data);
-                          }),
-                    )))
-          ],
-        ),
-      );
-    });
+        body: controller.obx(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!), (state) {
+          var dataList = [];
+          List<dynamic> departementList =
+              jsonDecode(profilController.user.departement);
+          for (var element in departementList) {
+            dataList = controller.approvisionReceptionList
+                .where((p0) => p0.departement == element)
+                .toList();
+          }
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: controller.scrollController,
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: dataList.length,
+                            itemBuilder: (context, index) {
+                              final data = dataList[index];
+                              return bonLivraisonItemWidget(data);
+                            }),
+                      )))
+            ],
+          );
+        }));
   }
 
   Widget bonLivraisonItemWidget(

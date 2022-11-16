@@ -11,7 +11,7 @@ class ArchiveController extends GetxController
   final ArchiveApi archiveApi = ArchiveApi();
   final ProfilController profilController = Get.find();
 
-  var archiveList = <ArchiveModel>[].obs;
+  List<ArchiveModel> archiveList = [];
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -34,7 +34,7 @@ class ArchiveController extends GetxController
     _isUploading.value = true;
     await FileApi().uploadFiled(file).then((value) {
       _isUploading.value = false;
-      _isUploadingDone.value = false;
+      _isUploadingDone.value = true;
       uploadedFileUrl = value;
     });
   }
@@ -56,7 +56,7 @@ class ArchiveController extends GetxController
 
   void getList() async {
     await archiveApi.getAllData().then((response) {
-      archiveList.assignAll(response);
+      archiveList.addAll(response);
       change(archiveList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -93,13 +93,15 @@ class ArchiveController extends GetxController
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveModel(
-          departement: data.departement,
-          folderName: data.folderName,
-          nomDocument: nomDocumentController.text,
-          description: descriptionController.text,
-          fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-          signature: profilController.user.matricule,
-          created: DateTime.now());
+        departement: data.departement,
+        folderName: data.folderName,
+        nomDocument: nomDocumentController.text,
+        description: descriptionController.text,
+        fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+        signature: profilController.user.matricule,
+        created: DateTime.now(),
+        reference: data.id!
+      );
       await archiveApi.insertData(archiveModel).then((value) {
         archiveList.clear();
         getList();
@@ -123,6 +125,7 @@ class ArchiveController extends GetxController
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveModel(
+        id: data.id,
           departement: data.departement,
           folderName: data.folderName,
           nomDocument: (nomDocumentController.text == "")
@@ -133,7 +136,9 @@ class ArchiveController extends GetxController
               : data.description,
           fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
           signature: profilController.user.matricule,
-          created: DateTime.now());
+          created: DateTime.now(),
+          reference: data.reference
+      );
       await archiveApi.updateData(archiveModel).then((value) {
         archiveList.clear();
         getList();

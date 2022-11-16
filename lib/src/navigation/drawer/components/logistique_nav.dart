@@ -3,16 +3,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/notify/notify_log.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class LogistiqueNav extends StatefulWidget {
   const LogistiqueNav(
-      {super.key, required this.currentRoute, required this.profilController, required this.departement});
+      {super.key, required this.currentRoute, required this.user, required this.departement});
   final String currentRoute;
-  final ProfilController profilController;
+  final UserModel user;
   final String departement;
 
   @override
@@ -31,7 +31,8 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
     // final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    int userRole = int.parse(widget.profilController.user.role);
+    int userRole = int.parse(widget.user.role);
+    
     return ExpansionTile(
       leading: const Icon(Icons.brightness_low, size: 30.0),
       title: AutoSizeText('Logistique', maxLines: 1, style: bodyMedium),
@@ -166,37 +167,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
             onTap: () {
               Get.toNamed(DevisRoutes.devis);
             }),
-      if (userRole <= 3)
-        DrawerWidget(
-            selected: widget.currentRoute == RhRoutes.rhPerformence,
-            icon: Icons.handyman,
-            sizeIcon: 20.0,
-            title: 'Performences',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(RhRoutes.rhPerformence);
-            }),
-        if (userRole <= 3)
-        DrawerWidget(
-            selected:
-                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
-            icon: Icons.multiline_chart_sharp,
-            sizeIcon: 20.0,
-            title: 'Acc. Reception',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
-              // Navigator.of(context).pop();
-            }),
-        DrawerWidget(
-            selected: widget.currentRoute == ArchiveRoutes.archives,
-            icon: Icons.archive,
-            sizeIcon: 20.0,
-            title: 'Archives',
-            style: bodyMedium!,
-            onTap: () {
-              Get.toNamed(ArchiveRoutes.archives);
-            }),
+       
       ],
     );
   }

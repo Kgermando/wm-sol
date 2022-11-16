@@ -82,32 +82,31 @@ class _UpdatePageState extends State<UpdatePage> {
           ));
             
         },
-      ), 
+      ),
       body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableUpdate(
-                              updateList: controller.updateList,
-                              controller: controller))),
-                ],
-              )
-    )
-      
-      ); 
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, right: p20, left: p20, bottom: p8),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: TableUpdate(
+                        updateList: state!,
+                        controller: controller))),
+          ],
+        )
+      ) 
+    ); 
   }
 
   Widget versionWidget() {
@@ -155,7 +154,7 @@ class _UpdatePageState extends State<UpdatePage> {
   Widget fichierWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: controller.isUploading
+        child: Obx(() => controller.isUploading
             ? const SizedBox(
                 height: p20, width: 50.0, child: LinearProgressIndicator())
             : TextButton.icon(
@@ -176,12 +175,12 @@ class _UpdatePageState extends State<UpdatePage> {
                         color: Colors.green.shade700)
                     : const Icon(Icons.upload_file),
                 label: controller.isUploadingDone
-                    ? Obx(() => Text("Téléchargement terminé",
+                    ? Text("Téléchargement terminé",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
-                            .copyWith(color: Colors.green.shade700))) 
-                    : Obx(() => Text("Selectionner le fichier",
-                        style: Theme.of(context).textTheme.bodyLarge)) ));
+                            .copyWith(color: Colors.green.shade700))
+                    : Text("Selectionner le fichier",
+                        style: Theme.of(context).textTheme.bodyLarge) )) );
   }
 }

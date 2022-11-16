@@ -9,8 +9,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/approbation_prod_model.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/routes/routes.dart'; 
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailProductModel extends StatefulWidget {

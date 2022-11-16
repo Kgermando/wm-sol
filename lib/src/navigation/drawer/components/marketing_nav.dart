@@ -3,15 +3,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class MaketingNav extends StatefulWidget {
-  const MaketingNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
+  const MaketingNav({super.key, required this.currentRoute, required this.user, required this.departement});
   final String currentRoute;
-  final ProfilController profilController;
+  final UserModel user;
   final String departement;
 
   @override
@@ -28,7 +28,7 @@ class _MaketingNavState extends State<MaketingNav> {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2; 
-    int userRole = int.parse(widget.profilController.user.role);
+    int userRole = int.parse(widget.user.role);
 
     return ExpansionTile(
       leading: const Icon(Icons.campaign, size: 30.0),
@@ -117,37 +117,7 @@ class _MaketingNavState extends State<MaketingNav> {
             onTap: () {
               Get.toNamed(TacheRoutes.tachePage);
             }),
-        if (userRole <= 3)
-          DrawerWidget(
-              selected: widget.currentRoute == RhRoutes.rhPerformence,
-              icon: Icons.multiline_chart_sharp,
-              sizeIcon: 20.0,
-              title: 'Performences',
-              style: bodyText1!,
-              onTap: () {
-                Get.toNamed(RhRoutes.rhPerformence);  
-              }),
-        if (userRole <= 3)
-        DrawerWidget(
-            selected:
-                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
-            icon: Icons.handyman,
-            sizeIcon: 20.0,
-            title: 'Acc. Reception',
-            style: bodyText1!,
-            onTap: () {
-              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
-              // Navigator.of(context).pop();
-            }),
-        DrawerWidget(
-            selected: widget.currentRoute == ArchiveRoutes.archives,
-            icon: Icons.archive,
-            sizeIcon: 20.0,
-            title: 'Archives',
-            style: bodyMedium!,
-            onTap: () {
-              Get.toNamed(ArchiveRoutes.archives);  
-            }),
+         
       ],
     );
   }

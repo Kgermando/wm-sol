@@ -133,6 +133,7 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
             e.nom == widget.personne.nom)
         .toList();
     var i = dataList.length;
+    
     for (var item in dataList) {
       List<dynamic> depList = jsonDecode(item.departement);
       setState(() {

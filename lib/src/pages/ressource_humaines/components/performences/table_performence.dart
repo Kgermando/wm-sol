@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/performences/performence_xlsx.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -13,9 +14,13 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TablePerformence extends StatefulWidget {
   const TablePerformence(
-      {super.key, required this.performenceList, required this.controller});
+      {super.key,
+      required this.performenceList,
+      required this.controller,
+      required this.profilController});
   final List<PerformenceModel> performenceList;
   final PerformenceController controller;
+  final ProfilController profilController;
 
   @override
   State<TablePerformence> createState() => _TablePerformenceState();
@@ -30,7 +35,7 @@ class _TablePerformenceState extends State<TablePerformence> {
   @override
   initState() {
     agentsColumn();
-    agentsRow();
+    agentsRow().then((value) => stateManager!.setShowLoading(false));
     super.initState();
   }
 
@@ -51,7 +56,7 @@ class _TablePerformenceState extends State<TablePerformence> {
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
-        stateManager!.notifyListeners();
+        stateManager!.setShowLoading(true);
       },
       createHeader: (PlutoGridStateManager header) {
         return Row(
@@ -116,13 +121,29 @@ class _TablePerformenceState extends State<TablePerformence> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.performenceList.length;
-    for (var item in widget.performenceList) {
+    List<PerformenceModel> performenceList = [];
+
+    // Profile user loggingIn
+    List<dynamic> depList =
+        jsonDecode(widget.profilController.user.departement);
+    List<String> depList1 = depList.cast<String>();
+
+    for (var e in depList1) {
+      performenceList = widget.performenceList.where((element) {
+        List<dynamic> depPerfList = jsonDecode(element.departement);
+        List<String> depPerfList1 = depPerfList.cast<String>();
+        return depPerfList1.contains(e);
+      }).toList();
+    }
+
+    var i = performenceList.length;
+    for (var item in performenceList) {
       List<dynamic> depList = jsonDecode(item.departement);
+      List<String> depPerfList1 = depList.cast<String>();
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'departement': PlutoCell(value: depList.first),
+          'departement': PlutoCell(value: depPerfList1),
           'agent': PlutoCell(value: item.agent),
           'nom': PlutoCell(value: item.nom),
           'postnom': PlutoCell(value: item.postnom),
@@ -160,7 +181,7 @@ class _TablePerformenceState extends State<TablePerformence> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 250,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(

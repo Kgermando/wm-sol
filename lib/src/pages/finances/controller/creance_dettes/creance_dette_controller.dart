@@ -38,6 +38,13 @@ class CreanceDetteController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomCompletController.clear();
+    pieceJustificativeController.clear();
+    libelleController.clear();
+    montantController.clear();
+  }
+
   void getList() async {
     await creanceDetteApi.getAllData().then((response) {
       creanceDetteList.assignAll(response);
@@ -86,6 +93,7 @@ class CreanceDetteController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await creanceDetteApi.insertData(dataItem).then((value) {
+        clear();
         creanceDetteList.clear();
         getList();
         Get.back();
@@ -117,6 +125,7 @@ class CreanceDetteController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await creanceDetteApi.insertData(dataItem).then((value) {
+        clear();
         creanceDetteList.clear();
         getList();
         Get.back();
@@ -149,6 +158,7 @@ class CreanceDetteController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await creanceDetteApi.updateData(dataItem).then((value) {
+        clear();
         creanceDetteList.clear();
         getList();
         Get.back();

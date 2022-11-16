@@ -3,8 +3,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
@@ -12,9 +12,9 @@ import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_
 import 'package:wm_solution/src/routes/routes.dart';
 
 class FinanceNav extends StatefulWidget {
-  const FinanceNav({super.key, required this.currentRoute, required this.profilController, required this.departement});
+  const FinanceNav({super.key, required this.currentRoute, required this.user, required this.departement});
   final String currentRoute;
-  final ProfilController profilController;
+  final UserModel user;
   final String departement;
 
   @override
@@ -37,7 +37,7 @@ class _FinanceNavState extends State<FinanceNav> {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2; 
-    int userRole = int.parse(widget.profilController.user.role);
+    int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.account_balance, size: 30.0),
       title: AutoSizeText('Finances', maxLines: 1, style: bodyMedium),
@@ -190,37 +190,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 });
           }).toList(),
         ),
-        DrawerWidget(
-            selected: widget.currentRoute == RhRoutes.rhPerformence,
-            icon: Icons.multiline_chart_sharp,
-            sizeIcon: 20.0,
-            title: 'Performences',
-            style: bodyText1,
-            onTap: () {
-              Navigator.pushNamed(context, RhRoutes.rhPerformence);
-              // Navigator.of(context).pop();
-            }),
-        DrawerWidget(
-            selected:
-                widget.currentRoute == LogistiqueRoutes.logApprovisionReception,
-            icon: Icons.handyman,
-            sizeIcon: 20.0,
-            title: 'Acc. Reception',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(LogistiqueRoutes.logApprovisionReception);
-              // Navigator.of(context).pop();
-            }),
-        DrawerWidget(
-            selected: widget.currentRoute == ArchiveRoutes.archives,
-            icon: Icons.archive,
-            sizeIcon: 20.0,
-            title: 'Archives',
-            style: bodyMedium!,
-            onTap: () {
-              Navigator.pushNamed(context, ArchiveRoutes.archives);
-              // Navigator.of(context).pop();
-            }),
+        
       ],
     );
   }

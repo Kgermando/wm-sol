@@ -40,8 +40,7 @@ class DashobardNotifyController extends GetxController {
 
 
   void getData() async {
-    _agentsCount.value = personnelsController.personnelsList.length;
-    print("agents ${_agentsCount.value} ");
+    _agentsCount.value = personnelsController.personnelsList.length; 
     _agentActifCount.value = personnelsController.personnelsList
         .where((element) => element.statutAgent == 'true')
         .length;

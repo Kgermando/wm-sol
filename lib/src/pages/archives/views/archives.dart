@@ -8,6 +8,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/archives/components/archive_table.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -27,6 +28,7 @@ class _ArchiveDataState extends State<ArchiveData> {
   Widget build(BuildContext context) {
     final ArchiveController controller = Get.find();
     final ArchiveFolderController controllerFolder = Get.find();
+    final ProfilController profilController = Get.find();
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -52,17 +54,21 @@ class _ArchiveDataState extends State<ArchiveData> {
                       visible: !Responsive.isMobile(context),
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableArchive(
-                              archiveFolderModel: widget.archiveFolderModel,
-                              controller: controller,
-                              controllerFolder: controllerFolder))),
+                    flex: 5,
+                    child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableArchive(
+                          archiveFolderModel: widget.archiveFolderModel,
+                          controller: controller,
+                          controllerFolder: controllerFolder,
+                          profilController: profilController,
+                        )
+                      )
+                    ),
                 ],
               ),
             ));

@@ -35,6 +35,13 @@ class CaisseNameController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomCompletController.clear();
+    rccmController.clear();
+    idNatController.clear();
+    addresseController.clear();
+  }
+
   void getList() async {
     await caisseNameApi.getAllData().then((response) {
       caisseNameList.assignAll(response);
@@ -81,6 +88,7 @@ class CaisseNameController extends GetxController
               (addresseController.text == '') ? '-' : addresseController.text,
           created: DateTime.now());
       await caisseNameApi.insertData(dataItem).then((value) {
+        clear();
         caisseNameList.clear();
         getList();
         Get.back();
@@ -115,6 +123,7 @@ class CaisseNameController extends GetxController
               : addresseController.text,
           created: data.created);
       await caisseNameApi.updateData(dataItem).then((value) {
+        clear();
         caisseNameList.clear();
         getList();
         Get.back();

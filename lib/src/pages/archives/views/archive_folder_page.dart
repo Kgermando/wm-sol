@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart'; 
+import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -40,13 +42,13 @@ class ArchiveFolderPage extends StatefulWidget {
 }
 
 class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
+  final ArchiveFolderController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Archives";
 
   @override
   Widget build(BuildContext context) {
-    final ArchiveFolderController controller =
-        Get.put(ArchiveFolderController()); 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, ""),
@@ -60,9 +62,25 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
           },
         ),
         body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!), (state) => Row(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!), (state) {
+            
+          List<ArchiveFolderModel> archiveFolderList = [];
+
+          // Profile user loggingIn
+          List<dynamic> depList = jsonDecode(profilController.user.departement);
+          List<String> depList1 = depList.cast<String>();
+
+          for (var e in depList1) {
+            archiveFolderList = state!.where((element) {
+              List<dynamic> depArchList = jsonDecode(element.departement);
+              List<String> depArchList1 = depArchList.cast<String>();
+              return depArchList1.contains(e);
+            }).toList();
+          }
+
+          return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
@@ -83,34 +101,33 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
                             alignment: WrapAlignment.start,
                             spacing: p20,
                             runSpacing: p20,
-                            children: List.generate(state!.length,
-                                (index) {
-                              final data = state[index];
+                            children: List.generate(archiveFolderList.length, (index) {
+                              final data = archiveFolderList[index];
                               final color =
                                   _lightColors[index % _lightColors.length];
                               return cardFolder(data, color);
                             })),
                       )))
             ],
-          )
-        ));
+          );
+        }));
   }
 
   Widget cardFolder(ArchiveFolderModel data, Color color) {
     return GestureDetector(
-      onDoubleTap: () {
-        Get.toNamed(ArchiveRoutes.archiveTable, arguments: data);
-      },
-      child: Column(
-        children: [
-          Icon(
-            Icons.folder,
-            color: color,
-            size: 100.0,
-          ),
-          Text(data.folderName.toUpperCase())
-        ],
-      ));
+        onDoubleTap: () {
+          Get.toNamed(ArchiveRoutes.archiveTable, arguments: data);
+        },
+        child: Column(
+          children: [
+            Icon(
+              Icons.folder,
+              color: color,
+              size: 100.0,
+            ),
+            Text(data.folderName.toUpperCase())
+          ],
+        ));
   }
 
   detailAgentDialog(ArchiveFolderController controller) {

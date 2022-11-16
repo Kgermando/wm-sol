@@ -30,8 +30,6 @@ class FinExterieurController extends GetxController
     getList();
   }
 
- 
-
   @override
   void dispose() {
     nomCompletController.dispose();
@@ -39,6 +37,13 @@ class FinExterieurController extends GetxController
     libelleController.dispose();
     montantController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    nomCompletController.clear();
+    pieceJustificativeController.clear();
+    libelleController.clear();
+    montantController.clear(); 
   }
 
   void getList() async {
@@ -93,6 +98,7 @@ class FinExterieurController extends GetxController
           financeExterieurName: data.nomComplet,
           created: DateTime.now());
       await finExterieurApi.insertData(dataItem).then((value) {
+        clear();
         finExterieurList.clear();
         getList();
         Get.back();
@@ -127,7 +133,8 @@ class FinExterieurController extends GetxController
           reference: data.id!,
           financeExterieurName: data.nomComplet,
           created: data.created);
-      await finExterieurApi.updateData(dataItem).then((value) {
+      await finExterieurApi.insertData(dataItem).then((value) {
+        clear();
         finExterieurList.clear();
         getList();
         Get.back();

@@ -11,8 +11,7 @@ import 'package:wm_solution/src/pages/commercial/components/commercials/succursa
 import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/stats_succusale.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/routes/routes.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 

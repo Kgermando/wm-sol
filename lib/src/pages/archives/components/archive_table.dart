@@ -7,6 +7,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -15,10 +16,11 @@ class TableArchive extends StatefulWidget {
       {super.key,
       required this.archiveFolderModel,
       required this.controller,
-      required this.controllerFolder});
+      required this.controllerFolder, required this.profilController});
   final ArchiveFolderModel archiveFolderModel;
   final ArchiveController controller;
   final ArchiveFolderController controllerFolder;
+  final ProfilController profilController;
 
   @override
   State<TableArchive> createState() => _TableArchiveState();
@@ -77,7 +79,7 @@ class _TableArchiveState extends State<TableArchive> {
       configuration: PlutoGridConfiguration(
         columnFilter: PlutoGridColumnFilterConfig(
           filters: const [
-            ...FilterHelper.defaultFilters,
+            ...FilterHelper.defaultFilters
           ],
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
@@ -105,9 +107,8 @@ class _TableArchiveState extends State<TableArchive> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataItemList = widget.controller.archiveList.where((element) =>
-        element.departement == widget.archiveFolderModel.departement &&
-        element.folderName == widget.archiveFolderModel.folderName);
+    var dataItemList = widget.controller.archiveList
+      .where((element) => element.reference == widget.archiveFolderModel.id);
 
     var i = dataItemList.length;
     for (var item in dataItemList) {

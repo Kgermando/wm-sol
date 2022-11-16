@@ -35,6 +35,13 @@ class BanqueNameController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomCompletController.clear();
+    rccmController.clear();
+    idNatController.clear();
+    addresseController.clear();
+  }
+
   void getList() async {
     await banqueNameApi.getAllData().then((response) {
       banqueNameList.assignAll(response);
@@ -81,6 +88,7 @@ class BanqueNameController extends GetxController
               (addresseController.text == '') ? '-' : addresseController.text,
           created: DateTime.now());
       await banqueNameApi.insertData(dataItem).then((value) {
+        clear();
         banqueNameList.clear();
         getList();
         Get.back();
@@ -115,6 +123,7 @@ class BanqueNameController extends GetxController
               : addresseController.text,
           created: data.created);
       await banqueNameApi.updateData(dataItem).then((value) {
+        clear();
         banqueNameList.clear();
         getList();
         Get.back();

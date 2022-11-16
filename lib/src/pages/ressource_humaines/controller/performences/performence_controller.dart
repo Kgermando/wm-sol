@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/performence_api.dart';
@@ -23,10 +21,8 @@ class PerformenceController extends GetxController
   }
 
   void getList() async {
-    await performenceApi.getAllData().then((response) {
-      var departement = jsonDecode(profilController.user.departement);
-      performenceList.assignAll(response
-          .where((element) => element.departement == departement.first));
+    await performenceApi.getAllData().then((response) { 
+      performenceList.assignAll(response);
       change(performenceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

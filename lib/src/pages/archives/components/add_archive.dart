@@ -28,95 +28,80 @@ class _AddArchiveState extends State<AddArchive> {
   Widget build(BuildContext context) {
     final ArchiveController controller = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.archiveFolderModel.folderName),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Form(
-                                      key: controller.formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: const [
-                                              TitleWidget(
-                                                  title: "Ajout archive")
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          nomDocumentWidget(controller),
-                                          ResponsiveChildWidget(
-                                              child1: fichierWidget(controller),
-                                              child2: Container()),
-                                          descriptionWidget(controller),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          BtnWidget(
-                                              title: 'Soumettre',
-                                              isLoading: controller.isLoading,
-                                              press: () {
-                                                final form = controller
-                                                    .formKey.currentState!;
-                                                if (form.validate()) {
-                                                  controller.submit(widget
-                                                      .archiveFolderModel);
-                                                  form.reset();
-                                                }
-                                                Navigator.of(context).pop();
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                  content: const Text(
-                                                      "Enregistrer avec succès!"),
-                                                  backgroundColor:
-                                                      Colors.green[700],
-                                                ));
-                                              })
-                                        ],
-                                      ),
-                                    ),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.archiveFolderModel.folderName),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
+                            child: Form(
+                              key: controller.formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: const [
+                                      TitleWidget(title: "Ajout archive")
+                                    ],
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  nomDocumentWidget(controller),
+                                  ResponsiveChildWidget(
+                                      child1: fichierWidget(controller),
+                                      child2: Container()),
+                                  descriptionWidget(controller),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  BtnWidget(
+                                    title: 'Soumettre',
+                                    isLoading: controller.isLoading,
+                                    press: () {
+                                      final form =
+                                          controller.formKey.currentState!;
+                                      if (form.validate()) {
+                                        controller.submit(
+                                            widget.archiveFolderModel);
+                                        form.reset();
+                                      }
+                                      
+                                    })
+                                ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget nomDocumentWidget(ArchiveController controller) {
@@ -168,7 +153,7 @@ class _AddArchiveState extends State<AddArchive> {
   Widget fichierWidget(ArchiveController controller) {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: controller.isUploading
+        child: Obx(() => controller.isUploading
             ? const SizedBox(
                 height: p20, width: 50.0, child: LinearProgressIndicator())
             : TextButton.icon(
@@ -195,6 +180,6 @@ class _AddArchiveState extends State<AddArchive> {
                             .bodyLarge!
                             .copyWith(color: Colors.green.shade700))
                     : Text("Selectionner le fichier",
-                        style: Theme.of(context).textTheme.bodyLarge)));
+                        style: Theme.of(context).textTheme.bodyLarge))));
   }
 }

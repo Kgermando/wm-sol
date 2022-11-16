@@ -628,9 +628,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     if (selected == true) {
       setState(() {
         controller.departementSelectedUpdateList.add(dataName);
-
-        print('depList ${controller.departementSelectedUpdateList}');
-        print('departementSelected $departementSelected');
+ 
 
         if (controller.departementSelectedUpdateList.first == 'Actionnaire') {
           controller.fonctionList = controller.fonctionActionnaireList;

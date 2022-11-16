@@ -52,8 +52,6 @@ class MaillingController extends GetxController
     getList();
   }
 
- 
-
   @override
   void dispose() {
     emailController.dispose();
@@ -62,6 +60,13 @@ class MaillingController extends GetxController
     pieceJointeController.dispose();
 
     super.dispose();
+  }
+
+  void clear() {
+    emailController.clear();
+    objetController.clear();
+    messageController.clear();
+    pieceJointeController.clear();
   }
 
 // var ccList = jsonDecode(mail.cc);
@@ -91,6 +96,7 @@ class MaillingController extends GetxController
     try {
       _isLoading.value = true;
       await mailApi.deleteData(id).then((value) {
+        clear();
         mailList.clear();
         getList();
         // Get.back();
@@ -130,6 +136,7 @@ class MaillingController extends GetxController
           dateSend: DateTime.now(),
           dateRead: DateTime.now());
       await mailApi.insertData(mailModel).then((value) {
+        clear();
         mailList.clear();
         getList();
         Get.back();

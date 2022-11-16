@@ -8,8 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
 import 'package:wm_solution/src/utils/regex.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 

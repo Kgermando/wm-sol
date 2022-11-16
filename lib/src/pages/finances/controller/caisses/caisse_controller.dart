@@ -44,6 +44,13 @@ class CaisseController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomCompletController.clear();
+    pieceJustificativeController.clear();
+    libelleController.clear();
+    montantController.clear();
+  }
+
   void getList() async {
     await caisseApi.getAllData().then((response) {
       caisseList.assignAll(response);
@@ -96,6 +103,7 @@ class CaisseController extends GetxController
           caisseName: data.nomComplet,
           created: DateTime.now());
       await caisseApi.insertData(dataItem).then((value) {
+        clear();
         caisseList.clear();
         getList();
         Get.back();
@@ -131,6 +139,7 @@ class CaisseController extends GetxController
           caisseName: data.nomComplet,
           created: DateTime.now());
       await caisseApi.insertData(dataItem).then((value) {
+        clear();
         caisseList.clear();
         getList();
         Get.back();
@@ -167,6 +176,7 @@ class CaisseController extends GetxController
           caisseName: data.nomComplet,
           created: data.created);
       await caisseApi.updateData(dataItem).then((value) {
+        clear();
         caisseList.clear();
         getList();
         Get.back();

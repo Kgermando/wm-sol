@@ -14,8 +14,6 @@ class UpdateController extends GetxController
   final UpdateVersionApi updateVersionApi = UpdateVersionApi();
   final ProfilController profilController = Get.find();
 
-  var updateList = <UpdateModel>[].obs;
-
   List<UpdateModel> updateVersionList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -89,7 +87,6 @@ class UpdateController extends GetxController
     getList();
   }
 
- 
   @override
   void dispose() {
     versionController.dispose();
@@ -97,38 +94,42 @@ class UpdateController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    versionController.clear();
+    motifController.clear();
+  }
+
   void getList() async {
     await updateVersionApi.getAllData().then((response) {
-      updateList.assignAll(response);
-      updateVersionList.addAll(updateList);
-      // Version actuel
-      var isVersion = isUpdateLocalVersion.split('.');
-      for (var e in isVersion) {
-        _sumLocalVersion.value += double.parse(e);
-      }
-      // Version Cloud
-      var isVersionCloud = updateVersionList.last.version.split('.');
-      for (var e in isVersionCloud) {
-        _sumVersionCloud.value += double.parse(e);
-      }
-      // change(updateList, status: RxStatus.success());
+      updateVersionList.addAll(response);
+      // // Version actuel
+      // var isVersion = isUpdateLocalVersion.split('.');
+      // for (var e in isVersion) {
+      //   _sumLocalVersion.value += double.parse(e);
+      // }
+      // // Version Cloud
+      // var isVersionCloud = updateVersionList.last.version.split('.');
+      // for (var e in isVersionCloud) {
+      //   _sumVersionCloud.value += double.parse(e);
+      // }
+      change(updateVersionList, status: RxStatus.success());
     }, onError: (err) {
-      // change(null, status: RxStatus.error(err.toString()));
+      change(null, status: RxStatus.error(err.toString()));
     });
   }
 
-  // void getData() async {
-  //   // Version actuel
-  //   var isVersion = isUpdateLocalVersion.split('.');
-  //   for (var e in isVersion) {
-  //     _sumLocalVersion.value += double.parse(e);
-  //   }
-  //   // Version Cloud
-  //   var isVersionCloud = updateList.last.version.split('.');
-  //   for (var e in isVersionCloud) {
-  //     _sumVersionCloud.value += double.parse(e);
-  //   }
-  // }
+  void getData() async {
+    // Version actuel
+    var isVersion = isUpdateLocalVersion.split('.');
+    for (var e in isVersion) {
+      _sumLocalVersion.value += double.parse(e);
+    }
+    // Version Cloud
+    var isVersionCloud = updateVersionList.last.version.split('.');
+    for (var e in isVersionCloud) {
+      _sumVersionCloud.value += double.parse(e);
+    }
+  }
 
   detailView(int id) async {
     final data = await updateVersionApi.getOneData(id);
@@ -139,7 +140,7 @@ class UpdateController extends GetxController
     try {
       _isLoading.value = true;
       await updateVersionApi.deleteData(id).then((value) {
-        updateList.clear();
+        updateVersionList.clear();
         getList();
         // Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
@@ -167,7 +168,8 @@ class UpdateController extends GetxController
         motif: motifController.text,
       );
       await updateVersionApi.insertData(dataItem).then((value) {
-        updateList.clear();
+        clear();
+        updateVersionList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
