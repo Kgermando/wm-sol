@@ -9,6 +9,7 @@ import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart'
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/balance/approbation_balance.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/balance/balance_pdf.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_ref_controller.dart';
@@ -36,126 +37,127 @@ class _DetailBalanceState extends State<DetailBalance> {
 
   @override
   Widget build(BuildContext context) {
-    return balanceRefController.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.balanceCompteModel.title),
-              drawer: const DrawerMenu(),
-              floatingActionButton:
-                  (widget.balanceCompteModel.isSubmit == 'false' &&
-                          widget.balanceCompteModel.approbationDD == '-')
-                      ? FloatingActionButton.extended(
-                          label: const Text("Ajouter une écriture"),
-                          tooltip: "Ecriture sur la feuille balance",
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            newEcritureDialog(balanceRefController);
-                          },
-                        )
-                      : Container(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.balanceCompteModel.title),
+      drawer: const DrawerMenu(),
+      floatingActionButton:
+          (widget.balanceCompteModel.isSubmit == 'false' &&
+                  widget.balanceCompteModel.approbationDD == '-')
+              ? FloatingActionButton.extended(
+                  label: const Text("Ajouter une écriture"),
+                  tooltip: "Ecriture sur la feuille balance",
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    newEcritureDialog();
+                  },
+                )
+              : Container(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: p20),
                             child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TitleWidget(
+                                        title:
+                                            Responsive.isMobile(context)
+                                                ? "Balance"
+                                                : "Comptes Balance"),
+                                    Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TitleWidget(
-                                                title:
-                                                    Responsive.isMobile(context)
-                                                        ? "Balance"
-                                                        : "Comptes Balance"),
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    if (widget.balanceCompteModel
-                                                                .signature ==
-                                                            profilController
-                                                                .user
-                                                                .matricule &&
-                                                        widget.balanceCompteModel
-                                                                .isSubmit ==
-                                                            "false") // Uniqyement celui a remplit le document
-                                                      sendButton(controller),
-                                                    if (widget
+                                            if (widget.balanceCompteModel
+                                                        .signature ==
+                                                    profilController
+                                                        .user
+                                                        .matricule &&
+                                                widget.balanceCompteModel
+                                                        .isSubmit ==
+                                                    "false") // Uniqyement celui a remplit le document
+                                              sendButton(controller),
+                                            if (widget
+                                                    .balanceCompteModel
+                                                    .approbationDD ==
+                                                "-")
+                                              deleteButton(),
+                                            PrintWidget(
+                                                tooltip:
+                                                    'Imprimer le document',
+                                                onPressed: () async {
+                                            var compteBalanceRefPdf =
+                                                balanceRefController
+                                                    .compteBalanceRefList
+                                                    .where((element) =>
+                                                        element
+                                                            .reference ==
+                                                        widget
                                                             .balanceCompteModel
-                                                            .approbationDD ==
-                                                        "-")
-                                                      deleteButton(controller),
-                                                    PrintWidget(
-                                                        tooltip:
-                                                            'Imprimer le document',
-                                                        onPressed: () async {
-                                                          var compteBalanceRefPdf =
-                                                              balanceRefController
-                                                                  .compteBalanceRefList
-                                                                  .where((element) =>
-                                                                      element
-                                                                          .reference ==
-                                                                      widget
-                                                                          .balanceCompteModel
-                                                                          .id)
-                                                                  .toList();
-                                                          await BalancePdf.generate(
-                                                              widget
-                                                                  .balanceCompteModel,
-                                                              compteBalanceRefPdf);
-                                                        }),
-                                                  ],
-                                                ),
-                                                Text(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .balanceCompteModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
+                                                            .id)
+                                                          .toList();
+                                                  await BalancePdf.generate(
+                                                      widget
+                                                          .balanceCompteModel,
+                                                      compteBalanceRefPdf);
+                                                }),
                                           ],
                                         ),
-                                        dataWidget(balanceRefController),
-                                        totalMontant(balanceRefController)
+                                        Text(
+                                            DateFormat(
+                                                    "dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .balanceCompteModel
+                                                    .created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+                                dataWidget(balanceRefController),
+                                totalMontant(balanceRefController)
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        ),
+                        const SizedBox(height:p20),
+                        ApprobationBalance(
+                          data: widget.balanceCompteModel,
+                          controller: controller,
+                          profilController: profilController)
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget totalMontant(BalanceRefController balanceRefController) {
@@ -432,27 +434,27 @@ class _DetailBalanceState extends State<DetailBalance> {
     );
   }
 
-  Widget deleteButton(BalanceController controller) {
+  Widget deleteButton() {
     return IconButton(
       icon: Icon(Icons.delete, color: Colors.red.shade700),
       tooltip: "Supprimer",
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de faire cette action ?'),
+          title: const Text('Etes-vous sûr de faire cette action ?', style: TextStyle(color: Colors.red),),
           content: const Text(
               'Cette action permet de permet de mettre ce fichier en corbeille.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () async {
                 controller.deleteData(widget.balanceCompteModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
@@ -489,7 +491,7 @@ class _DetailBalanceState extends State<DetailBalance> {
     );
   }
 
-  newEcritureDialog(BalanceRefController balanceRefController) {
+  newEcritureDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,

@@ -43,6 +43,7 @@ class PerformenceNoteController extends GetxController
 
   void getList() async {
     await performenceNoteApi.getAllData().then((response) {
+      performenceNoteList.clear();
       performenceNoteList.addAll(response);
       change(performenceNoteList, status: RxStatus.success());
     }, onError: (err) {

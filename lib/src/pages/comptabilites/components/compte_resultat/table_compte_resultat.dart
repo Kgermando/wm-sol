@@ -44,7 +44,7 @@ class _TableCompteResultatState extends State<TableCompteResultat> {
         final CompteResulatsModel compteResulatsModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail,
+        Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultatDetail,
             arguments: compteResulatsModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {

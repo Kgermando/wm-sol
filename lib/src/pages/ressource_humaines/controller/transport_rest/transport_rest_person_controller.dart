@@ -41,6 +41,13 @@ class TransportRestPersonnelsController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nomController.clear();
+    prenomController.clear();
+    matriculeController.clear();
+    montantController.clear();
+  }
+
   void getList() {
     transRestAgentsApi.getAllData().then((response) {
       transRestAgentList.assignAll(response);
@@ -68,6 +75,7 @@ class TransportRestPersonnelsController extends GetxController
             montant: montantController.text,
             observation: "false");
         await transRestAgentsApi.insertData(transRest).then((value) {
+          clear();
           transRestAgentList.clear();
           getList();
           Get.back();
@@ -102,6 +110,7 @@ class TransportRestPersonnelsController extends GetxController
             montant: data.montant,
             observation: "true");
         await transRestAgentsApi.insertData(transRest).then((value) {
+          clear();
           transRestAgentList.clear();
           getList();
           Get.back();

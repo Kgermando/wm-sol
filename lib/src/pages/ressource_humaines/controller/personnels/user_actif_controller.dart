@@ -7,7 +7,7 @@ import 'package:wm_solution/src/models/users/user_model.dart';
 class UsersController extends GetxController with StateMixin<List<UserModel>> {
   final UserApi userApi = UserApi();
 
-  var usersList = <UserModel>[].obs;
+  List<UserModel> usersList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -23,7 +23,8 @@ class UsersController extends GetxController with StateMixin<List<UserModel>> {
 
   void getList() async {
     userApi.getAllData().then((response) {
-      usersList.assignAll(response);
+      usersList.clear();
+      usersList.addAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

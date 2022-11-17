@@ -19,7 +19,7 @@ class PersonnelsController extends GetxController
   PerformenceApi performenceApi = PerformenceApi();
   final ProfilController profilController = Get.find();
 
-  var personnelsList = <AgentModel>[].obs;
+  List<AgentModel> personnelsList = [];
   var agentPieChartList = <AgentPieChartModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -152,7 +152,8 @@ class PersonnelsController extends GetxController
 
   void getList() async {
     personnelsApi.getAllData().then((response) {
-      personnelsList.assignAll(response);
+      personnelsList.clear();
+      personnelsList.addAll(response);
       change(personnelsList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

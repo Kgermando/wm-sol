@@ -8,7 +8,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
   final BilanApi bilanApi = BilanApi();
   final ProfilController profilController = Get.find();
 
-  var bilanList = <BilanModel>[].obs;
+  List<BilanModel> bilanList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -36,9 +36,15 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
     super.dispose();
   }
 
+  void clear() {
+    motifDDController.clear();
+    titleBilanController.clear();
+  }
+
   void getList() async {
     await bilanApi.getAllData().then((response) {
-      bilanList.assignAll(response);
+      bilanList.clear();
+      bilanList.addAll(response);
       change(bilanList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -83,6 +89,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
           motifDD: '-',
           signatureDD: '-');
       await bilanApi.insertData(bilan).then((value) {
+        clear();
         bilanList.clear();
         getList();
         Get.back();
@@ -114,6 +121,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await bilanApi.updateData(bilanModel).then((value) {
+        clear();
         bilanList.clear();
         getList();
         Get.back();
@@ -146,6 +154,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await bilanApi.updateData(bilanModel).then((value) {
+        clear();
         bilanList.clear();
         getList();
         Get.back();

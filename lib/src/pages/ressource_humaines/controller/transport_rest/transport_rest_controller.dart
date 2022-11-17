@@ -47,6 +47,13 @@ class TransportRestController extends GetxController
     motifDDController.dispose();
   }
 
+    void clear() { 
+    motifDGController.clear();
+    motifBudgetController.clear();
+    motifFinController.clear();
+    motifDDController.clear();
+  }
+
   void getList() async {
     await transportRestaurationApi.getAllData().then((response) {
       transportRestaurationList.assignAll(response);
@@ -107,6 +114,7 @@ class TransportRestController extends GetxController
           ressource: '-',
           isSubmit: 'false');
       await transportRestaurationApi.insertData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();
@@ -151,6 +159,7 @@ class TransportRestController extends GetxController
           ressource: data.ressource,
           isSubmit: 'true');
       await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();
@@ -195,6 +204,7 @@ class TransportRestController extends GetxController
           ressource: data.ressource,
           isSubmit: data.isSubmit);
       await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();
@@ -240,6 +250,7 @@ class TransportRestController extends GetxController
           ressource: '-',
           isSubmit: data.isSubmit);
       await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();
@@ -284,6 +295,7 @@ class TransportRestController extends GetxController
           ressource: '-',
           isSubmit: data.isSubmit);
       await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();
@@ -331,6 +343,7 @@ class TransportRestController extends GetxController
           ressource: (ressource.toString() == '') ? '-' : ressource.toString(),
           isSubmit: data.isSubmit);
       await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();
@@ -376,6 +389,7 @@ class TransportRestController extends GetxController
           ressource: data.ressource,
           isSubmit: data.isSubmit);
       await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
         transportRestaurationList.clear();
         getList();
         Get.back();

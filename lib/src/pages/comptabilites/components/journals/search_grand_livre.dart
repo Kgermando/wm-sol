@@ -136,10 +136,10 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
             child: ResponsiveChildWidget(
               child1: Text("Total débit :",
                 style: headlineMedium!.copyWith(
-                    color: Colors.yellow, fontWeight: FontWeight.bold)), 
+                    color: Colors.blue, fontWeight: FontWeight.bold)), 
               child2: Text(
                 "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
-                style: headlineMedium.copyWith(color: Colors.yellow))
+                style: headlineMedium.copyWith(color: Colors.blue))
             )
           ),
           Expanded(

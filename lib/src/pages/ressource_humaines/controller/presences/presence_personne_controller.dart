@@ -49,6 +49,11 @@ class PresencePersonneController extends GetxController
     identifiantController.dispose();
     motifController.dispose();
     super.dispose();
+  }  
+  
+  void clear() {
+    identifiantController.clear();
+    motifController.clear(); 
   }
 
   void getList() async {
@@ -99,6 +104,7 @@ class PresencePersonneController extends GetxController
           created: DateTime.now(),
           createdSortie: DateTime.now());
       await presencePersonnelApi.insertData(presence).then((value) {
+        clear();
         presencePersonneList.clear();
         getList();
         Get.back();
@@ -132,6 +138,7 @@ class PresencePersonneController extends GetxController
           created: personne.created,
           createdSortie: DateTime.now());
       await presencePersonnelApi.updateData(presence).then((value) {
+        clear();
         presencePersonneList.clear();
         getList();
         Get.back();

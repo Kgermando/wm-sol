@@ -9,7 +9,7 @@ class JournalLivreController extends GetxController
   final JournalLivreApi journalLivreApi = JournalLivreApi();
   final ProfilController profilController = Get.find();
 
-  var journalLivreList = <JournalLivreModel>[].obs;
+  List<JournalLivreModel> journalLivreList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -18,10 +18,7 @@ class JournalLivreController extends GetxController
   DateTimeRange? dateRange;
   TextEditingController intituleController = TextEditingController();
 
-  // Approbations
-  final formKeyBudget = GlobalKey<FormState>();
 
-  String approbationDG = '-';
   String approbationDD = '-';
   TextEditingController motifDDController = TextEditingController();
 
@@ -38,9 +35,15 @@ class JournalLivreController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    intituleController.clear();
+    motifDDController.clear(); 
+  }
+
   void getList() async {
     await journalLivreApi.getAllData().then((response) {
-      journalLivreList.assignAll(response);
+      journalLivreList.clear();
+      journalLivreList.addAll(response);
       change(journalLivreList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -87,6 +90,7 @@ class JournalLivreController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await journalLivreApi.insertData(journalLivre).then((value) {
+        clear();
         journalLivreList.clear();
         getList();
         Get.back();
@@ -109,17 +113,18 @@ class JournalLivreController extends GetxController
     try {
       _isLoading.value = true;
       final journalLivre = JournalLivreModel(
-          intitule: data.intitule,
-          debut: data.debut,
-          fin: data.fin,
-          isSubmit: 'true',
-          signature: data.signature,
-          created: data.created,
-          approbationDD: approbationDD,
-          motifDD:
-              (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule);
+        id: data.id,
+        intitule: data.intitule,
+        debut: data.debut,
+        fin: data.fin,
+        isSubmit: 'true',
+        signature: data.signature,
+        created: data.created,
+        approbationDD: data.approbationDD,
+        motifDD: data.motifDD,
+        signatureDD: data.signatureDD);
       await journalLivreApi.updateData(journalLivre).then((value) {
+        clear();
         journalLivreList.clear();
         getList();
         Get.back();
@@ -142,17 +147,19 @@ class JournalLivreController extends GetxController
     try {
       _isLoading.value = true;
       final journalLivre = JournalLivreModel(
-          intitule: data.intitule,
-          debut: data.debut,
-          fin: data.fin,
-          isSubmit: data.isSubmit,
-          signature: data.signature,
-          created: data.created,
-          approbationDD: approbationDD,
-          motifDD:
-              (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule);
+        id: data.id,
+        intitule: data.intitule,
+        debut: data.debut,
+        fin: data.fin,
+        isSubmit: data.isSubmit,
+        signature: data.signature,
+        created: data.created,
+        approbationDD: approbationDD,
+        motifDD:
+            (motifDDController.text == '') ? '-' : motifDDController.text,
+        signatureDD: profilController.user.matricule);
       await journalLivreApi.updateData(journalLivre).then((value) {
+        clear();
         journalLivreList.clear();
         getList();
         Get.back();

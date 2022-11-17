@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:wm_solution/src/api/auth/auth_api.dart';
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/get_local_storage.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/navigation/drawer/components/administration_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/budget_nav.dart';
@@ -30,7 +30,7 @@ class DrawerMenu extends StatelessWidget {
     return Drawer(
         // backgroundColor: Colors.amber[50],
         child: FutureBuilder<UserModel>(
-            future: AuthApi().getUserId(),
+            future: GetLocalStorage().read(),
             builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
               if (snapshot.hasData) {
                 UserModel? user = snapshot.data;

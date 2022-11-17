@@ -12,7 +12,6 @@ import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/a
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/compte_resultat_pdf.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -26,8 +25,10 @@ class DetailCompteResultat extends StatefulWidget {
 }
 
 class _DetailCompteResultatState extends State<DetailCompteResultat> {
+  final CompteResultatController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  String title = "Comptabilités"; 
+  String title = "Comptabilités";
 
   double totalCharges1 = 0.0;
   double totalCharges123 = 0.0;
@@ -39,154 +40,132 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
 
   @override
   Widget build(BuildContext context) {
-    final CompteResultatController controller = Get.find();
-    final ProfilController profilController = Get.find();
-
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.compteResulatsModel.intitule),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter une personne"),
-                tooltip: "Ajout personne à la liste",
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        pageDetail(
-                                            controller, profilController),
-                                        ApprobationCompteResultat(
-                                            data: widget.compteResulatsModel,
-                                            controller: controller,
-                                            profilController: profilController)
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )))
-                ],
-              ),
-            ));
-  }
-
-  totalCharges() {
-    totalCharges1 = double.parse(widget.compteResulatsModel.achatMarchandises) +
-        double.parse(widget.compteResulatsModel.variationStockMarchandises) +
-        double.parse(widget.compteResulatsModel.achatApprovionnements) +
-        double.parse(widget.compteResulatsModel.variationApprovionnements) +
-        double.parse(widget.compteResulatsModel.autresChargesExterne) +
-        double.parse(
-            widget.compteResulatsModel.impotsTaxesVersementsAssimiles) +
-        double.parse(widget.compteResulatsModel.renumerationPersonnel) +
-        double.parse(widget.compteResulatsModel.chargesSocialas) +
-        double.parse(widget.compteResulatsModel.dotatiopnsProvisions) +
-        double.parse(widget.compteResulatsModel.autresCharges) +
-        double.parse(widget.compteResulatsModel.chargesfinancieres);
-
-    totalCharges123 = totalCharges1 +
-        double.parse(widget.compteResulatsModel.chargesExptionnelles) +
-        double.parse(widget.compteResulatsModel.impotSurbenefices);
-    totalGeneralCharges = totalCharges123 +
-        double.parse(widget.compteResulatsModel.soldeCrediteur);
-  }
-
-  totalProduits() {
-    totalProduits1 = double.parse(
-            widget.compteResulatsModel.ventesMarchandises) +
-        double.parse(widget.compteResulatsModel.productionVendueBienEtSerices) +
-        double.parse(widget.compteResulatsModel.productionStockee) +
-        double.parse(widget.compteResulatsModel.productionImmobilisee) +
-        double.parse(widget.compteResulatsModel.subventionExploitation) +
-        double.parse(widget.compteResulatsModel.autreProduits) +
-        double.parse(widget.compteResulatsModel.produitfinancieres);
-
-    totalProduits123 = totalProduits1 +
-        double.parse(widget.compteResulatsModel.produitExceptionnels);
-    totalGeneralProduits = totalProduits123 +
-        double.parse(widget.compteResulatsModel.soldeDebiteur) +
-        double.parse(widget.compteResulatsModel.montantExportation);
-  }
-
-  Widget pageDetail(
-      CompteResultatController controller, ProfilController profilController) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Card(
-        elevation: 10,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const TitleWidget(title: "Compte résultat"),
-                Column(
-                  children: [
-                    Row(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.compteResulatsModel.intitule),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
                       children: [
-                        if (widget.compteResulatsModel.approbationDD == '-' ||
-                            widget.compteResulatsModel.approbationDD ==
-                                "Unapproved")
-                          editButton(),
-                        if (int.parse(profilController.user.role) <= 3 ||
-                            widget.compteResulatsModel.approbationDD == '-')
-                          deleteButton(controller),
-                        PrintWidget(
-                            tooltip: 'Imprimer le document',
-                            onPressed: () async {
-                              await CompteResultatPdf.generate(
-                                  widget.compteResulatsModel,
-                                  totalCharges1,
-                                  totalCharges123,
-                                  totalGeneralCharges,
-                                  totalProduits1,
-                                  totalProduits123,
-                                  totalGeneralProduits);
-                            }),
+                        pageDetail(),
+                        const SizedBox(height: p20),
+                        ApprobationCompteResultat(
+                            data: widget.compteResulatsModel,
+                            controller: controller,
+                            profilController: profilController)
                       ],
                     ),
-                    SelectableText(
-                        DateFormat("dd-MM-yyyy HH:mm")
-                            .format(widget.compteResulatsModel.created),
-                        textAlign: TextAlign.start),
-                  ],
-                )
-              ],
-            ),
-            dataWidget(),
-          ],
+                  )))
+        ],
+      ),
+    );
+  }
+
+  // totalCharges() {
+  //   totalCharges1 = double.parse(widget.compteResulatsModel.achatMarchandises) +
+  //       double.parse(widget.compteResulatsModel.variationStockMarchandises) +
+  //       double.parse(widget.compteResulatsModel.achatApprovionnements) +
+  //       double.parse(widget.compteResulatsModel.variationApprovionnements) +
+  //       double.parse(widget.compteResulatsModel.autresChargesExterne) +
+  //       double.parse(
+  //           widget.compteResulatsModel.impotsTaxesVersementsAssimiles) +
+  //       double.parse(widget.compteResulatsModel.renumerationPersonnel) +
+  //       double.parse(widget.compteResulatsModel.chargesSocialas) +
+  //       double.parse(widget.compteResulatsModel.dotatiopnsProvisions) +
+  //       double.parse(widget.compteResulatsModel.autresCharges) +
+  //       double.parse(widget.compteResulatsModel.chargesfinancieres);
+
+  //   totalCharges123 = totalCharges1 +
+  //       double.parse(widget.compteResulatsModel.chargesExptionnelles) +
+  //       double.parse(widget.compteResulatsModel.impotSurbenefices);
+  //   totalGeneralCharges = totalCharges123 +
+  //       double.parse(widget.compteResulatsModel.soldeCrediteur);
+
+  //   print("totalCharges1 $totalCharges1");
+  // }
+
+  // totalProduits() {
+  //   totalProduits1 = double.parse(
+  //           widget.compteResulatsModel.ventesMarchandises) +
+  //       double.parse(widget.compteResulatsModel.productionVendueBienEtSerices) +
+  //       double.parse(widget.compteResulatsModel.productionStockee) +
+  //       double.parse(widget.compteResulatsModel.productionImmobilisee) +
+  //       double.parse(widget.compteResulatsModel.subventionExploitation) +
+  //       double.parse(widget.compteResulatsModel.autreProduits) +
+  //       double.parse(widget.compteResulatsModel.produitfinancieres);
+
+  //   totalProduits123 = totalProduits1 +
+  //       double.parse(widget.compteResulatsModel.produitExceptionnels);
+  //   totalGeneralProduits = totalProduits123 +
+  //       double.parse(widget.compteResulatsModel.soldeDebiteur) +
+  //       double.parse(widget.compteResulatsModel.montantExportation);
+
+  //   print("totalProduits1 $totalProduits1");
+  // }
+
+  Widget pageDetail() {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Expanded(
+        child: Card(
+          elevation: 10,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const TitleWidget(title: "Compte Resultat"),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          if (widget.compteResulatsModel.approbationDD == '-' ||
+                              widget.compteResulatsModel.approbationDD ==
+                                  "Unapproved")
+                            editButton(),
+                          if (int.parse(profilController.user.role) <= 3 ||
+                              widget.compteResulatsModel.approbationDD == '-')
+                            deleteButton(controller),
+                          PrintWidget(
+                              tooltip: 'Imprimer le document',
+                              onPressed: () async {
+                                await CompteResultatPdf.generate(
+                                    widget.compteResulatsModel,
+                                    totalCharges1,
+                                    totalCharges123,
+                                    totalGeneralCharges,
+                                    totalProduits1,
+                                    totalProduits123,
+                                    totalGeneralProduits);
+                              }),
+                        ],
+                      ),
+                      SelectableText(
+                          DateFormat("dd-MM-yyyy HH:mm")
+                              .format(widget.compteResulatsModel.created),
+                          textAlign: TextAlign.start),
+                    ],
+                  )
+                ],
+              ),
+              dataWidget(),
+            ],
+          ),
         ),
       ),
     ]);
@@ -199,20 +178,22 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous sûr de faire cette action ?',
-              style: TextStyle(color: mainColor)),
+          title: const Text('Etes-vous sûr de faire cette action ?',
+              style: TextStyle(color: Colors.purple)),
           content: const Text('Cette action permet de modifier ce document.'),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              onPressed: () => Navigator.pop(context, 'cancel'),
+              child:
+                  const Text('Annuler', style: TextStyle(color: Colors.purple)),
             ),
             TextButton(
               onPressed: () {
                 Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultatUpdate,
                     arguments: widget.compteResulatsModel);
+                Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.purple)),
             ),
           ],
         ),
@@ -227,23 +208,23 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous sûr de faire cette action ?',
-              style: TextStyle(color: mainColor)),
+          title: const Text('Etes-vous sûr de faire cette action ?',
+              style: TextStyle(color: Colors.red)),
           content:
               const Text('Cette action va supprimer difinitivement le ficher.'),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              onPressed: () => Navigator.pop(context, 'cancel'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () async {
-                Navigator.pop(context);
                 controller.compteResultatApi
                     .deleteData(widget.compteResulatsModel.id!)
                     .then((value) => Navigator.of(context).pop());
+                Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
@@ -366,6 +347,27 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       bodyLarge = Theme.of(context).textTheme.bodyLarge;
       bodyMedium = Theme.of(context).textTheme.bodyMedium;
     }
+
+
+    totalCharges1 = double.parse(widget.compteResulatsModel.achatMarchandises) +
+        double.parse(widget.compteResulatsModel.variationStockMarchandises) +
+        double.parse(widget.compteResulatsModel.achatApprovionnements) +
+        double.parse(widget.compteResulatsModel.variationApprovionnements) +
+        double.parse(widget.compteResulatsModel.autresChargesExterne) +
+        double.parse(
+            widget.compteResulatsModel.impotsTaxesVersementsAssimiles) +
+        double.parse(widget.compteResulatsModel.renumerationPersonnel) +
+        double.parse(widget.compteResulatsModel.chargesSocialas) +
+        double.parse(widget.compteResulatsModel.dotatiopnsProvisions) +
+        double.parse(widget.compteResulatsModel.autresCharges) +
+        double.parse(widget.compteResulatsModel.chargesfinancieres);
+
+    totalCharges123 = totalCharges1 +
+        double.parse(widget.compteResulatsModel.chargesExptionnelles) +
+        double.parse(widget.compteResulatsModel.impotSurbenefices);
+    totalGeneralCharges = totalCharges123 +
+        double.parse(widget.compteResulatsModel.soldeCrediteur);
+ 
 
     return Column(
       children: [
@@ -832,6 +834,23 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       headline6 = Theme.of(context).textTheme.headline6;
       bodyMedium = Theme.of(context).textTheme.bodyMedium;
     }
+
+    totalProduits1 = double.parse(
+            widget.compteResulatsModel.ventesMarchandises) +
+        double.parse(widget.compteResulatsModel.productionVendueBienEtSerices) +
+        double.parse(widget.compteResulatsModel.productionStockee) +
+        double.parse(widget.compteResulatsModel.productionImmobilisee) +
+        double.parse(widget.compteResulatsModel.subventionExploitation) +
+        double.parse(widget.compteResulatsModel.autreProduits) +
+        double.parse(widget.compteResulatsModel.produitfinancieres);
+
+    totalProduits123 = totalProduits1 +
+        double.parse(widget.compteResulatsModel.produitExceptionnels);
+    totalGeneralProduits = totalProduits123 +
+        double.parse(widget.compteResulatsModel.soldeDebiteur) +
+        double.parse(widget.compteResulatsModel.montantExportation);
+
+    
     return Column(
       children: [
         Row(

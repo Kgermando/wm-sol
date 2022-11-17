@@ -62,7 +62,7 @@ class _TableCompteBilanDDState extends State<TableCompteBilanDD> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ComptabiliteRoutes.comptabiliteBilan);
+                            context, ComptabiliteRoutes.comptabiliteDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

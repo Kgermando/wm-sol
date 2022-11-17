@@ -9,7 +9,7 @@ class CompteResultatController extends GetxController
   final CompteResultatApi compteResultatApi = CompteResultatApi();
   final ProfilController profilController = Get.find();
 
-  var compteResultatList = <CompteResulatsModel>[].obs;
+  List<CompteResulatsModel> compteResultatList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -100,9 +100,41 @@ class CompteResultatController extends GetxController
     super.dispose();
   }
 
+ 
+  void clear() {
+    motifDDController.clear();
+
+    intituleController.clear();
+    achatMarchandisesController.clear();
+    variationStockMarchandisesController.clear();
+    achatApprovionnementsController.clear();
+    variationApprovionnementsController.clear();
+    autresChargesExterneController.clear();
+    impotsTaxesVersementsAssimilesController.clear();
+    renumerationPersonnelController.clear();
+    chargesSocialasController.clear();
+    dotatiopnsProvisionsController.clear();
+    autresChargesController.clear();
+    chargesfinancieresController.clear();
+    chargesExptionnellesController.clear();
+    impotSurbeneficesController.clear();
+    soldeCrediteurController.clear();
+    ventesMarchandisesController.clear();
+    productionVendueBienEtSericesController.clear();
+    productionStockeeController.clear();
+    productionImmobiliseeController.clear();
+    subventionExploitationController.clear();
+    autreProduitsController.clear();
+    montantExportationController.clear();
+    produitfinancieresController.clear();
+    produitExceptionnelsController.clear();
+    soldeDebiteurController.clear(); 
+  }
+
   void getList() async {
     await compteResultatApi.getAllData().then((response) {
-      compteResultatList.assignAll(response);
+      compteResultatList.clear();
+      compteResultatList.addAll(response);
       change(compteResultatList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -173,6 +205,7 @@ class CompteResultatController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await compteResultatApi.insertData(compteResulatsModel).then((value) {
+        clear();
         compteResultatList.clear();
         getList();
         Get.back();
@@ -230,6 +263,7 @@ class CompteResultatController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await compteResultatApi.updateData(compteResulatsModel).then((value) {
+        clear();
         compteResultatList.clear();
         getList();
         Get.back();
@@ -252,38 +286,39 @@ class CompteResultatController extends GetxController
     try {
       _isLoading.value = true;
       final compteResulatsModel = CompteResulatsModel(
-          intitule: data.intitule,
-          achatMarchandises: data.achatMarchandises,
-          variationStockMarchandises: data.variationStockMarchandises,
-          achatApprovionnements: data.achatApprovionnements,
-          variationApprovionnements: data.variationApprovionnements,
-          autresChargesExterne: data.autresChargesExterne,
-          impotsTaxesVersementsAssimiles: data.impotsTaxesVersementsAssimiles,
-          renumerationPersonnel: data.renumerationPersonnel,
-          chargesSocialas: data.chargesSocialas,
-          dotatiopnsProvisions: data.dotatiopnsProvisions,
-          autresCharges: data.autresCharges,
-          chargesfinancieres: data.chargesfinancieres,
-          chargesExptionnelles: data.chargesExptionnelles,
-          impotSurbenefices: data.impotSurbenefices,
-          soldeCrediteur: data.soldeCrediteur,
-          ventesMarchandises: data.ventesMarchandises,
-          productionVendueBienEtSerices: data.productionVendueBienEtSerices,
-          productionStockee: data.productionStockee,
-          productionImmobilisee: data.productionImmobilisee,
-          subventionExploitation: data.subventionExploitation,
-          autreProduits: data.autreProduits,
-          montantExportation: data.montantExportation,
-          produitfinancieres: data.produitfinancieres,
-          produitExceptionnels: data.produitExceptionnels,
-          soldeDebiteur: data.soldeDebiteur,
-          signature: data.signature,
-          createdRef: data.createdRef,
-          created: data.created,
-          approbationDD: approbationDD,
-          motifDD:
-              (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule);
+        id: data.id,
+        intitule: data.intitule,
+        achatMarchandises: data.achatMarchandises,
+        variationStockMarchandises: data.variationStockMarchandises,
+        achatApprovionnements: data.achatApprovionnements,
+        variationApprovionnements: data.variationApprovionnements,
+        autresChargesExterne: data.autresChargesExterne,
+        impotsTaxesVersementsAssimiles: data.impotsTaxesVersementsAssimiles,
+        renumerationPersonnel: data.renumerationPersonnel,
+        chargesSocialas: data.chargesSocialas,
+        dotatiopnsProvisions: data.dotatiopnsProvisions,
+        autresCharges: data.autresCharges,
+        chargesfinancieres: data.chargesfinancieres,
+        chargesExptionnelles: data.chargesExptionnelles,
+        impotSurbenefices: data.impotSurbenefices,
+        soldeCrediteur: data.soldeCrediteur,
+        ventesMarchandises: data.ventesMarchandises,
+        productionVendueBienEtSerices: data.productionVendueBienEtSerices,
+        productionStockee: data.productionStockee,
+        productionImmobilisee: data.productionImmobilisee,
+        subventionExploitation: data.subventionExploitation,
+        autreProduits: data.autreProduits,
+        montantExportation: data.montantExportation,
+        produitfinancieres: data.produitfinancieres,
+        produitExceptionnels: data.produitExceptionnels,
+        soldeDebiteur: data.soldeDebiteur,
+        signature: data.signature,
+        createdRef: data.createdRef,
+        created: data.created,
+        approbationDD: approbationDD,
+        motifDD:
+            (motifDDController.text == '') ? '-' : motifDDController.text,
+        signatureDD: profilController.user.matricule);
       await compteResultatApi.updateData(compteResulatsModel).then((value) {
         compteResultatList.clear();
         getList();

@@ -9,7 +9,7 @@ class BalanceRefController extends GetxController
   final CompteBalanceRefApi compteBalanceRefApi = CompteBalanceRefApi();
   final ProfilController profilController = Get.find();
 
-  var compteBalanceRefList = <CompteBalanceRefModel>[].obs;
+  List<CompteBalanceRefModel> compteBalanceRefList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -34,9 +34,15 @@ class BalanceRefController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    montantDebitController.clear();
+    montantCreditController.clear();
+  }
+
   void getList() async {
     await compteBalanceRefApi.getAllData().then((response) {
-      compteBalanceRefList.assignAll(response);
+      compteBalanceRefList.clear();
+      compteBalanceRefList.addAll(response); 
       change(compteBalanceRefList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -89,6 +95,7 @@ class BalanceRefController extends GetxController
               : montantCreditController.text,
           solde: solde.toString());
       await compteBalanceRefApi.insertData(compteBalanceRefModel).then((value) {
+        clear();
         compteBalanceRefList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -128,6 +135,7 @@ class BalanceRefController extends GetxController
               : montantCreditController.text,
           solde: solde.toString());
       await compteBalanceRefApi.updateData(compteBalanceRefModel).then((value) {
+        clear();
         compteBalanceRefList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -145,38 +153,5 @@ class BalanceRefController extends GetxController
     }
   }
 
-  // void sendDD(BalanceCompteModel data) async {
-  //   try {
-  //     _isLoading.value = true;
-  //     final bilanModel = BalanceCompteModel(
-  //         id: data.id,
-  //         title: data.title,
-  //         statut: data.statut,
-  //         signature: data.signature,
-  //         created: data.created,
-  //         isSubmit: 'true',
-  //         approbationDG: data.approbationDG,
-  //         motifDG: data.motifDG,
-  //         signatureDG: data.signatureDG,
-  //         approbationDD: data.approbationDD,
-  //         motifDD: data.motifDD,
-  //         signatureDD: data.signatureDD);
-  //     await balanceCompteApi.updateData(bilanModel).then((value) {
-  //       balanceList.clear();
-  //       getList();
-  //       Get.back();
-  //       Get.snackbar("Soumission effectuée avec succès!",
-  //           "Le document a bien été sauvegader",
-  //           backgroundColor: Colors.green,
-  //           icon: const Icon(Icons.check),
-  //           snackPosition: SnackPosition.TOP);
-  //       _isLoading.value = false;
-  //     });
-  //   } catch (e) {
-  //     Get.snackbar("Erreur de soumission", "$e",
-  //         backgroundColor: Colors.red,
-  //         icon: const Icon(Icons.check),
-  //         snackPosition: SnackPosition.TOP);
-  //   }
-  // }
+ 
 }

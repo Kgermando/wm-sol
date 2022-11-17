@@ -65,7 +65,7 @@ class _TableJournalComptabiliteDDState
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(context,
-                            ComptabiliteRoutes.comptabiliteJournalLivre);
+                            ComptabiliteRoutes.comptabiliteDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

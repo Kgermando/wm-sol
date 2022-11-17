@@ -10,7 +10,7 @@ class JournalController extends GetxController
   final JournalApi journalApi = JournalApi();
   final ProfilController profilController = Get.find();
 
-  var journalList = <JournalModel>[].obs;
+  List<JournalModel> journalList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -43,8 +43,18 @@ class JournalController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    numeroOperationController.clear();
+    libeleController.clear();
+    montantDebitController.clear();
+    montantCreditController.clear();
+    tvaController.clear();
+    remarqueController.clear(); 
+  }
+
   void getList() async {
     await journalApi.getAllData().then((response) {
+      journalList.clear();
       journalList.assignAll(response);
       change(journalList, status: RxStatus.success());
     }, onError: (err) {
@@ -96,6 +106,7 @@ class JournalController extends GetxController
           type: type.toString(),
           created: DateTime.now());
       await journalApi.insertData(journalModel).then((value) {
+        clear();
         journalList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
@@ -117,20 +128,22 @@ class JournalController extends GetxController
     try {
       _isLoading.value = true;
       final journalModel = JournalModel(
-          reference: data.id!,
-          numeroOperation: data.numeroOperation,
-          libele: libeleController.text,
-          compte: comptes.toString(),
-          montantDebit: (montantDebitController.text == "")
-              ? data.montantDebit
-              : montantDebitController.text,
-          montantCredit: (montantCreditController.text == "")
-              ? data.montantDebit
-              : montantCreditController.text,
-          tva: tvaController.text,
-          type: type.toString(),
-          created: DateTime.now());
+        id: data.id,
+        reference: data.reference,
+        numeroOperation: data.numeroOperation,
+        libele: libeleController.text,
+        compte: comptes.toString(),
+        montantDebit: (montantDebitController.text == "")
+            ? data.montantDebit
+            : montantDebitController.text,
+        montantCredit: (montantCreditController.text == "")
+            ? data.montantDebit
+            : montantCreditController.text,
+        tva: tvaController.text,
+        type: type.toString(),
+        created: data.created);
       await journalApi.updateData(journalModel).then((value) {
+        clear();
         journalList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",

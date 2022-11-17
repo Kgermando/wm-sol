@@ -11,16 +11,6 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
-import 'package:timeago/timeago.dart' as timeago;
-
-final _lightColors = [
-  Colors.pinkAccent.shade700,
-  Colors.tealAccent.shade700,
-  mainColor,
-  Colors.lightGreen.shade700,
-  Colors.lightBlue.shade700,
-  Colors.orange.shade700,
-];
 
 class DetailPerformence extends StatefulWidget {
   const DetailPerformence({super.key, required this.performenceModel});

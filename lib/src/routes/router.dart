@@ -800,7 +800,7 @@ List<GetPage<dynamic>>? getPages = [
       ],
       page: () {
         final BilanModel bilanModel = Get.arguments as BilanModel;
-        return DetailBilan(bilanModel: bilanModel);
+        return DetailBilan(bilanModel: bilanModel); 
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

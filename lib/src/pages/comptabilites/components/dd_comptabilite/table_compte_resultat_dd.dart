@@ -46,7 +46,7 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
               .compteResultatController
               .detailView(idPlutoRow.value);
 
-          Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail,
+          Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultatDetail,
               arguments: compteResulatsModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -64,7 +64,7 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(context,
-                            ComptabiliteRoutes.comptabiliteCompteResultat);
+                            ComptabiliteRoutes.comptabiliteDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

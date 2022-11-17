@@ -10,7 +10,7 @@ class CompteBilanRefController extends GetxController
   final CompteBilanRefApi compteBilanRefApi = CompteBilanRefApi();
   final ProfilController profilController = Get.find();
 
-  var compteBilanRefList = <CompteBilanRefModel>[].obs;
+  List<CompteBilanRefModel> compteBilanRefList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -37,9 +37,14 @@ class CompteBilanRefController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    montantController.clear(); 
+  }
+
   void getList() async {
     await compteBilanRefApi.getAllData().then((response) {
-      compteBilanRefList.assignAll(response);
+      compteBilanRefList.clear();
+      compteBilanRefList.addAll(response);
       change(compteBilanRefList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -54,7 +59,7 @@ class CompteBilanRefController extends GetxController
   void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await compteBilanRefApi.deleteData(id).then((value) {
+      await compteBilanRefApi.deleteData(id).then((value) { 
         compteBilanRefList.clear();
         getList();
         Get.back();
@@ -83,6 +88,7 @@ class CompteBilanRefController extends GetxController
               (montantController.text == "") ? "0" : montantController.text,
           type: type.toString());
       await compteBilanRefApi.insertData(compteBilanRefModel).then((value) {
+        clear();
         compteBilanRefList.clear();
         getList();
         // Get.back();
@@ -115,6 +121,7 @@ class CompteBilanRefController extends GetxController
               : montantController.text,
           type: (type.toString() == "") ? bilanRef.type : type.toString());
       await compteBilanRefApi.updateData(compteBilanRefModel).then((value) {
+        clear();
         compteBilanRefList.clear();
         getList();
         Get.back();

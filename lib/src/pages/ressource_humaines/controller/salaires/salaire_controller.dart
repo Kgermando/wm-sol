@@ -14,7 +14,7 @@ class SalaireController extends GetxController
   final ProfilController profilController = Get.find();
   final MailApi mailApi = MailApi();
 
-  var paiementSalaireList = <PaiementSalaireModel>[].obs;
+  List<PaiementSalaireModel> paiementSalaireList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -124,11 +124,39 @@ class SalaireController extends GetxController
     montantPrisConsiderationCalculCotisationsINSSController.dispose();
     totalDuBrutController.dispose();
     super.dispose();
+  }  
+  
+  void clear() {
+    joursHeuresPayeA100PourecentSalaireController.clear();
+    totalDuSalaireController.clear();
+    nombreHeureSupplementairesController.clear();
+    tauxHeureSupplementairesController.clear();
+    totalDuHeureSupplementairesController.clear();
+    supplementTravailSamediDimancheJoursFerieController.clear();
+    primeController.clear();
+    diversController.clear();
+    joursCongesPayeController.clear();
+    tauxCongesPayeController.clear();
+    totalDuCongePayeController.clear();
+    jourPayeMaladieAccidentController.clear();
+    tauxJournalierMaladieAccidentController.clear();
+    totalDuMaladieAccidentController.clear();
+    pensionDeductionController.clear();
+    indemniteCompensatricesDeductionController.clear();
+    retenuesFiscalesDeductionController.clear();
+    nombreEnfantBeneficaireAllocationsFamilialesController.clear();
+    nombreDeJoursAllocationsFamilialesController.clear();
+    tauxJoursAllocationsFamilialesController.clear();
+    totalAPayerAllocationsFamilialesController.clear();
+    netAPayerController.clear();
+    montantPrisConsiderationCalculCotisationsINSSController.clear();
+    totalDuBrutController.clear(); 
   }
 
   void getList() async {
     await paiementSalaireApi.getAllData().then((response) {
-      paiementSalaireList.assignAll(response);
+      paiementSalaireList.clear();
+      paiementSalaireList.addAll(response);
       change(paiementSalaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -222,6 +250,7 @@ class SalaireController extends GetxController
             ligneBudgetaire: '-',
             ressource: '-');
         await paiementSalaireApi.insertData(paiementSalaireModel).then((value) {
+          clear();
           paiementSalaireList.clear();
           getList();
           Get.back();
@@ -307,6 +336,7 @@ class SalaireController extends GetxController
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        clear();
         paiementSalaireList.clear();
         getList();
         Get.back();
@@ -392,6 +422,7 @@ class SalaireController extends GetxController
           ligneBudgetaire: '-',
           ressource: '-');
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        clear();
         paiementSalaireList.clear();
         getList();
         Get.back();
@@ -480,6 +511,7 @@ class SalaireController extends GetxController
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString());
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        clear();
         paiementSalaireList.clear();
         getList();
         Get.back();
@@ -565,6 +597,7 @@ class SalaireController extends GetxController
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
+        clear();
         sendEmail(value).then((value) {
           Get.back();
           Get.snackbar(

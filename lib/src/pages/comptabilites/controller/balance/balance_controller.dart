@@ -9,7 +9,7 @@ class BalanceController extends GetxController
   final BalanceCompteApi balanceCompteApi = BalanceCompteApi();
   final ProfilController profilController = Get.find();
 
-  var balanceList = <BalanceCompteModel>[].obs;
+  List<BalanceCompteModel> balanceList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -37,9 +37,15 @@ class BalanceController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    motifDDController.clear();
+    titleController.clear();
+  }
+
   void getList() async {
     await balanceCompteApi.getAllData().then((response) {
-      balanceList.assignAll(response);
+      balanceList.clear();
+      balanceList.addAll(response);
       change(balanceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -85,6 +91,7 @@ class BalanceController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await balanceCompteApi.insertData(balance).then((value) {
+        clear();
         balanceList.clear();
         getList();
         Get.back();
@@ -117,6 +124,7 @@ class BalanceController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await balanceCompteApi.updateData(bilanModel).then((value) {
+        clear();
         balanceList.clear();
         getList();
         Get.back();
@@ -150,6 +158,7 @@ class BalanceController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await balanceCompteApi.updateData(balanceModel).then((value) {
+        clear();
         balanceList.clear();
         getList();
         Get.back();

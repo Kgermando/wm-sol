@@ -8,7 +8,7 @@ class PerformenceController extends GetxController
     with StateMixin<List<PerformenceModel>> {
   PerformenceApi performenceApi = PerformenceApi();
   final ProfilController profilController = Get.find();
-  var performenceList = <PerformenceModel>[].obs;
+  List<PerformenceModel> performenceList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -22,7 +22,8 @@ class PerformenceController extends GetxController
 
   void getList() async {
     await performenceApi.getAllData().then((response) { 
-      performenceList.assignAll(response);
+      performenceList.clear();
+      performenceList.addAll(response);
       change(performenceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

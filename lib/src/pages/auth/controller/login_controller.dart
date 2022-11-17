@@ -14,7 +14,7 @@ class LoginController extends GetxController {
   final AuthApi authController = AuthApi();
   final UserApi userController = UserApi();
 
-  final ProfilController profilController = Get.find();                                                                        
+  final ProfilController profilController = Get.find();
 
   final _loadingLogin = false.obs;
   bool get isLoadingLogin => _loadingLogin.value;
@@ -29,6 +29,11 @@ class LoginController extends GetxController {
     matriculeController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    matriculeController.clear();
+    passwordController.clear();
   }
 
   String? validator(String value) {
@@ -64,7 +69,11 @@ class LoginController extends GetxController {
                   createdAt: user.createdAt,
                   passwordHash: user.passwordHash,
                   succursale: user.succursale);
-              await userController.updateData(userModel).then((userData) {
+              await userController.updateData(userModel).then((userData)async {
+                clear();
+                GetStorage box = GetStorage();  
+                box.write('userModel', json.encode(user));
+                
                 var departement = jsonDecode(userData.departement);
                 if (departement.first == "Administration") {
                   if (int.parse(userData.role) <= 2) {

@@ -26,12 +26,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
   @override
   Widget build(BuildContext context) {
     final JournalLivreController controller = Get.find();
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title, subTitle),
               drawer: const DrawerMenu(),
@@ -42,7 +37,11 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                   onPressed: () {
                     newjournalDialog(controller);
                   }),
-              body: Row(
+              body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (data) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -59,8 +58,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                               journalLivreList: controller.journalLivreList,
                               controller: controller))),
                 ],
-              ))),
-    );
+              )) ); 
   }
 
   newjournalDialog(JournalLivreController controller) {

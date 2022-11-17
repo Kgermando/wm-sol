@@ -23,82 +23,80 @@ class _DashboardComptabiliteState extends State<DashboardComptabilite> {
   @override
   Widget build(BuildContext context) {
     final DashboardComptabiliteController controller = Get.find();
-    return SafeArea(
-      child: Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(context, scaffoldKey, title, subTitle),
-          drawer: const DrawerMenu(),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                        margin: const EdgeInsets.only(
-                            top: p20, bottom: p8, right: p20, left: p20),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Wrap(
-                                  alignment: WrapAlignment.spaceEvenly,
-                                  children: [
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(ComptabiliteRoutes
-                                              .comptabiliteBilan);  
-                                        },
-                                        number: '${controller.bilanCount}',
-                                        title: 'Bilans',
-                                        icon: Icons.blur_linear_rounded,
-                                        color: Colors.green.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(ComptabiliteRoutes
-                                              .comptabiliteJournalLivre);  
-                                        },
-                                        number: '${controller.journalCount}',
-                                        title: 'Journals',
-                                        icon: Icons.backup_table,
-                                        color: Colors.blue.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(ComptabiliteRoutes
-                                              .comptabiliteCompteResultat); 
-                                        },
-                                        number: '${controller.compteResultatCount}',
-                                        title: 'Comptes resultats',
-                                        icon: Icons.view_compact_rounded,
-                                        color: Colors.teal.shade700),
-                                    DashNumberWidget(
-                                        gestureTapCallback: () {
-                                          Get.toNamed(ComptabiliteRoutes
-                                              .comptabiliteBalance);
-                                        },
-                                        number: '${controller.balanceCount}',
-                                        title: 'Balances',
-                                        icon: Icons.balcony_outlined,
-                                        color: Colors.orange.shade700),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20.0,
-                                ),
-                              ]),
-                        )),
-                  ))
-            ],
-          )),
-    );
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, subTitle),
+        drawer: const DrawerMenu(),
+        body: Obx(() => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: p20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                alignment: WrapAlignment.spaceEvenly,
+                                children: [
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(ComptabiliteRoutes
+                                            .comptabiliteBilan);  
+                                      },
+                                      number: '${controller.bilanCount}',
+                                      title: 'Bilans',
+                                      icon: Icons.blur_linear_rounded,
+                                      color: Colors.green.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(ComptabiliteRoutes
+                                            .comptabiliteJournalLivre);  
+                                      },
+                                      number: '${controller.journalCount}',
+                                      title: 'Journals',
+                                      icon: Icons.backup_table,
+                                      color: Colors.blue.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(ComptabiliteRoutes
+                                            .comptabiliteCompteResultat); 
+                                      },
+                                      number: '${controller.compteResultatCount}',
+                                      title: 'Comptes resultats',
+                                      icon: Icons.view_compact_rounded,
+                                      color: Colors.teal.shade700),
+                                  DashNumberWidget(
+                                      gestureTapCallback: () {
+                                        Get.toNamed(ComptabiliteRoutes
+                                            .comptabiliteBalance);
+                                      },
+                                      number: '${controller.balanceCount}',
+                                      title: 'Balances',
+                                      icon: Icons.balcony_outlined,
+                                      color: Colors.orange.shade700),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                            ]),
+                      )),
+                ))
+          ],
+        )) );
   }
 }
