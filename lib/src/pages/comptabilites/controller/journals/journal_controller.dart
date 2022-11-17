@@ -91,19 +91,18 @@ class JournalController extends GetxController
   void submit(JournalLivreModel data) async {
     try {
       _isLoading.value = true;
-      final journalModel = JournalModel(
-          reference: data.id!,
+      final journalModel = JournalModel( 
           numeroOperation: numeroOperationController.text,
           libele: libeleController.text,
-          compte: comptes.toString(),
+          compteDebit: comptes.toString(),
           montantDebit: (montantDebitController.text == "")
               ? "0"
               : montantDebitController.text,
+          compteCredit: comptes.toString(),
           montantCredit: (montantCreditController.text == "")
               ? "0"
               : montantCreditController.text,
-          tva: tvaController.text,
-          type: type.toString(),
+          locker: tvaController.text, 
           created: DateTime.now());
       await journalApi.insertData(journalModel).then((value) {
         clear();
@@ -128,19 +127,18 @@ class JournalController extends GetxController
     try {
       _isLoading.value = true;
       final journalModel = JournalModel(
-        id: data.id,
-        reference: data.reference,
+        id: data.id, 
         numeroOperation: data.numeroOperation,
         libele: libeleController.text,
-        compte: comptes.toString(),
+        compteDebit: comptes.toString(),
         montantDebit: (montantDebitController.text == "")
             ? data.montantDebit
             : montantDebitController.text,
+        compteCredit: comptes.toString(),
         montantCredit: (montantCreditController.text == "")
             ? data.montantDebit
             : montantCreditController.text,
-        tva: tvaController.text,
-        type: type.toString(),
+        locker: tvaController.text, 
         created: data.created);
       await journalApi.updateData(journalModel).then((value) {
         clear();

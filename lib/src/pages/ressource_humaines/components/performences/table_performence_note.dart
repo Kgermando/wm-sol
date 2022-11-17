@@ -52,19 +52,19 @@ class _TablePerformenceNoteState extends State<TablePerformenceNote> {
           cellTextStyle: const TextStyle(color: Colors.blue, fontSize: 20.0, fontWeight: FontWeight.bold),
           name: 'Hospitalité',
           width: 300,
-          stringValue: (row) => row.hospitalite),
+          stringValue: (row) => "${row.hospitalite} /10"),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
           cellTextStyle: const TextStyle(color: Colors.green, fontSize: 20.0, fontWeight: FontWeight.bold),
           name: 'Ponctualité',
           width: 200,
-          stringValue: (row) => row.ponctualite),
+          stringValue: (row) => "${row.ponctualite} /10"),
       EasyTableColumn(
         headerAlignment: Alignment.center,
         cellAlignment: Alignment.center,
         cellTextStyle: const TextStyle(color: Colors.purple, fontSize: 20.0, fontWeight: FontWeight.bold),
-        name: 'Travaille', width: 200, stringValue: (row) => row.travaille),
+        name: 'Travaille', width: 200, stringValue: (row) => "${row.travaille} /10"),
       EasyTableColumn(
         headerAlignment: Alignment.center,  
         name: 'Note', width: 300, stringValue: (row) => row.note),
@@ -73,32 +73,34 @@ class _TablePerformenceNoteState extends State<TablePerformenceNote> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(p10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const TitleWidget(title: 'Cotations'),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        widget.controllerNote.getList();
-                      });
-                    },
-                    icon: const Icon(Icons.refresh, color: Colors.green))
-              ],
-            ),
-            const SizedBox(height: p10),
-            SizedBox(
-                height: 400,
+    return SizedBox(
+      height: 400,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(p10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const TitleWidget(title: 'Cotations'),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.controllerNote.getList();
+                        });
+                      },
+                      icon: const Icon(Icons.refresh, color: Colors.green))
+                ],
+              ), 
+              Expanded(
                 child: EasyTable<PerformenceNoteModel>(
                   _model,
                   multiSort: true,
-                )),
-          ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

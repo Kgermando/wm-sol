@@ -178,16 +178,16 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                   ],
                                 ),
                                 Divider(color: mainColor),
-                                TableJournal(
-                                    itemList: state!
-                                      .where((element) => 
-                                element.reference == widget.journalLivreModel.id)
-                                .toList()),
-                                totalWidget(state
-                                    .where((element) =>
-                                        element.reference ==
-                                        widget.journalLivreModel.id)
-                                    .toList()), 
+                                // TableJournal(
+                                //     itemList: state!
+                                //       .where((element) => 
+                                // element.reference == widget.journalLivreModel.id)
+                                // .toList()),
+                                // totalWidget(state
+                                //     .where((element) =>
+                                //         element.reference ==
+                                //         widget.journalLivreModel.id)
+                                //     .toList()), 
                               ],
                             ),
                           ),

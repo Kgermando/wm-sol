@@ -44,7 +44,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
           name: 'Compte',
           width: 100,
           stringValue: (row) {
-            var compteSplit = row.compte.split('_');
+            var compteSplit = row.compteDebit.split('_');
             var compte = compteSplit.first;
             return compte;
           }),
@@ -61,14 +61,14 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
               ? "-"
               : "${NumberFormat.decimalPattern('fr').format(double.parse(row.montantCredit))} \$"),
       EasyTableColumn(
-          name: 'TVA', width: 100, stringValue: (row) => "${row.tva} %"),
+          name: 'Solde', width: 100, stringValue: (row) => "  \$"),
     ]);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var journal = widget.search.map((e) => e.compte).first;
+    var journal = widget.search.map((e) => e.compteDebit).first;
     var compteSplit = journal.split('_');
     var compte = compteSplit.first;
     return Scaffold(

@@ -348,25 +348,31 @@ List<GetPage<dynamic>>? getPages = [
   // Mails
   GetPage(
       name: MailRoutes.mails,
-      bindings: [MailBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MailBinding(), 
+        UsersBinding(),
+        ProfilBinding(), NetworkBindings()],
       page: () => const MailPages(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.addMail,
-      bindings: [MailBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [MailBinding(),
+        UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const NewMail(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailSend,
-      bindings: [MailBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [MailBinding(),
+        UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const MailSend(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailDetail,
-      bindings: [MailBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [MailBinding(),
+        UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         MailColor mailColor = Get.arguments as MailColor;
         return DetailMail(mailColor: mailColor);
@@ -375,7 +381,8 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailRepondre, 
-      bindings: [MailBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [MailBinding(),
+        UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         MailModel mailModel = Get.arguments as MailModel;
         return RepondreMail(mailModel: mailModel);
@@ -384,7 +391,8 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailTransfert, 
-      bindings: [MailBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [MailBinding(),
+        UsersBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         MailModel mailModel = Get.arguments as MailModel;
         return TransfertMail(mailModel: mailModel);
@@ -1248,6 +1256,7 @@ List<GetPage<dynamic>>? getPages = [
         RestitutionBinding(),
         RavitaillementBinding(),
         LivraisonBinding(),
+        HistoryRavitaillementBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const StockGlobalPage(),
@@ -1257,6 +1266,7 @@ List<GetPage<dynamic>>? getPages = [
       name: ComRoutes.comStockGlobalAdd,
       bindings: [
         StockGlobalBinding(), 
+        HistoryRavitaillementBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const AddStockGlobal(),
@@ -1270,6 +1280,7 @@ List<GetPage<dynamic>>? getPages = [
         RestitutionBinding(),
         RavitaillementBinding(),
         LivraisonBinding(),
+        HistoryRavitaillementBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -1299,6 +1310,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         StockGlobalBinding(),
         RavitaillementBinding(),
+        ProduitModelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {

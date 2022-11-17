@@ -19,7 +19,7 @@ class ComptabiliteNav extends StatefulWidget {
 }
 
 class _ComptabiliteNavState extends State<ComptabiliteNav> {
-   final ComptabiliteNotifyController comptabiliteNotifyController = Get.find();
+  final ComptabiliteNotifyController comptabiliteNotifyController = Get.put(ComptabiliteNotifyController());
   bool isOpen = false;
 
   @override

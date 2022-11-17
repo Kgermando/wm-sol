@@ -62,7 +62,7 @@ class _TablePerformenceState extends State<TablePerformence> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Performences"),
+            const TitleWidget(title: "Performances"),
             Row(
               children: [
                 IconButton(

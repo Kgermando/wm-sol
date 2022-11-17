@@ -163,7 +163,7 @@ class _GrandLivreState extends State<GrandLivre> {
   }
 
   Widget compteWidget(List<JournalModel> data) {
-    List<String> suggestionList = data.map((e) => e.compte).toSet().toList();
+    List<String> suggestionList = data.map((e) => e.compteDebit).toSet().toList();  
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
@@ -209,15 +209,15 @@ class _GrandLivreState extends State<GrandLivre> {
   }
 
   void searchKey(List<JournalModel> data) {
-    final livre = GrandLivreModel(
-        reference: reference!.id!, compte: compteController.text);
-    final search = data
-        .where((element) =>
-            element.compte == livre.compte &&
-                element.reference == livre.reference ||
-            element.compte == compteController.text)
-        .toList();
-    Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivreSearch,
-        arguments: search);
+    // final livre = GrandLivreModel(
+    //     reference: reference!.id!, compte: compteController.text);
+    // final search = data
+    //     .where((element) =>
+    //         element.compte == livre.compte &&
+    //             element.reference == livre.reference ||
+    //         element.compte == compteController.text)
+    //     .toList();
+    // Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivreSearch,
+    //     arguments: search);
   }
 }

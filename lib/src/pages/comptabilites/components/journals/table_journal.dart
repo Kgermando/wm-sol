@@ -42,7 +42,7 @@ class _TableJournalState extends State<TableJournal> {
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
           stringValue: (row) {
-            var compteSplit = row.compte.split('_');
+            var compteSplit = row.compteDebit.split('_');
             var compte = compteSplit.first;
             return compte;
           }),
@@ -62,10 +62,7 @@ class _TableJournalState extends State<TableJournal> {
           stringValue: (row) => (row.montantCredit == "0")
               ? "-"
               : "${NumberFormat.decimalPattern('fr').format(double.parse(row.montantCredit))} \$"),
-      EasyTableColumn(
-          headerAlignment: Alignment.center,
-          cellAlignment: Alignment.center,
-          name: 'TVA', width: 100, stringValue: (row) => "${row.tva} %"),
+       
     ]);
     super.initState();
   }

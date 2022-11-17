@@ -188,7 +188,7 @@ class JournalPdf {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(data.compte, textAlign: TextAlign.center),
+                        child: Text(data.compteDebit, textAlign: TextAlign.center),
                       ),
                       Expanded(
                         child: Text(
@@ -196,7 +196,7 @@ class JournalPdf {
                             textAlign: TextAlign.center),
                       ),
                     ],
-                  ),
+                  ), 
                 ],
               )),
         ],
@@ -234,7 +234,7 @@ class JournalPdf {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(data.compte, textAlign: TextAlign.center),
+                        child: Text(data.compteCredit, textAlign: TextAlign.center),
                       ),
                       Expanded(
                         child: Text(
@@ -247,23 +247,23 @@ class JournalPdf {
               )),
         ],
       ),
-      Divider(
-        color: PdfColors.amber,
-      ),
-      Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text('TVA :',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text("${data.tva} %", textAlign: TextAlign.left),
-          )
-        ],
-      ),
+      // Divider(
+      //   color: PdfColors.amber,
+      // ),
+      // Row(
+      //   children: [
+      //     Expanded(
+      //       flex: 1,
+      //       child: Text('TVA :',
+      //           textAlign: TextAlign.left,
+      //           style: TextStyle(fontWeight: FontWeight.bold)),
+      //     ),
+      //     Expanded(
+      //       flex: 3,
+      //       child: Text("${data.tva} %", textAlign: TextAlign.left),
+      //     )
+      //   ],
+      // ),
     ]);
   }
 

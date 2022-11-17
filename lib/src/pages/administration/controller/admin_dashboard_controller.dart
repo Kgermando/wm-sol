@@ -234,12 +234,12 @@ class AdminDashboardController extends GetxController {
         .where((element) => element.approbationDD == 'Approved')
         .length;
 
-    for (var journal in journalLivreController.journalLivreList
-        .where((element) => element.approbationDD == 'Approved')) {
-      journalCount = journalController.journalList
-          .where((element) => element.reference == journal.id)
-          .length;
-    }
+    // for (var journal in journalLivreController.journalLivreList
+    //     .where((element) => element.approbationDD == 'Approved')) {
+    //   journalCount = journalController.journalList
+    //       .where((element) => element.reference == journal.id)
+    //       .length;
+    // }
 
     // FINANCE
     // Banque

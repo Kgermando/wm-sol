@@ -26,6 +26,7 @@ class FonctionOccupee {
     'Directeur de finance',
     'Chef de service',
     'Transactions',
+    'Tresorerie',
     'Analyse et octroit des dettes',
     'Agent',
     'Expert',
