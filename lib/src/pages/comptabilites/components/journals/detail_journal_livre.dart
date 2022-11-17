@@ -29,177 +29,209 @@ class DetailJournalLivre extends StatefulWidget {
 class _DetailJournalLivreState extends State<DetailJournalLivre> {
   final JournalLivreController journalLivreController = Get.find();
   final JournalController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
 
   @override
-  Widget build(BuildContext context) { 
-    final ProfilController profilController = Get.find();
+  Widget build(BuildContext context) {  
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    return controller.obx(
+    
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title,
+          widget.journalLivreModel.intitule),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+          tooltip: "Nouvel écriture",
+          label: const Text("Ajouter une écriture"),
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            newEcritureDialog(controller);
+          }),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.journalLivreModel.intitule),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                  tooltip: "Nouvel écriture",
-                  label: const Text("Ajouter une écriture"),
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    newEcritureDialog(controller);
-                  }),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+        (state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: p20),
                             child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const TitleWidget(
-                                                title: "Journals"),
-                                            Row(
-                                              children: [
-                                                if (widget.journalLivreModel
-                                                            .signature ==
-                                                        profilController
-                                                            .user.matricule &&
-                                                    widget.journalLivreModel
-                                                            .isSubmit ==
-                                                        "false") // Uniqyement celui a remplit le document
-                                                  sendButton(),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .journalLivreModel
-                                                            .created),
-                                                    textAlign: TextAlign.end,
-                                                    style: bodyMedium)
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(height: p20),
-                                        ResponsiveChildWidget(
-                                            flex1: 1,
-                                            flex2: 3,
-                                            child1: Text('Intitule :',
-                                                textAlign: TextAlign.start,
-                                                style: bodyMedium!.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            child2: SelectableText(
-                                                widget
-                                                    .journalLivreModel.intitule,
-                                                textAlign: TextAlign.justify,
-                                                style: bodyMedium)),
-                                        Divider(color: mainColor),
-                                        ResponsiveChildWidget(
-                                          flex1: 1,
-                                          flex2: 3,
-                                          child1: Text('Date de début :',
-                                              textAlign: TextAlign.start,
-                                              style: bodyMedium.copyWith(
-                                                  fontWeight: FontWeight.bold)),
-                                          child2: SelectableText(
-                                              DateFormat("dd-MM-yyyy").format(
-                                                  widget
-                                                      .journalLivreModel.debut),
-                                              textAlign: TextAlign.justify,
-                                              style: bodyMedium),
-                                        ),
-                                        Divider(color: mainColor),
-                                        ResponsiveChildWidget(
-                                            flex1: 1,
-                                            flex2: 3,
-                                            child1: Text('Date de fin :',
-                                                textAlign: TextAlign.start,
-                                                style: bodyMedium.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            child2: SelectableText(
-                                                DateFormat("dd-MM-yyyy").format(
-                                                    widget
-                                                        .journalLivreModel.fin),
-                                                textAlign: TextAlign.justify,
-                                                style: bodyMedium)),
-                                        Divider(color: mainColor),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TitleWidget(
+                                        title: "Journals"),
+                                    Column(
+                                      children: [ 
                                         Row(
                                           children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text('Signature :',
-                                                  textAlign: TextAlign.start,
-                                                  style: bodyMedium.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                            Expanded(
-                                              flex: 3,
-                                              child: SelectableText(
-                                                  widget.journalLivreModel
-                                                      .signature,
-                                                  textAlign: TextAlign.justify,
-                                                  style: bodyMedium),
-                                            )
+                                            if (widget.journalLivreModel
+                                                .isSubmit == "false") 
+                                            sendButton(),
+                                            if (widget.journalLivreModel
+                                                  .approbationDD ==
+                                              "Unapproved")
+                                            deleteButton(),
                                           ],
-                                        ),
-                                        Divider(color: mainColor),
-                                        SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              1.5,
-                                          child: Expanded(
-                                              child: TableJournal(
-                                                  itemList:
-                                                      controller.journalList)),
-                                        ),
-                                        totalWidget(controller.journalList),
-                                        const SizedBox(height: p20),
-                                        ApprobationJournalLivre(
-                                            data: widget.journalLivreModel,
-                                            controller: journalLivreController,
-                                            profilController: profilController)
+                                        ), 
+                                        SelectableText(
+                                            DateFormat(
+                                                    "dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .journalLivreModel
+                                                    .created),
+                                            textAlign: TextAlign.end,
+                                            style: bodyMedium)
                                       ],
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: p20),
+                                ResponsiveChildWidget(
+                                    flex1: 1,
+                                    flex2: 3,
+                                    child1: Text('Intitule :',
+                                        textAlign: TextAlign.start,
+                                        style: bodyMedium!.copyWith(
+                                            fontWeight:
+                                                FontWeight.bold)),
+                                    child2: SelectableText(
+                                        widget
+                                            .journalLivreModel.intitule,
+                                        textAlign: TextAlign.justify,
+                                        style: bodyMedium)),
+                                Divider(color: mainColor),
+                                ResponsiveChildWidget(
+                                  flex1: 1,
+                                  flex2: 3,
+                                  child1: Text('Date de début :',
+                                      textAlign: TextAlign.start,
+                                      style: bodyMedium.copyWith(
+                                          fontWeight: FontWeight.bold)),
+                                  child2: SelectableText(
+                                      DateFormat("dd-MM-yyyy").format(
+                                          widget
+                                              .journalLivreModel.debut),
+                                      textAlign: TextAlign.justify,
+                                      style: bodyMedium),
+                                ),
+                                Divider(color: mainColor),
+                                ResponsiveChildWidget(
+                                    flex1: 1,
+                                    flex2: 3,
+                                    child1: Text('Date de fin :',
+                                        textAlign: TextAlign.start,
+                                        style: bodyMedium.copyWith(
+                                            fontWeight:
+                                                FontWeight.bold)),
+                                    child2: SelectableText(
+                                        DateFormat("dd-MM-yyyy").format(
+                                            widget
+                                                .journalLivreModel.fin),
+                                        textAlign: TextAlign.justify,
+                                        style: bodyMedium)),
+                                Divider(color: mainColor),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text('Signature :',
+                                          textAlign: TextAlign.start,
+                                          style: bodyMedium.copyWith(
+                                              fontWeight:
+                                                  FontWeight.bold)),
                                     ),
-                                  ),
-                                )
+                                    Expanded(
+                                      flex: 3,
+                                      child: SelectableText(
+                                          widget.journalLivreModel
+                                              .signature,
+                                          textAlign: TextAlign.justify,
+                                          style: bodyMedium),
+                                    )
+                                  ],
+                                ),
+                                Divider(color: mainColor),
+                                TableJournal(
+                                    itemList: state!
+                                      .where((element) => 
+                                element.reference == widget.journalLivreModel.id)
+                                .toList()),
+                                totalWidget(state
+                                    .where((element) =>
+                                        element.reference ==
+                                        widget.journalLivreModel.id)
+                                    .toList()), 
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        ),
+                        const SizedBox(height: p20),
+                        if(widget.journalLivreModel.isSubmit == 'true')
+                        ApprobationJournalLivre(
+                            data: widget.journalLivreModel,
+                            controller: journalLivreController,
+                            profilController: profilController)
+                      ],
+                    ),
+                  )))
+        ],
+      ),) 
+    ); 
+  }
+
+  Widget deleteButton() {
+    return IconButton(
+      icon: Icon(Icons.delete, color: Colors.red.shade700),
+      tooltip: "Supprimer",
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Etes-vous sûr de faire cette action ?',
+              style: TextStyle(color: Colors.red)),
+          content: const Text('Cette action permet de supprimer ce document.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
+            ),
+            TextButton(
+              onPressed: () {
+                journalLivreController.deleteData(widget.journalLivreModel.id!);
+                Navigator.pop(context, 'ok');
+              },
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget sendButton() {
@@ -209,21 +241,21 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous pour soumettre ce document ?',
-              style: TextStyle(color: mainColor)),
+          title: const Text('Etes-vous pour soumettre ce document ?',
+              style: TextStyle(color: Colors.green)),
           content: const Text(
               'Cette action permet de soumettre ce document chez le directeur de departement.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.green)),
             ),
             TextButton(
               onPressed: () async {
                 journalLivreController.sendDD(widget.journalLivreModel);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.green)),
             ),
           ],
         ),
@@ -327,8 +359,10 @@ class _DetailJournalLivreState extends State<DetailJournalLivre> {
                                 ),
                               ),
                               ResponsiveChildWidget(
-                                  child1: numeroOperationWidget(controller),
-                                  child2: libeleWidget(controller)),
+                                flex1: 1,
+                                flex2: 3,
+                                child1: numeroOperationWidget(controller),
+                                child2: libeleWidget(controller)),
                               ResponsiveChildWidget(
                                   child1: Container(
                                     margin: const EdgeInsets.only(bottom: p20),

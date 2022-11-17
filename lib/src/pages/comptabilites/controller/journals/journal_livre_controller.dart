@@ -155,8 +155,7 @@ class JournalLivreController extends GetxController
         signature: data.signature,
         created: data.created,
         approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
+        motifDD: (motifDDController.text == '') ? '-' : motifDDController.text,
         signatureDD: profilController.user.matricule);
       await journalLivreApi.updateData(journalLivre).then((value) {
         clear();

@@ -34,8 +34,13 @@ class _TablePerformenceNoteState extends State<TablePerformenceNote> {
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
-          name: 'Signature', width: 100, stringValue: (row) => row.signature),
-      EasyTableColumn(name: 'Matricule', stringValue: (row) => row.agent),
+          name: 'Signature', width: 200, stringValue: (row) => row.signature),
+      EasyTableColumn(
+        headerAlignment: Alignment.center,
+        cellAlignment: Alignment.center,
+        width: 200,
+        name: 'Matricule', 
+        stringValue: (row) => row.agent),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           name: 'Departement',

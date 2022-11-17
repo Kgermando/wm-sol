@@ -76,49 +76,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       ),
     );
   }
-
-  // totalCharges() {
-  //   totalCharges1 = double.parse(widget.compteResulatsModel.achatMarchandises) +
-  //       double.parse(widget.compteResulatsModel.variationStockMarchandises) +
-  //       double.parse(widget.compteResulatsModel.achatApprovionnements) +
-  //       double.parse(widget.compteResulatsModel.variationApprovionnements) +
-  //       double.parse(widget.compteResulatsModel.autresChargesExterne) +
-  //       double.parse(
-  //           widget.compteResulatsModel.impotsTaxesVersementsAssimiles) +
-  //       double.parse(widget.compteResulatsModel.renumerationPersonnel) +
-  //       double.parse(widget.compteResulatsModel.chargesSocialas) +
-  //       double.parse(widget.compteResulatsModel.dotatiopnsProvisions) +
-  //       double.parse(widget.compteResulatsModel.autresCharges) +
-  //       double.parse(widget.compteResulatsModel.chargesfinancieres);
-
-  //   totalCharges123 = totalCharges1 +
-  //       double.parse(widget.compteResulatsModel.chargesExptionnelles) +
-  //       double.parse(widget.compteResulatsModel.impotSurbenefices);
-  //   totalGeneralCharges = totalCharges123 +
-  //       double.parse(widget.compteResulatsModel.soldeCrediteur);
-
-  //   print("totalCharges1 $totalCharges1");
-  // }
-
-  // totalProduits() {
-  //   totalProduits1 = double.parse(
-  //           widget.compteResulatsModel.ventesMarchandises) +
-  //       double.parse(widget.compteResulatsModel.productionVendueBienEtSerices) +
-  //       double.parse(widget.compteResulatsModel.productionStockee) +
-  //       double.parse(widget.compteResulatsModel.productionImmobilisee) +
-  //       double.parse(widget.compteResulatsModel.subventionExploitation) +
-  //       double.parse(widget.compteResulatsModel.autreProduits) +
-  //       double.parse(widget.compteResulatsModel.produitfinancieres);
-
-  //   totalProduits123 = totalProduits1 +
-  //       double.parse(widget.compteResulatsModel.produitExceptionnels);
-  //   totalGeneralProduits = totalProduits123 +
-  //       double.parse(widget.compteResulatsModel.soldeDebiteur) +
-  //       double.parse(widget.compteResulatsModel.montantExportation);
-
-  //   print("totalProduits1 $totalProduits1");
-  // }
-
+ 
   Widget pageDetail() {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Expanded(

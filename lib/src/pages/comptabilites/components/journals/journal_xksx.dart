@@ -11,17 +11,15 @@ class JournalXlsx {
     String title = "Journals";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([
-      "id",
-      "intitule",
-      "debut",
-      "fin",
-      "signature",
-      "created",
+      "Intitule",
+      "Debut",
+      "Fin",
+      "Signature",
+      "Date",
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
-      List<String> data = [
-        dataList[i].id.toString(),
+      List<String> data = [ 
         dataList[i].intitule,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].debut),
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].fin),

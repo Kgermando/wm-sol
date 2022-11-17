@@ -93,8 +93,7 @@ class BalanceController extends GetxController
       await balanceCompteApi.insertData(balance).then((value) {
         clear();
         balanceList.clear();
-        getList();
-        Get.back();
+        getList(); 
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegader",
             backgroundColor: Colors.green,

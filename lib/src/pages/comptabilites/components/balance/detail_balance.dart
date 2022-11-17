@@ -54,7 +54,11 @@ class _DetailBalanceState extends State<DetailBalance> {
                   },
                 )
               : Container(),
-      body: Row(
+      body: balanceRefController.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
@@ -141,13 +145,14 @@ class _DetailBalanceState extends State<DetailBalance> {
                                     )
                                   ],
                                 ),
-                                dataWidget(balanceRefController),
+                                dataWidget(state!),
                                 totalMontant(balanceRefController)
                               ],
                             ),
                           ),
                         ),
                         const SizedBox(height:p20),
+                        if (widget.balanceCompteModel.isSubmit == 'true')
                         ApprobationBalance(
                           data: widget.balanceCompteModel,
                           controller: controller,
@@ -156,7 +161,7 @@ class _DetailBalanceState extends State<DetailBalance> {
                     ),
                   )))
         ],
-      ),
+      ),) 
     );
   }
 
@@ -234,7 +239,7 @@ class _DetailBalanceState extends State<DetailBalance> {
     );
   }
 
-  Widget dataWidget(BalanceRefController balanceRefController) {
+  Widget dataWidget(List<CompteBalanceRefModel> state) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Padding(
       padding: const EdgeInsets.all(p10),
@@ -297,15 +302,15 @@ class _DetailBalanceState extends State<DetailBalance> {
           ),
           Divider(color: mainColor),
           const SizedBox(height: p30),
-          compteWidget()
+          compteWidget(state)
         ],
       ),
     );
   }
 
-  Widget compteWidget() {
+  Widget compteWidget(List<CompteBalanceRefModel> state) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    var dataList = balanceRefController.compteBalanceRefList
+    var dataList = state
         .where((element) => element.reference == widget.balanceCompteModel.id)
         .toList();
     return ListView.builder(
@@ -469,21 +474,21 @@ class _DetailBalanceState extends State<DetailBalance> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous pour soumettre ce document ?',
-              style: TextStyle(color: mainColor)),
+          title: const Text('Etes-vous pour soumettre ce document ?',
+              style: TextStyle(color: Colors.green)),
           content: const Text(
               'Cette action permet de soumettre ce document chez le directeur de departement.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.green)),
             ),
             TextButton(
               onPressed: () async {
                 controller.sendDD(widget.balanceCompteModel);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.green)),
             ),
           ],
         ),

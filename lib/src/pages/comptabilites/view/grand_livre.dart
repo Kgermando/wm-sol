@@ -163,7 +163,7 @@ class _GrandLivreState extends State<GrandLivre> {
   }
 
   Widget compteWidget(List<JournalModel> data) {
-    List<String> suggestionList = data.map((e) => e.compte).toList();
+    List<String> suggestionList = data.map((e) => e.compte).toSet().toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(

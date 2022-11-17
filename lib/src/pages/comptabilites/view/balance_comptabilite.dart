@@ -16,13 +16,14 @@ class BalanceComptabilite extends StatefulWidget {
 }
 
 class _BalanceComptabiliteState extends State<BalanceComptabilite> {
+  final BalanceController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
   String subTitle = "Balance";
 
   @override
   Widget build(BuildContext context) {
-    final BalanceController controller = Get.find();
+    
 
     return Scaffold(
         key: scaffoldKey,

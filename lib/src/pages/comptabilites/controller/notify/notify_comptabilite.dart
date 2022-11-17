@@ -27,49 +27,54 @@ class ComptabiliteNotifyController extends GetxController {
   final _balanceCount = 0.obs;
   int get balanceCount => _balanceCount.value;
 
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   getCountComptabilite();
+  //   getCountBilanDD();
+  //   getCountJournalDD();
+  //   getCountCompteResultatDD();
+  //   getCountBalanceDD();
+  // } 
+
   @override
-  void onInit() {
-    super.onInit();
+  void refresh() {
     getCountComptabilite();
     getCountBilanDD();
     getCountJournalDD();
     getCountCompteResultatDD();
     getCountBalanceDD();
+    super.refresh();
   }
 
   void getCountComptabilite() async {
     NotifySumModel notifySum =
         await comptabiliteDepartementNotifyApi.getCountComptabilite();
     _itemCount.value = notifySum.sum;
-    update();
-     
+    update(); 
   }
 
   void getCountBilanDD() async {
     NotifyModel notifySum = await bilanNotifyApi.getCountDD();
     _bilanCount.value = notifySum.count;
-    update();
-     
+    update(); 
   }
 
   void getCountJournalDD() async {
     NotifyModel notifySum = await journalNotifyApi.getCountDD();
     _journalCount.value = notifySum.count;
-    update();
-     
+    update(); 
   }
 
   void getCountCompteResultatDD() async {
     NotifyModel notifySum = await compteResultatNotifyApi.getCountDD();
     _compteResultatCount.value = notifySum.count;
-    update();
-     
+    update(); 
   }
 
   void getCountBalanceDD() async {
     NotifyModel notifySum = await balanceNotifyApi.getCountDD();
     _balanceCount.value = notifySum.count;
-    update();
-     
+    update(); 
   }
 }

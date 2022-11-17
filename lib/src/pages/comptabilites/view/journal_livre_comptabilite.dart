@@ -37,7 +37,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                   onPressed: () {
                     newjournalDialog(controller);
                   }),
-              body: controller.obx(
+      body: controller.obx(
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
@@ -113,8 +113,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                     if (form.validate()) {
                       controller.submit();
                       form.reset();
-                    }
-                    Navigator.pop(context, 'ok');
+                    } 
                   },
                   child: const Text('OK'),
                 ),

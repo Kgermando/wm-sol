@@ -90,7 +90,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
-                                      isOpen4 = !val;
+                                      isOpen1 = !val;
                                     });
                                   },
                                   trailing: const Icon(
@@ -120,7 +120,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
-                                      isOpen1 = !val;
+                                      isOpen2 = !val;
                                     });
                                   },
                                   trailing: const Icon(
@@ -178,7 +178,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
-                                      isOpen2 = !val;
+                                      isOpen4 = !val;
                                     });
                                   },
                                   trailing: const Icon(

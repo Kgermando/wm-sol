@@ -9,13 +9,14 @@ import 'package:wm_solution/src/constants/role_theme.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/404/error.dart';
 import 'package:wm_solution/src/routes/router.dart';
-import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/redirect_route.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
   await GetStorage.init();
   UserModel user = await AuthApi().getUserId();
+  timeago.setLocaleMessages('fr', timeago.FrMessages()); // Add french messages
   runApp(Phoenix(child: MyApp(user: user)));
 }
 

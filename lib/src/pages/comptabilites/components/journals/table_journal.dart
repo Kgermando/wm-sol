@@ -23,18 +23,24 @@ class _TableJournalState extends State<TableJournal> {
       EasyTableColumn(
         name: 'Date',
         width: 200,
+        headerAlignment: Alignment.center,
         stringValue: (row) =>
             DateFormat("dd-MM-yyyy HH:mm").format(row.created),
       ),
       EasyTableColumn(
           name: 'N° Operation',
           width: 150,
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           stringValue: (row) => row.numeroOperation),
       EasyTableColumn(
+          headerAlignment: Alignment.center,
           name: 'Libele', width: 300, stringValue: (row) => row.libele),
       EasyTableColumn(
           name: 'Compte',
           width: 100,
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           stringValue: (row) {
             var compteSplit = row.compte.split('_');
             var compte = compteSplit.first;
@@ -43,16 +49,22 @@ class _TableJournalState extends State<TableJournal> {
       EasyTableColumn(
           name: 'Debit',
           width: 100,
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           stringValue: (row) => (row.montantDebit == "0")
               ? "-"
               : "${NumberFormat.decimalPattern('fr').format(double.parse(row.montantDebit))} \$"),
       EasyTableColumn(
           name: 'Credit',
           width: 100,
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           stringValue: (row) => (row.montantCredit == "0")
               ? "-"
               : "${NumberFormat.decimalPattern('fr').format(double.parse(row.montantCredit))} \$"),
       EasyTableColumn(
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           name: 'TVA', width: 100, stringValue: (row) => "${row.tva} %"),
     ]);
     super.initState();
@@ -60,10 +72,12 @@ class _TableJournalState extends State<TableJournal> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Padding(
-      padding: const EdgeInsets.all(p10),
-      child: EasyTable<JournalModel>(_model, multiSort: true),
-    ));
+    return SizedBox(
+      height: 400,
+      child: Padding(
+        padding: const EdgeInsets.all(p10),
+        child: EasyTable<JournalModel>(_model, multiSort: true),
+      ),
+    );
   }
 }

@@ -53,7 +53,11 @@ class _DetailBilanState extends State<DetailBilan> {
               },
             )
           : Container(),
-      body: Row(
+      body: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
@@ -122,23 +126,27 @@ class _DetailBilanState extends State<DetailBilan> {
                                   )
                                 ],
                               ),
-                              dataWidget(controller),
+                              dataWidget(state!),
                               totalMontant(controller)
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(height: p20),
-                        ApprobationCompteResultat(data: widget.bilanModel, controller: bilanController, profilController: profilController)
+                      if (widget.bilanModel.isSubmit == 'true')
+                      ApprobationCompteResultat(
+                        data: widget.bilanModel,
+                        controller: bilanController,
+                        profilController: profilController)
                     ],
                   ),
                 )))
         ],
-      ),
+      ),) 
     );
   }
 
-  Widget dataWidget(CompteBilanRefController controller) {
+  Widget dataWidget(List<CompteBilanRefModel> state) {
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     final bodySmall = Theme.of(context).textTheme.bodySmall;
@@ -192,7 +200,7 @@ class _DetailBilanState extends State<DetailBilan> {
                       ],
                     ),
                     const SizedBox(height: p30),
-                    compteActifWidget(controller)
+                    compteActifWidget(state)
                   ],
                 ),
               ),
@@ -239,7 +247,7 @@ class _DetailBilanState extends State<DetailBilan> {
                         ],
                       ),
                       const SizedBox(height: p30),
-                      comptePassifWidget(controller)
+                      comptePassifWidget(state)
                     ],
                   ),
                 ),
@@ -251,9 +259,9 @@ class _DetailBilanState extends State<DetailBilan> {
     );
   }
 
-  Widget compteActifWidget(CompteBilanRefController controller) {
+  Widget compteActifWidget(List<CompteBilanRefModel> state) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    List<CompteBilanRefModel>? dataList = controller.compteBilanRefList
+    List<CompteBilanRefModel>? dataList = state
         .where((element) =>
             element.reference == widget.bilanModel.id &&
             element.type == "Actif")
@@ -350,9 +358,9 @@ class _DetailBilanState extends State<DetailBilan> {
     );
   }
 
-  Widget comptePassifWidget(CompteBilanRefController controller) {
+  Widget comptePassifWidget(List<CompteBilanRefModel> state) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    List<CompteBilanRefModel>? dataList = controller.compteBilanRefList
+    List<CompteBilanRefModel>? dataList = state
         .where((element) =>
             element.reference == widget.bilanModel.id &&
             element.type == "Passif")
@@ -752,21 +760,21 @@ class _DetailBilanState extends State<DetailBilan> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous pour soumettre ce document ?',
-              style: TextStyle(color: mainColor)),
+          title: const Text('Etes-vous pour soumettre ce document ?',
+              style: TextStyle(color: Colors.green)),
           content: const Text(
               'Cette action permet de soumettre ce document chez le directeur de departement.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.green)),
             ),
             TextButton(
               onPressed: () async {
                 bilanController.sendDD(widget.bilanModel);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.green)),
             ),
           ],
         ),
