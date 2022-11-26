@@ -176,6 +176,7 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
             labelText: 'Nom du dossier',
           ),
+          maxLength: 50,
           keyboardType: TextInputType.text,
           validator: (value) {
             if (value != null && value.isEmpty) {

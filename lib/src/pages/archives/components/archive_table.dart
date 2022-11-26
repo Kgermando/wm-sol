@@ -16,7 +16,8 @@ class TableArchive extends StatefulWidget {
       {super.key,
       required this.archiveFolderModel,
       required this.controller,
-      required this.controllerFolder, required this.profilController});
+      required this.controllerFolder,
+      required this.profilController});
   final ArchiveFolderModel archiveFolderModel;
   final ArchiveController controller;
   final ArchiveFolderController controllerFolder;
@@ -68,7 +69,8 @@ class _TableArchiveState extends State<TableArchive> {
                 deleteButton(),
                 IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, ArchiveRoutes.archivesDetail,
+                          arguments: widget.archiveFolderModel);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
               ],
@@ -78,9 +80,7 @@ class _TableArchiveState extends State<TableArchive> {
       },
       configuration: PlutoGridConfiguration(
         columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters
-          ],
+          filters: const [...FilterHelper.defaultFilters],
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -108,7 +108,7 @@ class _TableArchiveState extends State<TableArchive> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataItemList = widget.controller.archiveList
-      .where((element) => element.reference == widget.archiveFolderModel.id);
+        .where((element) => element.reference == widget.archiveFolderModel.id);
 
     var i = dataItemList.length;
     for (var item in dataItemList) {
@@ -201,21 +201,21 @@ class _TableArchiveState extends State<TableArchive> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de faire cette action ?'),
+          title: const Text('Etes-vous sûr de faire cette action ?', style: TextStyle(color: Colors.red),),
           content: const Text(
               'Cette action permet de permet de mettre ce fichier en corbeille.'),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              onPressed: () => Navigator.pop(context, 'cancel'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red))
             ),
             TextButton(
-              onPressed: () async {
-                await widget.controllerFolder.archiveFolderApi
-                    .deleteData(widget.archiveFolderModel.id!)
-                    .then((value) => Navigator.of(context).pop());
+              onPressed: () {
+                widget.controllerFolder
+                    .deleteData(widget.archiveFolderModel.id!);
+                Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
