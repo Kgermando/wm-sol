@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/models/rh/agent_count_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -14,12 +12,17 @@ class DashRHPieWidget extends StatefulWidget {
 }
 
 class _DashRHPieWidgetState extends State<DashRHPieWidget> {
-  Timer? timer;
+    TooltipBehavior? _tooltipBehavior;
+
+  @override
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(enable: true);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // width: Responsive.isDesktop(context) ? 400 : double.infinity,
       width: MediaQuery.maybeOf(context)!.size.width / 1.1,
       child: Card(
         elevation: 6,
@@ -29,6 +32,7 @@ class _DashRHPieWidgetState extends State<DashRHPieWidget> {
                 text: 'Sexe',
                 textStyle: const TextStyle(fontWeight: FontWeight.bold)),
             legend: Legend(isVisible: true, isResponsive: true),
+            tooltipBehavior: _tooltipBehavior,
             series: <CircularSeries>[
               // Render pie chart
               PieSeries<AgentPieChartModel, String>(

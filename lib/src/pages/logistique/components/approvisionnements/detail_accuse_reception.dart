@@ -7,6 +7,7 @@ import 'package:wm_solution/src/models/logistiques/approvision_reception_model.d
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/logistique/components/approvisionnements/table_history_livraison_provision.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -29,85 +30,86 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title,
+          widget.approvisionReceptionModel.provision),
+      drawer: const DrawerMenu(),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.approvisionReceptionModel.provision),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+        (state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TitleWidget(
+                                        title: "Accusé reception"),
+                                    Column(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const TitleWidget(
-                                                title: "Accusé reception"),
-                                            Column(
-                                              children: [
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .approvisionReceptionModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget(),
+                                        SelectableText(
+                                            DateFormat("dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .approvisionReceptionModel
+                                                    .created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+                                dataWidget(),
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        ),
+                        TableHistoryLivraisonProvision(
+                                approvisionReceptionList: state!,
+                                approvisionReceptionModel:
+                                    widget.approvisionReceptionModel)
+                      ],
+                    ),
+                  )))
+        ],
+      ),) 
+    );
   }
 
   Widget dataWidget() {
-    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
- 
+    final bodyText2 = Theme.of(context).textTheme.bodyText2;
+
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // if (departementList.contains(profilController.user.departement))
-          accRecepetion(), 
+          accRecepetion(),
           const SizedBox(height: p20),
           ResponsiveChildWidget(
               child1: Text('Département :',
@@ -162,13 +164,13 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
 
   Widget accRecepetion() {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
-        var isCancelYear = widget.approvisionReceptionModel.createdReception.year ==
+    var isCancelYear = widget.approvisionReceptionModel.createdReception.year ==
         DateTime.now().year;
     var isCancelMonth =
         widget.approvisionReceptionModel.createdReception.month ==
             DateTime.now().month;
     var isCancelDay = widget.approvisionReceptionModel.createdReception.day ==
-        DateTime.now().day; 
+        DateTime.now().day;
 
     return Card(
       child: SizedBox(
@@ -195,8 +197,7 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
                                 fontSize: 16,
                                 color: Colors.green)
                             : bodyText1!.copyWith(color: Colors.green)),
-                
-                 const SizedBox(width: p20),
+                const SizedBox(width: p20),
                 if (widget.approvisionReceptionModel.accuseReception ==
                         'true' &&
                     isCancelYear &&

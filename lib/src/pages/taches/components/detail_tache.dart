@@ -32,11 +32,7 @@ class _DetailTacheState extends State<DetailTache> {
     final TachesController controller = Get.find();
     final ProfilController profilController = Get.find();
     final RapportController rapportController = Get.find();
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar:
                   headerBar(context, scaffoldKey, title, widget.tacheModel.nom),
@@ -50,7 +46,11 @@ class _DetailTacheState extends State<DetailTache> {
                       arguments: widget.tacheModel);
                 },
               ),
-              body: Row(
+              body: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -129,8 +129,11 @@ class _DetailTacheState extends State<DetailTache> {
                             ),
                           )))
                 ],
-              ),
-            ));
+              )) ,
+            )
+    
+    
+    ;
   }
 
   Color getColor(Set<MaterialState> states) {

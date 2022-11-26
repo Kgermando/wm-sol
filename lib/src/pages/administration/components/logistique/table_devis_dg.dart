@@ -52,8 +52,18 @@ class _TableDevisDGState extends State<TableDevisDG> {
         createHeader: (PlutoGridStateManager header) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              TitleWidget(title: "Devis"),
+            children: [
+              const TitleWidget(title: "Devis"),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, AdminRoutes.adminLogistique);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)), 
+                ],
+              ),
             ],
           );
         },

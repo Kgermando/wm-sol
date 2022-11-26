@@ -9,10 +9,10 @@ import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_com
 import 'package:wm_solution/src/routes/routes.dart';
 
 class ComptabiliteNav extends StatefulWidget {
-  const ComptabiliteNav({super.key, required this.currentRoute, required this.user, required this.departement});
+  const ComptabiliteNav({super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<ComptabiliteNav> createState() => _ComptabiliteNavState();
@@ -32,7 +32,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
       leading: const Icon(Icons.table_view, size: 30.0),
       title: AutoSizeText('Comptabilités', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement == 'Comptabilites') ? true : false,
+          widget.departementList.contains('Comptabilites') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

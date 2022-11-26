@@ -94,7 +94,8 @@ class _ApprobationDetteState extends State<ApprobationDette> {
                                         ],
                                       )
                                     : Container()),
-                        if (widget.data.approbationDG == '-' &&
+                        if (widget.data.approbationDD == "Approved" &&
+                              widget.data.approbationDG == '-' &&
                             widget.profilController.user.fonctionOccupe ==
                                 "Directeur générale")
                           Padding(

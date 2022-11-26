@@ -4,9 +4,15 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/dashboard/courbe_balance.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/dashboard/dash_pie_balance.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_chart_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_chart_pie_controller.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/components/dashboard/calendar_widget.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_widget.dart';
+import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
 class DashboardComptabilite extends StatefulWidget {
   const DashboardComptabilite({super.key});
@@ -16,13 +22,16 @@ class DashboardComptabilite extends StatefulWidget {
 }
 
 class _DashboardComptabiliteState extends State<DashboardComptabilite> {
+  final DashboardComptabiliteController controller = Get.find();
+  final BalanceChartController balanceChartController = Get.find();
+  final BalanceChartPieController balanceChartPieController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilite";
   String subTitle = "Dashboard";
 
   @override
   Widget build(BuildContext context) {
-    final DashboardComptabiliteController controller = Get.find();
+    
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -92,10 +101,23 @@ class _DashboardComptabiliteState extends State<DashboardComptabilite> {
                               ),
                               const SizedBox(
                                 height: 20.0,
-                              ),
+                              ), 
+                              ResponsiveChildWidget(
+                                flex1: 3,
+                                flex2: 1,
+                                child1: ChartPieBalance(
+                                    balanceChartPieList: balanceChartPieController.balanceChartPieList),
+                                child2: const CalendarWidget()),
+                                  const SizedBox(height: p20),
+                              CourbeBalance(
+                                      balanceSumList: balanceChartController
+                                          .balanceChartList),
+                                  
                             ]),
                       )),
                 ))
+
+
           ],
         )) );
   }

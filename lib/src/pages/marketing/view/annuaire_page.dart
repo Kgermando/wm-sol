@@ -29,31 +29,30 @@ class AnnuairePage extends StatefulWidget {
 }
 
 class _AnnuairePageState extends State<AnnuairePage> {
+  final AnnuaireController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
   String subTitle = "Annuaire";
 
   @override
   Widget build(BuildContext context) {
-    final AnnuaireController controller = Get.find();
-
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter contact"),
-                tooltip: "Ajout un nouveau contact",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Get.toNamed(MarketingRoutes.marketingAnnuaireAdd);
-                },
-              ),
-              body: Row(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter contact"),
+        tooltip: "Ajout un nouveau contact",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(MarketingRoutes.marketingAnnuaireAdd);
+        },
+      ),
+      body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -74,26 +73,35 @@ class _AnnuairePageState extends State<AnnuairePage> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     const TitleWidget(title: "Annuaire"),
-                                    PrintWidget(onPressed: () {
-                                      AnnuaireXlsx().exportToExcel(
-                                          controller.annuaireList);
-                                      if (!mounted) return;
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: const Text(
-                                            "Exportation effectué!"),
-                                        backgroundColor: Colors.green[700],
-                                      ));
-                                    }),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              controller.getList();
+                                            },
+                                            icon: Icon(Icons.refresh,
+                                                color: Colors.green.shade700)),
+                                        PrintWidget(onPressed: () {
+                                          AnnuaireXlsx().exportToExcel(
+                                              controller.annuaireList);
+                                          if (!mounted) return;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: const Text(
+                                                "Exportation effectué!"),
+                                            backgroundColor: Colors.green[700],
+                                          ));
+                                        }),
+                                      ],
+                                    ),
                                   ],
                                 ),
                                 ListView.builder(
-                                  shrinkWrap: true,
-                                    itemCount:
-                                        controller.annuaireList.length,
+                                    shrinkWrap: true,
+                                    itemCount: controller.annuaireList.length,
                                     itemBuilder: (context, index) {
                                       final annuaireModel =
                                           controller.annuaireList[index];
@@ -104,8 +112,8 @@ class _AnnuairePageState extends State<AnnuairePage> {
                             ),
                           )))
                 ],
-              ),
-            ));
+              )),
+    );
   }
 
   Widget buildSearch(AnnuaireController controller) => SearchWidget(
@@ -129,35 +137,27 @@ class _AnnuairePageState extends State<AnnuairePage> {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
     final color = _lightColors[index % _lightColors.length];
-    return Column(
-      children: [
-        GestureDetector(
-            onTap: () {
-              Get.toNamed(MarketingRoutes.marketingAnnuaireDetail,
-                  arguments: AnnuaireColor(
-                      annuaireModel: annuaireModel, color: color));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 2,
-                child: ListTile(
-                  visualDensity: VisualDensity.comfortable,
-                  dense: true,
-                  leading: Icon(Icons.perm_contact_cal_sharp,
-                      color: color, size: 50),
-                  title: Text(
-                    annuaireModel.nomPostnomPrenom,
-                    style: bodyText1,
-                  ),
-                  subtitle: Text(
-                    annuaireModel.mobile1,
-                    style: bodyText2,
-                  ),
-                ),
-              ),
-            )),
-      ],
+    return Card(
+      child: ListTile(
+        onTap: () {
+          Get.toNamed(MarketingRoutes.marketingAnnuaireDetail,
+              arguments:
+                  AnnuaireColor(annuaireModel: annuaireModel, color: color));
+        },
+        leading: Icon(Icons.perm_contact_cal_sharp, color: color, size: 50),
+        title: Text(
+          annuaireModel.nomPostnomPrenom,
+          style: bodyText1,
+        ),
+        subtitle: Text(
+          annuaireModel.mobile1,
+          style: bodyText2,
+        ),
+        trailing: Text(
+          annuaireModel.categorie,
+          style: bodyText2,
+        ),
+      ),
     );
   }
 }

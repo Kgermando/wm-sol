@@ -155,7 +155,8 @@ class LignBudgetaireController extends GetxController
           banque: banqueController.toString(),
           finExterieur: fondsAtrouver.toString(),
           signature: profilController.user.matricule,
-          created: DateTime.now());
+          created: DateTime.now(), 
+          reference: data.id!);
       await lIgneBudgetaireApi.insertData(ligneBudgetaireModel).then((value) {
         ligneBudgetaireList.clear();
         getList();

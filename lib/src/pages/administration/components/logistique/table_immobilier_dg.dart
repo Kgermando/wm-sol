@@ -62,7 +62,7 @@ class _TableImmobilierDGState extends State<TableImmobilierDG> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, LogistiqueRoutes.logImmobilierMateriel);
+                            context, AdminRoutes.adminLogistique);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

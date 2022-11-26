@@ -64,35 +64,37 @@ class DashboardLogController extends GetxController {
   }
 
  Future<void> getData() async {
-
-    _materielCount.value = materielController.materielList
+    var materiels = await materielController.materielsApi.getAllData();
+    _materielCount.value = materiels
         .where((element) => element.typeMateriel == 'Materiel' &&
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")
         .length;
-    _materielCountRoulant.value = materielController.materielList
+    _materielCountRoulant.value = materiels
         .where((element) => element.typeMateriel == 'Materiel roulant' &&
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")
         .length;
-    _mobilierCount.value = mobilierController.mobilierList
+    var mobiliers = await mobilierController.mobilierApi.getAllData();
+    _mobilierCount.value = mobiliers
         .where((element) => element.approbationDD == "Approved")
         .length;
-    _immobilierCount.value = immobilierController.immobilierList
+    var immobiliers = await immobilierController.immobilierApi.getAllData();
+    _immobilierCount.value = immobiliers
         .where((element) =>
             element.approbationDG == "Approved" &&
             element.approbationDD == "Approved")
         .length;
-    
-    _etatMaterielActif.value = etatMaterielController.etatMaterielList
+    var etatMateriels = await etatMaterielController.etatMaterielApi.getAllData();
+    _etatMaterielActif.value = etatMateriels
         .where((element) =>
             element.statut == "Actif" && element.approbationDD == "Approved")
         .length;
-    _etatMaterielInActif.value = etatMaterielController.etatMaterielList
+    _etatMaterielInActif.value = etatMateriels
         .where((element) =>
             element.statut == "Inactif" && element.approbationDD == "Approved")
         .length;
-    _etatMaterielDeclaser.value = etatMaterielController.etatMaterielList
+    _etatMaterielDeclaser.value = etatMateriels
         .where((element) =>
             element.statut == "Declaser" && element.approbationDD == "Approved")
         .length;

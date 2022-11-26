@@ -39,44 +39,43 @@ class _AgendaPageState extends State<AgendaPage> {
     final AgendaController controller = Get.find();
     final ProfilController profilController = Get.find();
 
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter rappel"),
+        tooltip: "Ajout un rappel",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          newFicheDialog(controller, profilController);
+        },
+      ),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter rappel"),
-                tooltip: "Ajout un rappel",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  newFicheDialog(controller, profilController);
-                },
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: buildAgenda(controller, profilController),
-                          )))
-                ],
-              ),
-            ));
+        (state) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: buildAgenda(controller, profilController),
+                  )))
+        ],
+      )) ,
+    );
   }
 
   Widget buildAgenda(

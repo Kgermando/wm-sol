@@ -66,7 +66,7 @@ class _TableCreanceDGState extends State<TableCreanceDG> {
                         IconButton(
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, FinanceRoutes.transactionsCreances);
+                                  context, AdminRoutes.adminFinance);
                             },
                             icon: Icon(Icons.refresh,
                                 color: Colors.green.shade700)),

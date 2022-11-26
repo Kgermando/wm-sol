@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/comptabilite/balance_compte_api.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
+import 'package:wm_solution/src/api/comptabilite/balance_api.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class BalanceController extends GetxController
-    with StateMixin<List<BalanceCompteModel>> {
-  final BalanceCompteApi balanceCompteApi = BalanceCompteApi();
+    with StateMixin<List<BalanceModel>> {
+  final BalanceApi balanceApi = BalanceApi();
   final ProfilController profilController = Get.find();
 
-  List<BalanceCompteModel> balanceList = [];
+  List<BalanceModel> balanceList = []; 
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  TextEditingController titleController = TextEditingController();
-
-  // Approbations
-  final formKeyBudget = GlobalKey<FormState>();
-
-  String approbationDG = '-';
-  String approbationDD = '-';
-  TextEditingController motifDDController = TextEditingController();
+  String? comptesAllSelect;
+  String? comptes;
+  TextEditingController montantDebitController = TextEditingController();
+  TextEditingController montantCreditController = TextEditingController();
+  bool statut = false;
 
   @override
   void onInit() {
@@ -32,35 +29,35 @@ class BalanceController extends GetxController
 
   @override
   void dispose() {
-    motifDDController.dispose();
-    titleController.dispose();
+    montantDebitController.dispose();
+    montantCreditController.dispose();
     super.dispose();
   }
 
   void clear() {
-    motifDDController.clear();
-    titleController.clear();
+    montantDebitController.clear();
+    montantCreditController.clear();
   }
 
   void getList() async {
-    await balanceCompteApi.getAllData().then((response) {
+    await balanceApi.getAllData().then((response) {
       balanceList.clear();
-      balanceList.addAll(response);
+      balanceList.addAll(response); 
       change(balanceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
-    });
+    }); 
   }
 
   detailView(int id) async {
-    final data = await balanceCompteApi.getOneData(id);
+    final data = await balanceApi.getOneData(id);
     return data;
   }
 
-  deleteData(int id) async {
+  void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await balanceCompteApi.deleteData(id).then((value) {
+      await balanceApi.deleteData(id).then((value) {
         balanceList.clear();
         getList();
         Get.back();
@@ -78,101 +75,87 @@ class BalanceController extends GetxController
     }
   }
 
-  void submit() async {
-    try {
-      _isLoading.value = true;
-      final balance = BalanceCompteModel(
-          title: titleController.text,
-          statut: 'false',
-          signature: profilController.user.matricule.toString(),
-          created: DateTime.now(),
-          isSubmit: 'false',
-          approbationDD: '-',
-          motifDD: '-',
-          signatureDD: '-');
-      await balanceCompteApi.insertData(balance).then((value) {
-        clear();
-        balanceList.clear();
-        getList(); 
-        Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
-      });
-    } catch (e) {
-      Get.snackbar("Erreur de soumission", "$e",
-          backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  // Future<void> submit() async {
+  //   try {
+  //     _isLoading.value = true;
+  //     var solde = double.parse((montantDebitController.text == "")
+  //             ? "0"
+  //             : montantDebitController.text) -
+  //         double.parse((montantCreditController.text == "")
+  //             ? "0"
+  //             : montantCreditController.text);
 
-  void sendDD(BalanceCompteModel data) async {
-    try {
-      _isLoading.value = true;
-      final bilanModel = BalanceCompteModel(
-          id: data.id,
-          title: data.title,
-          statut: data.statut,
-          signature: data.signature,
-          created: data.created,
-          isSubmit: 'true',
-          approbationDD: data.approbationDD,
-          motifDD: data.motifDD,
-          signatureDD: data.signatureDD);
-      await balanceCompteApi.updateData(bilanModel).then((value) {
-        clear();
-        balanceList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
-      });
-    } catch (e) {
-      Get.snackbar("Erreur de soumission", "$e",
-          backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  //     final balanceModel = BalanceModel( 
+  //         comptes: comptes.toString(),
+  //         debit: (montantDebitController.text == "")
+  //             ? "0"
+  //             : montantDebitController.text,
+  //         credit: (montantCreditController.text == "")
+  //             ? "0"
+  //             : montantCreditController.text, 
+  //         signature: profilController.user.matricule,
+  //         created: DateTime.now()
+  //     );
+  //     await balanceApi.insertData(balanceModel).then((value) {
+  //       clear();
+  //       balanceList.clear();
+  //       getList();
+  //       Get.snackbar("Soumission effectuée avec succès!",
+  //           "Le document a bien été sauvegader",
+  //           backgroundColor: Colors.green,
+  //           icon: const Icon(Icons.check),
+  //           snackPosition: SnackPosition.TOP);
+  //       _isLoading.value = false;
+  //     });
+  //   } catch (e) {
+  //     Get.snackbar("Erreur de soumission", "$e",
+  //         backgroundColor: Colors.red,
+  //         icon: const Icon(Icons.check),
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
 
-  void submitDD(BalanceCompteModel data) async {
-    try {
-      _isLoading.value = true;
-      final balanceModel = BalanceCompteModel(
-          id: data.id,
-          title: data.title,
-          statut: data.statut,
-          signature: data.signature,
-          created: data.created,
-          isSubmit: data.isSubmit,
-          approbationDD: approbationDD,
-          motifDD:
-              (motifDDController.text == '') ? '-' : motifDDController.text,
-          signatureDD: profilController.user.matricule);
-      await balanceCompteApi.updateData(balanceModel).then((value) {
-        clear();
-        balanceList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
-      });
-    } catch (e) {
-      Get.snackbar("Erreur de soumission", "$e",
-          backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  // Future<void> submitUpdate(BalanceModel data) async {
+  //   try {
+  //     _isLoading.value = true;
+  //     var solde = double.parse((montantDebitController.text == "")
+  //             ? data.debit
+  //             : montantDebitController.text) -
+  //         double.parse((montantCreditController.text == "")
+  //             ? data.credit
+  //             : montantCreditController.text);
+
+  //     final balanceModel = BalanceModel(
+  //         id: data.id, 
+
+  //         comptes: comptes.toString(),
+  //         debit: (montantDebitController.text == "")
+  //             ? data.debit
+  //             : montantDebitController.text,
+  //         credit: (montantCreditController.text == "")
+  //             ? data.credit
+  //             : montantCreditController.text, 
+  //         signature: profilController.user.matricule,
+  //         created: data.created
+  //     );
+  //     await balanceApi.updateData(balanceModel).then((value) {
+  //       clear();
+  //       balanceList.clear();
+  //       getList();
+  //       Get.snackbar("Soumission effectuée avec succès!",
+  //           "Le document a bien été sauvegader",
+  //           backgroundColor: Colors.green,
+  //           icon: const Icon(Icons.check),
+  //           snackPosition: SnackPosition.TOP);
+  //       _isLoading.value = false;
+  //     });
+  //   } catch (e) {
+  //     Get.snackbar("Erreur de soumission", "$e",
+  //         backgroundColor: Colors.red,
+  //         icon: const Icon(Icons.check),
+  //         snackPosition: SnackPosition.TOP);
+  //   }
+  // }
+
+ 
 }

@@ -157,14 +157,14 @@ class _TableTrajetState extends State<TableTrajet> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom Utilisateur(chauffeur)',
+        title: 'Utilisateur(chauffeur)',
         field: 'conducteur',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(

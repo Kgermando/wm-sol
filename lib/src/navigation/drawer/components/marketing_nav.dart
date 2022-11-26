@@ -9,18 +9,18 @@ import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_noti
 import 'package:wm_solution/src/routes/routes.dart';
 
 class MaketingNav extends StatefulWidget {
-  const MaketingNav({super.key, required this.currentRoute, required this.user, required this.departement});
+  const MaketingNav({super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<MaketingNav> createState() => _MaketingNavState();
 }
 
 class _MaketingNavState extends State<MaketingNav> {
-    final MarketingNotifyController controller = Get.find();
-  bool isOpen = false; 
+    final MarketingNotifyController controller = Get.put(MarketingNotifyController());
+  bool isOpen = false;
 
   @override
   Widget build(BuildContext context) {  
@@ -35,7 +35,7 @@ class _MaketingNavState extends State<MaketingNav> {
       title:
           AutoSizeText('Marketing', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement == 'Marketing')
+        widget.departementList.contains('Marketing')
               ? true
               : false,
       onExpansionChanged: (val) {

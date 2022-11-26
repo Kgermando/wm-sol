@@ -102,8 +102,8 @@ class _ApprobationMaterielState extends State<ApprobationMateriel> {
                                       ],
                                     )
                                   : Container()),
-                          if (widget.data.approbationDG ==
-                                  '-' &&
+                          if (widget.data.approbationDD == "Approved" &&
+                              widget.data.approbationDG == '-' &&
                               widget.profilController.user.fonctionOccupe ==
                                   "Directeur générale")
                             Padding(

@@ -12,20 +12,20 @@ import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_
 import 'package:wm_solution/src/routes/routes.dart';
 
 class FinanceNav extends StatefulWidget {
-  const FinanceNav({super.key, required this.currentRoute, required this.user, required this.departement});
+  const FinanceNav({super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<FinanceNav> createState() => _FinanceNavState();
 }
 
 class _FinanceNavState extends State<FinanceNav> {
-  final FinanceNotifyController financeNotifyController = Get.find();
-  final BanqueNameController banqueNameController = Get.find();
-  final CaisseNameController caisseNameController = Get.find();
-  final FinExterieurNameController finExterieurNameController = Get.find();
+  final FinanceNotifyController financeNotifyController = Get.put(FinanceNotifyController());
+  final BanqueNameController banqueNameController = Get.put(BanqueNameController());
+  final CaisseNameController caisseNameController = Get.put(CaisseNameController());
+  final FinExterieurNameController finExterieurNameController = Get.put(FinExterieurNameController());
   bool isOpen = false;
   bool isOpenBanque = false;
   bool isOpenCaisse = false;
@@ -42,7 +42,7 @@ class _FinanceNavState extends State<FinanceNav> {
       leading: const Icon(Icons.account_balance, size: 30.0),
       title: AutoSizeText('Finances', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement == 'Finances') ? true : false,
+        widget.departementList.contains('Finances') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

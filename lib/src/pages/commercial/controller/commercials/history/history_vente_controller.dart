@@ -9,7 +9,7 @@ class VenteCartController extends GetxController
   final VenteCartApi venteCartApi = VenteCartApi();
   final ProfilController profilController = Get.find();
 
-  var livraisonHistoryVenteCartList = <VenteCartModel>[].obs;
+  List<VenteCartModel> livraisonHistoryVenteCartList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -23,6 +23,7 @@ class VenteCartController extends GetxController
 
   void getList() async {
     await venteCartApi.getAllData().then((response) {
+      livraisonHistoryVenteCartList.clear();
       livraisonHistoryVenteCartList.assignAll(response);
       change(livraisonHistoryVenteCartList, status: RxStatus.success());
     }, onError: (err) {

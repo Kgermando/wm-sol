@@ -36,7 +36,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 2,
+      height: 400,
       child: PlutoGrid(
         columns: columns,
         rows: rows,
@@ -65,7 +65,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
                   tooltip: 'Rafraichir',
                   onPressed: () {
                     Navigator.pushNamed(
-                        context, BudgetRoutes.budgetBudgetPrevisionel);
+                        context, BudgetRoutes.budgetBudgetPrevisionelDetail, arguments: widget.departementBudgetModel);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700)),
             ],
@@ -117,8 +117,11 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.lignBudgetaireController.ligneBudgetaireList.length;
-    for (var item in widget.lignBudgetaireController.ligneBudgetaireList) {
+    var dataList = widget.lignBudgetaireController.ligneBudgetaireList
+        .where((p0) => p0.reference == widget.departementBudgetModel.id)
+        .toList();
+    var i = dataList.length;
+    for (var item in dataList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),

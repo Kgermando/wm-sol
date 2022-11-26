@@ -73,7 +73,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                           physics: const ScrollPhysics(),
                           children: [
                             SingleChildScrollView(
-                                child: ViewPersonne(personne: widget.personne)),
+                                child: ViewPersonne(personne: widget.personne, controller: personnelsController)),
                             SingleChildScrollView(
                                 child: InfosPersonne(personne: widget.personne))
                           ],

@@ -55,13 +55,13 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Engins"),
+            const TitleWidget(title: "Materiels"),
             Row(
               children: [
                 IconButton(
                     onPressed: () {
                       Navigator.pushNamed(
-                          context, LogistiqueRoutes.logMateriel);
+                          context, AdminRoutes.adminLogistique);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {

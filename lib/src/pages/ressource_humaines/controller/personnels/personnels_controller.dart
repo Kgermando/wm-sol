@@ -37,7 +37,8 @@ class PersonnelsController extends GetxController
   List<String> fonctionrhList = FonctionOccupee().rhDropdown;
   List<String> fonctionFinList = FonctionOccupee().finDropdown;
   List<String> fonctionBudList = FonctionOccupee().budDropdown;
-  List<String> fonctionComptabiliteList = FonctionOccupee().comptabiliteDropdown;
+  List<String> fonctionComptabiliteList =
+      FonctionOccupee().comptabiliteDropdown;
   List<String> fonctionMarketingList = FonctionOccupee().marketingDropdown;
   List<String> fonctionExpList = FonctionOccupee().expDropdown;
   List<String> fonctionCommList = FonctionOccupee().commDropdown;
@@ -74,6 +75,7 @@ class PersonnelsController extends GetxController
   TextEditingController experienceController = TextEditingController();
   TextEditingController salaireController = TextEditingController();
 
+  int identifiant = 1;
   String matricule = "";
   String? sexe;
   String? role;
@@ -109,7 +111,7 @@ class PersonnelsController extends GetxController
   void onInit() {
     super.onInit();
     getList();
-    agentPieChart();
+    agentPieChart(); 
   }
 
   @override
@@ -154,12 +156,13 @@ class PersonnelsController extends GetxController
     personnelsApi.getAllData().then((response) {
       personnelsList.clear();
       personnelsList.addAll(response);
+      identifiant = personnelsList.length + 1;
       change(personnelsList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
-
+ 
   void agentPieChart() async {
     personnelsApi.getChartPieSexe().then((response) {
       agentPieChartList.assignAll(response);
@@ -173,6 +176,8 @@ class PersonnelsController extends GetxController
     final data = await personnelsApi.getOneData(id);
     return data;
   }
+
+  refreshView(int id) => personnelsApi.getOneData(id);
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);

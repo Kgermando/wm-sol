@@ -19,11 +19,9 @@ var campaignsNotifyUrl = "$mainUrl/counts/campaigns";
 var prodModelNotifyUrl = "$mainUrl/counts/prod-models";
 var agendasNotifyUrl = "$mainUrl/counts/agendas";
 var cartNotifyUrl = "$mainUrl/counts/carts";
-var succursalesNotifyUrl = "$mainUrl/counts/succursales";
-var balancesNotifyUrl = "$mainUrl/counts/balances";
+var succursalesNotifyUrl = "$mainUrl/counts/succursales"; 
 var bilansNotifyUrl = "$mainUrl/counts/bilans";
-var compteResultatsNotifyUrl = "$mainUrl/counts/compte-resultats";
-var journalsNotifyUrl = "$mainUrl/counts/journals";
+var compteResultatsNotifyUrl = "$mainUrl/counts/compte-resultats"; 
 var devisNotifyUrl = "$mainUrl/counts/devis";
 var projetsNotifyUrl = "$mainUrl/counts/projets";
 var productionsNotifyUrl = "$mainUrl/counts/productions";
@@ -156,10 +154,7 @@ var addbilansUrl = Uri.parse("$mainUrl/comptabilite/bilans/insert-new-bilan");
 var compteBilanRefUrl = Uri.parse("$mainUrl/comptabilite/comptes-bilans-ref/");
 var addCompteBilanRefUrl =
     Uri.parse("$mainUrl/comptabilite/comptes-bilans-ref/insert-new-compte-bilan-ref"); 
-
-var journalsLivreUrl = Uri.parse("$mainUrl/comptabilite/journals-livres/");
-var addjournalsLivreUrl =
-    Uri.parse("$mainUrl/comptabilite/journals-livres/insert-new-journal-livre");
+ 
 var journalsUrl = Uri.parse("$mainUrl/comptabilite/journals/");
 var addjournalsUrl =
     Uri.parse("$mainUrl/comptabilite/journals/insert-new-journal");
@@ -172,14 +167,13 @@ var comptesResultatUrl = Uri.parse("$mainUrl/comptabilite/comptes_resultat/");
 var addComptesResultatUrl = Uri.parse(
     "$mainUrl/comptabilite/comptes_resultat/insert-new-compte-resultat");
 
-var balanceComptessUrl = Uri.parse("$mainUrl/comptabilite/balance_comptes/");
-var addBalanceComptesUrl = Uri.parse(
-    "$mainUrl/comptabilite/balance_comptes/insert-new-balance-compte");
 
-var balanceCompteRefUrl =
-    Uri.parse("$mainUrl/comptabilite/comptes-balance-ref/");
-var addBalanceCompteRefUrl = Uri.parse(
-    "$mainUrl/comptabilite/comptes-balance-ref/insert-new-comptes-balance-ref");
+var balanceCompteUrl = Uri.parse("$mainUrl/comptabilite/balances/");
+var balanceSumUrl = Uri.parse("$mainUrl/comptabilite/balances/balance-sum/");
+var balanceChartUrl = Uri.parse("$mainUrl/comptabilite/balances/balance-chart/");
+var balanceChartPieUrl =
+    Uri.parse("$mainUrl/comptabilite/balances/balance-chart-pie/");
+var addBalanceUrl = Uri.parse("$mainUrl/comptabilite/balances/insert-new-balance");
 
 // DEVIS
 var devisUrl = Uri.parse("$mainUrl/devis/");

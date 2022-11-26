@@ -12,7 +12,7 @@ class AnnuaireController extends GetxController
   final AnnuaireApi annuaireApi = AnnuaireApi();
   final ProfilController profilController = Get.find();
 
-  var annuaireList = <AnnuaireModel>[].obs;
+  List<AnnuaireModel> annuaireList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -78,7 +78,8 @@ class AnnuaireController extends GetxController
 
   void getList() async {
     await annuaireApi.getAllDataSearch(query).then((response) {
-      annuaireList.assignAll(response);
+      annuaireList.clear();
+      annuaireList.addAll(response); 
       change(annuaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

@@ -4,7 +4,7 @@ import 'package:wm_solution/src/api/commerciale/gain_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/gain_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class GainController extends GetxController with StateMixin<List<GainModel>> {
+class GainCartController extends GetxController with StateMixin<List<GainModel>> {
   final GainApi gainApi = GainApi();
   final ProfilController profilController = Get.find();
 

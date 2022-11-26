@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/finances/creances_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/finances/components/creance_dette/table_creance_remboursement.dart'; 
 import 'package:wm_solution/src/pages/finances/components/creances/approbation_creance.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
@@ -108,6 +109,11 @@ class _DetailCreanceState extends State<DetailCreance> {
                               ),
                             ),
                             const SizedBox(height: p20),
+                            TableCreanceRemboursement(
+                              controller: creanceDetteController, 
+                              creanceModel: widget.creanceModel
+                            ),
+                            const SizedBox(height: p20),
                             ApprobationCreance(
                                 data: widget.creanceModel,
                                 controller: controller,
@@ -125,7 +131,7 @@ class _DetailCreanceState extends State<DetailCreance> {
     double totalCreanceDette = 0.0;
 
     for (var item in creanceDetteController.creanceDetteList
-        .where((e) => e.creanceDette == "creances")) {
+        .where((e) => e.creanceDette == "creances" && e.reference == widget.creanceModel.id)) {
       totalCreanceDette += double.parse(item.montant);
     }
     double total = 0.0;

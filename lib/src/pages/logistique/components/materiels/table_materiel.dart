@@ -183,6 +183,15 @@ class _TableMaterielState extends State<TableMateriel> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) { 
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: const TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

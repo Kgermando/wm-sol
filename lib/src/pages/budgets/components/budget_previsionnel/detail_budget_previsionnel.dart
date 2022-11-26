@@ -67,25 +67,25 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
     final biginLigneBudget = now.isAfter(debut); // now.compareTo(debut) > 0;
     final expiredLigneBudget = now.isAfter(fin); //now.compareTo(fin) > 0;
 
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title,
+          widget.departementBudgetModel.title),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter ligne budgetaire"),
+        tooltip: "Ajout une nouvelle ligne budgetaire",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(BudgetRoutes.budgetLignebudgetaireAdd,
+              arguments: widget.departementBudgetModel);
+        },
+      ),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.departementBudgetModel.title),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter ligne budgetaire"),
-                tooltip: "Ajout une nouvelle ligne budgetaire",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Get.toNamed(BudgetRoutes.budgetLignebudgetaireAdd,
-                      arguments: widget.departementBudgetModel);
-                },
-              ),
-              body: Row(
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -344,8 +344,10 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                             ),
                           )))
                 ],
-              ),
-            ));
+              ),) 
+            )
+    
+    ;
   }
 
   Widget dataWidget() {

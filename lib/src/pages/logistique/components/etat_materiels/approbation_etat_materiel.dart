@@ -95,12 +95,10 @@ class _ApprobationEtatMaterielState extends State<ApprobationEtatMateriel> {
                               children: [
                                 const Text("Signature"),
                                 const SizedBox(height: p20),
-                                Text(widget
-                                    .data.signatureDD),
+                                Text(widget.data.signatureDD),
                               ],
                             )),
-                        if (widget.data.approbationDD ==
-                                '-' &&
+                        if (widget.data.approbationDD == '-' &&
                             widget.profilController.user.fonctionOccupe ==
                                 "Directeur de departement")
                           Padding(

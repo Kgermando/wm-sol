@@ -11,7 +11,7 @@ class CreanceDetteController extends GetxController
   final CreanceDetteApi creanceDetteApi = CreanceDetteApi();
   final ProfilController profilController = Get.find();
 
-  var creanceDetteList = <CreanceDetteModel>[].obs;
+  List<CreanceDetteModel> creanceDetteList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -47,7 +47,8 @@ class CreanceDetteController extends GetxController
 
   void getList() async {
     await creanceDetteApi.getAllData().then((response) {
-      creanceDetteList.assignAll(response);
+      creanceDetteList.clear();
+      creanceDetteList.addAll(response);
       change(creanceDetteList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

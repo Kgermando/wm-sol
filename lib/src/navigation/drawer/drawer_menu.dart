@@ -45,77 +45,81 @@ class DrawerMenu extends StatelessWidget {
                       width: 100,
                       height: 100,
                     )),
-                    for (var departement in departementList)
-                      if (departement == 'Administration' ||
-                          departement == 'Support')
-                        AdministrationNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Ressources Humaines' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
+                    if(departementList.contains('Administration') ||
+                      departementList.contains('Support') ) 
+                     AdministrationNav(
+                      currentRoute: currentRoute,
+                      user: user,
+                      departementList: departementList),
+                    
+                    if (departementList.contains('Ressources Humaines') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support')) 
                         RhNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Budgets' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
-                        BudgetNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Comptabilites' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
-                        ComptabiliteNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Finances' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
+                          departementList: departementList), 
+
+                    if (departementList.contains('Budgets') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support')) 
+                      BudgetNav(
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+
+                    if (departementList.contains('Comptabilites') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support'))  
+                      ComptabiliteNav(
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+
+                    if (departementList.contains('Finances') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support'))       
                         FinanceNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Marketing' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
-                        MaketingNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Commercial' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
-                        CommercialNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Exploitations' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+
+
+                    if (departementList.contains('Marketing') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support')) 
+                      MaketingNav(
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+
+
+                    if (departementList.contains('Commercial') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support'))  
+                      CommercialNav(
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+
+
+                    if (departementList.contains('Exploitations') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support'))  
                         ExploitationNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
-                    for (var departement in departementList)
-                      if (departement == 'Logistique' ||
-                          departement == 'Administration' ||
-                          departement == 'Support')
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+
+
+                    if (departementList.contains('Logistique') ||
+                        departementList.contains('Administration') ||
+                        departementList.contains('Support')) 
                         LogistiqueNav(
-                            currentRoute: currentRoute,
-                            user: user,
-                            departement: departement),
+                          currentRoute: currentRoute,
+                          user: user,
+                          departementList: departementList),
+                          
                     if (userRole <= 3)
                       DrawerWidget(
                         selected: currentRoute ==

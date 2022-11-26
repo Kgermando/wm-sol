@@ -13,7 +13,6 @@ import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_contro
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_livre_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
@@ -54,7 +53,6 @@ class AdminDashboardController extends GetxController {
 
   // Comptabilite
   final BilanController bilanController = Get.find();
-  final JournalLivreController journalLivreController = Get.find();
   final JournalController journalController = Get.find();
 
   // Finances
@@ -67,15 +65,15 @@ class AdminDashboardController extends GetxController {
 
   // var actionnaireCotisationList = await ActionnaireCotisationApi().getAllData();
 
-  var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
-  var dataCampaignList = <CampaignModel>[].obs;
-  var dataDevisList = <DevisModel>[].obs;
-  var devisListObjetsList = <DevisListObjetsModel>[].obs; // avec montant
-  var dataProjetList = <ProjetModel>[].obs;
-  var dataSalaireList = <PaiementSalaireModel>[].obs;
-  var dataTransRestList = <TransportRestaurationModel>[].obs;
-  var tansRestAgentList = <TransRestAgentsModel>[].obs; // avec montant
-  var departementsList = <DepartementBudgetModel>[].obs;
+  List<LigneBudgetaireModel> ligneBudgetaireList = [];
+  List<CampaignModel> dataCampaignList = [];
+  List<DevisModel> dataDevisList = [];
+  List<DevisListObjetsModel> devisListObjetsList = []; // avec montant
+  List<ProjetModel> dataProjetList = [];
+  List<PaiementSalaireModel> dataSalaireList = [];
+  List<TransportRestaurationModel> dataTransRestList = [];
+  List<TransRestAgentsModel> tansRestAgentList = []; // avec montant
+  List<DepartementBudgetModel> departementsList = [];
 
   // RH
   final _agentsCount = 0.obs;
@@ -133,17 +131,17 @@ class AdminDashboardController extends GetxController {
     super.onInit();
     getData();
   }
- 
 
   Future<void> getData() async {
-    _agentsCount.value = personnelsController.personnelsList.length;
+    var personnels = await personnelsController.personnelsApi.getAllData();
+    _agentsCount.value = personnels.length;
 
-    _agentActifCount.value = personnelsController.personnelsList
-        .where((element) => element.statutAgent == 'true')
-        .length;
+    _agentActifCount.value =
+        personnels.where((element) => element.statutAgent == 'true').length;
 
     // Exploitations
-    projetsApprouveCount = projetController.projetList
+    var projets = await projetController.projetsApi.getAllData();
+    projetsApprouveCount = projets
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
@@ -152,7 +150,8 @@ class AdminDashboardController extends GetxController {
         .length;
 
     // Comm & Marketing
-    campaignCount = campaignController.campaignList
+    var campaigns = await campaignController.campaignApi.getAllData();
+    campaignCount = campaigns
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
@@ -161,53 +160,62 @@ class AdminDashboardController extends GetxController {
         .length;
 
     // Budgets
-    devisListObjetsList = devisListObjetController.devisListObjetList;
-    tansRestAgentList = transportRestPersonnelsController.transRestAgentList;
-    departementsList.assignAll(budgetPrevisionnelController
-        .departementBudgetList
+    devisListObjetsList =
+        await devisListObjetController.devisListObjetsApi.getAllData();
+    tansRestAgentList =
+        await transportRestPersonnelsController.transRestAgentsApi.getAllData();
+    var departementBudgetList =
+        await budgetPrevisionnelController.depeartementBudgetApi.getAllData();
+    departementsList = departementBudgetList
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
             DateTime.now().isBefore(element.periodeFin))
-        .toList());
+        .toList();
 
     for (var i in departementsList) {
-      ligneBudgetaireList.assignAll(lignBudgetaireController.ligneBudgetaireList
+      var ligneBudgetaire =
+          await lignBudgetaireController.lIgneBudgetaireApi.getAllData();
+      ligneBudgetaireList = ligneBudgetaire
           .where((element) =>
               element.periodeBudgetDebut.microsecondsSinceEpoch ==
                   i.periodeDebut.microsecondsSinceEpoch &&
               DateTime.now().isBefore(element.periodeBudgetFin) &&
               i.approbationDG == "Approved" &&
               i.approbationDD == "Approved")
-          .toList());
+          .toList();
     }
 
     for (var item in ligneBudgetaireList) {
-      dataCampaignList.assignAll(campaignController.campaignList
+      var campaigns = await campaignController.campaignApi.getAllData();
+      dataCampaignList = campaigns
           .where((element) =>
               element.approbationDG == 'Approved' &&
               element.approbationDD == 'Approved' &&
               element.approbationBudget == 'Approved' &&
               element.observation == 'true' &&
               element.created.isBefore(item.periodeBudgetFin))
-          .toList());
-      dataDevisList.assignAll(devisController.devisList
+          .toList();
+      var devis = await devisController.devisAPi.getAllData();
+      dataDevisList = devis
           .where((element) =>
               element.approbationDG == 'Approved' &&
               element.approbationDD == 'Approved' &&
               element.approbationBudget == 'Approved' &&
               element.observation == 'true' &&
               element.created.isBefore(item.periodeBudgetFin))
-          .toList());
-      dataProjetList.assignAll(projetController.projetList
+          .toList();
+      var projets = await projetController.projetsApi.getAllData();
+      dataProjetList = projets
           .where((element) =>
               element.approbationDG == 'Approved' &&
               element.approbationDD == 'Approved' &&
               element.approbationBudget == 'Approved' &&
               element.observation == 'true' &&
               element.created.isBefore(item.periodeBudgetFin))
-          .toList());
-      dataSalaireList.assignAll(salaireController.paiementSalaireList
+          .toList();
+      var salaires = await salaireController.paiementSalaireApi.getAllData();
+      dataSalaireList = salaires
           .where((element) =>
               element.createdAt.month == DateTime.now().month &&
               element.createdAt.year == DateTime.now().year &&
@@ -216,9 +224,10 @@ class AdminDashboardController extends GetxController {
               element.approbationFin == 'Approved' &&
               element.observation == 'true' &&
               element.createdAt.isBefore(item.periodeBudgetFin))
-          .toList());
-      dataTransRestList.assignAll(transportRestController
-          .transportRestaurationList
+          .toList();
+      var transportRestaurations = await transportRestController
+        .transportRestaurationApi.getAllData();
+      dataTransRestList = transportRestaurations
           .where((element) =>
               element.approbationDG == 'Approved' &&
               element.approbationDD == 'Approved' &&
@@ -226,27 +235,22 @@ class AdminDashboardController extends GetxController {
               element.approbationFin == 'Approved' &&
               element.observation == 'true' &&
               element.created.isBefore(item.periodeBudgetFin))
-          .toList());
+          .toList();
     }
 
     // Comptabilite
-    bilanCount = bilanController.bilanList
+    var bilans = await bilanController.bilanApi.getAllData();
+    bilanCount = bilans
         .where((element) => element.approbationDD == 'Approved')
         .length;
 
-    // for (var journal in journalLivreController.journalLivreList
-    //     .where((element) => element.approbationDD == 'Approved')) {
-    //   journalCount = journalController.journalList
-    //       .where((element) => element.reference == journal.id)
-    //       .length;
-    // }
-
     // FINANCE
     // Banque
-    var recetteBanqueList = banqueController.banqueList
+    var banques = await banqueController.banqueApi.getAllData();
+    var recetteBanqueList = banques
         .where((element) => element.typeOperation == "Depot")
         .toList();
-    var depensesBanqueList = banqueController.banqueList
+    var depensesBanqueList = banques
         .where((element) => element.typeOperation == "Retrait")
         .toList();
     for (var item in recetteBanqueList) {
@@ -256,10 +260,11 @@ class AdminDashboardController extends GetxController {
       depensesBanque += double.parse(item.montant);
     }
     // Caisse
-    var recetteCaisseList = caisseController.caisseList
+    var caisses = await caisseController.caisseApi.getAllData();
+    var recetteCaisseList = caisses
         .where((element) => element.typeOperation == "Encaissement")
         .toList();
-    var depensesCaisseList = caisseController.caisseList
+    var depensesCaisseList = caisses
         .where((element) => element.typeOperation == "Decaissement")
         .toList();
     for (var item in recetteCaisseList) {
@@ -270,11 +275,13 @@ class AdminDashboardController extends GetxController {
     }
 
     // Creance remboursement
-    var creancePaiementList = creanceDetteController.creanceDetteList
+    var creanceDettes = await creanceDetteController.creanceDetteApi.getAllData();
+    var creancePaiementList = creanceDettes
         .where((element) => element.creanceDette == 'creances');
 
     // Creance
-    var nonPayeCreanceList = creanceController.creanceList
+    var creances = await creanceController.creanceApi.getAllData();
+    var nonPayeCreanceList = creances
         .where((element) =>
             element.statutPaie == 'false' &&
             element.approbationDG == 'Approved' &&
@@ -289,7 +296,7 @@ class AdminDashboardController extends GetxController {
     }
 
     // Dette paiement
-    var detteRemboursementList = creanceDetteController.creanceDetteList
+    var detteRemboursementList = creanceDettes
         .where((element) => element.creanceDette == 'dettes');
     var nonPayeDetteList = detteController.detteList
         .where((element) =>
@@ -310,14 +317,15 @@ class AdminDashboardController extends GetxController {
     // }
 
     // FinanceExterieur
-    var recetteFinExtList = finExterieurController.finExterieurList
+    var finExterieurs = await finExterieurController.finExterieurApi.getAllData();
+    var recetteFinExtList = finExterieurs
         .where((element) => element.typeOperation == "Depot")
         .toList();
 
     for (var item in recetteFinExtList) {
       recetteFinanceExterieur += double.parse(item.montant);
     }
-    var depenseFinExtList = finExterieurController.finExterieurList
+    var depenseFinExtList = finExterieurs
         .where((element) => element.typeOperation == "Retrait")
         .toList();
     for (var item in depenseFinExtList) {

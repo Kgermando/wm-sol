@@ -1049,7 +1049,9 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                                         color: Colors.purple.shade700)),
                               ],
                             )), 
-                      if (widget.salaire.approbationBudget == '-' &&
+                      if (widget.salaire.approbationDD ==
+                                    "Approved" &&
+                                widget.salaire.approbationBudget == '-' &&
                           profilController.user.fonctionOccupe ==
                               "Directeur de budget" ||
                       depList.contains('Budgets') &&
@@ -1129,7 +1131,8 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                               Text(widget.salaire.signatureFin),
                             ],
                           )), 
-                      if (widget.salaire.approbationFin == '-' &&
+                      if (widget.salaire.approbationBudget == "Approved" &&
+                              widget.salaire.approbationFin == '-' &&
                                 profilController.user.fonctionOccupe ==
                                     "Directeur de finance" ||
                             depList.contains('Finances') &&

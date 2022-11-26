@@ -1,21 +1,17 @@
-class GrandLivreModel {
-  late int reference; // Reference dans journal
+class GrandLivreModel { 
   late String compte;
 
-  GrandLivreModel({
-    required this.reference,
+  GrandLivreModel({ 
     required this.compte});
 
   factory GrandLivreModel.fromJson(Map<String, dynamic> json) {
-    return GrandLivreModel(
-        reference: json['reference'], 
+    return GrandLivreModel( 
         compte: json['compte'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'reference': reference, 
+    return { 
       'compte': compte
     };
   }

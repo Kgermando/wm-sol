@@ -10,17 +10,17 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class LogistiqueNav extends StatefulWidget {
   const LogistiqueNav(
-      {super.key, required this.currentRoute, required this.user, required this.departement});
+      {super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<LogistiqueNav> createState() => _LogistiqueNavState();
 }
 
 class _LogistiqueNavState extends State<LogistiqueNav> {
-  final NotifyLogController notifyLogController = Get.find();
+  final NotifyLogController notifyLogController = Get.put(NotifyLogController());
   bool isOpen = false;
   bool isOpen1 = false;
   bool isOpen2 = false;
@@ -37,7 +37,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
       leading: const Icon(Icons.brightness_low, size: 30.0),
       title: AutoSizeText('Logistique', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement == 'Logistique')
+        widget.departementList.contains('Logistique')
               ? true
               : false,
       onExpansionChanged: (val) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/logistiques/etat_materiel_model.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/etat_material_xlsx.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
@@ -120,7 +121,7 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
           'typeObjet': PlutoCell(value: item.typeObjet),
           'statut': PlutoCell(value: item.statut),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
@@ -184,13 +185,26 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
             textColor = Colors.orange;
           } else if (rendererContext.cell.value == 'Déclasser') {
             textColor = Colors.red;
-          }
-          return Text(
-            rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
+          } 
+          return Row(
+            children: [
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: textColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: p5),
+              Text(
+                rendererContext.cell.value.toString(),
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           );
         },
         width: 200,

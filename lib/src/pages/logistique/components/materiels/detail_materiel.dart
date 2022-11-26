@@ -8,7 +8,9 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/components/materiels/approbation_materiel.dart';
+import 'package:wm_solution/src/pages/logistique/components/materiels/table_trajet_roulant.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -24,6 +26,7 @@ class DetailMateriel extends StatefulWidget {
 class _DetailMaterielState extends State<DetailMateriel> {
   final MaterielController controller = Get.find();
   final ProfilController profilController = Get.find();
+  final TrajetController trajetController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
@@ -130,6 +133,12 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                     ),
                                   ),
                                 ),
+                                if (widget.materielModel.typeMateriel ==
+                                    'Materiel roulant')
+                                const SizedBox(height: p20),
+                                if (widget.materielModel.typeMateriel ==
+                                    'Materiel roulant')
+                                TableTrajetRoulant(controller: trajetController, materielModel: widget.materielModel),
                                 const SizedBox(height: p20),
                                 ApprobationMateriel(
                                     data: widget.materielModel,

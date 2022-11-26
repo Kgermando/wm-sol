@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/finances/components/creance_dette/table_dette_paiement.dart';
 import 'package:wm_solution/src/pages/finances/components/dettes/approbation_dette.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
@@ -43,8 +44,8 @@ class _DetailDetteState extends State<DetailDette> {
           context, scaffoldKey, title, widget.detteModel.numeroOperation),
       drawer: const DrawerMenu(),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Ajouter le Remboursement"),
-        tooltip: "Ajout le Remboursement",
+        label: const Text("Ajouter le paiement"),
+        tooltip: "Ajout le paiement",
         icon: const Icon(Icons.add_card),
         onPressed: () {
           dialongCreancePaiement(creanceDetteController);
@@ -105,6 +106,10 @@ class _DetailDetteState extends State<DetailDette> {
                           ),
                         ),
                         const SizedBox(height: p20),
+                        TableDettePaiement(
+                          controller: creanceDetteController, 
+                          detteModel: widget.detteModel),
+                        const SizedBox(height: p20),
                         ApprobationDette(
                             data: widget.detteModel,
                             controller: controller,
@@ -122,7 +127,7 @@ class _DetailDetteState extends State<DetailDette> {
     double totalCreanceDette = 0.0;
 
     for (var item in creanceDetteController.creanceDetteList
-        .where((e) => e.creanceDette == "creances")) {
+        .where((e) => e.creanceDette == "dettes" && e.reference == widget.detteModel.id)) {
       totalCreanceDette += double.parse(item.montant);
     }
     double total = 0.0;

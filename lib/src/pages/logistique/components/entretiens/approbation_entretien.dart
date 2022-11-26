@@ -99,8 +99,7 @@ class _ApprobationEntretienState extends State<ApprobationEntretien> {
                                     .data.signatureDD),
                               ],
                             )),
-                        if (widget.data.approbationDD ==
-                                '-' &&
+                        if (widget.data.approbationDD == '-' &&
                             widget.profilController.user.fonctionOccupe ==
                                 "Directeur de departement")
                           Padding(

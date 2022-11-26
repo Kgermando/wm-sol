@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:intl/intl.dart';
@@ -16,18 +16,17 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
 class BalancePdf {
-  static Future<void> generate(BalanceCompteModel data,
-      List<CompteBalanceRefModel> compteBalanceRefList) async {
+  static Future<void> generate(List<BalanceSumModel> data) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
-        buildHeader(data, user),
-        SizedBox(height: 2 * PdfPageFormat.cm),
-        buildTitle(data),
-        Divider(),
-        buildBody(data, compteBalanceRefList),
-        totalMontant(data, compteBalanceRefList)
+        // buildHeader(data, user),
+        // SizedBox(height: 2 * PdfPageFormat.cm),
+        // buildTitle(),
+        // Divider(),
+        // buildBody(data),
+        // totalMontant(data)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -37,7 +36,7 @@ class BalancePdf {
     return helper.saveAndLaunchFilePdf(bytes, 'compte-balance-$date.pdf');
   }
 
-  static Widget buildHeader(BalanceCompteModel data, UserModel user) => Column(
+  static Widget buildHeader(BalanceModel data, UserModel user) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // SizedBox(height: 1 * PdfPageFormat.cm),
@@ -94,7 +93,7 @@ class BalancePdf {
         ],
       );
 
-  static Widget buildCompagnyInfo(BalanceCompteModel data, UserModel user) {
+  static Widget buildCompagnyInfo(BalanceModel data, UserModel user) {
     final titles = <String>['RCCM:', 'N° Impôt:', 'ID Nat.:', 'Crée le:'];
     final datas = <String>[
       InfoSystem().rccm(),
@@ -114,18 +113,17 @@ class BalancePdf {
     );
   }
 
-  static Widget buildTitle(BalanceCompteModel data) => Column(
+  static Widget buildTitle() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            data.title.toUpperCase(),
+            'Balance'.toUpperCase(),
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
       );
 
-  static Widget buildBody(BalanceCompteModel data,
-      List<CompteBalanceRefModel> compteBalanceRefList) {
+  static Widget buildBody(BalanceModel data) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
@@ -195,7 +193,7 @@ class BalancePdf {
                 ),
                 Divider(color: PdfColors.amber),
                 SizedBox(height: p30),
-                compteWidget(compteBalanceRefList)
+                compteWidget(data)
               ],
             ),
           ),
@@ -204,86 +202,72 @@ class BalancePdf {
     ]);
   }
 
-  static Widget compteWidget(List<CompteBalanceRefModel> compteBalanceRefList) {
-    return ListView.builder(
-      itemCount: compteBalanceRefList.length,
-      itemBuilder: (context, index) {
-        final compte = compteBalanceRefList[index];
-        return Column(
+  static Widget compteWidget(BalanceModel compte) {
+    double solde = 0.0;
+
+    return Column(
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text(compte.comptes, textAlign: TextAlign.left),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      left: BorderSide(
-                        color: PdfColors.amber,
-                        width: 2,
-                      ),
-                    )),
-                    child: Text(
-                        "${compte.debit} \$",
-                        textAlign: TextAlign.center),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      left: BorderSide(
-                        color: PdfColors.amber,
-                        width: 2,
-                      ),
-                    )),
-                    child: Text(
-                        "${compte.credit} \$",
-                        textAlign: TextAlign.center),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      left: BorderSide(
-                        color: PdfColors.amber,
-                        width: 2,
-                      ),
-                    )),
-                    child: Text(
-                        "${compte.solde} \$",
-                        textAlign: TextAlign.center),
-                  ),
-                )
-              ],
+            Expanded(
+              flex: 3,
+              child: Text(compte.comptes, textAlign: TextAlign.left),
             ),
-            Divider(
-              color: PdfColors.amber,
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: const BoxDecoration(
+                    border: Border(
+                  left: BorderSide(
+                    color: PdfColors.amber,
+                    width: 2,
+                  ),
+                )),
+                child: Text("${compte.debit} \$", textAlign: TextAlign.center),
+              ),
             ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: const BoxDecoration(
+                    border: Border(
+                  left: BorderSide(
+                    color: PdfColors.amber,
+                    width: 2,
+                  ),
+                )),
+                child: Text("${compte.credit} \$", textAlign: TextAlign.center),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: const BoxDecoration(
+                    border: Border(
+                  left: BorderSide(
+                    color: PdfColors.amber,
+                    width: 2,
+                  ),
+                )),
+                child: Text("$solde \$", textAlign: TextAlign.center),
+              ),
+            )
           ],
-        );
-      },
+        ),
+        Divider(
+          color: PdfColors.amber,
+        ),
+      ],
     );
   }
 
-  static Widget totalMontant(BalanceCompteModel data,
-      List<CompteBalanceRefModel> compteBalanceRefList) {
+  static Widget totalMontant(BalanceModel data) {
     double totalDebit = 0.0;
     double totalCredit = 0.0;
     double totalSolde = 0.0;
 
-    for (var item in compteBalanceRefList) {
-      totalDebit += double.parse(item.debit);
-      totalCredit += double.parse(item.credit);
-      totalSolde += double.parse(item.solde);
-    }
+    totalDebit += double.parse(data.debit);
+    totalCredit += double.parse(data.credit); 
 
     return Padding(
       padding: const EdgeInsets.all(p10),

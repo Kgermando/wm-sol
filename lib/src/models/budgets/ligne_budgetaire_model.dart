@@ -10,62 +10,64 @@ class LigneBudgetaireModel {
   late String coutTotal;
   late String caisse;
   late String banque;
-  late String finExterieur;  // Reste à trouver
+  late String finExterieur; // Reste à trouver
   late String signature;
   late DateTime created;
+  late int reference;
 
   LigneBudgetaireModel(
       {this.id,
-      required  this.nomLigneBudgetaire,
-      required  this.departement,
-      required  this.periodeBudgetDebut,
-      required  this.periodeBudgetFin,
-      required  this.uniteChoisie,
-      required  this.nombreUnite,
-      required  this.coutUnitaire,
-      required  this.coutTotal,
-      required  this.caisse,
-      required  this.banque,
-      required  this.finExterieur,
+      required this.nomLigneBudgetaire,
+      required this.departement,
+      required this.periodeBudgetDebut,
+      required this.periodeBudgetFin,
+      required this.uniteChoisie,
+      required this.nombreUnite,
+      required this.coutUnitaire,
+      required this.coutTotal,
+      required this.caisse,
+      required this.banque,
+      required this.finExterieur,
       required this.signature,
-      required this.created
-  });
+      required this.created,
+      required this.reference});
 
   factory LigneBudgetaireModel.fromSQL(List<dynamic> row) {
     return LigneBudgetaireModel(
-      id: row[0],
-      nomLigneBudgetaire: row[1],
-      departement: row[2],
-      periodeBudgetDebut: row[3],
-      periodeBudgetFin: row[4],
-      uniteChoisie: row[5],
-      nombreUnite: row[6],
-      coutUnitaire: row[7],
-      coutTotal: row[8],
-      caisse: row[9],
-      banque: row[10],
-      finExterieur: row[11],
-      signature: row[12],
-      created: row[13]
-    );
+        id: row[0],
+        nomLigneBudgetaire: row[1],
+        departement: row[2],
+        periodeBudgetDebut: row[3],
+        periodeBudgetFin: row[4],
+        uniteChoisie: row[5],
+        nombreUnite: row[6],
+        coutUnitaire: row[7],
+        coutTotal: row[8],
+        caisse: row[9],
+        banque: row[10],
+        finExterieur: row[11],
+        signature: row[12],
+        created: row[13],
+        reference: row[14]);
   }
 
   factory LigneBudgetaireModel.fromJson(Map<String, dynamic> json) {
     return LigneBudgetaireModel(
-      id: json['id'],
-      nomLigneBudgetaire: json['nomLigneBudgetaire'],
-      departement: json['departement'],
-      periodeBudgetDebut: DateTime.parse(json['periodeBudgetDebut']),
-      periodeBudgetFin: DateTime.parse(json['periodeBudgetFin']),
-      uniteChoisie: json['uniteChoisie'],
-      nombreUnite: json['nombreUnite'],
-      coutUnitaire: json['coutUnitaire'],
-      coutTotal: json['coutTotal'],
-      caisse: json['caisse'],
-      banque: json['banque'], 
-      finExterieur: json['finExterieur'],
-      signature: json['signature'],
-      created: DateTime.parse(json['created'])
+        id: json['id'],
+        nomLigneBudgetaire: json['nomLigneBudgetaire'],
+        departement: json['departement'],
+        periodeBudgetDebut: DateTime.parse(json['periodeBudgetDebut']),
+        periodeBudgetFin: DateTime.parse(json['periodeBudgetFin']),
+        uniteChoisie: json['uniteChoisie'],
+        nombreUnite: json['nombreUnite'],
+        coutUnitaire: json['coutUnitaire'],
+        coutTotal: json['coutTotal'],
+        caisse: json['caisse'],
+        banque: json['banque'],
+        finExterieur: json['finExterieur'],
+        signature: json['signature'],
+        created: DateTime.parse(json['created']),
+      reference: json['reference'],
     );
   }
 
@@ -81,11 +83,11 @@ class LigneBudgetaireModel {
       'coutUnitaire': coutUnitaire,
       'coutTotal': coutTotal,
       'caisse': caisse,
-      'banque': banque, 
+      'banque': banque,
       'finExterieur': finExterieur,
       'signature': signature,
-      'created': created.toIso8601String()
+      'created': created.toIso8601String(),
+      'reference': reference,
     };
   }
-
 }

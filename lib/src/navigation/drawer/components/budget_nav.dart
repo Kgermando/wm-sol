@@ -9,17 +9,17 @@ import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_co
 import 'package:wm_solution/src/routes/routes.dart';
 
 class BudgetNav extends StatefulWidget {
-  const BudgetNav({super.key, required this.currentRoute, required this.user, required this.departement});
+  const BudgetNav({super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<BudgetNav> createState() => _BudgetNavState();
 }
 
 class _BudgetNavState extends State<BudgetNav> {
-  final BudgetNotifyController controller = Get.find();
+  final BudgetNotifyController controller = Get.put(BudgetNotifyController());
   bool isOpen = false;
 
   @override
@@ -30,7 +30,7 @@ class _BudgetNavState extends State<BudgetNav> {
     return ExpansionTile(
       leading: const Icon(Icons.fact_check, size: 30.0),
       title: AutoSizeText('Budgets', maxLines: 1, style: bodyMedium),
-      initiallyExpanded: (widget.departement == 'Budgets') ? true : false,
+      initiallyExpanded: widget.departementList.contains('Budgets') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;

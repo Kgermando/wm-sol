@@ -103,11 +103,11 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.departementBudgetList
-        .where((element) =>
-            DateTime.now().millisecondsSinceEpoch <=
-                element.periodeFin.millisecondsSinceEpoch ||
-            element.isSubmit == 'false')
-        .toList();
+      .where((element) =>
+          DateTime.now().millisecondsSinceEpoch <=
+              element.periodeFin.millisecondsSinceEpoch ||
+          element.isSubmit == 'false')
+      .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {

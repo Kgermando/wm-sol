@@ -686,7 +686,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                       ],
                                     )
                                   : Container()),
-                          if (widget.transportRestaurationModel.approbationDG ==
+                          if (widget.transportRestaurationModel.approbationDD == "Approved" &&
+                               widget.transportRestaurationModel.approbationDG ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur générale")
@@ -838,7 +839,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                           color: Colors.purple.shade700)),
                                 ],
                               )), 
-                  if (widget.transportRestaurationModel.approbationBudget == '-' &&
+                  if (widget.transportRestaurationModel.approbationDG ==
+                                      "Approved" &&
+                        widget.transportRestaurationModel.approbationBudget == '-' &&
                                     profilController.user.fonctionOccupe ==
                                         "Directeur de budget" ||
                                 depList.contains('Budgets') &&
@@ -929,7 +932,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                     .transportRestaurationModel.signatureFin),
                               ],
                             )), 
-                      if (widget.transportRestaurationModel.approbationFin == '-' &&
+                      if (widget.transportRestaurationModel.approbationBudget == "Approved" &&
+                            widget.transportRestaurationModel.approbationFin == '-' &&
                                   profilController.user.fonctionOccupe ==
                                       "Directeur de finance" ||
                               depList.contains('Finances') &&

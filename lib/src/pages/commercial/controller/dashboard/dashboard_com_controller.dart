@@ -10,12 +10,11 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/gains/ga
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_vente_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 
-
 class DashboardComController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
   final VenteCartController venteCartController = Get.find();
-  final GainController gainController = Get.find();
-  final FactureCreanceController factureCreanceController = Get.find(); 
+  final GainCartController gainController = Get.find();
+  final FactureCreanceController factureCreanceController = Get.find();
   final SuccursaleController succursaleController = Get.find();
 
   List<VenteChartModel> venteChartModel = [];
@@ -42,30 +41,45 @@ class DashboardComController extends GetxController {
   void onInit() {
     super.onInit();
     getData();
-   
-    _succursaleCount.value = succursaleController.succursaleList
+  }
+
+  Future<void> getData() async {
+    var getVenteChart = await VenteGainApi().getVenteChart();
+    var getAllDataGainMouth = await VenteGainApi().getAllDataGainMouth();
+    var getAllDataVenteMouth = await VenteGainApi().getAllDataVenteMouth();
+    var getAllDataGainYear = await VenteGainApi().getAllDataGainYear();
+    var getAllDataVenteYear = await VenteGainApi().getAllDataVenteYear();
+    var succursales = await succursaleController.succursaleApi.getAllData();
+    var gains = await gainController.gainApi.getAllData();
+    var ventes = await venteCartController.venteCartApi.getAllData();
+    var factureCreance =
+        await factureCreanceController.creanceFactureApi.getAllData();
+
+    venteChartModel.assignAll(getVenteChart);
+    venteMouthList.assignAll(getAllDataVenteMouth);
+    gainMouthList.assignAll(getAllDataGainMouth);
+    venteYearList.assignAll(getAllDataVenteYear);
+    gainYearList.assignAll(getAllDataGainYear);
+
+    _succursaleCount.value = succursales
         .where((element) => element.approbationDD == "Approved")
         .length;
- 
-    // Gain
 
-    var dataGain = gainController.gainList.map((e) => e.sum).toList();
+    // Gain
+    var dataGain = gains.map((e) => e.sum).toList();
     for (var data in dataGain) {
       _sumGain.value += data;
     }
 
     // Ventes
-
-    var dataPriceVente = venteCartController.livraisonHistoryVenteCartList
-        .map((e) => double.parse(e.priceTotalCart))
-        .toList();
+    var dataPriceVente =
+        ventes.map((e) => double.parse(e.priceTotalCart)).toList();
     for (var data in dataPriceVente) {
       _sumVente.value += data;
     }
 
     // Créances
-
-    for (var item in factureCreanceController.creanceFactureList) {
+    for (var item in factureCreance) {
       final cartItem = jsonDecode(item.cart) as List;
       List<CartModel> cartItemList = [];
 
@@ -85,19 +99,5 @@ class DashboardComController extends GetxController {
         }
       }
     }
-  }
-
-  Future<void> getData() async {
-    var getVenteChart = await VenteGainApi().getVenteChart();
-    var getAllDataGainMouth = await VenteGainApi().getAllDataGainMouth();
-    var getAllDataVenteMouth = await VenteGainApi().getAllDataVenteMouth();
-    var getAllDataGainYear = await VenteGainApi().getAllDataGainYear();
-    var getAllDataVenteYear = await VenteGainApi().getAllDataVenteYear();
-
-    venteChartModel.assignAll(getVenteChart);
-    venteMouthList.assignAll(getAllDataVenteMouth);
-    gainMouthList.assignAll(getAllDataGainMouth);
-    venteYearList.assignAll(getAllDataVenteYear);
-    gainYearList.assignAll(getAllDataGainYear);
   }
 }

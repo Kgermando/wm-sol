@@ -1,38 +1,26 @@
 import 'dart:io';
 
 import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class BalanceXlsx {
-  Future<void> exportToExcel(List<BalanceCompteModel> dataList) async {
+  Future<void> exportToExcel(List<BalanceSumModel> dataList) async {
     var excel = Excel.createExcel();
     String title = "Balances";
     Sheet sheetObject = excel[title];
-    sheetObject.insertRowIterables([
-      "id",
-      "title",
-      "statut",
-      "signature",
-      "created",
-      "isSubmit", 
-      "approbationDD",
-      "motifDD",
-      "signatureDD"
+    sheetObject.insertRowIterables([ 
+      "comptes",
+      "debit",
+      "credit", 
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
-      List<String> data = [
-        dataList[i].id.toString(),
-        dataList[i].title,
-        dataList[i].statut,
-        dataList[i].signature,
-        DateFormat("dd/MM/yy HH-mm").format(dataList[i].created),
-        dataList[i].isSubmit, 
-        dataList[i].approbationDD,
-        dataList[i].motifDD,
-        dataList[i].signatureDD,
+      List<String> data = [ 
+        dataList[i].comptes,
+        dataList[i].debit.toString(),
+        dataList[i].credit.toString(),  
       ];
 
       sheetObject.insertRowIterables(data, i + 1);

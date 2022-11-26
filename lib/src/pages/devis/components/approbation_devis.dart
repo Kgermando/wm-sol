@@ -110,8 +110,8 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                       ],
                                     )
                                   : Container()),
-                          if (widget.devisModel.approbationDG ==
-                                  '-' &&
+                          if (widget.devisModel.approbationDD == "Approved" &&
+                              widget.devisModel.approbationDG == '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur générale")
                             Padding(
@@ -262,7 +262,8 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                           color: Colors.purple.shade700)),
                                 ],
                               )),
-                          if (widget.devisModel
+                          if (widget.devisModel.approbationDG == "Approved" &&
+                                  widget.devisModel
                                       .approbationBudget ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
@@ -352,7 +353,8 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                     .devisModel.signatureFin),
                               ],
                             )),
-                        if (widget.devisModel.approbationFin ==
+                        if (widget.devisModel.approbationBudget == "Approved" &&
+                                widget.devisModel.approbationFin ==
                                 '-' &&
                             profilController.user.fonctionOccupe ==
                                 "Directeur de finance" ||

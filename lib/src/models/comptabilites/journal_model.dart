@@ -5,9 +5,10 @@ class JournalModel {
   late String compteDebit;
   late String montantDebit; 
   late String compteCredit;
-  late String montantCredit;
-  late String locker;
+  late String montantCredit; 
+  late String signature;
   late DateTime created;
+  late String locker;
 
   JournalModel(
       {this.id, 
@@ -16,9 +17,11 @@ class JournalModel {
       required this.compteDebit,
       required this.montantDebit,
       required this.compteCredit,
-      required this.montantCredit,
-      required this.locker, 
-      required this.created});
+      required this.montantCredit, 
+      required this.signature, 
+      required this.created,
+    required this.locker,
+  });
 
   factory JournalModel.fromSQL(List<dynamic> row) {
     return JournalModel(
@@ -29,8 +32,9 @@ class JournalModel {
       montantDebit: row[4],
       compteCredit: row[5],
       montantCredit: row[6],
-      locker: row[7],
-      created: row[8]
+      signature: row[7],
+      created: row[8],
+      locker: row[9]
     );
   }
 
@@ -42,9 +46,10 @@ class JournalModel {
       compteDebit: json['compteDebit'],
       montantDebit: json['montantDebit'],
       compteCredit: json['compteCredit'],
-      montantCredit: json['montantCredit'],
-      locker: json['locker'], 
+      montantCredit: json['montantCredit'], 
+      signature: json['signature'], 
       created: DateTime.parse(json['created']),
+      locker: json['locker'], 
     );
   }
 
@@ -56,9 +61,10 @@ class JournalModel {
       'compteDebit': compteDebit,
       'montantDebit': montantDebit,
       'compteCredit': compteCredit,
-      'montantCredit': montantCredit,
-      'locker': locker, 
+      'montantCredit': montantCredit, 
+      'signature': signature, 
       'created': created.toIso8601String(),
+      'locker': locker
     };
   }
 }

@@ -110,7 +110,8 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                       ],
                                     )
                                   : Container()),
-                          if (widget.campaignModel.approbationDG ==
+                          if (widget.campaignModel.approbationDD == "Approved" &&
+                              widget.campaignModel.approbationDG ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur générale")
@@ -262,7 +263,9 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                           color: Colors.purple.shade700)),
                                 ],
                               )), 
-                          if (widget.campaignModel.approbationBudget == '-' &&
+                          if (widget.campaignModel.approbationDG ==
+                                      "Approved" &&
+                                  widget.campaignModel.approbationBudget == '-' &&
                                     profilController.user.fonctionOccupe ==
                                         "Directeur de budget" ||
                                 depList.contains('Budgets') &&
@@ -353,7 +356,8 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                     .campaignModel.signatureFin),
                               ],
                             )), 
-                        if (widget.campaignModel.approbationFin == '-' &&
+                        if (widget.campaignModel.approbationBudget == "Approved" &&
+                                widget.campaignModel.approbationFin == '-' &&
                                   profilController.user.fonctionOccupe ==
                                       "Directeur de finance" ||
                               depList.contains('Finances') &&

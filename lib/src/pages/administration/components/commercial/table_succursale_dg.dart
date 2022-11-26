@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/succursale_xlsx.dart';
+import 'package:wm_solution/src/pages/commercial/components/succursale/succursale_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -61,7 +61,7 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, ComRoutes.comSuccursale);
+                        Navigator.pushNamed(context, AdminRoutes.adminComm);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

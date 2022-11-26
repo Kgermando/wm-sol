@@ -8,6 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/logistiques/approvisionnement_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/logistique/components/approvisionnements/table_history_approvision.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -91,7 +92,17 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                               const SizedBox(height: p20),
+                              TableHistoryApprovision(
+                                approvisionnementList: controller
+                                        .approvisionnementList
+                                        .where((element) =>
+                                            element.provision ==
+                                            widget.approvisionnementModel
+                                                .provision)
+                                        .toList(),
+                                controller: controller)
                               ],
                             ),
                           )))

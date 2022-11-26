@@ -9,7 +9,7 @@ class PersonnelsRolesController extends GetxController
   final AgentRoleApi personnelsRoleApi = AgentRoleApi();
   final ProfilController profilController = Get.find();
 
-  var personnelsRoleList = <AgentRoleModel>[].obs;
+  List<AgentRoleModel> personnelsRoleList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -33,7 +33,8 @@ class PersonnelsRolesController extends GetxController
 
   void getList() async {
     await personnelsRoleApi.getAllData().then((response) {
-      personnelsRoleList.assignAll(response);
+      personnelsRoleList.clear();
+      personnelsRoleList.addAll(response);
       change(personnelsRoleList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -70,11 +71,11 @@ class PersonnelsRolesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = AgentRoleModel(
-        reference: id,
-        departement: departement,
-        agent: agentController.text,
-        role: roleController.text,
-        created: DateTime.now());
+          reference: id,
+          departement: departement,
+          agent: agentController.text,
+          role: roleController.text,
+          created: DateTime.now());
       await personnelsRoleApi.insertData(dataItem).then((value) {
         personnelsRoleList.clear();
         getList();
@@ -102,8 +103,7 @@ class PersonnelsRolesController extends GetxController
           departement: data.departement,
           agent: agentController.text,
           role: roleController.text,
-          created: data.created
-        );
+          created: data.created);
       await personnelsRoleApi.updateData(dataItem).then((value) {
         personnelsRoleList.clear();
         getList();

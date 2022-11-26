@@ -9,7 +9,7 @@ class AgendaController extends GetxController
   final AgendaApi agendaApi = AgendaApi();
   final ProfilController profilController = Get.find();
 
-  var agendaList = <AgendaModel>[].obs;
+  List<AgendaModel> agendaList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -35,7 +35,8 @@ class AgendaController extends GetxController
 
   void getList() async {
     await agendaApi.getAllData().then((response) {
-      agendaList.assignAll(response.where(
+      agendaList.clear();
+      agendaList.addAll(response.where(
           (element) => element.signature == profilController.user.matricule));
       change(agendaList, status: RxStatus.success());
     }, onError: (err) {

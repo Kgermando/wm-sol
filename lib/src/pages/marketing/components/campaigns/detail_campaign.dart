@@ -8,11 +8,11 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/approbation_campaign.dart';
+import 'package:wm_solution/src/pages/marketing/components/campaigns/table_personnels_roles_campaign.dart';
+import 'package:wm_solution/src/pages/marketing/components/campaigns/table_taches_campaign_detail.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
-import 'package:wm_solution/src/pages/personnels_roles/view/table_personnels_roles.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
-import 'package:wm_solution/src/pages/taches/components/table_taches_detail.dart';
+import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart'; 
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart'; 
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
@@ -30,97 +30,86 @@ class DetailCampaign extends StatefulWidget {
 }
 
 class _DetailCampaignState extends State<DetailCampaign> {
+  final CampaignController controller = Get.find();
+  final ProfilController profilController = Get.find();
+  final PersonnelsRolesController personnelsRolesController = Get.find();
+  final PersonnelsController personnelsController = Get.find();
+  final TachesController tachesController = Get.find();
+  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
 
   @override
   Widget build(BuildContext context) {
-    final CampaignController controller = Get.find();
-    final ProfilController profilController = Get.find();
-    final PersonnelsRolesController personnelsRolesController = Get.find();
-    final PersonnelsController personnelsController = Get.find();
-    final TachesController tachesController = Get.find();
     int userRole = int.parse(profilController.user.role);
-    final sized = MediaQuery.of(context).size;
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title,
+          widget.campaignModel.typeProduit),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Nouvelle tâche"),
+        tooltip: "Ajouter une tâche pour les personnels.",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                color: Colors.amber.shade100,
+                padding: const EdgeInsets.all(p20),
+                child: Form(
+                  key: tachesController.formKey,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Text("Ecrire votre tâche ici.",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: p20,
+                      ),
+                      agentWidget(
+                          tachesController, personnelsRolesController),
+                      jalonControllerWidget(tachesController),
+                      tacheControllerWidget(tachesController),
+                      const SizedBox(
+                        height: p20,
+                      ),
+                      BtnWidget(
+                          title: 'Soumettre',
+                          press: () {
+                            final form =
+                                tachesController.formKey.currentState!;
+                            if (form.validate()) {
+                              tachesController.submit(
+                                  widget.campaignModel.typeProduit,
+                                  tachesController.tachesList.length,
+                                  widget.campaignModel.id!,
+                                  'Marketing');
+                              form.reset();
+                            }
+                          },
+                          isLoading: tachesController.isLoading)
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+      body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.campaignModel.typeProduit),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Nouvelle tâche"),
-                tooltip: "Ajouter une tâche pour les personnels.",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    constraints: BoxConstraints(
-                      maxWidth: Responsive.isDesktop(context)
-                          ? sized.width / 1.5
-                          : sized.width,
-                    ),
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: Responsive.isDesktop(context)
-                            ? sized.height / 1.3
-                            : sized.height,
-                        color: Colors.amber.shade100,
-                        padding: const EdgeInsets.all(p20),
-                        child: Form(
-                          key: tachesController.formKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: Text("Ecrire votre tâche ici.",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall)),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              agentWidget(
-                                  tachesController, personnelsRolesController),
-                              jalonControllerWidget(tachesController),
-                              tacheControllerWidget(tachesController),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              BtnWidget(
-                                  title: 'Créer maintenant',
-                                  press: () {
-                                    final form =
-                                        tachesController.formKey.currentState!;
-                                    if (form.validate()) {
-                                      tachesController.submit(
-                                          widget.campaignModel.typeProduit,
-                                          tachesController.tachesList.length,
-                                          widget.campaignModel.id!,
-                                          'Marketing');
-                                      form.reset();
-                                    }
-                                  },
-                                  isLoading: tachesController.isLoading)
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-              body: Row(
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -200,37 +189,41 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                           ],
                                         ),
                                         dataWidget(
-                                            controller, profilController),
-                                        TablePersonnelsRoles(
-                                            personnelsRolesController:
-                                                personnelsRolesController,
-                                            personnelsController:
-                                                personnelsController,
-                                            approuvedDD: widget
-                                                .campaignModel.approbationDD,
-                                            id: widget.campaignModel.id!,
-                                            departement:
-                                                'Marketing'),
-                                        TableTachesDetail(
-                                            tachesController: tachesController,
-                                            id: widget.campaignModel.id!,
-                                            departement:
-                                                'Marketing'),
-                                        const SizedBox(height: p20),
-                                        ApprobationCampaign(
-                                            campaignModel: widget.campaignModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                            controller, profilController), 
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(height: p20),
+                                TablePersonnelsRolesCampaign(
+                                    personnelsRolesController:
+                                        personnelsRolesController,
+                                    personnelsController:
+                                        personnelsController,
+                                    approuvedDD:
+                                        widget.campaignModel.approbationDD,
+                                    id: widget.campaignModel.id!,
+                                    departement: 'Marketing',
+                                    campaignModel: widget.campaignModel,
+                                  ),
+                                const SizedBox(height: p20), 
+                                TableTachesCampaignDetail(
+                                    tachesController: tachesController,
+                                    id: widget.campaignModel.id!,
+                                    departement: 'Marketing',
+                                    campaignModel: widget.campaignModel,
+                                ),
+                                const SizedBox(height: p20),
+                                ApprobationCampaign(
+                                    campaignModel: widget.campaignModel,
+                                    controller: controller,
+                                    profilController: profilController)
                               ],
                             ),
                           )))
                 ],
-              ),
-            ));
+              ))  
+            );
   }
 
   Widget deleteButton(CampaignController controller) {
@@ -277,6 +270,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                   style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.campaignModel.typeProduit,
                   textAlign: TextAlign.start, style: bodyMedium)),
+          Divider(color: mainColor),
           ResponsiveChildWidget(
               child1: Text('Date Debut Et Fin :',
                   textAlign: TextAlign.start,

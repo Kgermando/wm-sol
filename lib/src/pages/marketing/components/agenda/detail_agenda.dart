@@ -7,7 +7,6 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -27,81 +26,72 @@ class _DetailAgendaState extends State<DetailAgenda> {
   Widget build(BuildContext context) {
     final AgendaController controller = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.agendaColor.agendaModel.title),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.agendaColor.agendaModel.title),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TitleWidget(
+                                        title: widget
+                                            .agendaColor.agendaModel.title),
+                                    Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TitleWidget(
-                                                title: widget.agendaColor
-                                                    .agendaModel.title),
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    editButton(),
-                                                    deleteButton(controller),
-                                                  ],
-                                                ),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .agendaColor
-                                                            .agendaModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
+                                            editButton(),
+                                            deleteButton(controller),
                                           ],
                                         ),
-                                        dataWidget(),
+                                        SelectableText(
+                                            DateFormat("dd-MM-yyyy HH:mm")
+                                                .format(widget.agendaColor
+                                                    .agendaModel.created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+                                dataWidget(),
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget dataWidget() {

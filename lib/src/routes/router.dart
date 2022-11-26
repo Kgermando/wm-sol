@@ -15,11 +15,9 @@ import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/restitution_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_comptes_model.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart'; 
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
-import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
-import 'package:wm_solution/src/models/comptabilites/journal_livre_model.dart';
-import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
+import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';  
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
 import 'package:wm_solution/src/models/exploitations/production_model.dart';
@@ -84,13 +82,13 @@ import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart
 import 'package:wm_solution/src/pages/budgets/view/dashboard_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/historique_budgets.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/Gain_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/achat_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/bon_livraison_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/cart_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/dashboard_com_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/facture_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/facture_creance_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/gain_cart_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/history_livraison_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/history_ravitaillement_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/livraison_binding.dart';
@@ -101,30 +99,29 @@ import 'package:wm_solution/src/pages/commercial/bindings/restitution_binding.da
 import 'package:wm_solution/src/pages/commercial/bindings/stock_global_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/succursale_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/vente_cart_binding.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/achats/detail_achat.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/bon_livraison/detail_bon_livraison.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/cart/detail_cart.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/factures/detail_facture.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/factures/detail_facture_creance.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/ajout_product_model.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/detail_product_model.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/produit_model/update_product_modele_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/restitution/detail_restitution.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/add_stock_global.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/detail_stock_global.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/livraison_stock.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/stock_global/ravitaillement_stock.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/add_succursale.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/detail_succursale.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/succursale/update_succursale.dart';
-import 'package:wm_solution/src/pages/comptabilites/bindings/balance_binding.dart';
-import 'package:wm_solution/src/pages/comptabilites/bindings/balance_ref_binding.dart';
+import 'package:wm_solution/src/pages/commercial/components/achats/detail_achat.dart';
+import 'package:wm_solution/src/pages/commercial/components/bon_livraison/detail_bon_livraison.dart';
+import 'package:wm_solution/src/pages/commercial/components/cart/detail_cart.dart';
+import 'package:wm_solution/src/pages/commercial/components/factures/detail_facture.dart';
+import 'package:wm_solution/src/pages/commercial/components/factures/detail_facture_creance.dart';
+import 'package:wm_solution/src/pages/commercial/components/produit_model/ajout_product_model.dart';
+import 'package:wm_solution/src/pages/commercial/components/produit_model/detail_product_model.dart';
+import 'package:wm_solution/src/pages/commercial/components/produit_model/update_product_modele_controller.dart';
+import 'package:wm_solution/src/pages/commercial/components/restitution/detail_restitution.dart';
+import 'package:wm_solution/src/pages/commercial/components/stock_global/add_stock_global.dart';
+import 'package:wm_solution/src/pages/commercial/components/stock_global/detail_stock_global.dart';
+import 'package:wm_solution/src/pages/commercial/components/stock_global/livraison_stock.dart';
+import 'package:wm_solution/src/pages/commercial/components/stock_global/ravitaillement_stock.dart';
+import 'package:wm_solution/src/pages/commercial/components/succursale/add_succursale.dart';
+import 'package:wm_solution/src/pages/commercial/components/succursale/detail_succursale.dart';
+import 'package:wm_solution/src/pages/commercial/components/succursale/update_succursale.dart';
+import 'package:wm_solution/src/pages/comptabilites/bindings/balance_binding.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_ref_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/compte_resultat_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/dashboard_comptabilite_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/journal_binding.dart';
-import 'package:wm_solution/src/pages/comptabilites/bindings/journal_livre_binding.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart'; 
 import 'package:wm_solution/src/pages/devis/bindings/devis_binding.dart';
 import 'package:wm_solution/src/pages/devis/bindings/devis_list_objet_binding.dart';
 import 'package:wm_solution/src/pages/exploitations/bindings/dashboard_exploitation_binding.dart';
@@ -190,21 +187,18 @@ import 'package:wm_solution/src/pages/commercial/view/commercials/vente_page.dar
 import 'package:wm_solution/src/pages/commercial/view/dashboard_comm_page.dart';
 import 'package:wm_solution/src/pages/marketing/view/agenda_page.dart';
 import 'package:wm_solution/src/pages/marketing/view/annuaire_page.dart';
-import 'package:wm_solution/src/pages/marketing/view/campaign_page.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/balance/detail_balance.dart';
+import 'package:wm_solution/src/pages/marketing/view/campaign_page.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/detail_bilan.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/add_compte_resultat.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/detail_compte_resultat.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/update_compte_resultat.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/journals/detail_journal_livre.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/journals/search_grand_livre.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/update_compte_resultat.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/components/grand_livre/search_grand_livre.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/balance_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/bilan_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/compte_resultat_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/dashboard_comptabilite.dart';
-import 'package:wm_solution/src/pages/comptabilites/view/dd_comptabilie.dart';
-import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
-import 'package:wm_solution/src/pages/comptabilites/view/journal_livre_comptabilite.dart';
+import 'package:wm_solution/src/pages/comptabilites/view/dd_comptabilie.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/view/journal_comptabilite.dart';
 import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
 import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
 import 'package:wm_solution/src/pages/exploitations/components/fournisseurs/detail_fournisseur.dart';
@@ -257,7 +251,7 @@ import 'package:wm_solution/src/pages/mailling/components/new_mail.dart';
 import 'package:wm_solution/src/pages/mailling/components/repondre_mail.dart';
 import 'package:wm_solution/src/pages/mailling/components/tranfert_mail.dart';
 import 'package:wm_solution/src/pages/mailling/view/mails_page.dart';
-import 'package:wm_solution/src/pages/marketing/view/marketing_dahsboard.dart';
+import 'package:wm_solution/src/pages/marketing/view/dashboard_marketing_page.dart';
 import 'package:wm_solution/src/pages/marketing/view/marketing_dd.dart';
 import 'package:wm_solution/src/pages/personnels_roles/bindinfs/personnels_role_binding.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/bindings/dashboard_notify_binding.dart';
@@ -630,7 +624,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPresenceDetail,
-      bindings: [PresenceBinding(),
+      bindings: [
+        PresenceBinding(),
+        PrersencePersonneBinding(), 
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -644,6 +640,7 @@ List<GetPage<dynamic>>? getPages = [
       name: RhRoutes.rhdetailUser, 
       bindings: [ 
         UsersBinding(),
+        PersonnelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -691,7 +688,16 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetBudgetPrevisionel,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+      bindings: [
+        BudgetPrevisionnelBinding(), 
+        LignBudgetaireBinding(),
+        SalaireBinding(),
+        CampaignBinding(),
+        DevisBinding(),
+        DevisListObjetBinding(),
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProjetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const BudgetPrevisionnelPage(),
@@ -699,7 +705,16 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.historiqueBudgetPrevisionel,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+      bindings: [
+        BudgetPrevisionnelBinding(), 
+        LignBudgetaireBinding(),
+        SalaireBinding(),
+        CampaignBinding(),
+        DevisBinding(),
+        DevisListObjetBinding(),
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProjetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const HistoriqueBudget(),
@@ -707,7 +722,16 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetBudgetPrevisionelDetail,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+      bindings: [
+        BudgetPrevisionnelBinding(), 
+        LignBudgetaireBinding(), 
+        SalaireBinding(),
+        CampaignBinding(),
+        DevisBinding(),
+        DevisListObjetBinding(),
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProjetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -750,13 +774,11 @@ List<GetPage<dynamic>>? getPages = [
       name: ComptabiliteRoutes.comptabiliteDashboard,
       bindings: [
         DashboardComptabiliteBinding(),
-        BalanceBinding(),
-        BalanceRefBinding(),
+        BalanceBinding(), 
         BilanBinding(),
         BilanRefBinding(),
         CompteResultatBinding(),
-        JournalBinding(),
-        JournalLivreBinding(),
+        JournalBinding(), 
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const DashboardComptabilite(),
@@ -765,13 +787,11 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: ComptabiliteRoutes.comptabiliteDD,
       bindings: [
-        BalanceBinding(),
-        BalanceRefBinding(),
+        BalanceBinding(), 
         BilanBinding(),
         BilanRefBinding(),
         CompteResultatBinding(),
-        JournalBinding(),
-        JournalLivreBinding(),
+        JournalBinding(), 
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const DDComptabilite(),
@@ -779,20 +799,11 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBalance, 
-      bindings: [BalanceBinding(), BalanceRefBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [BalanceBinding(),  ProfilBinding(), NetworkBindings()],
       page: () => const BalanceComptabilite(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: ComptabiliteRoutes.comptabiliteBalanceDetail,
-      bindings: [BalanceBinding(), BalanceRefBinding(), ProfilBinding(), NetworkBindings()],
-      page: () {
-        final BalanceCompteModel balanceCompteModel =
-            Get.arguments as BalanceCompteModel;
-        return DetailBalance(balanceCompteModel: balanceCompteModel);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBilan,
@@ -849,36 +860,41 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteJournalLivre,
-      binding: JournalBinding(),
+      bindings: [
+        JournalBinding(),
+        BalanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const JournalLivreComptabilite(),
       transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: ComptabiliteRoutes.comptabiliteJournalDetail,
-      bindings: [JournalBinding(), JournalLivreBinding(), ProfilBinding(), NetworkBindings()],
-      page: () {
-        final JournalLivreModel journalLivreModel =
-            Get.arguments as JournalLivreModel;
-        return DetailJournalLivre(journalLivreModel: journalLivreModel);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+      transitionDuration: const Duration(seconds: 1)), 
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteGrandLivre,
-      bindings: [JournalBinding(), JournalLivreBinding()],
+      bindings: [
+        JournalBinding(),
+        BalanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const GrandLivre(),
       transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: ComptabiliteRoutes.comptabiliteGrandLivreSearch,
-      bindings: [JournalBinding(), JournalLivreBinding(), ProfilBinding(), NetworkBindings()],
-      page: () {
-        final List<JournalModel> search = Get.arguments as List<JournalModel>;
-        return SearchGrandLivre(search: search);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+      transitionDuration: const Duration(seconds: 1)),    
+GetPage(
+    name: ComptabiliteRoutes.comptabiliteGrandLivreSearch, 
+    bindings: [
+      JournalBinding(),
+      BalanceBinding(),
+      ProfilBinding(),
+      NetworkBindings()
+    ],
+    page: () {
+      final List<BalanceModel> search = Get.arguments as List<BalanceModel>;
+      return SearchGrandLivre(search: search);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
 
   // DevisRoutes
   GetPage(
@@ -1086,7 +1102,7 @@ List<GetPage<dynamic>>? getPages = [
         CampaignBinding(),
         ProfilBinding(), NetworkBindings()
       ],
-      page: () => const MarketingDahboard(),
+      page: () => const DashboardMarketingPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
@@ -1109,7 +1125,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingCampaignDetail,
-      bindings: [CampaignBinding(), TacheBinding(), RapportBinding(),
+      bindings: [
+        CampaignBinding(),
+        TacheBinding(),
+        RapportBinding(),
+        PersonnelsRoleBinding(),
+        PersonnelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -1120,7 +1141,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MarketingRoutes.marketingCampaignUpdate, 
-      bindings: [CampaignBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [CampaignBinding(),
+        PersonnelsRoleBinding(),
+        PersonnelBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final CampaignModel campaignModel = Get.arguments as CampaignModel;
         return UpdateCampaign(campaignModel: campaignModel);
@@ -1190,7 +1213,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         DashboardComBinding(),
         AchatBinding(),
-        GainBinding(),
+        GainCartBinding(),
         VenteCartBinding(),
         FactureCreanceBinding(),
         SuccursaleBinding(), 
@@ -1203,6 +1226,10 @@ List<GetPage<dynamic>>? getPages = [
       name: ComRoutes.comDD,
       bindings: [
         SuccursaleBinding(),
+        AchatBinding(),
+        GainCartBinding(),
+        VenteCartBinding(),
+        FactureCreanceBinding(),
         ProduitModelBinding(),
         ProfilBinding(),
         NetworkBindings()
@@ -1212,19 +1239,31 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursale,
-      bindings: [SuccursaleBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [SuccursaleBinding(),
+        AchatBinding(),
+        GainCartBinding(),
+        VenteCartBinding(),
+        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const SuccursalePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursaleAdd,
-      bindings: [SuccursaleBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [SuccursaleBinding(),
+        AchatBinding(),
+        GainCartBinding(),
+        VenteCartBinding(),
+        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const AddSuccursale(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursaleDetail, 
-      bindings: [SuccursaleBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [SuccursaleBinding(),
+        AchatBinding(),
+        GainCartBinding(),
+        VenteCartBinding(),
+        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final SuccursaleModel succursaleModel =
             Get.arguments as SuccursaleModel;
@@ -1234,7 +1273,11 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursaleUpdate, 
-      bindings: [SuccursaleBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [SuccursaleBinding(),
+        AchatBinding(),
+        GainCartBinding(),
+        VenteCartBinding(),
+        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final SuccursaleModel succursaleModel =
             Get.arguments as SuccursaleModel;
@@ -1244,7 +1287,8 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comVente, 
-      bindings: [VenteCartBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [VenteCartBinding(),
+        CartBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const VentePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1257,6 +1301,7 @@ List<GetPage<dynamic>>? getPages = [
         RavitaillementBinding(),
         LivraisonBinding(),
         HistoryRavitaillementBinding(),
+        ProduitModelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const StockGlobalPage(),
@@ -1265,7 +1310,8 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: ComRoutes.comStockGlobalAdd,
       bindings: [
-        StockGlobalBinding(), 
+        StockGlobalBinding(),
+        ProduitModelBinding(),
         HistoryRavitaillementBinding(),
         ProfilBinding(), NetworkBindings()
       ],
@@ -1280,6 +1326,7 @@ List<GetPage<dynamic>>? getPages = [
         RestitutionBinding(),
         RavitaillementBinding(),
         LivraisonBinding(),
+        ProduitModelBinding(),
         HistoryRavitaillementBinding(),
         ProfilBinding(), NetworkBindings()
       ],
@@ -1296,6 +1343,7 @@ List<GetPage<dynamic>>? getPages = [
         StockGlobalBinding(),
         BonLivraisonBinding(),
         LivraisonBinding(),
+        ProduitModelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -1310,6 +1358,7 @@ List<GetPage<dynamic>>? getPages = [
       bindings: [
         StockGlobalBinding(),
         RavitaillementBinding(),
+        ProduitModelBinding(),
         ProduitModelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
@@ -1387,20 +1436,22 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comHistoryLivraison, 
-      bindings: [HistoryLivraisonBinding(), ProfilBinding(), NetworkBindings()], 
+      bindings: [HistoryLivraisonBinding(),
+        CartBinding(), ProfilBinding(), NetworkBindings()], 
       page: () => const HistoryLivraisonPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
       name: ComRoutes.comFacture,
-      bindings: [FactureBinding(), ProfilBinding(), NetworkBindings()], 
+      bindings: [FactureBinding(), CartBinding(), ProfilBinding(), NetworkBindings()], 
       page: () => const FacturePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comCreance, 
-      bindings: [FactureCreanceBinding(), ProfilBinding(), NetworkBindings()], 
+      bindings: [FactureCreanceBinding(),
+        CartBinding(), ProfilBinding(), NetworkBindings()], 
       page: () => const FactureCreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1408,6 +1459,7 @@ List<GetPage<dynamic>>? getPages = [
       name: ComRoutes.comFactureDetail,
       bindings: [
         FactureBinding(),
+        CartBinding(),
         ProfilBinding(), NetworkBindings()
       ], 
       page: () {
@@ -1421,6 +1473,7 @@ List<GetPage<dynamic>>? getPages = [
       name: ComRoutes.comCreanceDetail,
       bindings: [
         FactureCreanceBinding(),
+        CartBinding(),
         ProfilBinding(), NetworkBindings()
       ], 
       page: () {
@@ -1438,7 +1491,7 @@ List<GetPage<dynamic>>? getPages = [
         AchatBinding(),
         FactureBinding(),
         FactureCreanceBinding(),
-        GainBinding(),
+        GainCartBinding(),
         NumeroFactureBinding(),
         VenteCartBinding(),
         ProfilBinding(), NetworkBindings()
@@ -1453,7 +1506,7 @@ List<GetPage<dynamic>>? getPages = [
         AchatBinding(),
         FactureBinding(),
         FactureCreanceBinding(),
-        GainBinding(),
+        GainCartBinding(),
         NumeroFactureBinding(),
         VenteCartBinding(),
         ProfilBinding(), NetworkBindings()
@@ -1542,6 +1595,7 @@ List<GetPage<dynamic>>? getPages = [
       name: ExploitationRoutes.expDD,
       bindings: [
         ProductionExpBinding(),
+        ProduitModelBinding(),
         ProjetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
@@ -1620,6 +1674,7 @@ List<GetPage<dynamic>>? getPages = [
         TacheBinding(),
         RapportBinding(),
         PersonnelsRoleBinding(),
+        PersonnelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const AddProjet(),
@@ -1633,6 +1688,7 @@ List<GetPage<dynamic>>? getPages = [
         TacheBinding(),
         RapportBinding(),
         PersonnelsRoleBinding(),
+        PersonnelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       binding: ProjetBinding(),
@@ -1650,6 +1706,7 @@ List<GetPage<dynamic>>? getPages = [
         TacheBinding(),
         RapportBinding(),
         PersonnelsRoleBinding(),
+        PersonnelBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -1734,6 +1791,7 @@ List<GetPage<dynamic>>? getPages = [
       binding: MaterielBinding(),
       bindings: [ 
         MaterielBinding(),
+        TrajetBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const MaterielPage(),
@@ -1741,7 +1799,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMaterielRoulant, 
-      bindings: [MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MaterielBinding(),
+        TrajetBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const MaterielRoulantPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1749,6 +1809,7 @@ List<GetPage<dynamic>>? getPages = [
       name: LogistiqueRoutes.logMaterielAdd,
       bindings: [
         MaterielBinding(),
+        TrajetBinding(),
         AnnuaireBinding(), ProfilBinding(), NetworkBindings()
       ],
       page: () => const AddMateriel(),
@@ -1756,7 +1817,8 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMaterielDetail,
-      bindings: [MaterielBinding(), AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [MaterielBinding(),
+        TrajetBinding(), AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return DetailMateriel(materielModel: materielModel);
@@ -1765,7 +1827,9 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMaterielUpdate,
-      bindings: [MaterielBinding(), AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MaterielBinding(),
+        TrajetBinding(), AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return UpdateMateriel(materielModel: materielModel);
@@ -1800,7 +1864,12 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: LogistiqueRoutes.logEntretien,
-      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding(),
+      bindings: [
+        EntretienBinding(),
+        ObjetRemplaceBinding(), 
+        MaterielBinding(),
+        ImmobilierBinding(),
+        MobilierBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () => const EntretiensPage(),
@@ -1809,7 +1878,12 @@ List<GetPage<dynamic>>? getPages = [
   
   GetPage(
       name: LogistiqueRoutes.logEntretienDetail,
-      bindings: [EntretienBinding(), ObjetRemplaceBinding(), MaterielBinding(),
+      bindings: [
+        EntretienBinding(), 
+        ObjetRemplaceBinding(),
+        ImmobilierBinding(),
+        MobilierBinding(), 
+        MaterielBinding(),
         ProfilBinding(), NetworkBindings()
       ],
       page: () {
@@ -1889,13 +1963,17 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: LogistiqueRoutes.logMobilierMateriel, 
-      bindings: [MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MobilierBinding(),
+        MaterielBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const MobilierPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMobilierMaterielDetail,
-      bindings: [MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MobilierBinding(),
+        MaterielBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final MobilierModel mobilierModel = Get.arguments as MobilierModel;
         return DetailMobiler(mobilierModel: mobilierModel);
@@ -1967,7 +2045,39 @@ List<GetPage<dynamic>>? getPages = [
   // Administration
   GetPage(
       name: AdminRoutes.adminDashboard,
-      bindings: [AdminDashboardBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        AdminDashboardBinding(), 
+        ProfilBinding(), 
+        NetworkBindings(),
+        PersonnelBinding(),  
+        BanqueBinding(), 
+        CaisseBinding(),
+        CreanceBinding(),
+        CreanceDetteBinding(),
+        DetteBinding(),
+        FinExterieurBinding(), 
+        SalaireBinding(),
+        CampaignBinding(),
+        DevisBinding(),
+        DevisListObjetBinding(),
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProjetBinding(), 
+        BudgetPrevisionnelBinding(),
+        LignBudgetaireBinding(),  
+        DashboardComptabiliteBinding(),
+        BalanceBinding(),
+        BilanBinding(),
+        BilanRefBinding(),
+        CompteResultatBinding(),
+        JournalBinding(), 
+        DashboardComBinding(),
+        VenteCartBinding(),
+        GainCartBinding(),
+        FactureBinding(),
+        FactureCreanceBinding(),
+        SuccursaleBinding(),
+      ],
       page: () => const AdminDashboard(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1997,7 +2107,8 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminExploitation,
-      bindings: [ProjetBinding(), ProductionExpBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [ProjetBinding(),
+        ProduitModelBinding(), ProductionExpBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const AdminExploitation(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

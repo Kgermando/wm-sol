@@ -9,17 +9,17 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class AdministrationNav extends StatefulWidget {
   const AdministrationNav(
-      {super.key, required this.currentRoute, required this.user, required this.departement});
+      {super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<AdministrationNav> createState() => _AdministrationNavState();
 }
 
 class _AdministrationNavState extends State<AdministrationNav> {
-  final AdminNotifyController controller = Get.find();
+  final AdminNotifyController controller = Get.put(AdminNotifyController());
   bool isOpen1 = false;
 
   @override
@@ -32,7 +32,7 @@ class _AdministrationNavState extends State<AdministrationNav> {
         size: 30.0,
       ),
       title: AutoSizeText('Administration', maxLines: 1, style: bodyMedium),
-      initiallyExpanded: (widget.departement == 'Administration') ? true : false,
+      initiallyExpanded: widget.departementList.contains('Administration') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen1 = !val;

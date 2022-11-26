@@ -3,15 +3,11 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
-import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_balance_dd.dart';
+import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_blan_dd.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_compte_resultat_dd.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_journal_livre_dd.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_compte_resultat_dd.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_livre_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
 
 
@@ -35,11 +31,9 @@ class _DDComptabiliteState extends State<DDComptabilite> {
 
   @override
   Widget build(BuildContext context) {
-    final ComptabiliteNotifyController notify = Get.find();
-    final BalanceController balanceController = Get.find();
+    final ComptabiliteNotifyController notify = Get.find(); 
     final BilanController bilanController = Get.find();
     final CompteResultatController compteResultatController = Get.find();
-    final JournalLivreController journalLivreController = Get.find();
     
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
@@ -69,37 +63,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                             Card(
-                                color: Colors.orange.shade700,
-                                child: ExpansionTile(
-                                  leading: const Icon(
-                                    Icons.folder,
-                                    color: Colors.white,
-                                  ),
-                                  title: Text('Dossier Compte Balances',
-                                      style: (Responsive.isDesktop(context))
-                                          ? headline6!
-                                              .copyWith(color: Colors.white)
-                                          : bodyLarge!
-                                              .copyWith(color: Colors.white)),
-                                  subtitle: Text(
-                                          "Vous avez ${notify.balanceCount} dossiers necessitent votre approbation",
-                                          style: bodyMedium!
-                                              .copyWith(color: Colors.white70)),
-                                  initiallyExpanded: false,
-                                  onExpansionChanged: (val) {
-                                    setState(() {
-                                      isOpen1 = !val;
-                                    });
-                                  },
-                                  trailing: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.white,
-                                  ),
-                                  children: [TableBalanceCompteDD(balanceController: balanceController)],
-                                ),
-                              ),
+                            children: [ 
                               Card(
                                 color: Colors.blue.shade700,
                                 child: ExpansionTile(
@@ -115,7 +79,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
                                       "Vous avez ${notify.bilanCount} dossiers necessitent votre approbation",
-                                      style: bodyMedium.copyWith(
+                                      style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
@@ -145,7 +109,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                               .copyWith(color: Colors.white)),
                                   subtitle: Text(
                                           "Vous avez ${notify.compteResultatCount} dossiers necessitent votre approbation",
-                                          style: bodyMedium.copyWith(color: Colors.white70)),
+                                          style: bodyMedium!.copyWith(color: Colors.white70)),
                                   initiallyExpanded: false,
                                   onExpansionChanged: (val) {
                                     setState(() {
@@ -159,37 +123,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
                                   children: [TableCompteResultatDD(compteResultatController: compteResultatController)],
                                 ),
                               ),
-                              Card(
-                                color: Colors.purple.shade700,
-                                child: ExpansionTile(
-                                  leading: const Icon(
-                                    Icons.folder,
-                                    color: Colors.white,
-                                  ),
-                                  title: Text('Dossier Compte journals',
-                                      style: (Responsive.isDesktop(context))
-                                          ? headline6!
-                                              .copyWith(color: Colors.white)
-                                          : bodyLarge!
-                                              .copyWith(color: Colors.white)),
-                                  subtitle: Text(
-                                          "Vous avez ${notify.journalCount} dossiers necessitent votre approbation",
-                                          style: bodyMedium.copyWith(color: Colors.white70)),
-                                  initiallyExpanded: false,
-                                  onExpansionChanged: (val) {
-                                    setState(() {
-                                      isOpen4 = !val;
-                                    });
-                                  },
-                                  trailing: const Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.white,
-                                  ),
-                                  children: [
-                                    TableJournalComptabiliteDD(journalLivreController: journalLivreController)
-                                  ],
-                                ),
-                              ),
+                              
                             ])),
                   ))
             ],

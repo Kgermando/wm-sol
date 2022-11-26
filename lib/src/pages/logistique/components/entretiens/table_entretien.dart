@@ -123,7 +123,7 @@ class _TableEntretienState extends State<TableEntretien> {
           'typeMaintenance': PlutoCell(value: item.typeMaintenance),
           'dureeTravaux': PlutoCell(value: item.dureeTravaux),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));

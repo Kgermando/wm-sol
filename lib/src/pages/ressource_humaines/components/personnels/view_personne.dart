@@ -8,6 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agent_pdf.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -15,8 +16,10 @@ import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class ViewPersonne extends StatefulWidget {
-  const ViewPersonne({super.key, required this.personne});
+  const ViewPersonne(
+      {super.key, required this.personne, required this.controller});
   final AgentModel personne;
+  final PersonnelsController controller;
 
   @override
   State<ViewPersonne> createState() => _ViewPersonneState();
@@ -48,7 +51,8 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   //       icon: const Icon(
                   //           Icons.admin_panel_settings)),
                   IconButton(
-                      onPressed: () {
+                      onPressed: () { 
+                        widget.controller.getList();
                         Navigator.pushNamed(
                             context, RhRoutes.rhPersonnelsDetail,
                             arguments: widget.personne);
@@ -97,10 +101,10 @@ class _ViewPersonneState extends State<ViewPersonne> {
                             ),
                           ],
                         ),
-                        Row(
+                        Obx(() => Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text('Statut agent : ',
+                            Text('Statut personnel : ',
                                 textAlign: TextAlign.start,
                                 style: bodyMedium!
                                     .copyWith(fontWeight: FontWeight.bold)),
@@ -114,7 +118,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
                                     style: bodyMedium.copyWith(
                                         color: Colors.orange.shade700))
                           ],
-                        ),
+                        )) ,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -261,7 +265,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
           ResponsiveChildWidget(
               child1: Text('Nom :',
                   textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.personne.nom,
                   textAlign: TextAlign.start, style: bodyMedium)),
           ResponsiveChildWidget(
@@ -401,7 +405,8 @@ class _ViewPersonneState extends State<ViewPersonne> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText("${widget.personne.salaire} USD",
-                    textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.blueGrey))),
+                    textAlign: TextAlign.start,
+                    style: bodyMedium.copyWith(color: Colors.blueGrey))),
         ],
       ),
     );

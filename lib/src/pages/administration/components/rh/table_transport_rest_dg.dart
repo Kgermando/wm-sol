@@ -71,7 +71,8 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhTransportRest);
+                        Navigator.pushNamed(
+                            context, AdminRoutes.adminRH);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

@@ -596,9 +596,17 @@ class _AddPersonnelState extends State<AddPersonnel> {
         String prefix = InfoSystem().prefix();
         final date = DateFormat("yy").format(DateTime.now());
 
+        String numero = '';
+        if (controller.identifiant < 10) {
+          numero = "00${controller.identifiant}";
+        } else if (controller.identifiant < 99) {
+          numero = "0${controller.identifiant}";
+        } else {
+          numero = "${controller.identifiant}";
+        }
+
         if (controller.departementSelectedList.first == 'Actionnaire') {
-          controller.matricule =
-              "${prefix}ACT$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}ACT$date-$numero";
           controller.fonctionList = controller.fonctionActionnaireList;
           controller.servAffectList = controller.serviceAffectationActionnaire;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -606,16 +614,14 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationActionnaire.first;
         } else if (controller.departementSelectedList.first ==
             'Administration') {
-          controller.matricule =
-              "${prefix}ADM$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}ADM$date-$numero";
           controller.fonctionList = controller.fonctionAdminList;
           controller.servAffectList = controller.serviceAffectationAdmin;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationAdmin.first;
         } else if (controller.departementSelectedList.first == 'Finances') {
-          controller.matricule =
-              "${prefix}FIN$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}FIN$date-$numero";
           controller.fonctionList = controller.fonctionFinList;
           controller.servAffectList = controller.serviceAffectationFin;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -623,16 +629,14 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationFin.first;
         } else if (controller.departementSelectedList.first ==
             'Comptabilites') {
-          controller.matricule =
-              "${prefix}CPT$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}CPT$date-$numero";
           controller.fonctionList = controller.fonctionComptabiliteList;
           controller.servAffectList = controller.serviceAffectationCompt;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationCompt.first;
         } else if (controller.departementSelectedList.first == 'Budgets') {
-          controller.matricule =
-              "${prefix}BUD$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}BUD$date-$numero";
           controller.fonctionList = controller.fonctionBudList;
           controller.servAffectList = controller.serviceAffectationBud;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -640,8 +644,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationBud.first;
         } else if (controller.departementSelectedList.first ==
             'Ressources Humaines') {
-          controller.matricule =
-              "${prefix}RH$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}RH$date-$numero";
           controller.fonctionList = controller.fonctionrhList;
           controller.servAffectList = controller.serviceAffectationRH;
           controller.fonctionOccupe = controller.fonctionList.first;
@@ -649,32 +652,28 @@ class _AddPersonnelState extends State<AddPersonnel> {
               controller.serviceAffectationRH.first;
         } else if (controller.departementSelectedList.first ==
             'Exploitations') {
-          controller.matricule =
-              "${prefix}EXP$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}EXP$date-$numero";
           controller.fonctionList = controller.fonctionExpList;
           controller.servAffectList = controller.serviceAffectationEXp;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationEXp.first;
         } else if (controller.departementSelectedList.first == 'Marketing') {
-          controller.matricule =
-              "${prefix}MKT$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}MKT$date-$numero";
           controller.fonctionList = controller.fonctionMarketingList;
           controller.servAffectList = controller.serviceAffectationMark;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationMark.first;
         } else if (controller.departementSelectedList.first == 'Commercial') {
-          controller.matricule =
-              "${prefix}COM$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}COM$date-$numero";
           controller.fonctionList = controller.fonctionCommList;
           controller.servAffectList = controller.serviceAffectationCom;
           controller.fonctionOccupe = controller.fonctionList.first;
           controller.servicesAffectation =
               controller.serviceAffectationCom.first;
         } else if (controller.departementSelectedList.first == 'Logistique') {
-          controller.matricule =
-              "${prefix}LOG$date-${widget.personnelList.length + 1}";
+          controller.matricule = "${prefix}LOG$date-$numero";
           controller.fonctionList = controller.fonctionlogList;
           controller.servAffectList = controller.serviceAffectationLog;
           controller.fonctionOccupe = controller.fonctionList.first;

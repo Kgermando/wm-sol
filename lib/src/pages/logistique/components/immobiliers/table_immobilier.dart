@@ -124,9 +124,9 @@ class _TableImmobilierState extends State<TableImmobilier> {
           'numeroCertificat': PlutoCell(value: item.numeroCertificat),
           'superficie': PlutoCell(value: item.superficie),
           'dateAcquisition': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.dateAcquisition)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.dateAcquisition)),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'approbationDG': PlutoCell(value: item.approbationDG),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)

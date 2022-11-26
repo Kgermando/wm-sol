@@ -9,17 +9,17 @@ import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_no
 import 'package:wm_solution/src/routes/routes.dart';
 
 class CommercialNav extends StatefulWidget {
-  const CommercialNav({super.key, required this.currentRoute, required this.user, required this.departement});
+  const CommercialNav({super.key, required this.currentRoute, required this.user, required this.departementList});
   final String currentRoute;
   final UserModel user;
-  final String departement;
+  final List<dynamic> departementList;
 
   @override
   State<CommercialNav> createState() => _CommercialNavState();
 }
 
 class _CommercialNavState extends State<CommercialNav> {
-      final ComNotifyController controller = Get.find();
+      final ComNotifyController controller = Get.put(ComNotifyController());
   bool isOpen = false;
 
   @override
@@ -31,9 +31,9 @@ class _CommercialNavState extends State<CommercialNav> {
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
       title:
-          AutoSizeText('Commercial', maxLines: 2, style: bodyMedium),
+          AutoSizeText('Commercials', maxLines: 2, style: bodyMedium),
       initiallyExpanded:
-          (widget.departement == 'Commercial')
+          widget.departementList.contains('Commercial')
               ? true
               : false,
       onExpansionChanged: (val) {

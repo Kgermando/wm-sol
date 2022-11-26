@@ -81,7 +81,7 @@ class TachesController extends GetxController
           signatureResp: profilController.user.matricule,
           created: DateTime.now(),
           read: 'false',
-          departement: '',
+          departement: departement,
           reference: id);
       await tachesApi.insertData(dataItem).then((value) {
         tachesList.clear();

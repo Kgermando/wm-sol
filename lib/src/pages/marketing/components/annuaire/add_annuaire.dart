@@ -6,7 +6,6 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -26,84 +25,75 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
   Widget build(BuildContext context) {
     final AnnuaireController controller = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(p20),
-                                child: Form(
-                                  key: controller.formKey,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const TitleWidget(title: 'Nouveau contact'),
-                                      const SizedBox(height: p20),
-                                      categorieField(controller),
-                                      ResponsiveChildWidget(
-                                        child1:
-                                            nomPostnomPrenomField(controller),
-                                        child2: emailField(controller),
-                                      ),
-                                      ResponsiveChildWidget(
-                                        child1: mobile1Field(controller),
-                                        child2: mobile2Field(controller),
-                                      ),
-                                      ResponsiveChildWidget(
-                                        child1:
-                                            secteurActiviteField(controller),
-                                        child2:
-                                            nomEntrepriseField(controller),
-                                      ),
-                                      gradeField(controller),
-                                      adresseEntrepriseField(controller),
-                                      const SizedBox(
-                                        height: p20,
-                                      ),
-                                      BtnWidget(
-                                          title: 'Soumettre',
-                                          isLoading: controller.isLoading,
-                                          press: () {
-                                            final form = controller
-                                                .formKey.currentState!;
-                                            if (form.validate()) {
-                                              controller.submit();
-                                              form.reset();
-                                            }
-                                          })
-                                    ],
-                                  ),
-                                ),
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const TitleWidget(title: 'Nouveau contact'),
+                              const SizedBox(height: p20),
+                              categorieField(controller),
+                              ResponsiveChildWidget(
+                                child1: nomPostnomPrenomField(controller),
+                                child2: emailField(controller),
                               ),
-                            ),
-                          )))
-                ],
-              ),
-            ));
+                              ResponsiveChildWidget(
+                                child1: mobile1Field(controller),
+                                child2: mobile2Field(controller),
+                              ),
+                              ResponsiveChildWidget(
+                                child1: secteurActiviteField(controller),
+                                child2: nomEntrepriseField(controller),
+                              ),
+                              gradeField(controller),
+                              adresseEntrepriseField(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              BtnWidget(
+                                  title: 'Soumettre',
+                                  isLoading: controller.isLoading,
+                                  press: () {
+                                    final form =
+                                        controller.formKey.currentState!;
+                                    if (form.validate()) {
+                                      controller.submit();
+                                      form.reset();
+                                    }
+                                  })
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget categorieField(AnnuaireController controller) {
@@ -125,7 +115,7 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
             child: Text(value),
           );
         }).toList(),
-        onChanged: (value) {
+        onChanged: (value) { 
           setState(() {
             controller.categorie = value;
           });

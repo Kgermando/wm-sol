@@ -6,7 +6,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercials/cart/cart_item_widget.dart';
+import 'package:wm_solution/src/pages/commercial/components/cart/cart_item_widget.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 

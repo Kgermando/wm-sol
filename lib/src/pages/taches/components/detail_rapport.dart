@@ -26,16 +26,16 @@ class _DetailRapportState extends State<DetailRapport> {
     final RapportController controller = Get.find();
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, widget.rapportModel.numeroTache),
               drawer: const DrawerMenu(),
-              body: Row(
+              body: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -113,8 +113,10 @@ class _DetailRapportState extends State<DetailRapport> {
                             ),
                           )))
                 ],
-              ),
-            ));
+              ),) 
+            )
+    
+    ;
   }
 
   Widget deleteButton(RapportController controller) {
