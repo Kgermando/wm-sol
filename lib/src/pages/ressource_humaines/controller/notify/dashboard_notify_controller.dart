@@ -40,27 +40,30 @@ class DashobardNotifyController extends GetxController {
 
 
   void getData() async {
-    _agentsCount.value = personnelsController.personnelsList.length; 
-    _agentActifCount.value = personnelsController.personnelsList
+    var personnels = await personnelsController.personnelsApi.getAllData();
+    _agentsCount.value = personnels.length; 
+    _agentActifCount.value = personnels
         .where((element) => element.statutAgent == 'true')
         .length;
-    _agentInactifCount.value = personnelsController.personnelsList
+    _agentInactifCount.value = personnels
         .where((element) => element.statutAgent == 'false')
         .length;
-    _agentFemmeCount.value = personnelsController.personnelsList
+    _agentFemmeCount.value = personnels
         .where((element) => element.sexe == 'Femme')
         .length;
-    _agentHommeCount.value = personnelsController.personnelsList
+    _agentHommeCount.value = personnels
         .where((element) => element.sexe == 'Homme')
         .length;
-    _agentNonPaye.value = salaireController.paiementSalaireList
+
+    var salaires = await salaireController.paiementSalaireApi.getAllData();
+    _agentNonPaye.value = salaires
         .where((element) =>
             element.observation == 'false' &&
             element.createdAt.month == DateTime.now().month &&
             element.createdAt.year == DateTime.now().year)
         .length;
 
-    salaireList = salaireController.paiementSalaireList
+    salaireList = salaires
         .where((element) =>
             element.createdAt.month == DateTime.now().month &&
             element.createdAt.year == DateTime.now().year &&

@@ -52,10 +52,10 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   //           Icons.admin_panel_settings)),
                   IconButton(
                       onPressed: () { 
-                        widget.controller.getList();
+                        widget.controller.detailView(widget.personne.id!);
                         Navigator.pushNamed(
                             context, RhRoutes.rhPersonnelsDetail,
-                            arguments: widget.personne);
+                            arguments: widget.personne); 
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(
@@ -81,7 +81,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
-        children: [
+        children: [ 
           Responsive.isMobile(context)
               ? Column(
                   children: [
@@ -101,24 +101,25 @@ class _ViewPersonneState extends State<ViewPersonne> {
                             ),
                           ],
                         ),
-                        Obx(() => Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text('Statut personnel : ',
                                 textAlign: TextAlign.start,
                                 style: bodyMedium!
                                     .copyWith(fontWeight: FontWeight.bold)),
-                            (widget.personne.statutAgent == 'true')
-                                ? Text('Actif',
-                                    textAlign: TextAlign.start,
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.green.shade700))
-                                : Text('Inactif',
-                                    textAlign: TextAlign.start,
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.orange.shade700))
+                            if (widget.personne.statutAgent == 'Actif')
+                              Obx(() => Text(widget.personne.statutAgent,
+                                  textAlign: TextAlign.start,
+                                  style: bodyMedium.copyWith(
+                                      color: Colors.green.shade700)))  ,
+                            if (widget.personne.statutAgent == 'Inactif')
+                              Obx(() => Text(widget.personne.statutAgent,
+                                  textAlign: TextAlign.start,
+                                  style: bodyMedium.copyWith(
+                                      color: Colors.orange.shade700)))  
                           ],
-                        )) ,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -232,19 +233,22 @@ class _ViewPersonneState extends State<ViewPersonne> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text('Statut agent : ',
+                            Text('Statut personnel : ',
                                 textAlign: TextAlign.start,
                                 style: bodyMedium!
                                     .copyWith(fontWeight: FontWeight.bold)),
-                            (widget.personne.statutAgent == 'true')
-                                ? Text('Actif',
-                                    textAlign: TextAlign.start,
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.green.shade700))
-                                : Text('Inactif',
-                                    textAlign: TextAlign.start,
-                                    style: bodyMedium.copyWith(
-                                        color: Colors.orange.shade700))
+                            if (widget.personne.statutAgent == 'Actif')
+                              // Obx(() => ),
+                              Text(widget.personne.statutAgent,
+                                  textAlign: TextAlign.start,
+                                  style: bodyMedium.copyWith(
+                                      color: Colors.green.shade700)),
+                            if (widget.personne.statutAgent == 'Inactif')
+                              // Obx(() => )
+                              Text(widget.personne.statutAgent,
+                                  textAlign: TextAlign.start,
+                                  style: bodyMedium.copyWith(
+                                      color: Colors.orange.shade700))
                           ],
                         ),
                         Text(
@@ -265,7 +269,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
           ResponsiveChildWidget(
               child1: Text('Nom :',
                   textAlign: TextAlign.start,
-                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.personne.nom,
                   textAlign: TextAlign.start, style: bodyMedium)),
           ResponsiveChildWidget(
@@ -309,7 +313,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.personne.matricule,
-                  textAlign: TextAlign.start, style: bodyMedium)),
+                  textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.teal.shade700))),
           ResponsiveChildWidget(
               child1: Text('Numéro de sécurité sociale :',
                   textAlign: TextAlign.start,

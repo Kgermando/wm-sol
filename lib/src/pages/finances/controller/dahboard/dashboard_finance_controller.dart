@@ -1,4 +1,4 @@
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
@@ -7,14 +7,13 @@ import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controlle
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart';
 
 class DashboardFinanceController extends GetxController {
- 
   final BanqueController banqueController = Get.find();
   final CaisseController caisseController = Get.find();
   final CreanceController creanceController = Get.find();
   final DetteController detteController = Get.find();
   final CreanceDetteController creanceDetteController = Get.find();
   final FinExterieurController finExterieurController = Get.find();
- 
+
   // Banque
   final _recetteBanque = 0.0.obs;
   double get recetteBanque => _recetteBanque.value;
@@ -40,7 +39,6 @@ class DashboardFinanceController extends GetxController {
   final _creancePaiement = 0.0.obs;
   double get creancePaiement => _creancePaiement.value;
 
-
   final _soldeCreance = 0.0.obs;
   double get soldeCreance => _soldeCreance.value;
 
@@ -49,7 +47,6 @@ class DashboardFinanceController extends GetxController {
   double get nonPayesDette => _nonPayesDette.value;
   final _detteRemboursement = 0.0.obs;
   double get detteRemboursement => _detteRemboursement.value;
-
 
   final _soldeDette = 0.0.obs;
   double get soldeDette => _soldeDette.value;
@@ -78,19 +75,19 @@ class DashboardFinanceController extends GetxController {
   void onInit() {
     super.onInit();
     getData();
-
   }
-  
 
   Future<void> getData() async {
     var dataBanqueList = await banqueController.banqueApi.getAllData();
     var dataCaisseList = await caisseController.caisseApi.getAllData();
     var dataCreanceList = await creanceController.creanceApi.getAllData();
     var dataDetteList = await detteController.detteApi.getAllData();
-    var creanceDettes = await creanceDetteController.creanceDetteApi.getAllData();
-    var dataFinanceExterieurList = await finExterieurController.finExterieurApi.getAllData();
+    var creanceDettes =
+        await creanceDetteController.creanceDetteApi.getAllData();
+    var dataFinanceExterieurList =
+        await finExterieurController.finExterieurApi.getAllData();
 
-     // Banque
+    // Banque
     var recetteBanqueList = dataBanqueList
         .where((element) => element.typeOperation == "Depot")
         .toList();
@@ -129,7 +126,7 @@ class DashboardFinanceController extends GetxController {
         .toList();
 
     for (var item in nonPayeCreanceList) {
-       _nonPayesCreance.value += double.parse(item.montant);
+      _nonPayesCreance.value += double.parse(item.montant);
     }
     for (var item in creancePaiementList) {
       _creancePaiement.value += double.parse(item.montant);
@@ -174,15 +171,17 @@ class DashboardFinanceController extends GetxController {
     _soldeCreance.value = nonPayesCreance - creancePaiement;
     _soldeDette.value = nonPayesDette - detteRemboursement;
 
-     _soldeBanque.value = recetteBanque - depensesBanque;
+    _soldeBanque.value = recetteBanque - depensesBanque;
     _soldeCaisse.value = recetteCaisse - depensesCaisse;
-    _soldeFinExterieur.value = recetteFinanceExterieur - depenseFinanceExterieur;
+    _soldeFinExterieur.value =
+        recetteFinanceExterieur - depenseFinanceExterieur;
 
     // _cumulFinanceExterieur.value = actionnaire + soldeFinExterieur;
     _cumulFinanceExterieur.value = soldeFinExterieur;
     _depenses.value = depensesBanque + depensesCaisse + depenseFinanceExterieur;
     _disponible.value =
         soldeBanque + soldeCaisse + cumulFinanceExterieur; // Montant disponible
-  
+
+    update();
   }
 }

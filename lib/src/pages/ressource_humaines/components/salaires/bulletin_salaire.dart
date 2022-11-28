@@ -259,7 +259,10 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
               'Observation',
               style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
             ),
-            child2: (widget.salaire.observation == 'false' &&
+            child2: (widget.salaire.approbationBudget == "Approved" &&
+                    widget.salaire.approbationDD == "Approved" &&
+                    widget.salaire.approbationFin == "Approved" &&
+                    widget.salaire.observation == 'false' &&
                 depList.contains("Finances"))  
                 ? checkboxRead(controller)
                 : Container(),

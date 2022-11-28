@@ -22,13 +22,7 @@ class _CourbeCaisseMounthState extends State<CourbeCaisseMounth> {
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
-
-    Timer.periodic(const Duration(milliseconds: 500), (t) {
-      setState(() {
-        loadData();
-      });
-      t.cancel();
-    });
+    loadData();
     super.initState();
   }
 
@@ -41,6 +35,8 @@ class _CourbeCaisseMounthState extends State<CourbeCaisseMounth> {
       setState(() {
         dataList1 = data1;
         dataList2 = data2;
+
+        print("caisse $dataList1");
       });
     }
   }
@@ -78,7 +74,7 @@ class _CourbeCaisseMounthState extends State<CourbeCaisseMounth> {
   }
 
   /// The method returns line series to chart.
-  List<LineSeries<CourbeChartModel, num>> _getDefaultLineSeries() {
+  List<LineSeries> _getDefaultLineSeries() {
     return <LineSeries<CourbeChartModel, num>>[
       LineSeries<CourbeChartModel, num>(
           dataSource: dataList1,

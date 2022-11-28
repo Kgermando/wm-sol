@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agents_xlsx.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -33,7 +34,6 @@ class _TablePersonnelsState extends State<TablePersonnels> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return PlutoGrid(
@@ -62,7 +62,8 @@ class _TablePersonnelsState extends State<TablePersonnels> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, RhRoutes.rhPersonnelsPage);
+                      Navigator.popAndPushNamed(
+                          context, RhRoutes.rhPersonnelsPage);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
@@ -127,24 +128,25 @@ class _TablePersonnelsState extends State<TablePersonnels> {
   Future agentsRow() async {
     var i = widget.personnelList.length;
     for (var item in widget.personnelList) {
-      rows.add(PlutoRow(cells: {
-        'numero': PlutoCell(value: i--),
-        'statutAgent': PlutoCell(
-            value: (item.statutAgent == "true") ? 'Actif' : 'Inactif'),
-        'matricule': PlutoCell(value: item.matricule),
-        'nom': PlutoCell(value: item.nom),
-        'postNom': PlutoCell(value: item.postNom),
-        'prenom': PlutoCell(value: item.prenom),
-        'email': PlutoCell(value: item.email),
-        'telephone': PlutoCell(value: item.telephone),
-        'sexe': PlutoCell(value: item.sexe),
-        'role': PlutoCell(value: "Niveau ${item.role}"), 
-        'createdAt':
-            PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
-        'departement': PlutoCell(value: item.departement),
-        'servicesAffectation': PlutoCell(value: item.servicesAffectation),
-        'id': PlutoCell(value: item.id)
-      }));
+      setState(() {
+        rows.add(PlutoRow(cells: {
+          'numero': PlutoCell(value: i--),
+          'statutAgent': PlutoCell(value: item.statutAgent),
+          'matricule': PlutoCell(value: item.matricule),
+          'nom': PlutoCell(value: item.nom),
+          'postNom': PlutoCell(value: item.postNom),
+          'prenom': PlutoCell(value: item.prenom),
+          'email': PlutoCell(value: item.email),
+          'telephone': PlutoCell(value: item.telephone),
+          'sexe': PlutoCell(value: item.sexe),
+          'role': PlutoCell(value: "Niveau ${item.role}"),
+          'createdAt':
+              PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
+          'departement': PlutoCell(value: item.departement),
+          'servicesAffectation': PlutoCell(value: item.servicesAffectation),
+          'id': PlutoCell(value: item.id)
+        }));
+      });
     }
   }
 
@@ -192,6 +194,15 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) { 
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: mainColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
@@ -278,7 +289,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'createdAt',

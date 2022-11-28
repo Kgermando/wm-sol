@@ -111,7 +111,7 @@ class PersonnelsController extends GetxController
   void onInit() {
     super.onInit();
     getList();
-    agentPieChart(); 
+    agentPieChart();
   }
 
   @override
@@ -162,10 +162,10 @@ class PersonnelsController extends GetxController
       change(null, status: RxStatus.error(err.toString()));
     });
   }
- 
+
   void agentPieChart() async {
     personnelsApi.getChartPieSexe().then((response) {
-      agentPieChartList.assignAll(response);
+      agentPieChartList.addAll(response);
       change(personnelsList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -174,10 +174,10 @@ class PersonnelsController extends GetxController
 
   detailView(int id) async {
     final data = await personnelsApi.getOneData(id);
+    print("data: ${data.statutAgent}");
+    update();
     return data;
   }
-
-  refreshView(int id) => personnelsApi.getOneData(id);
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
@@ -228,7 +228,7 @@ class PersonnelsController extends GetxController
           experience: (experienceController.text == '')
               ? '-'
               : experienceController.text,
-          statutAgent: 'false',
+          statutAgent: 'Inactif',
           createdAt: DateTime.now(),
           photo: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
           salaire:

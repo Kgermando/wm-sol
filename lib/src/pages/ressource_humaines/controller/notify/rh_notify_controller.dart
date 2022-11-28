@@ -55,6 +55,8 @@ class RHNotifyController extends GetxController {
     getCountTransRestFin();
     getCountTransResteObs();
   }
+
+ 
  
   void getCountRh() async {
     NotifySumModel notifySum = await rhDepartementNotifyApi.getCountRh();

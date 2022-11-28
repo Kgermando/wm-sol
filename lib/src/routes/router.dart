@@ -281,8 +281,10 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
+import 'package:wm_solution/src/pages/screens/binding/splash_binding.dart';
 import 'package:wm_solution/src/pages/screens/help_page.dart';
 import 'package:wm_solution/src/pages/screens/settings_page.dart';
+import 'package:wm_solution/src/pages/screens/splash_page.dart';
 import 'package:wm_solution/src/pages/taches/bindings/rapport_binding.dart';
 import 'package:wm_solution/src/pages/taches/bindings/tache_binding.dart';
 import 'package:wm_solution/src/pages/taches/components/add_rapport.dart';
@@ -293,6 +295,14 @@ import 'package:wm_solution/src/pages/update/view/update_page.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 List<GetPage<dynamic>>? getPages = [
+  // Settings
+  GetPage(
+      name: SettingsRoutes.splash,
+      binding: SplashBinding(),
+      page: () => const SplashView(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
   // UserRoutes
   GetPage(
       name: UserRoutes.login,

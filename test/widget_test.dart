@@ -14,9 +14,9 @@ import 'package:wm_solution/src/models/users/user_model.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    UserModel user = await AuthApi().getUserId();
+    // UserModel user = await AuthApi().getUserId();
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(user: user));
+    // await tester.pumpWidget(MyApp(user: user));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -24,6 +24,8 @@ class DetailPersonne extends StatefulWidget {
 }
 
 class _DetailPersonneState extends State<DetailPersonne> {
+  final PersonnelsController personnelsController = Get.find();
+  final UsersController usersController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
@@ -32,8 +34,6 @@ class _DetailPersonneState extends State<DetailPersonne> {
 
   @override
   Widget build(BuildContext context) {
-    final PersonnelsController personnelsController = Get.find();
-    final UsersController usersController = Get.find();
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title,
@@ -73,7 +73,9 @@ class _DetailPersonneState extends State<DetailPersonne> {
                           physics: const ScrollPhysics(),
                           children: [
                             SingleChildScrollView(
-                                child: ViewPersonne(personne: widget.personne, controller: personnelsController)),
+                                child: ViewPersonne(
+                                    personne: widget.personne,
+                                    controller: personnelsController)),
                             SingleChildScrollView(
                                 child: InfosPersonne(personne: widget.personne))
                           ],
@@ -90,9 +92,9 @@ class _DetailPersonneState extends State<DetailPersonne> {
       UsersController usersController) {
     final SalaireController salaireController = Get.put(SalaireController());
     bool isStatutPersonne = false;
-    if (widget.personne.statutAgent == "true") {
+    if (widget.personne.statutAgent == "Actif") {
       isStatutPersonne = true;
-    } else if (widget.personne.statutAgent == "false") {
+    } else if (widget.personne.statutAgent == "Inactif") {
       isStatutPersonne = false;
     }
     return salaireController.obx(onLoading: loadingMini(), (state) {
@@ -152,9 +154,9 @@ class _DetailPersonneState extends State<DetailPersonne> {
   agentStatutDialog(PersonnelsController personnelsController,
       UsersController usersController) {
     statutPersonel = widget.personne.statutAgent;
-    if (statutPersonel == 'true') {
+    if (statutPersonel == 'Actif') {
       statutAgent = true;
-    } else if (statutPersonel == 'false') {
+    } else if (statutPersonel == 'Inactif') {
       statutAgent = false;
     }
     return showDialog(
@@ -189,10 +191,10 @@ class _DetailPersonneState extends State<DetailPersonne> {
                           String vrai = '';
                           if (statutAgent) {
                             vrai = 'true';
-                            statutPersonel = 'true';
+                            statutPersonel = 'Actif';
                           } else {
                             vrai = 'false';
-                            statutPersonel = 'false';
+                            statutPersonel = 'Inactif';
                           }
                           if (vrai == 'true') {
                             usersController.createUser(widget.personne);
@@ -203,6 +205,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                             personnelsController.updateStatus(
                                 widget.personne, statutPersonel);
                           }
+                          personnelsController.detailView(widget.personne.id!);
                         });
                       },
                     ),

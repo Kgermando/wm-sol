@@ -11,8 +11,8 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 
 class LoginController extends GetxController {
-  final AuthApi authController = AuthApi();
-  final UserApi userController = UserApi();
+  final AuthApi authApi = AuthApi();
+  final UserApi userApi = UserApi();
 
   final ProfilController profilController = Get.find();
 
@@ -48,12 +48,12 @@ class LoginController extends GetxController {
     if (form.validate()) {
       try {
         _loadingLogin.value = true;
-        await authController
+        await authApi
             .login(matriculeController.text, passwordController.text)
             .then((value) {
           _loadingLogin.value = false;
-          if (value) {
-            authController.getUserId().then((user) async {
+          if (value) { 
+            authApi.getUserId().then((user) async {
               final userModel = UserModel(
                   id: user.id,
                   nom: user.nom,
@@ -69,7 +69,7 @@ class LoginController extends GetxController {
                   createdAt: user.createdAt,
                   passwordHash: user.passwordHash,
                   succursale: user.succursale);
-              await userController.updateData(userModel).then((userData)async {
+              await userApi.updateData(userModel).then((userData)async {
                 clear();
                 GetStorage box = GetStorage();  
                 box.write('userModel', json.encode(user));
@@ -165,7 +165,7 @@ class LoginController extends GetxController {
   void logout() async {
     try {
       _loadingLogin.value = true;
-      authController.getUserId().then((user) async {
+      authApi.getUserId().then((user) async {
         final userModel = UserModel(
             id: user.id,
             nom: user.nom,
@@ -181,7 +181,7 @@ class LoginController extends GetxController {
             createdAt: user.createdAt,
             passwordHash: user.passwordHash,
             succursale: user.succursale);
-        await userController.updateData(userModel).then((value) {
+        await userApi.updateData(userModel).then((value) {
           GetStorage box = GetStorage();
           box.remove('idToken');
           box.remove('accessToken');
