@@ -29,7 +29,7 @@ class BulletinSalaire extends StatefulWidget {
 }
 
 class _BulletinSalaireState extends State<BulletinSalaire> {
-  final SalaireController controller = Get.find(); 
+  final SalaireController controller = Get.find();
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
@@ -38,7 +38,6 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title,
@@ -158,10 +157,9 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   }
 
   Widget agentWidget(SalaireController controller) {
-    
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
 
-    List<dynamic> depList = jsonDecode(profilController.user.departement); 
+    List<dynamic> depList = jsonDecode(profilController.user.departement);
     return Column(
       children: [
         ResponsiveChildWidget(
@@ -263,7 +261,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                     widget.salaire.approbationDD == "Approved" &&
                     widget.salaire.approbationFin == "Approved" &&
                     widget.salaire.observation == 'false' &&
-                depList.contains("Finances"))  
+                    depList.contains("Finances"))
                 ? checkboxRead(controller)
                 : Container(),
             child3: (widget.salaire.observation == 'true')
@@ -977,8 +975,10 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                               ],
                             )),
                         if (widget.salaire.approbationDD == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de departement" ||
                             profilController.user.fonctionOccupe ==
-                                "Directeur de departement")
+                                "Directeur administratif")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(
@@ -1051,24 +1051,23 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                                     style: bodyLarge.copyWith(
                                         color: Colors.purple.shade700)),
                               ],
-                            )), 
-                      if (widget.salaire.approbationDD ==
-                                    "Approved" &&
+                            )),
+                        if (widget.salaire.approbationDD == "Approved" &&
                                 widget.salaire.approbationBudget == '-' &&
-                          profilController.user.fonctionOccupe ==
-                              "Directeur de budget" ||
-                      depList.contains('Budgets') &&
-                          widget.salaire.approbationBudget == '-' &&
-                          profilController.user.fonctionOccupe ==
-                              "Directeur de finance" ||
-                      depList.contains('Budgets') &&
-                          widget.salaire.approbationBudget == '-' &&
-                          profilController.user.fonctionOccupe ==
-                              "Directeur de departement" ||
-                      depList.contains('Budgets') &&
-                          widget.salaire.approbationBudget == '-' &&
-                          profilController.user.fonctionOccupe ==
-                              "Directeur générale")
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de budget" ||
+                            depList.contains('Budgets') &&
+                                widget.salaire.approbationBudget == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de finance" ||
+                            depList.contains('Budgets') &&
+                                widget.salaire.approbationBudget == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de departement" ||
+                            depList.contains('Budgets') &&
+                                widget.salaire.approbationBudget == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur générale")
                           Padding(
                             padding: const EdgeInsets.all(p10),
                             child: Form(
@@ -1133,23 +1132,23 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                               const SizedBox(height: p20),
                               Text(widget.salaire.signatureFin),
                             ],
-                          )), 
+                          )),
                       if (widget.salaire.approbationBudget == "Approved" &&
                               widget.salaire.approbationFin == '-' &&
-                                profilController.user.fonctionOccupe ==
-                                    "Directeur de finance" ||
-                            depList.contains('Finances') &&
-                                widget.salaire.approbationFin == '-' &&
-                                profilController.user.fonctionOccupe ==
-                                    "Directeur de budget" ||
-                            depList.contains('Finances') &&
-                                widget.salaire.approbationFin == '-' &&
-                                profilController.user.fonctionOccupe ==
-                                    "Directeur de departement" ||
-                            depList.contains('Finances') &&
-                                widget.salaire.approbationFin == '-' &&
-                                profilController.user.fonctionOccupe ==
-                                    "Directeur générale")
+                              profilController.user.fonctionOccupe ==
+                                  "Directeur de finance" ||
+                          depList.contains('Finances') &&
+                              widget.salaire.approbationFin == '-' &&
+                              profilController.user.fonctionOccupe ==
+                                  "Directeur de budget" ||
+                          depList.contains('Finances') &&
+                              widget.salaire.approbationFin == '-' &&
+                              profilController.user.fonctionOccupe ==
+                                  "Directeur de departement" ||
+                          depList.contains('Finances') &&
+                              widget.salaire.approbationFin == '-' &&
+                              profilController.user.fonctionOccupe ==
+                                  "Directeur générale")
                         Padding(
                             padding: const EdgeInsets.all(p10),
                             child: ResponsiveChildWidget(
@@ -1375,54 +1374,42 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   }
 
   // Soumettre une ligne budgetaire
-  Widget ligneBudgtaireWidget(SalaireController controller) {
-    final BudgetPrevisionnelController budgetPrevisionnelController =
-        Get.find();
-    final LignBudgetaireController lignBudgetaireController = Get.find();
+  Widget ligneBudgtaireWidget(SalaireController controller) { 
+    final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
+    List<String> dataList = [];
 
-    return budgetPrevisionnelController.obx((state) {
-      return lignBudgetaireController.obx((ligne) {
-        List<String> dataList = [];
-        for (var i in state!) {
-          dataList = ligne!
-              .where((element) =>
-                  element.periodeBudgetDebut.microsecondsSinceEpoch ==
-                      i.periodeDebut.microsecondsSinceEpoch &&
-                  i.approbationDG == "Approved" &&
-                  i.approbationDD == "Approved" &&
-                  DateTime.now().isBefore(element.periodeBudgetFin) &&
-                  element.departement == "Ressources Humaines")
-              .map((e) => e.nomLigneBudgetaire)
-              .toList();
-        }
-        return Container(
-          margin: const EdgeInsets.only(bottom: p10),
-          child: DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              labelText: 'Ligne Budgetaire',
-              labelStyle: const TextStyle(),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              contentPadding: const EdgeInsets.only(left: 5.0),
-            ),
-            value: controller.ligneBudgtaire,
-            isExpanded: true,
-            items: dataList.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            validator: (value) =>
-                value == null ? "Select Ligne Budgetaire" : null,
-            onChanged: (value) {
-              setState(() {
-                controller.ligneBudgtaire = value!;
-              });
-            },
+    return lignBudgetaireController.obx((ligne) {
+      dataList = ligne!
+        .where((p0) => DateTime.now().isBefore(p0.periodeBudgetFin))
+        .map((e) => e.nomLigneBudgetaire)
+        .toList(); 
+      return Container(
+        margin: const EdgeInsets.only(bottom: p10),
+        child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            labelText: 'Ligne Budgetaire',
+            labelStyle: const TextStyle(),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            contentPadding: const EdgeInsets.only(left: 5.0),
           ),
-        );
-      });
+          value: controller.ligneBudgtaire,
+          isExpanded: true,
+          items: dataList.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          validator: (value) =>
+              value == null ? "Select Ligne Budgetaire" : null,
+          onChanged: (value) {
+            setState(() {
+              controller.ligneBudgtaire = value!;
+            });
+          },
+        ),
+      );
     });
   }
 

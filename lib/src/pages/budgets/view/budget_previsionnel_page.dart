@@ -75,7 +75,7 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
 
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: const Text('Génerer le Budget previsionnel'),
+              title: const Text('Nouveau Budget previsionnel'),
               content: SizedBox(
                   height: 300,
                   width: 500,
@@ -84,7 +84,7 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
                       child: Column(
                         children: [
                           titleWidget(),
-                          departmentWidget(),
+                          // departmentWidget(),
                           Container(
                             margin: const EdgeInsets.only(bottom: p20),
                             child: ButtonWidget(
@@ -142,33 +142,33 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
         ));
   }
 
-  Widget departmentWidget() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          labelText: 'Département',
-          labelStyle: const TextStyle(),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          contentPadding: const EdgeInsets.only(left: 5.0),
-        ),
-        value: controller.departement,
-        isExpanded: true,
-        items: controller.departementList.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        validator: (value) => value == null ? "Select departement" : null,
-        onChanged: (value) {
-          setState(() {
-            controller.departement = value!;
-          });
-        },
-      ),
-    );
-  }
+  // Widget departmentWidget() {
+  //   return Container(
+  //     margin: const EdgeInsets.only(bottom: p20),
+  //     child: DropdownButtonFormField<String>(
+  //       decoration: InputDecoration(
+  //         labelText: 'Département',
+  //         labelStyle: const TextStyle(),
+  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+  //         contentPadding: const EdgeInsets.only(left: 5.0),
+  //       ),
+  //       value: controller.departement,
+  //       isExpanded: true,
+  //       items: controller.departementList.map((String value) {
+  //         return DropdownMenuItem<String>(
+  //           value: value,
+  //           child: Text(value),
+  //         );
+  //       }).toList(),
+  //       validator: (value) => value == null ? "Select departement" : null,
+  //       onChanged: (value) {
+  //         setState(() {
+  //           controller.departement = value!;
+  //         });
+  //       },
+  //     ),
+  //   );
+  // }
 
   Future pickDateRange(BuildContext context) async {
     final initialDateRange = DateTimeRange(

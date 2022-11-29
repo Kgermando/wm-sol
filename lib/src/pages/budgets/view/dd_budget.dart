@@ -47,15 +47,15 @@ class _DDBudgetState extends State<DDBudget> {
     final BudgetPrevisionnelController budgetPrevisionnelController =
         Get.find();
     final BudgetNotifyController budgetNotifyController = Get.find();
-    final RHNotifyController rhNotifyController = Get.find();
-      final MarketingNotifyController marketingNotifyController = Get.find();
-    final NotifyExpController expController = Get.find();
-    final SalaireController salaireController = Get.find();
-    final TransportRestController transportRestController = Get.find();
-    final DevisNotifyController devisNotifyController = Get.find();
-    final DevisController devisController = Get.find();
-    final CampaignController campaignController = Get.find();
-    final ProjetController projetController = Get.find();
+    final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
+      final MarketingNotifyController marketingNotifyController = Get.put(MarketingNotifyController());
+    final NotifyExpController expController = Get.put(NotifyExpController());
+    final SalaireController salaireController = Get.put(SalaireController());
+    final TransportRestController transportRestController = Get.put(TransportRestController());
+    final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
+    final DevisController devisController = Get.put(DevisController());
+    final CampaignController campaignController = Get.put(CampaignController());
+    final ProjetController projetController = Get.put(ProjetController());
 
     final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;

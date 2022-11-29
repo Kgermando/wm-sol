@@ -81,8 +81,6 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'nomLigneBudgetaire') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              } else if (column.field == 'departement') {
-                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'periodeBudget') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'uniteChoisie') {
@@ -126,7 +124,6 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nomLigneBudgetaire': PlutoCell(value: item.nomLigneBudgetaire),
-          'departement': PlutoCell(value: item.departement),
           'periodeBudget': PlutoCell(
               value: DateFormat("dd-MM-yyyy").format(item.periodeBudgetDebut)),
           'uniteChoisie': PlutoCell(value: item.uniteChoisie),
@@ -177,18 +174,6 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Département',
-        field: 'departement',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 250,
         minWidth: 150,
       ),
       PlutoColumn(

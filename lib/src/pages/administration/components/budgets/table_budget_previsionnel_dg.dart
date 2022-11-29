@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -155,19 +156,21 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Département',
-        field: 'departement',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        renderer: (rendererContext) {
+          return Row(
+            children: [
+              Icon(Icons.folder, color: mainColor),
+              const SizedBox(width: p5),
+              Text(
+                rendererContext.cell.value.toString(),
+                style: TextStyle(
+                  color: mainColor,
+                ),
+              ),
+            ],
+          );
+        },
+        width: 400,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -179,7 +182,7 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 400,
+        width: 220,
         minWidth: 150,
       ),
       PlutoColumn(

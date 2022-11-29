@@ -10,7 +10,7 @@ class BudgetPrevisionnelController extends GetxController
   DepeartementBudgetApi depeartementBudgetApi = DepeartementBudgetApi();
   final ProfilController profilController = Get.find();
 
-  var departementBudgetList = <DepartementBudgetModel>[].obs;
+  List<DepartementBudgetModel> departementBudgetList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -18,10 +18,10 @@ class BudgetPrevisionnelController extends GetxController
 
   DateTimeRange? dateRange;
 
-  String? departement;
+  // String? departement;
   TextEditingController titleController = TextEditingController();
 
-  List<String> departementList = Dropdown().departement;
+  // List<String> departementList = Dropdown().departement;
 
   // Approbations
   final formKeyBudget = GlobalKey<FormState>();
@@ -53,7 +53,7 @@ class BudgetPrevisionnelController extends GetxController
 
   void getList() async {
     await depeartementBudgetApi.getAllData().then((response) {
-      departementBudgetList.assignAll(response);
+      departementBudgetList.addAll(response);
       change(departementBudgetList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -91,7 +91,7 @@ class BudgetPrevisionnelController extends GetxController
       _isLoading.value = true;
       final departementBudgetModel = DepartementBudgetModel(
           title: titleController.text,
-          departement: departement.toString(),
+          departement: '-',
           periodeDebut: dateRange!.start,
           periodeFin: dateRange!.end,
           signature: profilController.user.matricule,

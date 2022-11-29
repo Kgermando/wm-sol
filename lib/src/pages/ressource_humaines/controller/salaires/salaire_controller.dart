@@ -88,6 +88,7 @@ class SalaireController extends GetxController
   TextEditingController motifBudgetController = TextEditingController();
   TextEditingController motifFinController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
+  String? budget;
   String? ligneBudgtaire;
   String? ressource;
 

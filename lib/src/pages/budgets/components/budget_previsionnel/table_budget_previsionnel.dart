@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -77,8 +78,6 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'title') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'departement') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'periodeBudget') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
@@ -114,7 +113,6 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'title': PlutoCell(value: item.title),
-          'departement': PlutoCell(value: item.departement),
           'periodeBudget': PlutoCell(
               value:
                   "${DateFormat("dd-MM-yyyy").format(item.periodeDebut)} - ${DateFormat("dd-MM-yyyy").format(item.periodeFin)}"),
@@ -151,20 +149,23 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Département',
-        field: 'departement',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        titleTextAlign: PlutoColumnTextAlign.left, 
+        renderer: (rendererContext) {  
+          return Row(
+            children: [
+              Icon(Icons.folder, color: mainColor),
+              const SizedBox(width: p5),
+              Text(
+                rendererContext.cell.value.toString(),  
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: mainColor, 
+                ),
+              ),
+            ],
+          );
+        },
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -176,7 +177,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 400,
+        width: 220,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -241,7 +242,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
             textColor = Colors.orange;
           }
           return Text(
-            rendererContext.cell.value.toString(),
+            rendererContext.cell.value.toString(), 
             style: TextStyle(
               color: textColor,
               fontWeight: FontWeight.bold,

@@ -31,7 +31,7 @@ class LignBudgetaireController extends GetxController
   final TransportRestPersonnelsController transportRestPersonnelsController =
       Get.find();
 
-  var ligneBudgetaireList = <LigneBudgetaireModel>[].obs;
+  List<LigneBudgetaireModel> ligneBudgetaireList =  [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;

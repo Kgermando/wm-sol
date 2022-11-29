@@ -1242,55 +1242,45 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         ));
   }
 
+
   // Soumettre une ligne budgetaire
   Widget ligneBudgtaireWidget(TransportRestController controller) {
-    final BudgetPrevisionnelController budgetPrevisionnelController =
-        Get.find();
-    final LignBudgetaireController lignBudgetaireController = Get.find();
+    final LignBudgetaireController lignBudgetaireController =
+        Get.put(LignBudgetaireController());
+    List<String> dataList = [];
 
-    return budgetPrevisionnelController.obx((state) {
-      return lignBudgetaireController.obx((ligne) {
-        List<String> dataList = [];
-        for (var i in state!) {
-          dataList = ligne!
-              .where((element) =>
-                  element.periodeBudgetDebut.microsecondsSinceEpoch ==
-                      i.periodeDebut.microsecondsSinceEpoch &&
-                  i.approbationDG == "Approved" &&
-                  i.approbationDD == "Approved" &&
-                  DateTime.now().isBefore(element.periodeBudgetFin) &&
-                  element.departement == "Ressources Humaines")
-              .map((e) => e.nomLigneBudgetaire)
-              .toList();
-        }
-        return Container(
-          margin: const EdgeInsets.only(bottom: p10),
-          child: DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              labelText: 'Ligne Budgetaire',
-              labelStyle: const TextStyle(),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              contentPadding: const EdgeInsets.only(left: 5.0),
-            ),
-            value: controller.ligneBudgtaire,
-            isExpanded: true,
-            items: dataList.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            validator: (value) =>
-                value == null ? "Select Ligne Budgetaire" : null,
-            onChanged: (value) {
-              setState(() {
-                controller.ligneBudgtaire = value!;
-              });
-            },
+    return lignBudgetaireController.obx((ligne) {
+      dataList = ligne!
+          .where((p0) => DateTime.now().isBefore(p0.periodeBudgetFin))
+          .map((e) => e.nomLigneBudgetaire)
+          .toList();
+      return Container(
+        margin: const EdgeInsets.only(bottom: p10),
+        child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            labelText: 'Ligne Budgetaire',
+            labelStyle: const TextStyle(),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+            contentPadding: const EdgeInsets.only(left: 5.0),
           ),
-        );
-      });
+          value: controller.ligneBudgtaire,
+          isExpanded: true,
+          items: dataList.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          validator: (value) =>
+              value == null ? "Select Ligne Budgetaire" : null,
+          onChanged: (value) {
+            setState(() {
+              controller.ligneBudgtaire = value!;
+            });
+          },
+        ),
+      );
     });
   }
 

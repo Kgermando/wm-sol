@@ -72,7 +72,9 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
       appBar: headerBar(context, scaffoldKey, title,
           widget.departementBudgetModel.title),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton:  (widget.departementBudgetModel.approbationDD == '-' 
+        && widget.departementBudgetModel.approbationDG =='-') 
+        ? FloatingActionButton.extended(
         label: const Text("Ajouter ligne budgetaire"),
         tooltip: "Ajout une nouvelle ligne budgetaire",
         icon: const Icon(Icons.add),
@@ -80,7 +82,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
           Get.toNamed(BudgetRoutes.budgetLignebudgetaireAdd,
               arguments: widget.departementBudgetModel);
         },
-      ),
+      ) : Container(),
       body: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
