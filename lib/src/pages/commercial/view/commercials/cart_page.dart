@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/cart/cart_item_widget.dart';
@@ -18,6 +19,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final CartController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
@@ -36,41 +38,42 @@ class _CartPageState extends State<CartPage> {
           width: MediaQuery.of(context).size.width / 2,
           child: totalCart(controller)),
       body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Le panier est vide.'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: controller.cartList.length,
-                            itemBuilder: (context, index) {
-                              final cart = controller.cartList[index];
-                              return CartItemWidget(
-                                  cart: cart, controller: controller);
-                            }),
-                        const SizedBox(height: p50),
-                      ],
-                    ),
-                  )))
-        ],
-      )) ,
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Le panier est vide.'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.cartList.length,
+                                    itemBuilder: (context, index) {
+                                      final cart = controller.cartList[index];
+                                      return CartItemWidget(
+                                          cart: cart, controller: controller);
+                                    }),
+                                const SizedBox(height: p50),
+                              ],
+                            ),
+                          )))
+                ],
+              )),
     );
   }
 
@@ -91,7 +94,7 @@ class _CartPageState extends State<CartPage> {
     return Container(
       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: Text(
-        'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} \$',
+        'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}',
         textAlign: TextAlign.center,
         style: TextStyle(
             fontSize: 20.0,

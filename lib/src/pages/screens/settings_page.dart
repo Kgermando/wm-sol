@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:wm_solution/src/utils/monnaie_dropdown.dart';
 import 'package:wm_solution/src/widgets/change_theme_button_widget.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -15,11 +18,13 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Settings";
   String subTitle = InfoSystem().version();
 
   List<String> langues = Dropdown().langues;
+  List<String> deviseList = MonnaieDropDown().devises;
 
   String? devise;
   String? langue;
@@ -32,14 +37,12 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-
   @override
-  Widget build(BuildContext context) { 
-    return  Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
       key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, subTitle),
-      drawer: const DrawerMenu(), 
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,11 +58,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     margin: const EdgeInsets.only(
                         top: p20, bottom: p8, right: p20, left: p20),
                     decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Column(
                       children: [
-                       const SizedBox(
+                        const SizedBox(
                           height: 20.0,
                         ),
                         const Card(
@@ -90,6 +92,18 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ListSettings(
+                                icon: Icons.monetization_on,
+                                title: 'Devise',
+                                options: deviseField(context)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListSettings(
                                 icon: Icons.apps_rounded,
                                 title: 'Version Plateform',
                                 options: getVersionField(context)),
@@ -103,11 +117,9 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-
-   Widget langueField(BuildContext context) {
+  Widget langueField(BuildContext context) {
     return DropdownButtonFormField<String>(
         decoration: const InputDecoration(
-          // labelText: 'Choisissez votre Unité d\'achat',
           labelStyle: TextStyle(),
           contentPadding: EdgeInsets.only(left: 5.0),
         ),
@@ -122,6 +134,31 @@ class _SettingsPageState extends State<SettingsPage> {
         onChanged: (produit) {
           setState(() {
             langue = produit;
+          });
+        });
+  }
+
+  Widget deviseField(BuildContext context) {
+    return DropdownButtonFormField<String>(
+        decoration: const InputDecoration(
+          labelText: 'Devise',
+          labelStyle: TextStyle(),
+          contentPadding: EdgeInsets.only(left: 5.0),
+        ),
+        value: devise,
+        isExpanded: true,
+        items: deviseList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            devise = value;
+            monnaieStorage.removeData();
+            monnaieStorage.setData(devise);
+            print("monnaire ${monnaieStorage.monney} ");
           });
         });
   }

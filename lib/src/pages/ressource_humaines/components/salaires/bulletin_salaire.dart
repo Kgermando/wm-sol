@@ -8,7 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/salaire_pdf.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
@@ -1373,15 +1373,24 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
   }
 
   // Soumettre une ligne budgetaire
-  Widget ligneBudgtaireWidget(SalaireController controller) { 
-    final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
+  Widget ligneBudgtaireWidget(SalaireController controller) {
+    final LignBudgetaireController lignBudgetaireController =
+        Get.put(LignBudgetaireController());
     List<String> dataList = [];
 
     return lignBudgetaireController.obx((ligne) {
       dataList = ligne!
-        .where((p0) => DateTime.now().isBefore(p0.periodeBudgetFin))
-        .map((e) => e.nomLigneBudgetaire)
-        .toList(); 
+          .where((p0) {
+            double sortieTotal =
+                p0.caisseSortie + p0.banqueSortie + p0.finExterieurSortie;
+
+            double reste = double.parse(p0.coutTotal) - sortieTotal;
+
+            return DateTime.now().isBefore(p0.periodeBudgetFin) &&
+                double.parse(p0.coutTotal) > sortieTotal && reste > double.parse(widget.salaire.salaire);
+          })
+          .map((e) => e.nomLigneBudgetaire)
+          .toList();
       return Container(
         margin: const EdgeInsets.only(bottom: p10),
         child: DropdownButtonFormField<String>(

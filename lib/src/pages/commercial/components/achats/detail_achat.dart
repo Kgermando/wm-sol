@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -24,6 +25,7 @@ class DetailAchat extends StatefulWidget {
 }
 
 class _DetailAchatState extends State<DetailAchat> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -71,7 +73,7 @@ class _DetailAchatState extends State<DetailAchat> {
                                     if (!Responsive.isMobile(context))
                                       TitleWidget(
                                           title:
-                                              'Succursale: ${widget.achatModel.succursale.toUpperCase()}'),
+                                      'Succursale: ${widget.achatModel.succursale.toUpperCase()}'),
                                     Column(
                                       children: [
                                         Row(
@@ -80,8 +82,7 @@ class _DetailAchatState extends State<DetailAchat> {
                                                 venteCartController),
                                             if (roleAgent)
                                               if (double.parse(widget
-                                                      .achatModel.quantity) >
-                                                  0)
+                                                    .achatModel.quantity) > 0)
                                                 transfertProduit()
                                           ],
                                         ),
@@ -219,7 +220,7 @@ class _DetailAchatState extends State<DetailAchat> {
                       overflow: TextOverflow.ellipsis),
                   const Spacer(),
                   Text(
-                      '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.achatModel.priceAchatUnit).toStringAsFixed(2)))} \$',
+                      '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.achatModel.priceAchatUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
                       style: Responsive.isDesktop(context)
                           ? const TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 20)
@@ -242,7 +243,7 @@ class _DetailAchatState extends State<DetailAchat> {
                       overflow: TextOverflow.ellipsis),
                   const Spacer(),
                   Text(
-                      '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} \$',
+                      '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                       style: Responsive.isDesktop(context)
                           ? const TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 20)
@@ -283,7 +284,7 @@ class _DetailAchatState extends State<DetailAchat> {
                     overflow: TextOverflow.ellipsis),
                 const Spacer(),
                 Text(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.achatModel.prixVenteUnit).toStringAsFixed(2)))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.achatModel.prixVenteUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -304,7 +305,7 @@ class _DetailAchatState extends State<DetailAchat> {
                     overflow: TextOverflow.ellipsis),
                 const Spacer(),
                 Text(
-                    '${double.parse(widget.achatModel.remise).toStringAsFixed(2)} \$',
+                    '${double.parse(widget.achatModel.remise).toStringAsFixed(2)} ${monnaieStorage.monney}',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -355,7 +356,7 @@ class _DetailAchatState extends State<DetailAchat> {
                             overflow: TextOverflow.ellipsis),
                         const Spacer(),
                         Text(
-                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$ / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeRemise.toStringAsFixed(2)))} \$',
+                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} ${monnaieStorage.monney} / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeRemise.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                             style: Responsive.isDesktop(context)
                                 ? const TextStyle(
                                     fontWeight: FontWeight.w700,
@@ -381,7 +382,7 @@ class _DetailAchatState extends State<DetailAchat> {
                           height: 10,
                         ),
                         Text(
-                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$ / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeRemise.toStringAsFixed(2)))} \$',
+                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} ${monnaieStorage.monney} / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeRemise.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                             textAlign: TextAlign.left,
                             style: Responsive.isDesktop(context)
                                 ? const TextStyle(
@@ -410,7 +411,7 @@ class _DetailAchatState extends State<DetailAchat> {
                             overflow: TextOverflow.ellipsis),
                         const Spacer(),
                         Text(
-                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} \$ / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotalRemise.toStringAsFixed(2)))} \$',
+                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} ${monnaieStorage.monney} / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotalRemise.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                             style: Responsive.isDesktop(context)
                                 ? const TextStyle(
                                     fontWeight: FontWeight.w700,
@@ -436,7 +437,7 @@ class _DetailAchatState extends State<DetailAchat> {
                           height: 10,
                         ),
                         Text(
-                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} \$ / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotalRemise.toStringAsFixed(2)))} \$',
+                            '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} ${monnaieStorage.monney} / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotalRemise.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                             textAlign: TextAlign.left,
                             style: Responsive.isDesktop(context)
                                 ? const TextStyle(
@@ -535,7 +536,7 @@ class _DetailAchatState extends State<DetailAchat> {
                           fontWeight: FontWeight.w700, fontSize: 20)
                       : bodyText1),
               Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalVendu.toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalVendu.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                   style: Responsive.isDesktop(context)
                       ? const TextStyle(
                           fontWeight: FontWeight.w700, fontSize: 20)
@@ -599,7 +600,7 @@ class _DetailAchatState extends State<DetailAchat> {
                           fontWeight: FontWeight.w700, fontSize: 20)
                       : bodyText1),
               Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                   style: Responsive.isDesktop(context)
                       ? TextStyle(
                           fontWeight: FontWeight.w700,
@@ -651,7 +652,7 @@ class _DetailAchatState extends State<DetailAchat> {
       children: [
         PrintWidget(onPressed: () async {
           await AchatPdf.generate(widget.achatModel, profilController.user,
-              venteCartController.livraisonHistoryVenteCartList);
+              venteCartController.livraisonHistoryVenteCartList, monnaieStorage);
         })
       ],
     );

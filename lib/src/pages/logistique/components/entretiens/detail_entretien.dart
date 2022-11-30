@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
 import 'package:wm_solution/src/models/logistiques/objet_remplace_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
@@ -26,6 +27,7 @@ class DetailEntretien extends StatefulWidget {
 }
 
 class _DetailEntretienState extends State<DetailEntretien> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final EntretienController controller = Get.find();
   final ObjetRemplaceController objetRemplaceController = Get.find();
   final MaterielController materielController = Get.find();
@@ -81,9 +83,9 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                                     widget.entretienModel.nom),
                                             Column(
                                               children: [
-                                                if ( widget.entretienModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
+                                                if (widget.entretienModel
+                                                        .approbationDD ==
+                                                    "Unapproved")
                                                   Row(
                                                     children: [
                                                       IconButton(
@@ -434,7 +436,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
       Container(
         padding: const EdgeInsets.all(p10),
         child: SelectableText(
-            "${NumberFormat.decimalPattern('fr').format(coutProduit)} \$",
+            "${NumberFormat.decimalPattern('fr').format(coutProduit)} ${monnaieStorage.monney}",
             textAlign: TextAlign.center,
             style: bodyMedium),
       ),
@@ -449,19 +451,21 @@ class _DetailEntretienState extends State<DetailEntretien> {
             textAlign: TextAlign.start, style: bodyMedium),
       ),
       if (widget.entretienModel.isSubmit == 'false')
-         Container(
-              padding: const EdgeInsets.all(p10),
-              child: IconButton(
-                  tooltip: "Actualiser après suppression",
-                  color: Colors.red,
-                  onPressed: () {
-                    objetRemplaceController.objetRemplaceApi.deleteData(id);
-                  },
-                  icon: const Icon(Icons.delete))),
-        if (widget.entretienModel.isSubmit == 'true')
+        Container(
+            padding: const EdgeInsets.all(p10),
+            child: IconButton(
+                tooltip: "Actualiser après suppression",
+                color: Colors.red,
+                onPressed: () {
+                  objetRemplaceController.objetRemplaceApi.deleteData(id);
+                },
+                icon: const Icon(Icons.delete))),
+      if (widget.entretienModel.isSubmit == 'true')
         Container(
           padding: const EdgeInsets.all(p10),
-          child: const Icon(Icons.check_box, color: Colors.green,
+          child: const Icon(
+            Icons.check_box,
+            color: Colors.green,
           ),
         )
     ]);
@@ -510,7 +514,8 @@ class _DetailEntretienState extends State<DetailEntretien> {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.only(bottom: p8),
-              child: Text("\$", style: Theme.of(context).textTheme.headline6),
+              child: Text("${monnaieStorage.monney}",
+                  style: Theme.of(context).textTheme.headline6),
             ))
       ],
     );

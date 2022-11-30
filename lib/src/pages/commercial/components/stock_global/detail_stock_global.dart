@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/stock_global/stock_global_pdf.dart';
@@ -25,6 +26,7 @@ class DetailStockGlobal extends StatefulWidget {
 }
 
 class _DetailStockGlobalState extends State<DetailStockGlobal> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -33,67 +35,69 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
     final StockGlobalController controller = Get.find();
 
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.stocksGlobalMOdel.idProduct),
-      drawer: const DrawerMenu(),
-      floatingActionButton: speedialWidget(),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: p20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.stocksGlobalMOdel.idProduct),
+        drawer: const DrawerMenu(),
+        floatingActionButton: speedialWidget(),
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        reporting(),
-                                        SelectableText(
-                                            DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(widget
-                                                    .stocksGlobalMOdel.created),
-                                            textAlign: TextAlign.start),
+                                        Column(
+                                          children: [
+                                            reporting(),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy HH:mm")
+                                                    .format(widget
+                                                        .stocksGlobalMOdel
+                                                        .created),
+                                                textAlign: TextAlign.start),
+                                          ],
+                                        )
                                       ],
-                                    )
+                                    ),
+                                    dataWidget(),
                                   ],
                                 ),
-                                dataWidget(),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
-        ],
-      ),) 
-    );
+                              ),
+                            )
+                          ],
+                        ),
+                      )))
+            ],
+          ),
+        ));
   }
 
   Widget dataWidget() {
@@ -166,7 +170,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     textAlign: TextAlign.start,
                     style: bodyMedium)),
             Divider(
@@ -177,7 +181,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     textAlign: TextAlign.start,
                     style: bodyMedium)),
             if (double.parse(widget.stocksGlobalMOdel.tva) > 1)
@@ -199,7 +203,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     textAlign: TextAlign.start,
                     style: bodyMedium)),
             Divider(
@@ -218,7 +222,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                         : bodyMedium.copyWith(fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis),
                 child2: Text(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700,
@@ -239,7 +243,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                         : bodyMedium.copyWith(fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis),
                 child2: Text(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700,
@@ -303,7 +307,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                           fontWeight: FontWeight.w700, fontSize: 20)
                       : bodyMedium),
               Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                   style: Responsive.isDesktop(context)
                       ? TextStyle(
                           fontWeight: FontWeight.w700,
@@ -337,7 +341,7 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         PrintWidget(onPressed: () async {
-          await StockGlobalPdf.generate(widget.stocksGlobalMOdel);
+          await StockGlobalPdf.generate(widget.stocksGlobalMOdel, monnaieStorage);
         })
       ],
     );

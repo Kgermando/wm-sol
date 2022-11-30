@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/achat_api.dart';
 import 'package:wm_solution/src/api/commerciale/creance_facture_api.dart';
 import 'package:wm_solution/src/api/commerciale/gain_api.dart';
 import 'package:wm_solution/src/api/commerciale/vente_cart_api.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
@@ -25,6 +27,7 @@ class StatsSuccursale extends StatefulWidget {
 }
 
 class _StatsSuccursaleState extends State<StatsSuccursale> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -107,7 +110,7 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
           configuration: PlutoGridConfiguration(
             columnFilter: PlutoGridColumnFilterConfig(
               filters: const [
-                ...FilterHelper.defaultFilters, 
+                ...FilterHelper.defaultFilters,
               ],
               resolveDefaultColumnFilter: (column, resolver) {
                 if (column.field == 'DATE') {
@@ -254,12 +257,14 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
                 ? DateFormat('dd/MM/yyyy').format(dateRange!.end)
                 : ''),
         'GAIN': PlutoCell(
-            value: '${NumberFormat.decimalPattern('fr').format(sumGain)} \$'),
+            value:
+                '${NumberFormat.decimalPattern('fr').format(sumGain)} ${monnaieStorage.monney}'),
         'VENTES': PlutoCell(
-            value: '${NumberFormat.decimalPattern('fr').format(sumVente)} \$'),
+            value:
+                '${NumberFormat.decimalPattern('fr').format(sumVente)} ${monnaieStorage.monney}'),
         'CREANCES': PlutoCell(
             value:
-                '${NumberFormat.decimalPattern('fr').format(sumDCreance)} \$'),
+                '${NumberFormat.decimalPattern('fr').format(sumDCreance)} ${monnaieStorage.monney}'),
       })
     ];
   }

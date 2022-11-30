@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
@@ -25,6 +26,7 @@ class DetailLigneBudgetaire extends StatefulWidget {
 }
 
 class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
 
@@ -205,7 +207,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               ),
               Expanded(
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.coutUnitaire))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.coutUnitaire))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -222,7 +224,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               ),
               Expanded(
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.coutTotal))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.coutTotal))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: headline6!.copyWith(color: Colors.red.shade700)),
               )
@@ -239,7 +241,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               ),
               Expanded(
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.caisse))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.caisse))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -255,7 +257,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               ),
               Expanded(
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.banque))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.banque))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -271,7 +273,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               ),
               Expanded(
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.finExterieur))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.ligneBudgetaireModel.finExterieur))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(color: Colors.orange.shade700)),
               )
@@ -338,8 +340,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
     // Campaigns
     campaignCaisseList = controller.dataCampaignList
         .where((element) =>
-            widget.ligneBudgetaireModel.departement ==
-                "Marketing" &&
+            widget.ligneBudgetaireModel.departement == "Marketing" &&
             element.ligneBudgetaire ==
                 widget.ligneBudgetaireModel.nomLigneBudgetaire &&
             element.created
@@ -348,8 +349,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
         .toList();
     campaignBanqueList = controller.dataCampaignList
         .where((element) =>
-            widget.ligneBudgetaireModel.departement ==
-                "Marketing" &&
+            widget.ligneBudgetaireModel.departement == "Marketing" &&
             element.ligneBudgetaire ==
                 widget.ligneBudgetaireModel.nomLigneBudgetaire &&
             element.created
@@ -586,7 +586,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
             const Text("Solde Caisse",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(caisseSolde)} \$",
+                "${NumberFormat.decimalPattern('fr').format(caisseSolde)} ${monnaieStorage.monney}",
                 textAlign: TextAlign.center,
                 style: headline6),
           ],
@@ -604,7 +604,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               const Text("Solde Banque",
                   style: TextStyle(fontWeight: FontWeight.bold)),
               SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(banqueSolde)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(banqueSolde)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   style: headline6),
             ],
@@ -623,7 +623,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
               const Text("Solde Reste à trouver",
                   style: TextStyle(fontWeight: FontWeight.bold)),
               SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(finExterieurSolde)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(finExterieurSolde)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   style: headline6!.copyWith(color: Colors.orange.shade700)),
             ],

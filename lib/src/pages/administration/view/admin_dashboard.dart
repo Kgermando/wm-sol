@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
@@ -24,10 +25,11 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final AdminDashboardController controller = Get.find();
   final PersonnelsController personnelsController = Get.find();
   final DashboardComController dashboardcomController = Get.find();
-  
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Administration";
   String subTitle = "Dashboard";
@@ -94,7 +96,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             FinanceRoutes.transactionsDettes);
                                       },
                                       number:
-                                          "${NumberFormat.decimalPattern('fr').format(controller.soldeDette)} \$",
+                                          "${NumberFormat.decimalPattern('fr').format(controller.soldeDette)} ${monnaieStorage.monney}",
                                       title: 'Dette',
                                       icon: Icons.blur_linear_rounded,
                                       color: Colors.red.shade700),
@@ -104,7 +106,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             FinanceRoutes.transactionsCreances);
                                       },
                                       number:
-                                          "${NumberFormat.decimalPattern('fr').format(controller.soldeCreance)} \$",
+                                          "${NumberFormat.decimalPattern('fr').format(controller.soldeCreance)} ${monnaieStorage.monney}",
                                       title: 'Créance',
                                       icon: Icons.money_off_csred,
                                       color: Colors.deepOrange.shade700),
@@ -114,7 +116,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             FinanceRoutes.financeDashboard);
                                       },
                                       number:
-                                          "${NumberFormat.decimalPattern('fr').format(controller.depenses)} \$",
+                                          "${NumberFormat.decimalPattern('fr').format(controller.depenses)} ${monnaieStorage.monney}",
                                       title: 'Dépenses',
                                       icon: Icons.monetization_on,
                                       color: Colors.pink.shade700),
@@ -124,7 +126,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             FinanceRoutes.financeDashboard);
                                       },
                                       number:
-                                          "${NumberFormat.decimalPattern('fr').format(controller.disponible)} \$",
+                                          "${NumberFormat.decimalPattern('fr').format(controller.disponible)} ${monnaieStorage.monney}",
                                       title: 'Disponible',
                                       icon: Icons.attach_money,
                                       color: Colors.teal.shade700),

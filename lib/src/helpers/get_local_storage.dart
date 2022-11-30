@@ -68,7 +68,7 @@ class GetLocalStorage extends GetxController {
   // AccessToken
   getAccessToken() {
     final data = box.read(_keyAccessToken);
-    _token.value = data;
+    _token.value = json.decode(data);
   }
 
   saveAccessToken(value) {
@@ -81,7 +81,7 @@ class GetLocalStorage extends GetxController {
 
   // RefreshToken
   getRefreshToken() {
-    box.read(_keyRefreshToken);
+     box.read(_keyRefreshToken);
   }
 
   saveRefreshToken(value) {

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -33,6 +34,7 @@ class DetailTransportRest extends StatefulWidget {
 }
 
 class _DetailTransportRestState extends State<DetailTransportRest> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final ProfilController profilController = Get.find();
   final TransportRestController controller = Get.find();
   final TransportRestPersonnelsController controllerAgent = Get.find();
@@ -46,26 +48,26 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.transportRestaurationModel.title),
-              drawer: const DrawerMenu(),
-              floatingActionButton:
-                  (widget.transportRestaurationModel.isSubmit == "true")
-                      ? Container()
-                      : FloatingActionButton.extended(
-                          label: const Text("Ajouter une personne"),
-                          tooltip: "Ajout personne à la liste",
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            detailAgentDialog(controller, controllerAgent);
-                          },
-                        ),
-              body: controllerAgent.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.transportRestaurationModel.title),
+      drawer: const DrawerMenu(),
+      floatingActionButton:
+          (widget.transportRestaurationModel.isSubmit == "true")
+              ? Container()
+              : FloatingActionButton.extended(
+                  label: const Text("Ajouter une personne"),
+                  tooltip: "Ajout personne à la liste",
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    detailAgentDialog(controller, controllerAgent);
+                  },
+                ),
+      body: controllerAgent.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -143,7 +145,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                                         await TransRestPdf.generate(
                                                             state!,
                                                             widget
-                                                                .transportRestaurationModel);
+                                                                .transportRestaurationModel,
+                                                            monnaieStorage);
                                                       }),
                                                     ],
                                                   ),
@@ -168,13 +171,14 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                   ),
                                 ),
                                 const SizedBox(height: p30),
-                                approbationWidget(controller, profilController)
+                                approbationWidget(
+                                    controller, profilController, state!)
                               ],
                             )),
                       ))
                 ],
-              )) ,
-            ); 
+              )),
+    );
   }
 
   alertDeleteDialog() {
@@ -400,7 +404,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         padding: const EdgeInsets.all(p10),
         width: 200,
         child: AutoSizeText(
-            "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+            "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
       ),
       Container(
         padding: const EdgeInsets.all(p10),
@@ -599,13 +603,14 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
             ),
             const SizedBox(width: p20),
             Expanded(
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+                child: Text("${monnaieStorage.monney}",
+                    style: Theme.of(context).textTheme.headline6))
           ],
         ));
   }
 
-  Widget approbationWidget(
-      TransportRestController controller, ProfilController profilController) {
+  Widget approbationWidget(TransportRestController controller,
+      ProfilController profilController, List<TransRestAgentsModel> state) {
     List<dynamic> depList = jsonDecode(profilController.user.departement);
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
@@ -685,8 +690,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                       ],
                                     )
                                   : Container()),
-                          if (widget.transportRestaurationModel.approbationDD == "Approved" &&
-                               widget.transportRestaurationModel.approbationDG ==
+                          if (widget.transportRestaurationModel.approbationDD ==
+                                  "Approved" &&
+                              widget.transportRestaurationModel.approbationDG ==
                                   '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur générale")
@@ -837,27 +843,32 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
                                 ],
-                              )), 
-                  if (widget.transportRestaurationModel.approbationDG ==
+                              )),
+                          if (widget.transportRestaurationModel.approbationDG ==
                                       "Approved" &&
-                        widget.transportRestaurationModel.approbationBudget == '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur de budget" ||
-                                depList.contains('Budgets') &&
-                                    widget.transportRestaurationModel.approbationBudget ==
-                                        '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur de finance" ||
-                                depList.contains('Budgets') &&
-                                    widget.transportRestaurationModel.approbationBudget ==
-                                        '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur de departement" ||
-                                depList.contains('Budgets') &&
-                                    widget.transportRestaurationModel.approbationBudget ==
-                                        '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur générale")
+                                  widget.transportRestaurationModel
+                                          .approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de budget" ||
+                              depList.contains('Budgets') &&
+                                  widget.transportRestaurationModel
+                                          .approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Budgets') &&
+                                  widget.transportRestaurationModel
+                                          .approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Budgets') &&
+                                  widget.transportRestaurationModel
+                                          .approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                             Padding(
                               padding: const EdgeInsets.all(p10),
                               child: Form(
@@ -865,8 +876,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                 child: Column(
                                   children: [
                                     ResponsiveChildWidget(
-                                        child1:
-                                            ligneBudgtaireWidget(controller),
+                                        child1: ligneBudgtaireWidget(
+                                            controller, state),
                                         child2: resourcesWidget(controller)),
                                     ResponsiveChildWidget(
                                         child1:
@@ -930,32 +941,38 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                 Text(widget
                                     .transportRestaurationModel.signatureFin),
                               ],
-                            )), 
-                      if (widget.transportRestaurationModel.approbationBudget == "Approved" &&
-                            widget.transportRestaurationModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur de finance" ||
-                              depList.contains('Finances') &&
-                                  widget.transportRestaurationModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur de budget" ||
-                              depList.contains('Finances') &&
-                                  widget.transportRestaurationModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur de departement" ||
-                              depList.contains('Finances') &&
-                                  widget.transportRestaurationModel
-                                        .approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur générale")
+                            )),
+                        if (widget.transportRestaurationModel.approbationBudget ==
+                                    "Approved" &&
+                                widget.transportRestaurationModel.approbationFin ==
+                                    '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de finance" ||
+                            depList.contains('Finances') &&
+                                widget.transportRestaurationModel.approbationFin ==
+                                    '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de budget" ||
+                            depList.contains('Finances') &&
+                                widget.transportRestaurationModel
+                                        .approbationFin ==
+                                    '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de departement" ||
+                            depList.contains('Finances') &&
+                                widget.transportRestaurationModel
+                                        .approbationFin ==
+                                    '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(
                                   child1: approbationFinWidget(controller),
-                                  child2: (controller.approbationFin ==
-                                          "Unapproved")
-                                      ? motifFinWidget(controller)
-                                      : Container())),
+                                  child2:
+                                      (controller.approbationFin == "Unapproved")
+                                          ? motifFinWidget(controller)
+                                          : Container())),
                       ],
                     )),
               ),
@@ -1241,16 +1258,34 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         ));
   }
 
-
   // Soumettre une ligne budgetaire
-  Widget ligneBudgtaireWidget(TransportRestController controller) {
+  Widget ligneBudgtaireWidget(
+      TransportRestController controller, List<TransRestAgentsModel> state) {
     final LignBudgetaireController lignBudgetaireController =
         Get.put(LignBudgetaireController());
     List<String> dataList = [];
 
+    double totalMontant = 0.0;
+    for (var element in state
+        .where((element) =>
+            element.reference == widget.transportRestaurationModel.id)
+        .toList()) {
+      totalMontant += double.parse(element.montant);
+    }
+
     return lignBudgetaireController.obx((ligne) {
       dataList = ligne!
-          .where((p0) => DateTime.now().isBefore(p0.periodeBudgetFin))
+          .where((p0) {
+            // Check somme total depenses
+            double sortieTotal =
+                p0.caisseSortie + p0.banqueSortie + p0.finExterieurSortie;
+            // check reste du budget dans chaque ligne budgetaire
+            double reste = double.parse(p0.coutTotal) - sortieTotal;
+
+            return DateTime.now().isBefore(p0.periodeBudgetFin) &&
+                double.parse(p0.coutTotal) > sortieTotal &&
+                reste > totalMontant;
+          })
           .map((e) => e.nomLigneBudgetaire)
           .toList();
       return Container(

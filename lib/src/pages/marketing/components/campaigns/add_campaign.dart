@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/widgets/button_widget.dart'; 
+import 'package:wm_solution/src/widgets/button_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -19,86 +20,82 @@ class AddCampaign extends StatefulWidget {
 }
 
 class _AddCampaignState extends State<AddCampaign> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final CampaignController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
   String subTitle = "Nouvelle campaigne";
 
   @override
-  Widget build(BuildContext context) { 
-
+  Widget build(BuildContext context) {
     return Scaffold(
-  key: scaffoldKey,
-  appBar: headerBar(
-      context, scaffoldKey, title, 'Nouvelle campagne'),
-  drawer: const DrawerMenu(), 
-  body: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Visibility(
-          visible: !Responsive.isMobile(context),
-          child: const Expanded(flex: 1, child: DrawerMenu())),
-      Expanded(
-          flex: 5,
-          child: SingleChildScrollView(
-          controller: ScrollController(),
-          physics: const ScrollPhysics(),
-          child: Container(
-            margin: const EdgeInsets.only(
-                top: p20, bottom: p8, right: p20, left: p20),
-            decoration: const BoxDecoration(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(20))),
-            child: Column(
-              children: [
-                Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: p20),
-                    child: Form(
-                      key: controller.formKey,
-                      child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: [
-                          const TitleWidget(title: "Nouvelle campagne"),
-                        const SizedBox(
-                          height: p20,
-                        ),
-                        ResponsiveChildWidget(
-                          child1: typeProduitWidget(), 
-                          child2: dateDebutEtFinWidget()),
-                        ResponsiveChildWidget(
-                          child1: coutCampaignWidget(),
-                          child2: lieuCibleWidget()),
-                        ResponsiveChildWidget(
-                          child1: promotionWidget(),
-                          child2: objectifsWidget()),
-                            const SizedBox(
-                              height: p20
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, 'Nouvelle campagne'),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
+                            child: Form(
+                              key: controller.formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const TitleWidget(title: "Nouvelle campagne"),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  ResponsiveChildWidget(
+                                      child1: typeProduitWidget(),
+                                      child2: dateDebutEtFinWidget()),
+                                  ResponsiveChildWidget(
+                                      child1: coutCampaignWidget(),
+                                      child2: lieuCibleWidget()),
+                                  ResponsiveChildWidget(
+                                      child1: promotionWidget(),
+                                      child2: objectifsWidget()),
+                                  const SizedBox(height: p20),
+                                  BtnWidget(
+                                      title: 'Soumettre',
+                                      isLoading: controller.isLoading,
+                                      press: () {
+                                        final form =
+                                            controller.formKey.currentState!;
+                                        if (form.validate()) {
+                                          controller.submit();
+                                          form.reset();
+                                        }
+                                      })
+                                ],
+                              ),
                             ),
-                            BtnWidget(
-                                title: 'Soumettre',
-                                isLoading: controller.isLoading,
-                                press: () {
-                                  final form = controller.formKey.currentState!;
-                                  if (form.validate()) {
-                                    controller.submit();
-                                    form.reset();
-                                  }
-                                })
-                            ],
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )))
-          ],
-        ),
-      );
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget typeProduitWidget() {
@@ -187,7 +184,8 @@ class _AddCampaignState extends State<AddCampaign> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+                child: Text("${monnaieStorage.monney}",
+                    style: Theme.of(context).textTheme.headline6))
           ],
         ));
   }
@@ -238,23 +236,23 @@ class _AddCampaignState extends State<AddCampaign> {
 
   Widget objectifsWidget() {
     return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: TextFormField(
-        controller: controller.objectifsController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Objectifs à atteindre',
-        ),
-        keyboardType: TextInputType.text,
-        style: const TextStyle(),
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.objectifsController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Objectifs à atteindre',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 }

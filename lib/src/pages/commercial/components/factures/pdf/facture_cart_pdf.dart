@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
@@ -15,19 +16,19 @@ import 'package:pdf/widgets.dart';
 
 class FactureCartPDF {
   static Future<File> generate(
-      FactureCartModel factureCartModel, monnaie) async {
+      FactureCartModel factureCartModel, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
 
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
       build: (context) => [
-        buildHeader(factureCartModel, user, monnaie),
+        buildHeader(factureCartModel, user, monnaieStorage),
         SizedBox(height: 3 * PdfPageFormat.cm),
         buildTitle(factureCartModel),
-        buildInvoice(factureCartModel, monnaie),
+        buildInvoice(factureCartModel, monnaieStorage),
         Divider(),
-        buildTotal(factureCartModel, monnaie),
+        buildTotal(factureCartModel, monnaieStorage),
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -35,7 +36,8 @@ class FactureCartPDF {
   }
 
   static Widget buildHeader(
-          FactureCartModel factureCartModel, UserModel user, monnaie) =>
+          FactureCartModel factureCartModel, UserModel user,
+          MonnaieStorage monnaieStorage) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +51,7 @@ class FactureCartPDF {
                 width: 50,
                 child: BarcodeWidget(
                   barcode: Barcode.qrCode(),
-                  data: "\$",
+                  data: monnaieStorage.monney,
                 ),
               ),
             ],
@@ -60,7 +62,7 @@ class FactureCartPDF {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildCustomerAddress(user),
-              buildInvoiceInfo(factureCartModel, user, monnaie),
+              buildInvoiceInfo(factureCartModel, user, monnaieStorage),
             ],
           ),
         ],
@@ -181,7 +183,7 @@ class FactureCartPDF {
     );
   }
 
-  static Widget buildTotal(FactureCartModel creanceCartModel, monnaie) {
+  static Widget buildTotal(FactureCartModel creanceCartModel, MonnaieStorage monnaieStorage) {
     var tva = 0.0;
     double sumCart = 0;
     final jsonList = jsonDecode(creanceCartModel.cart) as List;
@@ -223,7 +225,7 @@ class FactureCartPDF {
                 // ),
                 Divider(),
                 buildText(
-                  title: 'Total ($monnaie)',
+                  title: 'Total (${monnaieStorage.monney})',
                   titleStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

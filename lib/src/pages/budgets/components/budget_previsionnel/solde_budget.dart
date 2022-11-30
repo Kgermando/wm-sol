@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/widgets/responsive_child5_widget.dart';
 
 class SoldeBudgets extends StatelessWidget {
@@ -20,6 +22,7 @@ class SoldeBudgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
     final headline6 = Theme.of(context).textTheme.headline6;
     return ResponsiveChild5Widget(
         child1: Column(
@@ -27,7 +30,7 @@ class SoldeBudgets extends StatelessWidget {
             const Text("Coût total",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(coutTotal)} \$",
+                "${NumberFormat.decimalPattern('fr').format(coutTotal)} ${monnaieStorage.monney}",
                 textAlign: TextAlign.center,
                 style: headline6),
           ],
@@ -45,7 +48,7 @@ class SoldeBudgets extends StatelessWidget {
               const Text("Caisse",
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(
-                  "${NumberFormat.decimalPattern('fr').format(caisseSolde)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(caisseSolde)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   style: headline6),
@@ -65,7 +68,7 @@ class SoldeBudgets extends StatelessWidget {
               const Text("Banque",
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(
-                  "${NumberFormat.decimalPattern('fr').format(banqueSolde)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(banqueSolde)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   style: headline6),
@@ -77,7 +80,7 @@ class SoldeBudgets extends StatelessWidget {
             const Text("Reste à trouver",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text(
-                "${NumberFormat.decimalPattern('fr').format(finExterieurSolde)} \$",
+                "${NumberFormat.decimalPattern('fr').format(finExterieurSolde)} ${monnaieStorage.monney}",
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 style: headline6!.copyWith(color: Colors.orange.shade700)),

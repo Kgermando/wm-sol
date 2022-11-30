@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -16,6 +18,8 @@ class CartItemWidget extends StatefulWidget {
 }
 
 class _CartItemWidgetState extends State<CartItemWidget> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+  
   @override
   Widget build(BuildContext context) {
     // var role = int.parse(user.role) <= 3;
@@ -67,7 +71,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       child: Row(
                         children: [
                           Text(
-                              'Total: ${NumberFormat.decimalPattern('fr').format(sum)} \$',
+                              'Total: ${NumberFormat.decimalPattern('fr').format(sum)} ${monnaieStorage.monney}',
                               style: Theme.of(context).textTheme.bodyText1),
                           onCancel(),
                         ],
@@ -121,7 +125,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                                '${NumberFormat.decimalPattern('fr').format(sum)} \$',
+                                '${NumberFormat.decimalPattern('fr').format(sum)} ${monnaieStorage.monney}',
                                 style: Theme.of(context).textTheme.bodyText1),
                             onCancel(),
                           ],

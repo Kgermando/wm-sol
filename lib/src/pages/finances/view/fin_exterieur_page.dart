@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/components/fin_exterieur/table_fin_exterieur.dart';
@@ -23,6 +24,7 @@ class FinExterieurPage extends StatefulWidget {
 }
 
 class _FinExterieurPageState extends State<FinExterieurPage> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final FinExterieurController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
@@ -310,7 +312,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "\$",
+                  "${monnaieStorage.monney}",
                   style: headline6!,
                 ))
           ],

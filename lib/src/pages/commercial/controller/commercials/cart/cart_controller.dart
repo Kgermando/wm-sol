@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/cart_api.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
@@ -30,6 +31,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
   final VenteCartController venteCartController = Get.find();
   final AchatController achatController = Get.find();
   final ProfilController profilController = Get.find();
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
 
   var cartList = <CartModel>[].obs;
 
@@ -195,7 +197,8 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in factureList) {
         facture = item;
       }
-      final pdfFile = await FactureCartPDF.generate(facture!, '\$');
+      final pdfFile =
+          await FactureCartPDF.generate(facture!, monnaieStorage);
       PdfApi.openFile(pdfFile);
     } catch (e) {
       Get.snackbar("Erreur lors de l'ouverture", "$e",
@@ -263,7 +266,8 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in creanceList) {
         creance = item;
       }
-      final pdfFile = await CreanceCartPDF.generate(creance!, '\$');
+      final pdfFile =
+          await CreanceCartPDF.generate(creance!, monnaieStorage);
       PdfApi.openFile(pdfFile);
     } catch (e) {
       Get.snackbar("Erreur lors de l'ouverture", "$e",

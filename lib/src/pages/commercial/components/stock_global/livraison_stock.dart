@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/livraison_controller.dart';
@@ -22,6 +23,7 @@ class LivraisonStock extends StatefulWidget {
 }
 
 class _LivraisonStockState extends State<LivraisonStock> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final LivraisonController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
@@ -237,7 +239,7 @@ class _LivraisonStockState extends State<LivraisonStock> {
               child: Container(
                 margin: const EdgeInsets.only(left: 10.0, bottom: 5.0),
                 child: Text(
-                    'Prix Existant: ${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} \$',
+                    'Prix Existant: ${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
@@ -320,7 +322,8 @@ class _LivraisonStockState extends State<LivraisonStock> {
     pavTVARemise = controller.prixVenteUnit - remiseEnPourcent;
     return Container(
       margin: const EdgeInsets.only(left: 5.0, bottom: 20.0),
-      child: Text('R: ${pavTVARemise!.toStringAsFixed(2)} \$',
+      child: Text(
+          'R: ${pavTVARemise!.toStringAsFixed(2)} ${monnaieStorage.monney}',
           style: Theme.of(context).textTheme.headline6),
     );
   }

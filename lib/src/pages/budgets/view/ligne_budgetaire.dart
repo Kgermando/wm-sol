@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
@@ -12,7 +13,8 @@ class LigneBudgetaire extends StatefulWidget {
   const LigneBudgetaire(
       {super.key,
       required this.departementBudgetModel,
-      required this.lignBudgetaireController, required this.ligneBudgetaireList});
+      required this.lignBudgetaireController,
+      required this.ligneBudgetaireList});
   final DepartementBudgetModel departementBudgetModel;
   final LignBudgetaireController lignBudgetaireController;
   final List<LigneBudgetaireModel> ligneBudgetaireList;
@@ -22,6 +24,7 @@ class LigneBudgetaire extends StatefulWidget {
 }
 
 class _LigneBudgetaireState extends State<LigneBudgetaire> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -108,6 +111,27 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
             },
           ),
         ),
+        rowColorCallback: (rowColorContext) {
+          double sortieTotal = 0.0;
+          for (var element in widget.ligneBudgetaireList.where((element) =>
+              element.nomLigneBudgetaire ==
+              rowColorContext.row.cells.entries.elementAt(1).value.value)) {
+            sortieTotal = element.caisseSortie +
+                element.banqueSortie +
+                element.finExterieurSortie;
+          }
+
+          String value =
+              rowColorContext.row.cells.entries.elementAt(6).value.value;
+
+          bool isValid = double.parse(value) <= sortieTotal;
+
+          if (isValid) {
+            return Colors.orange.shade200;
+          }
+
+          return Colors.black;
+        },
         createFooter: (stateManager) {
           stateManager.setPageSize(20, notify: true); // default 40
           return PlutoPagination(stateManager);
@@ -131,18 +155,16 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
           'uniteChoisie': PlutoCell(value: item.uniteChoisie),
           'nombreUnite': PlutoCell(value: item.nombreUnite),
           'coutUnitaire': PlutoCell(value: item.coutUnitaire),
-          'coutTotal': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutTotal))} \$"),
+          'coutTotal': PlutoCell(value: item.coutTotal),
           'caisse': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.caisse))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.caisse))} ${monnaieStorage.monney}"),
           'banque': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.banque))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.banque))} ${monnaieStorage.monney}"),
           'finExterieur': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.finExterieur))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.finExterieur))} ${monnaieStorage.monney}"),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'id': PlutoCell(value: item.id)
@@ -216,7 +238,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Coût Unitaire',
+        title: 'Coût Unitaire ${monnaieStorage.monney}',
         field: 'coutUnitaire',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

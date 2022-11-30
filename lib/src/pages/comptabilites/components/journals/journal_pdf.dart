@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -16,7 +17,7 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
 class JournalPdf {
-  static Future<void> generate(JournalModel data) async {
+  static Future<void> generate(JournalModel data, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -25,7 +26,7 @@ class JournalPdf {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(data),
         Divider(),
-        buildBody(data)
+        buildBody(data, monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -122,7 +123,7 @@ class JournalPdf {
         ],
       );
 
-  static Widget buildBody(JournalModel data) {
+  static Widget buildBody(JournalModel data, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
@@ -188,15 +189,16 @@ class JournalPdf {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(data.compteDebit, textAlign: TextAlign.center),
+                        child:
+                            Text(data.compteDebit, textAlign: TextAlign.center),
                       ),
                       Expanded(
                         child: Text(
-                            "${NumberFormat.decimalPattern('fr').format(double.parse(data.montantDebit))} \$",
+                            "${NumberFormat.decimalPattern('fr').format(double.parse(data.montantDebit))} ${monnaieStorage.monney}",
                             textAlign: TextAlign.center),
                       ),
                     ],
-                  ), 
+                  ),
                 ],
               )),
         ],
@@ -234,11 +236,12 @@ class JournalPdf {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(data.compteCredit, textAlign: TextAlign.center),
+                        child: Text(data.compteCredit,
+                            textAlign: TextAlign.center),
                       ),
                       Expanded(
                         child: Text(
-                            "${NumberFormat.decimalPattern('fr').format(double.parse(data.montantCredit))} \$",
+                            "${NumberFormat.decimalPattern('fr').format(double.parse(data.montantCredit))} ${monnaieStorage.monney}",
                             textAlign: TextAlign.center),
                       ),
                     ],

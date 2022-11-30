@@ -388,6 +388,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
 
         if (value.ressource == "caisse") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
+            id: ligneBudget.id,
             nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
             departement: ligneBudget.departement,
             periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
@@ -422,6 +423,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         }
         if (value.ressource == "banque") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
+            id: ligneBudget.id,
             nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
             departement: ligneBudget.departement,
             periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
@@ -458,6 +460,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         }
         if (value.ressource == "finExterieur") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
+            id: ligneBudget.id,
             nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
             departement: ligneBudget.departement,
             periodeBudgetDebut: ligneBudget.periodeBudgetDebut,

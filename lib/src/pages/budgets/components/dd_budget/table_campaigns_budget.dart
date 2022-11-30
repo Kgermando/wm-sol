@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
@@ -18,6 +19,7 @@ class TableCampaignBudget extends StatefulWidget {
 }
 
 class _TableCampaignBudgetState extends State<TableCampaignBudget> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -61,8 +63,7 @@ class _TableCampaignBudgetState extends State<TableCampaignBudget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, MarketingRoutes.marketingCampaign);
+                        Navigator.pushNamed(context, BudgetRoutes.budgetDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
@@ -138,7 +139,8 @@ class _TableCampaignBudgetState extends State<TableCampaignBudget> {
           'numero': PlutoCell(value: i--),
           'typeProduit': PlutoCell(value: item.typeProduit),
           'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
-          'coutCampaign': PlutoCell(value: "${item.coutCampaign} \$"),
+          'coutCampaign':
+              PlutoCell(value: "${item.coutCampaign} ${monnaieStorage.monney}"),
           'lieuCible': PlutoCell(value: item.lieuCible),
           'promotion': PlutoCell(value: item.promotion),
           'objectifs': PlutoCell(value: item.objectifs),

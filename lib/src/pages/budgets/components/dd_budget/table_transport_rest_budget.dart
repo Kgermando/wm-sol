@@ -72,7 +72,7 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhTransportRest);
+                       Navigator.pushNamed(context, BudgetRoutes.budgetDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

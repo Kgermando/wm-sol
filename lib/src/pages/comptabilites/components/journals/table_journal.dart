@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/journal_model.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/journals/journal_xlsx.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
@@ -21,6 +23,7 @@ class TableJournal extends StatefulWidget {
 }
 
 class _TableJournalState extends State<TableJournal> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   late PlutoGridStateManager stateManager;
@@ -73,9 +76,9 @@ class _TableJournalState extends State<TableJournal> {
   //           'numeroOperation': PlutoCell(value: item.numeroOperation),
   //           'libele': PlutoCell(value: item.libele),
   //           'compteDebit': PlutoCell(value: item.compteDebit),
-  //           'montantDebit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} \$"),
+  //           'montantDebit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} ${monnaieStorage.monney}"),
   //           'compteCredit': PlutoCell(value: item.compteCredit),
-  //           'montantCredit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} \$"),
+  //           'montantCredit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} ${monnaieStorage.monney}"),
   //           'signature': PlutoCell(value: item.signature),
   //           'created': PlutoCell(
   //               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -194,9 +197,13 @@ class _TableJournalState extends State<TableJournal> {
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'libele': PlutoCell(value: item.libele),
           'compteDebit': PlutoCell(value: item.compteDebit),
-          'montantDebit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} \$"), 
+          'montantDebit': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} ${monnaieStorage.monney}"),
           'compteCredit': PlutoCell(value: item.compteCredit),
-          'montantCredit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} \$"),
+          'montantCredit': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} ${monnaieStorage.monney}"),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -301,7 +308,7 @@ class _TableJournalState extends State<TableJournal> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        renderer: (rendererContext) { 
+        renderer: (rendererContext) {
           return Text(
             rendererContext.cell.value.toString(),
             textAlign: TextAlign.center,

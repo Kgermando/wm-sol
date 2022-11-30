@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -23,6 +24,7 @@ class AjoutLigneBudgetaire extends StatefulWidget {
 }
 
 class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
 
@@ -269,7 +271,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                 flex: 1,
                 child: Container(
                     margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-                    child: Text('\$', style: headline6)))
+                    child: Text('${monnaieStorage.monney}', style: headline6)))
           ],
         ));
   }
@@ -311,7 +313,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                 flex: 1,
                 child: Container(
                     margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-                    child: Text('\$', style: headline6)))
+                    child: Text('${monnaieStorage.monney}', style: headline6)))
           ],
         ));
   }
@@ -324,7 +326,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
         child: Text(
-            'Coût total: ${NumberFormat.decimalPattern('fr').format(double.parse(coutToal.toStringAsFixed(2)))} \$',
+            'Coût total: ${NumberFormat.decimalPattern('fr').format(double.parse(coutToal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
             style: Responsive.isDesktop(context)
                 ? headline6!.copyWith(color: Colors.blue.shade700)
                 : bodyLarge!.copyWith(color: Colors.blue.shade700)));
@@ -341,7 +343,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
         child: Text(
-            'Reste à trouver: ${NumberFormat.decimalPattern('fr').format(double.parse(fondsAtrouver.toStringAsFixed(2)))} \$',
+            'Reste à trouver: ${NumberFormat.decimalPattern('fr').format(double.parse(fondsAtrouver.toStringAsFixed(2)))} ${monnaieStorage.monney}',
             style: Responsive.isDesktop(context)
                 ? headline6!.copyWith(color: Colors.red.shade700)
                 : bodyLarge!.copyWith(color: Colors.red.shade700)));

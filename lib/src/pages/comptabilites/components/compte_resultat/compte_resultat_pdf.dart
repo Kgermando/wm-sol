@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -23,7 +24,8 @@ class CompteResultatPdf {
       double totalGeneralCharges,
       double totalProduits1,
       double totalProduits123,
-      double totalGeneralProduits) async {
+      double totalGeneralProduits,
+      MonnaieStorage monnaieStorage) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -33,7 +35,7 @@ class CompteResultatPdf {
         buildTitle(data),
         Divider(),
         buildBody(data, totalCharges1, totalCharges123, totalGeneralCharges,
-            totalProduits1, totalProduits123, totalGeneralProduits)
+            totalProduits1, totalProduits123, totalGeneralProduits, monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -137,7 +139,8 @@ class CompteResultatPdf {
       double totalGeneralCharges,
       double totalProduits1,
       double totalProduits123,
-      double totalGeneralProduits) {
+      double totalGeneralProduits,
+      MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +174,7 @@ class CompteResultatPdf {
                 Divider(color: PdfColors.amber),
                 SizedBox(height: p30),
                 chargeWidget(
-                    data, totalCharges1, totalCharges123, totalGeneralCharges)
+                    data, totalCharges1, totalCharges123, totalGeneralCharges, monnaieStorage)
               ],
             ),
           ),
@@ -210,7 +213,7 @@ class CompteResultatPdf {
                   Divider(color: PdfColors.amber),
                   SizedBox(height: p30),
                   produitWidget(data, totalProduits1, totalProduits123,
-                      totalGeneralProduits)
+                      totalGeneralProduits, monnaieStorage)
                 ],
               ),
             ),
@@ -221,7 +224,8 @@ class CompteResultatPdf {
   }
 
   static Widget chargeWidget(CompteResulatsModel data, double totalCharges1,
-      double totalCharges123, double totalGeneralCharges) {
+      double totalCharges123, double totalGeneralCharges,
+      MonnaieStorage monnaieStorage) {
     return Column(
       children: [
         Row(
@@ -241,7 +245,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.achatMarchandises))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.achatMarchandises))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -269,7 +273,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.variationStockMarchandises))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.variationStockMarchandises))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -296,7 +300,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.achatApprovionnements))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.achatApprovionnements))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -324,7 +328,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.variationApprovionnements))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.variationApprovionnements))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -351,7 +355,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.autresChargesExterne))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.autresChargesExterne))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -379,7 +383,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.impotsTaxesVersementsAssimiles))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.impotsTaxesVersementsAssimiles))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -407,7 +411,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.renumerationPersonnel))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.renumerationPersonnel))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -434,7 +438,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.chargesSocialas))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.chargesSocialas))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -461,7 +465,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.dotatiopnsProvisions))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.dotatiopnsProvisions))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -488,7 +492,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.autresCharges))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.autresCharges))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -515,7 +519,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(data.chargesfinancieres))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(data.chargesfinancieres))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center),
               ),
             )
@@ -535,7 +539,7 @@ class CompteResultatPdf {
             Expanded(
               flex: 1,
               child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(totalCharges1)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(totalCharges1)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.left,
                   style: const TextStyle(color: PdfColors.red)),
             )
@@ -562,7 +566,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.chargesExptionnelles))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.chargesExptionnelles))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -590,7 +594,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.impotSurbenefices))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.impotSurbenefices))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -615,7 +619,7 @@ class CompteResultatPdf {
                   Expanded(
                     flex: 1,
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(totalCharges123)} \$",
+                        "${NumberFormat.decimalPattern('fr').format(totalCharges123)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.left,
                         style: const TextStyle(color: PdfColors.red)),
                   )
@@ -645,7 +649,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.soldeCrediteur))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.soldeCrediteur))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -670,7 +674,7 @@ class CompteResultatPdf {
                   Expanded(
                     flex: 1,
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(totalGeneralCharges)} \$",
+                        "${NumberFormat.decimalPattern('fr').format(totalGeneralCharges)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.left,
                         style: const TextStyle(color: PdfColors.red)),
                   )
@@ -687,7 +691,8 @@ class CompteResultatPdf {
   }
 
   static Widget produitWidget(CompteResulatsModel data, double totalProduits1,
-      double totalProduits123, double totalGeneralProduits) {
+      double totalProduits123, double totalGeneralProduits,
+      MonnaieStorage monnaieStorage) {
     return Column(
       children: [
         Row(
@@ -707,7 +712,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.ventesMarchandises))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.ventesMarchandises))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -735,7 +740,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.productionVendueBienEtSerices))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.productionVendueBienEtSerices))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -762,7 +767,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.productionStockee))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.productionStockee))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -789,7 +794,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.productionImmobilisee))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.productionImmobilisee))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -817,7 +822,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.subventionExploitation))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.subventionExploitation))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -844,7 +849,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.autreProduits))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.autreProduits))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -871,7 +876,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.produitfinancieres))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.produitfinancieres))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -900,11 +905,11 @@ class CompteResultatPdf {
               child: Column(
                 children: [
                   Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalProduits1)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalProduits1)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.left,
                       style: const TextStyle(color: PdfColors.red)),
                   Text(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(data.montantExportation))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(data.montantExportation))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -933,7 +938,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.produitExceptionnels))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(data.produitExceptionnels))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -957,7 +962,7 @@ class CompteResultatPdf {
                   Expanded(
                     flex: 1,
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(totalProduits123)} \$",
+                        "${NumberFormat.decimalPattern('fr').format(totalProduits123)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.left,
                         style: const TextStyle(color: PdfColors.red)),
                   )
@@ -987,7 +992,7 @@ class CompteResultatPdf {
                   ),
                 )),
                 child: Text(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(data.soldeDebiteur))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(data.soldeDebiteur))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center),
               ),
             )
@@ -1011,7 +1016,7 @@ class CompteResultatPdf {
                   Expanded(
                     flex: 1,
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(totalGeneralProduits)} \$",
+                        "${NumberFormat.decimalPattern('fr').format(totalGeneralProduits)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.left,
                         style: const TextStyle(color: PdfColors.red)),
                   )

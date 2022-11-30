@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -22,6 +23,7 @@ class RavitaillementStock extends StatefulWidget {
 }
 
 class _RavitaillementStockState extends State<RavitaillementStock> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final RavitaillementController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
@@ -189,7 +191,7 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                   children: [
                     const Text("Quantité précédent"),
                     Text(
-                        "${widget.stocksGlobalMOdel.quantity} ${widget.stocksGlobalMOdel.unite} \$",
+                        "${widget.stocksGlobalMOdel.quantity} ${widget.stocksGlobalMOdel.unite} ${monnaieStorage.monney}",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
@@ -238,7 +240,7 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                   children: [
                     const Text("Prix d'achat précédent"),
                     Text(
-                        "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} \$",
+                        "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
@@ -295,7 +297,7 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                   children: [
                     const Text("Prix de vente précédent"),
                     Text(
-                        "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} \$",
+                        "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(widget.stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
@@ -363,7 +365,8 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
 
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-        child: Text('PVU: ${controller.pavTVA.toStringAsFixed(2)} \$',
+        child: Text(
+            'PVU: ${controller.pavTVA.toStringAsFixed(2)} ${monnaieStorage.monney}',
             style: bodyText1));
   }
 }

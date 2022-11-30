@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -27,6 +28,7 @@ class UpdatePersonnel extends StatefulWidget {
 }
 
 class _UpdatePersonnelState extends State<UpdatePersonnel> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final PersonnelsController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
@@ -628,7 +630,6 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     if (selected == true) {
       setState(() {
         controller.departementSelectedUpdateList.add(dataName);
- 
 
         if (controller.departementSelectedUpdateList.first == 'Actionnaire') {
           controller.fonctionList = controller.fonctionActionnaireList;
@@ -910,7 +911,8 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+                child: Text("${monnaieStorage.monney}",
+                    style: Theme.of(context).textTheme.headline6))
           ],
         ));
   }

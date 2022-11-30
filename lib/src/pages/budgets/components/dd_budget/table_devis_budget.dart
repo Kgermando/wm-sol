@@ -51,9 +51,18 @@ class _TableDevisBudgetState extends State<TableDevisBudget> {
         },
         createHeader: (PlutoGridStateManager header) {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              TitleWidget(title: "Etat de besoin"),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const TitleWidget(title: "Etat de besoin"),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, BudgetRoutes.budgetDD);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)), 
+                ],
+              ),
             ],
           );
         },

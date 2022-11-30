@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:intl/intl.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 
 class DashboardCardWidget extends StatelessWidget {
   const DashboardCardWidget(
@@ -22,6 +24,7 @@ class DashboardCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
     double width = MediaQuery.of(context).size.width;
     if (MediaQuery.of(context).size.width >= 1100) {
       width = 250;
@@ -82,7 +85,7 @@ class DashboardCardWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 10.0),
                   AutoSizeText(
-                    '\$',
+                    '${monnaieStorage.monney}',
                     style: Responsive.isDesktop(context)
                         ? TextStyle(
                             fontSize: 20,

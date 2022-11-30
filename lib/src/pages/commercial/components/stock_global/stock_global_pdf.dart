@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -14,7 +15,7 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
 class StockGlobalPdf {
-  static Future<void> generate(StocksGlobalMOdel data) async {
+  static Future<void> generate(StocksGlobalMOdel data, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -23,7 +24,7 @@ class StockGlobalPdf {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(data),
         Divider(),
-        buildBody(data)
+        buildBody(data, monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -120,14 +121,14 @@ class StockGlobalPdf {
         ],
       );
 
-  static Widget buildBody(StocksGlobalMOdel data) {
+  static Widget buildBody(StocksGlobalMOdel data, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      achats(data),
+      achats(data, monnaieStorage),
       SizedBox(
         height: 20,
       ),
       disponiblesTitle(),
-      disponibles(data),
+      disponibles(data, monnaieStorage),
       SizedBox(
         height: 30,
       ),
@@ -138,7 +139,7 @@ class StockGlobalPdf {
     ]);
   }
 
-  static Widget achats(StocksGlobalMOdel stocksGlobalMOdel) {
+  static Widget achats(StocksGlobalMOdel stocksGlobalMOdel, MonnaieStorage monnaieStorage) {
     var prixAchatTotal = double.parse(stocksGlobalMOdel.priceAchatUnit) *
         double.parse(stocksGlobalMOdel.quantityAchat);
 
@@ -169,7 +170,7 @@ class StockGlobalPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(stocksGlobalMOdel.priceAchatUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -180,7 +181,7 @@ class StockGlobalPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -201,7 +202,7 @@ class StockGlobalPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(stocksGlobalMOdel.prixVenteUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -215,7 +216,7 @@ class StockGlobalPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -228,7 +229,7 @@ class StockGlobalPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           )
@@ -248,7 +249,7 @@ class StockGlobalPdf {
     );
   }
 
-  static Widget disponibles(StocksGlobalMOdel stocksGlobalMOdel) {
+  static Widget disponibles(StocksGlobalMOdel stocksGlobalMOdel, MonnaieStorage monnaieStorage) {
     var prixTotalRestante = double.parse(stocksGlobalMOdel.quantity) *
         double.parse(stocksGlobalMOdel.prixVenteUnit);
 
@@ -273,7 +274,7 @@ class StockGlobalPdf {
                 '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(stocksGlobalMOdel.quantity).toStringAsFixed(0)))} ${stocksGlobalMOdel.unite}',
               ),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),

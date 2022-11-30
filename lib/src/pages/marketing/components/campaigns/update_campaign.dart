@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -11,7 +12,6 @@ import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/button_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
-
 
 class UpdateCampaign extends StatefulWidget {
   const UpdateCampaign({super.key, required this.campaignModel});
@@ -22,18 +22,25 @@ class UpdateCampaign extends StatefulWidget {
 }
 
 class _UpdateCampaignState extends State<UpdateCampaign> {
-   final CampaignController controller = Get.find();
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+  final CampaignController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
 
   @override
   void initState() {
-     controller.typeProduitController = TextEditingController(text: widget.campaignModel.typeProduit);
-     controller.dateDebutEtFinController = TextEditingController(text: widget.campaignModel.dateDebutEtFin);
-     controller.coutCampaignController = TextEditingController(text: widget.campaignModel.coutCampaign);
-     controller.lieuCibleController = TextEditingController(text: widget.campaignModel.lieuCible);
-     controller.promotionController = TextEditingController(text: widget.campaignModel.promotion);
-     controller.objectifsController = TextEditingController(text: widget.campaignModel.objectifs);
+    controller.typeProduitController =
+        TextEditingController(text: widget.campaignModel.typeProduit);
+    controller.dateDebutEtFinController =
+        TextEditingController(text: widget.campaignModel.dateDebutEtFin);
+    controller.coutCampaignController =
+        TextEditingController(text: widget.campaignModel.coutCampaign);
+    controller.lieuCibleController =
+        TextEditingController(text: widget.campaignModel.lieuCible);
+    controller.promotionController =
+        TextEditingController(text: widget.campaignModel.promotion);
+    controller.objectifsController =
+        TextEditingController(text: widget.campaignModel.objectifs);
     super.initState();
   }
 
@@ -195,7 +202,8 @@ class _UpdateCampaignState extends State<UpdateCampaign> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+                child: Text("${monnaieStorage.monney}",
+                    style: Theme.of(context).textTheme.headline6))
           ],
         ));
   }

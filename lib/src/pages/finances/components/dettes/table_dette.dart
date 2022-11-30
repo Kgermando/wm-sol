@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/pages/finances/components/dettes/dette_xlsx.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
@@ -21,6 +22,7 @@ class TableDette extends StatefulWidget {
 }
 
 class _TableDetteState extends State<TableDette> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -146,7 +148,7 @@ class _TableDetteState extends State<TableDette> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -331,7 +333,7 @@ class _TableDetteState extends State<TableDette> {
                     style: bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white)),
                 SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.controller.nonPaye)} \$',
+                    '${NumberFormat.decimalPattern('fr').format(widget.controller.nonPaye)} ${monnaieStorage.monney}',
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
@@ -342,7 +344,7 @@ class _TableDetteState extends State<TableDette> {
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white)),
                 SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.controller.paye)} \$',
+                    '${NumberFormat.decimalPattern('fr').format(widget.controller.paye)} ${monnaieStorage.monney}',
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
@@ -353,7 +355,7 @@ class _TableDetteState extends State<TableDette> {
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white)),
                 SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.controller.nonPaye - widget.controller.paye)} \$',
+                    '${NumberFormat.decimalPattern('fr').format(widget.controller.nonPaye - widget.controller.paye)} ${monnaieStorage.monney}',
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],

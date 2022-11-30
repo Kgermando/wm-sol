@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -25,6 +26,7 @@ class DetailCompteResultat extends StatefulWidget {
 }
 
 class _DetailCompteResultatState extends State<DetailCompteResultat> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final CompteResultatController controller = Get.find();
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -76,7 +78,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       ),
     );
   }
- 
+
   Widget pageDetail() {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Expanded(
@@ -109,7 +111,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                                     totalGeneralCharges,
                                     totalProduits1,
                                     totalProduits123,
-                                    totalGeneralProduits);
+                                    totalGeneralProduits, monnaieStorage);
                               }),
                         ],
                       ),
@@ -306,7 +308,6 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
       bodyMedium = Theme.of(context).textTheme.bodyMedium;
     }
 
-
     totalCharges1 = double.parse(widget.compteResulatsModel.achatMarchandises) +
         double.parse(widget.compteResulatsModel.variationStockMarchandises) +
         double.parse(widget.compteResulatsModel.achatApprovionnements) +
@@ -325,7 +326,6 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         double.parse(widget.compteResulatsModel.impotSurbenefices);
     totalGeneralCharges = totalCharges123 +
         double.parse(widget.compteResulatsModel.soldeCrediteur);
- 
 
     return Column(
       children: [
@@ -347,7 +347,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.achatMarchandises))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.achatMarchandises))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -375,7 +375,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.variationStockMarchandises))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.variationStockMarchandises))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -403,7 +403,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.achatApprovionnements))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.achatApprovionnements))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -431,7 +431,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.variationApprovionnements))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.variationApprovionnements))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -459,7 +459,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.autresChargesExterne))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.autresChargesExterne))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -487,7 +487,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.impotsTaxesVersementsAssimiles))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.impotsTaxesVersementsAssimiles))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -515,7 +515,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.renumerationPersonnel))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.renumerationPersonnel))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -543,7 +543,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.chargesSocialas))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.chargesSocialas))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -571,7 +571,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.dotatiopnsProvisions))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.dotatiopnsProvisions))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -599,7 +599,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.autresCharges))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.autresCharges))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -627,7 +627,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.chargesfinancieres))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.chargesfinancieres))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyLarge),
               ),
@@ -642,7 +642,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                 textAlign: TextAlign.start,
                 style: headline6!.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(totalCharges1)} \$",
+                "${NumberFormat.decimalPattern('fr').format(totalCharges1)} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: headline6.copyWith(color: Colors.red.shade700))),
         Divider(
@@ -666,7 +666,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.chargesExptionnelles))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.chargesExptionnelles))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -694,7 +694,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.impotSurbenefices))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.impotSurbenefices))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -710,7 +710,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                 maxLines: 1,
                 style: headline6.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(totalCharges123)} \$",
+                "${NumberFormat.decimalPattern('fr').format(totalCharges123)} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: headline6.copyWith(color: Colors.red.shade700))),
         Divider(
@@ -734,7 +734,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.soldeCrediteur))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.soldeCrediteur))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -752,7 +752,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                       textAlign: TextAlign.start,
                       style: headline6.copyWith(fontWeight: FontWeight.bold)),
                   SelectableText(
-                      "${NumberFormat.decimalPattern('fr').format(totalGeneralCharges)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalGeneralCharges)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.start,
                       style: headline6.copyWith(color: Colors.red.shade700)),
                 ],
@@ -768,7 +768,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   Expanded(
                     flex: Responsive.isMobile(context) ? 3 : 1,
                     child: SelectableText(
-                        "${NumberFormat.decimalPattern('fr').format(totalGeneralCharges)} \$",
+                        "${NumberFormat.decimalPattern('fr').format(totalGeneralCharges)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.start,
                         style: headline6.copyWith(color: Colors.red.shade700)),
                   )
@@ -808,7 +808,6 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         double.parse(widget.compteResulatsModel.soldeDebiteur) +
         double.parse(widget.compteResulatsModel.montantExportation);
 
-    
     return Column(
       children: [
         Row(
@@ -829,7 +828,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.ventesMarchandises))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.ventesMarchandises))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -857,7 +856,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.productionVendueBienEtSerices))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.productionVendueBienEtSerices))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -885,7 +884,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.productionStockee))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.productionStockee))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -913,7 +912,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.productionImmobilisee))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.productionImmobilisee))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -941,7 +940,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.subventionExploitation))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.subventionExploitation))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -969,7 +968,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.autreProduits))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.autreProduits))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -997,7 +996,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.produitfinancieres))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.produitfinancieres))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -1021,11 +1020,11 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
           child2: Column(
             children: [
               SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(totalProduits1)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(totalProduits1)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.start,
                   style: headline6.copyWith(color: Colors.red.shade700)),
               SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.montantExportation))} \$",
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.montantExportation))} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   style: bodyMedium),
             ],
@@ -1052,7 +1051,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.produitExceptionnels))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.produitExceptionnels))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -1067,7 +1066,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
               textAlign: TextAlign.start,
               style: headline6.copyWith(fontWeight: FontWeight.bold)),
           child2: SelectableText(
-              "${NumberFormat.decimalPattern('fr').format(totalProduits123)} \$",
+              "${NumberFormat.decimalPattern('fr').format(totalProduits123)} ${monnaieStorage.monney}",
               textAlign: TextAlign.start,
               style: headline6.copyWith(color: Colors.red.shade700)),
         ),
@@ -1092,7 +1091,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                   ),
                 )),
                 child: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.soldeDebiteur))} \$",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.compteResulatsModel.soldeDebiteur))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: bodyMedium),
               ),
@@ -1108,7 +1107,7 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
               textAlign: TextAlign.start,
               style: headline6.copyWith(fontWeight: FontWeight.bold)),
           child2: SelectableText(
-              "${NumberFormat.decimalPattern('fr').format(totalGeneralProduits)} \$",
+              "${NumberFormat.decimalPattern('fr').format(totalGeneralProduits)} ${monnaieStorage.monney}",
               textAlign: TextAlign.start,
               style: headline6.copyWith(color: Colors.red.shade700)),
         ),

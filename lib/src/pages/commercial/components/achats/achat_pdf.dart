@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/vente_cart_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
@@ -16,7 +17,7 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 
 class AchatPdf {
   static Future<void> generate(AchatModel data, UserModel user,
-      List<VenteCartModel> venteCartList) async {
+      List<VenteCartModel> venteCartList, MonnaieStorage monnaieStorage) async { 
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -25,7 +26,7 @@ class AchatPdf {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(data),
         Divider(),
-        buildBody(data, user, venteCartList)
+        buildBody(data, user, venteCartList, monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -123,24 +124,24 @@ class AchatPdf {
       );
 
   static Widget buildBody(
-      AchatModel data, UserModel user, List<VenteCartModel> venteCartList) {
+      AchatModel data, UserModel user, List<VenteCartModel> venteCartList, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       headerTitle(data),
       SizedBox(
         height: 20,
       ),
       achatTitle(),
-      achats(data, user),
+      achats(data, user, monnaieStorage),
       SizedBox(
         height: 20,
       ),
       ventetitle(),
-      ventes(data, venteCartList),
+      ventes(data, venteCartList, monnaieStorage),
       SizedBox(
         height: 20,
       ),
       benficesTitle(),
-      benfices(data),
+      benfices(data, monnaieStorage),
       SizedBox(
         height: 30,
       ),
@@ -167,7 +168,7 @@ class AchatPdf {
         ));
   }
 
-  static Widget achats(AchatModel data, UserModel user) {
+  static Widget achats(AchatModel data, UserModel user, MonnaieStorage monnaieStorage) {
     var roleAgent = int.parse(user.role) <= 3;
 
     var prixAchatTotal =
@@ -207,7 +208,7 @@ class AchatPdf {
                     style: TextStyle(fontWeight: pw.FontWeight.bold)),
                 Spacer(),
                 Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(data.priceAchatUnit).toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(data.priceAchatUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
                 ),
               ],
             ),
@@ -222,7 +223,7 @@ class AchatPdf {
                     style: TextStyle(fontWeight: pw.FontWeight.bold)),
                 Spacer(),
                 Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(prixAchatTotal.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                 ),
               ],
             ),
@@ -247,7 +248,7 @@ class AchatPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(data.prixVenteUnit).toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(data.prixVenteUnit).toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -260,7 +261,7 @@ class AchatPdf {
                   style: TextStyle(fontWeight: pw.FontWeight.bold)),
               Spacer(),
               Text(
-                '${double.parse(data.remise).toStringAsFixed(2)} \$',
+                '${double.parse(data.remise).toStringAsFixed(2)} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -292,7 +293,7 @@ class AchatPdf {
                     style: TextStyle(fontWeight: pw.FontWeight.bold)),
                 Spacer(),
                 Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} \$ / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeRemise.toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenifice.toStringAsFixed(2)))} ${monnaieStorage.monney} / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeRemise.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                 ),
               ],
             ),
@@ -307,7 +308,7 @@ class AchatPdf {
                     style: TextStyle(fontWeight: pw.FontWeight.bold)),
                 Spacer(),
                 Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} \$ / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotalRemise.toStringAsFixed(2)))} \$',
+                  '${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotal.toStringAsFixed(2)))} ${monnaieStorage.monney} / ${NumberFormat.decimalPattern('fr').format(double.parse(margeBenificeTotalRemise.toStringAsFixed(2)))} ${monnaieStorage.monney}',
                 ),
               ],
             )
@@ -327,7 +328,8 @@ class AchatPdf {
     );
   }
 
-  static Widget ventes(AchatModel data, List<VenteCartModel> venteCartList) {
+  static Widget ventes(AchatModel data, List<VenteCartModel> venteCartList,
+      MonnaieStorage monnaieStorage) {
     double qtyVendus = 0;
     double prixTotalVendu = 0;
 
@@ -383,7 +385,7 @@ class AchatPdf {
                 '${NumberFormat.decimalPattern('fr').format(double.parse(qtyVendus.toStringAsFixed(0)))} ${data.unite}',
               ),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalVendu.toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalVendu.toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),
@@ -403,7 +405,7 @@ class AchatPdf {
     );
   }
 
-  static Widget benfices(AchatModel data) {
+  static Widget benfices(AchatModel data, MonnaieStorage monnaieStorage) {
     var prixTotalRestante =
         double.parse(data.quantity) * double.parse(data.prixVenteUnit);
 
@@ -429,7 +431,7 @@ class AchatPdf {
                 '${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(data.quantity).toStringAsFixed(0)))} ${data.unite}',
               ),
               Text(
-                '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} \$',
+                '${NumberFormat.decimalPattern('fr').format(double.parse(prixTotalRestante.toStringAsFixed(2)))} ${monnaieStorage.monney}',
               ),
             ],
           ),

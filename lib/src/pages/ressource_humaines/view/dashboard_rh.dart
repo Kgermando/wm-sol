@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dashboard/calendar_widget.dart';
@@ -20,6 +21,7 @@ class DashboardRH extends StatefulWidget {
 }
 
 class _DashboardRHState extends State<DashboardRH> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final DashobardNotifyController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
@@ -90,7 +92,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                       number: '${controller.agentsCount}',
                                       title: 'Total agents',
                                       icon: Icons.group,
-                                      color: Colors.blue.shade700)) ,
+                                      color: Colors.blue.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(RhRoutes.rhPersonnelsPage);
@@ -98,7 +100,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                       number: '${controller.agentActifCount}',
                                       title: 'Agents Actifs',
                                       icon: Icons.person,
-                                      color: Colors.green.shade700))  ,
+                                      color: Colors.green.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(RhRoutes.rhPersonnelsPage);
@@ -106,7 +108,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                       number: '${controller.agentInactifCount}',
                                       title: 'Agents inactifs',
                                       icon: Icons.person_off,
-                                      color: Colors.red.shade700))  ,
+                                      color: Colors.red.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(RhRoutes.rhPersonnelsPage);
@@ -114,7 +116,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                       number: '${controller.agentFemmeCount}',
                                       title: 'Femmes',
                                       icon: Icons.female,
-                                      color: Colors.purple.shade700))  ,
+                                      color: Colors.purple.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(RhRoutes.rhPersonnelsPage);
@@ -122,16 +124,16 @@ class _DashboardRHState extends State<DashboardRH> {
                                       number: '${controller.agentHommeCount}',
                                       title: 'Hommes',
                                       icon: Icons.male,
-                                      color: Colors.grey.shade700))  ,
+                                      color: Colors.grey.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(RhRoutes.rhPaiement);
                                       },
                                       number:
-                                          "${NumberFormat.decimalPattern('fr').format(controller.totalEnveloppeSalaire)} \$",
+                                          "${NumberFormat.decimalPattern('fr').format(controller.totalEnveloppeSalaire)} ${monnaieStorage.monney}",
                                       title: 'Enveloppe salariale',
                                       icon: Icons.monetization_on,
-                                      color: Colors.teal.shade700))  ,
+                                      color: Colors.teal.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
                                         Get.toNamed(RhRoutes.rhPersonnelsPage);
@@ -139,7 +141,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                       number: '${controller.agentNonPaye}',
                                       title: 'Non payés $isMonth',
                                       icon: Icons.person_remove,
-                                      color: Colors.pink.shade700))  ,
+                                      color: Colors.pink.shade700)),
                                 ],
                               ),
                               const SizedBox(height: p20),
@@ -152,7 +154,6 @@ class _DashboardRHState extends State<DashboardRH> {
                       )),
                 ))
           ],
-        )
-      );
+        ));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/history_livraison/history_livraison_xlsx.dart';
@@ -21,6 +23,7 @@ class TableHistoryLivraison extends StatefulWidget {
 }
 
 class _TableHistoryLivraisonState extends State<TableHistoryLivraison> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -201,7 +204,7 @@ class _TableHistoryLivraisonState extends State<TableHistoryLivraison> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix d\'Achat Unitaire \$',
+        title: 'Prix d\'Achat Unitaire ${monnaieStorage.monney}',
         field: 'priceAchatUnit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -213,7 +216,7 @@ class _TableHistoryLivraisonState extends State<TableHistoryLivraison> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix de vente Unitaire \$',
+        title: 'Prix de vente Unitaire ${monnaieStorage.monney}',
         field: 'prixVenteUnit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

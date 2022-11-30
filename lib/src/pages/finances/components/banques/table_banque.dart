@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
 import 'package:wm_solution/src/models/finances/banque_name_model.dart';
 import 'package:wm_solution/src/pages/finances/components/banques/banque_xlsx.dart';
@@ -26,6 +27,7 @@ class TableBanque extends StatefulWidget {
 }
 
 class _TableBanqueState extends State<TableBanque> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -65,7 +67,8 @@ class _TableBanqueState extends State<TableBanque> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.banqueNameModel.nomComplet.toUpperCase()),
+                  TitleWidget(
+                      title: widget.banqueNameModel.nomComplet.toUpperCase()),
                   Row(
                     children: [
                       IconButton(
@@ -149,7 +152,7 @@ class _TableBanqueState extends State<TableBanque> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
@@ -305,7 +308,7 @@ class _TableBanqueState extends State<TableBanque> {
                       style: bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(recette)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette)} ${monnaieStorage.monney}',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -316,7 +319,7 @@ class _TableBanqueState extends State<TableBanque> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(depenses)} ${monnaieStorage.monney}',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -327,7 +330,7 @@ class _TableBanqueState extends State<TableBanque> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} ${monnaieStorage.monney}',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],

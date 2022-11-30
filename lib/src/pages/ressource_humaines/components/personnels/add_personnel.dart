@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -28,6 +29,7 @@ class AddPersonnel extends StatefulWidget {
 }
 
 class _AddPersonnelState extends State<AddPersonnel> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final PersonnelsController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
@@ -40,10 +42,10 @@ class _AddPersonnelState extends State<AddPersonnel> {
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
         body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Row(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!),
+            (data) => Row(
                   children: [
                     Visibility(
                         visible: !Responsive.isMobile(context),
@@ -136,7 +138,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                           ),
                         )),
                   ],
-                )) );
+                )));
   }
 
   Widget fichierWidget() {
@@ -890,7 +892,8 @@ class _AddPersonnelState extends State<AddPersonnel> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+                child: Text("${monnaieStorage.monney}",
+                    style: Theme.of(context).textTheme.headline6))
           ],
         ));
   }

@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart'; 
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
+import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
@@ -14,7 +16,8 @@ class VenteItemWidget extends StatefulWidget {
       {Key? key,
       required this.controller,
       required this.achat,
-      required this.profilController, required this.cartController})
+      required this.profilController,
+      required this.cartController})
       : super(key: key);
   final AchatController controller;
   final AchatModel achat;
@@ -26,6 +29,7 @@ class VenteItemWidget extends StatefulWidget {
 }
 
 class _VenteItemWidgetState extends State<VenteItemWidget> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   TextEditingController controllerQuantityCart = TextEditingController();
 
   // Après ajout au panier le produit quite la liste
@@ -65,7 +69,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                           SizedBox(
                             width: size.width / 2,
                             child: Text(
-                              'Stock: ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.quantity))} ${widget.achat.unite} / ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.prixVenteUnit))} \$',
+                              'Stock: ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.quantity))} ${widget.achat.unite} / ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.prixVenteUnit))} ${monnaieStorage.monney}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -121,7 +125,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                           children: [
                             Expanded(
                               child: AutoSizeText(
-                                'Stock: ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.quantity))} ${widget.achat.unite} / ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.prixVenteUnit))} \$',
+                                'Stock: ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.quantity))} ${widget.achat.unite} / ${NumberFormat.decimalPattern('fr').format(double.parse(widget.achat.prixVenteUnit))} ${monnaieStorage.monney}',
                                 maxLines: 1,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -195,7 +199,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
         iconSize: Responsive.isDesktop(context) ? 24.0 : 18.0,
         onPressed: () {
           if (widget.controller.formKey.currentState!.validate()) {
-           widget.cartController.addCart(widget.achat);
+            widget.cartController.addCart(widget.achat);
             setState(() {
               isActive = !isActive;
             });

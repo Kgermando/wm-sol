@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -18,6 +20,7 @@ class TableDettePaiement extends StatefulWidget {
 }
 
 class _TableDettePaiementState extends State<TableDettePaiement> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -42,7 +45,7 @@ class _TableDettePaiementState extends State<TableDettePaiement> {
           stateManager!.setShowColumnFilter(true);
           stateManager!.setShowLoading(true);
         },
-        createHeader: (PlutoGridStateManager header) { 
+        createHeader: (PlutoGridStateManager header) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -50,12 +53,12 @@ class _TableDettePaiementState extends State<TableDettePaiement> {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
+                      onPressed: () {
+                        Navigator.pushNamed(
                             context, FinanceRoutes.transactionsDetteDetail,
                             arguments: widget.detteModel);
-                    },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 ],
               ),
             ],
@@ -96,7 +99,9 @@ class _TableDettePaiementState extends State<TableDettePaiement> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.controller.creanceDetteList
-      .where((e) => e.creanceDette == "dettes" && e.reference == widget.detteModel.id).toList();
+        .where((e) =>
+            e.creanceDette == "dettes" && e.reference == widget.detteModel.id)
+        .toList();
 
     var i = dataList.length;
     for (var item in dataList) {
@@ -108,7 +113,7 @@ class _TableDettePaiementState extends State<TableDettePaiement> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created))

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -22,6 +23,7 @@ class AddSalaire extends StatefulWidget {
 }
 
 class _AddSalaireState extends State<AddSalaire> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "New bulletin";
@@ -30,123 +32,123 @@ class _AddSalaireState extends State<AddSalaire> {
   Widget build(BuildContext context) {
     final SalaireController controller = Get.find();
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(context, scaffoldKey, title, subTitle),
-      drawer: const DrawerMenu(),
-      body: Row(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, subTitle),
+        drawer: const DrawerMenu(),
+        body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-            flex: 5,
-            child: SingleChildScrollView(
-              controller: ScrollController(),
-              physics: const ScrollPhysics(),
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: p20, bottom: p8, right: p20, left: p20),
-                decoration: const BoxDecoration(
-                    // border: Border.all(
-                    //   // color: Colors.red,
-                    // ),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: p20),
-                    child: Form(
-                      key: controller.formKey,
-                      child: Column(
-                        children: [
-                          const TitleWidget(
-                              title: "Generer le bulletin de paie"),
-                          const SizedBox(height: p20), 
-                    agentWidget(),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    salaireWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    heureSupplementaireWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    supplementTravailSamediDimancheJoursFerieWidget(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        // border: Border.all(
+                        //   // color: Colors.red,
+                        // ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            children: [
+                              const TitleWidget(
+                                  title: "Generer le bulletin de paie"),
+                              const SizedBox(height: p20),
+                              agentWidget(),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              salaireWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              heureSupplementaireWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              supplementTravailSamediDimancheJoursFerieWidget(
                                   controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    primeWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    diversWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    congesPayeWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    maladieAccidentWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    totalDuBrutWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    deductionWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    allocationsFamilialesWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    netAPayerWidget(controller),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    montantPrisConsiderationCalculCotisationsINSSWidget(
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              primeWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              diversWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              congesPayeWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              maladieAccidentWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              totalDuBrutWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              deductionWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              allocationsFamilialesWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              netAPayerWidget(controller),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              montantPrisConsiderationCalculCotisationsINSSWidget(
                                   controller),
-                    const SizedBox(
-                      height: p20,
-                    ), 
-                  BtnWidget(
-                      title: 'Soumettre',
-                      isLoading: controller.isLoading,
-                      press: () {
-                        controller.submit(widget.personne);
-                      })
-                        ],
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              BtnWidget(
+                                  title: 'Soumettre',
+                                  isLoading: controller.isLoading,
+                                  press: () {
+                                    controller.submit(widget.personne);
+                                  })
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            )),
-        ],
-      ));
+                )),
+          ],
+        ));
   }
 
-
-   Widget agentWidget() {
+  Widget agentWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Column(
       children: [
-        ResponsiveChildWidget(child1: Text(
-          'Matricule',
-            style: bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-              ), 
-          child2: SelectableText(
+        ResponsiveChildWidget(
+            child1: Text(
+              'Matricule',
+              style: bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+            ),
+            child2: SelectableText(
               widget.personne.matricule,
               style: bodyMedium,
-            )), 
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
             child1: Text(
@@ -156,27 +158,27 @@ class _AddSalaireState extends State<AddSalaire> {
             child2: SelectableText(
               widget.personne.numeroSecuriteSociale,
               style: bodyMedium,
-            )), 
-        Divider(color: mainColor),
-        ResponsiveChildWidget(child1: Text(
-          'Nom',
-            style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
-              ), 
-          child2: SelectableText(
-              widget.personne.nom,
-              style: bodyMedium,
-            )),  
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
-          child1: Text(
-            'Prénom',
-            style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
-          ), 
-          child2: SelectableText(
+            child1: Text(
+              'Nom',
+              style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
+            ),
+            child2: SelectableText(
+              widget.personne.nom,
+              style: bodyMedium,
+            )),
+        Divider(color: mainColor),
+        ResponsiveChildWidget(
+            child1: Text(
+              'Prénom',
+              style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
+            ),
+            child2: SelectableText(
               widget.personne.prenom,
               style: bodyMedium,
-            )
-          ),  
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
             child1: Text(
@@ -186,7 +188,7 @@ class _AddSalaireState extends State<AddSalaire> {
             child2: SelectableText(
               widget.personne.telephone,
               style: bodyMedium,
-            )),  
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
             child1: Text(
@@ -196,7 +198,7 @@ class _AddSalaireState extends State<AddSalaire> {
             child2: SelectableText(
               widget.personne.adresse,
               style: bodyMedium,
-            )),   
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
             child1: Text(
@@ -206,7 +208,7 @@ class _AddSalaireState extends State<AddSalaire> {
             child2: SelectableText(
               widget.personne.departement,
               style: bodyMedium,
-            )), 
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
             child1: Text(
@@ -216,7 +218,7 @@ class _AddSalaireState extends State<AddSalaire> {
             child2: SelectableText(
               widget.personne.servicesAffectation,
               style: bodyMedium,
-            )),  
+            )),
         Divider(color: mainColor),
         ResponsiveChildWidget(
             child1: Text(
@@ -224,9 +226,9 @@ class _AddSalaireState extends State<AddSalaire> {
               style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
             ),
             child2: SelectableText(
-              "${NumberFormat.decimalPattern('fr').format(double.parse(widget.personne.salaire))} \$",
+              "${NumberFormat.decimalPattern('fr').format(double.parse(widget.personne.salaire))} ${monnaieStorage.monney}",
               style: bodyMedium,
-            )),  
+            )),
       ],
     );
   }
@@ -254,10 +256,10 @@ class _AddSalaireState extends State<AddSalaire> {
               children: [
                 tauxJourHeureMoisSalaireWidget(controller),
                 ResponsiveChildWidget(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  child1: joursHeuresPayeA100PourecentSalaireWidget(controller),
-                  child2: totalDuSalaireWidget(controller)
-                ), 
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    child1:
+                        joursHeuresPayeA100PourecentSalaireWidget(controller),
+                    child2: totalDuSalaireWidget(controller)),
               ],
             ),
           ),
@@ -291,7 +293,8 @@ class _AddSalaireState extends State<AddSalaire> {
     );
   }
 
-  Widget joursHeuresPayeA100PourecentSalaireWidget(SalaireController controller) {
+  Widget joursHeuresPayeA100PourecentSalaireWidget(
+      SalaireController controller) {
     return Container(
         margin: const EdgeInsets.only(bottom: p10, left: p5),
         child: TextFormField(
@@ -347,17 +350,15 @@ class _AddSalaireState extends State<AddSalaire> {
               child: Text('Heure supplementaire',
                   style: bodyLarge!.copyWith(fontWeight: FontWeight.bold))),
           Expanded(
-            flex: 3,
-            child: ResponsiveChild3Widget(
-              mainAxisAlignment: MainAxisAlignment.center,
-              flex1: 3,
-              flex2: 2,
-              flex3: 2,
-              child1: nombreHeureSupplementairesWidget(controller), 
-              child2: tauxHeureSupplementairesWidget(controller), 
-              child3: totalDuHeureSupplementairesWidget(controller)
-            ) 
-          ),
+              flex: 3,
+              child: ResponsiveChild3Widget(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  flex1: 3,
+                  flex2: 2,
+                  flex3: 2,
+                  child1: nombreHeureSupplementairesWidget(controller),
+                  child2: tauxHeureSupplementairesWidget(controller),
+                  child3: totalDuHeureSupplementairesWidget(controller))),
         ],
       ),
     );
@@ -452,7 +453,8 @@ class _AddSalaireState extends State<AddSalaire> {
     return Container(
         margin: const EdgeInsets.only(bottom: p10, left: p5),
         child: TextFormField(
-          controller: controller.supplementTravailSamediDimancheJoursFerieController,
+          controller:
+              controller.supplementTravailSamediDimancheJoursFerieController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -575,17 +577,15 @@ class _AddSalaireState extends State<AddSalaire> {
               child: Text('Congés Payé',
                   style: bodyLarge!.copyWith(fontWeight: FontWeight.bold))),
           Expanded(
-            flex: 3,
-            child: ResponsiveChild3Widget(
-              mainAxisAlignment: MainAxisAlignment.center,
-              flex1: 3,
-              flex2: 2,
-              flex3: 2,
-              child1: joursCongesPayeWidget(controller), 
-              child2: tauxCongesPayeWidget(controller), 
-              child3: totalDuCongesPayeWidget(controller)
-            ) 
-          ),
+              flex: 3,
+              child: ResponsiveChild3Widget(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  flex1: 3,
+                  flex2: 2,
+                  flex3: 2,
+                  child1: joursCongesPayeWidget(controller),
+                  child2: tauxCongesPayeWidget(controller),
+                  child3: totalDuCongesPayeWidget(controller))),
         ],
       ),
     );
@@ -685,17 +685,15 @@ class _AddSalaireState extends State<AddSalaire> {
               child: Text('Maladie ou Accident',
                   style: bodyLarge!.copyWith(fontWeight: FontWeight.bold))),
           Expanded(
-            flex: 3,
-            child: ResponsiveChild3Widget(
-              mainAxisAlignment: MainAxisAlignment.center,
-              flex1: 3,
-              flex2: 2,
-              flex3: 2,
-              child1: jourPayeMaladieAccidentWidget(controller), 
-              child2: tauxJournalierMaladieAccidentWidget(controller), 
-              child3: totalDuMaladieAccidentWidget(controller)
-            )  
-          ),
+              flex: 3,
+              child: ResponsiveChild3Widget(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  flex1: 3,
+                  flex2: 2,
+                  flex3: 2,
+                  child1: jourPayeMaladieAccidentWidget(controller),
+                  child2: tauxJournalierMaladieAccidentWidget(controller),
+                  child3: totalDuMaladieAccidentWidget(controller))),
         ],
       ),
     );
@@ -823,11 +821,10 @@ class _AddSalaireState extends State<AddSalaire> {
               children: [
                 indemniteCompensatricesDeductionWidget(controller),
                 ResponsiveChild3Widget(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  child1: pensionDeductiontWidget(controller), 
-                  child2: avancesDeductionWidget(controller), 
-                  child3: diversDeductionWidget(controller)
-                ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    child1: pensionDeductiontWidget(controller),
+                    child2: avancesDeductionWidget(controller),
+                    child3: diversDeductionWidget(controller)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -961,10 +958,10 @@ class _AddSalaireState extends State<AddSalaire> {
                 nombreEnfantBeneficaireAllocationsFamilialesWidget(controller),
                 nombreDeJoursAllocationsFamilialesWidget(controller),
                 ResponsiveChildWidget(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  child1: tauxJoursAllocationsFamilialesWidget(controller), 
-                  child2: totalAPayerAllocationsFamilialesWidget(controller),  
-                )  
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  child1: tauxJoursAllocationsFamilialesWidget(controller),
+                  child2: totalAPayerAllocationsFamilialesWidget(controller),
+                )
               ],
             ),
           ),
@@ -978,7 +975,8 @@ class _AddSalaireState extends State<AddSalaire> {
     return Container(
         margin: const EdgeInsets.only(bottom: p10, left: p5),
         child: TextFormField(
-          controller: controller.nombreEnfantBeneficaireAllocationsFamilialesController,
+          controller:
+              controller.nombreEnfantBeneficaireAllocationsFamilialesController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -1113,8 +1111,7 @@ class _AddSalaireState extends State<AddSalaire> {
                   style: bodyLarge!.copyWith(fontWeight: FontWeight.bold))),
           Expanded(
               flex: 3,
-              child:
-                  montantPrisConsiderationCalculCotisationsINSSFieldWidget(
+              child: montantPrisConsiderationCalculCotisationsINSSFieldWidget(
                   controller)),
         ],
       ),
@@ -1126,7 +1123,8 @@ class _AddSalaireState extends State<AddSalaire> {
     return Container(
         margin: const EdgeInsets.only(bottom: p10, left: p5),
         child: TextFormField(
-          controller: controller.montantPrisConsiderationCalculCotisationsINSSController,
+          controller: controller
+              .montantPrisConsiderationCalculCotisationsINSSController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),

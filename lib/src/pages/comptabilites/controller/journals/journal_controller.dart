@@ -27,8 +27,7 @@ class JournalController extends GetxController
   String? compteCredit;
   TextEditingController numeroOperationController = TextEditingController();
   TextEditingController libeleController = TextEditingController();
-  TextEditingController montantDebitController = TextEditingController();
-  TextEditingController montantCreditController = TextEditingController();
+  TextEditingController montantController = TextEditingController(); 
   TextEditingController tvaController = TextEditingController();
   TextEditingController remarqueController = TextEditingController();
 
@@ -42,8 +41,7 @@ class JournalController extends GetxController
   void dispose() {
     numeroOperationController.dispose();
     libeleController.dispose();
-    montantDebitController.dispose();
-    montantCreditController.dispose();
+    montantController.dispose(); 
     tvaController.dispose();
     remarqueController.dispose();
     super.dispose();
@@ -52,8 +50,7 @@ class JournalController extends GetxController
   void clear() {
     numeroOperationController.clear();
     libeleController.clear();
-    montantDebitController.clear();
-    montantCreditController.clear();
+    montantController.clear(); 
     tvaController.clear();
     remarqueController.clear();
   }
@@ -61,8 +58,8 @@ class JournalController extends GetxController
   void getList() async {
     await journalApi.getAllData().then((response) {
       journalList.clear();
-      journalList.addAll(response);
-      numOpration = journalList.length + 1;
+      numOpration = response.length + 1;
+      journalList.addAll(response); 
       change(journalList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -110,13 +107,13 @@ class JournalController extends GetxController
         numeroOperation: numero,
         libele: libeleController.text,
         compteDebit: compteDebit.toString(),
-        montantDebit: (montantDebitController.text == "")
+        montantDebit: (montantController.text == "")
             ? "0"
-            : montantDebitController.text,
+            : montantController.text,
         compteCredit: compteCredit.toString(),
-        montantCredit: (montantCreditController.text == "")
+        montantCredit: (montantController.text == "")
             ? "0"
-            : montantCreditController.text,
+            : montantController.text,
         signature: profilController.user.matricule,
         created: DateTime.now(),
         locker: "false",
@@ -174,13 +171,13 @@ class JournalController extends GetxController
           numeroOperation: data.numeroOperation,
           libele: libeleController.text,
           compteDebit: compteDebit.toString(),
-          montantDebit: (montantDebitController.text == "")
+          montantDebit: (montantController.text == "")
               ? data.montantDebit
-              : montantDebitController.text,
+              : montantController.text,
           compteCredit: compteCredit.toString(),
-          montantCredit: (montantCreditController.text == "")
+          montantCredit: (montantController.text == "")
               ? data.montantDebit
-              : montantCreditController.text,
+              : montantController.text,
           signature: profilController.user.matricule,
           created: data.created,
           locker: data.locker);

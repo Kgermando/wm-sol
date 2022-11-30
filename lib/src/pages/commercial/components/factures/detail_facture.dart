@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
@@ -26,6 +27,7 @@ class DetailFacture extends StatefulWidget {
 }
 
 class _DetailFactureState extends State<DetailFacture> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -33,101 +35,98 @@ class _DetailFactureState extends State<DetailFacture> {
   Widget build(BuildContext context) {
     final FactureController controller = Get.find();
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.factureCartModel.client),
-              drawer: const DrawerMenu(),
-              body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.factureCartModel.client),
+        drawer: const DrawerMenu(),
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        TitleWidget(
+                                            title:
+                                                'Facture n° ${widget.factureCartModel.client}'),
+                                        Column(
                                           children: [
-                                            TitleWidget(
-                                                title:
-                                                    'Facture n° ${widget.factureCartModel.client}'),
-                                            Column(
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    PrintWidget(
-                                                        tooltip:
-                                                            'Imprimer le document',
-                                                        onPressed: () async {
-                                                          final pdfFile =
-                                                              await FactureCartPDF
-                                                                  .generate(
-                                                                      widget
-                                                                          .factureCartModel,
-                                                                      "\$");
-                                                          PdfApi.openFile(
-                                                              pdfFile);
-                                                        })
-                                                  ],
-                                                ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yy HH:mm")
-                                                        .format(widget
-                                                            .factureCartModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                PrintWidget(
+                                                    tooltip:
+                                                        'Imprimer le document',
+                                                    onPressed: () async {
+                                                      final pdfFile =
+                                                          await FactureCartPDF.generate(
+                                                              widget
+                                                                  .factureCartModel,
+                                                              monnaieStorage);
+                                                      PdfApi.openFile(pdfFile);
+                                                    })
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yy HH:mm")
+                                                    .format(widget
+                                                        .factureCartModel
+                                                        .created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        Divider(
-                                          color: mainColor,
-                                        ),
-                                        dataWidget(),
-                                        Divider(
-                                          color: mainColor,
-                                        ),
-                                        TableFactureCart(
-                                            factureList: jsonDecode(widget
-                                                .factureCartModel
-                                                .cart) as List),
-                                        const SizedBox(height: p20),
-                                        totalCart()
+                                        )
                                       ],
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )))
-                ],
-              ),) 
-            ); 
+                                    Divider(
+                                      color: mainColor,
+                                    ),
+                                    dataWidget(),
+                                    Divider(
+                                      color: mainColor,
+                                    ),
+                                    TableFactureCart(
+                                        factureList: jsonDecode(
+                                                widget.factureCartModel.cart)
+                                            as List),
+                                    const SizedBox(height: p20),
+                                    totalCart()
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )))
+            ],
+          ),
+        ));
   }
 
   Widget dataWidget() {
@@ -195,7 +194,7 @@ class _DetailFactureState extends State<DetailFacture> {
         width: width,
         margin: const EdgeInsets.all(p20),
         child: Text(
-          'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} \$',
+          'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}',
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),

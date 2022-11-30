@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/balance/balance_pdf.dart';
@@ -21,6 +22,7 @@ class BalanceComptabilite extends StatefulWidget {
 
 class _BalanceComptabiliteState extends State<BalanceComptabilite> {
   final BalanceSumController balanceSumController = Get.find();
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
  
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
@@ -67,7 +69,7 @@ body: balanceSumController.obx(
                             PrintWidget(
                                 tooltip: 'Imprimer le document',
                                 onPressed: () async {
-                                  await BalancePdf.generate(state!);
+                                  await BalancePdf.generate(state!, monnaieStorage);
                                 }),
                             IconButton(
                                 onPressed: () async {

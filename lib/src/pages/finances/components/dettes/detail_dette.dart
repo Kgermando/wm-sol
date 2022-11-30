@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/dette_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -27,6 +28,7 @@ class DetailDette extends StatefulWidget {
 }
 
 class _DetailDetteState extends State<DetailDette> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
@@ -39,95 +41,98 @@ class _DetailDetteState extends State<DetailDette> {
     final ProfilController profilController = Get.find();
 
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.detteModel.numeroOperation),
-      drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Ajouter le paiement"),
-        tooltip: "Ajout le paiement",
-        icon: const Icon(Icons.add_card),
-        onPressed: () {
-          dialongCreancePaiement(creanceDetteController);
-        },
-      ),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: p20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.detteModel.numeroOperation),
+        drawer: const DrawerMenu(),
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text("Ajouter le paiement"),
+          tooltip: "Ajout le paiement",
+          icon: const Icon(Icons.add_card),
+          onPressed: () {
+            dialongCreancePaiement(creanceDetteController);
+          },
+        ),
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const TitleWidget(title: "Dette"),
-                                    Column(
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SelectableText(
-                                            DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(
-                                                    widget.detteModel.created),
-                                            textAlign: TextAlign.start),
+                                        const TitleWidget(title: "Dette"),
+                                        Column(
+                                          children: [
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy HH:mm")
+                                                    .format(widget
+                                                        .detteModel.created),
+                                                textAlign: TextAlign.start),
+                                          ],
+                                        )
                                       ],
-                                    )
+                                    ),
+                                    dataWidget(
+                                        controller,
+                                        creanceDetteController,
+                                        profilController),
+                                    totalMontant(
+                                        controller, creanceDetteController),
                                   ],
                                 ),
-                                dataWidget(controller, creanceDetteController,
-                                    profilController),
-                                totalMontant(
-                                    controller, creanceDetteController),
-                              ],
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: p20),
+                            TableDettePaiement(
+                                controller: creanceDetteController,
+                                detteModel: widget.detteModel),
+                            const SizedBox(height: p20),
+                            ApprobationDette(
+                                data: widget.detteModel,
+                                controller: controller,
+                                profilController: profilController)
+                          ],
                         ),
-                        const SizedBox(height: p20),
-                        TableDettePaiement(
-                          controller: creanceDetteController, 
-                          detteModel: widget.detteModel),
-                        const SizedBox(height: p20),
-                        ApprobationDette(
-                            data: widget.detteModel,
-                            controller: controller,
-                            profilController: profilController)
-                      ],
-                    ),
-                  )))
-        ],
-      ),) 
-    );
+                      )))
+            ],
+          ),
+        ));
   }
 
   Widget totalMontant(DetteController controller,
       CreanceDetteController creanceDetteController) {
     double totalCreanceDette = 0.0;
 
-    for (var item in creanceDetteController.creanceDetteList
-        .where((e) => e.creanceDette == "dettes" && e.reference == widget.detteModel.id)) {
+    for (var item in creanceDetteController.creanceDetteList.where((e) =>
+        e.creanceDette == "dettes" && e.reference == widget.detteModel.id)) {
       totalCreanceDette += double.parse(item.montant);
     }
     double total = 0.0;
@@ -153,7 +158,7 @@ class _DetailDetteState extends State<DetailDette> {
                 ),
               )),
               child: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(total)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(total)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   style: headline6.copyWith(
                       fontWeight: FontWeight.bold, color: Colors.red.shade700)),
@@ -211,7 +216,7 @@ class _DetailDetteState extends State<DetailDette> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.detteModel.montant))} \$",
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.detteModel.montant))} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),
@@ -444,7 +449,7 @@ class _DetailDetteState extends State<DetailDette> {
                         borderRadius: BorderRadius.circular(10.0)),
                     labelText: 'Montant',
                     hintText:
-                        'Restant ${NumberFormat.decimalPattern('fr').format(total)} \$'),
+                        'Restant ${NumberFormat.decimalPattern('fr').format(total)} ${monnaieStorage.monney}'),
                 validator: (value) => value != null && value.isEmpty
                     ? 'Ce champs est obligatoire.'
                     : null,
@@ -455,7 +460,7 @@ class _DetailDetteState extends State<DetailDette> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "\$",
+                  "${monnaieStorage.monney}",
                   style: headline6!,
                 ))
           ],

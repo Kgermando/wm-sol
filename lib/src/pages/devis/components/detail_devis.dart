@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
@@ -30,6 +31,7 @@ class _DetailDevisState extends State<DetailDevis> {
   final DevisController controller = Get.find();
   final DevisListObjetController devisListObjetController = Get.find();
   final ProfilController profilController = Get.find();
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Devis";
 
@@ -46,8 +48,9 @@ class _DetailDevisState extends State<DetailDevis> {
               appBar: headerBar(
                   context, scaffoldKey, title, widget.devisModel.title),
               drawer: const DrawerMenu(),
-              floatingActionButton: (widget.devisModel.isSubmit == 'false') 
-                ? addObjetDevisButton() : Container(),
+              floatingActionButton: (widget.devisModel.isSubmit == 'false')
+                  ? addObjetDevisButton()
+                  : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,12 +88,12 @@ class _DetailDevisState extends State<DetailDevis> {
                                                     "Ticket n° ${widget.devisModel.id}"),
                                             Column(
                                               children: [
-                                                 if (widget.devisModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
-                                                Row(
-                                                  children: [ 
-                                                    IconButton(
+                                                if (widget.devisModel
+                                                        .approbationDD ==
+                                                    "Unapproved")
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
                                                           tooltip: 'Actualiser',
                                                           color: Colors
                                                               .green.shade700,
@@ -100,25 +103,24 @@ class _DetailDevisState extends State<DetailDevis> {
                                                           },
                                                           icon: const Icon(
                                                               Icons.refresh)),
-                                                    if (widget.devisModel
+                                                      if (widget.devisModel
                                                               .isSubmit ==
                                                           'false')
-                                                    IconButton(
-                                                        tooltip:
-                                                            'Soumettre chez le DD',
-                                                        color: Colors
-                                                            .green.shade700,
-                                                        onPressed: () {
-                                                          controller.sendDD(
-                                                              widget
-                                                                  .devisModel);
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.send)),
-                                                    
+                                                        IconButton(
+                                                            tooltip:
+                                                                'Soumettre chez le DD',
+                                                            color: Colors
+                                                                .green.shade700,
+                                                            onPressed: () {
+                                                              controller.sendDD(
+                                                                  widget
+                                                                      .devisModel);
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.send)),
                                                       deleteButton(controller),
-                                                  ],
-                                                ),
+                                                    ],
+                                                  ),
                                                 SelectableText(
                                                     DateFormat("dd-MM-yyyy")
                                                         .format(widget
@@ -144,9 +146,11 @@ class _DetailDevisState extends State<DetailDevis> {
                                 ),
                                 const SizedBox(height: p20),
                                 ApprobationDevis(
-                                    devisModel: widget.devisModel,
-                                    controller: controller,
-                                    profilController: profilController)
+                                  devisModel: widget.devisModel,
+                                  controller: controller,
+                                  profilController: profilController,
+                                  state: state!,
+                                )
                               ],
                             ),
                           )))
@@ -379,7 +383,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                           style: TextStyle(
                                               color: Colors.red.shade700)),
                                       Text(
-                                          "${NumberFormat.decimalPattern('fr').format(double.parse(devisListObjetController.montantGlobal.toStringAsFixed(2)))} \$",
+                                          "${NumberFormat.decimalPattern('fr').format(double.parse(devisListObjetController.montantGlobal.toStringAsFixed(2)))} ${monnaieStorage.monney}",
                                           style: TextStyle(
                                               color: Colors.red.shade700)),
                                     ],
@@ -459,7 +463,7 @@ class _DetailDevisState extends State<DetailDevis> {
           // decoration:
           //     BoxDecoration(border: Border.all(color: mainColor)),
           child: AutoSizeText(
-            "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(devisListObjetsModel.montantUnitaire).toStringAsFixed(2)))} \$",
+            "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(devisListObjetsModel.montantUnitaire).toStringAsFixed(2)))} ${monnaieStorage.monney}",
             maxLines: 1,
             textAlign: TextAlign.center,
             style: bodyMedium,
@@ -470,29 +474,29 @@ class _DetailDevisState extends State<DetailDevis> {
           // decoration:
           //     BoxDecoration(border: Border.all(color: mainColor)),
           child: AutoSizeText(
-            "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(devisListObjetsModel.montantGlobal).toStringAsFixed(2)))} \$",
+            "${NumberFormat.decimalPattern('fr').format(double.parse(double.parse(devisListObjetsModel.montantGlobal).toStringAsFixed(2)))} ${monnaieStorage.monney}",
             maxLines: 1,
             textAlign: TextAlign.center,
             style: bodyMedium,
           ),
         ),
         if (widget.devisModel.isSubmit == 'false')
-        Container(
-          padding: const EdgeInsets.all(16.0 * 0.75),
-          child: IconButton(
-              onPressed: () {
-                devisListObjetController.deleteData(devisListObjetsModel.id!);
-              },
-              icon: const Icon(Icons.delete, color: Colors.red)),
-        ),
-        if (widget.devisModel.isSubmit =='true')
-        Container(
-          padding: const EdgeInsets.all(16.0 * 0.75),
+          Container(
+            padding: const EdgeInsets.all(16.0 * 0.75),
+            child: IconButton(
+                onPressed: () {
+                  devisListObjetController.deleteData(devisListObjetsModel.id!);
+                },
+                icon: const Icon(Icons.delete, color: Colors.red)),
+          ),
+        if (widget.devisModel.isSubmit == 'true')
+          Container(
+            padding: const EdgeInsets.all(16.0 * 0.75),
             child: const Icon(
               Icons.check_box,
               color: Colors.green,
-          ),
-        )
+            ),
+          )
       ],
     );
   }

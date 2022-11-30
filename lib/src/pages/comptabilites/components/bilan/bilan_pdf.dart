@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_bilan_ref_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
@@ -20,7 +21,8 @@ class BilanPdf {
   static Future<void> generate(
       BilanModel data,
       List<CompteBilanRefModel> compteActifList,
-      List<CompteBilanRefModel> comptePassifList) async {
+      List<CompteBilanRefModel> comptePassifList,
+      MonnaieStorage monnaieStorage) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -29,8 +31,8 @@ class BilanPdf {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(data),
         Divider(),
-        buildBody(data, compteActifList, comptePassifList),
-        totalMontant(data, compteActifList, comptePassifList)
+        buildBody(data, compteActifList, comptePassifList, monnaieStorage),
+        totalMontant(data, compteActifList, comptePassifList, monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -130,7 +132,8 @@ class BilanPdf {
   static Widget buildBody(
       BilanModel data,
       List<CompteBilanRefModel> compteActifList,
-      List<CompteBilanRefModel> comptePassifList) {
+      List<CompteBilanRefModel> comptePassifList,
+      MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
@@ -162,7 +165,7 @@ class BilanPdf {
                 SizedBox(height: p30),
                 SizedBox(
                     // height: MediaQuery.of(context).size.height / 1.5,
-                    child: compteActifWidget(compteActifList))
+                    child: compteActifWidget(compteActifList, monnaieStorage))
               ],
             ),
           ),
@@ -201,7 +204,7 @@ class BilanPdf {
                   SizedBox(height: p30),
                   SizedBox(
                       // height: MediaQuery.of(context).size.height / 1.5,
-                      child: comptePassifWidget(comptePassifList))
+                      child: comptePassifWidget(comptePassifList, monnaieStorage))
                 ],
               ),
             ),
@@ -211,7 +214,8 @@ class BilanPdf {
     ]);
   }
 
-  static Widget compteActifWidget(List<CompteBilanRefModel> compteActifList) {
+  static Widget compteActifWidget(List<CompteBilanRefModel> compteActifList,
+      MonnaieStorage monnaieStorage) {
     return ListView.builder(
       itemCount: compteActifList.length,
       itemBuilder: (context, index) {
@@ -235,7 +239,7 @@ class BilanPdf {
                       ),
                     )),
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(double.parse(actif.montant))} \$",
+                        "${NumberFormat.decimalPattern('fr').format(double.parse(actif.montant))} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center),
                   ),
                 )
@@ -248,7 +252,8 @@ class BilanPdf {
     );
   }
 
-  static Widget comptePassifWidget(List<CompteBilanRefModel> comptePassifList) {
+  static Widget comptePassifWidget(List<CompteBilanRefModel> comptePassifList,
+      MonnaieStorage monnaieStorage) {
     return ListView.builder(
       itemCount: comptePassifList.length,
       itemBuilder: (context, index) {
@@ -272,7 +277,7 @@ class BilanPdf {
                       ),
                     )),
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(double.parse(passif.montant))} \$",
+                        "${NumberFormat.decimalPattern('fr').format(double.parse(passif.montant))} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center),
                   ),
                 )
@@ -290,7 +295,8 @@ class BilanPdf {
   static Widget totalMontant(
       BilanModel data,
       List<CompteBilanRefModel> compteActifList,
-      List<CompteBilanRefModel> comptePassifList) {
+      List<CompteBilanRefModel> comptePassifList,
+      MonnaieStorage monnaieStorage) {
     double totalActif = 0.0;
     var actifList = compteActifList
         .where((element) => element.reference == data.id)
@@ -322,7 +328,7 @@ class BilanPdf {
                 Expanded(
                   flex: 3,
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalActif)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalActif)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.left,
                       style: const TextStyle(color: PdfColors.red)),
                 )
@@ -342,7 +348,7 @@ class BilanPdf {
                 Expanded(
                   flex: 3,
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalPassif)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalPassif)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.left,
                       style: const TextStyle(color: PdfColors.red)),
                 )

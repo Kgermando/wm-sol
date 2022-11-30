@@ -670,9 +670,18 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
         Get.put(LignBudgetaireController());
     List<String> dataList = [];
 
-    return lignBudgetaireController.obx((ligne) {
+     return lignBudgetaireController.obx((ligne) {
       dataList = ligne!
-          .where((p0) => DateTime.now().isBefore(p0.periodeBudgetFin))
+          .where((p0) {
+            double sortieTotal =
+                p0.caisseSortie + p0.banqueSortie + p0.finExterieurSortie;
+
+            double reste = double.parse(p0.coutTotal) - sortieTotal;
+
+            return DateTime.now().isBefore(p0.periodeBudgetFin) &&
+                double.parse(p0.coutTotal) > sortieTotal &&
+                reste > double.parse(widget.campaignModel.coutCampaign);
+          })
           .map((e) => e.nomLigneBudgetaire)
           .toList();
       return Container(

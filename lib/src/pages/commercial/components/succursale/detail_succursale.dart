@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -11,7 +12,7 @@ import 'package:wm_solution/src/pages/commercial/components/succursale/approbati
 import 'package:wm_solution/src/pages/commercial/components/succursale/stats_succusale.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -24,6 +25,7 @@ class DetailSuccursale extends StatefulWidget {
 }
 
 class _DetailSuccursaleState extends State<DetailSuccursale> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -36,89 +38,82 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
     int userRole = int.parse(profilController.user.role);
 
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.succursaleModel.name),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+      key: scaffoldKey,
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.succursaleModel.name),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TitleWidget(title: "Succursale"),
+                                    Row(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const TitleWidget(
-                                                title: "Succursale"),
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                    color: Colors.purple,
-                                                    onPressed: () {
-                                                      Get.toNamed(
-                                                          ComRoutes
-                                                              .comSuccursaleUpdate,
-                                                          arguments: widget
-                                                              .succursaleModel);
-                                                    },
-                                                    icon:
-                                                        const Icon(Icons.edit)),
-                                                if (userRole <= 2)
-                                                  deleteButton(controller),
-                                                const SizedBox(width: p10),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yy HH:mm")
-                                                        .format(widget
-                                                            .succursaleModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        headerTitle(achatController),
+                                        IconButton(
+                                            color: Colors.purple,
+                                            onPressed: () {
+                                              Get.toNamed(
+                                                  ComRoutes.comSuccursaleUpdate,
+                                                  arguments:
+                                                      widget.succursaleModel);
+                                            },
+                                            icon: const Icon(Icons.edit)),
+                                        if (userRole <= 2)
+                                          deleteButton(controller),
+                                        const SizedBox(width: p10),
+                                        SelectableText(
+                                            DateFormat("dd-MM-yy HH:mm").format(
+                                                widget.succursaleModel.created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                StatsSuccursale(
-                                    succursaleModel: widget.succursaleModel),
-                                const SizedBox(height: p20),
-                                ApprobationSuccursale(
-                                    data: widget.succursaleModel,
-                                    controller: controller,
-                                    profilController: profilController)
+                                headerTitle(achatController),
                               ],
                             ),
-                          )))
-                ],
-              ),
-            );
+                          ),
+                        ),
+                        const SizedBox(height: p20),
+                        StatsSuccursale(
+                            succursaleModel: widget.succursaleModel),
+                        const SizedBox(height: p20),
+                        ApprobationSuccursale(
+                            data: widget.succursaleModel,
+                            controller: controller,
+                            profilController: profilController)
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget deleteButton(SuccursaleController controller) {
@@ -224,7 +219,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(sumAchat)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(sumAchat)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(color: Colors.purple)),
             ),
@@ -234,7 +229,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                 child2: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(sumAchatRevenue)} \$",
+                    "${NumberFormat.decimalPattern('fr').format(sumAchatRevenue)} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(color: Colors.blue))),
             Divider(color: mainColor),
@@ -243,7 +238,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(sumAchatMarge)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(sumAchatMarge)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(color: Colors.green)),
             ),

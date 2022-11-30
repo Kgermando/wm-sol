@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -16,7 +17,7 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
 class BalancePdf {
-  static Future<void> generate(List<BalanceSumModel> data) async {
+  static Future<void> generate(List<BalanceSumModel> data, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -123,7 +124,7 @@ class BalancePdf {
         ],
       );
 
-  static Widget buildBody(BalanceModel data) {
+  static Widget buildBody(BalanceModel data, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
@@ -193,7 +194,7 @@ class BalancePdf {
                 ),
                 Divider(color: PdfColors.amber),
                 SizedBox(height: p30),
-                compteWidget(data)
+                compteWidget(data, monnaieStorage)
               ],
             ),
           ),
@@ -202,7 +203,7 @@ class BalancePdf {
     ]);
   }
 
-  static Widget compteWidget(BalanceModel compte) {
+  static Widget compteWidget(BalanceModel compte, MonnaieStorage monnaieStorage) {
     double solde = 0.0;
 
     return Column(
@@ -223,7 +224,8 @@ class BalancePdf {
                     width: 2,
                   ),
                 )),
-                child: Text("${compte.debit} \$", textAlign: TextAlign.center),
+                child: Text("${compte.debit} ${monnaieStorage.monney}",
+                    textAlign: TextAlign.center),
               ),
             ),
             Expanded(
@@ -236,7 +238,8 @@ class BalancePdf {
                     width: 2,
                   ),
                 )),
-                child: Text("${compte.credit} \$", textAlign: TextAlign.center),
+                child: Text("${compte.credit} ${monnaieStorage.monney}",
+                    textAlign: TextAlign.center),
               ),
             ),
             Expanded(
@@ -249,7 +252,8 @@ class BalancePdf {
                     width: 2,
                   ),
                 )),
-                child: Text("$solde \$", textAlign: TextAlign.center),
+                child: Text("$solde ${monnaieStorage.monney}",
+                    textAlign: TextAlign.center),
               ),
             )
           ],
@@ -261,13 +265,13 @@ class BalancePdf {
     );
   }
 
-  static Widget totalMontant(BalanceModel data) {
+  static Widget totalMontant(BalanceModel data, MonnaieStorage monnaieStorage) {
     double totalDebit = 0.0;
     double totalCredit = 0.0;
     double totalSolde = 0.0;
 
     totalDebit += double.parse(data.debit);
-    totalCredit += double.parse(data.credit); 
+    totalCredit += double.parse(data.credit);
 
     return Padding(
       padding: const EdgeInsets.all(p10),
@@ -292,7 +296,7 @@ class BalancePdf {
                     ),
                   )),
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalDebit)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
@@ -308,7 +312,7 @@ class BalancePdf {
                     ),
                   )),
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalCredit)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalCredit)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
@@ -324,7 +328,7 @@ class BalancePdf {
                     ),
                   )),
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalSolde)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalSolde)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),

@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_model.dart'; 
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_sum_controller.dart';
 import 'package:wm_solution/src/widgets/responsive_child4_widget.dart';
 
@@ -16,6 +18,8 @@ class ListBalance extends StatefulWidget {
 }
 
 class _ListBalanceState extends State<ListBalance> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -36,7 +40,7 @@ class _ListBalanceState extends State<ListBalance> {
       totalDebit += item.debit;
       totalCredit += item.credit;
       totalSolde += item.debit - item.credit;
-      
+
       // print("item.debit ${item.debit} ");
     }
 
@@ -62,7 +66,7 @@ class _ListBalanceState extends State<ListBalance> {
                   ),
                 )),
                 child: Text(
-                    "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
+                    "${NumberFormat.decimalPattern('fr').format(totalDebit)} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: headline6.copyWith(fontWeight: FontWeight.bold)),
               ),
@@ -75,7 +79,7 @@ class _ListBalanceState extends State<ListBalance> {
                   ),
                 )),
                 child: Text(
-                    "${NumberFormat.decimalPattern('fr').format(totalCredit)} \$",
+                    "${NumberFormat.decimalPattern('fr').format(totalCredit)} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: headline6.copyWith(fontWeight: FontWeight.bold)),
               ),
@@ -88,7 +92,7 @@ class _ListBalanceState extends State<ListBalance> {
                   ),
                 )),
                 child: Text(
-                    "${NumberFormat.decimalPattern('fr').format(totalSolde)} \$",
+                    "${NumberFormat.decimalPattern('fr').format(totalSolde)} ${monnaieStorage.monney}",
                     textAlign: TextAlign.center,
                     style: headline6.copyWith(fontWeight: FontWeight.bold)),
               ))
@@ -194,7 +198,7 @@ class _ListBalanceState extends State<ListBalance> {
                     child: Text(
                         (compte.debit == 0.0)
                             ? "-"
-                            : "${NumberFormat.decimalPattern('fr').format(compte.debit)} \$",
+                            : "${NumberFormat.decimalPattern('fr').format(compte.debit)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center,
                         style: bodyMedium),
                   ),
@@ -212,7 +216,7 @@ class _ListBalanceState extends State<ListBalance> {
                     child: Text(
                         (compte.credit == 0.0)
                             ? "-"
-                            : "${NumberFormat.decimalPattern('fr').format(compte.credit)} \$",
+                            : "${NumberFormat.decimalPattern('fr').format(compte.credit)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center,
                         style: bodyMedium),
                   ),
@@ -228,7 +232,7 @@ class _ListBalanceState extends State<ListBalance> {
                       ),
                     )),
                     child: Text(
-                        "${NumberFormat.decimalPattern('fr').format(solde)} \$",
+                        "${NumberFormat.decimalPattern('fr').format(solde)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center,
                         style: bodyMedium),
                   ),

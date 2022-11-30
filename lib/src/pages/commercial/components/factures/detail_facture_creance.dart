@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
@@ -26,6 +27,7 @@ class DetailFactureCreance extends StatefulWidget {
 }
 
 class _DetailFactureCreanceState extends State<DetailFactureCreance> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -34,15 +36,15 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
     final FactureCreanceController controller = Get.find();
 
     return Scaffold(
-          key: scaffoldKey,
-          appBar: headerBar(
-              context, scaffoldKey, title, widget.creanceCartModel.client),
-          drawer: const DrawerMenu(),
-          body: controller.obx(
-    onLoading: loadingPage(context),
-    onEmpty: const Text('Aucune donnée'),
-    onError: (error) => loadingError(context, error!),
-    (state) => Row(
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.creanceCartModel.client),
+        drawer: const DrawerMenu(),
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
@@ -64,11 +66,10 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                             Card(
                               elevation: 3,
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: p20),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
@@ -86,13 +87,11 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                                                         'Imprimer le document',
                                                     onPressed: () async {
                                                       final pdfFile =
-                                                          await CreanceCartPDF
-                                                              .generate(
-                                                                  widget
-                                                                      .creanceCartModel,
-                                                                  "\$");
-                                                      PdfApi.openFile(
-                                                          pdfFile);
+                                                          await CreanceCartPDF.generate(
+                                                              widget
+                                                                  .creanceCartModel,
+                                                              monnaieStorage);
+                                                      PdfApi.openFile(pdfFile);
                                                     })
                                               ],
                                             ),
@@ -114,9 +113,9 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                                       color: mainColor,
                                     ),
                                     TableCreanceCart(
-                                        factureList: jsonDecode(widget
-                                            .creanceCartModel
-                                            .cart) as List),
+                                        factureList: jsonDecode(
+                                                widget.creanceCartModel.cart)
+                                            as List),
                                     const SizedBox(height: p20),
                                     totalCart()
                                   ],
@@ -127,8 +126,8 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                         ),
                       )))
             ],
-          ),) 
-        ); 
+          ),
+        ));
   }
 
   Widget dataWidget() {
@@ -196,7 +195,7 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
         width: width,
         margin: const EdgeInsets.all(p20),
         child: Text(
-          'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} \$',
+          'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}',
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),

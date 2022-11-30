@@ -368,6 +368,7 @@ class TransportRestController extends GetxController
 
         if (value.ressource == "caisse") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
+            id: ligneBudget.id,
             nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
             departement: ligneBudget.departement,
             periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
@@ -402,6 +403,7 @@ class TransportRestController extends GetxController
         }
         if (value.ressource == "banque") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
+            id: ligneBudget.id,
             nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
             departement: ligneBudget.departement,
             periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
@@ -438,6 +440,7 @@ class TransportRestController extends GetxController
         }
         if (value.ressource == "finExterieur") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
+            id: ligneBudget.id,
             nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
             departement: ligneBudget.departement,
             periodeBudgetDebut: ligneBudget.periodeBudgetDebut,

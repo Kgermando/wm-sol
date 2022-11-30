@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_name_model.dart';
 import 'package:wm_solution/src/pages/finances/components/fin_exterieur/fin_autre_xlsx.dart';
@@ -26,6 +27,7 @@ class TableFinExterieur extends StatefulWidget {
 }
 
 class _TableFinExterieurState extends State<TableFinExterieur> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -65,7 +67,8 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TitleWidget(title: widget.finExterieurNameModel.nomComplet
+                  TitleWidget(
+                      title: widget.finExterieurNameModel.nomComplet
                           .toUpperCase()),
                   Row(
                     children: [
@@ -150,7 +153,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
@@ -308,7 +311,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                       style: bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(recette)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette)} ${monnaieStorage.monney}',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -319,7 +322,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(depenses)} ${monnaieStorage.monney}',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],
@@ -330,7 +333,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   SelectableText(
-                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} \$',
+                      '${NumberFormat.decimalPattern('fr').format(recette - depenses)} ${monnaieStorage.monney}',
                       style: bodyMedium.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.white))
                 ],

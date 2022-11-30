@@ -56,7 +56,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
               const TitleWidget(title: "Projets"),
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, ExploitationRoutes.expProjet);
+                    Navigator.pushNamed(context, BudgetRoutes.budgetDD);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700))
             ],

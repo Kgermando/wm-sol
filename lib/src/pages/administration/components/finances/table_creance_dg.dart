@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/creances_model.dart';
 import 'package:wm_solution/src/pages/finances/components/creances/creance_xlsx.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
@@ -19,6 +20,7 @@ class TableCreanceDG extends StatefulWidget {
 }
 
 class _TableCreanceDGState extends State<TableCreanceDG> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -153,7 +155,7 @@ class _TableCreanceDGState extends State<TableCreanceDG> {
           'libelle': PlutoCell(value: item.libelle),
           'montant': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -339,7 +341,7 @@ class _TableCreanceDGState extends State<TableCreanceDG> {
                     style: bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white)),
                 SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.nonPaye)} \$',
+                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.nonPaye)} ${monnaieStorage.monney}',
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
@@ -350,7 +352,7 @@ class _TableCreanceDGState extends State<TableCreanceDG> {
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white)),
                 SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.paye)} \$',
+                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.paye)} ${monnaieStorage.monney}',
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],
@@ -361,7 +363,7 @@ class _TableCreanceDGState extends State<TableCreanceDG> {
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white)),
                 SelectableText(
-                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.nonPaye - widget.creanceController.paye)} \$',
+                    '${NumberFormat.decimalPattern('fr').format(widget.creanceController.nonPaye - widget.creanceController.paye)} ${monnaieStorage.monney}',
                     style: bodyMedium.copyWith(
                         fontWeight: FontWeight.bold, color: Colors.white))
               ],

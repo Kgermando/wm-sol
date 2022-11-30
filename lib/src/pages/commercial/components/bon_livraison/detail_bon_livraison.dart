@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/bon_livraison/bon_livraison_pdf.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -21,6 +22,7 @@ class DetailBonLivraison extends StatefulWidget {
 }
 
 class _DetailBonLivraisonState extends State<DetailBonLivraison> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -32,79 +34,72 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
     final ProfilController profilController = Get.find();
 
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.bonLivraisonModel.idProduct),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.bonLivraisonModel.idProduct),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const TitleWidget(
+                                        title: "Bon de livraison"),
+                                    Column(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const TitleWidget(
-                                                title: "Bon de livraison"),
-                                            Column(
-                                              children: [
-                                                PrintWidget(
-                                                  tooltip:
-                                                      'Imprimer le document',
-                                                  onPressed: () async {
-                                                    await BonLivraisonPDF.generate(
-                                                        widget
-                                                            .bonLivraisonModel,
-                                                        "\$");
-                                                  },
-                                                ),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .bonLivraisonModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
+                                        PrintWidget(
+                                          tooltip: 'Imprimer le document',
+                                          onPressed: () async {
+                                            await BonLivraisonPDF.generate(
+                                                widget.bonLivraisonModel,
+                                                "${monnaieStorage.monney}");
+                                          },
                                         ),
-                                        dataWidget(
-                                            controller, profilController),
+                                        SelectableText(
+                                            DateFormat("dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .bonLivraisonModel.created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
-                                )
+                                    )
+                                  ],
+                                ),
+                                dataWidget(controller, profilController),
                               ],
                             ),
-                          )))
-                ],
-              ),
-            );
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget dataWidget(
@@ -204,7 +199,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
               ),
               Expanded(
                 child: Text(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(widget.bonLivraisonModel.prixVenteUnit))} \$',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(widget.bonLivraisonModel.prixVenteUnit))} ${monnaieStorage.monney}',
                     style: Responsive.isDesktop(context)
                         ? const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 20)
@@ -230,7 +225,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                 ),
                 Expanded(
                   child: Text(
-                      '${NumberFormat.decimalPattern('fr').format(double.parse(widget.bonLivraisonModel.remise))} \$',
+                      '${NumberFormat.decimalPattern('fr').format(double.parse(widget.bonLivraisonModel.remise))} ${monnaieStorage.monney}',
                       style: Responsive.isDesktop(context)
                           ? const TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 20)

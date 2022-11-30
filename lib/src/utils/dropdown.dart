@@ -1,5 +1,4 @@
 class Dropdown {
-
   List<String> unites = [
     'Unité',
     'Pièces',
@@ -16,7 +15,7 @@ class Dropdown {
     'Bidons',
     'Rames',
     'Cartons',
-    'Fus'
+    'Fus',
     'FC',
     '\$',
     '€',
@@ -24,20 +23,18 @@ class Dropdown {
     'Divers',
   ];
 
-
   List<String> langues = [
     'Français',
     'English',
   ];
 
-   List<String> sexe = [
+  List<String> sexe = [
     'Femme',
     'Homme',
   ];
- 
 
   List<String> departement = [
-    'Administration', 
+    'Administration',
     'Finances',
     'Comptabilites',
     'Budgets',
@@ -47,27 +44,35 @@ class Dropdown {
     'Marketing',
     'Logistique',
     'Actionnaire'
-  ]; 
+  ];
 
-
-  List<String> departementBudget = [ 
+  List<String> departementBudget = [
     'Ressources Humaines',
     'Exploitations',
     'Marketing',
     'Logistique'
   ];
- 
+
   List<String> typeContrat = ['CDI', 'CDD'];
 
   List<String> roleAdmin = [
     '0',
-    '1', /// Niveau d'accreditation le plus élévé
-    '2', /// Niveau d'accreditation pour directeur
-    '3', /// Niveau d'accreditation chef de service
-    '4', /// Niveau d'accreditation agents
-    '5' /// Niveau d'accreditation le moins élévé
+    '1',
+
+    /// Niveau d'accreditation le plus élévé
+    '2',
+
+    /// Niveau d'accreditation pour directeur
+    '3',
+
+    /// Niveau d'accreditation chef de service
+    '4',
+
+    /// Niveau d'accreditation agents
+    '5'
+
+    /// Niveau d'accreditation le moins élévé
   ];
   List<String> roleSuperieur = ['1', '2', '3', '4', '5'];
   List<String> roleAgent = ['4', '5'];
-
 }

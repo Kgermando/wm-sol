@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/creances_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/finances/components/creance_dette/table_creance_remboursement.dart'; 
+import 'package:wm_solution/src/pages/finances/components/creance_dette/table_creance_remboursement.dart';
 import 'package:wm_solution/src/pages/finances/components/creances/approbation_creance.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
@@ -27,6 +28,7 @@ class DetailCreance extends StatefulWidget {
 }
 
 class _DetailCreanceState extends State<DetailCreance> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
@@ -110,9 +112,8 @@ class _DetailCreanceState extends State<DetailCreance> {
                             ),
                             const SizedBox(height: p20),
                             TableCreanceRemboursement(
-                              controller: creanceDetteController, 
-                              creanceModel: widget.creanceModel
-                            ),
+                                controller: creanceDetteController,
+                                creanceModel: widget.creanceModel),
                             const SizedBox(height: p20),
                             ApprobationCreance(
                                 data: widget.creanceModel,
@@ -130,8 +131,9 @@ class _DetailCreanceState extends State<DetailCreance> {
       CreanceDetteController creanceDetteController) {
     double totalCreanceDette = 0.0;
 
-    for (var item in creanceDetteController.creanceDetteList
-        .where((e) => e.creanceDette == "creances" && e.reference == widget.creanceModel.id)) {
+    for (var item in creanceDetteController.creanceDetteList.where((e) =>
+        e.creanceDette == "creances" &&
+        e.reference == widget.creanceModel.id)) {
       totalCreanceDette += double.parse(item.montant);
     }
     double total = 0.0;
@@ -157,7 +159,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                 ),
               )),
               child: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(total)} \$",
+                  "${NumberFormat.decimalPattern('fr').format(total)} ${monnaieStorage.monney}",
                   textAlign: TextAlign.center,
                   style: headline6.copyWith(
                       fontWeight: FontWeight.bold, color: Colors.red.shade700)),
@@ -215,7 +217,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.creanceModel.montant))} \$",
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.creanceModel.montant))} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),
@@ -449,7 +451,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                         borderRadius: BorderRadius.circular(10.0)),
                     labelText: 'Montant',
                     hintText:
-                        'Restant ${NumberFormat.decimalPattern('fr').format(total)} \$'),
+                        'Restant ${NumberFormat.decimalPattern('fr').format(total)} ${monnaieStorage.monney}'),
                 validator: (value) => value != null && value.isEmpty
                     ? 'Ce champs est obligatoire.'
                     : null,
@@ -460,7 +462,7 @@ class _DetailCreanceState extends State<DetailCreance> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "\$",
+                  "${monnaieStorage.monney}",
                   style: headline6!,
                 ))
           ],

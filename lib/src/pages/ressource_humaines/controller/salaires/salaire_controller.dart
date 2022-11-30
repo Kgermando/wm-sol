@@ -15,7 +15,8 @@ class SalaireController extends GetxController
   final PaiementSalaireApi paiementSalaireApi = PaiementSalaireApi();
   final MailApi mailApi = MailApi();
   final ProfilController profilController = Get.find();
-  final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
+  final LignBudgetaireController lignBudgetaireController =
+      Get.put(LignBudgetaireController());
 
   List<PaiementSalaireModel> paiementSalaireList = [];
 
@@ -128,8 +129,8 @@ class SalaireController extends GetxController
     montantPrisConsiderationCalculCotisationsINSSController.dispose();
     totalDuBrutController.dispose();
     super.dispose();
-  }  
-  
+  }
+
   void clear() {
     joursHeuresPayeA100PourecentSalaireController.clear();
     totalDuSalaireController.clear();
@@ -154,7 +155,7 @@ class SalaireController extends GetxController
     totalAPayerAllocationsFamilialesController.clear();
     netAPayerController.clear();
     montantPrisConsiderationCalculCotisationsINSSController.clear();
-    totalDuBrutController.clear(); 
+    totalDuBrutController.clear();
   }
 
   void getList() async {
@@ -514,32 +515,39 @@ class SalaireController extends GetxController
               ? '-'
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString());
-      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) async {
+      await paiementSalaireApi
+          .updateData(paiementSalaireModel)
+          .then((value) async {
         var ligneBudget = lignBudgetaireController.ligneBudgetaireList
-          .where((element) => element.nomLigneBudgetaire == value.ligneBudgetaire)
-          .first;
-
+            .where((element) =>
+                element.nomLigneBudgetaire == value.ligneBudgetaire)
+            .first;
+        print("ressource ${value.ressource}");
         if (value.ressource == "caisse") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
-              nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
-              departement: ligneBudget.departement,
-              periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
-              periodeBudgetFin: ligneBudget.periodeBudgetFin,
-              uniteChoisie: ligneBudget.uniteChoisie,
-              nombreUnite: ligneBudget.nombreUnite,
-              coutUnitaire: ligneBudget.coutUnitaire,
-              coutTotal: ligneBudget.coutTotal,
-              caisse: ligneBudget.caisse,
-              banque: ligneBudget.banque,
-              finExterieur: ligneBudget.finExterieur,
-              signature: ligneBudget.signature,
-              created: ligneBudget.created, 
-              reference: ligneBudget.reference,
-              caisseSortie: ligneBudget.caisseSortie + double.parse(value.salaire),
-              banqueSortie: ligneBudget.banqueSortie,
-              finExterieurSortie: ligneBudget.finExterieurSortie,
-            );
-          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel).then((value) {
+            id: ligneBudget.id,
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie:
+                ligneBudget.caisseSortie + double.parse(value.salaire),
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
             clear();
             paiementSalaireList.clear();
             getList();
@@ -552,27 +560,31 @@ class SalaireController extends GetxController
             _isLoading.value = false;
           });
         }
-        if(value.ressource == "banque") {
+        if (value.ressource == "banque") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
-              nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
-              departement: ligneBudget.departement,
-              periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
-              periodeBudgetFin: ligneBudget.periodeBudgetFin,
-              uniteChoisie: ligneBudget.uniteChoisie,
-              nombreUnite: ligneBudget.nombreUnite,
-              coutUnitaire: ligneBudget.coutUnitaire,
-              coutTotal: ligneBudget.coutTotal,
-              caisse: ligneBudget.caisse,
-              banque: ligneBudget.banque,
-              finExterieur: ligneBudget.finExterieur,
-              signature: ligneBudget.signature,
-              created: ligneBudget.created, 
-              reference: ligneBudget.reference,
-              caisseSortie: ligneBudget.caisseSortie,
-              banqueSortie: ligneBudget.banqueSortie + double.parse(value.salaire),
-              finExterieurSortie: ligneBudget.finExterieurSortie,
-            );
-          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel).then((value) {
+            id: ligneBudget.id,
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie:
+                ligneBudget.banqueSortie + double.parse(value.salaire),
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
             clear();
             paiementSalaireList.clear();
             getList();
@@ -585,27 +597,31 @@ class SalaireController extends GetxController
             _isLoading.value = false;
           });
         }
-        if(value.ressource == "finExterieur") {
+        if (value.ressource == "finExterieur") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
-              nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
-              departement: ligneBudget.departement,
-              periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
-              periodeBudgetFin: ligneBudget.periodeBudgetFin,
-              uniteChoisie: ligneBudget.uniteChoisie,
-              nombreUnite: ligneBudget.nombreUnite,
-              coutUnitaire: ligneBudget.coutUnitaire,
-              coutTotal: ligneBudget.coutTotal,
-              caisse: ligneBudget.caisse,
-              banque: ligneBudget.banque,
-              finExterieur: ligneBudget.finExterieur,
-              signature: ligneBudget.signature,
-              created: ligneBudget.created, 
-              reference: ligneBudget.reference,
-              caisseSortie: ligneBudget.caisseSortie,
-              banqueSortie: ligneBudget.banqueSortie,
-              finExterieurSortie: ligneBudget.finExterieurSortie + double.parse(value.salaire),
-            );
-          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel).then((value) {
+            id: ligneBudget.id,
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie:
+                ligneBudget.finExterieurSortie + double.parse(value.salaire),
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
             clear();
             paiementSalaireList.clear();
             getList();
@@ -617,7 +633,7 @@ class SalaireController extends GetxController
                 snackPosition: SnackPosition.TOP);
             _isLoading.value = false;
           });
-        } 
+        }
       });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",

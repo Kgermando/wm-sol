@@ -4,11 +4,12 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
 import 'package:wm_solution/src/utils/regex.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -20,6 +21,7 @@ class AddStockGlobal extends StatefulWidget {
 }
 
 class _AddStockGlobalState extends State<AddStockGlobal> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final StockGlobalController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
@@ -29,91 +31,88 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
   Widget build(BuildContext context) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Form(
-                                      key: controller.formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleWidget(
-                                              title: "Ajout stock global"),
-                                          const SizedBox(
-                                            height: p10,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text('Mode achat :',
-                                                    textAlign: TextAlign.start,
-                                                    style: bodyMedium!.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                              const SizedBox(
-                                                width: p10,
-                                              ),
-                                              Expanded(child: modeAchatField())
-                                            ],
-                                          ),
-                                          idProductField(),
-                                          ResponsiveChildWidget(
-                                              child1: quantityAchatField(),
-                                              child2: priceAchatUnitField()),
-                                          ResponsiveChildWidget(
-                                              child1: prixVenteField(),
-                                              child2: tvaField()),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          BtnWidget(
-                                              title: 'Soumettre',
-                                              isLoading: controller.isLoading,
-                                              press: () {
-                                                final form = controller
-                                                    .formKey.currentState!;
-                                                if (form.validate()) {
-                                                  controller.submit();
-                                                  form.reset();
-                                                }
-                                              })
-                                        ],
-                                      ),
-                                    ),
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
+                            child: Form(
+                              key: controller.formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const TitleWidget(
+                                      title: "Ajout stock global"),
+                                  const SizedBox(
+                                    height: p10,
                                   ),
-                                )
-                              ],
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text('Mode achat :',
+                                            textAlign: TextAlign.start,
+                                            style: bodyMedium!.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      const SizedBox(
+                                        width: p10,
+                                      ),
+                                      Expanded(child: modeAchatField())
+                                    ],
+                                  ),
+                                  idProductField(),
+                                  ResponsiveChildWidget(
+                                      child1: quantityAchatField(),
+                                      child2: priceAchatUnitField()),
+                                  ResponsiveChildWidget(
+                                      child1: prixVenteField(),
+                                      child2: tvaField()),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  BtnWidget(
+                                      title: 'Soumettre',
+                                      isLoading: controller.isLoading,
+                                      press: () {
+                                        final form =
+                                            controller.formKey.currentState!;
+                                        if (form.validate()) {
+                                          controller.submit();
+                                          form.reset();
+                                        }
+                                      })
+                                ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            );
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget modeAchatField() {
@@ -315,6 +314,8 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
     pavTVA = controller.prixVenteUnit + pvau;
     return Container(
         margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-        child: Text('PVU: ${pavTVA!.toStringAsFixed(2)} \$', style: bodyText1));
+        child: Text(
+            'PVU: ${pavTVA!.toStringAsFixed(2)} ${monnaieStorage.monney}',
+            style: bodyText1));
   }
 }

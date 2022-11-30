@@ -3,6 +3,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/commerciale/history_rabitaillement_api.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
@@ -28,7 +29,9 @@ class TableHistoryRavitaillementProduit extends StatefulWidget {
 
 class _TableHistoryRavitaillementProduitState
     extends State<TableHistoryRavitaillementProduit> {
-  final HistoryRavitaillementController historyRavitaillementController = Get.find();
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+  final HistoryRavitaillementController historyRavitaillementController =
+      Get.find();
   final ProfilController profilController = Get.find();
 
   List<PlutoColumn> columns = [];
@@ -192,7 +195,7 @@ class _TableHistoryRavitaillementProduitState
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix d\'Achat Unitaire \$',
+        title: 'Prix d\'Achat Unitaire ${monnaieStorage.monney}',
         field: 'priceAchatUnit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -204,7 +207,7 @@ class _TableHistoryRavitaillementProduitState
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix de vente Unitaire \$',
+        title: 'Prix de vente Unitaire ${monnaieStorage.monney}',
         field: 'prixVenteUnit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

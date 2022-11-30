@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -18,7 +19,7 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 
 class TransRestPdf {
   static Future<void> generate(List<TransRestAgentsModel> transRestAgentsList,
-      TransportRestaurationModel data) async {
+      TransportRestaurationModel data, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -27,7 +28,7 @@ class TransRestPdf {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(data),
         Divider(),
-        buildBody(transRestAgentsList, data)
+        buildBody(transRestAgentsList, data, monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -121,7 +122,7 @@ class TransRestPdf {
       );
 
   static Widget buildBody(List<TransRestAgentsModel> transRestAgentsList,
-      TransportRestaurationModel data) {
+      TransportRestaurationModel data, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
@@ -183,12 +184,12 @@ class TransRestPdf {
       Divider(
         color: PdfColors.amber,
       ),
-      tableListAgents(transRestAgentsList, data)
+      tableListAgents(transRestAgentsList, data, monnaieStorage)
     ]);
   }
 
   static Widget tableListAgents(List<TransRestAgentsModel> transRestAgentsList,
-      TransportRestaurationModel data) {
+      TransportRestaurationModel data, MonnaieStorage monnaieStorage) {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Table(
@@ -201,7 +202,7 @@ class TransRestPdf {
         },
         children: [
           tableRowHeader(),
-          for (var item in transRestAgentsList) tableRow(item, data)
+          for (var item in transRestAgentsList) tableRow(item, data, monnaieStorage)
         ],
       ),
     );
@@ -229,7 +230,7 @@ class TransRestPdf {
   }
 
   static TableRow tableRow(
-      TransRestAgentsModel item, TransportRestaurationModel data) {
+      TransRestAgentsModel item, TransportRestaurationModel data, MonnaieStorage monnaieStorage) {
     return TableRow(children: [
       Container(
         padding: const EdgeInsets.all(p10),
@@ -246,7 +247,7 @@ class TransRestPdf {
       Container(
         padding: const EdgeInsets.all(p10),
         child: Text(
-            "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} \$"),
+            "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
       ),
     ]);
   }

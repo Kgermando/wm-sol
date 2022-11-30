@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -20,6 +21,7 @@ class DetailCaisse extends StatefulWidget {
 }
 
 class _DetailCaisseState extends State<DetailCaisse> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
@@ -28,68 +30,70 @@ class _DetailCaisseState extends State<DetailCaisse> {
     final CaisseController controller = Get.find();
 
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.caisseModel.numeroOperation),
-      drawer: const DrawerMenu(),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: p20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.caisseModel.numeroOperation),
+        drawer: const DrawerMenu(),
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    TitleWidget(
-                                        title: widget.caisseModel.caisseName),
-                                    Column(
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SelectableText(
-                                            DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(
-                                                    widget.caisseModel.created),
-                                            textAlign: TextAlign.start),
+                                        TitleWidget(
+                                            title:
+                                                widget.caisseModel.caisseName),
+                                        Column(
+                                          children: [
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy HH:mm")
+                                                    .format(widget
+                                                        .caisseModel.created),
+                                                textAlign: TextAlign.start),
+                                          ],
+                                        )
                                       ],
-                                    )
+                                    ),
+                                    dataWidget(),
                                   ],
                                 ),
-                                dataWidget(),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
-        ],
-      ),) 
-    );
+                              ),
+                            )
+                          ],
+                        ),
+                      )))
+            ],
+          ),
+        ));
   }
 
   Widget dataWidget() {
@@ -134,7 +138,7 @@ class _DetailCaisseState extends State<DetailCaisse> {
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.caisseModel.montant))} \$",
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.caisseModel.montant))} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),

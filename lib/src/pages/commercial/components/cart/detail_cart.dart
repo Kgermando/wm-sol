@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -19,6 +20,7 @@ class DetailCart extends StatefulWidget {
 }
 
 class _DetailCartState extends State<DetailCart> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
@@ -37,65 +39,69 @@ class _DetailCartState extends State<DetailCart> {
         onPressed: () {},
       ),
       body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-              flex: 5,
-              child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: p20),
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                      visible: !Responsive.isMobile(context),
+                      child: const Expanded(flex: 1, child: DrawerMenu())),
+                  Expanded(
+                      flex: 5,
+                      child: SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, bottom: p8, right: p20, left: p20),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TitleWidget(title: 'Votre panier'),
-                                    Column(
+                                Card(
+                                  elevation: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        SelectableText(
-                                            DateFormat("dd-MM-yy HH:mm")
-                                                .format(widget.cart.created),
-                                            textAlign: TextAlign.start),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const TitleWidget(
+                                                title: 'Votre panier'),
+                                            Column(
+                                              children: [
+                                                SelectableText(
+                                                    DateFormat("dd-MM-yy HH:mm")
+                                                        .format(widget
+                                                            .cart.created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        dataWidget(),
+                                        Divider(
+                                          color: mainColor,
+                                        ),
+                                        const SizedBox(height: p10),
+                                        total(),
                                       ],
-                                    )
-                                  ],
-                                ),
-                                dataWidget(),
-                                Divider(
-                                  color: mainColor,
-                                ),
-                                const SizedBox(height: p10),
-                                total(),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )))
-        ],
-      )) ,
+                          )))
+                ],
+              )),
     );
   }
 
@@ -200,7 +206,8 @@ class _DetailCartState extends State<DetailCart> {
                 const Text('Montant à payé',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                     overflow: TextOverflow.ellipsis),
-                Text('${NumberFormat.decimalPattern('fr').format(sum)} \$',
+                Text(
+                    '${NumberFormat.decimalPattern('fr').format(sum)} ${monnaieStorage.monney}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

@@ -1,9 +1,9 @@
 
 class MonnaieDropDown {
   List<String> devises = [
-    'CDF',
-    'USD',
-    'EURO',
+    '\$', 
+    '€',
+    'CDF', 
     'FCFA'
   ];
 }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/components/creances/table_creance.dart';
@@ -20,6 +21,7 @@ class CreancePage extends StatefulWidget {
 }
 
 class _CreancePageState extends State<CreancePage> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Créances";
@@ -207,7 +209,7 @@ class _CreancePageState extends State<CreancePage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "\$",
+                  "${monnaieStorage.monney}",
                   style: headline6!,
                 ))
           ],

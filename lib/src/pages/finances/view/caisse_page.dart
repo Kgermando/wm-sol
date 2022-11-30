@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/components/caisses/table_caisse.dart';
@@ -23,6 +24,7 @@ class CaissePage extends StatefulWidget {
 }
 
 class _CaissePageState extends State<CaissePage> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final CaisseController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
@@ -308,7 +310,7 @@ class _CaissePageState extends State<CaissePage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "\$",
+                  "${monnaieStorage.monney}",
                   style: headline6!,
                 ))
           ],

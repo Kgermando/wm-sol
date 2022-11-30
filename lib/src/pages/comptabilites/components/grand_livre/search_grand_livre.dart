@@ -1,8 +1,10 @@
 import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -17,6 +19,7 @@ class SearchGrandLivre extends StatefulWidget {
 }
 
 class _SearchGrandLivreState extends State<SearchGrandLivre> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
 
@@ -44,7 +47,9 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
-          name: 'Libele', width: 200, stringValue: (row) => row.libele),
+          name: 'Libele',
+          width: 200,
+          stringValue: (row) => row.libele),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
@@ -62,7 +67,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
           width: 100,
           stringValue: (row) => (row.debit == "0")
               ? "-"
-              : "${NumberFormat.decimalPattern('fr').format(double.parse(row.debit))} \$"),
+              : "${NumberFormat.decimalPattern('fr').format(double.parse(row.debit))} ${monnaieStorage.monney}"),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
@@ -70,7 +75,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
           width: 100,
           stringValue: (row) => (row.credit == "0")
               ? "-"
-              : "${NumberFormat.decimalPattern('fr').format(double.parse(row.credit))} \$"),
+              : "${NumberFormat.decimalPattern('fr').format(double.parse(row.credit))} ${monnaieStorage.monney}"),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
@@ -78,7 +83,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
           width: 100,
           stringValue: (row) {
             double solde = double.parse(row.debit) - double.parse(row.credit);
-            return "${NumberFormat.decimalPattern('fr').format(solde)} \$";
+            return "${NumberFormat.decimalPattern('fr').format(solde)} ${monnaieStorage.monney}";
           }),
     ]);
     super.initState();
@@ -114,16 +119,15 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
                         shrinkWrap: true,
                         children: [
                           Text.rich(TextSpan(
-                            text: 'Résultats pour le compte <<', // default text style
+                            text:
+                                'Résultats pour le compte <<', // default text style
                             children: <TextSpan>[
                               TextSpan(
                                   text: ' $journal ',
                                   style: TextStyle(
                                       fontStyle: FontStyle.italic,
                                       color: mainColor)),
-                              const TextSpan(
-                                  text: '>> '),
-                               
+                              const TextSpan(text: '>> '),
                             ],
                           )),
                           const SizedBox(height: p20),
@@ -166,7 +170,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
                       style: headlineMedium!.copyWith(
                           color: Colors.blue, fontWeight: FontWeight.bold)),
                   child2: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalDebit)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalDebit)} ${monnaieStorage.monney}",
                       style: headlineMedium.copyWith(color: Colors.blue)))),
           Expanded(
               child: ResponsiveChildWidget(
@@ -174,7 +178,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
                       style: headlineMedium.copyWith(
                           color: Colors.green, fontWeight: FontWeight.bold)),
                   child2: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalCredit)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalCredit)} ${monnaieStorage.monney}",
                       style: headlineMedium.copyWith(color: Colors.green)))),
           Expanded(
               child: ResponsiveChildWidget(
@@ -182,7 +186,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
                       style: headlineMedium.copyWith(
                           color: Colors.red, fontWeight: FontWeight.bold)),
                   child2: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalDebit - totalCredit)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalDebit - totalCredit)} ${monnaieStorage.monney}",
                       style: headlineMedium.copyWith(color: Colors.red)))),
         ],
       ),

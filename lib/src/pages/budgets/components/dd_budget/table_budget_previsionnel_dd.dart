@@ -61,7 +61,7 @@ class _TableBudgetPrevisionnelDDState extends State<TableBudgetPrevisionnelDD> {
               IconButton(
                   onPressed: () {
                     Navigator.pushNamed(
-                        context, BudgetRoutes.budgetBudgetPrevisionel);
+                        context, BudgetRoutes.budgetDD);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700))
             ],

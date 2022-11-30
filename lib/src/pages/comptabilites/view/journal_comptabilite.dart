@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/journals/table_journal.dart';
@@ -22,6 +23,7 @@ class JournalLivreComptabilite extends StatefulWidget {
 }
 
 class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final JournalController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabilités";
@@ -218,7 +220,6 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                                   },
                                 ),
                               ),
-                              debit(),
                             ],
                           ),
                           child2: Column(
@@ -345,10 +346,10 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                                   },
                                 ),
                               ),
-                              credit()
                             ],
                           ),
                         ),
+                        montantWidget(),
                         BtnWidget(
                             title: 'Soumettre',
                             press: () {
@@ -390,7 +391,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
         ));
   }
 
-  Widget debit() {
+  Widget montantWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: Row(
@@ -398,7 +399,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
             Expanded(
               flex: 3,
               child: TextFormField(
-                controller: controller.montantDebitController,
+                controller: controller.montantController,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
@@ -421,43 +422,8 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
             const SizedBox(width: p8),
             Expanded(
                 flex: 1,
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
-          ],
-        ));
-  }
-
-  Widget credit() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: TextFormField(
-                controller: controller.montantCreditController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'Crédit',
-                ),
-                validator: (value) {
-                  if (value != null && value.isEmpty) {
-                    return 'Ce champs est obligatoire';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-            ),
-            const SizedBox(width: p8),
-            Expanded(
-                flex: 1,
-                child: Text("\$", style: Theme.of(context).textTheme.headline6))
+                child: Text("${monnaieStorage.monney}",
+                    style: Theme.of(context).textTheme.headline6))
           ],
         ));
   }

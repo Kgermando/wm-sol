@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_bilan_ref_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
@@ -32,118 +33,117 @@ class _DetailBilanState extends State<DetailBilan> {
   final CompteBilanRefController controller = Get.find();
   final BilanController bilanController = Get.find();
   final ProfilController profilController = Get.find();
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabiliés";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.bilanModel.titleBilan),
-      drawer: const DrawerMenu(),
-      floatingActionButton: (widget.bilanModel.isSubmit == 'false' &&
-              widget.bilanModel.approbationDD == '-')
-          ? FloatingActionButton.extended(
-              label: const Text("Ajouter une écriture"),
-              tooltip: "Ecriture sur la feuille bilan",
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                newEcritureDialog(controller);
-              },
-            )
-          : Container(),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
-            flex: 5,
-            child: SingleChildScrollView(
-                controller: ScrollController(),
-                physics: const ScrollPhysics(),
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      top: p20, bottom: p8, right: p20, left: p20),
-                  decoration: const BoxDecoration(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(20))),
-                  child: Column(
-                    children: [
-                      Card(
-                        elevation: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: p20),
-                          child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const TitleWidget(title: "Bilan"),
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          if (widget.bilanModel
-                                                  .isSubmit ==
-                                              'false') // Uniqyement celui a remplit le document
-                                            sendButton(),
-                                          if (widget.bilanModel
-                                                  .approbationDD ==
-                                              "Unapproved")
-                                            deleteButton(),
-                                          PrintWidget(
-                                              tooltip:
-                                                  'Imprimer le document',
-                                              onPressed: () async {
-                                                await BilanPdf.generate(
-                                                    widget.bilanModel,
-                                                    controller
-                                                        .compteActifList,
-                                                    controller
-                                                        .comptePassifList);
-                                              }),
-                                        ],
-                                      ),
-                                      Text(
-                                          DateFormat(
-                                                  "dd-MM-yyyy HH:mm")
-                                              .format(widget
-                                                  .bilanModel
-                                                  .created),
-                                          textAlign: TextAlign.start),
-                                    ],
-                                  )
-                                ],
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.bilanModel.titleBilan),
+        drawer: const DrawerMenu(),
+        floatingActionButton: (widget.bilanModel.isSubmit == 'false' &&
+                widget.bilanModel.approbationDD == '-')
+            ? FloatingActionButton.extended(
+                label: const Text("Ajouter une écriture"),
+                tooltip: "Ecriture sur la feuille bilan",
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  newEcritureDialog(controller);
+                },
+              )
+            : Container(),
+        body: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const TitleWidget(title: "Bilan"),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                if (widget
+                                                        .bilanModel.isSubmit ==
+                                                    'false') // Uniqyement celui a remplit le document
+                                                  sendButton(),
+                                                if (widget.bilanModel
+                                                        .approbationDD ==
+                                                    "Unapproved")
+                                                  deleteButton(),
+                                                PrintWidget(
+                                                    tooltip:
+                                                        'Imprimer le document',
+                                                    onPressed: () async {
+                                                      await BilanPdf.generate(
+                                                          widget.bilanModel,
+                                                          controller
+                                                              .compteActifList,
+                                                          controller
+                                                              .comptePassifList,
+                                                          monnaieStorage);
+                                                    }),
+                                              ],
+                                            ),
+                                            Text(
+                                                DateFormat("dd-MM-yyyy HH:mm")
+                                                    .format(widget
+                                                        .bilanModel.created),
+                                                textAlign: TextAlign.start),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    dataWidget(state!),
+                                    totalMontant(controller)
+                                  ],
+                                ),
                               ),
-                              dataWidget(state!),
-                              totalMontant(controller)
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: p20),
+                            if (widget.bilanModel.isSubmit == 'true')
+                              ApprobationCompteResultat(
+                                  data: widget.bilanModel,
+                                  controller: bilanController,
+                                  profilController: profilController)
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: p20),
-                      if (widget.bilanModel.isSubmit == 'true')
-                      ApprobationCompteResultat(
-                        data: widget.bilanModel,
-                        controller: bilanController,
-                        profilController: profilController)
-                    ],
-                  ),
-                )))
-        ],
-      ),) 
-    );
+                      )))
+            ],
+          ),
+        ));
   }
 
   Widget dataWidget(List<CompteBilanRefModel> state) {
@@ -342,7 +342,7 @@ class _DetailBilanState extends State<DetailBilan> {
                           ),
                         )),
                         child: Text(
-                            "${NumberFormat.decimalPattern('fr').format(double.parse(actif.montant))} \$",
+                            "${NumberFormat.decimalPattern('fr').format(double.parse(actif.montant))} ${monnaieStorage.monney}",
                             textAlign: TextAlign.center,
                             style: bodyMedium),
                       ),
@@ -447,7 +447,7 @@ class _DetailBilanState extends State<DetailBilan> {
                           ),
                         )),
                         child: Text(
-                            "${NumberFormat.decimalPattern('fr').format(double.parse(passif.montant))} \$",
+                            "${NumberFormat.decimalPattern('fr').format(double.parse(passif.montant))} ${monnaieStorage.monney}",
                             textAlign: TextAlign.center,
                             style: bodyMedium),
                       ),
@@ -691,7 +691,7 @@ class _DetailBilanState extends State<DetailBilan> {
                 Expanded(
                   flex: Responsive.isMobile(context) ? 2 : 3,
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalActif)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalActif)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.start,
                       style: headline6!.copyWith(color: Colors.red.shade700)),
                 )
@@ -713,7 +713,7 @@ class _DetailBilanState extends State<DetailBilan> {
                 Expanded(
                   flex: Responsive.isMobile(context) ? 2 : 3,
                   child: Text(
-                      "${NumberFormat.decimalPattern('fr').format(totalPassif)} \$",
+                      "${NumberFormat.decimalPattern('fr').format(totalPassif)} ${monnaieStorage.monney}",
                       textAlign: TextAlign.start,
                       style: headline6.copyWith(color: Colors.red.shade700)),
                 )
@@ -767,7 +767,8 @@ class _DetailBilanState extends State<DetailBilan> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler', style: TextStyle(color: Colors.green)),
+              child:
+                  const Text('Annuler', style: TextStyle(color: Colors.green)),
             ),
             TextButton(
               onPressed: () async {
@@ -1003,7 +1004,7 @@ class _DetailBilanState extends State<DetailBilan> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Montant \$',
+            labelText: 'Montant ${monnaieStorage.monney}',
           ),
           validator: (value) {
             if (value != null && value.isEmpty) {

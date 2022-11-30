@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
 import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ class TableFactureCart extends StatefulWidget {
 }
 
 class _TableFactureCartState extends State<TableFactureCart> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   EasyTableModel<CartModel>? _model;
   List<CartModel> cartItemList = [];
 
@@ -46,8 +49,8 @@ class _TableFactureCartState extends State<TableFactureCart> {
           stringValue: (row) {
             return (double.parse(row.quantityCart) >=
                     double.parse(row.qtyRemise))
-                ? "${NumberFormat.decimalPattern('fr').format(double.parse(row.remise))} \$"
-                : "${NumberFormat.decimalPattern('fr').format(double.parse(row.priceCart))} \$";
+                ? "${NumberFormat.decimalPattern('fr').format(double.parse(row.remise))} ${monnaieStorage.monney}"
+                : "${NumberFormat.decimalPattern('fr').format(double.parse(row.priceCart))} ${monnaieStorage.monney}";
           }),
       EasyTableColumn(name: 'TVA', stringValue: (row) => "${row.tva} %"),
       EasyTableColumn(
@@ -70,7 +73,7 @@ class _TableFactureCartState extends State<TableFactureCart> {
               total +=
                   double.parse(row.priceCart) * double.parse(row.quantityCart);
             }
-            return "${NumberFormat.decimalPattern('fr').format(total)} \$";
+            return "${NumberFormat.decimalPattern('fr').format(total)} ${monnaieStorage.monney}";
           })
     ]);
   }
