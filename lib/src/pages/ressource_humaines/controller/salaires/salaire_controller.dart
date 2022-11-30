@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/mails/mail_api.dart';
 import 'package:wm_solution/src/api/rh/paiement_salaire_api.dart';
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/mail/mail_model.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/utils/salaire_dropsown.dart';
 
 class SalaireController extends GetxController
     with StateMixin<List<PaiementSalaireModel>> {
   final PaiementSalaireApi paiementSalaireApi = PaiementSalaireApi();
-  final ProfilController profilController = Get.find();
   final MailApi mailApi = MailApi();
+  final ProfilController profilController = Get.find();
+  final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
 
   List<PaiementSalaireModel> paiementSalaireList = [];
 
@@ -511,17 +514,110 @@ class SalaireController extends GetxController
               ? '-'
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString());
-      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) {
-        clear();
-        paiementSalaireList.clear();
-        getList();
-        Get.back();
-        Get.snackbar(
-            "Effectuée avec succès!", "Le document a bien été sauvegader",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
+      await paiementSalaireApi.updateData(paiementSalaireModel).then((value) async {
+        var ligneBudget = lignBudgetaireController.ligneBudgetaireList
+          .where((element) => element.nomLigneBudgetaire == value.ligneBudgetaire)
+          .first;
+
+        if (value.ressource == "caisse") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+              nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+              departement: ligneBudget.departement,
+              periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+              periodeBudgetFin: ligneBudget.periodeBudgetFin,
+              uniteChoisie: ligneBudget.uniteChoisie,
+              nombreUnite: ligneBudget.nombreUnite,
+              coutUnitaire: ligneBudget.coutUnitaire,
+              coutTotal: ligneBudget.coutTotal,
+              caisse: ligneBudget.caisse,
+              banque: ligneBudget.banque,
+              finExterieur: ligneBudget.finExterieur,
+              signature: ligneBudget.signature,
+              created: ligneBudget.created, 
+              reference: ligneBudget.reference,
+              caisseSortie: ligneBudget.caisseSortie + double.parse(value.salaire),
+              banqueSortie: ligneBudget.banqueSortie,
+              finExterieurSortie: ligneBudget.finExterieurSortie,
+            );
+          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel).then((value) {
+            clear();
+            paiementSalaireList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if(value.ressource == "banque") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+              nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+              departement: ligneBudget.departement,
+              periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+              periodeBudgetFin: ligneBudget.periodeBudgetFin,
+              uniteChoisie: ligneBudget.uniteChoisie,
+              nombreUnite: ligneBudget.nombreUnite,
+              coutUnitaire: ligneBudget.coutUnitaire,
+              coutTotal: ligneBudget.coutTotal,
+              caisse: ligneBudget.caisse,
+              banque: ligneBudget.banque,
+              finExterieur: ligneBudget.finExterieur,
+              signature: ligneBudget.signature,
+              created: ligneBudget.created, 
+              reference: ligneBudget.reference,
+              caisseSortie: ligneBudget.caisseSortie,
+              banqueSortie: ligneBudget.banqueSortie + double.parse(value.salaire),
+              finExterieurSortie: ligneBudget.finExterieurSortie,
+            );
+          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel).then((value) {
+            clear();
+            paiementSalaireList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if(value.ressource == "finExterieur") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+              nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+              departement: ligneBudget.departement,
+              periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+              periodeBudgetFin: ligneBudget.periodeBudgetFin,
+              uniteChoisie: ligneBudget.uniteChoisie,
+              nombreUnite: ligneBudget.nombreUnite,
+              coutUnitaire: ligneBudget.coutUnitaire,
+              coutTotal: ligneBudget.coutTotal,
+              caisse: ligneBudget.caisse,
+              banque: ligneBudget.banque,
+              finExterieur: ligneBudget.finExterieur,
+              signature: ligneBudget.signature,
+              created: ligneBudget.created, 
+              reference: ligneBudget.reference,
+              caisseSortie: ligneBudget.caisseSortie,
+              banqueSortie: ligneBudget.banqueSortie,
+              finExterieurSortie: ligneBudget.finExterieurSortie + double.parse(value.salaire),
+            );
+          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel).then((value) {
+            clear();
+            paiementSalaireList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        } 
       });
     } catch (e) {
       Get.snackbar("Erreur de soumission", "$e",

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/budgets/departement_budget_api.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/utils/dropdown.dart';
 
 class BudgetPrevisionnelController extends GetxController
     with StateMixin<List<DepartementBudgetModel>> {
@@ -129,25 +128,23 @@ class BudgetPrevisionnelController extends GetxController
     try {
       _isLoading.value = true;
       final departementBudgetModel = DepartementBudgetModel(
-          id: data.id,
-          title: data.title,
-          departement: data.departement,
-          periodeDebut: data.periodeDebut,
-          periodeFin: data.periodeFin,
-          signature: data.signature,
-          createdRef: data.createdRef,
-          created: data.created,
-          isSubmit: 'true',
-          approbationDG: data.approbationDG,
-          motifDG: data.motifDG,
-          signatureDG: data.signatureDG,
-          approbationDD: data.approbationDD,
-          motifDD: data.motifDD,
-          signatureDD: data.signatureDD
+        id: data.id,
+        title: data.title,
+        departement: data.departement,
+        periodeDebut: data.periodeDebut,
+        periodeFin: data.periodeFin,
+        signature: data.signature,
+        createdRef: data.createdRef,
+        created: data.created,
+        isSubmit: 'true',
+        approbationDG: data.approbationDG,
+        motifDG: data.motifDG,
+        signatureDG: data.signatureDG,
+        approbationDD: data.approbationDD,
+        motifDD: data.motifDD,
+        signatureDD: data.signatureDD
       );
-      await depeartementBudgetApi
-          .updateData(departementBudgetModel)
-          .then((value) {
+      await depeartementBudgetApi.updateData(departementBudgetModel).then((value) {
         clear();
         departementBudgetList.clear();
         getList();

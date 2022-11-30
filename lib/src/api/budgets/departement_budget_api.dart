@@ -11,8 +11,7 @@ import 'package:http/http.dart' as http;
 class DepeartementBudgetApi extends GetConnect {
   var client = http.Client();
 
-  Future<List<DepartementBudgetModel>> getAllData() async {
-    // Map<String, String> header = headers;
+  Future<List<DepartementBudgetModel>> getAllData() async { 
     Map<String, String> header = headers;
     var resp = await client.get(budgetDepartementsUrl, headers: header);
 

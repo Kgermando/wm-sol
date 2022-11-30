@@ -8,9 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:wm_solution/main.dart';
-import 'package:wm_solution/src/api/auth/auth_api.dart';
-import 'package:wm_solution/src/models/users/user_model.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

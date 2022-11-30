@@ -12,9 +12,10 @@ class LigneBudgetaire extends StatefulWidget {
   const LigneBudgetaire(
       {super.key,
       required this.departementBudgetModel,
-      required this.lignBudgetaireController});
+      required this.lignBudgetaireController, required this.ligneBudgetaireList});
   final DepartementBudgetModel departementBudgetModel;
   final LignBudgetaireController lignBudgetaireController;
+  final List<LigneBudgetaireModel> ligneBudgetaireList;
 
   @override
   State<LigneBudgetaire> createState() => _LigneBudgetaireState();
@@ -65,7 +66,8 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
                   tooltip: 'Rafraichir',
                   onPressed: () {
                     Navigator.pushNamed(
-                        context, BudgetRoutes.budgetBudgetPrevisionelDetail, arguments: widget.departementBudgetModel);
+                        context, BudgetRoutes.budgetBudgetPrevisionelDetail,
+                        arguments: widget.departementBudgetModel);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700)),
             ],
@@ -115,7 +117,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.lignBudgetaireController.ligneBudgetaireList
+    var dataList = widget.ligneBudgetaireList
         .where((p0) => p0.reference == widget.departementBudgetModel.id)
         .toList();
     var i = dataList.length;

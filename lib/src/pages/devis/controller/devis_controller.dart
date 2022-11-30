@@ -6,14 +6,19 @@ import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/priority_dropdown.dart';
 
 class DevisController extends GetxController with StateMixin<List<DevisModel>> {
   final DevisAPi devisAPi = DevisAPi();
   final ProfilController profilController = Get.find();
+  final DevisListObjetController devisListObjetController = Get.put(DevisListObjetController());
+  final LignBudgetaireController lignBudgetaireController =
+      Get.put(LignBudgetaireController());
 
-  var devisList = <DevisModel>[].obs;
+  List<DevisModel> devisList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -68,7 +73,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
 
   void getList() async {
     devisAPi.getAllData().then((response) {
-      devisList.assignAll(response);
+      devisList.addAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -366,16 +371,128 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
             (ligneBudgtaire.toString() == '') ? '-' : ligneBudgtaire.toString(),
         ressource: (ressource.toString() == '') ? '-' : ressource.toString(),
       );
-      await devisAPi.updateData(devisModel).then((value) {
-        clear();
-        devisList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
+      await devisAPi.updateData(devisModel).then((value) async {
+        double coutTotal = 0.0;
+        var transRestAgentList = devisListObjetController
+            .devisListObjetList
+            .where((p0) => p0.reference == value.id)
+            .toList();
+        for (var element in transRestAgentList) {
+          coutTotal += double.parse(element.montantGlobal);
+        }
+
+        var ligneBudget = lignBudgetaireController.ligneBudgetaireList
+          .where((element) =>
+              element.nomLigneBudgetaire == value.ligneBudgetaire)
+          .first;
+
+        if (value.ressource == "caisse") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie + coutTotal,
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            devisList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if (value.ressource == "banque") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie:
+                ligneBudget.banqueSortie + coutTotal,
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            devisList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if (value.ressource == "finExterieur") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie:
+                ligneBudget.finExterieurSortie + coutTotal,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            devisList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        } 
+
       });
     } catch (e) {
       Get.snackbar("Erreur lors de la soumission", "$e",

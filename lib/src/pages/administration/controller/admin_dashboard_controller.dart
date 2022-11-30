@@ -1,12 +1,5 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
-import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
-import 'package:wm_solution/src/models/devis/devis_models.dart';
-import 'package:wm_solution/src/models/exploitations/projet_model.dart';
-import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
-import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
@@ -66,14 +59,6 @@ class AdminDashboardController extends GetxController {
   // var actionnaireCotisationList = await ActionnaireCotisationApi().getAllData();
 
   List<LigneBudgetaireModel> ligneBudgetaireList = [];
-  List<CampaignModel> dataCampaignList = [];
-  List<DevisModel> dataDevisList = [];
-  List<DevisListObjetsModel> devisListObjetsList = []; // avec montant
-  List<ProjetModel> dataProjetList = [];
-  List<PaiementSalaireModel> dataSalaireList = [];
-  List<TransportRestaurationModel> dataTransRestList = [];
-  List<TransRestAgentsModel> tansRestAgentList = []; // avec montant
-  List<DepartementBudgetModel> departementsList = [];
 
   // RH
   final _agentsCount = 0.obs;
@@ -84,20 +69,21 @@ class AdminDashboardController extends GetxController {
 
   // Budgets
   double coutTotal = 0.0;
-  double sommeEnCours = 0.0; // cest la somme des 4 departements
-  double sommeRestantes =
-      0.0; // la somme restante apres la soustration entre coutTotal - sommeEnCours
-  double poursentExecution = 0;
-  // Total par departements
-  double totalCampaign = 0.0;
-  double totalProjet = 0.0;
-  double totalSalaire = 0.0;
-  double totalDevis = 0.0;
-  double totalTransRest = 0.0;
+  double poursentExecutionTotal = 0.0;
+  double poursentExecution = 0.0;
+  double caisseSolde = 0.0;
+  double banqueSolde = 0.0;
+  double finExterieurSolde = 0.0;
+
+  double caisse = 0.0;
+  double banque = 0.0;
+  double finExterieur = 0.0;
+  double caisseSortie = 0.0;
+  double banqueSortie = 0.0;
+  double finExterieurSortie = 0.0;
 
   // Comptabilite
   int bilanCount = 0;
-  int journalCount = 0;
 
   // Finance
   double depenses = 0.0;
@@ -160,99 +146,41 @@ class AdminDashboardController extends GetxController {
         .length;
 
     // Budgets
-    devisListObjetsList =
-        await devisListObjetController.devisListObjetsApi.getAllData();
-    tansRestAgentList =
-        await transportRestPersonnelsController.transRestAgentsApi.getAllData();
-    var departementBudgetList =
-        await budgetPrevisionnelController.depeartementBudgetApi.getAllData();
-    departementsList = departementBudgetList
-        .where((element) =>
-            element.approbationDG == 'Approved' &&
-            element.approbationDD == 'Approved' &&
-            DateTime.now().isBefore(element.periodeFin))
+    ligneBudgetaireList = lignBudgetaireController.ligneBudgetaireList
+        .where((element) => DateTime.now().isBefore(element.periodeBudgetFin))
         .toList();
-
-    for (var i in departementsList) {
-      var ligneBudgetaire =
-          await lignBudgetaireController.lIgneBudgetaireApi.getAllData();
-      ligneBudgetaireList = ligneBudgetaire
-          .where((element) =>
-              element.periodeBudgetDebut.microsecondsSinceEpoch ==
-                  i.periodeDebut.microsecondsSinceEpoch &&
-              DateTime.now().isBefore(element.periodeBudgetFin) &&
-              i.approbationDG == "Approved" &&
-              i.approbationDD == "Approved")
-          .toList();
+ 
+    for (var element in ligneBudgetaireList) {
+      coutTotal += double.parse(element.coutTotal);
+      caisse += double.parse(element.caisse);
+      banque += double.parse(element.banque);
+      finExterieur += double.parse(element.finExterieur);
+      caisseSortie += element.caisseSortie;
+      banqueSortie += element.banqueSortie;
+      finExterieurSortie += element.finExterieurSortie;
     }
 
-    for (var item in ligneBudgetaireList) {
-      var campaigns = await campaignController.campaignApi.getAllData();
-      dataCampaignList = campaigns
-          .where((element) =>
-              element.approbationDG == 'Approved' &&
-              element.approbationDD == 'Approved' &&
-              element.approbationBudget == 'Approved' &&
-              element.observation == 'true' &&
-              element.created.isBefore(item.periodeBudgetFin))
-          .toList();
-      var devis = await devisController.devisAPi.getAllData();
-      dataDevisList = devis
-          .where((element) =>
-              element.approbationDG == 'Approved' &&
-              element.approbationDD == 'Approved' &&
-              element.approbationBudget == 'Approved' &&
-              element.observation == 'true' &&
-              element.created.isBefore(item.periodeBudgetFin))
-          .toList();
-      var projets = await projetController.projetsApi.getAllData();
-      dataProjetList = projets
-          .where((element) =>
-              element.approbationDG == 'Approved' &&
-              element.approbationDD == 'Approved' &&
-              element.approbationBudget == 'Approved' &&
-              element.observation == 'true' &&
-              element.created.isBefore(item.periodeBudgetFin))
-          .toList();
-      var salaires = await salaireController.paiementSalaireApi.getAllData();
-      dataSalaireList = salaires
-          .where((element) =>
-              element.createdAt.month == DateTime.now().month &&
-              element.createdAt.year == DateTime.now().year &&
-              element.approbationDD == 'Approved' &&
-              element.approbationBudget == 'Approved' &&
-              element.approbationFin == 'Approved' &&
-              element.observation == 'true' &&
-              element.createdAt.isBefore(item.periodeBudgetFin))
-          .toList();
-      var transportRestaurations = await transportRestController
-        .transportRestaurationApi.getAllData();
-      dataTransRestList = transportRestaurations
-          .where((element) =>
-              element.approbationDG == 'Approved' &&
-              element.approbationDD == 'Approved' &&
-              element.approbationBudget == 'Approved' &&
-              element.approbationFin == 'Approved' &&
-              element.observation == 'true' &&
-              element.created.isBefore(item.periodeBudgetFin))
-          .toList();
-    }
+    caisseSolde = caisse - caisseSortie;
+    banqueSolde = banque - banqueSortie;
+    finExterieurSolde = finExterieur - finExterieurSortie;
+
+    poursentExecutionTotal =
+        (caisseSolde + banqueSolde + finExterieurSolde) * 100 / coutTotal;
+    poursentExecution = 100 - poursentExecutionTotal;
+
 
     // Comptabilite
     var bilans = await bilanController.bilanApi.getAllData();
-    bilanCount = bilans
-        .where((element) => element.approbationDD == 'Approved')
-        .length;
+    bilanCount =
+        bilans.where((element) => element.approbationDD == 'Approved').length;
 
     // FINANCE
     // Banque
     var banques = await banqueController.banqueApi.getAllData();
-    var recetteBanqueList = banques
-        .where((element) => element.typeOperation == "Depot")
-        .toList();
-    var depensesBanqueList = banques
-        .where((element) => element.typeOperation == "Retrait")
-        .toList();
+    var recetteBanqueList =
+        banques.where((element) => element.typeOperation == "Depot").toList();
+    var depensesBanqueList =
+        banques.where((element) => element.typeOperation == "Retrait").toList();
     for (var item in recetteBanqueList) {
       recetteBanque += double.parse(item.montant);
     }
@@ -275,9 +203,10 @@ class AdminDashboardController extends GetxController {
     }
 
     // Creance remboursement
-    var creanceDettes = await creanceDetteController.creanceDetteApi.getAllData();
-    var creancePaiementList = creanceDettes
-        .where((element) => element.creanceDette == 'creances');
+    var creanceDettes =
+        await creanceDetteController.creanceDetteApi.getAllData();
+    var creancePaiementList =
+        creanceDettes.where((element) => element.creanceDette == 'creances');
 
     // Creance
     var creances = await creanceController.creanceApi.getAllData();
@@ -296,8 +225,8 @@ class AdminDashboardController extends GetxController {
     }
 
     // Dette paiement
-    var detteRemboursementList = creanceDettes
-        .where((element) => element.creanceDette == 'dettes');
+    var detteRemboursementList =
+        creanceDettes.where((element) => element.creanceDette == 'dettes');
     var nonPayeDetteList = detteController.detteList
         .where((element) =>
             element.statutPaie == 'false' &&
@@ -317,7 +246,8 @@ class AdminDashboardController extends GetxController {
     // }
 
     // FinanceExterieur
-    var finExterieurs = await finExterieurController.finExterieurApi.getAllData();
+    var finExterieurs =
+        await finExterieurController.finExterieurApi.getAllData();
     var recetteFinExtList = finExterieurs
         .where((element) => element.typeOperation == "Depot")
         .toList();
@@ -342,45 +272,6 @@ class AdminDashboardController extends GetxController {
     cumulFinanceExterieur = actionnaire + soldeFinExterieur;
     depenses = depensesBanque + depensesCaisse + depenseFinanceExterieur;
     disponible = soldeBanque + soldeCaisse + cumulFinanceExterieur;
-
-    // Budget
-    for (var item in ligneBudgetaireList) {
-      coutTotal += double.parse(item.coutTotal);
-    }
-
-    for (var item in dataCampaignList) {
-      totalCampaign += double.parse(item.coutCampaign);
-    }
-    for (var item in dataDevisList) {
-      var devisCaisseList = devisListObjetsList
-          .where((element) => element.reference == item.id)
-          .toList();
-      for (var element in devisCaisseList) {
-        totalDevis += double.parse(element.montantGlobal);
-      }
-    }
-    for (var item in dataProjetList) {
-      totalProjet += double.parse(item.coutProjet);
-    }
-    for (var item in dataSalaireList) {
-      totalSalaire += double.parse(item.salaire);
-    }
-    for (var item in dataTransRestList) {
-      var devisCaisseList = tansRestAgentList
-          .where((element) => element.reference == item.id)
-          .toList();
-      for (var element in devisCaisseList) {
-        totalTransRest += double.parse(element.montant);
-      }
-    }
-    // Sommes budgets
-    sommeEnCours = totalCampaign +
-        totalDevis +
-        totalProjet +
-        totalSalaire +
-        totalTransRest;
-    sommeRestantes = coutTotal - sommeEnCours;
-    poursentExecution = sommeRestantes * 100 / coutTotal;
 
     update();
   }

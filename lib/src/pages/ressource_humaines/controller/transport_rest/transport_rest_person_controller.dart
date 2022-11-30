@@ -9,7 +9,7 @@ class TransportRestPersonnelsController extends GetxController
   final TransRestAgentsApi transRestAgentsApi = TransRestAgentsApi();
   final ProfilController profilController = Get.find();
 
-  var transRestAgentList = <TransRestAgentsModel>[].obs;
+  List<TransRestAgentsModel> transRestAgentList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -50,7 +50,7 @@ class TransportRestPersonnelsController extends GetxController
 
   void getList() {
     transRestAgentsApi.getAllData().then((response) {
-      transRestAgentList.assignAll(response);
+      transRestAgentList.addAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

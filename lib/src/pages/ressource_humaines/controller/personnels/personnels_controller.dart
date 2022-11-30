@@ -172,12 +172,14 @@ class PersonnelsController extends GetxController
     });
   }
 
-  detailView(int id) async {
-    final data = await personnelsApi.getOneData(id);
-    print("data: ${data.statutAgent}");
-    update();
-    return data;
-  }
+  detailView(int id) => personnelsApi.getOneData(id);
+
+  // detailView(int id) async {
+  //   final data = await personnelsApi.getOneData(id);
+  //   print("data: ${data.statutAgent}");
+  //   update();
+  //   return data;
+  // }
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);

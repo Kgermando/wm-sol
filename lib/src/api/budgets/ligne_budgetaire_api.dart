@@ -60,13 +60,13 @@ class LIgneBudgetaireApi extends GetConnect {
   }
 
   Future<LigneBudgetaireModel> updateData(
-      int id, LigneBudgetaireModel ligneBudgetaireModel) async {
+    LigneBudgetaireModel ligneBudgetaireModel) async {
     Map<String, String> header = headers;
 
     var data = ligneBudgetaireModel.toJson();
     var body = jsonEncode(data);
     var updateUrl = Uri.parse(
-        "$mainUrl/budgets/ligne-budgetaires/update-ligne-budgetaire/$id");
+        "$mainUrl/budgets/ligne-budgetaires/update-ligne-budgetaire/");
 
     var res = await client.put(updateUrl, headers: header, body: body);
     if (res.statusCode == 200) {

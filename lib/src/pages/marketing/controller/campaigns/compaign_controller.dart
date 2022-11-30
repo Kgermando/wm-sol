@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/marketing/campaign_api.dart';
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 
 class CampaignController extends GetxController
     with StateMixin<List<CampaignModel>> {
   final CampaignApi campaignApi = CampaignApi();
   final ProfilController profilController = Get.find();
+  final LignBudgetaireController lignBudgetaireController =
+      Get.put(LignBudgetaireController());
 
-  var campaignList = <CampaignModel>[].obs;
+
+  List<CampaignModel> campaignList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -70,9 +75,23 @@ class CampaignController extends GetxController
     motifDDController.dispose();
   }
 
+  void clear() { 
+    typeProduitController.clear();
+    dateDebutEtFinController.clear();
+    coutCampaignController.clear();
+    lieuCibleController.clear();
+    promotionController.clear();
+    objectifsController.clear();
+
+    motifDGController.clear();
+    motifBudgetController.clear();
+    motifFinController.clear();
+    motifDDController.clear();
+  }
+
   void getList() async {
     campaignApi.getAllData().then((response) {
-      campaignList.assignAll(response);
+      campaignList.addAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -328,15 +347,120 @@ class CampaignController extends GetxController
               ? '-'
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString());
-      await campaignApi.updateData(dataItem).then((value) {
-        campaignList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
+      await campaignApi.updateData(dataItem).then((value) async {
+           var ligneBudget = lignBudgetaireController.ligneBudgetaireList
+            .where((element) =>
+                element.nomLigneBudgetaire == value.ligneBudgetaire)
+            .first;
+
+        if (value.ressource == "caisse") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie:
+                ligneBudget.caisseSortie + double.parse(value.coutCampaign),
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            campaignList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if (value.ressource == "banque") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie:
+                ligneBudget.banqueSortie + double.parse(value.coutCampaign),
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            campaignList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if (value.ressource == "finExterieur") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie:
+                ligneBudget.finExterieurSortie + double.parse(value.coutCampaign),
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            campaignList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        } 
       });
     } catch (e) {
       Get.snackbar("Erreur lors de la soumission", "$e",

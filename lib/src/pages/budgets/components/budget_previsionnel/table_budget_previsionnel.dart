@@ -165,7 +165,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
             ],
           );
         },
-        width: 200,
+        width: 400,
         minWidth: 150,
       ),
       PlutoColumn(

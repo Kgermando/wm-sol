@@ -139,15 +139,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       color: Colors.blueGrey.shade700),
                                   DashNumberWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(ComptabiliteRoutes
-                                            .comptabiliteJournalLivre);
-                                      },
-                                      number: '${controller.journalCount}',
-                                      title: 'Journals',
-                                      icon: Icons.backup_table,
-                                      color: Colors.blueAccent.shade700),
-                                  DashNumberWidget(
-                                      gestureTapCallback: () {
                                         Get.toNamed(
                                             ExploitationRoutes.expProjet);
                                       },

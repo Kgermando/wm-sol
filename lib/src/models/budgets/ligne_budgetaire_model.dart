@@ -14,6 +14,9 @@ class LigneBudgetaireModel {
   late String signature;
   late DateTime created;
   late int reference;
+  late double caisseSortie;
+  late double banqueSortie;
+  late double finExterieurSortie;
 
   LigneBudgetaireModel(
       {this.id,
@@ -30,7 +33,10 @@ class LigneBudgetaireModel {
       required this.finExterieur,
       required this.signature,
       required this.created,
-      required this.reference});
+      required this.reference,
+      required this.caisseSortie,
+      required this.banqueSortie,
+      required this.finExterieurSortie});
 
   factory LigneBudgetaireModel.fromSQL(List<dynamic> row) {
     return LigneBudgetaireModel(
@@ -48,7 +54,11 @@ class LigneBudgetaireModel {
         finExterieur: row[11],
         signature: row[12],
         created: row[13],
-        reference: row[14]);
+        reference: row[14],
+        caisseSortie: row[15],
+        banqueSortie: row[16],
+        finExterieurSortie: row[17]
+    );
   }
 
   factory LigneBudgetaireModel.fromJson(Map<String, dynamic> json) {
@@ -68,6 +78,9 @@ class LigneBudgetaireModel {
         signature: json['signature'],
         created: DateTime.parse(json['created']),
       reference: json['reference'],
+      caisseSortie: json['caisseSortie'],
+      banqueSortie: json['banqueSortie'],
+      finExterieurSortie: json['finExterieurSortie'],
     );
   }
 
@@ -88,6 +101,9 @@ class LigneBudgetaireModel {
       'signature': signature,
       'created': created.toIso8601String(),
       'reference': reference,
+      'caisseSortie': caisseSortie,
+      'banqueSortie': banqueSortie,
+      'finExterieurSortie': finExterieurSortie,
     };
   }
 }

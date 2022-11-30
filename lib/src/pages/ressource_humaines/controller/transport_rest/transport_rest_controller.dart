@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/rh/transport_restaurant_api.dart';
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
 class TransportRestController extends GetxController
     with StateMixin<List<TransportRestaurationModel>> {
   final TransportRestaurationApi transportRestaurationApi =
       TransportRestaurationApi();
   final ProfilController profilController = Get.find();
+  final TransportRestPersonnelsController transportRestPersonnelsController =
+      Get.put(TransportRestPersonnelsController());
+  final LignBudgetaireController lignBudgetaireController =
+      Get.put(LignBudgetaireController());
+
 
   var transportRestaurationList = <TransportRestaurationModel>[].obs;
 
@@ -47,7 +55,7 @@ class TransportRestController extends GetxController
     motifDDController.dispose();
   }
 
-    void clear() { 
+  void clear() {
     motifDGController.clear();
     motifBudgetController.clear();
     motifFinController.clear();
@@ -342,16 +350,128 @@ class TransportRestController extends GetxController
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString(),
           isSubmit: data.isSubmit);
-      await transportRestaurationApi.updateData(transRest).then((value) {
-        clear();
-        transportRestaurationList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
+      await transportRestaurationApi.updateData(transRest).then((value) async {
+        double coutTotal = 0.0;
+        var transRestAgentList = transportRestPersonnelsController
+            .transRestAgentList
+            .where((p0) => p0.reference == value.id)
+            .toList();
+        for (var element in transRestAgentList) {
+          coutTotal += double.parse(element.montant);
+        }
+
+
+        var ligneBudget = lignBudgetaireController.ligneBudgetaireList
+          .where((element) =>
+                element.nomLigneBudgetaire == value.ligneBudgetaire)
+            .first;
+
+        if (value.ressource == "caisse") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie + coutTotal,
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            transportRestaurationList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if (value.ressource == "banque") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie:
+                ligneBudget.banqueSortie + coutTotal,
+            finExterieurSortie: ligneBudget.finExterieurSortie,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            transportRestaurationList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        }
+        if (value.ressource == "finExterieur") {
+          final ligneBudgetaireModel = LigneBudgetaireModel(
+            nomLigneBudgetaire: ligneBudget.nomLigneBudgetaire,
+            departement: ligneBudget.departement,
+            periodeBudgetDebut: ligneBudget.periodeBudgetDebut,
+            periodeBudgetFin: ligneBudget.periodeBudgetFin,
+            uniteChoisie: ligneBudget.uniteChoisie,
+            nombreUnite: ligneBudget.nombreUnite,
+            coutUnitaire: ligneBudget.coutUnitaire,
+            coutTotal: ligneBudget.coutTotal,
+            caisse: ligneBudget.caisse,
+            banque: ligneBudget.banque,
+            finExterieur: ligneBudget.finExterieur,
+            signature: ligneBudget.signature,
+            created: ligneBudget.created,
+            reference: ligneBudget.reference,
+            caisseSortie: ligneBudget.caisseSortie,
+            banqueSortie: ligneBudget.banqueSortie,
+            finExterieurSortie:
+                ligneBudget.finExterieurSortie + coutTotal,
+          );
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
+              .then((value) {
+            clear();
+            transportRestaurationList.clear();
+            getList();
+            Get.back();
+            Get.snackbar(
+                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                backgroundColor: Colors.green,
+                icon: const Icon(Icons.check),
+                snackPosition: SnackPosition.TOP);
+            _isLoading.value = false;
+          });
+        } 
       });
     } catch (e) {
       _isLoading.value = false;
