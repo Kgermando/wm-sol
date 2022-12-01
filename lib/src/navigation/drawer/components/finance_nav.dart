@@ -34,9 +34,8 @@ class _FinanceNavState extends State<FinanceNav> {
   @override
   Widget build(BuildContext context) {
 
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
+   final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.account_balance, size: 30.0),
@@ -135,7 +134,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
                 title: element.nomComplet.toUpperCase(),
-                style: bodyText2!,
+                style: bodyText1,
                 onTap: () { 
                   Get.toNamed('/transactions-banque/${element.id}',
                       arguments: element);
@@ -158,7 +157,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
                 title: element.nomComplet.toUpperCase(),
-                style: bodyText2!,
+                style: bodyText1,
                 onTap: () { 
                   Get.toNamed('/transactions-caisse/${element.id!}',
                       arguments: element);
@@ -182,7 +181,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 icon: Icons.arrow_right,
                 sizeIcon: 15.0,
                 title: element.nomComplet.toUpperCase(),
-                style: bodyText2!,
+                style: bodyText1,
                 onTap: () { 
                   Get.toNamed(
                     '/transactions-financement-externe/${element.id}',

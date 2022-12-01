@@ -21,7 +21,8 @@ class _MailsNAvState extends State<MailsNAv> {
 
   @override
   Widget build(BuildContext context) {
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     String? pageCurrente = ModalRoute.of(context)!.settings.name;
     return Drawer(
       child: ListView(

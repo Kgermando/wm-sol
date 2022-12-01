@@ -24,9 +24,8 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
 
   @override
   Widget build(BuildContext context) {  
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.table_view, size: 30.0),
@@ -59,7 +58,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
               icon: Icons.manage_accounts,
               sizeIcon: 15.0,
               title: 'Directeur departement',
-              style: bodyText2!,
+              style: bodyText1!,
               badge: Badge(
                 showBadge: (int.parse(comptabiliteNotifyController.itemCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
@@ -78,7 +77,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Balance',
-            style: bodyText2!,
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(ComptabiliteRoutes.comptabiliteBalance); 
               // Navigator.of(context).pop();
@@ -89,7 +88,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Bilan',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComptabiliteRoutes.comptabiliteBilan); 
               // Navigator.of(context).pop();
@@ -100,7 +99,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Compte resultats',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultat); 
               // Navigator.of(context).pop();
@@ -111,7 +110,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Grand livre',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivre); 
               // Navigator.of(context).pop();
@@ -122,7 +121,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Journal',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComptabiliteRoutes.comptabiliteJournalLivre);   
               // Navigator.of(context).pop();

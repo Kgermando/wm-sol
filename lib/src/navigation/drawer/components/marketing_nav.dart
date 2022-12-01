@@ -24,10 +24,8 @@ class _MaketingNavState extends State<MaketingNav> {
 
   @override
   Widget build(BuildContext context) {  
-    // final bodyLarge = Theme.of(context).textTheme.bodyLarge;
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     int userRole = int.parse(widget.user.role);
 
     return ExpansionTile(
@@ -82,7 +80,7 @@ class _MaketingNavState extends State<MaketingNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Annuaire',
-            style: bodyText2!,
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(MarketingRoutes.marketingAnnuaire);
             }),
@@ -92,7 +90,7 @@ class _MaketingNavState extends State<MaketingNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Agenda',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(MarketingRoutes.marketingAgenda);
             }),
@@ -103,7 +101,7 @@ class _MaketingNavState extends State<MaketingNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Campagnes',
-              style: bodyText2,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(MarketingRoutes.marketingCampaign);
                 // Navigator.of(context).pop();
@@ -113,7 +111,7 @@ class _MaketingNavState extends State<MaketingNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Tâches',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(TacheRoutes.tachePage);
             }),

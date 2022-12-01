@@ -24,8 +24,9 @@ class _RhNavState extends State<RhNav> {
   Widget build(BuildContext context) { 
     final RHNotifyController controller = Get.put(RHNotifyController());
 
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;  
+   final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
+    
     int userRole = int.parse(widget.user.role);
 
     return ExpansionTile(

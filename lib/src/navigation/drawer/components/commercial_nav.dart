@@ -24,9 +24,8 @@ class _CommercialNavState extends State<CommercialNav> {
 
   @override
   Widget build(BuildContext context) {  
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1;
-    final bodyText2 = Theme.of(context).textTheme.bodyText2; 
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
@@ -81,7 +80,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Succursale',
-              style: bodyText2!,
+              style: bodyText1!,
               onTap: () {
                 Get.toNamed(ComRoutes.comSuccursale);
               }),
@@ -92,7 +91,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Produit modèle',
-              style: bodyText2!,
+              style: bodyText1!,
               onTap: () {
                 Get.toNamed(ComRoutes.comProduitModel);
               }),
@@ -103,7 +102,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Stocks global',
-              style: bodyText2!,
+              style: bodyText1!,
               onTap: () {
                 Get.toNamed(ComRoutes.comStockGlobal);
               }),
@@ -113,7 +112,7 @@ class _CommercialNavState extends State<CommercialNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Stock',
-            style: bodyText2!,
+            style: bodyText1!,
             onTap: () {
               Get.toNamed(ComRoutes.comAchat);
             }),
@@ -124,7 +123,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Bon de livraison',
-              style: bodyText2,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comBonLivraison);
               }),
@@ -135,7 +134,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Restitution du produit',
-              style: bodyText2,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comRestitution);
               }),
@@ -145,7 +144,7 @@ class _CommercialNavState extends State<CommercialNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Factures',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComRoutes.comFacture);
             }),
@@ -155,7 +154,7 @@ class _CommercialNavState extends State<CommercialNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Factures créance',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComRoutes.comCreance);
             }),
@@ -165,7 +164,7 @@ class _CommercialNavState extends State<CommercialNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Ventes',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComRoutes.comVente);
             }),
@@ -175,7 +174,7 @@ class _CommercialNavState extends State<CommercialNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Panier',
-            style: bodyText2,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComRoutes.comCart);
             }),
@@ -186,7 +185,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Historique de ravitaillement',
-              style: bodyText2,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(
                     ComRoutes.comHistoryRavitaillement);
@@ -198,7 +197,7 @@ class _CommercialNavState extends State<CommercialNav> {
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Historique de livraison',
-              style: bodyText2,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comHistoryLivraison);
               }),

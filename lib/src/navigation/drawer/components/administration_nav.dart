@@ -24,8 +24,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
 
   @override
   Widget build(BuildContext context) {
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    final bodyText1 = Theme.of(context).textTheme.bodyText1; 
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     return ExpansionTile(
       leading: const Icon(
         Icons.admin_panel_settings,
