@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
 import 'package:wm_solution/src/pages/commercial/components/produit_model/prod_model_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
@@ -165,6 +166,15 @@ class _TableProduitModelDDState extends State<TableProduitModelDD> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) { 
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: mainColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
         width: 300,
         minWidth: 150,
       ),
