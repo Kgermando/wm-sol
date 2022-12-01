@@ -2,25 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
-import 'package:wm_solution/src/pages/commercial/components/produit_model/prod_model_xlsx.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
+import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/succursale_xlsx.dart';
+import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableProduitModel extends StatefulWidget {
-  const TableProduitModel(
-      {super.key, required this.produitModelList, required this.controller});
-  final List<ProductModel> produitModelList;
-  final ProduitModelController controller;
+class TableSuccursale extends StatefulWidget {
+  const TableSuccursale(
+      {super.key, required this.succursaleList, required this.controller});
+  final List<SuccursaleModel> succursaleList;
+  final SuccursaleController controller;
 
   @override
-  State<TableProduitModel> createState() => _TableProduitModelState();
+  State<TableSuccursale> createState() => _TableSuccursaleState();
 }
 
-class _TableProduitModelState extends State<TableProduitModel> {
+class _TableSuccursaleState extends State<TableSuccursale> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -42,11 +41,10 @@ class _TableProduitModelState extends State<TableProduitModel> {
         final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
 
-        final ProductModel productionModel =
+        final SuccursaleModel succursaleModel =
             await widget.controller.detailView(idPlutoRow.value);
 
-        Get.toNamed(ComRoutes.comProduitModelDetail,
-            arguments: productionModel);
+        Get.toNamed(ComRoutes.comSuccursaleDetail, arguments: succursaleModel);
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
@@ -57,16 +55,16 @@ class _TableProduitModelState extends State<TableProduitModel> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Modèle Produits"),
+            const TitleWidget(title: "Succursales"),
             Row(
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, ComRoutes.comProduitModel);
+                      Navigator.pushNamed(context, ComRoutes.comSuccursale);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  ProdModelXlsx().exportToExcel(widget.produitModelList);
+                  SuccursaleXlsx().exportToExcel(widget.succursaleList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -86,19 +84,13 @@ class _TableProduitModelState extends State<TableProduitModel> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'idProduct') {
+            } else if (column.field == 'name') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'categorie') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'sousCategorie1') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'sousCategorie2') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'sousCategorie3') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'sousCategorie4') {
+            } else if (column.field == 'province') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'approbationDG') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -117,19 +109,16 @@ class _TableProduitModelState extends State<TableProduitModel> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.produitModelList.length;
-    for (var item in widget.produitModelList) {
+    var i = widget.succursaleList.length;
+    for (var item in widget.succursaleList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'idProduct': PlutoCell(value: item.idProduct),
-          'categorie': PlutoCell(value: item.categorie),
-          'sousCategorie1': PlutoCell(value: item.sousCategorie1),
-          'sousCategorie2': PlutoCell(value: item.sousCategorie2),
-          'sousCategorie3': PlutoCell(value: item.sousCategorie3),
-          'sousCategorie4': PlutoCell(value: item.sousCategorie4),
+          'name': PlutoCell(value: item.name),
+          'province': PlutoCell(value: item.province),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+          'approbationDG': PlutoCell(value: item.approbationDG),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
@@ -154,77 +143,20 @@ class _TableProduitModelState extends State<TableProduitModel> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Id Produit',
-        field: 'idProduct',
+        title: 'Nom succursale',
+        field: 'name',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        renderer: (rendererContext) {
-          return Text(
-            rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: mainColor,
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        },
         width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Categorie',
-        field: 'categorie',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Sous Categorie 1',
-        field: 'sousCategorie1',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Sous Categorie 2',
-        field: 'sousCategorie2',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Sous Categorie 3',
-        field: 'sousCategorie3',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Unité',
-        field: 'sousCategorie4',
+        title: 'Province',
+        field: 'province',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -244,6 +176,35 @@ class _TableProduitModelState extends State<TableProduitModel> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Approbation DG',
+        field: 'approbationDG',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,

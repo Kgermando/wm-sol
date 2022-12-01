@@ -5,7 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/history_ravitaillement/table_history_ravitaillement.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/history_ravitaillement/table_history_ravitaillement.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_ravitaillement_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 

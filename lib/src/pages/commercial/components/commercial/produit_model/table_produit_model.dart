@@ -2,30 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/history_ravitaillement/history_ravitaillement_xlsx.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/produit_model/prod_model_xlsx.dart';
+import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableHistoryRavitaillement extends StatefulWidget {
-  const TableHistoryRavitaillement(
-      {super.key,
-      required this.historyRavitaillementList,
-      required this.profilController});
-  final List<HistoryRavitaillementModel> historyRavitaillementList;
-  final ProfilController profilController;
+class TableProduitModel extends StatefulWidget {
+  const TableProduitModel(
+      {super.key, required this.produitModelList, required this.controller});
+  final List<ProductModel> produitModelList;
+  final ProduitModelController controller;
 
   @override
-  State<TableHistoryRavitaillement> createState() =>
-      _TableHistoryRavitaillementState();
+  State<TableProduitModel> createState() => _TableProduitModelState();
 }
 
-class _TableHistoryRavitaillementState
-    extends State<TableHistoryRavitaillement> {
-      final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+class _TableProduitModelState extends State<TableProduitModel> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -43,6 +38,16 @@ class _TableHistoryRavitaillementState
     return PlutoGrid(
       columns: columns,
       rows: rows,
+      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+        final dataId = tapEvent.row.cells.values;
+        final idPlutoRow = dataId.last;
+
+        final ProductModel productionModel =
+            await widget.controller.detailView(idPlutoRow.value);
+
+        Get.toNamed(ComRoutes.comProduitModelDetail,
+            arguments: productionModel);
+      },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
@@ -52,18 +57,16 @@ class _TableHistoryRavitaillementState
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Historique de Ravitaillements"),
+            const TitleWidget(title: "Modèle Produits"),
             Row(
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, ComRoutes.comHistoryRavitaillement);
+                      Navigator.pushNamed(context, ComRoutes.comProduitModel);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  HistoriqueRavitaillementXlsx()
-                      .exportToExcel(widget.historyRavitaillementList);
+                  ProdModelXlsx().exportToExcel(widget.produitModelList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -85,25 +88,19 @@ class _TableHistoryRavitaillementState
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'idProduct') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'quantity') {
+            } else if (column.field == 'categorie') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'quantityAchat') {
+            } else if (column.field == 'sousCategorie1') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'priceAchatUnit') {
+            } else if (column.field == 'sousCategorie2') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'prixVenteUnit') {
+            } else if (column.field == 'sousCategorie3') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'margeBen') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'tva') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'qtyRavitailler') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'succursale') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'signature') {
+            } else if (column.field == 'sousCategorie4') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -120,27 +117,20 @@ class _TableHistoryRavitaillementState
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.historyRavitaillementList
-        .where((element) =>
-            element.succursale == widget.profilController.user.succursale ||
-            int.parse(widget.profilController.user.role) <= 2)
-        .toSet()
-        .toList();
-    var i = dataList.length;
-    for (var item in dataList) {
+    var i = widget.produitModelList.length;
+    for (var item in widget.produitModelList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'idProduct': PlutoCell(value: item.idProduct),
-          'quantity': PlutoCell(value: '${item.quantity} ${item.unite}'),
-          'quantityAchat': PlutoCell(value: item.quantityAchat),
-          'priceAchatUnit': PlutoCell(value: item.priceAchatUnit),
-          'prixVenteUnit': PlutoCell(value: item.prixVenteUnit),
-          'margeBen': PlutoCell(value: item.margeBen),
-          'tva': PlutoCell(value: item.tva),
-          'qtyRavitailler': PlutoCell(value: item.qtyRavitailler),
+          'categorie': PlutoCell(value: item.categorie),
+          'sousCategorie1': PlutoCell(value: item.sousCategorie1),
+          'sousCategorie2': PlutoCell(value: item.sousCategorie2),
+          'sousCategorie3': PlutoCell(value: item.sousCategorie3),
+          'sousCategorie4': PlutoCell(value: item.sousCategorie4),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+          'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -171,13 +161,22 @@ class _TableHistoryRavitaillementState
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: mainColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
         width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Quantité',
-        field: 'quantity',
+        title: 'Categorie',
+        field: 'categorie',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -188,8 +187,8 @@ class _TableHistoryRavitaillementState
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Quantité d\'Achat',
-        field: 'quantityAchat',
+        title: 'Sous Categorie 1',
+        field: 'sousCategorie1',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -200,8 +199,8 @@ class _TableHistoryRavitaillementState
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix d\'Achat Unitaire ${monnaieStorage.monney}',
-        field: 'priceAchatUnit',
+        title: 'Sous Categorie 2',
+        field: 'sousCategorie2',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -212,8 +211,8 @@ class _TableHistoryRavitaillementState
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix de vente Unitaire ${monnaieStorage.monney}',
-        field: 'prixVenteUnit',
+        title: 'Sous Categorie 3',
+        field: 'sousCategorie3',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -224,32 +223,8 @@ class _TableHistoryRavitaillementState
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Marge Benefiaire',
-        field: 'margeBen',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'TVA %',
-        field: 'tva',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Quantité Ravitailler',
-        field: 'qtyRavitailler',
+        title: 'Unité',
+        field: 'sousCategorie4',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -269,6 +244,35 @@ class _TableHistoryRavitaillementState
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Approbation DD',
+        field: 'approbationDD',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 300,
+        minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Approved') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Unapproved') {
+            textColor = Colors.red;
+          } else if (rendererContext.cell.value == '-') {
+            textColor = Colors.orange;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,

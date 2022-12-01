@@ -8,7 +8,7 @@ import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_mode
 import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/history_ravitaillement/history_ravitaillement_xlsx.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/history_ravitaillement/history_ravitaillement_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_ravitaillement_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';

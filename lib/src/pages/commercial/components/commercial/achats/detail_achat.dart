@@ -8,7 +8,7 @@ import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/achats/achat_pdf.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/achats/achat_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_vente_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';

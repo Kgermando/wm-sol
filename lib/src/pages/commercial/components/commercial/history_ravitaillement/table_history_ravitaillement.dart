@@ -2,24 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
-import 'package:wm_solution/src/pages/commercial/components/succursale/succursale_xlsx.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
+import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/history_ravitaillement/history_ravitaillement_xlsx.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableSuccursale extends StatefulWidget {
-  const TableSuccursale(
-      {super.key, required this.succursaleList, required this.controller});
-  final List<SuccursaleModel> succursaleList;
-  final SuccursaleController controller;
+class TableHistoryRavitaillement extends StatefulWidget {
+  const TableHistoryRavitaillement(
+      {super.key,
+      required this.historyRavitaillementList,
+      required this.profilController});
+  final List<HistoryRavitaillementModel> historyRavitaillementList;
+  final ProfilController profilController;
 
   @override
-  State<TableSuccursale> createState() => _TableSuccursaleState();
+  State<TableHistoryRavitaillement> createState() =>
+      _TableHistoryRavitaillementState();
 }
 
-class _TableSuccursaleState extends State<TableSuccursale> {
+class _TableHistoryRavitaillementState
+    extends State<TableHistoryRavitaillement> {
+      final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -37,15 +43,6 @@ class _TableSuccursaleState extends State<TableSuccursale> {
     return PlutoGrid(
       columns: columns,
       rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row.cells.values;
-        final idPlutoRow = dataId.last;
-
-        final SuccursaleModel succursaleModel =
-            await widget.controller.detailView(idPlutoRow.value);
-
-        Get.toNamed(ComRoutes.comSuccursaleDetail, arguments: succursaleModel);
-      },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
@@ -55,16 +52,18 @@ class _TableSuccursaleState extends State<TableSuccursale> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Succursales"),
+            const TitleWidget(title: "Historique de Ravitaillements"),
             Row(
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, ComRoutes.comSuccursale);
+                      Navigator.pushNamed(
+                          context, ComRoutes.comHistoryRavitaillement);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
-                  SuccursaleXlsx().exportToExcel(widget.succursaleList);
+                  HistoriqueRavitaillementXlsx()
+                      .exportToExcel(widget.historyRavitaillementList);
                   if (!mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: const Text("Exportation effectué!"),
@@ -84,15 +83,27 @@ class _TableSuccursaleState extends State<TableSuccursale> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'name') {
+            } else if (column.field == 'idProduct') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'province') {
+            } else if (column.field == 'quantity') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'quantityAchat') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'priceAchatUnit') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'prixVenteUnit') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'margeBen') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'tva') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'qtyRavitailler') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'succursale') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'signature') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDG') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'approbationDD') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -109,17 +120,27 @@ class _TableSuccursaleState extends State<TableSuccursale> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.succursaleList.length;
-    for (var item in widget.succursaleList) {
+    var dataList = widget.historyRavitaillementList
+        .where((element) =>
+            element.succursale == widget.profilController.user.succursale ||
+            int.parse(widget.profilController.user.role) <= 2)
+        .toSet()
+        .toList();
+    var i = dataList.length;
+    for (var item in dataList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'name': PlutoCell(value: item.name),
-          'province': PlutoCell(value: item.province),
+          'idProduct': PlutoCell(value: item.idProduct),
+          'quantity': PlutoCell(value: '${item.quantity} ${item.unite}'),
+          'quantityAchat': PlutoCell(value: item.quantityAchat),
+          'priceAchatUnit': PlutoCell(value: item.priceAchatUnit),
+          'prixVenteUnit': PlutoCell(value: item.prixVenteUnit),
+          'margeBen': PlutoCell(value: item.margeBen),
+          'tva': PlutoCell(value: item.tva),
+          'qtyRavitailler': PlutoCell(value: item.qtyRavitailler),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -143,8 +164,8 @@ class _TableSuccursaleState extends State<TableSuccursale> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom succursale',
-        field: 'name',
+        title: 'Id Produit',
+        field: 'idProduct',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -155,8 +176,80 @@ class _TableSuccursaleState extends State<TableSuccursale> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Province',
-        field: 'province',
+        title: 'Quantité',
+        field: 'quantity',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Quantité d\'Achat',
+        field: 'quantityAchat',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Prix d\'Achat Unitaire ${monnaieStorage.monney}',
+        field: 'priceAchatUnit',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Prix de vente Unitaire ${monnaieStorage.monney}',
+        field: 'prixVenteUnit',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Marge Benefiaire',
+        field: 'margeBen',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'TVA %',
+        field: 'tva',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Quantité Ravitailler',
+        field: 'qtyRavitailler',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -176,64 +269,6 @@ class _TableSuccursaleState extends State<TableSuccursale> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Approbation DG',
-        field: 'approbationDG',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
-        minWidth: 150,
-        renderer: (rendererContext) {
-          Color textColor = Colors.black;
-          if (rendererContext.cell.value == 'Approved') {
-            textColor = Colors.green;
-          } else if (rendererContext.cell.value == 'Unapproved') {
-            textColor = Colors.red;
-          } else if (rendererContext.cell.value == '-') {
-            textColor = Colors.orange;
-          }
-          return Text(
-            rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        },
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Approbation DD',
-        field: 'approbationDD',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
-        minWidth: 150,
-        renderer: (rendererContext) {
-          Color textColor = Colors.black;
-          if (rendererContext.cell.value == 'Approved') {
-            textColor = Colors.green;
-          } else if (rendererContext.cell.value == 'Unapproved') {
-            textColor = Colors.red;
-          } else if (rendererContext.cell.value == '-') {
-            textColor = Colors.orange;
-          }
-          return Text(
-            rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        },
       ),
       PlutoColumn(
         readOnly: true,

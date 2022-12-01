@@ -10,7 +10,7 @@ class SuccursaleController extends GetxController
   final SuccursaleApi succursaleApi = SuccursaleApi();
   final ProfilController profilController = Get.find();
 
-  var succursaleList = <SuccursaleModel>[].obs;
+  List<SuccursaleModel> succursaleList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -43,9 +43,16 @@ class SuccursaleController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    nameController.clear();
+    adresseController.clear();
+    motifDGController.clear();
+    motifDDController.clear();
+  }
+
   void getList() async {
     succursaleApi.getAllData().then((response) {
-      succursaleList.assignAll(response);
+      succursaleList.addAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -94,6 +101,7 @@ class SuccursaleController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await succursaleApi.insertData(dataItem).then((value) {
+        clear();
         succursaleList.clear();
         getList();
         Get.back();
@@ -130,6 +138,7 @@ class SuccursaleController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await succursaleApi.updateData(dataItem).then((value) {
+        clear();
         succursaleList.clear();
         getList();
         Get.back();
@@ -165,6 +174,7 @@ class SuccursaleController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await succursaleApi.updateData(dataItem).then((value) {
+        clear();
         succursaleList.clear();
         getList();
         Get.back();
@@ -200,6 +210,7 @@ class SuccursaleController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await succursaleApi.updateData(dataItem).then((value) {
+        clear();
         succursaleList.clear();
         getList();
         Get.back();
