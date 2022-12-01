@@ -21,6 +21,7 @@ dependencies:
   badges: ^2.0.2
   http: ^0.13.4 
   dio: ^4.0.6
+  flutter_phoenix: ^1.1.0
   # flutter_secure_storage: ^6.0.0
   get_storage: ^2.0.3 
   provider: ^6.0.2
@@ -51,8 +52,7 @@ dependencies:
   excel: ^2.0.0-null-safety-3
   easy_autocomplete: ^1.6.0
   easy_table: ^2.0.1
-  flutter_slidable: ^2.0.0
-  flutter_phoenix: ^1.1.0
+  flutter_slidable: ^2.0.0 
   flutter_breadcrumb: ^1.0.1
   connectivity_plus: ^3.0.2
   internet_connection_checker: ^1.0.0+1  # Tous sauf le Web

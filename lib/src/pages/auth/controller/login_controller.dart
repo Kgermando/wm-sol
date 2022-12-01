@@ -77,61 +77,61 @@ class LoginController extends GetxController {
                 var departement = jsonDecode(userData.departement);
                 if (departement.first == "Administration") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(AdminRoutes.adminDashboard);
+                    Get.toNamed(AdminRoutes.adminDashboard);
                   } else {
-                    Get.offAllNamed(AdminRoutes.adminLogistique);
+                    Get.toNamed(AdminRoutes.adminLogistique);
                   }
                 } else if (departement.first == "Finances") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(FinanceRoutes.financeDashboard);
+                    Get.toNamed(FinanceRoutes.financeDashboard);
                   } else {
-                    Get.offAllNamed(FinanceRoutes.transactionsDettes);
+                    Get.toNamed(FinanceRoutes.transactionsDettes);
                   }
                 } else if (departement.first == "Comptabilites") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(ComptabiliteRoutes.comptabiliteDashboard);
+                    Get.toNamed(ComptabiliteRoutes.comptabiliteDashboard);
                   } else {
-                    Get.offAllNamed(
+                    Get.toNamed(
                         ComptabiliteRoutes.comptabiliteJournalLivre);
                   }
                 } else if (departement.first == "Budgets") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(BudgetRoutes.budgetBudgetPrevisionel);
+                    Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   } else {
-                    Get.offAllNamed(BudgetRoutes.budgetBudgetPrevisionel);
+                    Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   }
                 } else if (departement.first == "Ressources Humaines") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(RhRoutes.rhDashboard);
+                    Get.toNamed(RhRoutes.rhDashboard);
                   } else {
-                    Get.offAllNamed(RhRoutes.rhPresence);
+                    Get.toNamed(RhRoutes.rhPresence);
                   }
                 } else if (departement.first == "Exploitations") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(ExploitationRoutes.expDashboard);
+                    Get.toNamed(ExploitationRoutes.expDashboard);
                   } else {
-                    Get.offAllNamed(TacheRoutes.tachePage);
+                    Get.toNamed(TacheRoutes.tachePage);
                   }
                 } else if (departement.first == "Marketing") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(MarketingRoutes.marketingDashboard);
+                    Get.toNamed(MarketingRoutes.marketingDashboard);
                   } else {
-                    Get.offAllNamed(MarketingRoutes.marketingAnnuaire);
+                    Get.toNamed(MarketingRoutes.marketingAnnuaire);
                   }
                 } else if (departement.first == "Commercial") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(ComRoutes.comDashboard);
+                    Get.toNamed(ComRoutes.comDashboard);
                   } else {
-                    Get.offAllNamed(ComRoutes.comVente);
+                    Get.toNamed(ComRoutes.comVente);
                   }
                 } else if (departement.first == "Logistique") {
                   if (int.parse(userData.role) <= 2) {
-                    Get.offAllNamed(LogistiqueRoutes.logDashboard);
+                    Get.toNamed(LogistiqueRoutes.logDashboard);
                   } else {
-                    Get.offAllNamed(LogistiqueRoutes.logMateriel);
+                    Get.toNamed(LogistiqueRoutes.logMateriel);
                   }
                 } else if (departement.first == "Support") {
-                  Get.offAllNamed(AdminRoutes.adminDashboard);
+                  Get.toNamed(AdminRoutes.adminDashboard);
                 }
 
                 // GetLocalStorage().saveUser(userData);
@@ -185,7 +185,7 @@ class LoginController extends GetxController {
           GetStorage box = GetStorage();
           box.remove('idToken');
           box.remove('accessToken');
-          box.remove('refreshToken');
+          box.remove('refreshToken'); 
           Get.offAllNamed(UserRoutes.logout);
           Get.snackbar("Déconnexion réussie!", "",
               backgroundColor: Colors.green,

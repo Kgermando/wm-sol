@@ -1,12 +1,11 @@
 class ServiceAffectation {
-
   //   List<String> serviceAffectationDropdown = [
   //   'Administration',
   //   'Membre',
   //   'Consultant(e)',
   //   'Sans pste occupé'
   // ];
-    List<String> actionnaireDropdown = [
+  List<String> actionnaireDropdown = [
     'Administration',
     'Membre de FOKAD',
     'Conseiller juridique',
@@ -14,9 +13,8 @@ class ServiceAffectation {
     'Autre'
   ];
 
-
   List<String> adminDropdown = [
-    'Administration', 
+    'Administration',
     'Secretariat',
     'Reception',
     'Consultant(e)',
@@ -32,7 +30,7 @@ class ServiceAffectation {
     'Autre'
   ];
 
-   List<String> finDropdown = [
+  List<String> finDropdown = [
     'Supervision',
     'Caisse',
     'Banque',
@@ -82,11 +80,14 @@ class ServiceAffectation {
     'Autre'
   ];
   List<String> comDropdown = [
-    'Supervision', 
-    'Organisation et management',   
+    'Supervision',
+    'Organisation et management',
     'Management commercial',
+    'Management succursale',
     'Gestion operationnelle',
-    'Agent commercial',
+    'Livraison',
+    'Transport',
+    'Caisse',
     'Suivi et controle',
     'Support aux vendeurs',
     'Agent commercial',

@@ -73,20 +73,50 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const TitleWidget(title: "Succursale"),
-                                    Row(
+                                    Column(
                                       children: [
-                                        IconButton(
-                                            color: Colors.purple,
-                                            onPressed: () {
-                                              Get.toNamed(
-                                                  ComRoutes.comSuccursaleUpdate,
-                                                  arguments:
-                                                      widget.succursaleModel);
-                                            },
-                                            icon: const Icon(Icons.edit)),
-                                        if (userRole <= 2)
-                                          deleteButton(controller),
-                                        const SizedBox(width: p10),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  Navigator.pushNamed(
+                                                      context,
+                                                      ComRoutes
+                                                          .comSuccursaleDetail,
+                                                      arguments: widget
+                                                          .succursaleModel);
+                                                },
+                                                icon: const Icon(Icons.refresh,
+                                                    color: Colors.green)),
+                                            if (widget.succursaleModel.approbationDD == "Unapproved" ||
+                                                widget.succursaleModel
+                                                        .approbationDD ==
+                                                    "-" ||
+                                                widget.succursaleModel
+                                                        .approbationDG ==
+                                                    "Unapproved" ||
+                                                widget.succursaleModel
+                                                        .approbationDG ==
+                                                    "-")
+                                              Row(
+                                                children: [
+                                                  IconButton(
+                                                      color: Colors.purple,
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            ComRoutes
+                                                                .comSuccursaleUpdate,
+                                                            arguments: widget
+                                                                .succursaleModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.edit)),
+                                                  if (userRole <= 2)
+                                                    deleteButton(controller),
+                                                ],
+                                              ),
+                                          ],
+                                        ),
                                         SelectableText(
                                             DateFormat("dd-MM-yy HH:mm").format(
                                                 widget.succursaleModel.created),
@@ -124,20 +154,21 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de supprimé ceci?'),
+          title: const Text('Etes-vous sûr de supprimé ceci?',
+              style: TextStyle(color: Colors.red)),
           content:
               const Text('Cette action permet de supprimer définitivement.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () {
                 controller.succursaleApi.deleteData(widget.succursaleModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),

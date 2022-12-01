@@ -73,6 +73,7 @@ class FonctionOccupee {
 
   List<String> commDropdown = [
     'Directeur de departement',
+    'Gerant succursale',
     'Chef de service',
     'Agent',
     'Expert',

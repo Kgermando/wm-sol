@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
@@ -17,12 +18,11 @@ class MenuOptions {
       ));
 
   void onSelected(BuildContext context, MenuItemModel item) async {
-    final LoginController controller = Get.put(LoginController());  
+    final LoginController controller = Get.put(LoginController());
 
     switch (item) {
       case MenuItems.itemProfile:
-        Get.toNamed(UserRoutes.profil);
-        // Navigator.pushNamed(context, UserRoutes.profil);
+        Get.toNamed(UserRoutes.profil); 
         break;
 
       case MenuItems.itemHelp:
@@ -34,15 +34,7 @@ class MenuOptions {
         break;
 
       case MenuItems.itemLogout:
-        controller.logout();
-        // GetStorage box = GetStorage();
-        // String idToken = box.read('idToken');
-        // print("idToken $idToken");
-        
-        // box.remove('idToken');
-        // box.remove('accessToken');
-        // box.remove('refreshToken');
-        
+        controller.logout();  
         // Phoenix.rebirth(context);
     }
   }
