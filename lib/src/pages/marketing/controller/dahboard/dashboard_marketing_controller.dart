@@ -5,8 +5,8 @@ import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_co
 
 class DashboardMarketingController extends GetxController {
   final CampaignController campaignController = Get.find();
-  final AnnuaireController annuaireController = Get.find();
-  final AgendaController agendaController = Get.find();
+  final AnnuaireController annuaireController = Get.put(AnnuaireController());
+  final AgendaController agendaController = Get.put(AgendaController());
 
   final _campaignCount = 0.obs;
   int get campaignCount => _campaignCount.value;

@@ -10,7 +10,7 @@ class CreanceController extends GetxController
     with StateMixin<List<CreanceModel>> {
   final CreanceApi creanceApi = CreanceApi();
   final ProfilController profilController = Get.find();
-  final CreanceDetteController creanceDetteController = Get.find();
+  final CreanceDetteController creanceDetteController = Get.put(CreanceDetteController());
 
   var creanceList = <CreanceModel>[].obs;
 

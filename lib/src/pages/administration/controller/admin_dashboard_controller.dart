@@ -21,40 +21,40 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
 class AdminDashboardController extends GetxController {
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   // RH
-  final PersonnelsController personnelsController = Get.find();
-  final SalaireController salaireController = Get.find();
-  final TransportRestController transportRestController = Get.find();
+  final PersonnelsController personnelsController = Get.put(PersonnelsController());
+  final SalaireController salaireController = Get.put(SalaireController());
+  final TransportRestController transportRestController = Get.put(TransportRestController());
   final TransportRestPersonnelsController transportRestPersonnelsController =
-      Get.find();
+      Get.put(TransportRestPersonnelsController());
 
   // Budgets
-  final BudgetPrevisionnelController budgetPrevisionnelController = Get.find();
-  final LignBudgetaireController lignBudgetaireController = Get.find();
+  final BudgetPrevisionnelController budgetPrevisionnelController = Get.put(BudgetPrevisionnelController());
+  final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
 
   // Comm & Marketing
-  final CampaignController campaignController = Get.find();
+  final CampaignController campaignController = Get.put(CampaignController());
 
   // Logistique
-  final DevisController devisController = Get.find();
-  final DevisListObjetController devisListObjetController = Get.find();
+  final DevisController devisController = Get.put(DevisController());
+  final DevisListObjetController devisListObjetController = Get.put(DevisListObjetController());
 
   // Exploitation
-  final ProjetController projetController = Get.find();
+  final ProjetController projetController = Get.put(ProjetController());
 
   // Comptabilite
-  final BilanController bilanController = Get.find();
-  final JournalController journalController = Get.find();
+  final BilanController bilanController = Get.put(BilanController());
+  final JournalController journalController = Get.put(JournalController());
 
   // Finances
-  final BanqueController banqueController = Get.find();
-  final CaisseController caisseController = Get.find();
-  final CreanceController creanceController = Get.find();
-  final DetteController detteController = Get.find();
-  final CreanceDetteController creanceDetteController = Get.find();
-  final FinExterieurController finExterieurController = Get.find();
+  final BanqueController banqueController = Get.put(BanqueController());
+  final CaisseController caisseController = Get.put(CaisseController());
+  final CreanceController creanceController = Get.put(CreanceController());
+  final DetteController detteController = Get.put(DetteController());
+  final CreanceDetteController creanceDetteController = Get.put(CreanceDetteController());
+  final FinExterieurController finExterieurController = Get.put(FinExterieurController());
 
   // var actionnaireCotisationList = await ActionnaireCotisationApi().getAllData();
 

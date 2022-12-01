@@ -12,10 +12,11 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/succursa
 
 class DashboardComController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
-  final VenteCartController venteCartController = Get.find();
-  final GainCartController gainController = Get.find();
-  final FactureCreanceController factureCreanceController = Get.find();
-  final SuccursaleController succursaleController = Get.find();
+  final VenteCartController venteCartController = Get.put(VenteCartController());
+  final GainCartController gainController = Get.put(GainCartController());
+  final FactureCreanceController factureCreanceController = Get.put(FactureCreanceController());
+  final SuccursaleController succursaleController =
+      Get.put(SuccursaleController());
 
   List<VenteChartModel> venteChartModel = [];
   List<CourbeVenteModel> venteMouthList = [];

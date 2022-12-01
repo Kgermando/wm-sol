@@ -84,7 +84,7 @@ class UpdateController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getList();
+    getList(); 
   }
 
   @override
@@ -103,33 +103,22 @@ class UpdateController extends GetxController
     await updateVersionApi.getAllData().then((response) {
       updateVersionList.addAll(response);
       // // Version actuel
-      // var isVersion = isUpdateLocalVersion.split('.');
-      // for (var e in isVersion) {
-      //   _sumLocalVersion.value += double.parse(e);
-      // }
-      // // Version Cloud
-      // var isVersionCloud = updateVersionList.last.version.split('.');
-      // for (var e in isVersionCloud) {
-      //   _sumVersionCloud.value += double.parse(e);
-      // }
+      var isVersion = isUpdateLocalVersion.split('.');
+      for (var e in isVersion) {
+        _sumLocalVersion.value += double.parse(e);
+      }
+      // Version Cloud
+      var isVersionCloud = updateVersionList.last.version.split('.');
+      for (var e in isVersionCloud) {
+        _sumVersionCloud.value += double.parse(e);
+      }
       change(updateVersionList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
-  void getData() async {
-    // Version actuel
-    var isVersion = isUpdateLocalVersion.split('.');
-    for (var e in isVersion) {
-      _sumLocalVersion.value += double.parse(e);
-    }
-    // Version Cloud
-    var isVersionCloud = updateVersionList.last.version.split('.');
-    for (var e in isVersionCloud) {
-      _sumVersionCloud.value += double.parse(e);
-    }
-  }
+ 
 
   detailView(int id) async {
     final data = await updateVersionApi.getOneData(id);

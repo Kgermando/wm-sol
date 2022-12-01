@@ -148,7 +148,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
                           radius: 55,
                           backgroundColor: mainColor,
                           child: ClipOval(
-                              child: (widget.personne.photo == null)
+                              child: (widget.personne.photo == '-')
                                   ? Image.asset(
                                       'assets/images/avatar.jpg',
                                       fit: BoxFit.cover,

@@ -169,9 +169,17 @@ class _SettingsPageState extends State<SettingsPage> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-            title: Text(InfoSystem().name()),
-            content:
-                Text('Version: ${InfoSystem().version()} \nDate: 03-09-2022')),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(InfoSystem().logo(), height: 200, width: 200),
+              const SizedBox(height: p20),
+              Text(InfoSystem().name()),
+            ],
+          ),
+          content:
+            Text('Version: ${InfoSystem().version()} \nDate: 01-12-2022')
+          ),
       ),
     );
   }

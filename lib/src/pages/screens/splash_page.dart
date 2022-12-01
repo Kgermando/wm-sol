@@ -6,9 +6,17 @@ class SplashView extends GetView<SplashController> {
   const SplashView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(  
       body: Center(
-        child: Image.asset("assets/images/logo.png"),
+        child: Column(
+          children: [
+            Expanded(child: Image.asset("assets/images/logo.png")), 
+            const SizedBox(
+              width: 50,
+              child: LinearProgressIndicator()),
+            const SizedBox(height: 50)
+          ],
+        ),
       ),
     );
   }

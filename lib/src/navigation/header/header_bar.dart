@@ -37,6 +37,8 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
 
   final String firstLettter = profilController.user.prenom[0];
   final String firstLettter2 = profilController.user.nom[0];
+
+  print("sumVersionCloud ${updateController.sumVersionCloud}");
   return AppBar(
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
@@ -87,6 +89,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             ),
           ),
     actions: [
+      
       if (Platform.isWindows &&
           updateController.updateVersionList.isNotEmpty &&
           updateController.sumVersionCloud > updateController.sumLocalVersion)

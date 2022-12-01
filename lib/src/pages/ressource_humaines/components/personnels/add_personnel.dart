@@ -173,7 +173,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                             );
                             if (result != null) {
                               setState(() {
-                               controller
+                                controller
                                     .uploadFile(result.files.single.path!);
                               });
                             } else {

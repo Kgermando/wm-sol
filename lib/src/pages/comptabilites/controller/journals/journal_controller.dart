@@ -11,8 +11,9 @@ class JournalController extends GetxController
     with StateMixin<List<JournalModel>> {
   final JournalApi journalApi = JournalApi();
   final ProfilController profilController = Get.find();
-  final BalanceController balanceController = Get.find();
-  final BalanceSumController balanceSumController = Get.find();
+  final BalanceController balanceController = Get.put(BalanceController());
+  final BalanceSumController balanceSumController =
+      Get.put(BalanceSumController());
 
   List<JournalModel> journalList = [];
   int numOpration = 1;

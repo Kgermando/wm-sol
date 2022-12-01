@@ -6,9 +6,9 @@ import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_
 
 class DashboardComptabiliteController extends GetxController {
   final BalanceController balanceController = Get.find();
-  final BilanController bilanController = Get.find();
-  final CompteResultatController compteResultatController = Get.find();
-  final JournalController journalController = Get.find();
+  final BilanController bilanController = Get.put(BilanController());
+  final CompteResultatController compteResultatController = Get.put(CompteResultatController());
+  final JournalController journalController = Get.put(JournalController());
 
   final _bilanCount = 0.obs;
   int get bilanCount => _bilanCount.value;
