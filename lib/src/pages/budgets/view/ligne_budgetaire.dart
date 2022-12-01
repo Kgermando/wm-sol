@@ -130,7 +130,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
             return Colors.orange.shade200;
           }
 
-          return Colors.black;
+          return Colors.transparent;
         },
         createFooter: (stateManager) {
           stateManager.setPageSize(20, notify: true); // default 40
@@ -154,7 +154,8 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
               value: DateFormat("dd-MM-yyyy").format(item.periodeBudgetDebut)),
           'uniteChoisie': PlutoCell(value: item.uniteChoisie),
           'nombreUnite': PlutoCell(value: item.nombreUnite),
-          'coutUnitaire': PlutoCell(value: item.coutUnitaire),
+          'coutUnitaire': PlutoCell(value: 
+          "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutUnitaire))} ${monnaieStorage.monney}"),
           'coutTotal': PlutoCell(value: item.coutTotal),
           'caisse': PlutoCell(
               value:
@@ -238,7 +239,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Coût Unitaire ${monnaieStorage.monney}',
+        title: 'Coût Unitaire',
         field: 'coutUnitaire',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -250,7 +251,7 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Coût Total',
+        title: 'Coût Total ${monnaieStorage.monney}',
         field: 'coutTotal',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

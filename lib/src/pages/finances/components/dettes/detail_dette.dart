@@ -460,7 +460,7 @@ class _DetailDetteState extends State<DetailDette> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "${monnaieStorage.monney}",
+                  monnaieStorage.monney,
                   style: headline6!,
                 ))
           ],

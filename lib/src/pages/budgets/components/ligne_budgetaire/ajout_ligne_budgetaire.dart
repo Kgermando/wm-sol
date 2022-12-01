@@ -271,7 +271,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                 flex: 1,
                 child: Container(
                     margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-                    child: Text('${monnaieStorage.monney}', style: headline6)))
+                    child: Text(monnaieStorage.monney, style: headline6)))
           ],
         ));
   }
@@ -313,7 +313,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                 flex: 1,
                 child: Container(
                     margin: const EdgeInsets.only(left: 10.0, bottom: 20.0),
-                    child: Text('${monnaieStorage.monney}', style: headline6)))
+                    child: Text(monnaieStorage.monney, style: headline6)))
           ],
         ));
   }

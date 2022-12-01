@@ -603,7 +603,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
             ),
             const SizedBox(width: p20),
             Expanded(
-                child: Text("${monnaieStorage.monney}",
+                child: Text(monnaieStorage.monney,
                     style: Theme.of(context).textTheme.headline6))
           ],
         ));
@@ -678,18 +678,14 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                       ],
                                     )
                                   : Container(),
-                              child3: (widget.transportRestaurationModel
-                                          .approbationDG ==
-                                      "Unapproved")
-                                  ? Column(
+                              child3: Column(
                                       children: [
                                         const Text("Signature"),
                                         const SizedBox(height: p20),
                                         Text(widget.transportRestaurationModel
                                             .signatureDG),
                                       ],
-                                    )
-                                  : Container()),
+                                    )),
                           if (widget.transportRestaurationModel.approbationDD ==
                                   "Approved" &&
                               widget.transportRestaurationModel.approbationDG ==

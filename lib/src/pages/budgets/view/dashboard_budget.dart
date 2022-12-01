@@ -104,7 +104,9 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                 const SizedBox(height: p30),
                                 LineChartSortie(
                                     ligneBudgetaireList:
-                                        controller.ligneBudgetaireList)
+                                        controller.ligneBudgetaireList),
+
+                                        
                               ]),
                         )),
                   ))

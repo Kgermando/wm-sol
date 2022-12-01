@@ -514,7 +514,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.only(bottom: p8),
-              child: Text("${monnaieStorage.monney}",
+              child: Text(monnaieStorage.monney,
                   style: Theme.of(context).textTheme.headline6),
             ))
       ],

@@ -85,7 +85,7 @@ class DashboardCardWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 10.0),
                   AutoSizeText(
-                    '${monnaieStorage.monney}',
+                    monnaieStorage.monney,
                     style: Responsive.isDesktop(context)
                         ? TextStyle(
                             fontSize: 20,

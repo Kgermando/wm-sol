@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 
 class LineChartSortie extends StatefulWidget {
@@ -16,8 +17,22 @@ class _LineChartSortieState extends State<LineChartSortie> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
-      child:
-        SfCartesianChart(primaryXAxis: DateTimeAxis(
+      child: 
+      
+      // SfSparkLineChart(
+      //   //Enable the trackball
+      //   trackball: const SparkChartTrackball(
+      //       activationMode: SparkChartActivationMode.tap),
+      //   //Enable marker
+      //   marker: const SparkChartMarker(
+      //       displayMode: SparkChartMarkerDisplayMode.all),
+      //   //Enable data label
+      //   labelDisplayMode: SparkChartLabelDisplayMode.all,
+      //   data: widget.ligneBudgetaireList.map((e) => e.banqueSortie).toList(),
+      // )
+      
+      
+      SfCartesianChart(primaryXAxis: DateTimeAxis(
           dateFormat: DateFormat.M(),
         ), series: <ChartSeries>[
         // Renders line chart

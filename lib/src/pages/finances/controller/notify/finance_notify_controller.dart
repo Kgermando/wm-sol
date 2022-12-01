@@ -1,3 +1,4 @@
+ 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/notifications/departements/finance_departement.dart';
 import 'package:wm_solution/src/api/notifications/finances/creance_notify_api.dart';
@@ -26,15 +27,16 @@ class FinanceNotifyController extends GetxController {
     final _detteCountDG = 0.obs;
   int get detteCountDG => _detteCountDG.value;
 
+
   @override
   void onInit() {
     super.onInit();
     getCountDD();
-    getCountObs();
-    getCountCreanceDD();
-    getCountCreanceDG();
-    getCountDetteDD();
-    getCountDetteDG();
+        getCountObs();
+        getCountCreanceDD();
+        getCountCreanceDG();
+        getCountDetteDD();
+        getCountDetteDG();
   }
  
 

@@ -18,15 +18,17 @@ class ComptabiliteNotifyController extends GetxController {
   int get bilanCount => _bilanCount.value;
   final _compteResultatCount = 0.obs;
   int get compteResultatCount => _compteResultatCount.value; 
-
+ 
+ 
   @override
   void onInit() {
     super.onInit();
     getCountComptabilite();
-    getCountBilanDD(); 
-    getCountCompteResultatDD(); 
-  } 
+        getCountBilanDD();
+        getCountCompteResultatDD(); 
+  }
 
+ 
   
   void getCountComptabilite() async {
     NotifySumModel notifySum =

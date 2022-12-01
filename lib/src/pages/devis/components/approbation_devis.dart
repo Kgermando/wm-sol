@@ -87,16 +87,13 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                               : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.devisModel.approbationDG ==
-                                      "Unapproved")
-                                  ? Column(
+                              child2: Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
                                         Text(widget.devisModel.motifDG),
                                       ],
-                                    )
-                                  : Container(),
+                                    ) ,
                               child3: (widget.devisModel.approbationDG ==
                                       "Unapproved")
                                   ? Column(

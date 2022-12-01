@@ -209,7 +209,7 @@ class _DettePageState extends State<DettePage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "${monnaieStorage.monney}",
+                  monnaieStorage.monney,
                   style: headline6!,
                 ))
           ],

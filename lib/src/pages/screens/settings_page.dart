@@ -157,8 +157,7 @@ class _SettingsPageState extends State<SettingsPage> {
           setState(() {
             devise = value;
             monnaieStorage.removeData();
-            monnaieStorage.setData(devise);
-            print("monnaire ${monnaieStorage.monney} ");
+            monnaieStorage.setData(devise); 
           });
         });
   }

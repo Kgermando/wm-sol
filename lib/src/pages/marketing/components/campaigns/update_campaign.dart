@@ -202,7 +202,7 @@ class _UpdateCampaignState extends State<UpdateCampaign> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("${monnaieStorage.monney}",
+                child: Text(monnaieStorage.monney,
                     style: Theme.of(context).textTheme.headline6))
           ],
         ));

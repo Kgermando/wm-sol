@@ -1,10 +1,11 @@
+
+
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/notifications/devis/devis_notify_api.dart';
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 
 class DevisNotifyController extends GetxController {
   final DevisNotifyApi devisNotifyApi = DevisNotifyApi();
-
 
   final _itemCountDevisDG = 0.obs;
   int get itemCountDevisDG => _itemCountDevisDG.value;
@@ -16,18 +17,18 @@ class DevisNotifyController extends GetxController {
   int get itemCountDevisFin => _itemCountDevisFin.value;
   final _itemCountDevisObs = 0.obs;
   int get itemCountDevisObs => _itemCountDevisObs.value;
-
-
+ 
   @override
   void onInit() {
-    super.onInit();
+    super.onInit(); 
     getCountDevisDG();
-    getCountDevisBudget();
-    getCountDevisSalaireDD();
-    getCountDevisFin();
-    getCountDeviseObs();
+        getCountDevisBudget();
+        getCountDevisSalaireDD();
+        getCountDevisFin();
+        getCountDeviseObs();
   }
 
+  
   void getCountDevisDG() async {
     NotifyModel notifySum = await devisNotifyApi.getCountDG();
     _itemCountDevisDG.value = notifySum.count;

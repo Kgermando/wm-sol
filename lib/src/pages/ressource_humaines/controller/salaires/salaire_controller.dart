@@ -521,8 +521,7 @@ class SalaireController extends GetxController
         var ligneBudget = lignBudgetaireController.ligneBudgetaireList
             .where((element) =>
                 element.nomLigneBudgetaire == value.ligneBudgetaire)
-            .first;
-        print("ressource ${value.ressource}");
+            .first; 
         if (value.ressource == "caisse") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
             id: ligneBudget.id,

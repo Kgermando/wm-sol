@@ -209,7 +209,7 @@ class _CreancePageState extends State<CreancePage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "${monnaieStorage.monney}",
+                  monnaieStorage.monney,
                   style: headline6!,
                 ))
           ],

@@ -312,7 +312,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "${monnaieStorage.monney}",
+                  monnaieStorage.monney,
                   style: headline6!,
                 ))
           ],

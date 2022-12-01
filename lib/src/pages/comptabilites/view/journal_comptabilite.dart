@@ -422,7 +422,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
             const SizedBox(width: p8),
             Expanded(
                 flex: 1,
-                child: Text("${monnaieStorage.monney}",
+                child: Text(monnaieStorage.monney,
                     style: Theme.of(context).textTheme.headline6))
           ],
         ));

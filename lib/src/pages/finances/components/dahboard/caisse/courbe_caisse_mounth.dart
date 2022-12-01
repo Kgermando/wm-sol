@@ -33,9 +33,7 @@ class _CourbeCaisseMounthState extends State<CourbeCaisseMounth> {
     if (mounted) {
       setState(() {
         dataList1 = data1;
-        dataList2 = data2;
-
-        print("caisse $dataList1");
+        dataList2 = data2; 
       });
     }
   }

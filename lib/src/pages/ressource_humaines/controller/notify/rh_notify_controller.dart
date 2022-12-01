@@ -38,24 +38,22 @@ class RHNotifyController extends GetxController {
   final _itemCountTransRestFin = 0.obs;
   int get itemCountTransRestFin => _itemCountTransRestFin.value;
 
-
-
-
+ 
   @override
   void onInit() {
-    super.onInit();
-    getCountRh();
-    getCountSalaireBudget();
-    getCountSalaireDD();
-    getCountSalaireFin();
-    getCountSalaireObs();
-    getCountTransRestDG();
-    getCountTransRestBudget();
-    getCountTransRestSalaireDD();
-    getCountTransRestFin();
-    getCountTransResteObs();
+    super.onInit(); 
+      getCountRh();
+        getCountSalaireBudget();
+        getCountSalaireDD();
+        getCountSalaireFin();
+        getCountSalaireObs();
+        getCountTransRestDG();
+        getCountTransRestBudget();
+        getCountTransRestSalaireDD();
+        getCountTransRestFin();
+        getCountTransResteObs();
   }
-
+ 
  
  
   void getCountRh() async {

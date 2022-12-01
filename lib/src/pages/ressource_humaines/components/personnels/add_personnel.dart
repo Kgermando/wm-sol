@@ -173,7 +173,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                             );
                             if (result != null) {
                               setState(() {
-                                controller
+                               controller
                                     .uploadFile(result.files.single.path!);
                               });
                             } else {
@@ -892,7 +892,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("${monnaieStorage.monney}",
+                child: Text(monnaieStorage.monney,
                     style: Theme.of(context).textTheme.headline6))
           ],
         ));

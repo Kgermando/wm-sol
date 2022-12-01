@@ -17,6 +17,7 @@ class CampaignNotifyApi extends GetConnect {
   var getFinUrl = Uri.parse("$campaignsNotifyUrl/get-count-fin/");
   var getObsUrl = Uri.parse("$campaignsNotifyUrl/get-count-obs/");
 
+  
   Future<NotifyModel> getCountDG() async {
     Map<String, String> header = headers;
 

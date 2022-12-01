@@ -310,7 +310,7 @@ class _CaissePageState extends State<CaissePage> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "${monnaieStorage.monney}",
+                  monnaieStorage.monney,
                   style: headline6!,
                 ))
           ],

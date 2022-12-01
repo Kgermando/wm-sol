@@ -23,15 +23,17 @@ class ComNotifyController extends GetxController {
   final _prodModelCount = 0.obs;
   int get prodModelCount => _prodModelCount.value;
  
-    @override
+
+  @override
   void onInit() {
     super.onInit();
-    getCountCom();  
+    getCountCom();
     getCountSuccursalesDG();
     getCountSuccursalesDD();
     getCountProdModelDD();
   }
- 
+
+
   void getCountCom() async {
     NotifySumModel notifySum =
         await comDepartementNotifyApi.getCountCom();

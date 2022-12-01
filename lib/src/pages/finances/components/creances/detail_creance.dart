@@ -462,7 +462,7 @@ class _DetailCreanceState extends State<DetailCreance> {
             Expanded(
                 flex: 1,
                 child: Text(
-                  "${monnaieStorage.monney}",
+                  monnaieStorage.monney,
                   style: headline6!,
                 ))
           ],

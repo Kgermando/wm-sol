@@ -190,7 +190,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: CircleAvatar(
-                          child: (widget.personne.photo == null)
+                          child: (widget.personne.photo == '-')
                               ? Image.asset('assets/images/avatar.jpg')
                               : Image.network(widget.personne.photo!)),
                     ),
@@ -911,7 +911,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
             const SizedBox(width: p20),
             Expanded(
                 flex: 1,
-                child: Text("${monnaieStorage.monney}",
+                child: Text(monnaieStorage.monney,
                     style: Theme.of(context).textTheme.headline6))
           ],
         ));

@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class SuccursaleNotifyApi extends GetConnect {
   var client = http.Client();
 
+ 
   var getDGUrl = Uri.parse("$succursalesNotifyUrl/get-count-dg/");
   var getDDUrl = Uri.parse("$succursalesNotifyUrl/get-count-dd/");
 

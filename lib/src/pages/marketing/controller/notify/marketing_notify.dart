@@ -22,16 +22,21 @@ class MarketingNotifyController extends GetxController {
   int get campaignCountFin => _campaignCountFin.value;
   final _campaignCountObs = 0.obs;
   int get campaignCountObs => _campaignCountObs.value;
+ 
+  
 
   @override
   void onInit() {
-    super.onInit();
+    super.onInit(); 
     getCountComMarketing();
-    getCountCampaignDD();
-    getCountCampaignBudget();
-    getCountCampaignFin();
-    getCountCampaignObs();
+        getCountCampaignDD();
+        getCountCampaignBudget();
+        getCountCampaignFin();
+        getCountCampaignObs();
   }
+
+  
+
 
   void getCountComMarketing() async {
     NotifySumModel notifySum =

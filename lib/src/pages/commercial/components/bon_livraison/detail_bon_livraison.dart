@@ -77,7 +77,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                                           onPressed: () async {
                                             await BonLivraisonPDF.generate(
                                                 widget.bonLivraisonModel,
-                                                "${monnaieStorage.monney}");
+                                                monnaieStorage.monney);
                                           },
                                         ),
                                         SelectableText(

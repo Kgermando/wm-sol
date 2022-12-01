@@ -1,3 +1,5 @@
+ 
+
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/notifications/departements/logistique_departement.dart';
 import 'package:wm_solution/src/api/notifications/logistique/materiel_notify_api.dart';
@@ -51,16 +53,15 @@ class NotifyLogController extends GetxController {
   void onInit() {
     super.onInit();
     getCount();
-    getCountEnginDG();
-    getCountEnginDD();
-    getCountTrajetsDD();
-    getCountImmobilierDG();
-    getCountImmobilierDD();
-    getCountMobilierDD();
-    getCountEntretienDD();
-    getCountEtatmaterielDD();
+        getCountEnginDG();
+        getCountEnginDD();
+        getCountTrajetsDD();
+        getCountImmobilierDG();
+        getCountImmobilierDD();
+        getCountMobilierDD();
+        getCountEntretienDD();
+        getCountEtatmaterielDD();
   }
-
 
   void getCount() async {
     NotifySumModel notifySum =

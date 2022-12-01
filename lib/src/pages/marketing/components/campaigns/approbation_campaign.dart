@@ -97,18 +97,14 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                       ],
                                     )
                                   : Container(),
-                              child3: (widget.campaignModel
-                                          .approbationDG ==
-                                      "Unapproved")
-                                  ? Column(
+                              child3: Column(
                                       children: [
                                         const Text("Signature"),
                                         const SizedBox(height: p20),
                                         Text(widget.campaignModel
                                             .signatureDG),
                                       ],
-                                    )
-                                  : Container()),
+                                    ) ),
                           if (widget.campaignModel.approbationDD == "Approved" &&
                               widget.campaignModel.approbationDG ==
                                   '-' &&
