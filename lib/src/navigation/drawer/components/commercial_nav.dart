@@ -31,7 +31,7 @@ class _CommercialNavState extends State<CommercialNav> {
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
       title:
-          AutoSizeText('Commercials', maxLines: 2, style: bodyMedium),
+          AutoSizeText('Commercial', maxLines: 2, style: bodyMedium),
       initiallyExpanded:
           widget.departementList.contains('Commercial')
               ? true
