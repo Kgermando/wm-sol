@@ -12,8 +12,8 @@ class BonLivraisonController extends GetxController
     with StateMixin<List<BonLivraisonModel>> {
   final BonLivraisonApi bonLivraisonApi = BonLivraisonApi();
   final ProfilController profilController = Get.find();
-  final AchatController achatController = Get.find();
-  final HistoryLivraisonController historyLivraisonController = Get.find();
+  final AchatController achatController = Get.put(AchatController());
+  final HistoryLivraisonController historyLivraisonController = Get.put(HistoryLivraisonController());
 
   var bonLivraisonList = <BonLivraisonModel>[].obs;
 
@@ -164,7 +164,7 @@ class BonLivraisonController extends GetxController
           });
         } else {
           // add to Stocks au comptant
-          final achatModel = AchatModel(
+          final achatModel = AchatModel( 
               idProduct: data.idProduct,
               quantity: data.quantityAchat,
               quantityAchat: data.quantityAchat, // Qty de livraison (entrant)
@@ -178,7 +178,7 @@ class BonLivraisonController extends GetxController
               succursale: data.succursale,
               signature: profilController.user.matricule,
               created: DateTime.now());
-          await achatController.achatApi.updateData(achatModel).then((value) {
+          await achatController.achatApi.insertData(achatModel).then((value) {
             bonLivraisonList.clear();
             getList();
             Get.back();

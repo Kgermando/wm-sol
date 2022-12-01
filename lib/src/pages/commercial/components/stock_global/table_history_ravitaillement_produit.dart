@@ -308,7 +308,6 @@ class _TableHistoryRavitaillementProduitState
             'id': PlutoCell(value: item.id)
           }));
         }
-        stateManager!.resetCurrentState();
       });
     }
   }

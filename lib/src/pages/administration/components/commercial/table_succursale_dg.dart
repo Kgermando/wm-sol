@@ -187,7 +187,7 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DG',
-        field: 'approbationDD',
+        field: 'approbationDG',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,

@@ -24,13 +24,13 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/history/
 
 class CartController extends GetxController with StateMixin<List<CartModel>> {
   final CartApi cartApi = CartApi();
-  final FactureController factureController = Get.find();
+  final FactureController factureController = Get.put(FactureController());
   final FactureCreanceController factureCreanceController = Get.find();
-  final NumeroFactureController numeroFactureController = Get.find();
-  final GainCartController gainController = Get.find();
-  final VenteCartController venteCartController = Get.find();
-  final AchatController achatController = Get.find();
-  final ProfilController profilController = Get.find();
+  final NumeroFactureController numeroFactureController = Get.put(NumeroFactureController());
+  final GainCartController gainController = Get.put(GainCartController());
+  final VenteCartController venteCartController = Get.put(VenteCartController());
+  final AchatController achatController = Get.put(AchatController());
+  final ProfilController profilController = Get.put(ProfilController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
 
   var cartList = <CartModel>[].obs;

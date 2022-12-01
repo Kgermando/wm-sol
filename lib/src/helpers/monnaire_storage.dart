@@ -7,13 +7,13 @@ class MonnaieStorage extends GetxController {
   static const _keyMonnaie = 'monnaie';
   GetStorage box = GetStorage();
 
-  final _monney = ''.obs;
+  final _monney = '\$'.obs;
   String get monney => _monney.value;
 
   @override
   void onInit() {
     super.onInit();
-    getData();
+    // getData();
   }
 
 

@@ -10,7 +10,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 class RavitaillementController extends GetxController {
   final StockGlobalController stockGlobalController = Get.find();
   final HistoryRavitaillementController historyRavitaillementController =
-      Get.find();
+      Get.put(HistoryRavitaillementController());
   final ProfilController profilController = Get.find();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
