@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart'; 
+import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 
 class AgendaBinding extends Bindings {
   @override
   void dependencies() {
-   Get.lazyPut<AgendaController>(() => AgendaController());  
+    Get.put<AgendaController>(AgendaController());
   }
-  
 }

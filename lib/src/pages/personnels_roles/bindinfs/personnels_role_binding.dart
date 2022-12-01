@@ -4,6 +4,6 @@ import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_rol
 class PersonnelsRoleBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<PersonnelsRolesController>(() => PersonnelsRolesController());
+    Get.put<PersonnelsRolesController>(PersonnelsRolesController());
   }
 }

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_model.dart';  
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -42,26 +42,26 @@ class _GrandLivreState extends State<GrandLivre> {
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
         body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => Row(
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: Card(
-                    child: Container(
-                        margin: const EdgeInsets.all(p20),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: pageView(state!)),
-                  )),
-            ],
-          )));
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!),
+            (state) => Row(
+                  children: [
+                    Visibility(
+                        visible: !Responsive.isMobile(context),
+                        child: const Expanded(flex: 1, child: DrawerMenu())),
+                    Expanded(
+                        flex: 5,
+                        child: Card(
+                          child: Container(
+                              margin: const EdgeInsets.all(p20),
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: pageView(state!)),
+                        )),
+                  ],
+                )));
   }
 
   Widget pageView(List<BalanceModel> data) {
@@ -119,21 +119,18 @@ class _GrandLivreState extends State<GrandLivre> {
     );
   }
 
-  Widget compteWidget(List<BalanceModel> data) { 
-    List<String> suggestionList =
-        data.map((e) => e.comptes).toSet().toList(); 
- 
+  Widget compteWidget(List<BalanceModel> data) {
+    List<String> suggestionList = data.map((e) => e.comptes).toSet().toList();
 
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
+          progressIndicatorBuilder: loading(),
           controller: compteController,
-          
           decoration: InputDecoration(
             labelText: 'Compte',
             labelStyle: const TextStyle(),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
             contentPadding: const EdgeInsets.only(left: 5.0),
           ),
           keyboardType: TextInputType.text,
@@ -169,7 +166,7 @@ class _GrandLivreState extends State<GrandLivre> {
     );
   }
 
-  void searchKey(List<BalanceModel> data) {  
+  void searchKey(List<BalanceModel> data) {
     final search = data
         .where((element) => element.comptes == compteController.text)
         .toList();

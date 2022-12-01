@@ -1,4 +1,8 @@
 
+class ExceptionRoutes {
+  static const notFound = "/not-found"; 
+}
+
 class SettingsRoutes {
   static const helps = "/helps";
   static const settings = "/settings";

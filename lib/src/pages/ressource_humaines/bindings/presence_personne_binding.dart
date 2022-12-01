@@ -4,7 +4,6 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/pr
 class PrersencePersonneBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<PresencePersonneController>(() => PresencePersonneController());
+    Get.put<PresencePersonneController>(PresencePersonneController());
   }
-  
 }

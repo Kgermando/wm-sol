@@ -4,7 +4,6 @@ import 'package:wm_solution/src/pages/auth/controller/change_password_controller
 class ChangePasswordBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
+    Get.put<ChangePasswordController>(ChangePasswordController());
   }
-  
 }

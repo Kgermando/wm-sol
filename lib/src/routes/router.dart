@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/bindings/network_bindings.dart'; 
+import 'package:wm_solution/src/bindings/network_bindings.dart';
+import 'package:wm_solution/src/bindings/wm_binding.dart'; 
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
@@ -48,6 +49,7 @@ import 'package:wm_solution/src/models/rh/perfomence_model.dart';
 import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/pages/404/error.dart';
 import 'package:wm_solution/src/pages/administration/bindings/admin_dashboard_binding.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_budget.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_comm.dart';
@@ -295,13 +297,21 @@ import 'package:wm_solution/src/pages/update/view/update_page.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 List<GetPage<dynamic>>? getPages = [
+  // 404
+   GetPage(
+    name: ExceptionRoutes.notFound, 
+    page: () => const PageNotFound(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
+
+
   // Settings
   GetPage(
-      name: SettingsRoutes.splash,
-      binding: SplashBinding(),
-      page: () => const SplashView(),
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+    name: SettingsRoutes.splash,
+    binding: WMBindings(), 
+    page: () => const SplashView(),
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)),
 
   // UserRoutes
   GetPage(

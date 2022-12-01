@@ -14,7 +14,7 @@ class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
   final UserApi userApi = UserApi();
 
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   final _loadingLogin = false.obs;
   bool get isLoadingLogin => _loadingLogin.value;

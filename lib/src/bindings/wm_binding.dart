@@ -1,4 +1,4 @@
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_notify_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
@@ -15,145 +15,143 @@ import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_noti
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/screens/controller/splash_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 
 class WMBindings extends Bindings {
   @override
   void dependencies() {
-
+    Get.put<SplashController>(SplashController());
     // Authentification
-    // Get.lazyPut<LoginController>(() => LoginController());
-    Get.lazyPut<ProfilController>(() => ProfilController());
-    // Get.lazyPut<ChangePasswordController>(() => ChangePasswordController());
-    // Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
+    // Get.put<LoginController>(LoginController());
+    Get.put<ProfilController>(ProfilController());
+    // Get.put<ChangePasswordController>(ChangePasswordController());
+    // Get.put<ForgotPasswordController>(ForgotPasswordController());
 
     // Header
-    Get.lazyPut<NotifyHeaderController>(() => NotifyHeaderController());
-    // Administration 
-    Get.lazyPut<AdminNotifyController>(() => AdminNotifyController());
-
+    Get.put<NotifyHeaderController>(NotifyHeaderController());
+    // Administration
+    Get.put<AdminNotifyController>(AdminNotifyController());
 
     // Mail
-    // Get.lazyPut<MaillingController>(() => MaillingController());
+    // Get.put<MaillingController>(MaillingController());
 
     // Personnels & Roles
-    Get.lazyPut<PersonnelsRolesController>(() => PersonnelsRolesController());
+    Get.put<PersonnelsRolesController>(PersonnelsRolesController());
 
     // Taches
-    // Get.lazyPut<TachesController>(() => TachesController());
-    // Get.lazyPut<RapportController>(() => RapportController());
+    // Get.put<TachesController>(TachesController());
+    // Get.put<RapportController>(RapportController());
 
     // Archive
-    // Get.lazyPut<ArchiveController>(() => ArchiveController());
-    // Get.lazyPut<ArchiveFolderController>(() => ArchiveFolderController());
+    // Get.put<ArchiveController>(ArchiveController());
+    // Get.put<ArchiveFolderController>(ArchiveFolderController());
 
     // RH
-    // Get.lazyPut<DashobardNotifyController>(() => DashobardNotifyController());
-    Get.lazyPut<RHNotifyController>(() => RHNotifyController());
-    // Get.lazyPut<PersonnelsController>(() => PersonnelsController());
-    // Get.lazyPut<SalaireController>(() => SalaireController());
-    // Get.lazyPut<TransportRestController>(() => TransportRestController());
-    // Get.lazyPut<TransportRestPersonnelsController>(() => TransportRestPersonnelsController());
-    // Get.lazyPut<PerformenceController>(() => PerformenceController());
-    // Get.lazyPut<PerformenceNoteController>(() => PerformenceNoteController());
-    // Get.lazyPut<UsersController>(() => UsersController());
-    // Get.lazyPut<PresenceController>(() => PresenceController());
-    // Get.lazyPut<PresencePersonneController>(() => PresencePersonneController());
+    // Get.put<DashobardNotifyController>(DashobardNotifyController());
+    Get.put<RHNotifyController>(RHNotifyController());
+    // Get.put<PersonnelsController>(PersonnelsController());
+    // Get.put<SalaireController>(SalaireController());
+    // Get.put<TransportRestController>(TransportRestController());
+    // Get.put<TransportRestPersonnelsController>(TransportRestPersonnelsController());
+    // Get.put<PerformenceController>(PerformenceController());
+    // Get.put<PerformenceNoteController>(PerformenceNoteController());
+    // Get.put<UsersController>(UsersController());
+    // Get.put<PresenceController>(PresenceController());
+    // Get.put<PresencePersonneController>(PresencePersonneController());
 
     // Budgets
-    // Get.lazyPut<DashboardBudgetController>(() => DashboardBudgetController());
-    Get.lazyPut<BudgetNotifyController>(() => BudgetNotifyController());
-    // Get.lazyPut<BudgetPrevisionnelController>(
-    //     () => BudgetPrevisionnelController());
-    // Get.lazyPut<LignBudgetaireController>(() => LignBudgetaireController());
+    // Get.put<DashboardBudgetController>(DashboardBudgetController());
+    Get.put<BudgetNotifyController>(BudgetNotifyController());
+    // Get.put<BudgetPrevisionnelController>(
+    //     BudgetPrevisionnelController());
+    // Get.put<LignBudgetaireController>(LignBudgetaireController());
 
     // Comptabilites
-    // Get.lazyPut<DashboardComptabiliteController>(
-    //       () => DashboardComptabiliteController());
-    Get.lazyPut<ComptabiliteNotifyController>(
-        () => ComptabiliteNotifyController());
-    // Get.lazyPut<BalanceController>(() => BalanceController());
-    // Get.lazyPut<BalanceRefController>(() => BalanceRefController());
-    // Get.lazyPut<BilanController>(() => BilanController());
-    // Get.lazyPut<CompteBilanRefController>(() => CompteBilanRefController());
-    // Get.lazyPut<CompteBilanRefController>(() => CompteBilanRefController());
-    // Get.lazyPut<CompteResultatController>(() => CompteResultatController());
-    // Get.lazyPut<JournalController>(() => JournalController());
-    // Get.lazyPut<JournalLivreController>(() => JournalLivreController());
+    // Get.put<DashboardComptabiliteController>(
+    //       DashboardComptabiliteController());
+    Get.put<ComptabiliteNotifyController>(ComptabiliteNotifyController());
+    // Get.put<BalanceController>(BalanceController());
+    // Get.put<BalanceRefController>(BalanceRefController());
+    // Get.put<BilanController>(BilanController());
+    // Get.put<CompteBilanRefController>(CompteBilanRefController());
+    // Get.put<CompteBilanRefController>(CompteBilanRefController());
+    // Get.put<CompteResultatController>(CompteResultatController());
+    // Get.put<JournalController>(JournalController());
+    // Get.put<JournalLivreController>(JournalLivreController());
 
     // Devis
-    // Get.lazyPut<DevisController>(() => DevisController());
-    // Get.lazyPut<DevisListObjetController>(() => DevisListObjetController());
-    Get.lazyPut<DevisNotifyController>(() => DevisNotifyController());
+    // Get.put<DevisController>(DevisController());
+    // Get.put<DevisListObjetController>(DevisListObjetController());
+    Get.put<DevisNotifyController>(DevisNotifyController());
 
     // Finances
-    // Get.lazyPut<DashboardFinanceController>(() => DashboardFinanceController());
-    // Get.lazyPut<BanqueController>(() => BanqueController());
-    Get.lazyPut<BanqueNameController>(() => BanqueNameController());
-    // Get.lazyPut<CaisseController>(() => CaisseController());
-    Get.lazyPut<CaisseNameController>(() => CaisseNameController());
-    // Get.lazyPut<CreanceDetteController>(() => CreanceDetteController());
-    // Get.lazyPut<CreanceController>(() => CreanceController());
-    // Get.lazyPut<DetteController>(() => DetteController());
-    // Get.lazyPut<FinExterieurController>(() => FinExterieurController());
-    Get.lazyPut<FinExterieurNameController>(() => FinExterieurNameController());
-    Get.lazyPut<FinanceNotifyController>(() => FinanceNotifyController());
-    // Get.lazyPut<ObservationNotifyController>(
-    //     () => ObservationNotifyController());
+    // Get.put<DashboardFinanceController>(DashboardFinanceController());
+    // Get.put<BanqueController>(BanqueController());
+    Get.put<BanqueNameController>(BanqueNameController());
+    // Get.put<CaisseController>(CaisseController());
+    Get.put<CaisseNameController>(CaisseNameController());
+    // Get.put<CreanceDetteController>(CreanceDetteController());
+    // Get.put<CreanceController>(CreanceController());
+    // Get.put<DetteController>(DetteController());
+    // Get.put<FinExterieurController>(FinExterieurController());
+    Get.put<FinExterieurNameController>(FinExterieurNameController());
+    Get.put<FinanceNotifyController>(FinanceNotifyController());
+    // Get.put<ObservationNotifyController>(
+    //     ObservationNotifyController());
 
     // Marketing
-    Get.lazyPut<MarketingNotifyController>(() => MarketingNotifyController());
-    // Get.lazyPut<DashboardMarketingController>(() => DashboardMarketingController());
-    // Get.lazyPut<CampaignController>(() => CampaignController());
-    // Get.lazyPut<AnnuaireController>(() => AnnuaireController());
-    // Get.lazyPut<AgendaController>(() => AgendaController());
+    Get.put<MarketingNotifyController>(MarketingNotifyController());
+    // Get.put<DashboardMarketingController>(DashboardMarketingController());
+    // Get.put<CampaignController>(CampaignController());
+    // Get.put<AnnuaireController>(AnnuaireController());
+    // Get.put<AgendaController>(AgendaController());
 
     // Commercial
-    // Get.lazyPut<DashboardComController>(() => DashboardComController());
-    Get.lazyPut<ComNotifyController>(() => ComNotifyController());
-    // Get.lazyPut<SuccursaleController>(() => SuccursaleController());
-    // Get.lazyPut<AchatController>(() => AchatController());
-    // Get.lazyPut<BonLivraisonController>(() => BonLivraisonController());
-    // Get.lazyPut<CartController>(() => CartController());
-    // Get.lazyPut<FactureController>(() => FactureController());
-    // Get.lazyPut<FactureCreanceController>(() => FactureCreanceController());
-    // Get.lazyPut<NumeroFactureController>(() => NumeroFactureController());
-    // Get.lazyPut<GainController>(() => GainController());
-    // Get.lazyPut<HistoryLivraisonController>(() => HistoryLivraisonController());
-    // Get.lazyPut<HistoryRavitaillementController>(
-    //     () => HistoryRavitaillementController());
-    // Get.lazyPut<VenteCartController>(() => VenteCartController());
-    // Get.lazyPut<ProduitModelController>(() => ProduitModelController());
-    // Get.lazyPut<RestitutionController>(() => RestitutionController());
-    // Get.lazyPut<LivraisonController>(() => LivraisonController());
-    // Get.lazyPut<RavitaillementController>(() => RavitaillementController());
-    // Get.lazyPut<StockGlobalController>(() => StockGlobalController());
+    // Get.put<DashboardComController>(DashboardComController());
+    Get.put<ComNotifyController>(ComNotifyController());
+    // Get.put<SuccursaleController>(SuccursaleController());
+    // Get.put<AchatController>(AchatController());
+    // Get.put<BonLivraisonController>(BonLivraisonController());
+    // Get.put<CartController>(CartController());
+    // Get.put<FactureController>(FactureController());
+    // Get.put<FactureCreanceController>(FactureCreanceController());
+    // Get.put<NumeroFactureController>(NumeroFactureController());
+    // Get.put<GainController>(GainController());
+    // Get.put<HistoryLivraisonController>(HistoryLivraisonController());
+    // Get.put<HistoryRavitaillementController>(
+    //     HistoryRavitaillementController());
+    // Get.put<VenteCartController>(VenteCartController());
+    // Get.put<ProduitModelController>(ProduitModelController());
+    // Get.put<RestitutionController>(RestitutionController());
+    // Get.put<LivraisonController>(LivraisonController());
+    // Get.put<RavitaillementController>(RavitaillementController());
+    // Get.put<StockGlobalController>(StockGlobalController());
 
     // Exploitations
-    // Get.lazyPut<ProjetController>(() => ProjetController());
-    // Get.lazyPut<DashboardExpController>(() => DashboardExpController());
-    Get.lazyPut<NotifyExpController>(() => NotifyExpController());
-    // Get.lazyPut<FourniseurController>(() => FourniseurController());
-    // Get.lazyPut<ProductionExpController>(() => ProductionExpController());
-    // Get.lazyPut<VersementController>(() => VersementController());
+    // Get.put<ProjetController>(ProjetController());
+    // Get.put<DashboardExpController>(DashboardExpController());
+    Get.put<NotifyExpController>(NotifyExpController());
+    // Get.put<FourniseurController>(FourniseurController());
+    // Get.put<ProductionExpController>(ProductionExpController());
+    // Get.put<VersementController>(VersementController());
 
     // Logistique
-    // Get.lazyPut<ApprovisionReceptionController>(
-    //     () => ApprovisionReceptionController());
-    // Get.lazyPut<ApprovisionnementController>(
-    //     () => ApprovisionnementController());
-    // Get.lazyPut<MaterielController>(() => MaterielController());
-    // Get.lazyPut<TrajetController>(() => TrajetController());
-    // Get.lazyPut<DashboardLogController>(() => DashboardLogController());
-    // Get.lazyPut<EntretienController>(() => EntretienController());
-    // Get.lazyPut<ObjetRemplaceController>(() => ObjetRemplaceController());
-    // Get.lazyPut<EtatMaterielController>(() => EtatMaterielController());
-    // Get.lazyPut<ImmobilierController>(() => ImmobilierController());
-    // Get.lazyPut<MobilierController>(() => MobilierController());
-    Get.lazyPut<NotifyLogController>(() => NotifyLogController());
-
+    // Get.put<ApprovisionReceptionController>(
+    //     ApprovisionReceptionController());
+    // Get.put<ApprovisionnementController>(
+    //     ApprovisionnementController());
+    // Get.put<MaterielController>(MaterielController());
+    // Get.put<TrajetController>(TrajetController());
+    // Get.put<DashboardLogController>(DashboardLogController());
+    // Get.put<EntretienController>(EntretienController());
+    // Get.put<ObjetRemplaceController>(ObjetRemplaceController());
+    // Get.put<EtatMaterielController>(EtatMaterielController());
+    // Get.put<ImmobilierController>(ImmobilierController());
+    // Get.put<MobilierController>(MobilierController());
+    Get.put<NotifyLogController>(NotifyLogController());
 
     // Update Version
-    Get.lazyPut<UpdateController>(() => UpdateController());
+    Get.put<UpdateController>(UpdateController());
   }
 }
