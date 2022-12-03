@@ -34,6 +34,15 @@ class NotifyHeaderController extends GetxController {
     getCountAgenda();
   }
 
+  // @override
+  // void refresh() {
+  //  getCountCart();
+  //   getCountTache();
+  //   getCountMail();
+  //   getCountAgenda();
+  //   super.refresh();
+  // }
+
   void getCountCart() async {
     NotifyModel notifySum =
         await cartNotifyApi.getCount(profilController.user.matricule);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart'; 
+import 'package:wm_solution/src/models/commercial/prod_model.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';

@@ -48,7 +48,7 @@ class WMBindings extends Bindings {
     // Get.put<ArchiveFolderController>(ArchiveFolderController());
 
     // RH
-    // Get.put<DashobardNotifyController>(DashobardNotifyController());
+    // Get.put<DashobardRHController>(DashobardRHController());
     Get.put<RHNotifyController>(RHNotifyController());
     // Get.put<PersonnelsController>(PersonnelsController());
     // Get.put<SalaireController>(SalaireController());

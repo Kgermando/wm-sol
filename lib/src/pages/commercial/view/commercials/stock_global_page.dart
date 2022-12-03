@@ -60,16 +60,31 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
                             decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: controller.stockGlobalList.length,
-                                itemBuilder: (context, index) {
-                                  final data =
-                                      controller.stockGlobalList[index];
-                                  return ListStockGlobal(
-                                      stocksGlobalMOdel: data,
-                                      role: profilController.user.role);
-                                }),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          controller.getList();
+                                        },
+                                        icon: const Icon(Icons.refresh,
+                                            color: Colors.green))
+                                  ],
+                                ),
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.stockGlobalList.length,
+                                    itemBuilder: (context, index) {
+                                      final data =
+                                          controller.stockGlobalList[index];
+                                      return ListStockGlobal(
+                                          stocksGlobalMOdel: data,
+                                          role: profilController.user.role);
+                                    }),
+                              ],
+                            ),
                           )))
                 ],
               )) ,

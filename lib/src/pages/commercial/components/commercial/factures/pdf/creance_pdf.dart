@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +14,7 @@ import 'package:pdf/widgets.dart';
 // Ce format n'est pas utiliser
 class CreancePDF {
   static Future<File> generate(
-      CreanceCartModel creanceCartModel, monnaie) async {
+      CreanceCartModel creanceCartModel, String monnaie) async {
     final pdf = Document();
 
     final user = await AuthApi().getUserId();
@@ -48,7 +48,7 @@ class CreancePDF {
                 width: 50,
                 child: BarcodeWidget(
                   barcode: Barcode.qrCode(),
-                  data: user.succursale,
+                  data: InfoSystem().nameClient(),
                 ),
               ),
             ],
@@ -69,8 +69,7 @@ class CreancePDF {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(user.succursale.toUpperCase(),
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(InfoSystem().nameAdress()),
+              style: TextStyle(fontWeight: FontWeight.bold)), 
         ],
       );
 
@@ -80,8 +79,8 @@ class CreancePDF {
       'RCCM:',
       'N° Impôt:',
       'ID Nat.:',
-      'Créance numero:',
-      'Créance prise le:',
+      'Facture numero:',
+      'Date:',
     ];
     final data = <String>[
       InfoSystem().rccm(),
@@ -105,10 +104,10 @@ class CreancePDF {
   static Widget buildSupplierAddress(UserModel user) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(user.succursale.toUpperCase(),
+           Text(InfoSystem().nameClient(),
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
-          Text("Adresse ...."),
+          Text(InfoSystem().nameAdress()),
         ],
       );
 
@@ -117,7 +116,7 @@ class CreancePDF {
         children: [
           Text(
             'Facture créance'.toUpperCase(),
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           // SizedBox(height: 0.8 * PdfPageFormat.cm),
           // Text(invoice.info.description),
@@ -167,6 +166,7 @@ class CreancePDF {
       headerStyle: TextStyle(fontWeight: FontWeight.bold),
       headerDecoration: const BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
+      cellStyle: const TextStyle(fontSize: 8),
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
@@ -249,7 +249,8 @@ class CreancePDF {
           // buildSimpleText(title: 'Address', value: invoice.supplier.address),
           // SizedBox(height: 1 * PdfPageFormat.mm),
           // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-          pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.')
+         pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
+              style: const TextStyle(fontSize: 10))
         ],
       );
 

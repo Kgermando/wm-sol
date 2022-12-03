@@ -36,12 +36,12 @@ class _VentePageState extends State<VentePage> {
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
         (state) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: DrawerMenu())),
-          Expanded(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
               flex: 5,
               child: SingleChildScrollView(
                   controller: ScrollController(),
@@ -52,17 +52,32 @@ class _VentePageState extends State<VentePage> {
                       decoration: const BoxDecoration(
                           borderRadius:
                               BorderRadius.all(Radius.circular(20))),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: controller.achatList.length,
-                          itemBuilder: (context, index) {
-                            final data = controller.achatList[index];
-                            return VenteItemWidget(
-                                controller: controller,
-                                achat: data,
-                                profilController: profilController,
-                                cartController: cartController);
-                          }))))
+                      child: Column(
+                        children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      controller.getList();
+                                    },
+                                    icon: const Icon(Icons.refresh,
+                                        color: Colors.green))
+                              ],
+                            ),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: state!.length,
+                              itemBuilder: (context, index) {
+                                final data = state[index];
+                                return VenteItemWidget(
+                                  controller: controller,
+                                  achat: data,
+                                  profilController: profilController,
+                                  cartController: cartController);
+                            }),
+                        ],
+                      ))))
         ],
       )) ,
     );

@@ -2,11 +2,10 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:wm_solution/src/api/auth/auth_api.dart';
-import 'package:wm_solution/src/helpers/monnaire_storage.dart';
+import 'package:wm_solution/src/api/auth/auth_api.dart'; 
 import 'package:wm_solution/src/helpers/pdf_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:intl/intl.dart';
@@ -16,19 +15,19 @@ import 'package:pdf/widgets.dart';
 
 class FactureCartPDF {
   static Future<File> generate(
-      FactureCartModel factureCartModel, MonnaieStorage monnaieStorage) async {
+      FactureCartModel factureCartModel, String monnaie) async {
     final pdf = Document();
 
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
       build: (context) => [
-        buildHeader(factureCartModel, user, monnaieStorage),
+        buildHeader(factureCartModel, user, monnaie),
         SizedBox(height: 3 * PdfPageFormat.cm),
         buildTitle(factureCartModel),
-        buildInvoice(factureCartModel, monnaieStorage),
+        buildInvoice(factureCartModel, monnaie),
         Divider(),
-        buildTotal(factureCartModel, monnaieStorage),
+        buildTotal(factureCartModel, monnaie),
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -37,7 +36,7 @@ class FactureCartPDF {
 
   static Widget buildHeader(
           FactureCartModel factureCartModel, UserModel user,
-          MonnaieStorage monnaieStorage) =>
+          monnaie) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,7 +50,7 @@ class FactureCartPDF {
                 width: 50,
                 child: BarcodeWidget(
                   barcode: Barcode.qrCode(),
-                  data: monnaieStorage.monney,
+                  data: InfoSystem().nameClient(),
                 ),
               ),
             ],
@@ -62,7 +61,7 @@ class FactureCartPDF {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               buildCustomerAddress(user),
-              buildInvoiceInfo(factureCartModel, user, monnaieStorage),
+              buildInvoiceInfo(factureCartModel, user, monnaie),
             ],
           ),
         ],
@@ -72,8 +71,7 @@ class FactureCartPDF {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(user.succursale.toUpperCase(),
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(InfoSystem().nameAdress()),
+              style: TextStyle(fontWeight: FontWeight.bold)), 
         ],
       );
 
@@ -84,8 +82,7 @@ class FactureCartPDF {
       'N° Impôt:',
       'ID Nat.:',
       'Facture numero:',
-      'Date de payement:',
-      'Monnaie:',
+      'Date:',
     ];
     final data = <String>[
       InfoSystem().rccm(),
@@ -93,7 +90,6 @@ class FactureCartPDF {
       InfoSystem().iDNat(),
       factureCartModel.client,
       DateFormat("dd/MM/yy HH:mm").format(factureCartModel.created),
-      monnaie
     ];
 
     return Column(
@@ -172,6 +168,7 @@ class FactureCartPDF {
       headerStyle: TextStyle(fontWeight: FontWeight.bold),
       headerDecoration: const BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
+      cellStyle: const TextStyle(fontSize: 8),
       cellAlignments: {
         0: Alignment.centerLeft,
         1: Alignment.centerLeft,
@@ -183,7 +180,7 @@ class FactureCartPDF {
     );
   }
 
-  static Widget buildTotal(FactureCartModel creanceCartModel, MonnaieStorage monnaieStorage) {
+  static Widget buildTotal(FactureCartModel creanceCartModel, monnaie) {
     var tva = 0.0;
     double sumCart = 0;
     final jsonList = jsonDecode(creanceCartModel.cart) as List;
@@ -225,7 +222,7 @@ class FactureCartPDF {
                 // ),
                 Divider(),
                 buildText(
-                  title: 'Total (${monnaieStorage.monney})',
+                  title: 'Total ($monnaie)',
                   titleStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -253,7 +250,8 @@ class FactureCartPDF {
           // buildSimpleText(title: 'Address', value: invoice.supplier.address),
           // SizedBox(height: 1 * PdfPageFormat.mm),
           // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-          pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.')
+         pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
+              style: const TextStyle(fontSize: 10))
         ],
       );
 

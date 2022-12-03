@@ -20,8 +20,7 @@ class _MailsNAvState extends State<MailsNAv> {
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) {
-    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+  Widget build(BuildContext context) { 
     final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     String? pageCurrente = ModalRoute.of(context)!.settings.name;
     return Drawer(

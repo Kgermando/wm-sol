@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

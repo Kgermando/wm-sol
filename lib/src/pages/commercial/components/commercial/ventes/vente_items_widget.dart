@@ -2,9 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
@@ -30,7 +31,8 @@ class VenteItemWidget extends StatefulWidget {
 
 class _VenteItemWidgetState extends State<VenteItemWidget> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  TextEditingController controllerQuantityCart = TextEditingController();
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // Après ajout au panier le produit quite la liste
   bool isActive = true;
@@ -82,7 +84,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                     Container(
                         constraints: const BoxConstraints(maxWidth: 200),
                         child: Form(
-                          key: widget.controller.formKey,
+                          key: formKey,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -141,7 +143,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                   Container(
                       constraints: const BoxConstraints(maxWidth: 100),
                       child: Form(
-                        key: widget.controller.formKey,
+                        key: formKey,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -168,7 +170,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
             : const TextStyle(
                 fontSize: 12,
               ),
-        controller: controllerQuantityCart,
+        controller: widget.cartController.controllerQuantityCart,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
@@ -188,7 +190,7 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
             return null;
           }
         },
-        onSaved: (value) => controllerQuantityCart.text,
+        onSaved: (value) => widget.cartController.controllerQuantityCart.text,
       ),
     );
   }
@@ -198,7 +200,8 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
         tooltip: 'Ajoutez au panier',
         iconSize: Responsive.isDesktop(context) ? 24.0 : 18.0,
         onPressed: () {
-          if (widget.controller.formKey.currentState!.validate()) {
+          final form = formKey.currentState!;
+          if (form.validate()) {
             widget.cartController.addCart(widget.achat);
             setState(() {
               isActive = !isActive;
@@ -207,5 +210,26 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
         },
         icon:
             Icon(Icons.add_shopping_cart_sharp, color: Colors.green.shade700));
+  }
+
+  Widget alertDialog(String text) {
+    return IconButton(
+      icon: const Icon(Icons.assistant_direction),
+      tooltip: 'Restitution de la quantité en stocks',
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          content: Text(text),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, "ok");
+              },
+              child: Text('OK', style: TextStyle(color: mainColor)),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

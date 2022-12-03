@@ -4,7 +4,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/p
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
-class DashobardNotifyController extends GetxController {
+class DashobardRHController extends GetxController {
   final PersonnelsController personnelsController = Get.find();
   final SalaireController salaireController = Get.find();
   final TransportRestController transportRestController = Get.find();

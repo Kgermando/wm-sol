@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -34,7 +34,7 @@ class CampagneXlsx {
         dataList[i].objectifs,
         dataList[i].observation,
         dataList[i].signature,
-        DateFormat("dd/MM/yy HH-mm").format(dataList[i].created) 
+        DateFormat("dd/MM/yy HH-mm").format(dataList[i].created)
       ];
 
       sheetObject.insertRowIterables(data, i + 1);

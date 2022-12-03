@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/vente_cart_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/vente_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class VenteCartController extends GetxController
@@ -9,7 +9,7 @@ class VenteCartController extends GetxController
   final VenteCartApi venteCartApi = VenteCartApi();
   final ProfilController profilController = Get.find();
 
-  List<VenteCartModel> livraisonHistoryVenteCartList = [];
+  List<VenteCartModel> venteCartList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -23,9 +23,9 @@ class VenteCartController extends GetxController
 
   void getList() async {
     await venteCartApi.getAllData().then((response) {
-      livraisonHistoryVenteCartList.clear();
-      livraisonHistoryVenteCartList.assignAll(response);
-      change(livraisonHistoryVenteCartList, status: RxStatus.success());
+      venteCartList.clear();
+      venteCartList.addAll(response);
+      change(venteCartList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
@@ -40,7 +40,7 @@ class VenteCartController extends GetxController
     try {
       _isLoading.value = true;
       await venteCartApi.deleteData(id).then((value) {
-        livraisonHistoryVenteCartList.clear();
+        venteCartList.clear();
         getList();
         Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",

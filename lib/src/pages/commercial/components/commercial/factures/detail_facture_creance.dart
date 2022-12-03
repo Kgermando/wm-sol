@@ -7,8 +7,8 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/cart/table_creance_cart.dart';
@@ -27,14 +27,13 @@ class DetailFactureCreance extends StatefulWidget {
 }
 
 class _DetailFactureCreanceState extends State<DetailFactureCreance> {
+  final FactureCreanceController controller = Get.find();
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final FactureCreanceController controller = Get.find();
-
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -82,15 +81,26 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                                           children: [
                                             Row(
                                               children: [
+                                                IconButton(
+                                                    tooltip:
+                                                        'Remboursement de la dette',
+                                                    onPressed: () {
+                                                      alertDialog();
+                                                    },
+                                                    icon:
+                                                        const Icon(Icons.send),
+                                                    color:
+                                                        Colors.green.shade700),
                                                 PrintWidget(
                                                     tooltip:
                                                         'Imprimer le document',
                                                     onPressed: () async {
                                                       final pdfFile =
-                                                          await CreanceCartPDF.generate(
-                                                              widget
-                                                                  .creanceCartModel,
-                                                              monnaieStorage);
+                                                          await CreanceCartPDF
+                                                              .generate(
+                                                                  widget
+                                                                      .creanceCartModel,
+                                                                  monnaieStorage.monney);
                                                       PdfApi.openFile(pdfFile);
                                                     })
                                               ],
@@ -157,15 +167,7 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
   }
 
   Widget totalCart() {
-    double width = MediaQuery.of(context).size.width;
-    if (MediaQuery.of(context).size.width >= 1100) {
-      width = MediaQuery.of(context).size.width / 2;
-    } else if (MediaQuery.of(context).size.width < 1100 &&
-        MediaQuery.of(context).size.width >= 650) {
-      width = MediaQuery.of(context).size.width / 1.3;
-    } else if (MediaQuery.of(context).size.width < 650) {
-      width = MediaQuery.of(context).size.width / 1.2;
-    }
+    final headline6 = Theme.of(context).textTheme.headline6;
 
     List<dynamic> cartItem;
     // cartItem = facture!.cart.toList();
@@ -188,18 +190,68 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
             double.parse(data.priceCart) * double.parse(data.quantityCart);
       }
     }
-    return Card(
-      elevation: 5,
-      color: mainColor.withOpacity(.5),
-      child: Container(
-        width: width,
-        margin: const EdgeInsets.all(p20),
-        child: Text(
-          'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: p30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                left: BorderSide(
+                  color: mainColor,
+                  width: 2,
+                ),
+              )),
+              child: Padding(
+                padding: const EdgeInsets.only(left: p10),
+                child: Text("Total: ",
+                    style: headline6!.copyWith(
+                        color: Colors.red.shade700,
+                        fontWeight: FontWeight.bold)),
+              )),
+          const SizedBox(width: p20),
+          Text(
+              "${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              style: headline6.copyWith(color: Colors.red.shade700))
+        ],
       ),
     );
+  }
+
+  alertDialog() {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return AlertDialog(
+              title: Text('Remboursement de la dette',
+                  style: TextStyle(color: Colors.green.shade700)),
+              content: const SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Text(
+                      "Cette action permet de mentioner cette facture comme etant payé.")),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: Text('Annuler',
+                      style: TextStyle(color: Colors.green.shade700)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    controller.submit(widget.creanceCartModel);
+                    Navigator.pop(context, 'ok');
+                  },
+                  child: Text('OK',
+                      style: TextStyle(color: Colors.green.shade700)),
+                ),
+              ],
+            );
+          });
+        });
   }
 }

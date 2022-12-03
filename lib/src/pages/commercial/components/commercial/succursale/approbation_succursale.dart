@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/app_theme.dart'; 
-import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart'; 
+import 'package:wm_solution/src/models/commercial/succursale_model.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';

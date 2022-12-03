@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/gain_api.dart';
-import 'package:wm_solution/src/models/commercial/gain_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/api/commerciale/vente_cart_api.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart'; 
 
-class GainCartController extends GetxController with StateMixin<List<GainModel>> {
-  final GainApi gainApi = GainApi();
-  final ProfilController profilController = Get.find();
+class VenteEffectueController extends GetxController with StateMixin<List<VenteCartModel>> {
+  final VenteCartApi venteCartApi = VenteCartApi();  
 
-  var gainList = <GainModel>[].obs;
+  List<VenteCartModel> venteCartList = [];
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+ 
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
+ 
 
   @override
   void onInit() {
-    super.onInit();
     getList();
+    super.onInit();
+    
   }
 
+ 
   void getList() async {
-    await gainApi.getAllData().then((response) {
-      gainList.assignAll(response);
-      change(gainList, status: RxStatus.success());
+    await venteCartApi.getAllData().then((response) {
+      venteCartList.clear();
+      venteCartList.addAll(response);
+      change(venteCartList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
   detailView(int id) async {
-    final data = await gainApi.getOneData(id);
+    final data = await venteCartApi.getOneData(id);
     return data;
   }
 
   void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await gainApi.deleteData(id).then((value) {
-        gainList.clear();
+      await venteCartApi.deleteData(id).then((value) {
+        venteCartList.clear();
         getList();
         Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
@@ -54,4 +56,5 @@ class GainCartController extends GetxController with StateMixin<List<GainModel>>
           snackPosition: SnackPosition.TOP);
     }
   }
+ 
 }

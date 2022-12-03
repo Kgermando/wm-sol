@@ -50,14 +50,29 @@ class _AchatPageState extends State<AchatPage> {
                           top: p20, bottom: p8, right: p20, left: p20),
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: state!.length,
-                          itemBuilder: (context, index) {
-                            final data = state[index];
-                            return ListStock(
-                                achat: data, role: profilController.user.role);
-                          }))))
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    controller.getList();
+                                  },
+                                  icon: const Icon(Icons.refresh,
+                                      color: Colors.green))
+                            ],
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state!.length,
+                            itemBuilder: (context, index) {
+                              final data = state[index];
+                              return ListStock(
+                                  achat: data, role: profilController.user.role);
+                            }),
+                        ],
+                      ))))
         ],
       )) ,
     );

@@ -4,35 +4,35 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/commercials/vente_effectue/ventes_effectue_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class DetailCart extends StatefulWidget {
-  const DetailCart({super.key, required this.cart});
-  final CartModel cart;
+class DetailVenteEffectue extends StatefulWidget {
+  const DetailVenteEffectue({super.key, required this.venteCartModel});
+  final VenteCartModel venteCartModel;
 
   @override
-  State<DetailCart> createState() => _DetailCartState();
+  State<DetailVenteEffectue> createState() => _DetailVenteEffectueState();
 }
 
-class _DetailCartState extends State<DetailCart> {
-  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+class _DetailVenteEffectueState extends State<DetailVenteEffectue> {
+  final VenteEffectueController controller = Get.find();
+  final MonnaieStorage monnaieStorage = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
   @override
-  Widget build(BuildContext context) {
-    final CartController controller = Get.find();
+  Widget build(BuildContext context) { 
 
     return Scaffold(
       key: scaffoldKey,
-      appBar: headerBar(context, scaffoldKey, title, widget.cart.idProductCart),
-      drawer: const DrawerMenu(), 
+      appBar: headerBar(context, scaffoldKey, title, widget.venteCartModel.idProductCart),
+      drawer: const DrawerMenu(),
       body: controller.obx(
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
@@ -69,14 +69,16 @@ class _DetailCartState extends State<DetailCart> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const TitleWidget(
-                                                title: 'Votre panier'),
+                                          if(!Responsive.isMobile(context))
+                                           TitleWidget(
+                                                title: widget
+                                                 .venteCartModel.succursale),
                                             Column(
                                               children: [
                                                 SelectableText(
                                                     DateFormat("dd-MM-yy HH:mm")
                                                         .format(widget
-                                                            .cart.created),
+                                                            .venteCartModel.created),
                                                     textAlign: TextAlign.start),
                                               ],
                                             )
@@ -102,55 +104,51 @@ class _DetailCartState extends State<DetailCart> {
 
   Widget dataWidget() {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+     double prixUnitaire =
+        double.parse(widget.venteCartModel.priceTotalCart) / double.parse(widget.venteCartModel.quantityCart);
+
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         children: [
           const SizedBox(height: p30),
           ResponsiveChildWidget(
-            flex1: 1, 
+            flex1: 1,
             flex2: 3,
             child1: Text('Produit :',
-                textAlign: TextAlign.start,
-                style: bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.cart.idProductCart,
-                    textAlign: TextAlign.start, style: bodyLarge),
-          ),  
-          Divider(
-            color: mainColor,
-          ),
-          ResponsiveChildWidget(
-            flex1: 1,
-            flex2: 3,
-            child1: Text('Quantités :',
-                textAlign: TextAlign.start,
-                style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
-            child2: Text(
-                    '${NumberFormat.decimalPattern('fr').format(double.parse(widget.cart.quantityCart))} ${widget.cart.unite}',
                     textAlign: TextAlign.start,
-                    style: bodyLarge),
-          ), 
+                    style: bodyLarge!.copyWith(fontWeight: FontWeight.bold)), 
+            child2: SelectableText(widget.venteCartModel.idProductCart,
+                    textAlign: TextAlign.start, style: bodyLarge)
+          ) ,
           Divider(
             color: mainColor,
           ),
           ResponsiveChildWidget(
-            flex1: 1,
-            flex2: 3,
-            child1: Text('Prix unitaire :',
-                textAlign: TextAlign.start,
-                style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
-            child2: (double.parse(widget.cart.quantityCart) >=
-                      double.parse(widget.cart.qtyRemise)) 
-              ? Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(widget.cart.remise))} x ${NumberFormat.decimalPattern('fr').format(double.parse(widget.cart.quantityCart))} ${widget.cart.unite}',
+              flex1: 1,
+              flex2: 3,
+              child1: Text('Quantités :',
                   textAlign: TextAlign.start,
-                  style: bodyLarge)
-              : Text(
-                  '${NumberFormat.decimalPattern('fr').format(double.parse(widget.cart.priceCart))} x ${NumberFormat.decimalPattern('fr').format(double.parse(widget.cart.quantityCart))} ${widget.cart.unite}',
-                  textAlign: TextAlign.start,
-                  style: bodyLarge,
-                ),
+                  style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+              child2: Text(
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(widget.venteCartModel.quantityCart))} ${widget.venteCartModel.unite}',
+                    textAlign: TextAlign.start,
+                    style: bodyLarge)), 
+          Divider(
+            color: mainColor,
           ),
+          ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
+              child1: Text('Prix unitaire :',
+                  textAlign: TextAlign.start,
+                  style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
+              child2: Text(
+              "${NumberFormat.decimalPattern('fr').format(prixUnitaire)} ${monnaieStorage.monney}",
+              textAlign: TextAlign.start,
+              style: bodyLarge,
+            ),
+          ),  
           Divider(
             color: mainColor,
           ),
@@ -160,27 +158,15 @@ class _DetailCartState extends State<DetailCart> {
             child1: Text('Signature :',
                 textAlign: TextAlign.start,
                 style: bodyLarge.copyWith(fontWeight: FontWeight.bold)),
-            child2: SelectableText(widget.cart.signature,
+            child2: SelectableText(widget.venteCartModel.signature,
                 textAlign: TextAlign.start, style: bodyLarge),
-          ),  
+          ),   
         ],
       ),
     );
   }
 
-  Widget total() {
-    double sum = 0.0;
-    var qtyRemise = double.parse(widget.cart.qtyRemise);
-    var quantityCart = double.parse(widget.cart.quantityCart);
-
-    if (quantityCart >= qtyRemise) {
-      sum = double.parse(widget.cart.quantityCart) *
-          double.parse(widget.cart.remise);
-    } else {
-      sum = double.parse(widget.cart.quantityCart) *
-          double.parse(widget.cart.priceCart);
-    }
-
+   Widget total() {  
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -189,11 +175,11 @@ class _DetailCartState extends State<DetailCart> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Montant à payé',
+                const Text('Montant payé',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                     overflow: TextOverflow.ellipsis),
                 Text(
-                    '${NumberFormat.decimalPattern('fr').format(sum)} ${monnaieStorage.monney}',
+                    '${NumberFormat.decimalPattern('fr').format(double.parse(widget.venteCartModel.priceTotalCart))} ${monnaieStorage.monney}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,

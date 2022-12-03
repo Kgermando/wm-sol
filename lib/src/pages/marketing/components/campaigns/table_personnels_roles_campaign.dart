@@ -2,7 +2,7 @@ import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/personnels_roles/components/personnels_roles_xlsx.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -17,7 +17,8 @@ class TablePersonnelsRolesCampaign extends StatefulWidget {
       required this.personnelsController,
       required this.approuvedDD,
       required this.id,
-      required this.departement, required this.campaignModel});
+      required this.departement,
+      required this.campaignModel});
   final PersonnelsRolesController personnelsRolesController;
   final PersonnelsController personnelsController;
   final String approuvedDD; // Verrouiller after approbation DD
@@ -26,10 +27,12 @@ class TablePersonnelsRolesCampaign extends StatefulWidget {
   final CampaignModel campaignModel;
 
   @override
-  State<TablePersonnelsRolesCampaign> createState() => _TablePersonnelsRolesCampaignState();
+  State<TablePersonnelsRolesCampaign> createState() =>
+      _TablePersonnelsRolesCampaignState();
 }
 
-class _TablePersonnelsRolesCampaignState extends State<TablePersonnelsRolesCampaign> {
+class _TablePersonnelsRolesCampaignState
+    extends State<TablePersonnelsRolesCampaign> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -61,7 +64,8 @@ class _TablePersonnelsRolesCampaignState extends State<TablePersonnelsRolesCampa
               const TitleWidget(title: "Liste personnels & rôles"),
               Row(
                 children: [
-                  if (widget.approuvedDD == "-" || widget.approuvedDD == "Unapproved")
+                  if (widget.approuvedDD == "-" ||
+                      widget.approuvedDD == "Unapproved")
                     IconButton(
                         tooltip: 'Ajouter du personnels ici.',
                         onPressed: () {
@@ -76,8 +80,8 @@ class _TablePersonnelsRolesCampaignState extends State<TablePersonnelsRolesCampa
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    PersonnelsRolesXlsx()
-                        .exportToExcel(widget.personnelsRolesController.personnelsRoleList);
+                    PersonnelsRolesXlsx().exportToExcel(
+                        widget.personnelsRolesController.personnelsRoleList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -118,7 +122,9 @@ class _TablePersonnelsRolesCampaignState extends State<TablePersonnelsRolesCampa
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.personnelsRolesController.personnelsRoleList
-      .where((element) => element.reference == widget.id && element.departement == widget.departement)
+        .where((element) =>
+            element.reference == widget.id &&
+            element.departement == widget.departement)
         .toList();
     var i = dataList.length;
     for (var item in dataList) {
@@ -214,7 +220,8 @@ class _TablePersonnelsRolesCampaignState extends State<TablePersonnelsRolesCampa
                 ),
                 TextButton(
                   onPressed: () {
-                    final form = widget.personnelsRolesController.formKey.currentState!;
+                    final form =
+                        widget.personnelsRolesController.formKey.currentState!;
                     if (form.validate()) {
                       widget.personnelsRolesController
                           .submit(widget.id, widget.departement);
@@ -230,8 +237,9 @@ class _TablePersonnelsRolesCampaignState extends State<TablePersonnelsRolesCampa
   }
 
   Widget agentWidget() {
-    List<String> suggestionList =
-        widget.personnelsController.personnelsList.map((e) => e.matricule).toList();
+    List<String> suggestionList = widget.personnelsController.personnelsList
+        .map((e) => e.matricule)
+        .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(

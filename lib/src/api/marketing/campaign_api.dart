@@ -4,9 +4,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
-import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/api/route_api.dart'; 
 import 'package:http/http.dart' as http;
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 
 class CampaignApi extends GetConnect {
   var client = http.Client();

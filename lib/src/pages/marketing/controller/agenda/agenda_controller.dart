@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/marketing/agenda_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
+import 'package:wm_solution/src/api/marketing/agenda_api.dart'; 
+import 'package:wm_solution/src/models/marketing/agenda_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class AgendaController extends GetxController

@@ -33,7 +33,7 @@ class _FacturePageState extends State<FacturePage> {
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
-          (data) => Row(
+          (state) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -47,7 +47,7 @@ class _FacturePageState extends State<FacturePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           child: TableFacture(
-                              factureList: controller.factureList,
+                              factureList: state!,
                               controller: controller,
                               profilController: profilController))),
                 ],

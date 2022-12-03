@@ -28,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   String? devise;
   String? langue;
+  String? formatImprimante;
 
   @override
   void initState() {
@@ -82,7 +83,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: ListSettings(
                                 icon: Icons.language,
                                 title: 'Langues',
-                                options: langueField(context)),
+                                options: langueWidget(context)),
                           ),
                         ),
                         const SizedBox(
@@ -94,7 +95,19 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: ListSettings(
                                 icon: Icons.monetization_on,
                                 title: 'Devise',
-                                options: deviseField(context)),
+                                options: deviseWidget(context)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListSettings(
+                                icon: Icons.print,
+                                title: 'Format imprimante',
+                                options: formatImprimanteWidget(context)),
                           ),
                         ),
                         const SizedBox(
@@ -117,7 +130,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget langueField(BuildContext context) {
+  Widget langueWidget(BuildContext context) {
     return DropdownButtonFormField<String>(
         decoration: const InputDecoration(
           labelStyle: TextStyle(),
@@ -131,14 +144,14 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Text(value),
           );
         }).toList(),
-        onChanged: (produit) {
+        onChanged: (value) {
           setState(() {
-            langue = produit;
+            langue = value;
           });
         });
   }
 
-  Widget deviseField(BuildContext context) {
+  Widget deviseWidget(BuildContext context) {
     return DropdownButtonFormField<String>(
         decoration: const InputDecoration(
           labelText: 'Devise',
@@ -157,7 +170,29 @@ class _SettingsPageState extends State<SettingsPage> {
           setState(() {
             devise = value;
             monnaieStorage.removeData();
-            monnaieStorage.setData(devise); 
+            monnaieStorage.setData(devise);
+          });
+        });
+  }
+
+  Widget formatImprimanteWidget(BuildContext context) {
+    List<String> formatList = ["A4", "A5", "A6"];
+    return DropdownButtonFormField<String>(
+        decoration: const InputDecoration(
+          labelStyle: TextStyle(),
+          contentPadding: EdgeInsets.only(left: 5.0),
+        ),
+        value: formatImprimante,
+        isExpanded: true,
+        items: formatList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            formatImprimante = value;
           });
         });
   }
@@ -169,17 +204,16 @@ class _SettingsPageState extends State<SettingsPage> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(InfoSystem().logo(), height: 200, width: 200),
-              const SizedBox(height: p20),
-              Text(InfoSystem().name()),
-            ],
-          ),
-          content:
-            Text('Version: ${InfoSystem().version()} \nDate: 01-12-2022')
-          ),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(InfoSystem().logo(), height: 200, width: 200),
+                const SizedBox(height: p20),
+                Text(InfoSystem().name()),
+              ],
+            ),
+            content:
+                Text('Version: ${InfoSystem().version()} \nDate: 01-12-2022')),
       ),
     );
   }

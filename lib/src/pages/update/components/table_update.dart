@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -160,7 +161,7 @@ class _TableUpdateState extends State<TableUpdate> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Motif',
+        title: 'Rapport update',
         field: 'motif',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -172,7 +173,7 @@ class _TableUpdateState extends State<TableUpdate> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Url',
+        title: 'Télécharger',
         field: 'urlUpdate',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -181,10 +182,10 @@ class _TableUpdateState extends State<TableUpdate> {
         titleTextAlign: PlutoColumnTextAlign.left,
         renderer: (rendererContext) {
           return IconButton(
-              onPressed: () {
-                rendererContext.cell.value.toString();
-              },
-              icon: const Icon(Icons.download));
+            onPressed: () {
+              rendererContext.cell.value.toString();
+            },
+            icon: Icon(Icons.download, color: mainColor));
         },
         minWidth: 150,
       ),

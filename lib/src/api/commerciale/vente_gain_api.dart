@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/courbe_vente_gain_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/vente_chart_model.dart';
+import 'package:wm_solution/src/models/commercial/courbe_vente_gain_model.dart';
+import 'package:wm_solution/src/models/commercial/vente_chart_model.dart';
 import 'package:http/http.dart' as http;
 
 class VenteGainApi extends GetConnect {

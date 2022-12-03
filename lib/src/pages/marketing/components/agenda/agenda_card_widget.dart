@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
+import 'package:wm_solution/src/models/marketing/agenda_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:wm_solution/src/models/marketing/agenda_model.dart';
 
 class AgendaCardWidget extends StatelessWidget {
   const AgendaCardWidget({
@@ -40,7 +41,7 @@ class AgendaCardWidget extends StatelessWidget {
                     style: TextStyle(fontSize: 10, color: Colors.grey.shade700),
                   ),
                 ),
-                if (DateTime.now().day == agendaModel.dateRappel.day) 
+                if (DateTime.now().day == agendaModel.dateRappel.day)
                   Container(
                     width: 15,
                     height: 15,

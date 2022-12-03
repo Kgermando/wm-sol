@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/bon_livraison_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
-import 'package:wm_solution/src/models/comm_maketing/livraiason_history_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
+import 'package:wm_solution/src/models/commercial/livraiason_history_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_livraison.dart';
@@ -15,7 +15,7 @@ class BonLivraisonController extends GetxController
   final AchatController achatController = Get.put(AchatController());
   final HistoryLivraisonController historyLivraisonController = Get.put(HistoryLivraisonController());
 
-  var bonLivraisonList = <BonLivraisonModel>[].obs;
+  List<BonLivraisonModel> bonLivraisonList = [] ;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -29,7 +29,8 @@ class BonLivraisonController extends GetxController
 
   void getList() async {
     await bonLivraisonApi.getAllData().then((response) {
-      bonLivraisonList.assignAll(response);
+      bonLivraisonList.clear();
+      bonLivraisonList.addAll(response);
       change(bonLivraisonList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -163,6 +164,7 @@ class BonLivraisonController extends GetxController
             });
           });
         } else {
+          
           // add to Stocks au comptant
           final achatModel = AchatModel( 
               idProduct: data.idProduct,
@@ -178,16 +180,43 @@ class BonLivraisonController extends GetxController
               succursale: data.succursale,
               signature: profilController.user.matricule,
               created: DateTime.now());
-          await achatController.achatApi.insertData(achatModel).then((value) {
-            bonLivraisonList.clear();
-            getList();
-            Get.back();
-            Get.snackbar("Bon de Livraison effectuée avec succès!",
-                "La Livraison a bien été réçu",
-                backgroundColor: Colors.green,
-                icon: const Icon(Icons.check),
-                snackPosition: SnackPosition.TOP);
-            _isLoading.value = false;
+          await achatController.achatApi.insertData(achatModel).then((value) async {
+             // Add Livraison history si la succursale == la succursale de ravitaillement
+          var margeBenMap = (double.parse(value.prixVenteUnit) - double.parse(value.priceAchatUnit)) *
+              double.parse(value.quantity);
+
+          var margeBenRemise = (double.parse(value.remise) - double.parse(value.priceAchatUnit)) *
+              double.parse(value.quantity);
+          // Insert to Historique de Livraisons Stocks au comptant
+          final livraisonHistoryModel = LivraisonHistoryModel(
+            idProduct: data.idProduct,
+            quantityAchat: value.quantityAchat,
+            quantity: value.quantity,
+            priceAchatUnit: value.priceAchatUnit,
+            prixVenteUnit: value.prixVenteUnit,
+            unite: data.unite,
+            margeBen: margeBenMap.toString(),
+            tva: value.tva,
+            remise: value.remise,
+            qtyRemise: value.qtyRemise,
+            margeBenRemise: margeBenRemise.toString(),
+            qtyLivre: value.quantityAchat,
+            succursale: value.succursale,
+            signature: data.signature,
+            created: value.created,
+          );
+          await historyLivraisonController.livraisonHistorylivraisonHistoryApi
+            .insertData(livraisonHistoryModel).then((value) {
+              bonLivraisonList.clear();
+              getList();
+              Get.back();
+              Get.snackbar("Bon de Livraison effectuée avec succès!",
+                  "La Livraison a bien été réçu",
+                  backgroundColor: Colors.green,
+                  icon: const Icon(Icons.check),
+                  snackPosition: SnackPosition.TOP);
+              _isLoading.value = false;
+              });  
           });
         }
       });

@@ -4,18 +4,16 @@ import 'package:wm_solution/src/bindings/wm_binding.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/annuaire_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/restitution_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart'; 
+import 'package:wm_solution/src/models/commercial/bon_livraison.dart'; 
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/prod_model.dart';
+import 'package:wm_solution/src/models/commercial/restitution_model.dart';
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
+import 'package:wm_solution/src/models/commercial/succursale_model.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart'; 
 import 'package:wm_solution/src/models/comptabilites/balance_model.dart'; 
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';  
@@ -33,6 +31,9 @@ import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/models/logistiques/mobilier_model.dart';
 import 'package:wm_solution/src/models/logistiques/trajet_model.dart';
 import 'package:wm_solution/src/models/mail/mail_model.dart';
+import 'package:wm_solution/src/models/marketing/agenda_model.dart';
+import 'package:wm_solution/src/models/marketing/annuaire_model.dart';
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
@@ -101,6 +102,7 @@ import 'package:wm_solution/src/pages/commercial/bindings/restitution_binding.da
 import 'package:wm_solution/src/pages/commercial/bindings/stock_global_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/succursale_binding.dart';
 import 'package:wm_solution/src/pages/commercial/bindings/vente_cart_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/vente_effectue_binding.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/achats/detail_achat.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/bon_livraison/detail_bon_livraison.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/cart/detail_cart.dart';
@@ -117,6 +119,8 @@ import 'package:wm_solution/src/pages/commercial/components/commercial/stock_glo
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/add_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/detail_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/update_succursale.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/vente_effectue/detail_vente_effectue.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/vente_effectue_page.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/balance_binding.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_ref_binding.dart';
@@ -282,8 +286,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/performence_rh.dar
 import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
-import 'package:wm_solution/src/pages/screens/binding/splash_binding.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart'; 
 import 'package:wm_solution/src/pages/screens/help_page.dart';
 import 'package:wm_solution/src/pages/screens/settings_page.dart';
 import 'package:wm_solution/src/pages/screens/splash_page.dart';
@@ -1416,7 +1419,6 @@ GetPage(
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
   GetPage(
       name: ComRoutes.comProduitModel,
       bindings: [ProduitModelBinding(), ProfilBinding(), NetworkBindings()],
@@ -1589,6 +1591,22 @@ GetPage(
       page: () {
         final AchatModel achatModel = Get.arguments as AchatModel;
         return DetailAchat(achatModel: achatModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  
+  GetPage(
+      name: ComRoutes.comVenteEffectue, 
+      binding: VenteEffectueBinding(),
+      page: () => const VenteEffectue(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComRoutes.comVenteEffectueDetail,
+      binding: VenteEffectueBinding(), 
+      page: () {
+        final VenteCartModel venteCartModel = Get.arguments as VenteCartModel;
+        return DetailVenteEffectue(venteCartModel: venteCartModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

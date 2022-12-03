@@ -132,7 +132,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                                                       icon: const Icon(
                                                           Icons.send),
                                                       color: Colors
-                                                          .green.shade700),
+                                                          .teal),
                                                 if (widget
                                                         .departementBudgetModel
                                                         .isSubmit ==
@@ -423,6 +423,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                 TextButton(
                   onPressed: () {
                     controller.submitToDD(widget.departementBudgetModel);
+                    Navigator.pop(context, 'ok');
                   },
                   child: Text('OK',
                       style: TextStyle(color: Colors.green.shade700)),
@@ -455,8 +456,8 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                 TextButton(
                   onPressed: () {
                     controller
-                        .deleteData(widget.departementBudgetModel.id!)
-                        .then((value) => Navigator.of(context).pop());
+                        .deleteData(widget.departementBudgetModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
                   child:
                       Text('OK', style: TextStyle(color: Colors.red.shade700)),

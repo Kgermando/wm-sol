@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -5,13 +7,13 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/cart_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/creance_cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/gain_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/number_facture.dart';
-import 'package:wm_solution/src/models/comm_maketing/vente_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/gain_model.dart';
+import 'package:wm_solution/src/models/commercial/number_facture.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/creance_cart_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/facture_cart_pdf.dart';
@@ -25,15 +27,18 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/history/
 class CartController extends GetxController with StateMixin<List<CartModel>> {
   final CartApi cartApi = CartApi();
   final FactureController factureController = Get.put(FactureController());
-  final FactureCreanceController factureCreanceController = Get.find();
-  final NumeroFactureController numeroFactureController = Get.put(NumeroFactureController());
+  final FactureCreanceController factureCreanceController =
+      Get.put(FactureCreanceController());
+  final NumeroFactureController numeroFactureController =
+      Get.put(NumeroFactureController());
   final GainCartController gainController = Get.put(GainCartController());
-  final VenteCartController venteCartController = Get.put(VenteCartController());
+  final VenteCartController venteCartController =
+      Get.put(VenteCartController());
   final AchatController achatController = Get.put(AchatController());
   final ProfilController profilController = Get.put(ProfilController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
 
-  var cartList = <CartModel>[].obs;
+  List<CartModel> cartList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -53,9 +58,14 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
     super.dispose();
   }
 
+  void clear() {
+    controllerQuantityCart.clear();
+  }
+
   void getList() async {
     await cartApi.getAllData(profilController.user.matricule).then((response) {
-      cartList.assignAll(response);
+      cartList.clear();
+      cartList.addAll(response); 
       change(cartList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -102,10 +112,12 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           qtyRemise: achat.qtyRemise,
           succursale: profilController.user.succursale,
           signature: profilController.user.matricule,
-          created: DateTime.now());
+          created: DateTime.now(),
+          createdAt: achat.created
+      );
       await cartApi.insertData(cartModel).then((value) async {
-        var qty = double.parse(achat.quantity) -
-            double.parse(controllerQuantityCart.text);
+        var qty =
+            double.parse(achat.quantity) - double.parse(value.quantityCart);
         final achatModel = AchatModel(
             id: achat.id!,
             idProduct: achat.idProduct,
@@ -122,11 +134,12 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
             signature: achat.signature,
             created: achat.created);
         await achatController.achatApi.updateData(achatModel).then((value) {
+          clear();
           cartList.clear();
           getList();
-          Get.back();
-          Get.snackbar("Soumission effectuée avec succès!",
-              "Le document a bien été sauvegader",
+          // Get.back();
+          Get.snackbar("${value.idProduct} ajouté!",
+              "${value.idProduct} au panier avec succès.",
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
@@ -151,14 +164,16 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           signature: profilController.user.matricule,
           created: DateTime.now());
       await factureController.factureApi
-          .updateData(factureCartModel)
+          .insertData(factureCartModel)
           .then((value) async {
         // Genere le numero de la facture
         numberFactureField(value.client, value.succursale, value.signature);
+ 
+
         // Ajout des items dans historique
-        venteHisotory();
+        venteHisotory(cartList);
         // Add Gain par produit
-        gainVentes();
+        gainVentes(cartList);
         // Vide de la panier
         cleanCart().then((value) {
           cartList.clear();
@@ -197,8 +212,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in factureList) {
         facture = item;
       }
-      final pdfFile =
-          await FactureCartPDF.generate(facture!, monnaieStorage);
+      final pdfFile = await FactureCartPDF.generate(facture!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
     } catch (e) {
       Get.snackbar("Erreur lors de l'ouverture", "$e",
@@ -222,9 +236,9 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           .then((value) {
         numberFactureField(value.client, value.succursale, value.signature);
         // Ajout des items dans historique
-        venteHisotory();
+        venteHisotory(cartList);
         // Add Gain par produit
-        gainVentes();
+        gainVentes(cartList);
         // Vide de la panier
         cleanCart().then((value) {
           cartList.clear();
@@ -266,8 +280,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in creanceList) {
         creance = item;
       }
-      final pdfFile =
-          await CreanceCartPDF.generate(creance!, monnaieStorage);
+      final pdfFile = await CreanceCartPDF.generate(creance!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
     } catch (e) {
       Get.snackbar("Erreur lors de l'ouverture", "$e",
@@ -292,8 +305,9 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         .insertData(numberFactureModel);
   }
 
-  Future<void> venteHisotory() async {
-    for (var item in cartList) {
+  Future<void> venteHisotory(List<CartModel> cartItemList) async { 
+
+    cartItemList.forEach((item) async { 
       double priceTotal = 0;
       if (double.parse(item.quantityCart) >= double.parse(item.qtyRemise)) {
         priceTotal =
@@ -312,13 +326,39 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           qtyRemise: item.qtyRemise,
           succursale: item.succursale,
           signature: item.signature,
-          created: item.created);
+          created: item.created,
+          createdAt: item.createdAt
+        );
       await venteCartController.venteCartApi.insertData(venteCartModel);
-    }
+    });
+
+    // for (var item in cartItemList) {
+    //   double priceTotal = 0;
+    //   if (double.parse(item.quantityCart) >= double.parse(item.qtyRemise)) {
+    //     priceTotal =
+    //         double.parse(item.quantityCart) * double.parse(item.remise);
+    //   } else {
+    //     priceTotal =
+    //         double.parse(item.quantityCart) * double.parse(item.priceCart);
+    //   }
+    //   final venteCartModel = VenteCartModel(
+    //       idProductCart: item.idProductCart,
+    //       quantityCart: item.quantityCart,
+    //       priceTotalCart: priceTotal.toString(),
+    //       unite: item.unite,
+    //       tva: item.tva,
+    //       remise: item.remise,
+    //       qtyRemise: item.qtyRemise,
+    //       succursale: item.succursale,
+    //       signature: item.signature,
+    //       created: item.created);
+    //   await venteCartController.venteCartApi.insertData(venteCartModel);
+    // }
   }
 
-  Future<void> gainVentes() async {
-    for (var item in cartList) {
+  Future<void> gainVentes(List<CartModel> cartItemList) async { 
+
+    cartItemList.forEach((item) async {
       double gainTotal = 0;
       if (double.parse(item.quantityCart) >= double.parse(item.qtyRemise)) {
         gainTotal =
@@ -335,7 +375,26 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           signature: item.signature,
           created: item.created);
       await gainController.gainApi.insertData(gainModel);
-    }
+    });
+
+    // for (var item in cartItemList) {
+    //   double gainTotal = 0;
+    //   if (double.parse(item.quantityCart) >= double.parse(item.qtyRemise)) {
+    //     gainTotal =
+    //         (double.parse(item.remise) - double.parse(item.priceAchatUnit)) *
+    //             double.parse(item.quantityCart);
+    //   } else {
+    //     gainTotal =
+    //         (double.parse(item.priceCart) - double.parse(item.priceAchatUnit)) *
+    //             double.parse(item.quantityCart);
+    //   }
+    //   final gainModel = GainModel(
+    //       sum: gainTotal,
+    //       succursale: item.succursale,
+    //       signature: item.signature,
+    //       created: item.created);
+    //   await gainController.gainApi.insertData(gainModel);
+    // }
   }
 
   updateAchat(CartModel cart) async {

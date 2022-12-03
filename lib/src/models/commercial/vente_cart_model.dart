@@ -1,9 +1,8 @@
-class CartModel {
+class VenteCartModel {
   late int? id;
   late String idProductCart;
   late String quantityCart;
-  late String priceCart;
-  late String priceAchatUnit;
+  late String priceTotalCart;
   late String unite;
   late String tva;
   late String remise;
@@ -11,53 +10,54 @@ class CartModel {
   late String succursale;
   late String signature; // celui qui fait le document
   late DateTime created;
+  late DateTime createdAt;
 
-  CartModel({
+  VenteCartModel({
     this.id,
     required this.idProductCart,
     required this.quantityCart,
-    required this.priceCart,
-    required this.priceAchatUnit,
+    required this.priceTotalCart,
     required this.unite,
     required this.tva,
     required this.remise,
     required this.qtyRemise,
-    required this.succursale,
-    required this.signature,
-    required this.created
+      required this.succursale,
+      required this.signature,
+      required this.created,
+      required this.createdAt
   });
 
-  factory CartModel.fromSQL(List<dynamic> row) {
-    return CartModel(
+  factory VenteCartModel.fromSQL(List<dynamic> row) {
+    return VenteCartModel(
       id: row[0],
       idProductCart: row[1],
       quantityCart: row[2],
-      priceCart: row[3],
-      priceAchatUnit: row[4],
-      unite: row[5],
-      tva: row[6],
-      remise: row[7],
-      qtyRemise: row[8],
-      succursale: row[9],
-      signature: row[10],
-      created: row[11]
+      priceTotalCart: row[3],
+      unite: row[4],
+      tva: row[5],
+      remise: row[6],
+      qtyRemise: row[7],
+      succursale: row[8],
+      signature: row[9],
+      created: row[10],
+        createdAt: row[11]
     );
   } 
  
-  factory CartModel.fromJson(Map<String, dynamic> json) {
-    return CartModel(
+  factory VenteCartModel.fromJson(Map<String, dynamic> json) {
+    return VenteCartModel(
       id: json['id'],
       idProductCart: json['idProductCart'],
       quantityCart: json['quantityCart'],
-      priceCart: json['priceCart'],
-      priceAchatUnit: json['priceAchatUnit'],
+      priceTotalCart: json['priceTotalCart'],
       unite: json['unite'],
       tva: json["tva"],
       remise: json["remise"],
       qtyRemise: json["qtyRemise"],
       succursale: json['succursale'],
       signature: json['signature'],
-      created: DateTime.parse(json['created'])
+      created: DateTime.parse(json['created']),
+      createdAt: DateTime.parse(json['createdAt'])
     );
   }
 
@@ -66,15 +66,15 @@ class CartModel {
       'id': id,
       'idProductCart': idProductCart,
       'quantityCart': quantityCart,
-      'priceCart': priceCart,
-      'priceAchatUnit': priceAchatUnit,
+      'priceTotalCart': priceTotalCart,
       'unite': unite,
       "tva": tva,
       "remise": remise,
       "qtyRemise": qtyRemise,
       'succursale': succursale,
       'signature': signature,
-      'created': created.toIso8601String()
+      'created': created.toIso8601String(),
+      'createdAt': createdAt.toIso8601String()
     };
   }
 }

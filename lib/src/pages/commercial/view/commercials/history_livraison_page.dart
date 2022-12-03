@@ -33,7 +33,7 @@ class _HistoryLivraisonPageState extends State<HistoryLivraisonPage> {
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
-          (data) => Row(
+          (state) => Row(
                 children: [
                   Visibility(
                       visible: !Responsive.isMobile(context),
@@ -47,8 +47,7 @@ class _HistoryLivraisonPageState extends State<HistoryLivraisonPage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           child: TableHistoryLivraison(
-                              livraisonHistoryList:
-                                  controller.livraisonHistoryList,
+                              livraisonHistoryList: state!,
                               profilController: profilController))),
                 ],
               )) );

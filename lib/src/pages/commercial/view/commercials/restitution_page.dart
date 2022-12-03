@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/restitution_model.dart';
+import 'package:wm_solution/src/models/commercial/restitution_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/restitution/restitution_controller.dart';
@@ -49,13 +49,28 @@ class _RestitutionPageState extends State<RestitutionPage> {
                         top: p20, bottom: p8, right: p20, left: p20),
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.restitutionList.length,
-                        itemBuilder: (context, index) {
-                          final data = controller.restitutionList[index];
-                          return restitutionItemWidget(data);
-                        }),
+                    child: Column(
+                      children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          controller.getList();
+                                        },
+                                        icon: const Icon(Icons.refresh,
+                                            color: Colors.green))
+                                  ],
+                                ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.restitutionList.length,
+                            itemBuilder: (context, index) {
+                              final data = controller.restitutionList[index];
+                              return restitutionItemWidget(data);
+                            }),
+                      ],
+                    ),
                   )))
         ],
       )) ,

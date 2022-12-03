@@ -37,8 +37,6 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
 
   final String firstLettter = profilController.user.prenom[0];
   final String firstLettter2 = profilController.user.nom[0];
-
-  print("sumVersionCloud ${updateController.sumVersionCloud}");
   return AppBar(
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
@@ -106,40 +104,40 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                     : Obx(() => AutoSizeText(updateController.progressString,
                         maxLines: 1, style: const TextStyle(fontSize: 12.0)))
                 : Icon(Icons.download, color: Colors.red.shade700)),
-      if (departementList.contains('Exploitations'))
+      if (departementList.contains('Exploitations') || departementList.contains('Marketing'))
         IconButton(
             tooltip: 'Tâches',
             onPressed: () {
               Get.toNamed(TacheRoutes.tachePage);
             },
-            icon: Badge(
+            icon: Obx(() => Badge(
               showBadge:
                   (notifyHeaderController.tacheItemCount >= 1) ? true : false,
               badgeContent: Text(
                   notifyHeaderController.tacheItemCount.toString(),
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.work_outline),
-            )),
+            )) ),
       if (departementList.contains('Commercial'))
         IconButton(
             tooltip: 'Panier',
             onPressed: () {
               Get.toNamed(ComRoutes.comCart);
             },
-            icon: Badge(
+            icon: Obx(() => Badge(
               showBadge:
                   (notifyHeaderController.cartItemCount >= 1) ? true : false,
               badgeContent: Text(
                   notifyHeaderController.cartItemCount.toString(),
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.shopping_cart_outlined),
-            )),
+            )) ),
       IconButton(
           tooltip: 'Agenda',
           onPressed: () {
             Get.toNamed(MarketingRoutes.marketingAgenda);
           },
-          icon: Badge(
+          icon: Obx(() => Badge(
             showBadge:
                 (notifyHeaderController.agendaItemCount >= 1) ? true : false,
             badgeContent: Text(
@@ -147,20 +145,20 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                 style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.note_alt_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
-          )),
+          )) ),
       IconButton(
           tooltip: 'Mailling',
           onPressed: () {
             Get.toNamed(MailRoutes.mails);
           },
-          icon: Badge(
+          icon: Obx(() => Badge(
             showBadge:
                 (notifyHeaderController.mailsItemCount >= 1) ? true : false,
             badgeContent: Text(notifyHeaderController.mailsItemCount.toString(),
                 style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.mail_outline_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
-          )),
+          )) ),
       if (!Responsive.isMobile(context))
         const SizedBox(
           width: p10,

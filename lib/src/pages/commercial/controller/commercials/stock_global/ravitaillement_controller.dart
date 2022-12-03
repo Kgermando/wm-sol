@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
+import 'package:wm_solution/src/models/commercial/history_ravitaillement_model.dart';
+import 'package:wm_solution/src/models/commercial/prod_model.dart';
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_ravitaillement_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';

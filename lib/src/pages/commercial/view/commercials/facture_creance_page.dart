@@ -33,7 +33,7 @@ class _FactureCreancePageState extends State<FactureCreancePage> {
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
-          (data) => Row(
+          (state) => Row(
         children: [
           Visibility(
               visible: !Responsive.isMobile(context),
@@ -47,7 +47,7 @@ class _FactureCreancePageState extends State<FactureCreancePage> {
                       borderRadius:
                           BorderRadius.all(Radius.circular(20))),
                   child: TableFactureCreance(
-                      creanceFactureList: controller.creanceFactureList,
+                      creanceFactureList: state!,
                       controller: controller,
                       profilController: profilController))),
         ],

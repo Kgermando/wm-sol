@@ -7,7 +7,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
+import 'package:wm_solution/src/models/marketing/agenda_model.dart';
 
 class UpdateAgenda extends StatefulWidget {
   const UpdateAgenda({super.key, required this.agendaColor});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/courbe_vente_gain_model.dart';
+import 'package:wm_solution/src/models/commercial/courbe_vente_gain_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
 

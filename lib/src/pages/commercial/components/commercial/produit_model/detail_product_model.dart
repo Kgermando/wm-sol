@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
+import 'package:wm_solution/src/models/commercial/prod_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
@@ -73,6 +73,17 @@ class _DetailProductModelState extends State<DetailProductModel> {
                                               children: [
                                                 Row(
                                                   children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          ComRoutes
+                                                              .comProduitModelDetail,
+                                                          arguments: widget
+                                                              .productModel);
+                                                    },
+                                                icon: const Icon(Icons.refresh,
+                                                    color: Colors.green)),
                                                     if (widget.productModel
                                                             .approbationDD ==
                                                         "-")

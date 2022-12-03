@@ -30,7 +30,7 @@ class _CommercialNavState extends State<CommercialNav> {
     return ExpansionTile(
       leading: const Icon(Icons.store, size: 30.0),
       title:
-          AutoSizeText('Commercial', maxLines: 2, style: bodyMedium),
+          AutoSizeText('Commercial', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
           widget.departementList.contains('Commercial')
               ? true
@@ -73,36 +73,45 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comDD); 
               }), 
-        if (userRole <= 3)
+          DrawerWidget(
+            selected: widget.currentRoute == ComRoutes.comVente,
+            icon: Icons.arrow_right,
+            sizeIcon: 15.0,
+            title: 'Ventes',
+            style: bodyText1!,
+            onTap: () {
+              Get.toNamed(ComRoutes.comVente);
+            }),
+        if (userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comSuccursale,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Succursale',
-              style: bodyText1!,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comSuccursale);
               }),
-        if (userRole <= 3)
+        if (userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comProduitModel,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Produit modèle',
-              style: bodyText1!,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comProduitModel);
               }),
-        if (userRole <= 3)
+        if (userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comStockGlobal,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Stocks global',
-              style: bodyText1!,
+              style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comStockGlobal);
               }),
@@ -112,7 +121,7 @@ class _CommercialNavState extends State<CommercialNav> {
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Stock',
-            style: bodyText1!,
+            style: bodyText1,
             onTap: () {
               Get.toNamed(ComRoutes.comAchat);
             }),
@@ -127,7 +136,7 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comBonLivraison);
               }),
-        if (userRole <= 3)
+        if (userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comRestitution,
@@ -157,17 +166,7 @@ class _CommercialNavState extends State<CommercialNav> {
             style: bodyText1,
             onTap: () {
               Get.toNamed(ComRoutes.comCreance);
-            }),
-        DrawerWidget(
-            selected:
-                widget.currentRoute == ComRoutes.comVente,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Ventes',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(ComRoutes.comVente);
-            }),
+            }), 
         DrawerWidget(
             selected:
                 widget.currentRoute == ComRoutes.comCart,
@@ -178,6 +177,15 @@ class _CommercialNavState extends State<CommercialNav> {
             onTap: () {
               Get.toNamed(ComRoutes.comCart);
             }),
+        DrawerWidget(
+            selected: widget.currentRoute == ComRoutes.comVenteEffectue,
+            icon: Icons.arrow_right,
+            sizeIcon: 15.0,
+            title: 'Vos Ventes',
+            style: bodyText1,
+            onTap: () {
+              Get.toNamed(ComRoutes.comVenteEffectue);
+            }), 
         if (userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute ==
@@ -190,7 +198,7 @@ class _CommercialNavState extends State<CommercialNav> {
                 Get.toNamed(
                     ComRoutes.comHistoryRavitaillement);
               }),
-        if (userRole <= 2)
+        if (userRole <= 3)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comHistoryLivraison,
@@ -201,7 +209,7 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comHistoryLivraison);
               }),
-         
+       
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/facture_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class FactureController extends GetxController
@@ -9,7 +9,7 @@ class FactureController extends GetxController
   final FactureApi factureApi = FactureApi();
   final ProfilController profilController = Get.find();
 
-  var factureList = <FactureCartModel>[].obs;
+  List<FactureCartModel> factureList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -23,7 +23,8 @@ class FactureController extends GetxController
 
   void getList() async {
     await factureApi.getAllData().then((response) {
-      factureList.assignAll(response);
+      factureList.clear();
+      factureList.addAll(response);
       change(factureList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

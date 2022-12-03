@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dashboard/calendar_widget.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dashboard/dash_pie_wdget.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_notify_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_rh_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -22,7 +22,7 @@ class DashboardRH extends StatefulWidget {
 
 class _DashboardRHState extends State<DashboardRH> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  final DashobardNotifyController controller = Get.find();
+  final DashobardRHController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Dashboard";

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/comm_maketing/history_ravitaillement_model.dart';
+import 'package:wm_solution/src/models/commercial/history_ravitaillement_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 

@@ -4,15 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
+import 'package:wm_solution/src/models/commercial/succursale_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/approbation_succursale.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/stats_succusale.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/approbation_succursale.dart'; 
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -130,9 +130,9 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: p20),
-                        StatsSuccursale(
-                            succursaleModel: widget.succursaleModel),
+                        // const SizedBox(height: p20),
+                        // StatsSuccursale(
+                        //     succursaleModel: widget.succursaleModel),
                         const SizedBox(height: p20),
                         ApprobationSuccursale(
                             data: widget.succursaleModel,
@@ -178,6 +178,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
 
   Widget headerTitle(AchatController achatController) {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    final headline6 = Theme.of(context).textTheme.headline6;
 
     var dataAchatList = achatController.achatList
         .where((element) => element.succursale == widget.succursaleModel.name)
@@ -245,34 +246,58 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                   textAlign: TextAlign.start, style: bodyMedium),
             ),
             Divider(color: mainColor),
-            ResponsiveChildWidget(
-              child1: Text('Investissement :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(sumAchat)} ${monnaieStorage.monney}",
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(color: Colors.purple)),
-            ),
-            Divider(color: mainColor),
-            ResponsiveChildWidget(
-                child1: Text('Revenus attendus :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-                child2: SelectableText(
-                    "${NumberFormat.decimalPattern('fr').format(sumAchatRevenue)} ${monnaieStorage.monney}",
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(color: Colors.blue))),
-            Divider(color: mainColor),
-            ResponsiveChildWidget(
-              child1: Text('Marge bénéficiaires :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(sumAchatMarge)} ${monnaieStorage.monney}",
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(color: Colors.green)),
-            ),
+            ResponsiveChild3Widget(
+              child1: Column(
+                children: [
+                  const Text("Investissement",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  SelectableText(
+                      "${NumberFormat.decimalPattern('fr').format(sumAchat)} ${monnaieStorage.monney}",
+                      textAlign: TextAlign.center,
+                      style: headline6!.copyWith(color: Colors.blue.shade700)),
+                ],
+              ),
+              child2: Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                  left: BorderSide(
+                    color: mainColor,
+                    width: 2,
+                  ),
+                )),
+                child: Column(
+                  children: [
+                    const Text("Revenus attendus",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(
+                        "${NumberFormat.decimalPattern('fr').format(sumAchatRevenue)} ${monnaieStorage.monney}",
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        style: headline6.copyWith(color: Colors.orange.shade700)),
+                  ],
+                ),
+              ),
+              child3: Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                  left: BorderSide(
+                    color: mainColor,
+                    width: 2,
+                  ),
+                )),
+                child: Column(
+                  children: [
+                    const Text("Marge bénéficiaires",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(
+                        "${NumberFormat.decimalPattern('fr').format(sumAchatMarge)} ${monnaieStorage.monney}",
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        style: headline6.copyWith(color: Colors.green.shade700)),
+                  ],
+                ),
+              ),
+            ) 
           ],
         ),
       )),

@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/vente_gain_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/courbe_vente_gain_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/vente_chart_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/courbe_vente_gain_model.dart';
+import 'package:wm_solution/src/models/commercial/vente_chart_model.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_creance_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/gains/gain_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_vente_controller.dart';

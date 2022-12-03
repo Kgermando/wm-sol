@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class ListStock extends StatelessWidget {

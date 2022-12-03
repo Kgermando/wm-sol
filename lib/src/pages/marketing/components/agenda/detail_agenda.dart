@@ -7,7 +7,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/models/comm_maketing/agenda_model.dart';
+import 'package:wm_solution/src/models/marketing/agenda_model.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailAgenda extends StatefulWidget {

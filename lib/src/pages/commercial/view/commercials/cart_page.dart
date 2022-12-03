@@ -8,7 +8,7 @@ import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/cart/cart_item_widget.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart'; 
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class CartPage extends StatefulWidget {
@@ -34,9 +34,9 @@ class _CartPageState extends State<CartPage> {
       floatingActionButton: (controller.cartList.isNotEmpty)
           ? speedialWidget(controller)
           : Container(),
-      bottomNavigationBar: SizedBox(
-          width: MediaQuery.of(context).size.width / 2,
-          child: totalCart(controller)),
+      // bottomNavigationBar: SizedBox(
+      //     width: MediaQuery.of(context).size.width / 2,
+      //     child: totalCart(controller)),
       body: controller.obx(
           onLoading: loadingPage(context),
           onEmpty: const Text('Le panier est vide.'),
@@ -60,15 +60,27 @@ class _CartPageState extends State<CartPage> {
                                     BorderRadius.all(Radius.circular(20))),
                             child: Column(
                               children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          controller.getList();
+                                        },
+                                        icon: const Icon(Icons.refresh,
+                                            color: Colors.green))
+                                  ],
+                                ),
                                 ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: controller.cartList.length,
+                                    itemCount: state!.length,
                                     itemBuilder: (context, index) {
-                                      final cart = controller.cartList[index];
+                                      final cart = state[index];
                                       return CartItemWidget(
                                           cart: cart, controller: controller);
                                     }),
-                                const SizedBox(height: p50),
+                                SizedBox(
+                                    height: p50, child: totalCart(controller))
                               ],
                             ),
                           )))

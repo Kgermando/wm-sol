@@ -7,15 +7,15 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/cart_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/cart_model.dart';
+import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/cart/table_facture_cart.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/facture_cart_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
-import 'package:wm_solution/src/widgets/print_widget.dart';
+import 'package:wm_solution/src/widgets/print_widget.dart'; 
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailFacture extends StatefulWidget {
@@ -89,7 +89,7 @@ class _DetailFactureState extends State<DetailFacture> {
                                                           await FactureCartPDF.generate(
                                                               widget
                                                                   .factureCartModel,
-                                                              monnaieStorage);
+                                                              monnaieStorage.monney);
                                                       PdfApi.openFile(pdfFile);
                                                     })
                                               ],
@@ -156,15 +156,7 @@ class _DetailFactureState extends State<DetailFacture> {
   }
 
   Widget totalCart() {
-    double width = MediaQuery.of(context).size.width;
-    if (MediaQuery.of(context).size.width >= 1100) {
-      width = MediaQuery.of(context).size.width / 2;
-    } else if (MediaQuery.of(context).size.width < 1100 &&
-        MediaQuery.of(context).size.width >= 650) {
-      width = MediaQuery.of(context).size.width / 1.3;
-    } else if (MediaQuery.of(context).size.width < 650) {
-      width = MediaQuery.of(context).size.width / 1.2;
-    }
+    final headline6 = Theme.of(context).textTheme.headline6;
 
     List<dynamic> cartItem;
     // cartItem = facture!.cart.toList();
@@ -187,18 +179,34 @@ class _DetailFactureState extends State<DetailFacture> {
             double.parse(data.priceCart) * double.parse(data.quantityCart);
       }
     }
-    return Card(
-      elevation: 5,
-      color: mainColor.withOpacity(.5),
-      child: Container(
-        width: width,
-        margin: const EdgeInsets.all(p20),
-        child: Text(
-          'Total: ${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: p30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+              left: BorderSide(
+                color: mainColor,
+                width: 2,
+              ),
+              )),
+            child: Padding(
+              padding: const EdgeInsets.only(left: p10),
+              child: Text("Total: ", 
+              style: headline6!.copyWith(color: Colors.red.shade700, 
+                fontWeight: FontWeight.bold)),
+            )),
+            const SizedBox(width: p20),
+          Text(
+            "${NumberFormat.decimalPattern('fr').format(sumCart)} ${monnaieStorage.monney}",
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            style: headline6.copyWith(color: Colors.red.shade700))
+           
+        ],
       ),
-    );
+    ); 
   }
 }

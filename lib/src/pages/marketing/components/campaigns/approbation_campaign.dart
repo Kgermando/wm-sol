@@ -3,17 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart'; 
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class ApprobationCampaign extends StatefulWidget {
   const ApprobationCampaign(
-      {super.key, required this.campaignModel, required this.controller, required this.profilController});
+      {super.key,
+      required this.campaignModel,
+      required this.controller,
+      required this.profilController});
   final CampaignModel campaignModel;
   final CampaignController controller;
   final ProfilController profilController;
@@ -30,7 +33,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
 
   Widget approbationWidget(
       CampaignController controller, ProfilController profilController) {
-        List<dynamic> depList = jsonDecode(profilController.user.departement);
+    List<dynamic> depList = jsonDecode(profilController.user.departement);
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Container(
       decoration: BoxDecoration(
@@ -73,41 +76,35 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Approbation"),
                                   const SizedBox(height: p20),
-                                  Text(
-                                      widget.campaignModel
-                                          .approbationDG,
+                                  Text(widget.campaignModel.approbationDG,
                                       style: bodyLarge!.copyWith(
-                                          color:
-                                              (widget.campaignModel
-                                                          .approbationDG ==
-                                                      "Unapproved")
-                                                  ? Colors.red.shade700
-                                                  : Colors.green.shade700)),
+                                          color: (widget.campaignModel
+                                                      .approbationDG ==
+                                                  "Unapproved")
+                                              ? Colors.red.shade700
+                                              : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.campaignModel
-                                          .approbationDG ==
+                              child2: (widget.campaignModel.approbationDG ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
-                                        Text(widget.campaignModel
-                                            .motifDG),
+                                        Text(widget.campaignModel.motifDG),
                                       ],
                                     )
                                   : Container(),
                               child3: Column(
-                                      children: [
-                                        const Text("Signature"),
-                                        const SizedBox(height: p20),
-                                        Text(widget.campaignModel
-                                            .signatureDG),
-                                      ],
-                                    ) ),
-                          if (widget.campaignModel.approbationDD == "Approved" &&
-                              widget.campaignModel.approbationDG ==
-                                  '-' &&
+                                children: [
+                                  const Text("Signature"),
+                                  const SizedBox(height: p20),
+                                  Text(widget.campaignModel.signatureDG),
+                                ],
+                              )),
+                          if (widget.campaignModel.approbationDD ==
+                                  "Approved" &&
+                              widget.campaignModel.approbationDG == '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur générale")
                             Padding(
@@ -139,27 +136,22 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Approbation"),
                                   const SizedBox(height: p20),
-                                  Text(
-                                      widget.campaignModel
-                                          .approbationDD,
+                                  Text(widget.campaignModel.approbationDD,
                                       style: bodyLarge.copyWith(
-                                          color:
-                                              (widget.campaignModel
-                                                          .approbationDD ==
-                                                      "Unapproved")
-                                                  ? Colors.red.shade700
-                                                  : Colors.green.shade700)),
+                                          color: (widget.campaignModel
+                                                      .approbationDD ==
+                                                  "Unapproved")
+                                              ? Colors.red.shade700
+                                              : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.campaignModel
-                                          .approbationDD ==
+                              child2: (widget.campaignModel.approbationDD ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
-                                        Text(widget.campaignModel
-                                            .motifDD),
+                                        Text(widget.campaignModel.motifDD),
                                       ],
                                     )
                                   : Container(),
@@ -167,12 +159,10 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Signature"),
                                   const SizedBox(height: p20),
-                                  Text(widget
-                                      .campaignModel.signatureDD),
+                                  Text(widget.campaignModel.signatureDD),
                                 ],
                               )),
-                          if (widget.campaignModel.approbationDD ==
-                                  '-' &&
+                          if (widget.campaignModel.approbationDD == '-' &&
                               profilController.user.fonctionOccupe ==
                                   "Directeur de departement")
                             Padding(
@@ -200,27 +190,22 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Approbation"),
                                   const SizedBox(height: p20),
-                                  Text(
-                                      widget.campaignModel
-                                          .approbationBudget,
+                                  Text(widget.campaignModel.approbationBudget,
                                       style: bodyLarge.copyWith(
-                                          color:
-                                              (widget.campaignModel
-                                                          .approbationBudget ==
-                                                      "Unapproved")
-                                                  ? Colors.red.shade700
-                                                  : Colors.green.shade700)),
+                                          color: (widget.campaignModel
+                                                      .approbationBudget ==
+                                                  "Unapproved")
+                                              ? Colors.red.shade700
+                                              : Colors.green.shade700)),
                                 ],
                               ),
-                              child2: (widget.campaignModel
-                                          .approbationBudget ==
+                              child2: (widget.campaignModel.approbationBudget ==
                                       "Unapproved")
                                   ? Column(
                                       children: [
                                         const Text("Motif"),
                                         const SizedBox(height: p20),
-                                        Text(widget.campaignModel
-                                            .motifBudget),
+                                        Text(widget.campaignModel.motifBudget),
                                       ],
                                     )
                                   : Container(),
@@ -228,8 +213,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Signature"),
                                   const SizedBox(height: p20),
-                                  Text(widget.campaignModel
-                                      .signatureBudget),
+                                  Text(widget.campaignModel.signatureBudget),
                                 ],
                               )),
                           const SizedBox(height: p20),
@@ -240,9 +224,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Ligne Budgetaire"),
                                   const SizedBox(height: p20),
-                                  Text(
-                                      widget.campaignModel
-                                          .ligneBudgetaire,
+                                  Text(widget.campaignModel.ligneBudgetaire,
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
                                 ],
@@ -251,33 +233,32 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                 children: [
                                   const Text("Ressource"),
                                   const SizedBox(height: p20),
-                                  Text(
-                                      widget
-                                          .campaignModel.ressource,
+                                  Text(widget.campaignModel.ressource,
                                       style: bodyLarge.copyWith(
                                           color: Colors.purple.shade700)),
                                 ],
-                              )), 
+                              )),
                           if (widget.campaignModel.approbationDG ==
                                       "Approved" &&
-                                  widget.campaignModel.approbationBudget == '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur de budget" ||
-                                depList.contains('Budgets') &&
-                                    widget.campaignModel.approbationBudget ==
-                                        '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur de finance" ||
-                                depList.contains('Budgets') &&
-                                    widget.campaignModel.approbationBudget ==
-                                        '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur de departement" ||
-                                depList.contains('Budgets') &&
-                                    widget.campaignModel.approbationBudget ==
-                                        '-' &&
-                                    profilController.user.fonctionOccupe ==
-                                        "Directeur générale")
+                                  widget.campaignModel.approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de budget" ||
+                              depList.contains('Budgets') &&
+                                  widget.campaignModel.approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Budgets') &&
+                                  widget.campaignModel.approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Budgets') &&
+                                  widget.campaignModel.approbationBudget ==
+                                      '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                             Padding(
                               padding: const EdgeInsets.all(p10),
                               child: Form(
@@ -319,27 +300,22 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                               children: [
                                 const Text("Approbation"),
                                 const SizedBox(height: p20),
-                                Text(
-                                    widget.campaignModel
-                                        .approbationFin,
+                                Text(widget.campaignModel.approbationFin,
                                     style: bodyLarge.copyWith(
-                                        color: (widget
-                                                    .campaignModel
+                                        color: (widget.campaignModel
                                                     .approbationFin ==
                                                 "Unapproved")
                                             ? Colors.red.shade700
                                             : Colors.green.shade700)),
                               ],
                             ),
-                            child2: (widget.campaignModel
-                                        .approbationFin ==
+                            child2: (widget.campaignModel.approbationFin ==
                                     "Unapproved")
                                 ? Column(
                                     children: [
                                       const Text("Motif"),
                                       const SizedBox(height: p20),
-                                      Text(widget
-                                          .campaignModel.motifFin),
+                                      Text(widget.campaignModel.motifFin),
                                     ],
                                   )
                                 : Container(),
@@ -347,26 +323,26 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                               children: [
                                 const Text("Signature"),
                                 const SizedBox(height: p20),
-                                Text(widget
-                                    .campaignModel.signatureFin),
+                                Text(widget.campaignModel.signatureFin),
                               ],
-                            )), 
-                        if (widget.campaignModel.approbationBudget == "Approved" &&
+                            )),
+                        if (widget.campaignModel.approbationBudget ==
+                                    "Approved" &&
                                 widget.campaignModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur de finance" ||
-                              depList.contains('Finances') &&
-                                  widget.campaignModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur de budget" ||
-                              depList.contains('Finances') &&
-                                  widget.campaignModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur de departement" ||
-                              depList.contains('Finances') &&
-                                  widget.campaignModel.approbationFin == '-' &&
-                                  profilController.user.fonctionOccupe ==
-                                      "Directeur générale")
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de finance" ||
+                            depList.contains('Finances') &&
+                                widget.campaignModel.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de budget" ||
+                            depList.contains('Finances') &&
+                                widget.campaignModel.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de departement" ||
+                            depList.contains('Finances') &&
+                                widget.campaignModel.approbationFin == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(
@@ -666,7 +642,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
         Get.put(LignBudgetaireController());
     List<String> dataList = [];
 
-     return lignBudgetaireController.obx((ligne) {
+    return lignBudgetaireController.obx((ligne) {
       dataList = ligne!
           .where((p0) {
             double sortieTotal =

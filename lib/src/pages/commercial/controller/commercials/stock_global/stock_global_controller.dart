@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/stock_global_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
+import 'package:wm_solution/src/models/commercial/prod_model.dart';
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
@@ -11,7 +11,7 @@ class StockGlobalController extends GetxController
     with StateMixin<List<StocksGlobalMOdel>> {
   final StockGlobalApi stockGlobalApi = StockGlobalApi();
   final ProfilController profilController = Get.find();
-  final ProduitModelController produitModelController = Get.find();
+  final ProduitModelController produitModelController = Get.put(ProduitModelController());
 
   var stockGlobalList = <StocksGlobalMOdel>[].obs;
 

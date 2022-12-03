@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:excel/excel.dart';
-import 'package:wm_solution/src/models/comm_maketing/annuaire_model.dart';
+import 'package:wm_solution/src/models/marketing/annuaire_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,7 +10,7 @@ class AnnuaireXlsx {
     var excel = Excel.createExcel();
     String title = "Annuaire";
     Sheet sheetObject = excel[title];
-    sheetObject.insertRowIterables([ 
+    sheetObject.insertRowIterables([
       "Categorie",
       "Nom complet",
       "Email",
@@ -26,7 +26,7 @@ class AnnuaireXlsx {
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
-      List<String> data = [ 
+      List<String> data = [
         dataList[i].categorie,
         dataList[i].nomPostnomPrenom,
         dataList[i].email,

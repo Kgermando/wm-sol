@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:http/http.dart' as http;
 
 class AchatApi extends GetConnect {

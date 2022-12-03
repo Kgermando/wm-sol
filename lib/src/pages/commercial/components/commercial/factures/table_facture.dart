@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/comm_maketing/facture_cart_model.dart';
+import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -79,6 +79,8 @@ class _TableFactureState extends State<TableFacture> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'succursale') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'signature') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'created') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
@@ -107,6 +109,7 @@ class _TableFactureState extends State<TableFacture> {
           'numero': PlutoCell(value: i--),
           'client': PlutoCell(value: item.client),
           'succursale': PlutoCell(value: item.succursale),
+          'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
           'id': PlutoCell(value: item.id)
@@ -146,6 +149,18 @@ class _TableFactureState extends State<TableFacture> {
         readOnly: true,
         title: 'Succursale',
         field: 'succursale',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Signature',
+        field: 'signature',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,

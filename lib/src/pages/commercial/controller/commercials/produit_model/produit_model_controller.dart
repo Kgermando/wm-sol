@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/produit_model_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/prod_model.dart';
+import 'package:wm_solution/src/models/commercial/prod_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class ProduitModelController extends GetxController
@@ -9,7 +9,7 @@ class ProduitModelController extends GetxController
   final ProduitModelApi produitModelApi = ProduitModelApi();
   final ProfilController profilController = Get.find();
 
-  var produitModelList = <ProductModel>[].obs;
+  List<ProductModel> produitModelList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -45,9 +45,19 @@ class ProduitModelController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    categorieController.clear();
+    sousCategorie1Controller.clear();
+    sousCategorie2Controller.clear();
+    sousCategorie3Controller.clear();
+    uniteController.clear();
+  }
+
   void getList() async {
     await produitModelApi.getAllData().then((response) {
-      produitModelList.assignAll(response);
+      produitModelList.clear();
+      getList();
+      produitModelList.addAll(response);
       change(produitModelList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -63,6 +73,7 @@ class ProduitModelController extends GetxController
     try {
       _isLoading.value = true;
       await produitModelApi.deleteData(id).then((value) {
+        clear();
         produitModelList.clear();
         getList();
         Get.back();
@@ -105,6 +116,7 @@ class ProduitModelController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await produitModelApi.insertData(dataItem).then((value) {
+        clear();
         produitModelList.clear();
         getList();
         Get.back();
@@ -142,6 +154,7 @@ class ProduitModelController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await produitModelApi.updateData(dataItem).then((value) {
+        clear();
         produitModelList.clear();
         getList();
         Get.back();
@@ -178,6 +191,7 @@ class ProduitModelController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await produitModelApi.updateData(dataItem).then((value) {
+        clear();
         produitModelList.clear();
         getList();
         Get.back();

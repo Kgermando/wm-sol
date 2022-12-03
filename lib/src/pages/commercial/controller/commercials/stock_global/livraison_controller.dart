@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
-import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/succursale_model.dart';
+import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
+import 'package:wm_solution/src/models/commercial/succursale_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
@@ -10,8 +10,8 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/succursa
 
 class LivraisonController extends GetxController {
   final StockGlobalController stockGlobalController = Get.put(StockGlobalController());
-  final SuccursaleController succursaleController = Get.find();
-  final BonLivraisonController bonLivraisonController = Get.find();
+  final SuccursaleController succursaleController = Get.put(SuccursaleController());
+  final BonLivraisonController bonLivraisonController = Get.put(BonLivraisonController());
   final ProfilController profilController = Get.find();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

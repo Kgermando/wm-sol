@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/pages/taches/components/tache_xlsx.dart';
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
@@ -18,14 +18,16 @@ class TableTachesCampaignDetail extends StatefulWidget {
       {super.key,
       required this.tachesController,
       required this.id,
-      required this.departement, required this.campaignModel});
+      required this.departement,
+      required this.campaignModel});
   final TachesController tachesController;
   final int id;
   final String departement;
   final CampaignModel campaignModel;
 
   @override
-  State<TableTachesCampaignDetail> createState() => _TableTachesCampaignDetailState();
+  State<TableTachesCampaignDetail> createState() =>
+      _TableTachesCampaignDetailState();
 }
 
 class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
@@ -77,7 +79,8 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    TacheXlsx().exportToExcel(widget.tachesController.tachesList);
+                    TacheXlsx()
+                        .exportToExcel(widget.tachesController.tachesList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -86,7 +89,6 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
                   })
                 ],
               ),
-              
             ],
           );
         },

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/restitution_api.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/restitution_model.dart';
-import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/restitution_model.dart';
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_livraison.dart';
@@ -13,9 +13,10 @@ class RestitutionController extends GetxController
     with StateMixin<List<RestitutionModel>> {
   final RestitutionApi restitutionApi = RestitutionApi();
   final ProfilController profilController = Get.find();
-  final StockGlobalController stockGlobalController = Get.find();
+  final StockGlobalController stockGlobalController =
+      Get.put(StockGlobalController());
   final AchatController achatController = Get.find();
-  final HistoryLivraisonController historyLivraisonController = Get.find();
+  final HistoryLivraisonController historyLivraisonController = Get.put(HistoryLivraisonController());
 
   var restitutionList = <RestitutionModel>[].obs;
 
@@ -23,12 +24,20 @@ class RestitutionController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  double quantityStock = 0.0;
+ 
+
+  TextEditingController quantityStockController = TextEditingController(); 
 
   @override
   void onInit() {
     super.onInit();
     getList();
+  }
+
+  @override
+  void dispose() {
+    quantityStockController.dispose();
+    super.dispose();
   }
 
   void getList() async {
@@ -66,15 +75,16 @@ class RestitutionController extends GetxController
     }
   }
 
-  double qtyRestante = 0.0;
+  
 
   void transfertProduit(AchatModel achat) async {
     try {
-      qtyRestante = double.parse(achat.quantity) - quantityStock;
+      double qtyRestante = 0.0;
+      qtyRestante = double.parse(achat.quantity) - double.parse(quantityStockController.text);
 
       final restitutionModel = RestitutionModel(
           idProduct: achat.idProduct,
-          quantity: quantityStock.toString(),
+          quantity: quantityStockController.text,
           unite: achat.unite,
           firstName: profilController.user.nom.toString(),
           lastName: profilController.user.prenom.toString(),

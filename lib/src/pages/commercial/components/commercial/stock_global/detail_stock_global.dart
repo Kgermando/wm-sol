@@ -13,9 +13,10 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
-import 'package:wm_solution/src/models/comm_maketing/stocks_global_model.dart';
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailStockGlobal extends StatefulWidget {
   const DetailStockGlobal({super.key, required this.stocksGlobalMOdel});
@@ -72,11 +73,29 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
+                                        if(!Responsive.isMobile(context))
+                                        const TitleWidget(title: "Stock global"),
                                         Column(
                                           children: [
-                                            reporting(),
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          ComRoutes
+                                                              .comStockGlobalDetail,
+                                                          arguments: widget
+                                                              .stocksGlobalMOdel);
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                reporting(),
+                                              ],
+                                            ),
                                             SelectableText(
                                                 DateFormat("dd-MM-yyyy HH:mm")
                                                     .format(widget
@@ -341,7 +360,8 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         PrintWidget(onPressed: () async {
-          await StockGlobalPdf.generate(widget.stocksGlobalMOdel, monnaieStorage);
+          await StockGlobalPdf.generate(
+              widget.stocksGlobalMOdel, monnaieStorage);
         })
       ],
     );

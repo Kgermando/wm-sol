@@ -1,5 +1,5 @@
-import 'package:get/get.dart'; 
-import 'package:wm_solution/src/models/comm_maketing/campaign_model.dart';
+import 'package:get/get.dart';
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
@@ -16,20 +16,18 @@ class ObservationNotifyController extends GetxController {
   final CampaignController campaignController = Get.find();
   final DevisController devisController = Get.find();
   final ProjetController projetController = Get.find();
-  
+
   var salaireList = <PaiementSalaireModel>[].obs;
   var transRestList = <TransportRestaurationModel>[].obs;
   var campaignList = <CampaignModel>[].obs;
   var devisList = <DevisModel>[].obs;
-  var projetList = <ProjetModel>[].obs; 
+  var projetList = <ProjetModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     getCount();
   }
-
- 
 
   void getCount() async {
     salaireList.assignAll(salaireController.paiementSalaireList
@@ -72,7 +70,7 @@ class ObservationNotifyController extends GetxController {
             element.approbationBudget == 'Approved' &&
             element.approbationFin == 'Approved' &&
             element.observation == "false")
-        .toList()); 
-     update();
+        .toList());
+    update();
   }
 }

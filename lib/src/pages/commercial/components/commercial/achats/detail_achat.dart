@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/comm_maketing/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/achats/achat_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_vente_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/commercials/restitution/restitution_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -26,87 +29,91 @@ class DetailAchat extends StatefulWidget {
 
 class _DetailAchatState extends State<DetailAchat> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+  final RestitutionController restitutionController =
+      Get.put(RestitutionController());
+  final AchatController controller = Get.find();
+  final ProfilController profilController = Get.find();
+  final VenteCartController venteCartController = Get.find();
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
   @override
   Widget build(BuildContext context) {
-    final AchatController controller = Get.find();
-    final ProfilController profilController = Get.find();
-    final VenteCartController venteCartController = Get.find();
-
     var roleAgent = int.parse(profilController.user.role) <= 3;
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.achatModel.idProduct),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
+    return Scaffold(
+        key: scaffoldKey,
+        appBar:
+            headerBar(context, scaffoldKey, title, widget.achatModel.idProduct),
+        drawer: const DrawerMenu(),
+        body: venteCartController.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: (!Responsive.isMobile(context))
+                                  ? MainAxisAlignment.spaceBetween
+                                  : MainAxisAlignment.end,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      (!Responsive.isMobile(context))
-                                          ? MainAxisAlignment.spaceBetween
-                                          : MainAxisAlignment.end,
+                                if (!Responsive.isMobile(context))
+                                  TitleWidget(
+                                      title:
+                                          'Succursale: ${widget.achatModel.succursale.toUpperCase()}'),
+                                Column(
                                   children: [
-                                    if (!Responsive.isMobile(context))
-                                      TitleWidget(
-                                          title:
-                                      'Succursale: ${widget.achatModel.succursale.toUpperCase()}'),
-                                    Column(
+                                    Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            reporting(profilController,
-                                                venteCartController),
-                                            if (roleAgent)
-                                              if (double.parse(widget
-                                                    .achatModel.quantity) > 0)
-                                                transfertProduit()
-                                          ],
-                                        ),
-                                        SelectableText(
-                                            DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(
-                                                    widget.achatModel.created),
-                                            textAlign: TextAlign.start),
+                                        IconButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(context,
+                                                  ComRoutes.comAchatDetail,
+                                                  arguments: widget.achatModel);
+                                            },
+                                            icon: const Icon(Icons.refresh,
+                                                color: Colors.green)),
+                                        reporting(profilController,
+                                            state!),
+                                        if (roleAgent) transfertProduit()
                                       ],
-                                    )
+                                    ),
+                                    SelectableText(
+                                        DateFormat("dd-MM-yyyy HH:mm")
+                                            .format(widget.achatModel.created),
+                                        textAlign: TextAlign.start),
                                   ],
-                                ),
-                                dataWidget(
-                                    profilController, venteCartController),
+                                )
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                            dataWidget(profilController, state),
+                          ],
+                        ),
+                      )))
+            ],
+          ),
+        ));
   }
 
-  Widget dataWidget(ProfilController profilController,
-      VenteCartController venteCartController) {
+  Widget dataWidget(
+      ProfilController profilController, List<VenteCartModel> state) {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
@@ -121,7 +128,7 @@ class _DetailAchatState extends State<DetailAchat> {
             height: 20,
           ),
           ventetitle(),
-          ventes(venteCartController),
+          ventes(state),
           const SizedBox(
             height: 20,
           ),
@@ -467,41 +474,26 @@ class _DetailAchatState extends State<DetailAchat> {
     );
   }
 
-  Widget ventes(VenteCartController venteCartController) {
+  Widget ventes(List<VenteCartModel> state) {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
 
-    double qtyVendus = 0;
-    double prixTotalVendu = 0;
+    double qtyVendus = 0.0;
+    double prixTotalVendu = 0.0;
 
-    var ventesQty = venteCartController.livraisonHistoryVenteCartList
-        .where((element) {
-          String v1 = element.idProductCart;
-          String v2 = widget.achatModel.idProduct;
-          int date1 = element.created.millisecondsSinceEpoch;
-          int date2 = widget.achatModel.created.millisecondsSinceEpoch;
-          return v1 == v2 && date2 >= date1;
-        })
-        .map((e) => double.parse(e.quantityCart))
+    List<VenteCartModel> venteCartList = state
+        .where((element) =>
+            element.createdAt.millisecondsSinceEpoch ==
+            widget.achatModel.created.millisecondsSinceEpoch)
         .toList();
+ 
 
-    for (var item in ventesQty) {
-      qtyVendus += item;
-    }
+    for (var item in venteCartList) {
+      qtyVendus += double.parse(item.quantityCart);
+    } 
 
-    var ventesPrix = venteCartController.livraisonHistoryVenteCartList
-        .where((element) {
-          var v1 = element.idProductCart;
-          var v2 = widget.achatModel.idProduct;
-          var date1 = element.created.millisecondsSinceEpoch;
-          var date2 = widget.achatModel.created.millisecondsSinceEpoch;
-          return v1 == v2 && date2 >= date1;
-        })
-        .map((e) => double.parse(e.priceTotalCart))
-        .toList();
-
-    for (var item in ventesPrix) {
-      prixTotalVendu += item;
+    for (var item in venteCartList) {
+      prixTotalVendu += double.parse(item.priceTotalCart);
     }
 
     return Card(
@@ -616,28 +608,31 @@ class _DetailAchatState extends State<DetailAchat> {
 
   Widget transfertProduit() {
     return IconButton(
-      color: Colors.red,
+      color: Colors.orange,
       icon: const Icon(Icons.assistant_direction),
       tooltip: 'Restitution de la quantité en stocks',
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Restituer de la quantité',
-              style: TextStyle(color: mainColor)),
-          content: const Text(
-              'Cette action permet de restitutuer la quantité dans le stock global.'),
+          title: const Text('Restituer de la quantité',
+              style: TextStyle(color: Colors.orange)),
+          content: Form(key: restitutionController.formKey, child: montant()),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child:
+                  const Text('Annuler', style: TextStyle(color: Colors.orange)),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                Get.toNamed(ComRoutes.comRestitutionStock,
-                    arguments: widget.achatModel);
+                final form = restitutionController.formKey.currentState!;
+                if (form.validate()) {
+                  restitutionController.transfertProduit(widget.achatModel);
+                  form.reset();
+                  Navigator.of(context).pop();
+                }
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.orange)),
             ),
           ],
         ),
@@ -645,14 +640,44 @@ class _DetailAchatState extends State<DetailAchat> {
     );
   }
 
+  Widget montant() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: restitutionController.quantityStockController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+          ],
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Montant',
+          ),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else if (double.parse(value!) >
+                double.parse(widget.achatModel.quantity)) {
+              return 'Qtés insuffisantes';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
   Widget reporting(ProfilController profilController,
-      VenteCartController venteCartController) {
+      List<VenteCartModel> state) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         PrintWidget(onPressed: () async {
-          await AchatPdf.generate(widget.achatModel, profilController.user,
-              venteCartController.livraisonHistoryVenteCartList, monnaieStorage);
+          await AchatPdf.generate(
+              widget.achatModel,
+              profilController.user,
+              state,
+              monnaieStorage);
         })
       ],
     );

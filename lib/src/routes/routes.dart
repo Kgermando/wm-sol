@@ -265,6 +265,8 @@ class ComRoutes {
   static const comRestitutionDetail =
       "/com-restitution-detail";
   static const comVente = "/com-vente";
+  static const comVenteEffectue = "/com-vente-effectue";
+  static const comVenteEffectueDetail = "/com-vente-effectue-detail";
 }
 
 class ArchiveRoutes {

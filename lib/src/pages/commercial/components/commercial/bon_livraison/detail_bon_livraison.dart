@@ -4,12 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/comm_maketing/bon_livraison.dart';
+import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/bon_livraison/bon_livraison_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -72,13 +73,26 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                                         title: "Bon de livraison"),
                                     Column(
                                       children: [
-                                        PrintWidget(
-                                          tooltip: 'Imprimer le document',
-                                          onPressed: () async {
-                                            await BonLivraisonPDF.generate(
-                                                widget.bonLivraisonModel,
-                                                monnaieStorage.monney);
-                                          },
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  Navigator.pushNamed(context,
+                                                      ComRoutes.comBonLivraisonDetail,
+                                                      arguments:
+                                                          widget.bonLivraisonModel);
+                                                },
+                                                icon: const Icon(Icons.refresh,
+                                                    color: Colors.green)),
+                                            PrintWidget(
+                                              tooltip: 'Imprimer le document',
+                                              onPressed: () async {
+                                                await BonLivraisonPDF.generate(
+                                                    widget.bonLivraisonModel,
+                                                    monnaieStorage.monney);
+                                              },
+                                            ),
+                                          ],
                                         ),
                                         SelectableText(
                                             DateFormat("dd-MM-yyyy HH:mm")
