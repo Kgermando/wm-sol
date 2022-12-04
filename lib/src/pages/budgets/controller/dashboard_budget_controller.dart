@@ -4,8 +4,8 @@ import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_con
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 
 class DashboardBudgetController extends GetxController {
-  final BudgetPrevisionnelController budgetPrevisionnelController = Get.find();
-  final LignBudgetaireController lignBudgetaireController = Get.find();
+  final BudgetPrevisionnelController budgetPrevisionnelController = Get.put(BudgetPrevisionnelController());
+  final LignBudgetaireController lignBudgetaireController = Get.put(LignBudgetaireController());
 
   double coutTotal = 0.0;
   double poursentExecutionTotal = 0.0;
