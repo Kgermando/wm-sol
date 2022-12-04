@@ -286,7 +286,8 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/performence_rh.dar
 import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart'; 
+import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/view/users_actif_page.dart'; 
 import 'package:wm_solution/src/pages/screens/help_page.dart';
 import 'package:wm_solution/src/pages/screens/settings_page.dart';
 import 'package:wm_solution/src/pages/screens/splash_page.dart';
@@ -670,6 +671,17 @@ List<GetPage<dynamic>>? getPages = [
         final UserModel userModel = Get.arguments as UserModel;
         return DetailUser(user: userModel);
       },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: RhRoutes.rhUserActif,
+      bindings: [
+        UsersBinding(),
+        PersonnelBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
+      page: () => const UsersActifPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 

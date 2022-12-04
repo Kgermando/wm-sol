@@ -49,6 +49,20 @@ class RavitaillementController extends GetxController {
     super.dispose();
   }
 
+  void clear() {
+    quantity == null;
+    priceAchatUnit == null;
+    date == null;
+    telephone == null;
+    succursale == null;
+    nameBusiness == null;
+    controlleridProduct.clear();
+    controllerquantity.clear();
+    controllerpriceAchatUnit.clear();
+    controllerPrixVenteUnit.clear();
+    controllerUnite.clear();
+  }
+
   // Historique de ravitaillement
   void submit(StocksGlobalMOdel stock) async {
     try {
@@ -94,6 +108,7 @@ class RavitaillementController extends GetxController {
         stockGlobalController.stockGlobalApi
             .updateData(stocksGlobalMOdel)
             .then((value) {
+          clear();
           stockGlobalController.stockGlobalList;
           Get.back();
           Get.snackbar("Livraison effectuée avec succès!",

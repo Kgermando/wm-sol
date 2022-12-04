@@ -62,7 +62,7 @@ class RhRoutes {
   static const rhPersonnelsDetail = "/rh-personnelss-detail";
   static const rhPersonnelsUpdate = "/rh-personnelss-update";
   static const rhdetailUser = "/rh-detail-user";  
-  static const rhPersonnelsPageUser = "/rh-personnelss-page-user";
+  static const rhUserActif = "/rh-users-actif";
   static const rhPaiement = "/rh-paiements";
   static const rhPaiementAdd = "/rh-paiements-add";
   static const rhPaiementBulletin = "/rh-paiements-bulletin";

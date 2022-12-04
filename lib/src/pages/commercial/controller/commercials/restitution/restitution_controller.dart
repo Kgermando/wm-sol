@@ -16,7 +16,8 @@ class RestitutionController extends GetxController
   final StockGlobalController stockGlobalController =
       Get.put(StockGlobalController());
   final AchatController achatController = Get.find();
-  final HistoryLivraisonController historyLivraisonController = Get.put(HistoryLivraisonController());
+  final HistoryLivraisonController historyLivraisonController =
+      Get.put(HistoryLivraisonController());
 
   var restitutionList = <RestitutionModel>[].obs;
 
@@ -24,9 +25,7 @@ class RestitutionController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
- 
-
-  TextEditingController quantityStockController = TextEditingController(); 
+  TextEditingController quantityStockController = TextEditingController();
 
   @override
   void onInit() {
@@ -38,6 +37,10 @@ class RestitutionController extends GetxController
   void dispose() {
     quantityStockController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    quantityStockController.clear();
   }
 
   void getList() async {
@@ -75,12 +78,11 @@ class RestitutionController extends GetxController
     }
   }
 
-  
-
   void transfertProduit(AchatModel achat) async {
     try {
       double qtyRestante = 0.0;
-      qtyRestante = double.parse(achat.quantity) - double.parse(quantityStockController.text);
+      qtyRestante = double.parse(achat.quantity) -
+          double.parse(quantityStockController.text);
 
       final restitutionModel = RestitutionModel(
           idProduct: achat.idProduct,
@@ -113,6 +115,7 @@ class RestitutionController extends GetxController
             signature: achat.signature,
             created: achat.created);
         await achatController.achatApi.updateData(achatModel).then((value) {
+          clear();
           restitutionList.clear();
           getList();
           Get.back();
@@ -187,6 +190,7 @@ class RestitutionController extends GetxController
               signature: profilController.user.matricule.toString(),
               created: DateTime.now());
           await restitutionApi.updateData(restitutionModel).then((value) {
+            clear();
             restitutionList.clear();
             Get.back();
             Get.snackbar("Livraison effectuée avec succès!",

@@ -123,7 +123,7 @@ class AdminDashboardController extends GetxController {
     _agentsCount.value = personnels.length;
 
     _agentActifCount.value =
-        personnels.where((element) => element.statutAgent == 'true').length;
+        personnels.where((element) => element.statutAgent == 'Actif').length;
 
     // Exploitations
     var projets = await projetController.projetsApi.getAllData();

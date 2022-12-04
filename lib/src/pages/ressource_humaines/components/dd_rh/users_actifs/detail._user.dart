@@ -8,6 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
@@ -20,16 +21,14 @@ class DetailUser extends StatefulWidget {
 }
 
 class _DetailUserState extends State<DetailUser> {
+  final UsersController controller = Get.find();
+    final SuccursaleController succursaleController = Get.put(SuccursaleController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
   @override
-  Widget build(BuildContext context) {
-    final UsersController controller = Get.find();
-    final SuccursaleController succursaleController = Get.find();
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    // List<dynamic> depList = jsonDecode(widget.user.departement);
-    // print("depList $depList");
+  Widget build(BuildContext context) { 
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium; 
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
@@ -39,6 +38,58 @@ class _DetailUserState extends State<DetailUser> {
               appBar: headerBar(context, scaffoldKey, title,
                   "${widget.user.prenom} ${widget.user.nom}"),
               drawer: const DrawerMenu(),
+              floatingActionButton: FloatingActionButton.extended(
+                label: const Text("Affecter une succursale"),
+                tooltip: "Affecter une succursale à cet utilisateur",
+                icon: const Icon(Icons.home_work),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context, 
+                    builder: (BuildContext context) {
+                      return Container(
+                        color: Colors.amber.shade100,
+                        padding: const EdgeInsets.all(p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                          "Nommer la liste des personnels pour le paiement",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall)),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              succursaleWidget(),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              BtnWidget(
+                                  title: 'Créer maintenant',
+                                  press: () {
+                                    final form =
+                                        controller.formKey.currentState!;
+                                    if (form.validate()) {
+                                      controller.succursaleUser(widget.user);
+                                      form.reset();
+                                    }
+                                  },
+                                  isLoading: controller.isLoading)
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -171,13 +222,16 @@ class _DetailUserState extends State<DetailUser> {
                                         Divider(color: mainColor),
                                         const SizedBox(height: p20),
                                         ResponsiveChildWidget(
-                                            child1: Text('Succursale :',
-                                                textAlign: TextAlign.start,
-                                                style: bodyMedium.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            child2: succursaleWidget(controller,
-                                                succursaleController)),
+                                          child1: Text('Succursale :',
+                                              textAlign: TextAlign.start,
+                                              style: bodyMedium.copyWith(
+                                                  fontWeight:
+                                                      FontWeight.bold)),
+                                          child2:  SelectableText(
+                                              widget.user.succursale,
+                                              textAlign: TextAlign.start,
+                                              style: bodyMedium) 
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -190,8 +244,10 @@ class _DetailUserState extends State<DetailUser> {
             ));
   }
 
-  Widget succursaleWidget(
-      UsersController controller, SuccursaleController succursaleController) {
+
+
+
+  Widget succursaleWidget() {
     var succList =
         succursaleController.succursaleList.map((e) => e.name).toList();
 
@@ -215,8 +271,7 @@ class _DetailUserState extends State<DetailUser> {
         validator: (value) => value == null ? "Select Succursale" : null,
         onChanged: (value) {
           setState(() {
-            controller.succursale = value!;
-            controller.succursaleUser(widget.user);
+            controller.succursale = value!; 
           });
         },
       ),

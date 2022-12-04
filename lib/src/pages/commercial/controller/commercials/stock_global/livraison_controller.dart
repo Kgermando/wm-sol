@@ -9,9 +9,12 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 
 class LivraisonController extends GetxController {
-  final StockGlobalController stockGlobalController = Get.put(StockGlobalController());
-  final SuccursaleController succursaleController = Get.put(SuccursaleController());
-  final BonLivraisonController bonLivraisonController = Get.put(BonLivraisonController());
+  final StockGlobalController stockGlobalController =
+      Get.put(StockGlobalController());
+  final SuccursaleController succursaleController =
+      Get.put(SuccursaleController());
+  final BonLivraisonController bonLivraisonController =
+      Get.put(BonLivraisonController());
   final ProfilController profilController = Get.find();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -33,6 +36,13 @@ class LivraisonController extends GetxController {
   void onInit() {
     super.onInit();
     getList();
+  }
+
+  void clear() {
+    quantityStock == null;
+    succursale == null;
+    controllerQuantity.clear();
+    controllerPrixVenteUnit.clear();
   }
 
   @override
@@ -99,6 +109,7 @@ class LivraisonController extends GetxController {
         await bonLivraisonController.bonLivraisonApi
             .insertData(bonLivraisonModel)
             .then((value) {
+          clear();
           stockGlobalController.stockGlobalList;
           Get.back();
           Get.snackbar("Livraison effectuée avec succès!",

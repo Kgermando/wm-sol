@@ -63,6 +63,7 @@ class MaillingController extends GetxController
   }
 
   void clear() {
+    uploadedFileUrl = null;
     emailController.clear();
     objetController.clear();
     messageController.clear();

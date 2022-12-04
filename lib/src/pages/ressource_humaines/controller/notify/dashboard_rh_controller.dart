@@ -43,10 +43,10 @@ class DashobardRHController extends GetxController {
     var personnels = await personnelsController.personnelsApi.getAllData();
     _agentsCount.value = personnels.length; 
     _agentActifCount.value = personnels
-        .where((element) => element.statutAgent == 'true')
+        .where((element) => element.statutAgent == 'Actif')
         .length;
     _agentInactifCount.value = personnels
-        .where((element) => element.statutAgent == 'false')
+        .where((element) => element.statutAgent == 'Inactif')
         .length;
     _agentFemmeCount.value = personnels
         .where((element) => element.sexe == 'Femme')

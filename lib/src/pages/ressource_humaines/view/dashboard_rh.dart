@@ -95,7 +95,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                       color: Colors.blue.shade700)),
                                   Obx(() => DashNumberRHWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                        Get.toNamed(RhRoutes.rhUserActif);
                                       },
                                       number: '${controller.agentActifCount}',
                                       title: 'Agents Actifs',

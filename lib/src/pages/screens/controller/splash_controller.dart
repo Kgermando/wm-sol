@@ -128,6 +128,17 @@ class SplashController extends GetxController {
           Get.offAndToNamed(LogistiqueRoutes.logMateriel);
         }
       } else if (departement.first == "Support") {
+        Get.put(MaillingController());
+        Get.put(AdminDashboardController());
+        Get.put(DashobardRHController());
+        Get.put(DashboardComController());
+        Get.put(DashboardBudgetController());
+        Get.put(DashboardMarketingController());
+        Get.put(DashboardComptabiliteController());
+        Get.put(DashboardExpController());
+        Get.put(DashboardFinanceController());
+        Get.put(DashboardLogController()); 
+        
         Get.offAndToNamed(AdminRoutes.adminDashboard);
       }
 

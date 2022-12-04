@@ -64,6 +64,8 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
   }
 
   void clear() {
+    ligneBudgtaire = null;
+    ressource = null;
     titleController.clear();
     motifDGController.clear();
     motifBudgetController.clear();

@@ -84,16 +84,13 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
                                           ],
                                         )
                                       : Container(),
-                              child3:
-                                  (widget.data.approbationDG == "Unapproved")
-                                      ? Column(
-                                          children: [
-                                            const Text("Signature"),
-                                            const SizedBox(height: p20),
-                                            Text(widget.data.signatureDG),
-                                          ],
-                                        )
-                                      : Container()),
+                              child3: Column(
+                                children: [
+                                  const Text("Signature"),
+                                  const SizedBox(height: p20),
+                                  Text(widget.data.signatureDG),
+                                ],
+                              ) ),
                           if (widget.data.approbationDD == "Approved" &&
                               widget.data.approbationDG == '-' &&
                               widget.profilController.user.fonctionOccupe ==

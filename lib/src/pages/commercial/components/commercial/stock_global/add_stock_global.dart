@@ -173,9 +173,9 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
             child: Text(value),
           );
         }).toList(),
-        onChanged: (produit) {
+        onChanged: (value) {
           setState(() {
-            controller.idProduct = produit;
+            controller.idProduct = value!;
           });
         },
       ),

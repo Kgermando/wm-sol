@@ -7,9 +7,10 @@ import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
-import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart'; 
+import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
@@ -19,7 +20,6 @@ import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
-
 
 class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
@@ -63,8 +63,9 @@ class LoginController extends GetxController {
             .login(matriculeController.text, passwordController.text)
             .then((value) {
           _loadingLogin.value = false;
-          if (value) { 
+          if (value) {
             Get.put(ProfilController());
+            Get.put(UsersController());
             authApi.getUserId().then((user) async {
               final userModel = UserModel(
                   id: user.id,
@@ -81,14 +82,14 @@ class LoginController extends GetxController {
                   createdAt: user.createdAt,
                   passwordHash: user.passwordHash,
                   succursale: user.succursale);
-              await userApi.updateData(userModel).then((userData)async {
+              await userApi.updateData(userModel).then((userData) async {
                 clear();
-                GetStorage box = GetStorage();  
+                GetStorage box = GetStorage();
                 box.write('userModel', json.encode(user));
-                
+
                 var departement = jsonDecode(userData.departement);
 
-                 if (departement.first == "Administration") {
+                if (departement.first == "Administration") {
                   Get.put(MaillingController());
                   Get.put(AdminDashboardController());
                   Get.put(DashobardRHController());
@@ -174,7 +175,7 @@ class LoginController extends GetxController {
                 }
 
                 // GetLocalStorage().saveUser(userData);
-                 _loadingLogin.value = false;
+                _loadingLogin.value = false;
               });
               _loadingLogin.value = false;
               Get.snackbar("Authentification réussie",
@@ -225,15 +226,15 @@ class LoginController extends GetxController {
           GetStorage box = GetStorage();
           box.remove('idToken');
           box.remove('accessToken');
-          box.remove('refreshToken'); 
+          box.remove('refreshToken');
           Get.offAllNamed(UserRoutes.logout);
           Get.snackbar("Déconnexion réussie!", "",
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
-           _loadingLogin.value = false;
+          _loadingLogin.value = false;
         });
-         _loadingLogin.value = false;
+        _loadingLogin.value = false;
       });
     } catch (e) {
       _loadingLogin.value = false;

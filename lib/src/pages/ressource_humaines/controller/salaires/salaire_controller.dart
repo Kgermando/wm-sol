@@ -132,6 +132,10 @@ class SalaireController extends GetxController
   }
 
   void clear() {
+    budget = null;
+    ligneBudgtaire = null;
+    ressource = null;
+    tauxJourHeureMoisSalaire = null;
     joursHeuresPayeA100PourecentSalaireController.clear();
     totalDuSalaireController.clear();
     nombreHeureSupplementairesController.clear();

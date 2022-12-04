@@ -74,7 +74,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       color: Colors.blue.shade700),
                                   DashNumberWidget(
                                       gestureTapCallback: () {
-                                        Get.toNamed(RhRoutes.rhPersonnelsPage);
+                                        Get.toNamed(RhRoutes.rhUserActif);
                                       },
                                       number: '${controller.agentActifCount}',
                                       title: 'Agent Actifs',

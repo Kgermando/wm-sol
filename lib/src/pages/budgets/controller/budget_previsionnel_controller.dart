@@ -45,6 +45,7 @@ class BudgetPrevisionnelController extends GetxController
   }
 
   void clear() {
+    dateRange = null;
     titleController.clear();
     motifDGController.clear();
     motifDDController.clear();

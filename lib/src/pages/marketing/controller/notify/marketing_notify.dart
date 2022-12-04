@@ -29,13 +29,11 @@ class MarketingNotifyController extends GetxController {
   void onInit() {
     super.onInit(); 
     getCountComMarketing();
-        getCountCampaignDD();
-        getCountCampaignBudget();
-        getCountCampaignFin();
-        getCountCampaignObs();
+    getCountCampaignDD();
+    getCountCampaignBudget();
+    getCountCampaignFin();
+    getCountCampaignObs();
   }
-
-  
 
 
   void getCountComMarketing() async {

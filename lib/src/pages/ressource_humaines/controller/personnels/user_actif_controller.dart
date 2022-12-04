@@ -21,6 +21,10 @@ class UsersController extends GetxController with StateMixin<List<UserModel>> {
     getList();
   }
 
+  void clear() {
+    succursale == null;
+  }
+
   void getList() async {
     userApi.getAllData().then((response) {
       usersList.clear();
@@ -124,6 +128,7 @@ class UsersController extends GetxController with StateMixin<List<UserModel>> {
           passwordHash: user.passwordHash,
           succursale: succursale.toString());
       await userApi.updateData(userModel).then((value) {
+        clear();
         usersList.clear();
         getList();
         Get.back();

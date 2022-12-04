@@ -76,6 +76,8 @@ class CampaignController extends GetxController
   }
 
   void clear() { 
+    ligneBudgtaire = null;
+    ressource = null;
     typeProduitController.clear();
     dateDebutEtFinController.clear();
     coutCampaignController.clear();

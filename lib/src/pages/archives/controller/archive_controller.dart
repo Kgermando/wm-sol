@@ -54,6 +54,14 @@ class ArchiveController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    departement = null;
+    uploadedFileUrl = null;
+    nomDocumentController.clear();
+    descriptionController.clear();
+    fichierController.clear();
+  }
+
   void getList() async {
     await archiveApi.getAllData().then((response) {
       archiveList.addAll(response);
@@ -93,16 +101,16 @@ class ArchiveController extends GetxController
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveModel(
-        departement: data.departement,
-        folderName: data.folderName,
-        nomDocument: nomDocumentController.text,
-        description: descriptionController.text,
-        fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-        signature: profilController.user.matricule,
-        created: DateTime.now(),
-        reference: data.id!
-      );
+          departement: data.departement,
+          folderName: data.folderName,
+          nomDocument: nomDocumentController.text,
+          description: descriptionController.text,
+          fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          reference: data.id!);
       await archiveApi.insertData(archiveModel).then((value) {
+        clear();
         archiveList.clear();
         getList();
         Get.back();
@@ -125,7 +133,7 @@ class ArchiveController extends GetxController
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveModel(
-        id: data.id,
+          id: data.id,
           departement: data.departement,
           folderName: data.folderName,
           nomDocument: (nomDocumentController.text == "")
@@ -137,9 +145,9 @@ class ArchiveController extends GetxController
           fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
-          reference: data.reference
-      );
+          reference: data.reference);
       await archiveApi.updateData(archiveModel).then((value) {
+        clear();
         archiveList.clear();
         getList();
         Get.back();

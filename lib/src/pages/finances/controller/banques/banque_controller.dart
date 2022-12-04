@@ -45,6 +45,7 @@ class BanqueController extends GetxController
   }
 
   void clear() {
+    typeOperation = null;
     nomCompletController.clear();
     pieceJustificativeController.clear();
     libelleController.clear();

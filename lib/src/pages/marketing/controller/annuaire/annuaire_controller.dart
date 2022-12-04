@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:wm_solution/src/api/marketing/annuaire_api.dart'; 
+import 'package:wm_solution/src/api/marketing/annuaire_api.dart';
 import 'package:wm_solution/src/models/marketing/annuaire_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -56,6 +56,18 @@ class AnnuaireController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    categorie = null;
+    nomPostnomPrenomController.clear();
+    emailController.clear();
+    mobile1Controller.clear();
+    mobile2Controller.clear();
+    secteurActiviteController.clear();
+    nomEntrepriseController.clear();
+    gradeController.clear();
+    adresseEntrepriseController.clear();
+  }
+
   void debounce(
     VoidCallback callback, {
     Duration duration = const Duration(milliseconds: 500),
@@ -79,7 +91,7 @@ class AnnuaireController extends GetxController
   void getList() async {
     await annuaireApi.getAllDataSearch(query).then((response) {
       annuaireList.clear();
-      annuaireList.addAll(response); 
+      annuaireList.addAll(response);
       change(annuaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -129,6 +141,7 @@ class AnnuaireController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await annuaireApi.insertData(dataItem).then((value) {
+        clear();
         annuaireList.clear();
         getList();
         Get.back();
@@ -165,6 +178,7 @@ class AnnuaireController extends GetxController
           signature: profilController.user.matricule,
           created: data.created);
       await annuaireApi.updateData(dataItem).then((value) {
+        clear();
         annuaireList.clear();
         getList();
         Get.back();

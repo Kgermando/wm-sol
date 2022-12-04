@@ -49,6 +49,10 @@ class JournalController extends GetxController
   }
 
   void clear() {
+    comptesAllSelectDebit = null;
+    comptesAllSelectCredit = null;
+    compteDebit = null;
+    compteCredit = null;
     numeroOperationController.clear();
     libeleController.clear();
     montantController.clear(); 

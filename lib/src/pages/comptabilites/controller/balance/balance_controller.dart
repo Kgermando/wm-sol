@@ -15,11 +15,11 @@ class BalanceController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  String? comptesAllSelect;
-  String? comptes;
-  TextEditingController montantDebitController = TextEditingController();
-  TextEditingController montantCreditController = TextEditingController();
-  bool statut = false;
+  // String? comptesAllSelect;
+  // String? comptes;
+  // TextEditingController montantDebitController = TextEditingController();
+  // TextEditingController montantCreditController = TextEditingController();
+  // bool statut = false;
 
   @override
   void onInit() {
@@ -27,17 +27,17 @@ class BalanceController extends GetxController
     getList();
   }
 
-  @override
-  void dispose() {
-    montantDebitController.dispose();
-    montantCreditController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   montantDebitController.dispose();
+  //   montantCreditController.dispose();
+  //   super.dispose();
+  // }
 
-  void clear() {
-    montantDebitController.clear();
-    montantCreditController.clear();
-  }
+  // void clear() {
+  //   montantDebitController.clear();
+  //   montantCreditController.clear();
+  // }
 
   void getList() async {
     await balanceApi.getAllData().then((response) {

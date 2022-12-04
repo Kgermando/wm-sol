@@ -56,6 +56,8 @@ class TransportRestController extends GetxController
   }
 
   void clear() {
+    ligneBudgtaire = null;
+    ressource = null;
     motifDGController.clear();
     motifBudgetController.clear();
     motifFinController.clear();

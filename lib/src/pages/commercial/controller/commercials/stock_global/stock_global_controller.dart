@@ -11,7 +11,8 @@ class StockGlobalController extends GetxController
     with StateMixin<List<StocksGlobalMOdel>> {
   final StockGlobalApi stockGlobalApi = StockGlobalApi();
   final ProfilController profilController = Get.find();
-  final ProduitModelController produitModelController = Get.put(ProduitModelController());
+  final ProduitModelController produitModelController =
+      Get.put(ProduitModelController());
 
   var stockGlobalList = <StocksGlobalMOdel>[].obs;
 
@@ -41,6 +42,14 @@ class StockGlobalController extends GetxController
     super.onInit();
     getList();
     getData();
+  }
+
+  void clear() {
+    idProduct == null;
+    date == null;
+    telephone == null;
+    succursale == null;
+    nameBusiness == null;
   }
 
   Future<void> getData() async {
@@ -104,6 +113,7 @@ class StockGlobalController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await stockGlobalApi.insertData(dataItem).then((value) {
+        clear();
         stockGlobalList.clear();
         getList();
         Get.back();

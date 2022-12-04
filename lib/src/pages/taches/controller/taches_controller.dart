@@ -34,6 +34,12 @@ class TachesController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    agent = null;
+    jalonController.clear();
+    tacheController.clear();
+  }
+
   void getList() async {
     await tachesApi.getAllData().then((response) {
       tachesList.assignAll(response);
@@ -84,6 +90,7 @@ class TachesController extends GetxController
           departement: departement,
           reference: id);
       await tachesApi.insertData(dataItem).then((value) {
+        clear();
         tachesList.clear();
         getList();
         Get.back();
@@ -117,6 +124,7 @@ class TachesController extends GetxController
           departement: data.departement,
           reference: data.reference);
       await tachesApi.updateData(dataItem).then((value) {
+        clear();
         tachesList.clear();
         getList();
         Get.back();
@@ -150,6 +158,7 @@ class TachesController extends GetxController
           departement: data.departement,
           reference: data.reference);
       await tachesApi.updateData(dataItem).then((value) {
+        clear();
         tachesList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
