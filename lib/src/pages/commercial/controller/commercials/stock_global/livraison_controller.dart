@@ -48,7 +48,7 @@ class LivraisonController extends GetxController {
   @override
   void dispose() {
     controllerQuantity.dispose();
-    controllerPrixVenteUnit.dispose();
+    // controllerPrixVenteUnit.dispose();
     super.dispose();
   }
 

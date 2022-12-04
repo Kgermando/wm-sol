@@ -57,11 +57,18 @@ class _DetailUserState extends State<DetailUser> {
                               Row(
                                 children: [
                                   Expanded(
-                                      child: Text(
-                                          "Nommer la liste des personnels pour le paiement",
+                                    child: (widget.user.succursale =="-") 
+                                      ? Text(
+                                          "Affecter une succursale à cet utilisateur",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headlineSmall)),
+                                              .headlineSmall)
+                                      : Text(
+                                          "Modifier la succursale pour cet utilisateur",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall)
+                                  ),
                                 ],
                               ),
                               const SizedBox(
@@ -72,7 +79,7 @@ class _DetailUserState extends State<DetailUser> {
                                 height: p20,
                               ),
                               BtnWidget(
-                                  title: 'Créer maintenant',
+                                  title: 'Soumettre',
                                   press: () {
                                     final form =
                                         controller.formKey.currentState!;

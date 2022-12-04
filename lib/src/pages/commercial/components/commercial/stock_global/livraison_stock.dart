@@ -209,7 +209,7 @@ class _LivraisonStockState extends State<LivraisonStock> {
           Expanded(
             flex: 3,
             child: TextFormField(
-              controller: controller.controllerPrixVenteUnit,
+              // controller: controller.controllerPrixVenteUnit,
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
@@ -229,8 +229,14 @@ class _LivraisonStockState extends State<LivraisonStock> {
                 return null;
               },
               onChanged: (value) => setState(() {
-                controller.prixVenteUnit =
-                    (value == "") ? 0.0 : double.parse(value);
+                if (value == "" || value == ".") {
+                  controller.prixVenteUnit = 0.0;
+                } else {
+                 controller.prixVenteUnit = double.parse(value); 
+                }
+                
+                // controller.prixVenteUnit =
+                //     (value == "") ? 0.0 : double.parse(value);
               }),
             ),
           ),

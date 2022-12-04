@@ -178,7 +178,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         cleanCart().then((value) {
           cartList.clear();
           getList();
-          Get.back();
+          // Get.back();
           Get.snackbar("Succursale ajoutée avec succès!",
               "Le document a bien été soumis",
               backgroundColor: Colors.green,
@@ -243,7 +243,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         cleanCart().then((value) {
           cartList.clear();
           getList();
-          Get.back();
+          // Get.back();
           Get.snackbar("Succursale ajoutée avec succès!",
               "Le document a bien été soumis",
               backgroundColor: Colors.green,
