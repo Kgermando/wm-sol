@@ -12,9 +12,11 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/succursa
 
 class DashboardComController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
-  final VenteCartController venteCartController = Get.put(VenteCartController());
+  final VenteCartController venteCartController =
+      Get.put(VenteCartController());
   final GainCartController gainController = Get.put(GainCartController());
-  final FactureCreanceController factureCreanceController = Get.put(FactureCreanceController());
+  final FactureCreanceController factureCreanceController =
+      Get.put(FactureCreanceController());
   final SuccursaleController succursaleController =
       Get.put(SuccursaleController());
 
@@ -56,11 +58,11 @@ class DashboardComController extends GetxController {
     var factureCreance =
         await factureCreanceController.creanceFactureApi.getAllData();
 
-    venteChartModel.assignAll(getVenteChart);
-    venteMouthList.assignAll(getAllDataVenteMouth);
-    gainMouthList.assignAll(getAllDataGainMouth);
-    venteYearList.assignAll(getAllDataVenteYear);
-    gainYearList.assignAll(getAllDataGainYear);
+    venteChartModel.addAll(getVenteChart);
+    venteMouthList.addAll(getAllDataVenteMouth);
+    gainMouthList.addAll(getAllDataGainMouth);
+    venteYearList.addAll(getAllDataVenteYear);
+    gainYearList.addAll(getAllDataGainYear);
 
     _succursaleCount.value = succursales
         .where((element) => element.approbationDD == "Approved")
@@ -100,5 +102,7 @@ class DashboardComController extends GetxController {
         }
       }
     }
+
+    update();
   }
 }

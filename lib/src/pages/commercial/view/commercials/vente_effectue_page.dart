@@ -12,6 +12,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_
 import 'package:wm_solution/src/pages/commercial/controller/commercials/vente_effectue/ventes_effectue_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class VenteEffectue extends StatefulWidget {
   const VenteEffectue({super.key});
@@ -61,8 +62,9 @@ class _VenteEffectueState extends State<VenteEffectue> {
                               child: Column(
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
+                                      const TitleWidget(title: "Vos ventes"),
                                       IconButton(
                                           onPressed: () {
                                             controller.getList();

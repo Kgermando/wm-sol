@@ -38,11 +38,11 @@ class SplashController extends GetxController {
   }
 
   void isLoggIn() async {
+    Get.put(ProfilController());
     Get.put(UsersController());
     await loginController.authApi.getUserId().then((userData) async {
       var departement = jsonDecode(userData.departement);
-      if (departement.first == "Administration") {
-        Get.put(ProfilController());
+      if (departement.first == "Administration") { 
         Get.put(MaillingController());
         Get.put(AdminDashboardController());
         Get.put(DashobardRHController());
@@ -58,8 +58,7 @@ class SplashController extends GetxController {
         } else {
           Get.offAndToNamed(AdminRoutes.adminComptabilite);
         }
-      } else if (departement.first == "Finances") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Finances") { 
         Get.put(MaillingController());
         Get.put(DashboardFinanceController());
         if (int.parse(userData.role) <= 2) {
@@ -68,8 +67,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(FinanceRoutes.transactionsDettes);
         }
 
-      } else if (departement.first == "Comptabilites") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Comptabilites") { 
         Get.put(MaillingController());
         Get.put(DashboardComptabiliteController());
         if (int.parse(userData.role) <= 2) {
@@ -78,8 +76,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
         }
 
-      } else if (departement.first == "Budgets") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Budgets") { 
         Get.put(MaillingController());
         Get.put(DashboardBudgetController());
         if (int.parse(userData.role) <= 2) {
@@ -88,8 +85,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
         }
 
-      } else if (departement.first == "Ressources Humaines") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Ressources Humaines") { 
         Get.put(MaillingController());
         Get.put(DashobardRHController());
         if (int.parse(userData.role) <= 2) {
@@ -98,8 +94,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(RhRoutes.rhPresence);
         }
 
-      } else if (departement.first == "Exploitations") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Exploitations") { 
         Get.put(MaillingController());
         Get.put(DashboardExpController());
         if (int.parse(userData.role) <= 2) {
@@ -108,8 +103,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(TacheRoutes.tachePage);
         }
 
-      } else if (departement.first == "Marketing") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Marketing") { 
         Get.put(MaillingController());
         Get.put(DashboardMarketingController());
         if (int.parse(userData.role) <= 2) {
@@ -117,8 +111,7 @@ class SplashController extends GetxController {
         } else {
           Get.offAndToNamed(MarketingRoutes.marketingAnnuaire);
         }
-      } else if (departement.first == "Commercial") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Commercial") { 
         Get.put(MaillingController()); 
         Get.put(DashboardComController());
         if (int.parse(userData.role) <= 2) {
@@ -126,8 +119,7 @@ class SplashController extends GetxController {
         } else {
           Get.offAndToNamed(ComRoutes.comVente);
         }
-      } else if (departement.first == "Logistique") {
-        Get.put(ProfilController());
+      } else if (departement.first == "Logistique") { 
         Get.put(MaillingController());
         Get.put(DashboardLogController()); 
         if (int.parse(userData.role) <= 2) {

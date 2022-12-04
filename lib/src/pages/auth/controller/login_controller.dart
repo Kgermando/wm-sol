@@ -9,6 +9,17 @@ import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart'; 
+import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
+import 'package:wm_solution/src/pages/exploitations/controller/dashboard/dashboard_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
+import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
+
 
 class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
@@ -53,6 +64,7 @@ class LoginController extends GetxController {
             .then((value) {
           _loadingLogin.value = false;
           if (value) { 
+            Get.put(ProfilController());
             authApi.getUserId().then((user) async {
               final userModel = UserModel(
                   id: user.id,
@@ -75,66 +87,94 @@ class LoginController extends GetxController {
                 box.write('userModel', json.encode(user));
                 
                 var departement = jsonDecode(userData.departement);
-                if (departement.first == "Administration") {
+
+                 if (departement.first == "Administration") {
+                  Get.put(MaillingController());
+                  Get.put(AdminDashboardController());
+                  Get.put(DashobardRHController());
+                  Get.put(DashboardComController());
+                  Get.put(DashboardBudgetController());
+                  Get.put(DashboardMarketingController());
+                  Get.put(DashboardComptabiliteController());
+                  Get.put(DashboardExpController());
+                  Get.put(DashboardFinanceController());
+                  Get.put(DashboardLogController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(AdminRoutes.adminDashboard);
+                    Get.offAndToNamed(AdminRoutes.adminDashboard);
                   } else {
-                    Get.toNamed(AdminRoutes.adminLogistique);
+                    Get.offAndToNamed(AdminRoutes.adminComptabilite);
                   }
                 } else if (departement.first == "Finances") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardFinanceController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(FinanceRoutes.financeDashboard);
+                    Get.offAndToNamed(FinanceRoutes.financeDashboard);
                   } else {
-                    Get.toNamed(FinanceRoutes.transactionsDettes);
+                    Get.offAndToNamed(FinanceRoutes.transactionsDettes);
                   }
                 } else if (departement.first == "Comptabilites") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardComptabiliteController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(ComptabiliteRoutes.comptabiliteDashboard);
+                    Get.offAndToNamed(ComptabiliteRoutes.comptabiliteDashboard);
                   } else {
-                    Get.toNamed(
+                    Get.offAndToNamed(
                         ComptabiliteRoutes.comptabiliteJournalLivre);
                   }
                 } else if (departement.first == "Budgets") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardBudgetController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
+                    Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   } else {
-                    Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
+                    Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   }
                 } else if (departement.first == "Ressources Humaines") {
+                  Get.put(MaillingController());
+                  Get.put(DashobardRHController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(RhRoutes.rhDashboard);
+                    Get.offAndToNamed(RhRoutes.rhDashboard);
                   } else {
-                    Get.toNamed(RhRoutes.rhPresence);
+                    Get.offAndToNamed(RhRoutes.rhPresence);
                   }
                 } else if (departement.first == "Exploitations") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardExpController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(ExploitationRoutes.expDashboard);
+                    Get.offAndToNamed(ExploitationRoutes.expDashboard);
                   } else {
-                    Get.toNamed(TacheRoutes.tachePage);
+                    Get.offAndToNamed(TacheRoutes.tachePage);
                   }
                 } else if (departement.first == "Marketing") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardMarketingController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(MarketingRoutes.marketingDashboard);
+                    Get.offAndToNamed(MarketingRoutes.marketingDashboard);
                   } else {
-                    Get.toNamed(MarketingRoutes.marketingAnnuaire);
+                    Get.offAndToNamed(MarketingRoutes.marketingAnnuaire);
                   }
                 } else if (departement.first == "Commercial") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardComController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(ComRoutes.comDashboard);
+                    Get.offAndToNamed(ComRoutes.comDashboard);
                   } else {
-                    Get.toNamed(ComRoutes.comVente);
+                    Get.offAndToNamed(ComRoutes.comVente);
                   }
                 } else if (departement.first == "Logistique") {
+                  Get.put(MaillingController());
+                  Get.put(DashboardLogController());
                   if (int.parse(userData.role) <= 2) {
-                    Get.toNamed(LogistiqueRoutes.logDashboard);
+                    Get.offAndToNamed(LogistiqueRoutes.logDashboard);
                   } else {
-                    Get.toNamed(LogistiqueRoutes.logMateriel);
+                    Get.offAndToNamed(LogistiqueRoutes.logMateriel);
                   }
                 } else if (departement.first == "Support") {
-                  Get.toNamed(AdminRoutes.adminDashboard);
+                  Get.offAndToNamed(AdminRoutes.adminDashboard);
                 }
 
                 // GetLocalStorage().saveUser(userData);
+                 _loadingLogin.value = false;
               });
               _loadingLogin.value = false;
               Get.snackbar("Authentification réussie",
@@ -191,7 +231,9 @@ class LoginController extends GetxController {
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
+           _loadingLogin.value = false;
         });
+         _loadingLogin.value = false;
       });
     } catch (e) {
       _loadingLogin.value = false;
