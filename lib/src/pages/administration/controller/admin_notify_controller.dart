@@ -99,13 +99,13 @@ class AdminNotifyController extends GetxController {
   }
 
   void getCountLogistique() async {
-    NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
+    NotifySumModel notifySum = await adminDepartementNotifyApi.getCountLogistique();
     _logistiqueCount.value = int.parse(notifySum.sum);
     update();
   }
 
   void getCountDevis() async {
-    NotifySumModel notifySum = await adminDepartementNotifyApi.getCountBudget();
+    NotifySumModel notifySum = await adminDepartementNotifyApi.getCountDevis();
     _devisCount.value = int.parse(notifySum.sum);
     update();
   }

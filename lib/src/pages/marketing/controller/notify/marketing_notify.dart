@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
-import 'package:wm_solution/src/api/notifications/comm_marketing/campaign_notify_api.dart';
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/api/notifications/departements/marketing_departement.dart';
+import 'package:wm_solution/src/api/notifications/marketing/campaign_notify_api.dart';
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 

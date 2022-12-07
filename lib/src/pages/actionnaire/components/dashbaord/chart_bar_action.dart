@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart'; 
-import 'package:syncfusion_flutter_charts/charts.dart'; 
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/utils/list_colors.dart'; 
 
 class ChartBarActions extends StatefulWidget {
   const ChartBarActions({super.key, required this.state});
@@ -38,6 +39,8 @@ class _ChartBarActionsState extends State<ChartBarActions> {
         series: <ChartSeries>[
           BarSeries<ActionnaireModel, String>(
               name: 'Parts',
+              pointColorMapper: (datum, index) =>
+                  listColors[index % listColors.length],
               dataSource: widget.state,
               // sortingOrder: SortingOrder.descending,
               xValueMapper: (ActionnaireModel gdp, _) => "${gdp.prenom} ${gdp.nom} ${gdp.postNom}",

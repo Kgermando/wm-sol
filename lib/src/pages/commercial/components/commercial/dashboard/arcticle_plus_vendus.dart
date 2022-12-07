@@ -3,6 +3,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/commercial/vente_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 
 class ArticlePlusVendus extends StatefulWidget {
   const ArticlePlusVendus({Key? key, required this.controller})
@@ -40,6 +41,8 @@ class _ArticlePlusVendusState extends State<ArticlePlusVendus> {
         series: <ChartSeries>[
           BarSeries<VenteChartModel, String>(
               name: 'Produits',
+              pointColorMapper: (datum, index) =>
+                  listColors[index % listColors.length],
               dataSource: widget.controller.venteChartModel,
               sortingOrder: SortingOrder.descending,
               xValueMapper: (VenteChartModel gdp, _) => gdp.idProductCart,

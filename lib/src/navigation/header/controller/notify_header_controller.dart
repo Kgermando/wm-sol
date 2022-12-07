@@ -1,8 +1,8 @@
-import 'package:get/get.dart';
-import 'package:wm_solution/src/api/notifications/comm_marketing/agenda_notify_api.dart';
-import 'package:wm_solution/src/api/notifications/comm_marketing/cart_notify_api.dart';
+import 'package:get/get.dart'; 
+import 'package:wm_solution/src/api/notifications/commercial/cart_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/exploitations/taches_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/mails/mails_notify_api.dart';
+import 'package:wm_solution/src/api/notifications/marketing/agenda_notify_api.dart';
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 

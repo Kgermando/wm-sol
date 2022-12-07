@@ -1,6 +1,6 @@
 import 'package:get/get.dart'; 
-import 'package:wm_solution/src/api/notifications/comm_marketing/prod_model_notify_api.dart';
-import 'package:wm_solution/src/api/notifications/comm_marketing/succursale_notify_api.dart';
+import 'package:wm_solution/src/api/notifications/commercial/prod_model_notify_api.dart';
+import 'package:wm_solution/src/api/notifications/commercial/succursale_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/departements/comm_marketing_departement.dart';
 import 'package:wm_solution/src/models/notify/notify_model.dart';
 import 'package:wm_solution/src/models/notify/notify_sum_model.dart';

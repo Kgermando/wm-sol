@@ -7,6 +7,9 @@ import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
@@ -91,6 +94,9 @@ class LoginController extends GetxController {
 
                 if (departement.first == "Administration") {
                   Get.put(MaillingController());
+                  Get.put(PersonnelsController());
+                  Get.put(CreanceController());
+                  Get.put(DetteController());
                   Get.put(AdminDashboardController());
                   Get.put(DashobardRHController());
                   Get.put(DashboardComController());
@@ -171,6 +177,16 @@ class LoginController extends GetxController {
                     Get.offAndToNamed(LogistiqueRoutes.logMateriel);
                   }
                 } else if (departement.first == "Support") {
+                  Get.put(ProfilController());
+                  Get.put(MaillingController());
+                  Get.put(AdminDashboardController());
+                  Get.put(DashobardRHController());
+                  Get.put(DashboardComController());
+                  Get.put(DashboardMarketingController());
+                  Get.put(DashboardComptabiliteController());
+                  Get.put(DashboardExpController());
+                  Get.put(DashboardFinanceController());
+                  Get.put(DashboardLogController());
                   Get.offAndToNamed(AdminRoutes.adminDashboard);
                 }
 
