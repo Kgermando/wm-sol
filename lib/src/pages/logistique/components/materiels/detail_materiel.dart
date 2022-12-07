@@ -24,11 +24,17 @@ class DetailMateriel extends StatefulWidget {
 }
 
 class _DetailMaterielState extends State<DetailMateriel> {
-  final MaterielController controller = Get.find();
+  final MaterielController controller = Get.put(MaterielController());
   final ProfilController profilController = Get.find();
   final TrajetController trajetController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
+
+  Future<MaterielModel> refresh() async {
+    final MaterielModel dataItem =
+        await controller.detailView(widget.materielModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +96,27 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                             TitleWidget(title: widget.materielModel.typeMateriel),
                                             Column(
                                               children: [
-                                                if (widget.materielModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
+                                               
                                                   Row(
                                                     children: [
                                                       IconButton(
+                                                          tooltip: 'Actualiser',
+                                                          onPressed: () async {
+                                                            refresh().then((value) =>
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    LogistiqueRoutes
+                                                                        .logMaterielDetail,
+                                                                    arguments:
+                                                                        value));
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.refresh,
+                                                              color: Colors
+                                                                  .green)),
+                                                      if (widget.materielModel
+                                                            .approbationDD ==
+                                                        "Unapproved") IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
                                                             Get.toNamed(
@@ -106,7 +127,9 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                                           },
                                                           icon: const Icon(
                                                               Icons.edit)),
-                                                      IconButton(
+                                                      if (widget.materielModel
+                                                            .approbationDD ==
+                                                        "Unapproved") IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog();

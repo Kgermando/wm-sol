@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/commerciale/achat_api.dart';
 import 'package:wm_solution/src/api/commerciale/cart_api.dart';
-import 'package:wm_solution/src/models/commercial/achat_model.dart'; 
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class AchatController extends GetxController with StateMixin<List<AchatModel>> {
@@ -16,15 +16,11 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-
-
   @override
   void onInit() {
     super.onInit();
     getList();
   }
-
-
 
   void getList() async {
     await achatApi.getAllData().then((response) {
@@ -66,7 +62,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   //   try {
   //     _isLoading.value = true;
   //     double qty = double.parse(achat.quantity) -
-  //         double.parse(controllerQuantityCart.text); 
+  //         double.parse(controllerQuantityCart.text);
 
   //     final cartModel = CartModel(
   //         idProductCart: achat.idProduct,
@@ -101,7 +97,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   //         getList();
   //         Get.back();
   //         Get.snackbar("Soumission effectuée avec succès!",
-  //             "Le document a bien été sauvegader",
+  //             "Le document a bien été sauvegadé",
   //             backgroundColor: Colors.green,
   //             icon: const Icon(Icons.check),
   //             snackPosition: SnackPosition.TOP);

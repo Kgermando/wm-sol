@@ -12,7 +12,7 @@ class FactureCreanceController extends GetxController
   final FactureApi factureApi = FactureApi();
   final ProfilController profilController = Get.find();
 
-  List<CreanceCartModel> creanceFactureList = [] ;
+  List<CreanceCartModel> creanceFactureList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -75,7 +75,7 @@ class FactureCreanceController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

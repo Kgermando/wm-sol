@@ -14,7 +14,8 @@ import 'package:wm_solution/src/utils/priority_dropdown.dart';
 class DevisController extends GetxController with StateMixin<List<DevisModel>> {
   final DevisAPi devisAPi = DevisAPi();
   final ProfilController profilController = Get.find();
-  final DevisListObjetController devisListObjetController = Get.put(DevisListObjetController());
+  final DevisListObjetController devisListObjetController =
+      Get.put(DevisListObjetController());
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
 
@@ -375,8 +376,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
       );
       await devisAPi.updateData(devisModel).then((value) async {
         double coutTotal = 0.0;
-        var transRestAgentList = devisListObjetController
-            .devisListObjetList
+        var transRestAgentList = devisListObjetController.devisListObjetList
             .where((p0) => p0.reference == value.id)
             .toList();
         for (var element in transRestAgentList) {
@@ -384,9 +384,9 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         }
 
         var ligneBudget = lignBudgetaireController.ligneBudgetaireList
-          .where((element) =>
-              element.nomLigneBudgetaire == value.ligneBudgetaire)
-          .first;
+            .where((element) =>
+                element.nomLigneBudgetaire == value.ligneBudgetaire)
+            .first;
 
         if (value.ressource == "caisse") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
@@ -409,14 +409,15 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
             banqueSortie: ligneBudget.banqueSortie,
             finExterieurSortie: ligneBudget.finExterieurSortie,
           );
-          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel)
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
               .then((value) {
             clear();
             devisList.clear();
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -441,8 +442,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
             created: ligneBudget.created,
             reference: ligneBudget.reference,
             caisseSortie: ligneBudget.caisseSortie,
-            banqueSortie:
-                ligneBudget.banqueSortie + coutTotal,
+            banqueSortie: ligneBudget.banqueSortie + coutTotal,
             finExterieurSortie: ligneBudget.finExterieurSortie,
           );
           await lignBudgetaireController.lIgneBudgetaireApi
@@ -453,7 +453,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -479,8 +479,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
             reference: ligneBudget.reference,
             caisseSortie: ligneBudget.caisseSortie,
             banqueSortie: ligneBudget.banqueSortie,
-            finExterieurSortie:
-                ligneBudget.finExterieurSortie + coutTotal,
+            finExterieurSortie: ligneBudget.finExterieurSortie + coutTotal,
           );
           await lignBudgetaireController.lIgneBudgetaireApi
               .updateData(ligneBudgetaireModel)
@@ -490,14 +489,13 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
             _isLoading.value = false;
           });
-        } 
-
+        }
       });
     } catch (e) {
       Get.snackbar("Erreur lors de la soumission", "$e",

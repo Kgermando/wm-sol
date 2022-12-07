@@ -4,10 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart'; 
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child4_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -21,9 +22,17 @@ class DetailLigneBudgetaire extends StatefulWidget {
 }
 
 class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
+  final LignBudgetaireController controller =
+      Get.put(LignBudgetaireController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
+
+  Future<LigneBudgetaireModel> refresh() async {
+    final LigneBudgetaireModel dataItem =
+        await controller.detailView(widget.ligneBudgetaireModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +89,19 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
                                                       .nomLigneBudgetaire),
                                             Column(
                                               children: [
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              BudgetRoutes
+                                                                  .budgetLignebudgetaireDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
                                                 SelectableText(
                                                     DateFormat(
                                                             "dd-MM-yyyy HH:mm")
@@ -299,7 +321,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
         100 /
         double.parse(widget.ligneBudgetaireModel.coutTotal);
 
-    touxExecutions = 100 - touxExecutionsTotal; 
+    touxExecutions = 100 - touxExecutionsTotal;
 
     final headline6 = Theme.of(context).textTheme.headline6;
     return ResponsiveChild4Widget(

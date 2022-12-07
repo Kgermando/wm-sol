@@ -50,12 +50,17 @@ var userUrl = Uri.parse("$mainUrl/user/");
 
 // Administration
 var actionnaireListUrl = Uri.parse("$mainUrl/admin/actionnaires/");
+var actionnaireLimitUrl = Uri.parse("$mainUrl/admin/actionnaires/get-data-limit/");
 var actionnaireAddUrl =
     Uri.parse("$mainUrl/admin/actionnaires/insert-new-actionnaire");
 var actionnaireCotisationListUrl =
     Uri.parse("$mainUrl/admin/actionnaire-cotisations/");
 var actionnaireCotisationAddUrl = Uri.parse(
     "$mainUrl/admin/actionnaire-cotisations/insert-new-actionnaire-cotisation");
+var actionnaireTransferttUrl =
+    Uri.parse("$mainUrl/admin/actionnaire-transferts/");
+var actionnaireTransfertAddUrl = Uri.parse(
+  "$mainUrl/admin/actionnaire-transferts/insert-new-actionnaire-transfert");
 
 // RH
 var listAgentsUrl = Uri.parse("$mainUrl/rh/agents/");

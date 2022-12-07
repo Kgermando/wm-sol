@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
@@ -21,6 +24,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
+  final MaillingController maillingController = Get.put(MaillingController());
 
   final getStorge = GetStorage();
 
@@ -41,8 +45,7 @@ class SplashController extends GetxController {
     Get.put(UsersController());
     await loginController.authApi.getUserId().then((userData) async {
       var departement = jsonDecode(userData.departement);
-      if (departement.first == "Administration") {
-        Get.put(MaillingController());
+      if (departement.first == "Administration") { 
         Get.put(AdminDashboardController());
         Get.put(DashobardRHController());
         Get.put(DashboardComController());
@@ -59,8 +62,7 @@ class SplashController extends GetxController {
         } else {
           Get.offAndToNamed(AdminRoutes.adminComptabilite);
         }
-      } else if (departement.first == "Finances") {
-        Get.put(MaillingController());
+      } else if (departement.first == "Finances") { 
         Get.put(DashboardFinanceController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(FinanceRoutes.financeDashboard);
@@ -68,7 +70,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(FinanceRoutes.transactionsDettes);
         }
       } else if (departement.first == "Comptabilites") {
-        Get.put(MaillingController());
+        
         Get.put(DashboardComptabiliteController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteDashboard);
@@ -76,7 +78,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
         }
       } else if (departement.first == "Budgets") {
-        Get.put(MaillingController());
+        
         Get.put(DashboardBudgetController());
         Get.put(BudgetPrevisionnelController());
         Get.put(LignBudgetaireController());
@@ -86,7 +88,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
         }
       } else if (departement.first == "Ressources Humaines") {
-        Get.put(MaillingController());
+        
         Get.put(DashobardRHController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(RhRoutes.rhDashboard);
@@ -94,7 +96,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(RhRoutes.rhPresence);
         }
       } else if (departement.first == "Exploitations") {
-        Get.put(MaillingController());
+        
         Get.put(DashboardExpController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ExploitationRoutes.expDashboard);
@@ -102,7 +104,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(TacheRoutes.tachePage);
         }
       } else if (departement.first == "Marketing") {
-        Get.put(MaillingController());
+        
         Get.put(DashboardMarketingController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(MarketingRoutes.marketingDashboard);
@@ -110,7 +112,7 @@ class SplashController extends GetxController {
           Get.offAndToNamed(MarketingRoutes.marketingAnnuaire);
         }
       } else if (departement.first == "Commercial") {
-        Get.put(MaillingController());
+        
         Get.put(DashboardComController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ComRoutes.comDashboard);
@@ -118,15 +120,25 @@ class SplashController extends GetxController {
           Get.offAndToNamed(ComRoutes.comVente);
         }
       } else if (departement.first == "Logistique") {
-        Get.put(MaillingController());
+        
         Get.put(DashboardLogController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(LogistiqueRoutes.logDashboard);
         } else {
           Get.offAndToNamed(LogistiqueRoutes.logMateriel);
         }
+      } else if (departement.first == "Actionnaire") {
+        Get.put<ActionnaireController>(ActionnaireController());
+        Get.put<ActionnaireCotisationController>(
+            ActionnaireCotisationController());
+        Get.put<ActionnaireTransfertController>(
+            ActionnaireTransfertController());
+        Get.put(AdminDashboardController());
+
+        Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
+
       } else if (departement.first == "Support") {
-        Get.put(MaillingController());
+        
         Get.put(AdminDashboardController());
         Get.put(DashobardRHController());
         Get.put(DashboardComController());

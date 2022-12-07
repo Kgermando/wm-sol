@@ -23,16 +23,22 @@ class DetailRestitution extends StatefulWidget {
 }
 
 class _DetailRestitutionState extends State<DetailRestitution> {
+   final RestitutionController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
   bool isChecked = false;
 
-  @override
-  Widget build(BuildContext context) {
-    final RestitutionController controller = Get.find();
-    final ProfilController profilController = Get.find();
+  
+  Future<RestitutionModel> refresh() async {
+    final RestitutionModel dataItem =
+        await controller.detailView(widget.restitutionModel.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) {  
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title,
@@ -78,12 +84,12 @@ class _DetailRestitutionState extends State<DetailRestitution> {
                                             children: [
                                       IconButton(
                                           onPressed: () {
-                                            Navigator.pushNamed(
-                                                context,
-                                                ComRoutes
-                                                    .comRestitutionDetail,
-                                                arguments: widget
-                                                    .restitutionModel);
+                                             refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          ComRoutes
+                                                              .comRestitutionDetail,
+                                                          arguments: value)); 
                                           },
                                           icon: const Icon(Icons.refresh,
                                               color: Colors.green)),

@@ -32,7 +32,7 @@ class DetailCampaign extends StatefulWidget {
 
 class _DetailCampaignState extends State<DetailCampaign> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  final CampaignController controller = Get.find();
+  final CampaignController controller = Get.put(CampaignController());
   final ProfilController profilController = Get.find();
   final PersonnelsRolesController personnelsRolesController = Get.find();
   final PersonnelsController personnelsController = Get.find();
@@ -40,6 +40,12 @@ class _DetailCampaignState extends State<DetailCampaign> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
+
+  Future<CampaignModel> refresh() async {
+    final CampaignModel dataItem =
+        await controller.detailView(widget.campaignModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +158,22 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                                     children: [
                                                       Row(
                                                         children: [
+                                                          IconButton(
+                                                              tooltip:
+                                                                  'Actualiser',
+                                                              onPressed:
+                                                                  () async {
+                                                                refresh().then((value) => Navigator.pushNamed(
+                                                                    context,
+                                                                    MarketingRoutes
+                                                                        .marketingCampaignDetail,
+                                                                    arguments:
+                                                                        value));
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.refresh,
+                                                                  color: Colors
+                                                                      .green)),
                                                           if (userRole <= 3)
                                                             IconButton(
                                                                 tooltip:

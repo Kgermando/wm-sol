@@ -40,6 +40,13 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
   double totalProduits123 = 0.0;
   double totalGeneralProduits = 0.0;
 
+  Future<CompteResulatsModel> refresh() async {
+    final CompteResulatsModel dataItem =
+        await controller.detailView(widget.compteResulatsModel.id!);
+    return dataItem;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +101,14 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                     children: [
                       Row(
                         children: [
+                          IconButton(
+                              onPressed: () async {
+                                refresh().then((value) => Navigator.pushNamed(
+                                    context, ComptabiliteRoutes.comptabiliteCompteResultatDetail,
+                                    arguments: value));
+                              },
+                              icon: const Icon(Icons.refresh,
+                                  color: Colors.green)),
                           if (widget.compteResulatsModel.approbationDD == '-' ||
                               widget.compteResulatsModel.approbationDD ==
                                   "Unapproved")

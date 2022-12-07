@@ -14,6 +14,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/cart/table_facture_cart.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/facture_cart_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart'; 
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -27,13 +28,20 @@ class DetailFacture extends StatefulWidget {
 }
 
 class _DetailFactureState extends State<DetailFacture> {
+  final FactureController controller = Get.put(FactureController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
+  Future<FactureCartModel> refresh() async {
+    final FactureCartModel dataItem =
+        await controller.detailView(widget.factureCartModel.id!);
+    return dataItem;
+  }
+
+
   @override
-  Widget build(BuildContext context) {
-    final FactureController controller = Get.find();
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -81,6 +89,19 @@ class _DetailFactureState extends State<DetailFacture> {
                                           children: [
                                             Row(
                                               children: [
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ComRoutes
+                                                                  .comFactureDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
                                                 PrintWidget(
                                                     tooltip:
                                                         'Imprimer le document',

@@ -3,10 +3,11 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/constants/responsive.dart'; 
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/infos_personne.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/view_personne.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -31,6 +32,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
 
   bool statutAgent = false;
   String statutPersonel = 'false';
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +93,22 @@ class _DetailPersonneState extends State<DetailPersonne> {
   Widget speedialWidget(PersonnelsController personnelsController,
       UsersController usersController) {
     final SalaireController salaireController = Get.put(SalaireController());
+    final ActionnaireController actionnaireController =
+        Get.put(ActionnaireController());
+
+    int userRole = int.parse(actionnaireController.profilController.user.role);
+
     bool isStatutPersonne = false;
     if (widget.personne.statutAgent == "Actif") {
       isStatutPersonne = true;
     } else if (widget.personne.statutAgent == "Inactif") {
       isStatutPersonne = false;
     }
+
+    var isActionnaireActif = actionnaireController.actionnaireList
+        .where((element) => element.matricule == widget.personne.matricule)
+        .toList(); 
+
     return salaireController.obx(onLoading: loadingMini(), (state) {
       var isPayE = state!
           .where((element) => element.matricule == widget.personne.matricule)
@@ -141,7 +153,86 @@ class _DetailPersonneState extends State<DetailPersonne> {
                   Get.toNamed(RhRoutes.rhPaiementAdd,
                       arguments: widget.personne);
                 }
-              })
+              }),
+          if (userRole <= 2)
+            SpeedDialChild(
+                child: const Icon(Icons.sensor_occupied),
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.teal.shade700,
+                label: (isActionnaireActif.isEmpty)
+                    ? 'Ajouté actionnaire'
+                    : 'Déja Ajouté',
+                onPressed: () {
+
+                  
+                  showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        color: Colors.amber.shade100,
+                        padding: const EdgeInsets.all(p20),
+                        child: Form(
+                          key: actionnaireController.formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                          "Ajouté ${widget.personne.prenom} comme Actionnaire."
+                                              .toUpperCase(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium)),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                      child: Text("Actionnaire",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall)),
+                                  Expanded(
+                                    child: FlutterSwitch(
+                                      width: 225.0,
+                                      height: 50.0,
+                                      activeColor: Colors.green,
+                                      inactiveColor: Colors.red,
+                                      valueFontSize: 25.0,
+                                      toggleSize: 45.0,
+                                      value: isActionnaireActif.isNotEmpty,
+                                      borderRadius: 30.0,
+                                      padding: 8.0,
+                                      showOnOff: true,
+                                      activeText: 'Ajouté',
+                                      inactiveText: 'Retiré',
+                                      onToggle: (val) {
+                                        setState(() {
+                                          actionnaireController
+                                              .submit(widget.personne);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: p50,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                })
         ],
         child: const Icon(
           Icons.menu,

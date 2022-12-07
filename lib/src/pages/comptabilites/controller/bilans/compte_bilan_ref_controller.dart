@@ -38,7 +38,7 @@ class CompteBilanRefController extends GetxController
   }
 
   void clear() {
-    montantController.clear(); 
+    montantController.clear();
   }
 
   void getList() async {
@@ -59,7 +59,7 @@ class CompteBilanRefController extends GetxController
   void deleteData(int id) async {
     try {
       _isLoading.value = true;
-      await compteBilanRefApi.deleteData(id).then((value) { 
+      await compteBilanRefApi.deleteData(id).then((value) {
         compteBilanRefList.clear();
         getList();
         Get.back();
@@ -93,7 +93,7 @@ class CompteBilanRefController extends GetxController
         getList();
         // Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

@@ -9,7 +9,7 @@ class BalanceController extends GetxController
   final BalanceApi balanceApi = BalanceApi();
   final ProfilController profilController = Get.find();
 
-  List<BalanceModel> balanceList = []; 
+  List<BalanceModel> balanceList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -42,11 +42,11 @@ class BalanceController extends GetxController
   void getList() async {
     await balanceApi.getAllData().then((response) {
       balanceList.clear();
-      balanceList.addAll(response); 
+      balanceList.addAll(response);
       change(balanceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
-    }); 
+    });
   }
 
   detailView(int id) async {
@@ -85,14 +85,14 @@ class BalanceController extends GetxController
   //             ? "0"
   //             : montantCreditController.text);
 
-  //     final balanceModel = BalanceModel( 
+  //     final balanceModel = BalanceModel(
   //         comptes: comptes.toString(),
   //         debit: (montantDebitController.text == "")
   //             ? "0"
   //             : montantDebitController.text,
   //         credit: (montantCreditController.text == "")
   //             ? "0"
-  //             : montantCreditController.text, 
+  //             : montantCreditController.text,
   //         signature: profilController.user.matricule,
   //         created: DateTime.now()
   //     );
@@ -101,7 +101,7 @@ class BalanceController extends GetxController
   //       balanceList.clear();
   //       getList();
   //       Get.snackbar("Soumission effectuée avec succès!",
-  //           "Le document a bien été sauvegader",
+  //           "Le document a bien été sauvegadé",
   //           backgroundColor: Colors.green,
   //           icon: const Icon(Icons.check),
   //           snackPosition: SnackPosition.TOP);
@@ -126,7 +126,7 @@ class BalanceController extends GetxController
   //             : montantCreditController.text);
 
   //     final balanceModel = BalanceModel(
-  //         id: data.id, 
+  //         id: data.id,
 
   //         comptes: comptes.toString(),
   //         debit: (montantDebitController.text == "")
@@ -134,7 +134,7 @@ class BalanceController extends GetxController
   //             : montantDebitController.text,
   //         credit: (montantCreditController.text == "")
   //             ? data.credit
-  //             : montantCreditController.text, 
+  //             : montantCreditController.text,
   //         signature: profilController.user.matricule,
   //         created: data.created
   //     );
@@ -143,7 +143,7 @@ class BalanceController extends GetxController
   //       balanceList.clear();
   //       getList();
   //       Get.snackbar("Soumission effectuée avec succès!",
-  //           "Le document a bien été sauvegader",
+  //           "Le document a bien été sauvegadé",
   //           backgroundColor: Colors.green,
   //           icon: const Icon(Icons.check),
   //           snackPosition: SnackPosition.TOP);
@@ -157,5 +157,4 @@ class BalanceController extends GetxController
   //   }
   // }
 
- 
 }

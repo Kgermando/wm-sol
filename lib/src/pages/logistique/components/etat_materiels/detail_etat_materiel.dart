@@ -23,10 +23,16 @@ class DetailEtatMateriel extends StatefulWidget {
 }
 
 class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
-  final EtatMaterielController controller = Get.find();
+  final EtatMaterielController controller = Get.put(EtatMaterielController());
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
+
+  Future<EtatMaterielModel> refresh() async {
+    final EtatMaterielModel dataItem =
+        await controller.detailView(widget.etatMaterielModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +82,30 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                             Column(
                                               children: [
                                                 Column(
-                                                  children: [
-                                                    if ( widget.etatMaterielModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
+                                                  children: [ 
                                                       Row(
                                                         children: [
+                                                          IconButton(
+                                                            tooltip:
+                                                                'Actualiser',
+                                                            onPressed:
+                                                                () async {
+                                                              refresh().then((value) =>
+                                                                  Navigator.pushNamed(
+                                                                      context,
+                                                                      LogistiqueRoutes
+                                                                          .logEtatMaterielDetail,
+                                                                      arguments:
+                                                                          value));
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.refresh,
+                                                                color: Colors
+                                                                    .green)),
+                                                        if (widget
+                                                                .etatMaterielModel
+                                                                .approbationDD ==
+                                                            "Unapproved")
                                                           IconButton(
                                                               tooltip:
                                                                   'Modifier',
@@ -95,6 +119,10 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                                               },
                                                               icon: const Icon(
                                                                   Icons.edit)),
+                                                          if (widget
+                                                                .etatMaterielModel
+                                                                .approbationDD ==
+                                                            "Unapproved")
                                                           IconButton(
                                                               tooltip:
                                                                   'Supprimer',

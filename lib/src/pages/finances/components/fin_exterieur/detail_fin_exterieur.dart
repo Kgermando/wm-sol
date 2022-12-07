@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -21,14 +22,20 @@ class DetailFinExterieur extends StatefulWidget {
 }
 
 class _DetailFinExterieurState extends State<DetailFinExterieur> {
+   final FinExterieurController controller = Get.put(FinExterieurController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
-  @override
-  Widget build(BuildContext context) {
-    final FinExterieurController controller = Get.find();
+    Future<FinanceExterieurModel> refresh() async {
+    final FinanceExterieurModel dataItem =
+        await controller.detailView(widget.financeExterieurModel.id!);
+    return dataItem;
+  }
 
+
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title,
@@ -76,6 +83,20 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
                                                       .financeExterieurName),
                                               Column(
                                                 children: [
+                                                  IconButton(
+                                                      tooltip: 'Actualiser',
+                                                      onPressed: () async {
+                                                        refresh().then((value) =>
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                FinanceRoutes
+                                                                    .transactionsFinancementExterneDetail,
+                                                                arguments:
+                                                                    value));
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.refresh,
+                                                          color: Colors.green)),
                                                   SelectableText(
                                                       DateFormat(
                                                               "dd-MM-yyyy HH:mm")

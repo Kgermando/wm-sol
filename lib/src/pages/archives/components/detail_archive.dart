@@ -9,6 +9,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
@@ -21,9 +22,16 @@ class DetailArchive extends StatefulWidget {
 }
 
 class _DetailArchiveState extends State<DetailArchive> {
+  final ArchiveController controller = Get.put(ArchiveController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Archive";
   final GlobalKey<SfPdfViewerState> pdfViewerKey = GlobalKey();
+
+  Future<ArchiveModel> refresh() async {
+    final ArchiveModel dataItem =
+        await controller.detailView(widget.archiveModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +66,28 @@ class _DetailArchiveState extends State<DetailArchive> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                SelectableText(
-                                    DateFormat("dd-MM-yyyy HH:mm")
-                                        .format(widget.archiveModel.created),
-                                    textAlign: TextAlign.start)
+                                Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () async {
+                                        refresh().then((value) =>
+                                            Navigator.pushNamed(
+                                                context,
+                                                ArchiveRoutes
+                                                    .archivesDetail,
+                                                arguments:
+                                                    value));
+                                      },
+                                      icon: const Icon(
+                                          Icons.refresh,
+                                          color:
+                                              Colors.green)),
+                                    SelectableText(
+                                        DateFormat("dd-MM-yyyy HH:mm")
+                                            .format(widget.archiveModel.created),
+                                        textAlign: TextAlign.start),
+                                  ],
+                                )
                               ],
                             ),
                             const SizedBox(height: p20),

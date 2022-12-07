@@ -264,7 +264,7 @@ class SalaireController extends GetxController
           getList();
           Get.back();
           Get.snackbar("Soumission effectuée avec succès!",
-              "Le document a bien été sauvegader",
+              "Le document a bien été sauvegadé",
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
@@ -350,7 +350,7 @@ class SalaireController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Observation effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -436,7 +436,7 @@ class SalaireController extends GetxController
         getList();
         Get.back();
         Get.snackbar(
-            "Effectuée avec succès!", "Le document a bien été sauvegader",
+            "Effectuée avec succès!", "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -525,7 +525,7 @@ class SalaireController extends GetxController
         var ligneBudget = lignBudgetaireController.ligneBudgetaireList
             .where((element) =>
                 element.nomLigneBudgetaire == value.ligneBudgetaire)
-            .first; 
+            .first;
         if (value.ressource == "caisse") {
           final ligneBudgetaireModel = LigneBudgetaireModel(
             id: ligneBudget.id,
@@ -556,7 +556,7 @@ class SalaireController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -593,7 +593,7 @@ class SalaireController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -630,7 +630,7 @@ class SalaireController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -717,7 +717,7 @@ class SalaireController extends GetxController
         sendEmail(value).then((value) {
           Get.back();
           Get.snackbar(
-              "Effectuée avec succès!", "Le document a bien été sauvegader",
+              "Effectuée avec succès!", "Le document a bien été sauvegadé",
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);

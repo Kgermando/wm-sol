@@ -23,17 +23,22 @@ class DetailBonLivraison extends StatefulWidget {
 }
 
 class _DetailBonLivraisonState extends State<DetailBonLivraison> {
+  final BonLivraisonController controller = Get.put(BonLivraisonController());
+  final ProfilController profilController = Get.find();
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
   bool isChecked = false;
 
-  @override
-  Widget build(BuildContext context) {
-    final BonLivraisonController controller = Get.find();
-    final ProfilController profilController = Get.find();
+  Future<BonLivraisonModel> refresh() async {
+    final BonLivraisonModel dataItem =
+        await controller.detailView(widget.bonLivraisonModel.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) {  
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(
@@ -77,10 +82,12 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
                                           children: [
                                             IconButton(
                                                 onPressed: () {
-                                                  Navigator.pushNamed(context,
-                                                      ComRoutes.comBonLivraisonDetail,
-                                                      arguments:
-                                                          widget.bonLivraisonModel);
+                                                  refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          ComRoutes
+                                                              .comBonLivraisonDetail,
+                                                          arguments: value));
                                                 },
                                                 icon: const Icon(Icons.refresh,
                                                     color: Colors.green)),

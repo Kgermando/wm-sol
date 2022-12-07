@@ -100,7 +100,6 @@ class CompteResultatController extends GetxController
     super.dispose();
   }
 
- 
   void clear() {
     motifDDController.clear();
 
@@ -128,7 +127,7 @@ class CompteResultatController extends GetxController
     montantExportationController.clear();
     produitfinancieresController.clear();
     produitExceptionnelsController.clear();
-    soldeDebiteurController.clear(); 
+    soldeDebiteurController.clear();
   }
 
   void getList() async {
@@ -210,7 +209,7 @@ class CompteResultatController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -268,7 +267,7 @@ class CompteResultatController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -286,45 +285,45 @@ class CompteResultatController extends GetxController
     try {
       _isLoading.value = true;
       final compteResulatsModel = CompteResulatsModel(
-        id: data.id,
-        intitule: data.intitule,
-        achatMarchandises: data.achatMarchandises,
-        variationStockMarchandises: data.variationStockMarchandises,
-        achatApprovionnements: data.achatApprovionnements,
-        variationApprovionnements: data.variationApprovionnements,
-        autresChargesExterne: data.autresChargesExterne,
-        impotsTaxesVersementsAssimiles: data.impotsTaxesVersementsAssimiles,
-        renumerationPersonnel: data.renumerationPersonnel,
-        chargesSocialas: data.chargesSocialas,
-        dotatiopnsProvisions: data.dotatiopnsProvisions,
-        autresCharges: data.autresCharges,
-        chargesfinancieres: data.chargesfinancieres,
-        chargesExptionnelles: data.chargesExptionnelles,
-        impotSurbenefices: data.impotSurbenefices,
-        soldeCrediteur: data.soldeCrediteur,
-        ventesMarchandises: data.ventesMarchandises,
-        productionVendueBienEtSerices: data.productionVendueBienEtSerices,
-        productionStockee: data.productionStockee,
-        productionImmobilisee: data.productionImmobilisee,
-        subventionExploitation: data.subventionExploitation,
-        autreProduits: data.autreProduits,
-        montantExportation: data.montantExportation,
-        produitfinancieres: data.produitfinancieres,
-        produitExceptionnels: data.produitExceptionnels,
-        soldeDebiteur: data.soldeDebiteur,
-        signature: data.signature,
-        createdRef: data.createdRef,
-        created: data.created,
-        approbationDD: approbationDD,
-        motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
-        signatureDD: profilController.user.matricule);
+          id: data.id,
+          intitule: data.intitule,
+          achatMarchandises: data.achatMarchandises,
+          variationStockMarchandises: data.variationStockMarchandises,
+          achatApprovionnements: data.achatApprovionnements,
+          variationApprovionnements: data.variationApprovionnements,
+          autresChargesExterne: data.autresChargesExterne,
+          impotsTaxesVersementsAssimiles: data.impotsTaxesVersementsAssimiles,
+          renumerationPersonnel: data.renumerationPersonnel,
+          chargesSocialas: data.chargesSocialas,
+          dotatiopnsProvisions: data.dotatiopnsProvisions,
+          autresCharges: data.autresCharges,
+          chargesfinancieres: data.chargesfinancieres,
+          chargesExptionnelles: data.chargesExptionnelles,
+          impotSurbenefices: data.impotSurbenefices,
+          soldeCrediteur: data.soldeCrediteur,
+          ventesMarchandises: data.ventesMarchandises,
+          productionVendueBienEtSerices: data.productionVendueBienEtSerices,
+          productionStockee: data.productionStockee,
+          productionImmobilisee: data.productionImmobilisee,
+          subventionExploitation: data.subventionExploitation,
+          autreProduits: data.autreProduits,
+          montantExportation: data.montantExportation,
+          produitfinancieres: data.produitfinancieres,
+          produitExceptionnels: data.produitExceptionnels,
+          soldeDebiteur: data.soldeDebiteur,
+          signature: data.signature,
+          createdRef: data.createdRef,
+          created: data.created,
+          approbationDD: approbationDD,
+          motifDD:
+              (motifDDController.text == '') ? '-' : motifDDController.text,
+          signatureDD: profilController.user.matricule);
       await compteResultatApi.updateData(compteResulatsModel).then((value) {
         compteResultatList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

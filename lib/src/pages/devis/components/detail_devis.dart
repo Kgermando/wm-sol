@@ -14,6 +14,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/devis/components/approbation_devis.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -36,6 +37,12 @@ class _DetailDevisState extends State<DetailDevis> {
   String title = "Devis";
 
   bool isChecked = false;
+
+  Future<DevisModel> refresh() async {
+    final DevisModel dataItem =
+        await controller.detailView(widget.devisModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +94,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                                 title:
                                                     "Ticket n° ${widget.devisModel.id}"),
                                             Column(
-                                              children: [
-                                                if (widget.devisModel
-                                                        .approbationDD ==
-                                                    "Unapproved")
+                                              children: [ 
                                                   Row(
                                                     children: [
                                                       IconButton(
@@ -98,8 +102,13 @@ class _DetailDevisState extends State<DetailDevis> {
                                                           color: Colors
                                                               .green.shade700,
                                                           onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
+                                                             refresh().then((value) =>
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    DevisRoutes
+                                                                        .devisDetail,
+                                                                    arguments:
+                                                                        value));
                                                           },
                                                           icon: const Icon(
                                                               Icons.refresh)),
@@ -110,7 +119,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                                             tooltip:
                                                                 'Soumettre chez le DD',
                                                             color: Colors
-                                                                .green.shade700,
+                                                                .teal.shade700,
                                                             onPressed: () {
                                                               controller.sendDD(
                                                                   widget
@@ -118,6 +127,9 @@ class _DetailDevisState extends State<DetailDevis> {
                                                             },
                                                             icon: const Icon(
                                                                 Icons.send)),
+                                                      if (widget.devisModel
+                                                            .approbationDD ==
+                                                        "Unapproved")
                                                       deleteButton(controller),
                                                     ],
                                                   ),

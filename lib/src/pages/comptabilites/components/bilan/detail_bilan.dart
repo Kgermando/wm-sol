@@ -15,6 +15,7 @@ import 'package:wm_solution/src/pages/comptabilites/components/bilan/approbation
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/bilan_pdf.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/comptes_dropdown.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -36,6 +37,12 @@ class _DetailBilanState extends State<DetailBilan> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Comptabiliés";
+
+  Future<BilanModel> refresh() async {
+    final BilanModel dataItem =
+        await bilanController.detailView(widget.bilanModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +102,19 @@ class _DetailBilanState extends State<DetailBilan> {
                                           children: [
                                             Row(
                                               children: [
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ComptabiliteRoutes
+                                                                  .comptabiliteBilanDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
                                                 if (widget
                                                         .bilanModel.isSubmit ==
                                                     'false') // Uniqyement celui a remplit le document

@@ -26,6 +26,9 @@ class DetailPresence extends StatefulWidget {
 }
 
 class _DetailPresenceState extends State<DetailPresence> {
+    final PresenceController controller = Get.put(PresenceController());
+  final PresencePersonneController controllerPresencePersonne = Get.put(PresencePersonneController());
+  final PersonnelsController controllerPersonnels = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Présences";
@@ -36,9 +39,7 @@ class _DetailPresenceState extends State<DetailPresence> {
 
   @override
   Widget build(BuildContext context) {
-    final PresenceController controller = Get.find();
-    final PresencePersonneController controllerPresencePersonne =Get.find();
-    final PersonnelsController controllerPersonnels = Get.find();
+  
 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
@@ -89,36 +90,36 @@ class _DetailPresenceState extends State<DetailPresence> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  TitleWidget(
-                                                      title: widget
-                                                          .presenceModel.title),
-                                                  Row(
-                                                    children: [
-                                                      deleteDialog(controller),
-                                                      Container(
-                                                        width: 2,
-                                                        height: 22,
-                                                        color: lightGrey,
-                                                      ),
-                                                      const SizedBox(width: p8),
-                                                      RichText(
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          text: TextSpan(
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium,
-                                                              children: [
-                                                                const TextSpan(
-                                                                    text:
-                                                                        "Créé à "),
-                                                                TextSpan(
-                                                                    text: DateFormat(
-                                                                            "HH:mm")
-                                                                        .format(widget
-                                                                            .presenceModel
-                                                                            .created))
+                                TitleWidget(
+                                    title: widget
+                                        .presenceModel.title),
+                                Row(
+                                  children: [
+                                    deleteDialog(controller),
+                                    Container(
+                                      width: 2,
+                                      height: 22,
+                                      color: lightGrey,
+                                    ),
+                                    const SizedBox(width: p8),
+                                    RichText(
+                                        textAlign:
+                                            TextAlign.start,
+                                        text: TextSpan(
+                                          style: Theme.of(
+                                                  context)
+                                              .textTheme
+                                              .bodyMedium,
+                                          children: [
+                                            const TextSpan(
+                                                text:
+                                                    "Créé à "),
+                                            TextSpan(
+                                                text: DateFormat(
+                                                        "HH:mm")
+                                                    .format(widget
+                                                        .presenceModel
+                                                          .created))
                                                               ]))
                                                     ],
                                                   )

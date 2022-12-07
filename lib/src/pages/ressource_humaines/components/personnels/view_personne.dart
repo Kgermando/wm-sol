@@ -26,6 +26,13 @@ class ViewPersonne extends StatefulWidget {
 }
 
 class _ViewPersonneState extends State<ViewPersonne> {
+
+  Future<AgentModel> refresh() async {
+    final AgentModel dataItem =
+        await widget.controller.detailView(widget.personne.id!);
+    return dataItem;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -38,24 +45,13 @@ class _ViewPersonneState extends State<ViewPersonne> {
             children: [
               const TitleWidget(title: 'Curriculum vitæ'),
               Row(
-                children: [
-                  // if (int.parse(
-                  //       widget.personne.role) == 0 &&
-                  //     actionnaire.isEmpty)
-                  //   IconButton(
-                  //       color: Colors.red.shade700,
-                  //       tooltip: 'Ajout Actionnaire',
-                  //       onPressed: () {
-                  //         actionnaireDialog(agentModel);
-                  //       },
-                  //       icon: const Icon(
-                  //           Icons.admin_panel_settings)),
+                children: [ 
                   IconButton(
+                      tooltip: 'Actualiser',
                       onPressed: () { 
-                        widget.controller.detailView(widget.personne.id!);
-                        Navigator.pushNamed(
+                        refresh().then((value) => Navigator.pushNamed(
                             context, RhRoutes.rhPersonnelsDetail,
-                            arguments: widget.personne); 
+                            arguments: value));
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(

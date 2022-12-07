@@ -17,7 +17,6 @@ class TransportRestController extends GetxController
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
 
-
   var transportRestaurationList = <TransportRestaurationModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -129,7 +128,7 @@ class TransportRestController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -174,7 +173,7 @@ class TransportRestController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -362,9 +361,8 @@ class TransportRestController extends GetxController
           coutTotal += double.parse(element.montant);
         }
 
-
         var ligneBudget = lignBudgetaireController.ligneBudgetaireList
-          .where((element) =>
+            .where((element) =>
                 element.nomLigneBudgetaire == value.ligneBudgetaire)
             .first;
 
@@ -389,14 +387,15 @@ class TransportRestController extends GetxController
             banqueSortie: ligneBudget.banqueSortie,
             finExterieurSortie: ligneBudget.finExterieurSortie,
           );
-          await lignBudgetaireController.lIgneBudgetaireApi.updateData(ligneBudgetaireModel)
+          await lignBudgetaireController.lIgneBudgetaireApi
+              .updateData(ligneBudgetaireModel)
               .then((value) {
             clear();
             transportRestaurationList.clear();
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -421,8 +420,7 @@ class TransportRestController extends GetxController
             created: ligneBudget.created,
             reference: ligneBudget.reference,
             caisseSortie: ligneBudget.caisseSortie,
-            banqueSortie:
-                ligneBudget.banqueSortie + coutTotal,
+            banqueSortie: ligneBudget.banqueSortie + coutTotal,
             finExterieurSortie: ligneBudget.finExterieurSortie,
           );
           await lignBudgetaireController.lIgneBudgetaireApi
@@ -433,7 +431,7 @@ class TransportRestController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -459,8 +457,7 @@ class TransportRestController extends GetxController
             reference: ligneBudget.reference,
             caisseSortie: ligneBudget.caisseSortie,
             banqueSortie: ligneBudget.banqueSortie,
-            finExterieurSortie:
-                ligneBudget.finExterieurSortie + coutTotal,
+            finExterieurSortie: ligneBudget.finExterieurSortie + coutTotal,
           );
           await lignBudgetaireController.lIgneBudgetaireApi
               .updateData(ligneBudgetaireModel)
@@ -470,13 +467,13 @@ class TransportRestController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
             _isLoading.value = false;
           });
-        } 
+        }
       });
     } catch (e) {
       _isLoading.value = false;

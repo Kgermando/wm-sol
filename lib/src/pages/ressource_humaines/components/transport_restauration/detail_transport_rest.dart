@@ -99,14 +99,12 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              if (Responsive.isDesktop(context))
+                                              if (!Responsive.isMobile(context))
                                                 TitleWidget(
                                                     title: widget
                                                         .transportRestaurationModel
                                                         .title),
-                                              if (!Responsive.isDesktop(
-                                                  context))
-                                                Container(),
+                                             
                                               Column(
                                                 children: [
                                                   Row(
@@ -117,7 +115,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                                           "false")
                                                         IconButton(
                                                             color: Colors
-                                                                .green.shade700,
+                                                                .teal.shade700,
                                                             onPressed: () {
                                                               controller.sendDD(
                                                                   widget

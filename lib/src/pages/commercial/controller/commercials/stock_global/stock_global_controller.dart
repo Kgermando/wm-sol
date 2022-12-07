@@ -118,7 +118,7 @@ class StockGlobalController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -141,7 +141,7 @@ class StockGlobalController extends GetxController
   //       getList();
   //       Get.back();
   //       Get.snackbar("Soumission effectuée avec succès!",
-  //           "Le document a bien été sauvegader",
+  //           "Le document a bien été sauvegadé",
   //           backgroundColor: Colors.green,
   //           icon: const Icon(Icons.check),
   //           snackPosition: SnackPosition.TOP);

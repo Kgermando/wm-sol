@@ -24,14 +24,14 @@ class DetailTache extends StatefulWidget {
 }
 
 class _DetailTacheState extends State<DetailTache> {
+   final TachesController controller = Get.put(TachesController());
+  final ProfilController profilController = Get.find();
+  final RapportController rapportController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Tâches";
 
   @override
-  Widget build(BuildContext context) {
-    final TachesController controller = Get.find();
-    final ProfilController profilController = Get.find();
-    final RapportController rapportController = Get.find();
+  Widget build(BuildContext context) { 
     return Scaffold(
               key: scaffoldKey,
               appBar:

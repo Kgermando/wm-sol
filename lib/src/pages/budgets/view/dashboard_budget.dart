@@ -7,7 +7,6 @@ import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/budgets/components/dahsboard/courbe_ligne_budgetaire.dart';
-import 'package:wm_solution/src/pages/budgets/components/dahsboard/line_chart_sortie.dart';
 import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_budget_widget.dart';

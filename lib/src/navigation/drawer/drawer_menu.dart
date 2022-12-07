@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/get_local_storage.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/navigation/drawer/components/actionnaire_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/administration_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/budget_nav.dart';
 import 'package:wm_solution/src/navigation/drawer/components/commercial_nav.dart';
@@ -44,9 +45,15 @@ class DrawerMenu extends StatelessWidget {
                       InfoSystem().logo(),
                       width: 100,
                       height: 100,
-                    )),
+                    )), 
+                    if (departementList.contains('Administration') ||
+                        departementList.contains('Actionnaire') ||
+                        departementList.contains('Support')) 
+                    ActionnaireNav(
+                          currentRoute: currentRoute,
+                          departementList: departementList),
                     if(departementList.contains('Administration') ||
-                      departementList.contains('Support') ) 
+                      departementList.contains('Support')) 
                      AdministrationNav(
                       currentRoute: currentRoute,
                       user: user,

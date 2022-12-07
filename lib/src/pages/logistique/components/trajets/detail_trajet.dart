@@ -10,6 +10,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/components/trajets/approbation_trajet.dart';
 import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -23,10 +24,17 @@ class DetailTrajet extends StatefulWidget {
 }
 
 class _DetailTrajetState extends State<DetailTrajet> {
-  final TrajetController controller = Get.find();
+  final TrajetController controller = Get.put(TrajetController());
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
+
+  Future<TrajetModel> refresh() async {
+    final TrajetModel dataItem =
+        await controller.detailView(widget.trajetModel.id!);
+    return dataItem;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,18 +85,37 @@ class _DetailTrajetState extends State<DetailTrajet> {
                                                     .trajetModel.conducteur),
                                             Column(
                                               children: [
-                                                if (widget.trajetModel
+                                               
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
+                                                          tooltip: 'Actualiser',
+                                                          onPressed: () async {
+                                                            refresh().then((value) =>
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    LogistiqueRoutes
+                                                                        .logTrajetAutoDetail,
+                                                                    arguments:
+                                                                        value));
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.refresh,
+                                                              color: Colors
+                                                                  .green)),
+                                                      if (widget.trajetModel
                                                             .approbationDD ==
-                                                        "-")
-                                                  IconButton(
-                                                      tooltip: 'Supprimer',
-                                                      onPressed: () async {
-                                                        alertDeleteDialog();
-                                                      },
-                                                      icon: const Icon(
-                                                          Icons.delete),
-                                                      color:
-                                                          Colors.red.shade700),
+                                                        "-") IconButton(
+                                                          tooltip: 'Supprimer',
+                                                          onPressed: () async {
+                                                            alertDeleteDialog();
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.delete),
+                                                          color:
+                                                              Colors.red.shade700),
+                                                    ],
+                                                  ),
                                                 SelectableText(
                                                     DateFormat("dd-MM-yy HH:mm")
                                                         .format(widget

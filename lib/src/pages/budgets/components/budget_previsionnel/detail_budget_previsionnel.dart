@@ -36,6 +36,12 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
 
+  Future<DepartementBudgetModel> refresh() async {
+    final DepartementBudgetModel dataItem =
+        await controller.detailView(widget.departementBudgetModel.id!);
+    return dataItem;
+  }
+
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -109,12 +115,13 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                                                 IconButton(
                                                     tooltip: 'Rafraichir',
                                                     onPressed: () {
+                                                     refresh().then((value) =>
                                                       Navigator.pushNamed(
                                                           context,
                                                           BudgetRoutes
                                                               .budgetBudgetPrevisionelDetail,
-                                                          arguments: widget
-                                                              .departementBudgetModel);
+                                                          arguments:
+                                                              value));
                                                     },
                                                     icon: Icon(Icons.refresh,
                                                         color: Colors

@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/administrations/actionnaire_model.dart';
+import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:http/http.dart' as http;
 
 class ActionnaireApi extends GetConnect {
@@ -15,6 +15,23 @@ class ActionnaireApi extends GetConnect {
     Map<String, String> header = headers;
 
     var resp = await client.get(actionnaireListUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<ActionnaireModel> data = [];
+      for (var u in bodyList) {
+        data.add(ActionnaireModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(resp.statusCode);
+    }
+  }
+
+  Future<List<ActionnaireModel>> getAllDataLimit() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(actionnaireLimitUrl, headers: header);
 
     if (resp.statusCode == 200) {
       List<dynamic> bodyList = json.decode(resp.body);

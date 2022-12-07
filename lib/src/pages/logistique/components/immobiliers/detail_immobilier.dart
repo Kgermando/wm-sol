@@ -23,13 +23,20 @@ class DetailImmobilier extends StatefulWidget {
 }
 
 class _DetailImmobilierState extends State<DetailImmobilier> {
+    final ImmobilierController controller = Get.put(ImmobilierController());
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
+    Future<ImmobilierModel> refresh() async {
+    final ImmobilierModel dataItem =
+        await controller.detailView(widget.immobilierModel.id!);
+    return dataItem;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ImmobilierController controller = Get.find();
-    final ProfilController profilController = Get.find();
+  
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -76,12 +83,27 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                                 title: "Immobilier"),
                                             Column(
                                               children: [
-                                                if (widget.immobilierModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
+                                                
                                                   Row(
                                                     children: [
                                                       IconButton(
+                                                          tooltip: 'Actualiser',
+                                                          onPressed: () async {
+                                                            refresh().then((value) =>
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    LogistiqueRoutes
+                                                                        .logImmobilierMaterielDetail,
+                                                                    arguments:
+                                                                        value));
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.refresh,
+                                                              color: Colors
+                                                                  .green)),
+                                                     if (widget.immobilierModel
+                                                            .approbationDD ==
+                                                        "Unapproved") IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
                                                             Get.toNamed(
@@ -92,7 +114,9 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                                           },
                                                           icon: const Icon(
                                                               Icons.edit)),
-                                                      IconButton(
+                                                    if (widget.immobilierModel
+                                                            .approbationDD ==
+                                                        "Unapproved")  IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog(

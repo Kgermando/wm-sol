@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/budgets/ligne_budgetaire_api.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
-import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart'; 
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class LignBudgetaireController extends GetxController
     with StateMixin<List<LigneBudgetaireModel>> {
   LIgneBudgetaireApi lIgneBudgetaireApi = LIgneBudgetaireApi();
-  final ProfilController profilController = Get.find(); 
+  final ProfilController profilController = Get.find();
 
-  List<LigneBudgetaireModel> ligneBudgetaireList =  [];
+  List<LigneBudgetaireModel> ligneBudgetaireList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -40,7 +40,7 @@ class LignBudgetaireController extends GetxController
   @override
   void onInit() {
     super.onInit();
-    getList(); 
+    getList();
   }
 
   @override
@@ -94,30 +94,29 @@ class LignBudgetaireController extends GetxController
     try {
       _isLoading.value = true;
       final ligneBudgetaireModel = LigneBudgetaireModel(
-        nomLigneBudgetaire: nomLigneBudgetaireController.text,
-        departement: data.departement,
-        periodeBudgetDebut: data.periodeDebut,
-        periodeBudgetFin: data.periodeFin,
-        uniteChoisie: uniteChoisieController.text,
-        nombreUnite: nombreUniteController.toString(),
-        coutUnitaire: coutUnitaireController.toString(),
-        coutTotal: coutToal.toString(),
-        caisse: caisseController.toString(),
-        banque: banqueController.toString(),
-        finExterieur: fondsAtrouver.toString(),
-        signature: profilController.user.matricule,
-        created: DateTime.now(), 
-        reference: data.id!,
-        caisseSortie: 0.0,
-        banqueSortie: 0.0,
-        finExterieurSortie: 0.0
-      );
+          nomLigneBudgetaire: nomLigneBudgetaireController.text,
+          departement: data.departement,
+          periodeBudgetDebut: data.periodeDebut,
+          periodeBudgetFin: data.periodeFin,
+          uniteChoisie: uniteChoisieController.text,
+          nombreUnite: nombreUniteController.toString(),
+          coutUnitaire: coutUnitaireController.toString(),
+          coutTotal: coutToal.toString(),
+          caisse: caisseController.toString(),
+          banque: banqueController.toString(),
+          finExterieur: fondsAtrouver.toString(),
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          reference: data.id!,
+          caisseSortie: 0.0,
+          banqueSortie: 0.0,
+          finExterieurSortie: 0.0);
       await lIgneBudgetaireApi.insertData(ligneBudgetaireModel).then((value) {
         ligneBudgetaireList.clear();
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

@@ -106,7 +106,7 @@ class MobilierController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -141,7 +141,7 @@ class MobilierController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -169,7 +169,7 @@ class MobilierController extends GetxController
           created: data.created,
           approbationDD: approbationDD,
           motifDD:
-            (motifDDController.text == '') ? '-' : motifDDController.text,
+              (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await mobilierApi.updateData(dataItem).then((value) {
         clear();
@@ -177,7 +177,7 @@ class MobilierController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

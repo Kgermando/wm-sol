@@ -5,9 +5,9 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/sal
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
 class DashobardRHController extends GetxController {
-  final PersonnelsController personnelsController = Get.find();
-  final SalaireController salaireController = Get.find();
-  final TransportRestController transportRestController = Get.find();
+  final PersonnelsController personnelsController = Get.put(PersonnelsController());
+  final SalaireController salaireController = Get.put(SalaireController());
+  final TransportRestController transportRestController = Get.put(TransportRestController());
 
   List<PaiementSalaireModel> salaireList = [];
 

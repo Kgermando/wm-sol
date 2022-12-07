@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -21,14 +22,19 @@ class DetailCart extends StatefulWidget {
 }
 
 class _DetailCartState extends State<DetailCart> {
+  final CartController controller = Get.put(CartController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
-  @override
-  Widget build(BuildContext context) {
-    final CartController controller = Get.find();
+  Future<CartModel> refresh() async {
+    final CartModel dataItem =
+        await controller.detailView(widget.cart.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, widget.cart.idProductCart),
@@ -73,6 +79,19 @@ class _DetailCartState extends State<DetailCart> {
                                                 title: 'Votre panier'),
                                             Column(
                                               children: [
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ComRoutes
+                                                                  .comCartDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
                                                 SelectableText(
                                                     DateFormat("dd-MM-yy HH:mm")
                                                         .format(widget

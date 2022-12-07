@@ -156,7 +156,7 @@ class PersonnelsController extends GetxController
     personnelsApi.getAllData().then((response) {
       personnelsList.clear();
       identifiant = response.length + 1;
-      personnelsList.addAll(response); 
+      personnelsList.addAll(response);
       change(personnelsList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -244,7 +244,7 @@ class PersonnelsController extends GetxController
         getList();
         Get.back();
         Get.snackbar(
-            "Enregistrement effectué!", "Le document a bien été sauvegader",
+            "Enregistrement effectué!", "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -275,7 +275,7 @@ class PersonnelsController extends GetxController
       getList();
       Get.back();
       Get.snackbar(
-          "Enregistrement effectué!", "Le document a bien été sauvegader",
+          "Enregistrement effectué!", "Le document a bien été sauvegadé",
           backgroundColor: Colors.green,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
@@ -356,8 +356,7 @@ class PersonnelsController extends GetxController
       personnelsList.clear();
       getList();
       Get.back();
-      Get.snackbar(
-          "Modification effectué!", "Le document a bien été sauvegader",
+      Get.snackbar("Modification effectué!", "Le document a bien été sauvegadé",
           backgroundColor: Colors.green,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);

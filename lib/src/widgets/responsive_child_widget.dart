@@ -15,13 +15,14 @@ class ResponsiveChildWidget extends StatelessWidget {
   final Widget child2;
   final int? flex1;
   final int? flex2;
-  final MainAxisAlignment? mainAxisAlignment;
+  final MainAxisAlignment? mainAxisAlignment; 
 
   @override
   Widget build(BuildContext context) {
     if (Responsive.isDesktop(context)) {
       return Row(
         mainAxisAlignment: (mainAxisAlignment == null) ? MainAxisAlignment.start : mainAxisAlignment!,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(flex: (flex1 == null) ? 1 : flex1!, child: child1),
           const SizedBox(width: p20),
@@ -33,6 +34,7 @@ class ResponsiveChildWidget extends StatelessWidget {
         mainAxisAlignment: (mainAxisAlignment == null)
             ? MainAxisAlignment.start
             : mainAxisAlignment!,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(flex: (flex1 == null) ? 1 : flex1!, child: child1),
           const SizedBox(width: p20),

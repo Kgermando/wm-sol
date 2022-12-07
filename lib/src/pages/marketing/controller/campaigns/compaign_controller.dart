@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/marketing/campaign_api.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
-import 'package:wm_solution/src/models/marketing/campaign_model.dart'; 
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 
@@ -13,7 +13,6 @@ class CampaignController extends GetxController
   final ProfilController profilController = Get.find();
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
-
 
   List<CampaignModel> campaignList = [];
 
@@ -75,7 +74,7 @@ class CampaignController extends GetxController
     motifDDController.dispose();
   }
 
-  void clear() { 
+  void clear() {
     ligneBudgtaire = null;
     ressource = null;
     typeProduitController.clear();
@@ -350,7 +349,7 @@ class CampaignController extends GetxController
               : ligneBudgtaire.toString(),
           ressource: (ressource.toString() == '') ? '-' : ressource.toString());
       await campaignApi.updateData(dataItem).then((value) async {
-           var ligneBudget = lignBudgetaireController.ligneBudgetaireList
+        var ligneBudget = lignBudgetaireController.ligneBudgetaireList
             .where((element) =>
                 element.nomLigneBudgetaire == value.ligneBudgetaire)
             .first;
@@ -385,7 +384,7 @@ class CampaignController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -422,7 +421,7 @@ class CampaignController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -448,8 +447,8 @@ class CampaignController extends GetxController
             reference: ligneBudget.reference,
             caisseSortie: ligneBudget.caisseSortie,
             banqueSortie: ligneBudget.banqueSortie,
-            finExterieurSortie:
-                ligneBudget.finExterieurSortie + double.parse(value.coutCampaign),
+            finExterieurSortie: ligneBudget.finExterieurSortie +
+                double.parse(value.coutCampaign),
           );
           await lignBudgetaireController.lIgneBudgetaireApi
               .updateData(ligneBudgetaireModel)
@@ -459,13 +458,13 @@ class CampaignController extends GetxController
             getList();
             Get.back();
             Get.snackbar(
-                "Effectuée avec succès!", "Le document a bien été sauvegader",
+                "Effectuée avec succès!", "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
             _isLoading.value = false;
           });
-        } 
+        }
       });
     } catch (e) {
       Get.snackbar("Erreur lors de la soumission", "$e",

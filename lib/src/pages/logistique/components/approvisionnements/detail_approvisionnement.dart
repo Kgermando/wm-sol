@@ -11,6 +11,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/table_history_approvision.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
@@ -25,11 +26,17 @@ class DetailApprovisionnement extends StatefulWidget {
 }
 
 class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
-  final ApprovisionnementController controller = Get.find();
+  final ApprovisionnementController controller = Get.put(ApprovisionnementController());
   final ApprovisionReceptionController approvisionReceptionController =
       Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
+
+  Future<ApprovisionnementModel> refresh() async {
+    final ApprovisionnementModel dataItem =
+        await controller.detailView(widget.approvisionnementModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +84,20 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                                           children: [
                                             Column(
                                               children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              LogistiqueRoutes
+                                                                  .logApprovisionnementDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
                                                 SelectableText(
                                                     DateFormat(
                                                             "dd-MM-yyyy HH:mm")

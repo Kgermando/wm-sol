@@ -14,6 +14,7 @@ import 'package:wm_solution/src/pages/logistique/components/entretiens/approbati
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/objet_remplace_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -28,12 +29,19 @@ class DetailEntretien extends StatefulWidget {
 
 class _DetailEntretienState extends State<DetailEntretien> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  final EntretienController controller = Get.find();
+  final EntretienController controller = Get.put(EntretienController());
   final ObjetRemplaceController objetRemplaceController = Get.find();
   final MaterielController materielController = Get.find();
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
+
+  
+  Future<EntretienModel> refresh() async {
+    final EntretienModel dataItem =
+        await controller.detailView(widget.entretienModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +101,13 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                                           color: Colors
                                                               .green.shade700,
                                                           onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
+                                                            refresh().then((value) =>
+                                                                Navigator.pushNamed(
+                                                                    context,
+                                                                    LogistiqueRoutes
+                                                                        .logEntretienDetail,
+                                                                    arguments:
+                                                                        value)); 
                                                           },
                                                           icon: const Icon(
                                                               Icons.refresh)),

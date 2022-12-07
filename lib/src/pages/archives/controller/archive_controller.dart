@@ -64,6 +64,7 @@ class ArchiveController extends GetxController
 
   void getList() async {
     await archiveApi.getAllData().then((response) {
+      archiveList.clear();
       archiveList.addAll(response);
       change(archiveList, status: RxStatus.success());
     }, onError: (err) {
@@ -115,7 +116,7 @@ class ArchiveController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Archivage effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -152,7 +153,7 @@ class ArchiveController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Modification de l'Archive effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

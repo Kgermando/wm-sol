@@ -10,11 +10,6 @@ class MonnaieStorage extends GetxController {
   final _monney = '\$'.obs;
   String get monney => _monney.value;
 
-  @override
-  void onInit() {
-    super.onInit();
-    // getData();
-  }
 
 
   getData() {

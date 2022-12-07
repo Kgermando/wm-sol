@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/finances/banque_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -21,13 +22,20 @@ class DetailBanque extends StatefulWidget {
 }
 
 class _DetailBanqueState extends State<DetailBanque> {
+  final BanqueController controller = Get.put(BanqueController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
+  Future<BanqueModel> refresh() async {
+    final BanqueModel dataItem =
+        await controller.detailView(widget.banqueModel.id!);
+    return dataItem;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final BanqueController controller = Get.find();
+    
 
     return Scaffold(
         key: scaffoldKey,
@@ -74,11 +82,29 @@ class _DetailBanqueState extends State<DetailBanque> {
                                                 widget.banqueModel.banqueName),
                                         Column(
                                           children: [
-                                            SelectableText(
-                                                DateFormat("dd-MM-yyyy HH:mm")
-                                                    .format(widget
-                                                        .banqueModel.created),
-                                                textAlign: TextAlign.start),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              FinanceRoutes
+                                                                  .transactionsBanqueDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                SelectableText(
+                                                    DateFormat("dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .banqueModel.created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            ),
                                           ],
                                         )
                                       ],

@@ -9,6 +9,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/table_history_livraison_provision.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -23,10 +24,17 @@ class DetailAccuseReception extends StatefulWidget {
 }
 
 class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
-  final ApprovisionReceptionController controller = Get.find();
+  final ApprovisionReceptionController controller = Get.put(ApprovisionReceptionController());
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
+
+  
+  Future<ApprovisionReceptionModel> refresh() async {
+    final ApprovisionReceptionModel dataItem =
+        await controller.detailView(widget.approvisionReceptionModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +81,18 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
                                         title: "Accusé reception"),
                                     Column(
                                       children: [
+                                            IconButton(
+                                                tooltip: 'Actualiser',
+                                                onPressed: () async {
+                                                  refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          LogistiqueRoutes
+                                                              .logApprovisionReceptionDetail,
+                                                          arguments: value));
+                                                },
+                                                icon: const Icon(Icons.refresh,
+                                                    color: Colors.green)),
                                         SelectableText(
                                             DateFormat("dd-MM-yyyy HH:mm")
                                                 .format(widget

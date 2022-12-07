@@ -13,6 +13,7 @@ import 'package:wm_solution/src/pages/finances/components/creance_dette/table_cr
 import 'package:wm_solution/src/pages/finances/components/creances/approbation_creance.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
@@ -28,18 +29,23 @@ class DetailCreance extends StatefulWidget {
 }
 
 class _DetailCreanceState extends State<DetailCreance> {
+   final CreanceController controller = Get.find();
+  final CreanceDetteController creanceDetteController = Get.find();
+  final ProfilController profilController = Get.find();
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
   bool isChecked = false;
 
-  @override
-  Widget build(BuildContext context) {
-    final CreanceController controller = Get.find();
-    final CreanceDetteController creanceDetteController = Get.find();
-    final ProfilController profilController = Get.find();
+  Future<CreanceModel> refresh() async {
+    final CreanceModel dataItem =
+        await controller.detailView(widget.creanceModel.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -91,11 +97,29 @@ class _DetailCreanceState extends State<DetailCreance> {
                                         const TitleWidget(title: "Créance"),
                                         Column(
                                           children: [
-                                            SelectableText(
-                                                DateFormat("dd-MM-yyyy HH:mm")
-                                                    .format(widget
-                                                        .creanceModel.created),
-                                                textAlign: TextAlign.start),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              FinanceRoutes
+                                                                  .transactionsCreanceDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                SelectableText(
+                                                    DateFormat("dd-MM-yyyy HH:mm")
+                                                        .format(widget
+                                                            .creanceModel.created),
+                                                    textAlign: TextAlign.start),
+                                              ],
+                                            ),
                                           ],
                                         )
                                       ],

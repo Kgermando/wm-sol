@@ -27,14 +27,19 @@ class DetailStockGlobal extends StatefulWidget {
 }
 
 class _DetailStockGlobalState extends State<DetailStockGlobal> {
+  final StockGlobalController controller = Get.put(StockGlobalController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
-  @override
-  Widget build(BuildContext context) {
-    final StockGlobalController controller = Get.find();
+  Future<StocksGlobalMOdel> refresh() async {
+    final StocksGlobalMOdel dataItem =
+        await controller.detailView(widget.stocksGlobalMOdel.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -83,12 +88,13 @@ class _DetailStockGlobalState extends State<DetailStockGlobal> {
                                               children: [
                                                 IconButton(
                                                     onPressed: () {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          ComRoutes
-                                                              .comStockGlobalDetail,
-                                                          arguments: widget
-                                                              .stocksGlobalMOdel);
+                                                       refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ComRoutes
+                                                                  .comStockGlobalDetail,
+                                                              arguments:
+                                                                  value)); 
                                                     },
                                                     icon: const Icon(
                                                         Icons.refresh,

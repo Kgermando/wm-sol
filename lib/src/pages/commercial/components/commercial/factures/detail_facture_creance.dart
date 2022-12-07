@@ -14,6 +14,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/cart/table_creance_cart.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/creance_cart_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_creance_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -31,6 +32,12 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
+
+    Future<CreanceCartModel> refresh() async {
+    final CreanceCartModel dataItem =
+        await controller.detailView(widget.creanceCartModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +89,19 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                                             Row(
                                               children: [
                                                 IconButton(
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ComRoutes
+                                                                  .comCreanceDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                IconButton(
                                                     tooltip:
                                                         'Remboursement de la dette',
                                                     onPressed: () {
@@ -90,7 +110,7 @@ class _DetailFactureCreanceState extends State<DetailFactureCreance> {
                                                     icon:
                                                         const Icon(Icons.send),
                                                     color:
-                                                        Colors.green.shade700),
+                                                        Colors.teal.shade700),
                                                 PrintWidget(
                                                     tooltip:
                                                         'Imprimer le document',

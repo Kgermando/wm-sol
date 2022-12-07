@@ -20,7 +20,7 @@ class AdministrationNav extends StatefulWidget {
 
 class _AdministrationNavState extends State<AdministrationNav> {
   final AdminNotifyController controller = Get.put(AdminNotifyController());
-  bool isOpen1 = false;
+  bool isOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _AdministrationNavState extends State<AdministrationNav> {
       initiallyExpanded: widget.departementList.contains('Administration') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
-          isOpen1 = !val;
+          isOpen = !val;
         });
       },
       trailing: const Icon(Icons.arrow_drop_down),

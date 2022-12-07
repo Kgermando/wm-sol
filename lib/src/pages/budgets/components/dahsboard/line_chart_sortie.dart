@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart'; 
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 

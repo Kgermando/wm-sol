@@ -9,7 +9,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/produit_model/approbation_prod_model.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailProductModel extends StatefulWidget {
@@ -21,106 +21,107 @@ class DetailProductModel extends StatefulWidget {
 }
 
 class _DetailProductModelState extends State<DetailProductModel> {
+  final ProduitModelController controller =
+      Get.put(ProduitModelController());
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
-  @override
-  Widget build(BuildContext context) {
-    final ProduitModelController controller = Get.find();
-    final ProfilController profilController = Get.find();
+  Future<ProductModel> refresh() async {
+    final ProductModel dataItem =
+        await controller.detailView(widget.productModel.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.productModel.idProduct),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+      key: scaffoldKey,
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.productModel.idProduct),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TitleWidget(
+                                        title: widget.productModel.categorie),
+                                    Column(
                                       children: [
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TitleWidget(
-                                                title: widget
-                                                    .productModel.categorie),
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                IconButton(
-                                                    onPressed: () {
+                                            IconButton(
+                                                onPressed: () {
+                                                  refresh().then((value) =>
                                                       Navigator.pushNamed(
                                                           context,
                                                           ComRoutes
                                                               .comProduitModelDetail,
-                                                          arguments: widget
-                                                              .productModel);
-                                                    },
+                                                          arguments: value));
+                                                },
                                                 icon: const Icon(Icons.refresh,
                                                     color: Colors.green)),
-                                                    if (widget.productModel
-                                                            .approbationDD ==
-                                                        "-")
-                                                      editButton(controller),
-                                                    if (widget.productModel
-                                                            .approbationDD ==
-                                                        "-")
-                                                      deleteButton(controller),
-                                                  ],
-                                                ),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .productModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
+                                            if (widget.productModel
+                                                    .approbationDD ==
+                                                "-")
+                                              editButton(controller),
+                                            if (widget.productModel
+                                                    .approbationDD ==
+                                                "-")
+                                              deleteButton(controller),
                                           ],
                                         ),
-                                        dataWidget()
+                                        SelectableText(
+                                            DateFormat("dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .productModel.created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                ApprobationProdModel(
-                                    data: widget.productModel,
-                                    controller: controller,
-                                    profilController: profilController)
+                                dataWidget()
                               ],
                             ),
-                          )))
-                ],
-              ),
-            );
+                          ),
+                        ),
+                        const SizedBox(height: p20),
+                        ApprobationProdModel(
+                            data: widget.productModel,
+                            controller: controller,
+                            profilController: profilController)
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget editButton(ProduitModelController controller) {

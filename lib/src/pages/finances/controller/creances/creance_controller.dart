@@ -10,7 +10,8 @@ class CreanceController extends GetxController
     with StateMixin<List<CreanceModel>> {
   final CreanceApi creanceApi = CreanceApi();
   final ProfilController profilController = Get.find();
-  final CreanceDetteController creanceDetteController = Get.put(CreanceDetteController());
+  final CreanceDetteController creanceDetteController =
+      Get.put(CreanceDetteController());
 
   var creanceList = <CreanceModel>[].obs;
 
@@ -140,7 +141,7 @@ class CreanceController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -179,7 +180,7 @@ class CreanceController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -218,7 +219,7 @@ class CreanceController extends GetxController
         getList();
         Get.back();
         Get.snackbar(
-            "Créance payé avec succès!", "Le document a bien été sauvegader",
+            "Créance payé avec succès!", "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -258,7 +259,7 @@ class CreanceController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -298,7 +299,7 @@ class CreanceController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

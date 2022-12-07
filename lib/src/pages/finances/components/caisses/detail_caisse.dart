@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/finances/caisse_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -21,14 +22,19 @@ class DetailCaisse extends StatefulWidget {
 }
 
 class _DetailCaisseState extends State<DetailCaisse> {
+   final CaisseController controller = Get.put(CaisseController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
-  @override
-  Widget build(BuildContext context) {
-    final CaisseController controller = Get.find();
+  Future<CaisseModel> refresh() async {
+    final CaisseModel dataItem =
+        await controller.detailView(widget.caisseModel.id!);
+    return dataItem;
+  }
 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -74,6 +80,18 @@ class _DetailCaisseState extends State<DetailCaisse> {
                                                 widget.caisseModel.caisseName),
                                         Column(
                                           children: [
+                                            IconButton(
+                                                tooltip: 'Actualiser',
+                                                onPressed: () async {
+                                                  refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          FinanceRoutes
+                                                              .transactionsCaisseDetail,
+                                                          arguments: value));
+                                                },
+                                                icon: const Icon(Icons.refresh,
+                                                    color: Colors.green)),
                                             SelectableText(
                                                 DateFormat("dd-MM-yyyy HH:mm")
                                                     .format(widget

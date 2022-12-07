@@ -25,16 +25,24 @@ class DetailSuccursale extends StatefulWidget {
 }
 
 class _DetailSuccursaleState extends State<DetailSuccursale> {
+  final SuccursaleController controller = Get.put(SuccursaleController());
+  final AchatController achatController = Get.find();
+  final ProfilController profilController = Get.find();
+
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
+  Future<SuccursaleModel> refresh() async {
+    final SuccursaleModel dataItem =
+        await controller.detailView(widget.succursaleModel.id!);
+    return dataItem;
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    final SuccursaleController controller = Get.find();
-    final AchatController achatController = Get.find();
-    final ProfilController profilController = Get.find();
-
+  
     int userRole = int.parse(profilController.user.role);
 
     return Scaffold(

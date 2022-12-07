@@ -9,7 +9,7 @@ class ArchiveFolderController extends GetxController
   final ArchiveFolderApi archiveFolderApi = ArchiveFolderApi();
   final ProfilController profilController = Get.find();
 
-  var archiveFolderList = <ArchiveFolderModel>[].obs;
+  List<ArchiveFolderModel> archiveFolderList = [];
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -28,10 +28,14 @@ class ArchiveFolderController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    folderNameController.clear();
+  }
+
   void getList() async {
     await archiveFolderApi.getAllData().then((response) {
-      archiveFolderList.assignAll(response);
-      // print("list data  ${response.length}");
+      archiveFolderList.clear();
+      archiveFolderList.addAll(response);
       change(archiveFolderList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -73,10 +77,11 @@ class ArchiveFolderController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await archiveFolderApi.insertData(archiveModel).then((value) {
+        clear();
         archiveFolderList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -103,7 +108,7 @@ class ArchiveFolderController extends GetxController
   //       archiveFolderList.clear();
   //       getList();
   //       Get.snackbar("Soumission effectuée avec succès!",
-  //           "Le document a bien été sauvegader",
+  //           "Le document a bien été sauvegadé",
   //           backgroundColor: Colors.green,
   //           icon: const Icon(Icons.check),
   //           snackPosition: SnackPosition.TOP);

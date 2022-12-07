@@ -28,7 +28,7 @@ class JournalController extends GetxController
   String? compteCredit;
   TextEditingController numeroOperationController = TextEditingController();
   TextEditingController libeleController = TextEditingController();
-  TextEditingController montantController = TextEditingController(); 
+  TextEditingController montantController = TextEditingController();
   TextEditingController tvaController = TextEditingController();
   TextEditingController remarqueController = TextEditingController();
 
@@ -42,7 +42,7 @@ class JournalController extends GetxController
   void dispose() {
     numeroOperationController.dispose();
     libeleController.dispose();
-    montantController.dispose(); 
+    montantController.dispose();
     tvaController.dispose();
     remarqueController.dispose();
     super.dispose();
@@ -55,7 +55,7 @@ class JournalController extends GetxController
     compteCredit = null;
     numeroOperationController.clear();
     libeleController.clear();
-    montantController.clear(); 
+    montantController.clear();
     tvaController.clear();
     remarqueController.clear();
   }
@@ -64,7 +64,7 @@ class JournalController extends GetxController
     await journalApi.getAllData().then((response) {
       journalList.clear();
       numOpration = response.length + 1;
-      journalList.addAll(response); 
+      journalList.addAll(response);
       change(journalList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -112,13 +112,11 @@ class JournalController extends GetxController
         numeroOperation: numero,
         libele: libeleController.text,
         compteDebit: compteDebit.toString(),
-        montantDebit: (montantController.text == "")
-            ? "0"
-            : montantController.text,
+        montantDebit:
+            (montantController.text == "") ? "0" : montantController.text,
         compteCredit: compteCredit.toString(),
-        montantCredit: (montantController.text == "")
-            ? "0"
-            : montantController.text,
+        montantCredit:
+            (montantController.text == "") ? "0" : montantController.text,
         signature: profilController.user.matricule,
         created: DateTime.now(),
         locker: "false",
@@ -152,7 +150,7 @@ class JournalController extends GetxController
             balanceSumController.getList();
             getList();
             Get.snackbar("Soumission effectuée avec succès!",
-                "Le document a bien été sauvegader",
+                "Le document a bien été sauvegadé",
                 backgroundColor: Colors.green,
                 icon: const Icon(Icons.check),
                 snackPosition: SnackPosition.TOP);
@@ -191,7 +189,7 @@ class JournalController extends GetxController
         journalList.clear();
         getList();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

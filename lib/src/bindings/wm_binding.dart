@@ -22,6 +22,7 @@ import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.da
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/screens/controller/splash_controller.dart';
@@ -60,7 +61,7 @@ class WMBindings extends Bindings {
     // Get.put<ArchiveFolderController>(ArchiveFolderController());
 
     // RH
-    // Get.put<DashobardRHController>(DashobardRHController());
+    Get.put<DashobardRHController>(DashobardRHController());
     Get.put<RHNotifyController>(RHNotifyController());
     // Get.put<PersonnelsController>(PersonnelsController());
     // Get.put<SalaireController>(SalaireController());

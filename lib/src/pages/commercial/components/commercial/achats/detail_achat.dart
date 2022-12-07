@@ -38,6 +38,13 @@ class _DetailAchatState extends State<DetailAchat> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
 
+  Future<AchatModel> refresh() async {
+    final AchatModel dataItem =
+        await controller.detailView(widget.achatModel.id!);
+    return dataItem;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var roleAgent = int.parse(profilController.user.role) <= 3;
@@ -84,9 +91,12 @@ class _DetailAchatState extends State<DetailAchat> {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                              Navigator.pushNamed(context,
-                                                  ComRoutes.comAchatDetail,
-                                                  arguments: widget.achatModel);
+                                              refresh().then((value) =>
+                                                  Navigator.pushNamed(
+                                                      context,
+                                                      ComRoutes
+                                                          .comAchatDetail,
+                                                      arguments: value)); 
                                             },
                                             icon: const Icon(Icons.refresh,
                                                 color: Colors.green)),

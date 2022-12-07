@@ -41,6 +41,8 @@ class ActionnaireRoute {
   static const actionnaireDashboard = "/actionnaire-dashboard";
   static const actionnairePage = "/actionnaire-page";
   static const actionnaireDetail = "/actionnaire-detail";
+  static const actionnaireCotisation = "/actionnaire-cotisations";
+  static const actionnaireTransfert = "/actionnaire-transfert";
 }
 
 class AdminRoutes { 
@@ -257,8 +259,7 @@ class ComRoutes {
   static const comHistoryRavitaillement =
       "/com-history-ravitaillement";
   static const comHistoryLivraison =
-      "/com-history-livraison";
-  static const comnumberFact = "/com-number-fact";
+      "/com-history-livraison"; 
   static const comRestitutionStock =
       "/com-restitution-stock";
   static const comRestitution = "/com-restitution";

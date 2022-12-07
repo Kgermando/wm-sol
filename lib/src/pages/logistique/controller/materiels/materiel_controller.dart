@@ -131,13 +131,14 @@ class MaterielController extends GetxController
           modele: modeleController.text,
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre:
-              (genreController.text == '') ? 'Autres' :  genreController.text,
+          genre: (genreController.text == '') ? 'Autres' : genreController.text,
           qtyMaxReservoir: (qtyMaxReservoirController.text == '')
               ? '0'
-              :   qtyMaxReservoirController.text,
+              : qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
-          numeroPLaque: (numeroPLaqueController.text == '') ? '-' : numeroPLaqueController.text,
+          numeroPLaque: (numeroPLaqueController.text == '')
+              ? '-'
+              : numeroPLaqueController.text,
           identifiant: numero,
           kilometrageInitiale: (kilometrageInitialeController.text == '')
               ? '0'
@@ -158,7 +159,7 @@ class MaterielController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -191,7 +192,7 @@ class MaterielController extends GetxController
           identifiant: data.identifiant,
           kilometrageInitiale: (kilometrageInitialeController.text == '')
               ? '0'
-              :  kilometrageInitialeController.text,
+              : kilometrageInitialeController.text,
           fournisseur: fournisseurController.text,
           alimentation: alimentation.toString(),
           signature: profilController.user.matricule,
@@ -208,7 +209,7 @@ class MaterielController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -255,7 +256,7 @@ class MaterielController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
@@ -302,7 +303,7 @@ class MaterielController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegader",
+            "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

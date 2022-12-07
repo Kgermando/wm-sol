@@ -13,6 +13,7 @@ import 'package:wm_solution/src/pages/finances/components/creance_dette/table_de
 import 'package:wm_solution/src/pages/finances/components/dettes/approbation_dette.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
@@ -28,18 +29,25 @@ class DetailDette extends StatefulWidget {
 }
 
 class _DetailDetteState extends State<DetailDette> {
+   final DetteController controller = Get.put(DetteController());
+  final CreanceDetteController creanceDetteController = Get.find();
+  final ProfilController profilController = Get.find();
+
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
 
   bool isChecked = false;
 
+  Future<DetteModel> refresh() async {
+    final DetteModel dataItem =
+        await controller.detailView(widget.detteModel.id!);
+    return dataItem;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final DetteController controller = Get.find();
-    final CreanceDetteController creanceDetteController = Get.find();
-    final ProfilController profilController = Get.find();
-
+   
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -91,6 +99,18 @@ class _DetailDetteState extends State<DetailDette> {
                                         const TitleWidget(title: "Dette"),
                                         Column(
                                           children: [
+                                            IconButton(
+                                                tooltip: 'Actualiser',
+                                                onPressed: () async {
+                                                  refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          FinanceRoutes
+                                                              .transactionsDetteDetail,
+                                                          arguments: value));
+                                                },
+                                                icon: const Icon(Icons.refresh,
+                                                    color: Colors.green)),
                                             SelectableText(
                                                 DateFormat("dd-MM-yyyy HH:mm")
                                                     .format(widget

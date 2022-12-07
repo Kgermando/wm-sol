@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/bindings/network_bindings.dart';
-import 'package:wm_solution/src/bindings/wm_binding.dart'; 
+import 'package:wm_solution/src/bindings/wm_binding.dart';
+import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart'; 
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
@@ -51,6 +52,12 @@ import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/404/error.dart';
+import 'package:wm_solution/src/pages/actionnaire/binding/actionnaire_binding.dart';
+import 'package:wm_solution/src/pages/actionnaire/components/detail_actionnaire.dart';
+import 'package:wm_solution/src/pages/actionnaire/view/actionnaire_cotisation_page.dart';
+import 'package:wm_solution/src/pages/actionnaire/view/actionnaire_dashboard.dart';
+import 'package:wm_solution/src/pages/actionnaire/view/actionnaire_page.dart';
+import 'package:wm_solution/src/pages/actionnaire/view/actionnaire_transfert_page.dart';
 import 'package:wm_solution/src/pages/administration/bindings/admin_dashboard_binding.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_budget.dart';
 import 'package:wm_solution/src/pages/administration/view/admin_comm.dart';
@@ -544,6 +551,7 @@ List<GetPage<dynamic>>? getPages = [
         UsersBinding(), 
         PresenceBinding(),
         PrersencePersonneBinding(),
+        ActionnaireBinding(),
         ProfilBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
@@ -2182,6 +2190,42 @@ GetPage(
       name: AdminRoutes.adminRH,
       bindings: [SalaireBinding(), TransportRestBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const AdminRH(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  // Actionnaire
+  GetPage(
+      name: ActionnaireRoute.actionnaireDashboard,
+      binding: ActionnaireBinding(),
+      page: () => const ActionnaireDashboard(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ActionnaireRoute.actionnairePage,
+      binding: ActionnaireBinding(),
+      page: () => const ActionnairePage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ActionnaireRoute.actionnaireDetail,
+      binding: ActionnaireBinding(),
+      page: () {
+        final ActionnaireModel actionnaireModel =
+            Get.arguments as ActionnaireModel;
+        return DetailActionnaire(actionnaireModel: actionnaireModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ActionnaireRoute.actionnaireCotisation,
+      binding: ActionnaireBinding(),
+      page: () => const ActionnaireCotisationPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ActionnaireRoute.actionnaireTransfert,
+      binding: ActionnaireBinding(),
+      page: () => const ActionnaireTransfertPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 

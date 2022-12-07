@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/vente_effectue/ventes_effectue_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -25,6 +26,12 @@ class _DetailVenteEffectueState extends State<DetailVenteEffectue> {
   final MonnaieStorage monnaieStorage = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
+
+  Future<VenteCartModel> refresh() async {
+    final VenteCartModel dataItem =
+        await controller.detailView(widget.venteCartModel.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) { 
@@ -75,6 +82,19 @@ class _DetailVenteEffectueState extends State<DetailVenteEffectue> {
                                                  .venteCartModel.succursale),
                                             Column(
                                               children: [
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ComRoutes
+                                                                  .comVenteEffectueDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
                                                 SelectableText(
                                                     DateFormat("dd-MM-yy HH:mm")
                                                         .format(widget

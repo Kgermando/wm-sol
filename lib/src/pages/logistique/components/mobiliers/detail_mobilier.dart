@@ -28,8 +28,14 @@ class _DetailMobilerState extends State<DetailMobiler> {
 
   @override
   Widget build(BuildContext context) {
-    final MobilierController controller = Get.find();
+    final MobilierController controller = Get.put(MobilierController());
     final ProfilController profilController = Get.find();
+
+    Future<MobilierModel> refresh() async {
+      final MobilierModel dataItem =
+          await controller.detailView(widget.mobilierModel.id!);
+      return dataItem;
+    }
 
     return controller.obx(
         onLoading: loadingPage(context),
@@ -75,13 +81,27 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                             const TitleWidget(
                                                 title: "Mobilier"),
                                             Column(
-                                              children: [
-                                                if (widget.mobilierModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
+                                              children: [ 
                                                   Row(
                                                     children: [
-                                                      IconButton(
+                                                    IconButton(
+                                                        tooltip: 'Actualiser',
+                                                        onPressed: () async {
+                                                          refresh().then((value) =>
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  ActionnaireRoute
+                                                                      .actionnaireDetail,
+                                                                  arguments:
+                                                                      value));
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.refresh,
+                                                            color:
+                                                                Colors.green)),
+                                                   if (widget.mobilierModel
+                                                            .approbationDD ==
+                                                        "Unapproved")    IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
                                                             Get.toNamed(
@@ -92,7 +112,9 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                                           },
                                                           icon: const Icon(
                                                               Icons.edit)),
-                                                      IconButton(
+                                                     if (widget.mobilierModel
+                                                            .approbationDD ==
+                                                        "Unapproved")  IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog(
