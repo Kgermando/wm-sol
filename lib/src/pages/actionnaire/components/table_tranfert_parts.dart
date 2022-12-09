@@ -62,7 +62,7 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'matriculeEnvoi') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'matriculeEnvoi') {
+            } else if (column.field == 'matriculeRecu') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'montant') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;

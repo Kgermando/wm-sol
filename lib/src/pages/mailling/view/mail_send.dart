@@ -8,19 +8,9 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/mailling/components/list_mails.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
-
-final _lightColors = [
-  Colors.pinkAccent.shade700,
-  Colors.tealAccent.shade700,
-  mainColor,
-  Colors.lightGreen.shade700,
-  Colors.lightBlue.shade700,
-  Colors.orange.shade700,
-  Colors.brown.shade700,
-  Colors.grey.shade700,
-  Colors.blueGrey.shade700,
-];
+ 
 
 class MailSend extends StatefulWidget {
   const MailSend({super.key});
@@ -87,7 +77,7 @@ class _MailSendState extends State<MailSend> {
                                           itemBuilder: (context, index) {
                                             final mail =
                                                 controller.mailSendList[index];
-                                            final color = _lightColors[index];
+                                            final color = listColors[index];
                                             return pageWidget(mail, color);
                                           })),
                                 )

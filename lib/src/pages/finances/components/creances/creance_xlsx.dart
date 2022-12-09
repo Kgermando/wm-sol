@@ -11,7 +11,7 @@ class CreanceXlsx {
     String title = "Créances";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([
-      "Nom Complet",
+      "Titre",
       "Pièce Justificative",
       "Libelle",
       "Montant",

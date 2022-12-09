@@ -137,7 +137,7 @@ class _DetailBanqueState extends State<DetailBanque> {
           ),
           Divider(color: mainColor),
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
+            child1: Text('Titre :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.banqueModel.nomComplet,
@@ -159,13 +159,27 @@ class _DetailBanqueState extends State<DetailBanque> {
             child2: SelectableText(widget.banqueModel.libelle,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
+          if (widget.banqueModel.typeOperation == "Depot")
           Divider(color: mainColor),
+          if(widget.banqueModel.typeOperation == "Depot")
           ResponsiveChildWidget(
-            child1: Text('Montant :',
+            child1: Text('Montant depôt :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.banqueModel.montant))} ${monnaieStorage.monney}",
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.banqueModel.montantDepot))} ${monnaieStorage.monney}",
+                textAlign: TextAlign.start,
+                style: bodyMedium),
+          ),
+          if (widget.banqueModel.typeOperation == "Retrait")
+          Divider(color: mainColor),
+          if (widget.banqueModel.typeOperation == "Retrait")
+          ResponsiveChildWidget(
+            child1: Text('Montant retrait :',
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.banqueModel.montantRetrait))} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),

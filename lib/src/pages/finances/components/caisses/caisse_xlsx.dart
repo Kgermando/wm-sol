@@ -11,12 +11,12 @@ class CaisseXlsx {
     String title = "Caisse";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([ 
-      "Nom Complet",
+      "Titre",
       "Pièce Justificative",
       "Libelle",
-      "Montant",
-      "Département",
       "Type Operation",
+      "Montant Encaissement", 
+      "Montant Decaissement", 
       "Numero Operation",
       "Signature",
       "Date"
@@ -27,9 +27,9 @@ class CaisseXlsx {
         dataList[i].nomComplet,
         dataList[i].pieceJustificative,
         dataList[i].libelle,
-        dataList[i].montant,
-        dataList[i].departement,
         dataList[i].typeOperation,
+        dataList[i].montantEncaissement,
+        dataList[i].montantDecaissement,  
         dataList[i].numeroOperation,
         dataList[i].signature,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].created)

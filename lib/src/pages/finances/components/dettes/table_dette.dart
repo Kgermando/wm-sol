@@ -73,6 +73,7 @@ class _TableDetteState extends State<TableDette> {
                           icon: Icon(Icons.refresh,
                               color: Colors.green.shade700)),
                       PrintWidget(onPressed: () {
+                        widget.controller.getList();
                         DetteXlsx().exportToExcel(widget.detteList);
                         if (!mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -177,7 +178,7 @@ class _TableDetteState extends State<TableDette> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
+        title: 'Titre',
         field: 'nomComplet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

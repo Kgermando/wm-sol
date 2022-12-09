@@ -28,31 +28,37 @@ class _TableCotisationPersonneState extends State<TableCotisationPersonne> {
     _model = EasyTableModel<ActionnaireCotisationModel>(rows: rows, columns: [
       EasyTableColumn(
         headerAlignment: Alignment.center,
+        cellAlignment: Alignment.center,
         name: 'Montant',
         width: 150,
         stringValue: (row) => "${NumberFormat.decimalPattern('fr').format(double.parse(row.montant))} ${monnaieStorage.monney}"), 
       EasyTableColumn(
           headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           name: 'Note',
           width: 300,
           stringValue: (row) => row.note),
       EasyTableColumn(
           headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           name: 'Moyen de Paiement',
           width: 200,
           stringValue: (row) => row.moyenPaiement),
       EasyTableColumn(
           headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           name: 'Numero Transaction',
           width: 200,
           stringValue: (row) => row.numeroTransaction),
       EasyTableColumn(
           headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           name: 'Signature', width: 150, stringValue: (row) => row.signature),
       EasyTableColumn(
           headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
           name: 'Date',
-          width: 150,
+          width: 200,
           stringValue: (row) =>
               DateFormat("dd-MM-yy HH:mm").format(row.created)),
     ]);

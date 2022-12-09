@@ -54,6 +54,7 @@ class _TableDettePaiementState extends State<TableDettePaiement> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.controller.getList();
                         Navigator.pushNamed(
                             context, FinanceRoutes.transactionsDetteDetail,
                             arguments: widget.detteModel);
@@ -139,7 +140,7 @@ class _TableDettePaiementState extends State<TableDettePaiement> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
+        title: 'Titre',
         field: 'nomComplet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

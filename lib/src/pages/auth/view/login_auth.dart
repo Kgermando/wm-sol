@@ -143,12 +143,12 @@ class LoginAuth extends GetView<LoginController> {
             ),
           ),
           onPressed: controller.login,
-          child: controller.isLoadingLogin
+          child: Obx(() => controller.isLoadingLogin
               ? loadingWhite()
               : Text(
                   "Login",
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white)
-                )), 
+                )) ), 
     );
   }
 }

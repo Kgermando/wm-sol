@@ -66,6 +66,7 @@ class DetteController extends GetxController with StateMixin<List<DetteModel>> {
 
   void getList() async {
     await detteApi.getAllData().then((response) {
+      detteList.clear();
       detteList.assignAll(response);
       List<DetteModel?> data = detteList
           .where((element) =>

@@ -68,6 +68,7 @@ class CreanceController extends GetxController
 
   void getList() async {
     await creanceApi.getAllData().then((response) {
+      creanceList.clear();
       creanceList.assignAll(response);
       List<CreanceModel?> data = creanceList
           .where((element) =>

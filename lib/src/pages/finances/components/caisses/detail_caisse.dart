@@ -127,8 +127,9 @@ class _DetailCaisseState extends State<DetailCaisse> {
             child2: SelectableText(widget.caisseModel.caisseName,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
+          Divider(color: mainColor),
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
+            child1: Text('Titre :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.caisseModel.nomComplet,
@@ -150,13 +151,27 @@ class _DetailCaisseState extends State<DetailCaisse> {
             child2: SelectableText(widget.caisseModel.libelle,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
-          Divider(color: mainColor),
+          if (widget.caisseModel.typeOperation == "Encaissement")
+            Divider(color: mainColor),
+          if (widget.caisseModel.typeOperation == "Encaissement")
           ResponsiveChildWidget(
-            child1: Text('Montant :',
+            child1: Text('Montant Encaissement :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.caisseModel.montant))} ${monnaieStorage.monney}",
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.caisseModel.montantEncaissement))} ${monnaieStorage.monney}",
+                textAlign: TextAlign.start,
+                style: bodyMedium),
+          ),
+          if (widget.caisseModel.typeOperation == "Decaissement")
+          Divider(color: mainColor),
+          if(widget.caisseModel.typeOperation == "Decaissement")
+          ResponsiveChildWidget(
+            child1: Text('Montant Decaissement :',
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.caisseModel.montantDecaissement))} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),

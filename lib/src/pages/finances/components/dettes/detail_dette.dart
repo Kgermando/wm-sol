@@ -208,7 +208,7 @@ class _DetailDetteState extends State<DetailDette> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
+            child1: Text('Titre :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.detteModel.nomComplet,
@@ -400,7 +400,7 @@ class _DetailDetteState extends State<DetailDette> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom complet',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           validator: (value) => value != null && value.isEmpty

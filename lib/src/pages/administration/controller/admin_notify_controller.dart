@@ -45,8 +45,7 @@ class AdminNotifyController extends GetxController {
       getCountExploitation();
       getCountCom();
       getCountMarketing();
-      getCountLogistique();
-      getCountDevis();
+      getCountLogistique(); 
     
   }
 
@@ -104,9 +103,5 @@ class AdminNotifyController extends GetxController {
     update();
   }
 
-  void getCountDevis() async {
-    NotifySumModel notifySum = await adminDepartementNotifyApi.getCountDevis();
-    _devisCount.value = int.parse(notifySum.sum);
-    update();
-  }
+ 
 }

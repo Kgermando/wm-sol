@@ -26,9 +26,7 @@ class AdminDepartementNotifyApi extends GetConnect {
   var logistiqueUrl = Uri.parse(
       "$adminDepartementNotifyUrl/get-count-admin-departement-logistique/");
   var rhUrl =
-      Uri.parse("$adminDepartementNotifyUrl/get-count-admin-departement-rh/");
-  var devisUrl = Uri.parse(
-      "$adminDepartementNotifyUrl/get-count-admin-departement-devis/");
+      Uri.parse("$adminDepartementNotifyUrl/get-count-admin-departement-rh/"); 
 
   Future<NotifySumModel> getCountBudget() async {
     Map<String, String> header = headers;
@@ -126,15 +124,5 @@ class AdminDepartementNotifyApi extends GetConnect {
     }
   }
 
-  Future<NotifySumModel> getCountDevis() async {
-    Map<String, String> header = headers;
-
-    var resp = await client.get(devisUrl, headers: header);
-
-    if (resp.statusCode == 200) {
-      return NotifySumModel.fromJson(json.decode(resp.body));
-    } else {
-      throw Exception(resp.statusCode);
-    }
-  }
+  
 }

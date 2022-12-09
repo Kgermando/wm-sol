@@ -233,7 +233,7 @@ class _BanquePageState extends State<BanquePage> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom complet',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           validator: (value) => value != null && value.isEmpty

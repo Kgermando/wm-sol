@@ -54,6 +54,7 @@ class CaisseController extends GetxController
 
   void getList() async {
     await caisseApi.getAllData().then((response) {
+      caisseList.clear();
       caisseList.assignAll(response);
       change(caisseList, status: RxStatus.success());
     }, onError: (err) {
@@ -95,14 +96,16 @@ class CaisseController extends GetxController
           nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
-          montant: montantController.text,
+          montantEncaissement: montantController.text,
           departement: '-',
           typeOperation: 'Encaissement',
           numeroOperation: 'Transaction-Caisse-${caisseList.length + 1}',
           signature: profilController.user.matricule,
           reference: data.id!,
           caisseName: data.nomComplet,
-          created: DateTime.now());
+          created: DateTime.now(),
+          montantDecaissement: "0"
+        );
       await caisseApi.insertData(dataItem).then((value) {
         clear();
         caisseList.clear();
@@ -131,14 +134,16 @@ class CaisseController extends GetxController
           nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
-          montant: montantController.text,
+          montantEncaissement: "0",
           departement: '-',
           typeOperation: 'Decaissement',
           numeroOperation: 'Transaction-Caisse-${caisseList.length + 1}',
           signature: profilController.user.matricule,
           reference: data.id!,
           caisseName: data.nomComplet,
-          created: DateTime.now());
+          created: DateTime.now(),
+          montantDecaissement: montantController.text,
+        );
       await caisseApi.insertData(dataItem).then((value) {
         clear();
         caisseList.clear();
@@ -160,40 +165,5 @@ class CaisseController extends GetxController
     }
   }
 
-  void submitUpdate(CaisseModel data) async {
-    try {
-      _isLoading.value = true;
-      final dataItem = CaisseModel(
-          id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montant: montantController.text,
-          departement: data.departement,
-          typeOperation: typeOperation.toString(),
-          numeroOperation: data.numeroOperation,
-          signature: profilController.user.matricule,
-          reference: data.reference,
-          caisseName: data.nomComplet,
-          created: data.created);
-      await caisseApi.updateData(dataItem).then((value) {
-        clear();
-        caisseList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegadé",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
-      });
-    } catch (e) {
-      _isLoading.value = false;
-      Get.snackbar("Erreur de soumission", "$e",
-          backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  
 }

@@ -26,9 +26,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashb
 
 class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
-  final UserApi userApi = UserApi();
-
-  final ProfilController profilController = Get.put(ProfilController());
+  final UserApi userApi = UserApi(); 
 
   final _loadingLogin = false.obs;
   bool get isLoadingLogin => _loadingLogin.value;
@@ -65,34 +63,21 @@ class LoginController extends GetxController {
         await authApi
             .login(matriculeController.text, passwordController.text)
             .then((value) {
+              clear();
           _loadingLogin.value = false;
-          if (value) {
-            Get.put(ProfilController());
-            Get.put(UsersController());
-            authApi.getUserId().then((user) async {
-              final userModel = UserModel(
-                  id: user.id,
-                  nom: user.nom,
-                  prenom: user.prenom,
-                  email: user.email,
-                  telephone: user.telephone,
-                  matricule: user.matricule,
-                  departement: user.departement,
-                  servicesAffectation: user.servicesAffectation,
-                  fonctionOccupe: user.fonctionOccupe,
-                  role: user.role,
-                  isOnline: 'true',
-                  createdAt: user.createdAt,
-                  passwordHash: user.passwordHash,
-                  succursale: user.succursale);
-              await userApi.updateData(userModel).then((userData) async {
-                clear();
-                GetStorage box = GetStorage();
-                box.write('userModel', json.encode(user));
+          if (value) { 
+            
+            Get.put(UsersController()); 
 
+            authApi.getUserId().then((userData) async {
+              Get.put(ProfilController(), permanent: true);
+             
+                GetStorage box = GetStorage();
+                box.write('userModel', json.encode(userData));
+                
                 var departement = jsonDecode(userData.departement);
 
-                if (departement.first == "Administration") {
+                if (departement.first == "Administration") { 
                   Get.put(MaillingController());
                   Get.put(PersonnelsController());
                   Get.put(CreanceController());
@@ -106,6 +91,7 @@ class LoginController extends GetxController {
                   Get.put(DashboardExpController());
                   Get.put(DashboardFinanceController());
                   Get.put(DashboardLogController());
+
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(AdminRoutes.adminDashboard);
                   } else {
@@ -177,29 +163,31 @@ class LoginController extends GetxController {
                     Get.offAndToNamed(LogistiqueRoutes.logMateriel);
                   }
                 } else if (departement.first == "Support") {
-                  Get.put(ProfilController());
                   Get.put(MaillingController());
+                  Get.put(PersonnelsController());
+                  Get.put(CreanceController());
+                  Get.put(DetteController());
                   Get.put(AdminDashboardController());
                   Get.put(DashobardRHController());
                   Get.put(DashboardComController());
+                  Get.put(DashboardBudgetController());
                   Get.put(DashboardMarketingController());
                   Get.put(DashboardComptabiliteController());
                   Get.put(DashboardExpController());
                   Get.put(DashboardFinanceController());
                   Get.put(DashboardLogController());
+
                   Get.offAndToNamed(AdminRoutes.adminDashboard);
                 }
 
                 // GetLocalStorage().saveUser(userData);
                 _loadingLogin.value = false;
-              });
-              _loadingLogin.value = false;
-              Get.snackbar("Authentification réussie",
-                  "Bienvenue ${user.prenom} dans l'interface ${InfoSystem().name()}",
+                Get.snackbar("Authentification réussie",
+                  "Bienvenue ${userData.prenom} dans l'interface ${InfoSystem().name()}",
                   backgroundColor: Colors.green,
                   icon: const Icon(Icons.check),
                   snackPosition: SnackPosition.TOP);
-            });
+              }); 
           } else {
             _loadingLogin.value = false;
             Get.snackbar("Echec d'authentification",
@@ -222,25 +210,10 @@ class LoginController extends GetxController {
   void logout() async {
     try {
       _loadingLogin.value = true;
-      authApi.getUserId().then((user) async {
-        final userModel = UserModel(
-            id: user.id,
-            nom: user.nom,
-            prenom: user.prenom,
-            email: user.email,
-            telephone: user.telephone,
-            matricule: user.matricule,
-            departement: user.departement,
-            servicesAffectation: user.servicesAffectation,
-            fonctionOccupe: user.fonctionOccupe,
-            role: user.role,
-            isOnline: 'false',
-            createdAt: user.createdAt,
-            passwordHash: user.passwordHash,
-            succursale: user.succursale);
-        await userApi.updateData(userModel).then((value) {
+    await authApi.getUserId().then((value) {
           GetStorage box = GetStorage();
           box.remove('idToken');
+          box.remove("userModel");
           box.remove('accessToken');
           box.remove('refreshToken');
           Get.offAllNamed(UserRoutes.logout);
@@ -249,9 +222,7 @@ class LoginController extends GetxController {
               icon: const Icon(Icons.check),
               snackPosition: SnackPosition.TOP);
           _loadingLogin.value = false;
-        });
-        _loadingLogin.value = false;
-      });
+        }); 
     } catch (e) {
       _loadingLogin.value = false;
       Get.snackbar("Erreur lors de la connection", "$e",

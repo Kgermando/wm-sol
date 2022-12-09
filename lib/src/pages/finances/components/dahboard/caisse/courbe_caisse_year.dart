@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/finances/caisse_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/charts/courbe_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/models/finances/caisse_model.dart';
+import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 
 class CourbeCaisseYear extends StatefulWidget {
   const CourbeCaisseYear({Key? key}) : super(key: key);
@@ -15,35 +19,36 @@ class CourbeCaisseYear extends StatefulWidget {
 }
 
 class _CourbeCaisseYearState extends State<CourbeCaisseYear> {
-  List<CourbeChartModel> dataList1 = [];
-  List<CourbeChartModel> dataList2 = [];
+   final CaisseController controller = Get.put(CaisseController());
+  // List<CourbeChartModel> dataList1 = [];
+  // List<CourbeChartModel> dataList2 = [];
   TooltipBehavior? _tooltipBehavior;
 
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
 
-    Timer.periodic(const Duration(milliseconds: 500), (t) {
-      setState(() {
-        loadData();
-      });
-      t.cancel();
-    });
+  //   Timer.periodic(const Duration(milliseconds: 500), (t) {
+  //     setState(() {
+  //       loadData();
+  //     });
+  //     t.cancel();
+  //   });
     super.initState();
   }
 
-  void loadData() async {
-    List<CourbeChartModel> data1 =
-        await CaisseApi().getAllDataYearEncaissement();
-    List<CourbeChartModel> data2 =
-        await CaisseApi().getAllDataYearDecaissement();
-    if (mounted) {
-      setState(() {
-        dataList1 = data1;
-        dataList2 = data2;
-      });
-    }
-  }
+  // void loadData() async {
+  //   List<CourbeChartModel> data1 =
+  //       await CaisseApi().getAllDataYearEncaissement();
+  //   List<CourbeChartModel> data2 =
+  //       await CaisseApi().getAllDataYearDecaissement();
+  //   if (mounted) {
+  //     setState(() {
+  //       dataList1 = data1;
+  //       dataList2 = data2;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -78,19 +83,23 @@ class _CourbeCaisseYearState extends State<CourbeCaisseYear> {
   }
 
   /// The method returns line series to chart.
-  List<LineSeries<CourbeChartModel, num>> _getDefaultLineSeries() {
-    return <LineSeries<CourbeChartModel, num>>[
-      LineSeries<CourbeChartModel, num>(
-          dataSource: dataList1,
+  List<LineSeries> _getDefaultLineSeries() {
+    return <LineSeries>[
+      LineSeries<CaisseModel, num>(
+          dataSource: controller.caisseList,
           name: 'Encaissements',
-          xValueMapper: (CourbeChartModel sales, _) => int.parse(sales.created),
-          yValueMapper: (CourbeChartModel sales, _) => sales.sum,
+          xValueMapper: (CaisseModel dataItem, _) =>
+              int.parse(DateFormat("YYYY").format(dataItem.created)),
+          yValueMapper: (CaisseModel dataItem, _) =>
+              int.parse(dataItem.montantEncaissement),
           markerSettings: const MarkerSettings(isVisible: true)),
-      LineSeries<CourbeChartModel, num>(
-          dataSource: dataList2,
+      LineSeries<CaisseModel, num>(
+          dataSource: controller.caisseList,
           name: 'Décaissements',
-          xValueMapper: (CourbeChartModel sales, _) => int.parse(sales.created),
-          yValueMapper: (CourbeChartModel sales, _) => sales.sum,
+          xValueMapper: (CaisseModel dataItem, _) =>
+              int.parse(DateFormat("YYYY").format(dataItem.created)),
+          yValueMapper: (CaisseModel dataItem, _) =>
+              int.parse(dataItem.montantDecaissement),
           markerSettings: const MarkerSettings(isVisible: true))
     ];
   }

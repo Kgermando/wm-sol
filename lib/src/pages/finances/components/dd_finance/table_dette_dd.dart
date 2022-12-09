@@ -182,7 +182,7 @@ class _TableDetteDDState extends State<TableDetteDD> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
+        title: 'Titre',
         field: 'nomComplet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

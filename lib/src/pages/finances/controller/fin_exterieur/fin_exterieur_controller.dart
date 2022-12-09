@@ -49,6 +49,7 @@ class FinExterieurController extends GetxController
 
   void getList() async {
     await finExterieurApi.getAllData().then((response) {
+      finExterieurList.clear();
       finExterieurList.assignAll(response);
 
       change(finExterieurList, status: RxStatus.success());
@@ -90,14 +91,16 @@ class FinExterieurController extends GetxController
           nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
-          montant: montantController.text,
+          montantDepot: montantController.text,
           typeOperation: 'Depot',
           numeroOperation:
-              'Transaction-Autres-Fin-${finExterieurList.length + 1}',
+              'Transaction-fin-exterieur-${finExterieurList.length + 1}',
           signature: profilController.user.matricule,
           reference: data.id!,
           financeExterieurName: data.nomComplet,
-          created: DateTime.now());
+          created: DateTime.now(),
+        montantRetrait: "0",
+      );
       await finExterieurApi.insertData(dataItem).then((value) {
         clear();
         finExterieurList.clear();
@@ -126,14 +129,16 @@ class FinExterieurController extends GetxController
           nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
-          montant: montantController.text,
+          montantDepot: "0",
           typeOperation: 'Retrait',
           numeroOperation:
-              'Transaction-Autres-Fin-${finExterieurList.length + 1}',
+              'Transaction-fin-exterieur-${finExterieurList.length + 1}',
           signature: profilController.user.matricule,
           reference: data.id!,
           financeExterieurName: data.nomComplet,
-          created: data.created);
+          created: data.created,
+        montantRetrait: montantController.text,
+      );
       await finExterieurApi.insertData(dataItem).then((value) {
         clear();
         finExterieurList.clear();

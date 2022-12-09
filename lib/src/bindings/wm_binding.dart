@@ -37,7 +37,7 @@ class WMBindings extends Bindings {
     Get.put<SplashController>(SplashController());
     // Authentification
     // Get.put<LoginController>(LoginController());
-    Get.put<ProfilController>(ProfilController());
+    Get.put<ProfilController>(ProfilController(), permanent: true);
     // Get.put<ChangePasswordController>(ChangePasswordController());
     // Get.put<ForgotPasswordController>(ForgotPasswordController());
 

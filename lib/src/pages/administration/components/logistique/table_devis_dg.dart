@@ -51,7 +51,7 @@ class _TableDevisDGState extends State<TableDevisDG> {
         },
         createHeader: (PlutoGridStateManager header) {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const TitleWidget(title: "Devis"),
               Row(

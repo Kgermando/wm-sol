@@ -128,7 +128,7 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-            child1: Text('Banque :',
+            child1: Text('Compte :',
                 textAlign: TextAlign.start,
                 style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
@@ -136,8 +136,9 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),
+          Divider(color: mainColor),
           ResponsiveChildWidget(
-            child1: Text('Nom Complet :',
+            child1: Text('Titre :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(widget.financeExterieurModel.nomComplet,
@@ -161,13 +162,27 @@ class _DetailFinExterieurState extends State<DetailFinExterieur> {
             child2: SelectableText(widget.financeExterieurModel.libelle,
                 textAlign: TextAlign.start, style: bodyMedium),
           ),
-          Divider(color: mainColor),
+          if (widget.financeExterieurModel.montantRetrait == "Depot")
+            Divider(color: mainColor),
+          if (widget.financeExterieurModel.montantRetrait == "Depot")
           ResponsiveChildWidget(
             child1: Text('Montant :',
                 textAlign: TextAlign.start,
                 style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
             child2: SelectableText(
-                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.financeExterieurModel.montant))} ${monnaieStorage.monney}",
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.financeExterieurModel.montantDepot))} ${monnaieStorage.monney}",
+                textAlign: TextAlign.start,
+                style: bodyMedium),
+          ),
+          if (widget.financeExterieurModel.montantRetrait == "Retrait")
+          Divider(color: mainColor),
+          if(widget.financeExterieurModel.montantRetrait == "Retrait")
+          ResponsiveChildWidget(
+            child1: Text('Montant :',
+                textAlign: TextAlign.start,
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+            child2: SelectableText(
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.financeExterieurModel.montantRetrait))} ${monnaieStorage.monney}",
                 textAlign: TextAlign.start,
                 style: bodyMedium),
           ),

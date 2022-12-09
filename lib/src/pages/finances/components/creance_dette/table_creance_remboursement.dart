@@ -55,6 +55,7 @@ class _TableCreanceRemboursementState extends State<TableCreanceRemboursement> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.controller.getList();
                         Navigator.pushNamed(
                             context, FinanceRoutes.transactionsCreanceDetail,
                             arguments: widget.creanceModel);
@@ -141,7 +142,7 @@ class _TableCreanceRemboursementState extends State<TableCreanceRemboursement> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
+        title: 'Titre',
         field: 'nomComplet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

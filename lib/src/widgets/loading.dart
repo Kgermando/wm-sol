@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wm_solution/src/constants/app_theme.dart'; 
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/widgets/custom_text.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -120,41 +120,35 @@ Widget loadingMega() => Scaffold(
       ),
     );
 
-Widget loading() => Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            CircularProgressIndicator(),
-            SizedBox(
-              width: 20.0,
-            ),
-            Text('Patientez svp...', style: TextStyle())
-          ],
-        ),
+Widget loading() => Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          CircularProgressIndicator(),
+          SizedBox(
+            width: 20.0,
+          ),
+          Text('Patientez svp...', style: TextStyle())
+        ],
       ),
     );
 
-Widget loadingWhite() => Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            CircularProgressIndicator(strokeWidth: 2.0, color: Colors.white),
-            SizedBox(
-              width: 10.0,
-            ),
-            Text('Patientez svp...', style: TextStyle(color: Colors.white))
-          ],
-        ),
+Widget loadingWhite() => Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          CircularProgressIndicator(strokeWidth: 2.0, color: Colors.white),
+          SizedBox(
+            width: 10.0,
+          ),
+          Text('Patientez svp...', style: TextStyle(color: Colors.white))
+        ],
       ),
     );
 
-Widget loadingMini() => const Scaffold(
-      body: Center(
-        child: SizedBox(
-            width: 10,
-            height: 10,
-            child: CircularProgressIndicator(strokeWidth: 2.0)),
-      ),
+Widget loadingMini() => const Center(
+      child: SizedBox(
+          width: 10,
+          height: 10,
+          child: CircularProgressIndicator(strokeWidth: 2.0)),
     );

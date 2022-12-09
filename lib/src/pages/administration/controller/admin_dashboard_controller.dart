@@ -21,7 +21,6 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
 class AdminDashboardController extends GetxController {
-  final ProfilController profilController = Get.put(ProfilController());
 
   // RH
   final PersonnelsController personnelsController = Get.put(PersonnelsController());
@@ -182,10 +181,10 @@ class AdminDashboardController extends GetxController {
     var depensesBanqueList =
         banques.where((element) => element.typeOperation == "Retrait").toList();
     for (var item in recetteBanqueList) {
-      recetteBanque += double.parse(item.montant);
+      recetteBanque += double.parse(item.montantDepot);
     }
     for (var item in depensesBanqueList) {
-      depensesBanque += double.parse(item.montant);
+      depensesBanque += double.parse(item.montantRetrait);
     }
     // Caisse
     var caisses = await caisseController.caisseApi.getAllData();
@@ -196,10 +195,10 @@ class AdminDashboardController extends GetxController {
         .where((element) => element.typeOperation == "Decaissement")
         .toList();
     for (var item in recetteCaisseList) {
-      recetteCaisse += double.parse(item.montant);
+      recetteCaisse += double.parse(item.montantEncaissement);
     }
     for (var item in depensesCaisseList) {
-      depensesCaisse += double.parse(item.montant);
+      depensesCaisse += double.parse(item.montantDecaissement);
     }
 
     // Creance remboursement
@@ -253,13 +252,13 @@ class AdminDashboardController extends GetxController {
         .toList();
 
     for (var item in recetteFinExtList) {
-      recetteFinanceExterieur += double.parse(item.montant);
+      recetteFinanceExterieur += double.parse(item.montantDepot);
     }
     var depenseFinExtList = finExterieurs
         .where((element) => element.typeOperation == "Retrait")
         .toList();
     for (var item in depenseFinExtList) {
-      depenseFinanceExterieur += double.parse(item.montant);
+      depenseFinanceExterieur += double.parse(item.montantRetrait);
     }
 
     soldeCreance = nonPayesCreance - creancePaiement;

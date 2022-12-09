@@ -29,27 +29,26 @@ class _ActionnaireTransfertPageState extends State<ActionnaireTransfertPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!),
-            (state) => Row(
-              children: [
-                Visibility(
-                    visible: !Responsive.isMobile(context),
-                    child: const Expanded(flex: 1, child: DrawerMenu())),
-                Expanded(
-                  flex: 5,
-                  child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, right: p20, left: p20, bottom: p8),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: TableTransfertParts(state: state!, monnaie: monnaieStorage.monney)
-                  )),
-              ],
-            )));
+        body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (state) => Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableTransfertParts(
+                            state: state!, monnaie: monnaieStorage.monney)))),
+          ],
+        ));
   }
-
 }

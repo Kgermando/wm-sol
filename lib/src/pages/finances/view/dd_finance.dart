@@ -80,7 +80,7 @@ class _DDFinanceState extends State<DDFinance> {
           key: scaffoldKey,
           appBar: headerBar(context, scaffoldKey, title, subTitle),
           drawer: const DrawerMenu(),
-          floatingActionButton: (userRole < 2) ? speedialWidget() : Container(),
+          floatingActionButton: (userRole <= 2) ? speedialWidget() : Container(),
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -345,7 +345,7 @@ class _DDFinanceState extends State<DDFinance> {
           child: const Icon(Icons.savings),
           foregroundColor: Colors.white,
           backgroundColor: Colors.tealAccent.shade700,
-          label: 'Créer une une caisse',
+          label: 'Créer une caisse',
           onPressed: () {
             caisseDialog();
           },
@@ -579,7 +579,7 @@ class _DDFinanceState extends State<DDFinance> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom complet',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           validator: (value) => value != null && value.isEmpty
@@ -597,7 +597,7 @@ class _DDFinanceState extends State<DDFinance> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom complet',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           // validator: (value) => value != null && value.isEmpty
@@ -651,7 +651,7 @@ class _DDFinanceState extends State<DDFinance> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom complet',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           validator: (value) => value != null && value.isEmpty
@@ -723,7 +723,7 @@ class _DDFinanceState extends State<DDFinance> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom complet',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           validator: (value) => value != null && value.isEmpty

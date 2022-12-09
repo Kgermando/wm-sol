@@ -24,6 +24,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
+  final ProfilController profilController =  Get.put(ProfilController(), permanent: true);
   final MaillingController maillingController = Get.put(MaillingController());
 
   final getStorge = GetStorage();
@@ -32,16 +33,15 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
     String? idToken = getStorge.read('idToken');
-    if (idToken != null) {
-      Future.delayed(const Duration(milliseconds: 3000), () {});
+    if (idToken != null) { 
       isLoggIn();
     } else {
       Get.offAllNamed(UserRoutes.login);
     }
   }
 
-  void isLoggIn() async {
-    Get.put(ProfilController());
+  void isLoggIn() async { 
+    
     Get.put(UsersController());
     await loginController.authApi.getUserId().then((userData) async {
       var departement = jsonDecode(userData.departement);
@@ -70,7 +70,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(FinanceRoutes.transactionsDettes);
         }
       } else if (departement.first == "Comptabilites") {
-        
         Get.put(DashboardComptabiliteController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteDashboard);
@@ -78,7 +77,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
         }
       } else if (departement.first == "Budgets") {
-        
         Get.put(DashboardBudgetController());
         Get.put(BudgetPrevisionnelController());
         Get.put(LignBudgetaireController());
@@ -139,17 +137,19 @@ class SplashController extends GetxController {
 
       } else if (departement.first == "Support") {
         
-        Get.put(AdminDashboardController());
-        Get.put(DashobardRHController());
-        Get.put(DashboardComController());
-        Get.put(DashboardBudgetController());
-        Get.put(BudgetPrevisionnelController());
-        Get.put(LignBudgetaireController());
-        Get.put(DashboardMarketingController());
-        Get.put(DashboardComptabiliteController());
-        Get.put(DashboardExpController());
-        Get.put(DashboardFinanceController());
-        Get.put(DashboardLogController());
+      //  Get.put(MaillingController());
+      //   Get.put(PersonnelsController());
+      //   Get.put(CreanceController());
+      //   Get.put(DetteController());
+      //   Get.put(AdminDashboardController());
+      //   Get.put(DashobardRHController());
+      //   Get.put(DashboardComController());
+      //   Get.put(DashboardBudgetController());
+      //   Get.put(DashboardMarketingController());
+      //   Get.put(DashboardComptabiliteController());
+      //   Get.put(DashboardExpController());
+      //   Get.put(DashboardFinanceController());
+      //   Get.put(DashboardLogController());
 
         Get.offAndToNamed(AdminRoutes.adminDashboard);
       }

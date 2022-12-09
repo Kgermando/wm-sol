@@ -67,6 +67,7 @@ class _TableCreanceState extends State<TableCreance> {
                     children: [
                       IconButton(
                           onPressed: () {
+                            widget.controller.getList();
                             Navigator.pushNamed(
                                 context, FinanceRoutes.transactionsCreances);
                           },
@@ -177,7 +178,7 @@ class _TableCreanceState extends State<TableCreance> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
+        title: 'Titre',
         field: 'nomComplet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

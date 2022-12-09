@@ -58,7 +58,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Column(
+                        child: Obx(() => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Wrap(
@@ -176,7 +176,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                           controller: dashboardcomController)),
                                   child2: DashRHPieWidget(
                                       controller: personnelsController))
-                            ])),
+                            ])) ),
                   ))
             ],
           )),

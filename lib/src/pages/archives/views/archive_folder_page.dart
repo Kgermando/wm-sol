@@ -11,25 +11,8 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
-
-final _lightColors = [
-  Colors.amber.shade300,
-  Colors.lightGreen.shade400,
-  Colors.lightBlue.shade400,
-  Colors.orange.shade400,
-  Colors.pinkAccent.shade400,
-  Colors.tealAccent.shade400,
-  Colors.purpleAccent.shade400,
-  Colors.limeAccent.shade400,
-  Colors.blueAccent.shade400,
-  Colors.brown.shade400,
-  Colors.cyanAccent.shade400,
-  Colors.grey.shade400,
-  Colors.indigoAccent.shade400,
-  Colors.redAccent.shade400,
-  Colors.deepPurple.shade400
-];
 
 Color listColor =
     Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
@@ -61,34 +44,35 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
             detailAgentDialog(controller);
           },
         ),
-        body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!), (state) {
-            
-          List<ArchiveFolderModel> archiveFolderList = [];
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!), (state) {
+                  List<ArchiveFolderModel> archiveFolderList = [];
 
-          // Profile user loggingIn
-          List<dynamic> depList = jsonDecode(profilController.user.departement);
-          List<String> depList1 = depList.cast<String>();
+                  // Profile user loggingIn
+                  List<dynamic> depList =
+                      jsonDecode(profilController.user.departement);
+                  List<String> depList1 = depList.cast<String>();
 
-          for (var e in depList1) {
-            archiveFolderList = state!.where((element) {
-              List<dynamic> depArchList = jsonDecode(element.departement);
-              List<String> depArchList1 = depArchList.cast<String>();
-              return depArchList1.contains(e);
-            }).toList();
-          }
+                  for (var e in depList1) {
+                    archiveFolderList = state!.where((element) {
+                      List<dynamic> depArchList =
+                          jsonDecode(element.departement);
+                      List<String> depArchList1 = depArchList.cast<String>();
+                      return depArchList1.contains(e);
+                    }).toList();
+                  }
 
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView(
+                  return SingleChildScrollView(
                       controller: ScrollController(),
                       physics: const ScrollPhysics(),
                       child: Container(
@@ -97,20 +81,44 @@ class _ArchiveFolderPageState extends State<ArchiveFolderPage> {
                         decoration: const BoxDecoration(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        child: Wrap(
-                            alignment: WrapAlignment.start,
-                            spacing: p20,
-                            runSpacing: p20,
-                            children: List.generate(archiveFolderList.length, (index) {
-                              final data = archiveFolderList[index];
-                              final color =
-                                  _lightColors[index % _lightColors.length];
-                              return cardFolder(data, color);
-                            })),
-                      )))
-            ],
-          );
-        }));
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    tooltip: "Actualiser",
+                                    onPressed: () {
+                                      controller.getList();
+                                    },
+                                    icon: Icon(Icons.refresh,
+                                        color: Colors.green.shade700))
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Wrap(
+                                      alignment: WrapAlignment.start,
+                                      spacing: p20,
+                                      runSpacing: p20,
+                                      children: List.generate(
+                                          archiveFolderList.length, (index) {
+                                        final data = archiveFolderList[index];
+                                        final color = listColors[
+                                            index % listColors.length];
+                                        return cardFolder(data, color);
+                                      })),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ));
+                }))
+          ],
+        ));
   }
 
   Widget cardFolder(ArchiveFolderModel data, Color color) {

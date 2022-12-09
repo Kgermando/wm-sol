@@ -1,10 +1,13 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/finances/caisse_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/charts/courbe_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/models/finances/caisse_model.dart';
+import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 
 class CourbeCaisseMounth extends StatefulWidget {
   const CourbeCaisseMounth({Key? key}) : super(key: key);
@@ -14,29 +17,30 @@ class CourbeCaisseMounth extends StatefulWidget {
 }
 
 class _CourbeCaisseMounthState extends State<CourbeCaisseMounth> {
+  final CaisseController controller = Get.put(CaisseController());
   List<CourbeChartModel> dataList1 = [];
-  List<CourbeChartModel> dataList2 = [];
+  // List<CourbeChartModel> dataList2 = [];
   TooltipBehavior? _tooltipBehavior;
 
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
-    loadData();
+    // loadData();
     super.initState();
   }
 
-  void loadData() async {
-    List<CourbeChartModel> data1 =
-        await CaisseApi().getAllDataMouthEncaissement();
-    List<CourbeChartModel> data2 =
-        await CaisseApi().getAllDataMouthDecaissement();
-    if (mounted) {
-      setState(() {
-        dataList1 = data1;
-        dataList2 = data2; 
-      });
-    }
-  }
+  // void loadData() async {
+  //   List<CourbeChartModel> data1 =
+  //       await CaisseApi().getAllDataMouthEncaissement();
+  //   // List<CourbeChartModel> data2 =
+  //   //     await CaisseApi().getAllDataMouthDecaissement();
+  //   if (mounted) {
+  //     setState(() {
+  //       dataList1 = data1;
+  //       // dataList2 = data2;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +76,20 @@ class _CourbeCaisseMounthState extends State<CourbeCaisseMounth> {
 
   /// The method returns line series to chart.
   List<LineSeries> _getDefaultLineSeries() {
-    return <LineSeries<CourbeChartModel, num>>[
-      LineSeries<CourbeChartModel, num>(
-          dataSource: dataList1,
+    return <LineSeries>[
+      LineSeries<CaisseModel, num>(
+          dataSource: controller.caisseList,
           name: 'Encaissements',
-          xValueMapper: (CourbeChartModel sales, _) => int.parse(sales.created),
-          yValueMapper: (CourbeChartModel sales, _) => sales.sum,
+          xValueMapper: (CaisseModel dataItem, _) => int.parse(
+              DateFormat("MM").format(dataItem.created)),
+          yValueMapper: (CaisseModel dataItem, _) => int.parse(dataItem.montantEncaissement),
           markerSettings: const MarkerSettings(isVisible: true)),
-      LineSeries<CourbeChartModel, num>(
-          dataSource: dataList2,
+      LineSeries<CaisseModel, num>(
+          dataSource: controller.caisseList,
           name: 'Décaissements',
-          xValueMapper: (CourbeChartModel sales, _) => int.parse(sales.created),
-          yValueMapper: (CourbeChartModel sales, _) => sales.sum,
+          xValueMapper: (CaisseModel dataItem, _) => int.parse(
+              DateFormat("MM").format(dataItem.created)),
+          yValueMapper: (CaisseModel dataItem, _) => int.parse(dataItem.montantDecaissement),
           markerSettings: const MarkerSettings(isVisible: true))
     ];
   }

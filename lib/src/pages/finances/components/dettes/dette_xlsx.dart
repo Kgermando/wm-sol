@@ -11,7 +11,7 @@ class DetteXlsx {
     String title = "Dettes";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([
-      "Nom Complet",
+      "Titre",
       "Pièce Justificative",
       "Libelle",
       "Montant",

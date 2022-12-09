@@ -1,4 +1,5 @@
 
+import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:file_picker/file_picker.dart'; 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
@@ -97,21 +98,24 @@ class _NewMailState extends State<NewMail> {
         ],
       ));
   }
+ 
 
-  Widget emailWidget() {
+  Widget emailWidget() { 
+    List<String> suggestionList = controller.mailList
+        .map((e) => e.email).toSet().toList();
     return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.emailController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: "Email",
-          ),
-          keyboardType: TextInputType.emailAddress,
-          style: const TextStyle(),
-          validator: (value) => RegExpIsValide().validateEmail(value),
-        ));
+      margin: const EdgeInsets.only(bottom: p20),
+      child:  EasyAutocomplete(
+        controller: controller.emailController,
+        decoration: InputDecoration(
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          labelText: "Email",
+        ),
+        keyboardType: TextInputType.emailAddress,
+        suggestions: suggestionList,
+        validator: (value) => RegExpIsValide().validateEmail(value),
+      ) );
   }
 
   Widget ccWidget() {

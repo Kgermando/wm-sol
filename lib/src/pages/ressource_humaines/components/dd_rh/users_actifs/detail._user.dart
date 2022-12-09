@@ -8,6 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
@@ -25,6 +26,11 @@ class _DetailUserState extends State<DetailUser> {
     final SuccursaleController succursaleController = Get.put(SuccursaleController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
+
+  Future<UserModel> refresh() async {
+    final UserModel dataItem = await controller.detailView(widget.user.id!);
+    return dataItem;
+  }
 
   @override
   Widget build(BuildContext context) { 
@@ -125,6 +131,25 @@ class _DetailUserState extends State<DetailUser> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                                tooltip: 'Actualiser',
+                                                onPressed: () {
+                                                  refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          RhRoutes.rhdetailUser,
+                                                          arguments: value));
+                                                },
+                                                icon: Icon(Icons.refresh,
+                                                    color:
+                                                        Colors.green.shade700)),
+                                          ],
+                                        ),
+                                        const SizedBox(height: p20),
                                         ResponsiveChildWidget(
                                             child1: Text('Nom :',
                                                 textAlign: TextAlign.start,

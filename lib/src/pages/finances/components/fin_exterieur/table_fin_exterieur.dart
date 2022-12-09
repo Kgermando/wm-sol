@@ -74,6 +74,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                     children: [
                       IconButton(
                           onPressed: () {
+                            widget.controller.getList();
                             Navigator.pushNamed(context,
                                 '/transactions-financement-externe/${widget.finExterieurNameModel.id}',
                                 arguments: widget.finExterieurNameModel);
@@ -111,10 +112,13 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                   } else if (column.field == 'libelle') {
                     return resolver<PlutoFilterTypeContains>()
                         as PlutoFilterType;
+                  } else if (column.field == 'typeOperation') {
+                    return resolver<PlutoFilterTypeContains>()
+                        as PlutoFilterType;
                   } else if (column.field == 'montant') {
                     return resolver<PlutoFilterTypeContains>()
                         as PlutoFilterType;
-                  } else if (column.field == 'typeOperation') {
+                  } else if (column.field == 'montant') {
                     return resolver<PlutoFilterTypeContains>()
                         as PlutoFilterType;
                   } else if (column.field == 'numeroOperation') {
@@ -151,9 +155,12 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
           'nomComplet': PlutoCell(value: item.nomComplet),
           'pieceJustificative': PlutoCell(value: item.pieceJustificative),
           'libelle': PlutoCell(value: item.libelle),
-          'montant': PlutoCell(
+          'montantDepot': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDepot))} ${monnaieStorage.monney}"),
+          'montantRetrait': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantRetrait))} ${monnaieStorage.monney}"),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
@@ -181,7 +188,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom complet',
+        title: 'Titre',
         field: 'nomComplet',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -214,11 +221,11 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
-      ),
+      ), 
       PlutoColumn(
         readOnly: true,
-        title: 'Montant',
-        field: 'montant',
+        title: 'Type d\'operation',
+        field: 'typeOperation',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -229,8 +236,20 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Type d\'operation',
-        field: 'typeOperation',
+        title: 'Montant Depot',
+        field: 'montantDepot',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Montant Retrait',
+        field: 'montantRetrait',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
@@ -295,10 +314,10 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
             element.typeOperation == "Retrait")
         .toList();
     for (var item in recetteList) {
-      recette += double.parse(item!.montant);
+      recette += double.parse(item!.montantDepot);
     }
     for (var item in depensesList) {
-      depenses += double.parse(item!.montant);
+      depenses += double.parse(item!.montantRetrait);
     }
     return Card(
       color: Colors.red.shade700,

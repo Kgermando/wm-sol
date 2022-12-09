@@ -11,12 +11,13 @@ class FinAutreXlsx {
     String title = "Banque";
     Sheet sheetObject = excel[title];
     sheetObject.insertRowIterables([ 
-      "Banque",
-      "Nom Complet",
+      "Compte",
+      "Titre",
       "PièceJustificative",
       "Libelle",
-      "Montant",
       "TypeOperation",
+      "Montant Depot",
+      "Montant Retrait",
       "Numero d'Operation",
       "Signature", 
       "Date"
@@ -28,8 +29,9 @@ class FinAutreXlsx {
         dataList[i].nomComplet,
         dataList[i].pieceJustificative,
         dataList[i].libelle,
-        dataList[i].montant,
         dataList[i].typeOperation,
+        dataList[i].montantDepot,
+        dataList[i].montantRetrait, 
         dataList[i].numeroOperation,
         dataList[i].signature,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].created)

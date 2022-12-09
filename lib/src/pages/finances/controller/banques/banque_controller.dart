@@ -54,6 +54,7 @@ class BanqueController extends GetxController
 
   void getList() async {
     await banqueApi.getAllData().then((response) {
+      banqueList.clear();
       banqueList.assignAll(response);
       change(banqueList, status: RxStatus.success());
     }, onError: (err) {
@@ -95,14 +96,16 @@ class BanqueController extends GetxController
           nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
-          montant: montantController.text,
+          montantDepot: montantController.text,
           departement: '-',
           typeOperation: 'Depot',
           numeroOperation: 'Transaction-Banque-${banqueList.length + 1}',
           signature: profilController.user.matricule,
           reference: data.id!,
           banqueName: data.nomComplet,
-          created: DateTime.now());
+          created: DateTime.now(),
+          montantRetrait: "0"
+        );
       await banqueApi.insertData(dataItem).then((value) {
         clear();
         banqueList.clear();
@@ -131,14 +134,16 @@ class BanqueController extends GetxController
           nomComplet: nomCompletController.text,
           pieceJustificative: pieceJustificativeController.text,
           libelle: libelleController.text,
-          montant: montantController.text,
+          montantDepot: "0",
           departement: '-',
           typeOperation: 'Retrait',
           numeroOperation: 'Transaction-Banque-${banqueList.length + 1}',
           signature: profilController.user.matricule,
           reference: data.id!,
           banqueName: data.nomComplet,
-          created: DateTime.now());
+          created: DateTime.now(),
+          montantRetrait: montantController.text
+        );
       await banqueApi.insertData(dataItem).then((value) {
         clear();
         banqueList.clear();
@@ -160,40 +165,5 @@ class BanqueController extends GetxController
     }
   }
 
-  void submitUpdate(BanqueModel data) async {
-    try {
-      _isLoading.value = true;
-      final dataItem = BanqueModel(
-          id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montant: montantController.text,
-          departement: data.departement,
-          typeOperation: typeOperation.toString(),
-          numeroOperation: data.numeroOperation,
-          signature: profilController.user.matricule,
-          reference: data.reference,
-          banqueName: data.nomComplet,
-          created: data.created);
-      await banqueApi.updateData(dataItem).then((value) {
-        clear();
-        banqueList.clear();
-        getList();
-        Get.back();
-        Get.snackbar("Soumission effectuée avec succès!",
-            "Le document a bien été sauvegadé",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _isLoading.value = false;
-      });
-    } catch (e) {
-      _isLoading.value = false;
-      Get.snackbar("Erreur de soumission", "$e",
-          backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-    }
-  }
+  
 }
