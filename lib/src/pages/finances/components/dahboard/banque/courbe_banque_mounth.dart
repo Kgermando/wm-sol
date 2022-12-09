@@ -1,8 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart'; 
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart'; 
 import 'package:syncfusion_flutter_charts/charts.dart';

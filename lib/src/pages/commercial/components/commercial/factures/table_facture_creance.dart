@@ -61,6 +61,7 @@ class _TableFactureCreanceState extends State<TableFactureCreance> {
             const TitleWidget(title: "Facture Créance"),
             IconButton(
                 onPressed: () {
+                  widget.controller.getList();
                   Navigator.pushNamed(context, ComRoutes.comCreance);
                 },
                 icon: Icon(Icons.refresh, color: Colors.green.shade700)),

@@ -103,16 +103,18 @@ class UpdateController extends GetxController
     await updateVersionApi.getAllData().then((response) {
       updateVersionList.clear();
       updateVersionList.addAll(response);
+
       if (updateVersionList.isNotEmpty) {
         // // Version actuel
         var isVersion = isUpdateLocalVersion.split('.');
         for (var e in isVersion) {
-          _sumLocalVersion.value += double.parse(e);
+          _sumLocalVersion.value += double.parse(e); 
         }
+
         // Version Cloud
-        var isVersionCloud = updateVersionList.last.version.split('.');
+        var isVersionCloud = updateVersionList.first.version.split('.');
         for (var e in isVersionCloud) {
-          _sumVersionCloud.value += double.parse(e);
+          _sumVersionCloud.value += double.parse(e); 
         }
       }
       change(updateVersionList, status: RxStatus.success());

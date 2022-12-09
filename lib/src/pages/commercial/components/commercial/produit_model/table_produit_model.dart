@@ -62,6 +62,7 @@ class _TableProduitModelState extends State<TableProduitModel> {
               children: [
                 IconButton(
                     onPressed: () {
+                      widget.controller.getList();
                       Navigator.pushNamed(context, ComRoutes.comProduitModel);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),

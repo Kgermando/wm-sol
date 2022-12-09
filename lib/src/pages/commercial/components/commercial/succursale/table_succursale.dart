@@ -60,6 +60,7 @@ class _TableSuccursaleState extends State<TableSuccursale> {
               children: [
                 IconButton(
                     onPressed: () {
+                      widget.controller.getList();
                       Navigator.pushNamed(context, ComRoutes.comSuccursale);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),

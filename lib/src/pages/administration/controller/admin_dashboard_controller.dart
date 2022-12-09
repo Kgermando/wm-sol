@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart'; 
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';

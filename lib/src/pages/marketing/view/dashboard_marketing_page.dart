@@ -18,14 +18,14 @@ class DashboardMarketingPage extends StatefulWidget {
 
 class _DashboardMarketingPageState
     extends State<DashboardMarketingPage> {
+  final DashboardMarketingController controller =
+      Get.put(DashboardMarketingController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
   String subTitle = "Dashboard";
 
   @override
   Widget build(BuildContext context) {
-    final DashboardMarketingController controller = Get.find();
-
     return Obx(() => Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),

@@ -34,6 +34,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
       : jsonDecode(notifyHeaderController.profilController.user.departement);
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+ 
 
   final String firstLettter = profilController.user.prenom[0];
   final String firstLettter2 = profilController.user.nom[0];

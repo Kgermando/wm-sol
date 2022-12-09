@@ -1,12 +1,9 @@
-import 'dart:async';
-
+ 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:wm_solution/src/api/finances/caisse_api.dart';
+import 'package:intl/intl.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/models/charts/courbe_chart_model.dart';
+import 'package:wm_solution/src/constants/responsive.dart'; 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';

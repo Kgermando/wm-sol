@@ -25,88 +25,87 @@ class _UpdatePageState extends State<UpdatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(context, scaffoldKey, title, ''),
-      drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text("Mise à jour"),
-        tooltip: "Add Update",
-        icon: const Icon(Icons.download),
-        onPressed: () {
-          Get.bottomSheet(Scaffold(
-            body: Container(
-              // color: Colors.amber.shade100,
-              padding: const EdgeInsets.all(p20),
-              child: Form(
-                key: controller.formKey,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text("Nouvelle mise à jour",
-                          style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall)),
-                      ],
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, ''),
+        drawer: const DrawerMenu(),
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text("Mise à jour"),
+          tooltip: "Add Update",
+          icon: const Icon(Icons.download),
+          onPressed: () {
+            Get.bottomSheet(
+                useRootNavigator: true,
+                Scaffold(
+                  body: Container(
+                    // color: Colors.amber.shade100,
+                    padding: const EdgeInsets.all(p20),
+                    child: Form(
+                      key: controller.formKey,
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text("Nouvelle mise à jour",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall)),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: p20,
+                          ),
+                          versionWidget(),
+                          motifWidget(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              fichierWidget(),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: p20,
+                          ),
+                          BtnWidget(
+                              title: 'Ajouter maintenant',
+                              press: () {
+                                final form = controller.formKey.currentState!;
+                                if (form.validate()) {
+                                  controller.submit();
+                                  form.reset();
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                              isLoading: controller.isLoading)
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    versionWidget(),
-                    motifWidget(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        fichierWidget(),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: p20,
-                    ),
-                    BtnWidget(
-                        title: 'Ajouter maintenant',
-                        press: () {
-                          final form = controller.formKey.currentState!;
-                          if (form.validate()) {
-                            controller.submit();
-                            form.reset();
-                          }
-                        },
-                        isLoading: controller.isLoading)
+                  ),
+                ));
+          },
+        ),
+        body: controller.obx(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!),
+            (state) => Row(
+                  children: [
+                    Visibility(
+                        visible: !Responsive.isMobile(context),
+                        child: const Expanded(flex: 1, child: DrawerMenu())),
+                    Expanded(
+                        flex: 5,
+                        child: Container(
+                            margin: const EdgeInsets.only(
+                                top: p20, right: p20, left: p20, bottom: p8),
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: TableUpdate(
+                                updateList: state!, controller: controller))),
                   ],
-                ),
-              ),
-            ),
-          ));
-            
-        },
-      ),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, right: p20, left: p20, bottom: p8),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child: TableUpdate(
-                        updateList: state!,
-                        controller: controller))),
-          ],
-        )
-      ) 
-    ); 
+                )));
   }
 
   Widget versionWidget() {
@@ -181,6 +180,6 @@ class _UpdatePageState extends State<UpdatePage> {
                             .bodyLarge!
                             .copyWith(color: Colors.green.shade700))
                     : Text("Selectionner le fichier",
-                        style: Theme.of(context).textTheme.bodyLarge) )) );
+                        style: Theme.of(context).textTheme.bodyLarge))));
   }
 }

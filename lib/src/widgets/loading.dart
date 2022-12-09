@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/widgets/custom_text.dart';
 
@@ -57,12 +58,9 @@ Widget loadingError(BuildContext context, String error) => Column(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomText(
-              text:
-                  "Une erreur s'est produite $error veillez actualiser votre logiciel. Merçi.",
-              size: 24,
-              weight: FontWeight.bold,
-            ),
+            Expanded(child: Text("Une erreur s'est produite $error. Merçi.")),
+
+             ElevatedButton(onPressed: () => Get.back(), child: const Text("Revenir en arrière."))
           ],
         ),
       ],

@@ -61,6 +61,7 @@ class _TableFactureState extends State<TableFacture> {
             const TitleWidget(title: "Factures"),
             IconButton(
                 onPressed: () {
+                  widget.controller.getList();
                   Navigator.pushNamed(context, ComRoutes.comFacture);
                 },
                 icon: Icon(Icons.refresh, color: Colors.green.shade700)),
