@@ -53,8 +53,7 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
                   child: const Expanded(flex: 1, child: DrawerMenu())),
               Expanded(
                   flex: 5,
-                  child: SingleChildScrollView(
-                      controller: controller.scrollController,
+                  child: SingleChildScrollView( 
                       physics: const ScrollPhysics(),
                       child: Container(
                         margin: const EdgeInsets.only(

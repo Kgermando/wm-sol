@@ -45,11 +45,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
 
   @override
   Widget build(BuildContext context) {
-    return objetRemplaceController.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, widget.entretienModel.nom),
@@ -62,7 +58,11 @@ class _DetailEntretienState extends State<DetailEntretien> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: objetRemplaceController.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -164,11 +164,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: p20),
-                                // TableObjetRemplace(
-                                //     objetRemplaceList: objetRemplaceController
-                                //         .objetRemplaceList,
-                                //     entretienModel: widget.entretienModel),
+                                const SizedBox(height: p20), 
 
                                 objetRemplaceWidget(objetRemplaceController),
                                 const SizedBox(height: p20),
@@ -179,10 +175,13 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                       profilController: profilController)
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
               ),
-            ));
+            )
+    
+    
+    ;
   }
 
   alertDeleteDialog(EntretienController controller) {

@@ -113,19 +113,19 @@ class _DetailCampaignState extends State<DetailCampaign> {
             );
           },
         ),
-        body: controller.obx(
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
             onLoading: loadingPage(context),
             onEmpty: const Text('Aucune donnée'),
             onError: (error) => loadingError(context, error!),
-            (state) => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Visibility(
-                        visible: !Responsive.isMobile(context),
-                        child: const Expanded(flex: 1, child: DrawerMenu())),
-                    Expanded(
-                        flex: 5,
-                        child: SingleChildScrollView(
+            (state) => SingleChildScrollView(
                             controller: ScrollController(),
                             physics: const ScrollPhysics(),
                             child: Container(
@@ -244,9 +244,12 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                       profilController: profilController)
                                 ],
                               ),
-                            )))
+                            ))) )
                   ],
-                )));
+                )
+        
+        
+        );
   }
 
   Widget deleteButton(CampaignController controller) {
@@ -257,19 +260,19 @@ class _DetailCampaignState extends State<DetailCampaign> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de supprimé ceci?'),
+          title: const Text('Etes-vous sûr de supprimé ceci?', style: TextStyle(color: Colors.red)),
           content:
               const Text('Cette action permet de supprimer définitivement.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () {
                 controller.campaignApi.deleteData(widget.campaignModel.id!);
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),

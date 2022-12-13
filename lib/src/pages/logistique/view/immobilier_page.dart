@@ -25,42 +25,40 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter un immobilier"),
-                tooltip: "Ajouter un nouveau immobilier",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  newFicheDialog();
-                },
-              ),
-              body: Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableImmobilier(
-                              immobilierList: controller.immobilierList,
-                              controller: controller))),
-                ],
-              ))),
-    );
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter un immobilier"),
+        tooltip: "Ajouter un nouveau immobilier",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          newFicheDialog();
+        },
+      ),
+      body: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (data) => Row(
+            children: [
+              Visibility(
+                  visible: !Responsive.isMobile(context),
+                  child: const Expanded(flex: 1, child: DrawerMenu())),
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, right: p20, left: p20, bottom: p8),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: TableImmobilier(
+                          immobilierList: controller.immobilierList,
+                          controller: controller))),
+            ],
+          )));
   }
 
   newFicheDialog() {
@@ -68,7 +66,7 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return StatefulBuilder(builder: (context, StateSetter setState) { 
+          return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
               scrollable: true,
               title:
@@ -77,22 +75,22 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
                   child: Form(
-                          key: controller.formKey,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              ResponsiveChildWidget(
-                                  child1: typeAllocationWidget(),
-                                  child2: adresseWidget()),
-                              ResponsiveChildWidget(
-                                  child1: numeroCertificatWidget(),
-                                  child2: superficieWidget()),
-                              dateAcquisitionWidget(),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                            ],
-                          ))),
+                      key: controller.formKey,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          ResponsiveChildWidget(
+                              child1: typeAllocationWidget(),
+                              child2: adresseWidget()),
+                          ResponsiveChildWidget(
+                              child1: numeroCertificatWidget(),
+                              child2: superficieWidget()),
+                          dateAcquisitionWidget(),
+                          const SizedBox(
+                            height: p20,
+                          ),
+                        ],
+                      ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -186,11 +184,10 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
         child: TextFormField(
           controller: controller.superficieController,
           decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Superficie en m²',
-            hintText: 'M²'
-          ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              labelText: 'Superficie en m²',
+              hintText: 'M²'),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
           validator: (value) {

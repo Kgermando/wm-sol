@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/budgets/departement_budget_api.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class BudgetPrevisionnelController extends GetxController
     with StateMixin<List<DepartementBudgetModel>> {
@@ -53,6 +54,7 @@ class BudgetPrevisionnelController extends GetxController
 
   void getList() async {
     await depeartementBudgetApi.getAllData().then((response) {
+      departementBudgetList.clear();
       departementBudgetList.addAll(response);
       change(departementBudgetList, status: RxStatus.success());
     }, onError: (err) {
@@ -107,10 +109,8 @@ class BudgetPrevisionnelController extends GetxController
       await depeartementBudgetApi
           .insertData(departementBudgetModel)
           .then((value) {
-        clear();
-        departementBudgetList.clear();
-        Get.back();
-        getList();
+        clear(); 
+        Get.toNamed(BudgetRoutes.budgetBudgetPrevisionelDetail, arguments: value); 
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

@@ -24,42 +24,40 @@ class _MobilierPageState extends State<MobilierPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter un mobilier"),
-                tooltip: "Ajouter un nouveau mobilier",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  newFicheDialog();
-                },
-              ),
-              body: Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableMobilier(
-                              mobilierList: controller.mobilierList,
-                              controller: controller))),
-                ],
-              ))),
-    );
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, subTitle),
+        drawer: const DrawerMenu(),
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text("Ajouter un mobilier"),
+          tooltip: "Ajouter un nouveau mobilier",
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            newFicheDialog();
+          },
+        ),
+        body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (data) => Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableMobilier(
+                            mobilierList: controller.mobilierList,
+                            controller: controller)))),
+          ],
+        ));
   }
 
   newFicheDialog() {
@@ -82,8 +80,7 @@ class _MobilierPageState extends State<MobilierPage> {
                             children: [
                               const SizedBox(height: 20),
                               ResponsiveChildWidget(
-                                child1: nomWidget(), 
-                                child2: marqueWidget()),
+                                  child1: nomWidget(), child2: marqueWidget()),
                               ResponsiveChildWidget(
                                   child1: modeleWidget(),
                                   child2: nombreWidget()),

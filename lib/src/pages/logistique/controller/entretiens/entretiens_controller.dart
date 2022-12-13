@@ -50,6 +50,7 @@ class EntretienController extends GetxController
   }
 
   void clear() {
+    approbationDD = '-';
     motifDDController.clear();
     dureeTravauxController.clear();
   }

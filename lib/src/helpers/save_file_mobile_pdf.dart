@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:open_file/open_file.dart' as open_file;
+// import 'package:open_file/open_file.dart' as open_file;
 import 'package:path_provider/path_provider.dart' as path_provider;
 // ignore: depend_on_referenced_packages
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart'
@@ -27,7 +27,7 @@ Future<void> saveAndLaunchFilePdf(Uint8List bytes, String fileName) async {
   await file.writeAsBytes(bytes, flush: true);
 
   if (Platform.isAndroid || Platform.isIOS) {
-    await open_file.OpenFile.open(fileLocation);
+    // await open_file.OpenFile.open(fileLocation);
   } else if (Platform.isWindows) {
     await Process.run('start', <String>[fileLocation], runInShell: true);
   } else if (Platform.isMacOS) {

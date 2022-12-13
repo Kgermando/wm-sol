@@ -44,6 +44,11 @@ class EtatMaterielController extends GetxController
     super.dispose();
   }
 
+  void clear() {
+    approbationDD = '-';
+    motifDDController.clear();
+  }
+
   void getData() async {
     materielList = materielController.materielList
         .where((element) =>
@@ -103,6 +108,7 @@ class EtatMaterielController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await etatMaterielApi.insertData(dataItem).then((value) {
+        clear();
         etatMaterielList.clear();
         getList();
         Get.back();
@@ -137,6 +143,7 @@ class EtatMaterielController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await etatMaterielApi.updateData(dataItem).then((value) {
+        clear();
         etatMaterielList.clear();
         getList();
         Get.back();
@@ -172,6 +179,7 @@ class EtatMaterielController extends GetxController
         signatureDD: data.signatureDD,
       );
       await etatMaterielApi.updateData(dataItem).then((value) {
+        clear();
         etatMaterielList.clear();
         getList();
         Get.back();
@@ -207,6 +215,7 @@ class EtatMaterielController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await etatMaterielApi.updateData(dataItem).then((value) {
+        clear();
         etatMaterielList.clear();
         getList();
         Get.back();

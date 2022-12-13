@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/logistiques/materiels_api.dart';
 import 'package:wm_solution/src/models/logistiques/material_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class MaterielController extends GetxController
     with StateMixin<List<MaterielModel>> {
@@ -62,7 +63,9 @@ class MaterielController extends GetxController
     super.dispose();
   }
 
-  void clearTextEditingControllers() {
+  void clear() {
+    approbationDG = '-';
+    approbationDD = '-';
     motifDGController.clear();
     motifDDController.clear();
     modeleController.clear();
@@ -154,10 +157,15 @@ class MaterielController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await materielsApi.insertData(dataItem).then((value) {
-        clearTextEditingControllers();
+        clear();
         materielList.clear();
         getList();
-        Get.back();
+        if (value.typeMateriel == 'Materiel roulant') {
+          Get.toNamed(LogistiqueRoutes.logMaterielRoulant);
+        }
+        if (value.typeMateriel == 'Materiel') {
+          Get.toNamed(LogistiqueRoutes.logMateriel);
+        }
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
@@ -204,10 +212,15 @@ class MaterielController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await materielsApi.updateData(dataItem).then((value) {
-        clearTextEditingControllers();
+        clear();
         materielList.clear();
         getList();
-        Get.back();
+        if (value.typeMateriel == 'Materiel roulant') {
+          Get.toNamed(LogistiqueRoutes.logMaterielRoulant); 
+        }
+        if (value.typeMateriel == 'Materiel') {
+          Get.toNamed(LogistiqueRoutes.logMateriel); 
+        }
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
@@ -251,9 +264,8 @@ class MaterielController extends GetxController
           motifDD: data.motifDD,
           signatureDD: data.signatureDD);
       await materielsApi.updateData(dataItem).then((value) {
-        clearTextEditingControllers();
+        clear();
         materielList.clear();
-        getList();
         Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
@@ -298,7 +310,7 @@ class MaterielController extends GetxController
               (motifDDController.text == '') ? '-' : motifDDController.text,
           signatureDD: profilController.user.matricule);
       await materielsApi.updateData(dataItem).then((value) {
-        clearTextEditingControllers();
+        clear();
         materielList.clear();
         getList();
         Get.back();

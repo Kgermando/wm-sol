@@ -43,11 +43,7 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
       appBar: headerBar(context, scaffoldKey, title,
           widget.approvisionReceptionModel.provision),
       drawer: const DrawerMenu(),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
+      body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
@@ -55,7 +51,11 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
               child: const Expanded(flex: 1, child: DrawerMenu())),
           Expanded(
               flex: 5,
-              child: SingleChildScrollView(
+              child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                   controller: ScrollController(),
                   physics: const ScrollPhysics(),
                   child: Container(
@@ -114,9 +114,12 @@ class _DetailAccuseReceptionState extends State<DetailAccuseReception> {
                                     widget.approvisionReceptionModel)
                       ],
                     ),
-                  )))
+                  ))) )
         ],
-      ),) 
+      )
+      
+      
+       
     );
   }
 

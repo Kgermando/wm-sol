@@ -50,6 +50,7 @@ class TransportRestPersonnelsController extends GetxController
 
   void getList() {
     transRestAgentsApi.getAllData().then((response) {
+      transRestAgentList.clear();
       transRestAgentList.addAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {

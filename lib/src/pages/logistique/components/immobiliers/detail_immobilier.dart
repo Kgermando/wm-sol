@@ -35,14 +35,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
   }
 
   @override
-  Widget build(BuildContext context) {
-  
-
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+  Widget build(BuildContext context) { 
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
                   widget.immobilierModel.typeAllocation),
@@ -55,7 +49,11 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -150,10 +148,14 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                     profilController: profilController)
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
               ),
-            ));
+            )
+    
+    
+    
+    ;
   }
 
   alertDeleteDialog(ImmobilierController controller) {

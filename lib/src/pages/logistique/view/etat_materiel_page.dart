@@ -24,41 +24,43 @@ class _EtatMaterielPageState extends State<EtatMaterielPage> {
   @override
   Widget build(BuildContext context) {
     final EtatMaterielController controller = Get.find();
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Statut du materiel"),
-                tooltip: "Ajouter le statut de materiel",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Get.toNamed(LogistiqueRoutes.logAddEtatMateriel);
-                },
-              ),
-              body: Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableEtatMateriel(
-                              etatMaterielList: controller.etatMaterielList,
-                              controller: controller))),
-                ],
-              ))),
-    );
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Statut du materiel"),
+        tooltip: "Ajouter le statut de materiel",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(LogistiqueRoutes.logAddEtatMateriel);
+        },
+      ),
+      body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (data) => Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, right: p20, left: p20, bottom: p8),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: TableEtatMateriel(
+                        etatMaterielList: controller.etatMaterielList,
+                        controller: controller))) ),
+          ],
+        )
+      
+       )
+    
+   ;
   }
 }

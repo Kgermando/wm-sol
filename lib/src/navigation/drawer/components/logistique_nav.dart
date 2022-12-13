@@ -64,14 +64,14 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
               sizeIcon: 20.0,
               title: 'Directeur de departement',
               style: bodyText1!,
-              badge: Badge(
+              badge: Obx(() => Badge(
                 showBadge: (int.parse(notifyLogController.itemCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
                 badgeContent: Obx(() => Text(notifyLogController.itemCount,
                     style:
                         const TextStyle(fontSize: 10.0, color: Colors.white))),
                 child: const Icon(Icons.notifications),
-              ),
+              )) ,
               onTap: () {
                 Navigator.pushNamed(context, LogistiqueRoutes.logDD);
                 // Navigator.of(context).pop();

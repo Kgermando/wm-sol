@@ -74,8 +74,6 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'responsable') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              } else if (column.field == 'objectifs') {
-                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'dateDebutEtFin') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'typeFinancement') {
@@ -118,8 +116,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nomProjet': PlutoCell(value: item.nomProjet),
-          'responsable': PlutoCell(value: item.responsable),
-          'objectifs': PlutoCell(value: item.objectifs),
+          'responsable': PlutoCell(value: item.responsable), 
           'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
           'typeFinancement': PlutoCell(value: item.typeFinancement),
           'created': PlutoCell(
@@ -171,18 +168,6 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Objectifs',
-        field: 'objectifs',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(

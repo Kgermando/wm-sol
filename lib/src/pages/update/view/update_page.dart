@@ -5,6 +5,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/update/components/table_update.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
@@ -19,11 +20,12 @@ class UpdatePage extends StatefulWidget {
 
 class _UpdatePageState extends State<UpdatePage> {
   final UpdateController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Mise à jours";
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, ''),
@@ -33,7 +35,8 @@ class _UpdatePageState extends State<UpdatePage> {
           tooltip: "Add Update",
           icon: const Icon(Icons.download),
           onPressed: () {
-            Get.bottomSheet(
+            if(profilController.user.matricule.contains("Support")) {
+              Get.bottomSheet(
                 useRootNavigator: true,
                 Scaffold(
                   body: Container(
@@ -83,6 +86,7 @@ class _UpdatePageState extends State<UpdatePage> {
                     ),
                   ),
                 ));
+            }
           },
         ),
         body: controller.obx(

@@ -242,6 +242,8 @@ var addApprovisionReceptionsUrl =
 // Exploitations
 var projetsUrl = Uri.parse("$mainUrl/projets/");
 var addProjetssUrl = Uri.parse("$mainUrl/projets/insert-new-projet");
+var sectionProjetsUrl = Uri.parse("$mainUrl/section-projets/");
+var addSectionProjetssUrl = Uri.parse("$mainUrl/section-projets/insert-new-section-projet");
 
 var tachesUrl = Uri.parse("$mainUrl/taches/");
 var addTachessUrl = Uri.parse("$mainUrl/taches/insert-new-tache");
@@ -363,3 +365,8 @@ var addEntrepriseInfoUrl =
 var suivisUrl = Uri.parse("$mainUrl/suivis/");
 var addSuivisUrl =
     Uri.parse("$mainUrl/update-versions/insert-new-suivi");
+
+
+// Settings
+var monnaieUrl = Uri.parse("$mainUrl/settings/monnaies/");
+var addMonnaieUrl = Uri.parse("$mainUrl/settings/monnaies/insert-new-monnaie");

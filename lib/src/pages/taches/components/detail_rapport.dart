@@ -4,8 +4,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart'; 
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -18,106 +17,98 @@ class DetailRapport extends StatefulWidget {
 }
 
 class _DetailRapportState extends State<DetailRapport> {
-   final RapportController controller = Get.put(RapportController());
+  final RapportController controller = Get.put(RapportController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Rapports";
 
   @override
   Widget build(BuildContext context) {
-   
     final bodySmall = Theme.of(context).textTheme.bodySmall;
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.rapportModel.numeroTache),
-              drawer: const DrawerMenu(),
-              body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.rapportModel.numeroTache),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ListTile(
-                                          leading: const Icon(Icons.person,
-                                              size: p50),
-                                          title: SelectableText(
-                                            widget.rapportModel.signature,
-                                            style: bodySmall,
-                                          ),
-                                          subtitle: SelectableText(
-                                            widget.rapportModel.numeroTache,
-                                            style: bodySmall,
-                                          ),
-                                          trailing: SelectableText(
-                                              timeago.format(
-                                                  widget.rapportModel.created,
-                                                  locale: 'fr_short'),
-                                              textAlign: TextAlign.start,
-                                              style: bodySmall),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text('Nom :',
-                                                  textAlign: TextAlign.start,
-                                                  style: bodyMedium!.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                            Expanded(
-                                              flex: 3,
-                                              child: SelectableText(
-                                                  widget.rapportModel.nom,
-                                                  textAlign: TextAlign.start,
-                                                  style: bodyMedium),
-                                            )
-                                          ],
-                                        ),
-                                        Divider(color: mainColor),
-                                        SelectableText(
-                                            widget.rapportModel.rapport,
-                                            style: bodyMedium,
-                                            textAlign: TextAlign.justify),
-                                      ],
-                                    ),
+                                ListTile(
+                                  leading: const Icon(Icons.person, size: p50),
+                                  title: SelectableText(
+                                    widget.rapportModel.signature,
+                                    style: bodySmall,
                                   ),
-                                )
+                                  subtitle: SelectableText(
+                                    widget.rapportModel.numeroTache,
+                                    style: bodySmall,
+                                  ),
+                                  trailing: SelectableText(
+                                      timeago.format(
+                                          widget.rapportModel.created,
+                                          locale: 'fr_short'),
+                                      textAlign: TextAlign.start,
+                                      style: bodySmall),
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text('Nom :',
+                                          textAlign: TextAlign.start,
+                                          style: bodyMedium!.copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                          widget.rapportModel.nom,
+                                          textAlign: TextAlign.start,
+                                          style: bodyMedium),
+                                    )
+                                  ],
+                                ),
+                                Divider(color: mainColor),
+                                Text(
+                                    widget.rapportModel.rapport 
+                                        .replaceAll('\n', ' '), 
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: bodyMedium,
+                                    textAlign: TextAlign.justify),
                               ],
                             ),
-                          )))
-                ],
-              ),) 
-            )
-    
-    ;
+                          ),
+                        )
+                      ],
+                    ),
+                  )))
+        ],
+      ),
+    ); 
   }
 
   Widget deleteButton(RapportController controller) {

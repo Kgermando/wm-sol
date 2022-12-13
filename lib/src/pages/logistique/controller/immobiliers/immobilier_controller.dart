@@ -47,6 +47,8 @@ class ImmobilierController extends GetxController
   }
 
   void clear() {
+    approbationDG = '-';
+    approbationDD = '-';
     motifDGController.clear();
     motifDDController.clear();
     typeAllocationController.clear();

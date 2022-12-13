@@ -52,15 +52,15 @@ class NotifyLogController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCount();
-        getCountEnginDG();
-        getCountEnginDD();
-        getCountTrajetsDD();
-        getCountImmobilierDG();
-        getCountImmobilierDD();
-        getCountMobilierDD();
-        getCountEntretienDD();
-        getCountEtatmaterielDD();
+      getCount();
+      getCountEnginDG();
+      getCountEnginDD();
+      getCountTrajetsDD();
+      getCountImmobilierDG();
+      getCountImmobilierDD();
+      getCountMobilierDD();
+      getCountEntretienDD();
+      getCountEtatmaterielDD();
   }
 
   void getCount() async {

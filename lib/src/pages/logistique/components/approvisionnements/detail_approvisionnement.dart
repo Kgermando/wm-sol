@@ -40,11 +40,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
 
   @override
   Widget build(BuildContext context) {
-    return approvisionReceptionController.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
                   widget.approvisionnementModel.provision),
@@ -58,7 +54,11 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: approvisionReceptionController.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -126,10 +126,12 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                                 controller: controller)
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
               ),
-            ));
+            )
+    
+    ;
   }
 
   Widget dataWidget() {

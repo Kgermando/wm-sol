@@ -140,35 +140,7 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
             }
           },
         ));
-  }
-
-  // Widget departmentWidget() {
-  //   return Container(
-  //     margin: const EdgeInsets.only(bottom: p20),
-  //     child: DropdownButtonFormField<String>(
-  //       decoration: InputDecoration(
-  //         labelText: 'Département',
-  //         labelStyle: const TextStyle(),
-  //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-  //         contentPadding: const EdgeInsets.only(left: 5.0),
-  //       ),
-  //       value: controller.departement,
-  //       isExpanded: true,
-  //       items: controller.departementList.map((String value) {
-  //         return DropdownMenuItem<String>(
-  //           value: value,
-  //           child: Text(value),
-  //         );
-  //       }).toList(),
-  //       validator: (value) => value == null ? "Select departement" : null,
-  //       onChanged: (value) {
-  //         setState(() {
-  //           controller.departement = value!;
-  //         });
-  //       },
-  //     ),
-  //   );
-  // }
+  } 
 
   Future pickDateRange(BuildContext context) async {
     final initialDateRange = DateTimeRange(

@@ -174,7 +174,7 @@ class _TableTrajetRoulantState extends State<TableTrajetRoulant> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 250,
         minWidth: 150,
       ),
       PlutoColumn(

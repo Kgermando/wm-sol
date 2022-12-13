@@ -113,16 +113,18 @@ class TachesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
-          nom: data.nom,
-          numeroTache: data.numeroTache,
-          agent: agent.toString(),
-          jalon: jalonController.text,
-          tache: tacheController.text,
-          signatureResp: profilController.user.matricule,
-          created: data.created,
-          read: data.read,
-          departement: data.departement,
-          reference: data.reference);
+        id: data.id,
+        nom: data.nom,
+        numeroTache: data.numeroTache,
+        agent: agent.toString(),
+        jalon: jalonController.text,
+        tache: tacheController.text,
+        signatureResp: profilController.user.matricule,
+        created: data.created,
+        read: data.read,
+        departement: data.departement,
+        reference: data.reference
+      );
       await tachesApi.updateData(dataItem).then((value) {
         clear();
         tachesList.clear();
@@ -147,6 +149,7 @@ class TachesController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
+          id: data.id,
           nom: data.nom,
           numeroTache: data.numeroTache,
           agent: agent.toString(),

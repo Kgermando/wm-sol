@@ -30,66 +30,69 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter de la provision"),
-                tooltip: "Ajout la provision",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  newDialog();
-                },
-              ),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: controller.scrollController,
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter de la provision"),
+        tooltip: "Ajout la provision",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          newDialog();
+        },
+      ),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: controller.scrollController,
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(onPressed: () {
+                                IconButton(
+                                    onPressed: () {
                                       controller.approvisionnementList;
-                                    }, icon: const Icon(Icons.refresh, color: Colors.green)),
-                                  ],
-                                ),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        controller.approvisionnementList.length,
-                                    itemBuilder: (context, index) {
-                                      final data =
-                                          controller.approvisionnementList[index];
-                                      return ListApprovisionnement(
-                                          approvisionnementModel: data,
-                                          role: profilController.user.role);
-                                    }),
+                                    },
+                                    icon: const Icon(Icons.refresh,
+                                        color: Colors.green)),
                               ],
                             ),
-                          )))
-                ],
-              ),
-            ));
+                            ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller.approvisionnementList.length,
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      controller.approvisionnementList[index];
+                                  return ListApprovisionnement(
+                                      approvisionnementModel: data,
+                                      role: profilController.user.role);
+                                }),
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   newDialog() {
@@ -139,8 +142,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
           });
         });
   }
- 
-  
+
   Widget provisionWidget() {
     List<String> suggestionList = controller.approvisionnementList
         .map((e) => e.provision)
@@ -151,11 +153,10 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
         child: EasyAutocomplete(
           controller: controller.provisionController,
           decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Provision',
-            hintText: 'Cartouche, Papier,...'
-          ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              labelText: 'Provision',
+              hintText: 'Cartouche, Papier,...'),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
           validator: (value) {

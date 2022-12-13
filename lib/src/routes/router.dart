@@ -216,9 +216,7 @@ import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
 import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
 import 'package:wm_solution/src/pages/exploitations/components/fournisseurs/detail_fournisseur.dart';
 import 'package:wm_solution/src/pages/exploitations/components/productions/detail_production_exp.dart';
-import 'package:wm_solution/src/pages/exploitations/components/projets/add_projet.dart';
 import 'package:wm_solution/src/pages/exploitations/components/projets/detail_projet.dart';
-import 'package:wm_solution/src/pages/exploitations/components/projets/update_projet.dart';
 import 'package:wm_solution/src/pages/exploitations/view/dashboard_exp.dart';
 import 'package:wm_solution/src/pages/exploitations/view/exp_dd.dart';
 import 'package:wm_solution/src/pages/exploitations/view/fournisseurs_page.dart';
@@ -319,7 +317,10 @@ List<GetPage<dynamic>>? getPages = [
   // Settings
   GetPage(
     name: SettingsRoutes.splash,
-    binding: WMBindings(), 
+    // binding: WMBindings(), 
+    bindings: [
+      
+    ],
     page: () => const SplashView(),
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)),
@@ -1724,20 +1725,20 @@ GetPage(
       page: () => const ProjetPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: ExploitationRoutes.expProjetAdd,
-      bindings: [
-        ProjetBinding(),
-        VersementBinding(),
-        TacheBinding(),
-        RapportBinding(),
-        PersonnelsRoleBinding(),
-        PersonnelBinding(),
-        ProfilBinding(), NetworkBindings()
-      ],
-      page: () => const AddProjet(),
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+  // GetPage(
+  //     name: ExploitationRoutes.expProjetAdd,
+  //     bindings: [
+  //       ProjetBinding(),
+  //       VersementBinding(),
+  //       TacheBinding(),
+  //       RapportBinding(),
+  //       PersonnelsRoleBinding(),
+  //       PersonnelBinding(),
+  //       ProfilBinding(), NetworkBindings()
+  //     ],
+  //     page: () => const AddProjet(),
+  //     transition: Transition.cupertino,
+  //     transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ExploitationRoutes.expProjetDetail,
       bindings: [
@@ -1756,23 +1757,23 @@ GetPage(
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: ExploitationRoutes.expProjetUpdate,
-      bindings: [
-        ProjetBinding(),
-        VersementBinding(),
-        TacheBinding(),
-        RapportBinding(),
-        PersonnelsRoleBinding(),
-        PersonnelBinding(),
-        ProfilBinding(), NetworkBindings()
-      ],
-      page: () {
-        final ProjetModel projetModel = Get.arguments as ProjetModel;
-        return UpdateProjet(projetModel: projetModel);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+  // GetPage(
+  //     name: ExploitationRoutes.expProjetUpdate,
+  //     bindings: [
+  //       ProjetBinding(),
+  //       VersementBinding(),
+  //       TacheBinding(),
+  //       RapportBinding(),
+  //       PersonnelsRoleBinding(),
+  //       PersonnelBinding(),
+  //       ProfilBinding(), NetworkBindings()
+  //     ],
+  //     page: () {
+  //       final ProjetModel projetModel = Get.arguments as ProjetModel;
+  //       return UpdateProjet(projetModel: projetModel);
+  //     },
+  //     transition: Transition.cupertino,
+  //     transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
       name: ExploitationRoutes.expVersement,

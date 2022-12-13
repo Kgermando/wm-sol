@@ -43,6 +43,7 @@ class MobilierController extends GetxController
   }
 
   void clear() {
+    approbationDD = '-';
     nomController.clear();
     modeleController.clear();
     marqueController.clear();

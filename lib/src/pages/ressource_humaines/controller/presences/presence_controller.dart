@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/rh/presence_api.dart';
 import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class PresenceController extends GetxController
     with StateMixin<List<PresenceModel>> {
@@ -11,7 +12,7 @@ class PresenceController extends GetxController
 
   final ProfilController profilController = Get.find();
 
-  var presenceList = <PresenceModel>[].obs;
+  List<PresenceModel> presenceList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -25,8 +26,8 @@ class PresenceController extends GetxController
 
   void getList() async {
     await presenceApi.getAllData().then((response) {
-      presenceList.assignAll(response);
-      // print("list data  ${response.length}");
+      presenceList.clear();
+      presenceList.addAll(response);
       change(presenceList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -68,10 +69,7 @@ class PresenceController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await presenceApi.insertData(presenceModel).then((value) {
-        presenceList.clear();
-        getList();
-        Get.back();
-
+        Get.toNamed(RhRoutes.rhPresenceDetail, arguments: value);
         Get.snackbar(
             "Liste Presence créé avec succès!", "Nouvelle liste de presence.",
             backgroundColor: Colors.green,

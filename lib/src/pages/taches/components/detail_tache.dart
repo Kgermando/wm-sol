@@ -30,35 +30,41 @@ class _DetailTacheState extends State<DetailTache> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Tâches";
 
+  Future<TacheModel> refresh() async {
+    final TacheModel dataItem =
+        await controller.detailView(widget.tacheModel.id!);
+    return dataItem;
+  }
+
   @override
   Widget build(BuildContext context) { 
     return Scaffold(
-              key: scaffoldKey,
-              appBar:
-                  headerBar(context, scaffoldKey, title, widget.tacheModel.nom),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ecrire votre rapport"),
-                tooltip: "Ajouter le rapport",
-                icon: const Icon(Icons.edit_note),
-                onPressed: () {
-                  Get.toNamed(TacheRoutes.rapportAdd,
-                      arguments: widget.tacheModel);
-                },
-              ),
-              body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
+      key: scaffoldKey,
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.tacheModel.nom),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ecrire votre rapport"),
+        tooltip: "Ajouter le rapport",
+        icon: const Icon(Icons.edit_note),
+        onPressed: () {
+          Get.toNamed(TacheRoutes.rapportAdd,
+              arguments: widget.tacheModel);
+        },
+      ),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!),
+            (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -102,7 +108,7 @@ class _DetailTacheState extends State<DetailTache> {
                                           color: mainColor,
                                         ),
                                         if (widget.tacheModel.read == 'true')
-                                          Text("✅ Ce rapport est fermé",
+                                          Text("✅ Tâche cloturer !",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!
@@ -113,23 +119,22 @@ class _DetailTacheState extends State<DetailTache> {
                                                 profilController
                                                     .user.matricule &&
                                             widget.tacheModel.read == 'false')
-                                          checkboxRead(controller),
-                                        Divider(
-                                          color: mainColor,
-                                        ),
-                                        TableRapport(
-                                            rapportController:
-                                                rapportController,
-                                            tacheModel: widget.tacheModel),
+                                          checkboxRead(controller), 
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(
+                                  height: p20,
+                                ),
+                                TableRapport(
+                                    rapportController: rapportController,
+                                    tacheModel: widget.tacheModel),
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
-              )) ,
+              ) 
             )
     
     
@@ -168,11 +173,14 @@ class _DetailTacheState extends State<DetailTache> {
             } else {
               controller.submitRead(widget.tacheModel, 'false');
             }
+             refresh().then((value) => Navigator.pushNamed(
+                context, ExploitationRoutes.expProjetDetail,
+                arguments: value));
             // confirmeLecture(data);
           });
         },
       ),
-      title: const Text("Confirmation de lecture"),
+      title: const Text("Cloturer cette tâche."),
     );
   }
 

@@ -23,9 +23,7 @@ class ProduitModelController extends GetxController
       TextEditingController(); // sousCategorie4
 
   // Approbations
-  String approbationDG = '-';
   String approbationDD = '-';
-  TextEditingController motifDGController = TextEditingController();
   TextEditingController motifDDController = TextEditingController();
 
   @override

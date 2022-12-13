@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comptabilite/bilan_api.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class BilanController extends GetxController with StateMixin<List<BilanModel>> {
   final BilanApi bilanApi = BilanApi();
@@ -89,10 +90,8 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
           motifDD: '-',
           signatureDD: '-');
       await bilanApi.insertData(bilan).then((value) {
-        clear();
-        bilanList.clear();
-        getList();
-        Get.back();
+        clear(); 
+        Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail, arguments: value);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

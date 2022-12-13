@@ -37,11 +37,7 @@ class _DetailMobilerState extends State<DetailMobiler> {
       return dataItem;
     }
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(
                   context, scaffoldKey, title, widget.mobilierModel.nom),
@@ -54,7 +50,11 @@ class _DetailMobilerState extends State<DetailMobiler> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -149,10 +149,13 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                     profilController: profilController)
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
               ),
-            ));
+            )
+    
+    
+    ;
   }
 
   alertDeleteDialog(MobilierController controller) {

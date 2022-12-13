@@ -131,6 +131,7 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
     var dataList = widget.tachesController.tachesList
         .where((element) =>
             element.reference == widget.id &&
+            element.nom == widget.campaignModel.typeProduit &&
             element.departement == widget.departement)
         .toList();
 

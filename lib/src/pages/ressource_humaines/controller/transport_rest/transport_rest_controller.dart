@@ -6,6 +6,7 @@ import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class TransportRestController extends GetxController
     with StateMixin<List<TransportRestaurationModel>> {
@@ -17,7 +18,7 @@ class TransportRestController extends GetxController
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
 
-  var transportRestaurationList = <TransportRestaurationModel>[].obs;
+  List<TransportRestaurationModel> transportRestaurationList = [] ;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -65,7 +66,8 @@ class TransportRestController extends GetxController
 
   void getList() async {
     await transportRestaurationApi.getAllData().then((response) {
-      transportRestaurationList.assignAll(response);
+      transportRestaurationList.clear();
+      transportRestaurationList.addAll(response);
       change(transportRestaurationList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -123,10 +125,8 @@ class TransportRestController extends GetxController
           ressource: '-',
           isSubmit: 'false');
       await transportRestaurationApi.insertData(transRest).then((value) {
-        clear();
-        transportRestaurationList.clear();
-        getList();
-        Get.back();
+        clear(); 
+        Get.toNamed(RhRoutes.rhTransportRestDetail, arguments: value);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

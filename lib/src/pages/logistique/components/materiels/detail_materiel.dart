@@ -38,11 +38,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
                   widget.materielModel.identifiant),
@@ -68,7 +64,11 @@ class _DetailMaterielState extends State<DetailMateriel> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) =>  SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -169,10 +169,14 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                     profilController: profilController)
                               ],
                             ),
-                          )))
+                          ))))
                 ],
               ),
-            ));
+            )
+    
+    
+    
+    ;
   }
 
   alertDeleteDialog() {

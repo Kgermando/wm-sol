@@ -47,7 +47,8 @@ class TrajetController extends GetxController
     super.dispose();
   }
 
-  void clearTextEditingControllers() {
+  void clear() {
+    approbationDD = '-';
     motifDDController.clear();
     conducteurController.clear();
     trajetDeController.clear();
@@ -111,7 +112,7 @@ class TrajetController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await trajetApi.insertData(trajetModel).then((value) {
-        clearTextEditingControllers();
+        clear();
         trajetList.clear();
         getList();
         Get.back();
@@ -150,7 +151,7 @@ class TrajetController extends GetxController
           motifDD: '-',
           signatureDD: '-');
       await trajetApi.updateData(dataItem).then((value) {
-        clearTextEditingControllers();
+        clear();
         trajetList.clear();
         getList();
         Get.back();

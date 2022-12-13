@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wm_solution/src/api/update/update_api.dart';
 import 'package:wm_solution/src/api/upload_file_api.dart';
@@ -67,14 +66,14 @@ class UpdateController extends GetxController
             "${((received / total) * 100).toStringAsFixed(0)}%";
         update();
       }).then((value) {
-        Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
+        Get.snackbar("Téléchargement réussi!", " ",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
-        OpenFile.open(fileName);
+        // OpenFile.open(fileName);
       });
     } catch (e) {
-      Get.snackbar("Erreur de soumission", "$e",
+      Get.snackbar("Erreur de Téléchargement", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);

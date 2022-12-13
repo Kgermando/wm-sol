@@ -43,19 +43,23 @@ dependencies:
   flutter_staggered_grid_view: ^0.6.1
   flash_card: ^0.0.7
   pdf: ^3.8.0 
-  open_file: ^3.2.1
+  # open_file: ^3.2.1
   path_provider: ^2.0.10
   path_provider_platform_interface: ^2.0.4
   dospace: ^0.13.15
-  file_picker: ^4.6.1
+  file_picker: ^5.2.3
   extended_image: ^6.2.1
   excel: ^2.0.0-null-safety-3
   easy_autocomplete: ^1.6.0
   easy_table: ^2.0.1
   flutter_slidable: ^2.0.0 
   flutter_breadcrumb: ^1.0.1
-  connectivity_plus: ^3.0.2
-  internet_connection_checker: ^1.0.0+1  # Tous sauf le Web
+  # connectivity_plus: ^3.0.2
+  # internet_connection_checker: ^1.0.0+1  # sauf le Web
+  flutter_quill: ^6.1.6  # sauf le android
+  # device_info_plus: ^7.0.0
+  ffi: ^2.0.1
+  open_app_file: ^4.0.1
 
 dev_dependencies:
   flutter_test:
