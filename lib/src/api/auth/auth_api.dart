@@ -16,7 +16,6 @@ import 'package:http/http.dart' as http;
 class AuthApi extends GetConnect {
   var client = http.Client();
 
-
   Future<bool> login(String matricule, String passwordHash) async {
     var data = {'matricule': matricule, 'passwordHash': passwordHash};
     var body = jsonEncode(data);

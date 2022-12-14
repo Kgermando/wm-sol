@@ -107,7 +107,7 @@ class ProduitModelController extends GetxController
               : sousCategorie3Controller.text,
           sousCategorie4:
               (uniteController.text == "") ? '-' : uniteController.text,
-          idProduct: idProductform,
+          idProduct: idProductform.toUpperCase(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDD: '-',
@@ -145,7 +145,7 @@ class ProduitModelController extends GetxController
           sousCategorie2: sousCategorie2Controller.text,
           sousCategorie3: sousCategorie3Controller.text,
           sousCategorie4: uniteController.text,
-          idProduct: idProductform,
+          idProduct: idProductform.toUpperCase(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDD: '-',

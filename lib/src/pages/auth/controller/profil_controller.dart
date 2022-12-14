@@ -10,35 +10,38 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
   bool get isLoadingProfil => _loadingProfil.value;
 
   final _user = UserModel(
-    nom: '-',
-    prenom: '-',
-    email: '-',
-    telephone: '-',
-    matricule: '-',
-    departement: '-',
-    servicesAffectation: '-',
-    fonctionOccupe: '-',
-    role: '5',
-    isOnline: 'false',
-    createdAt: DateTime.now(),
-    passwordHash: '-',
-    succursale: '-').obs;
+          nom: '-',
+          prenom: '-',
+          email: '-',
+          telephone: '-',
+          matricule: '-',
+          departement: '-',
+          servicesAffectation: '-',
+          fonctionOccupe: '-',
+          role: '5',
+          isOnline: 'false',
+          createdAt: DateTime.now(),
+          passwordHash: '-',
+          succursale: '-')
+      .obs;
 
   UserModel get user => _user.value;
 
   @override
-  void onInit() { 
+  void onInit() {
     super.onInit();
-    _loadingProfil.value = true;
-    authController.getUserId().then((value) {
-      _user.value = value;
-      _loadingProfil.value = false;
-      update();
-      debugPrint("user profil: ${_user.value.matricule}");
-    });
-    // print("Profil ${user.fonctionOccupe}");
+
+    getUser();
+    print("Profil ${user.prenom}");
   }
 
-
-
+  void getUser() async {
+    _loadingProfil.value = true;
+    await authController.getUserId().then((value) {
+      _user.value = value;
+      _loadingProfil.value = false;
+      debugPrint("user profil: ${_user.value.matricule}");
+      update();
+    });
+  }
 }

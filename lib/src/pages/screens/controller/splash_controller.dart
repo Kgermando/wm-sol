@@ -24,7 +24,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  final ProfilController profilController =  Get.put(ProfilController(), permanent: true);
+  final ProfilController profilController =  Get.put(ProfilController());
   final MaillingController maillingController = Get.put(MaillingController());
 
   final getStorge = GetStorage();

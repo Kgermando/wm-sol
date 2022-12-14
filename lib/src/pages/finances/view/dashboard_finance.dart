@@ -6,8 +6,10 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_banque_mounth.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_banque_year.dart';
+import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_bar_banque.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/caisse/courbe_caisse_mounth.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/caisse/courbe_caisse_year.dart';
+import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dashboard_card_widget.dart';
@@ -21,13 +23,15 @@ class DashboadFinance extends StatefulWidget {
 }
 
 class _DashboadFinanceState extends State<DashboadFinance> {
+  final DashboardFinanceController controller = Get.find();
+  final BanqueController banqueController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Dashboard";
 
   @override
   Widget build(BuildContext context) {
-    final DashboardFinanceController controller = Get.find();
+    
 
     return SafeArea(
       child: Scaffold(
@@ -147,9 +151,9 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                 const SizedBox(
                                   height: 20.0,
                                 ),
-                                const ResponsiveChildWidget(
-                                    child1: CourbeCaisseMounth(),
-                                    child2: CourbeCaisseYear()),
+                                 ResponsiveChildWidget(
+                                    child1: CourbeBarBanque(banqueList: banqueController.banqueList),
+                                    child2: const CourbeCaisseYear()),
                                 const SizedBox(
                                   height: 20.0,
                                 ),

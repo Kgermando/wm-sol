@@ -11,6 +11,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/a
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/utils/regex.dart';
 import 'package:intl/intl.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 
 class VenteItemWidget extends StatefulWidget {
   const VenteItemWidget(
@@ -36,6 +37,8 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
 
   // Après ajout au panier le produit quite la liste
   bool isActive = true;
+
+  FocusNode focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -141,17 +144,18 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                     ),
                   ),
                   Container(
-                      constraints: const BoxConstraints(maxWidth: 100),
-                      child: Form(
-                        key: formKey,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Expanded(child: qtyField()),
-                            Expanded(child: onChanged())
-                          ],
-                        ),
-                      ))
+                    constraints: const BoxConstraints(maxWidth: 100),
+                    child: Form(
+                      key: formKey,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(child: qtyField()),
+                          Expanded(child: onChanged())
+                        ],
+                      ),
+                    )
+                  )
                 ],
               ),
             ),
@@ -170,8 +174,9 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
             : const TextStyle(
                 fontSize: 12,
               ),
-        controller: widget.cartController.controllerQuantityCart,
+        // controller: widget.cartController.controllerQuantityCart,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        focusNode: focusNode,
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
         ],
@@ -190,13 +195,20 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
             return null;
           }
         },
-        onSaved: (value) => widget.cartController.controllerQuantityCart.text,
+        onChanged: (value) {
+          setState(() {
+            widget.cartController.controllerQuantityCart = value;
+            // print("qty cart ${widget.cartController.controllerQuantityCart}");
+          });
+        },
+        // onSaved: (value) => widget.cartController.controllerQuantityCart,
+        
       ),
     );
   }
 
   Widget onChanged() {
-    return IconButton(
+    return Obx(() => (widget.cartController.isLoading) ? loadingMini() : IconButton(
         tooltip: 'Ajoutez au panier',
         iconSize: Responsive.isDesktop(context) ? 24.0 : 18.0,
         onPressed: () {
@@ -209,10 +221,10 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
           }
         },
         icon:
-            Icon(Icons.add_shopping_cart_sharp, color: Colors.green.shade700));
+            Icon(Icons.add_shopping_cart_sharp, color: Colors.green.shade700))) ;
   }
 
-  Widget alertDialog(String text) {
+   alertDialog(String text) {
     return IconButton(
       icon: const Icon(Icons.assistant_direction),
       tooltip: 'Restitution de la quantité en stocks',
@@ -232,4 +244,8 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
       ),
     );
   }
+
+
+ 
+
 }

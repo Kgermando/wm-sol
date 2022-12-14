@@ -40,11 +40,13 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
 
   List<CartModel> cartList = [];
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  TextEditingController controllerQuantityCart = TextEditingController();
+  // TextEditingController controllerQuantityCart = TextEditingController();
+  String? controllerQuantityCart;
 
   @override
   void onInit() {
@@ -52,20 +54,21 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
     getList();
   }
 
-  @override
-  void dispose() {
-    controllerQuantityCart.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controllerQuantityCart.dispose();
+  //   super.dispose();
+  // }
 
   void clear() {
-    controllerQuantityCart.clear();
+    // controllerQuantityCart.clear();
+    controllerQuantityCart = null;
   }
 
   void getList() async {
     await cartApi.getAllData(profilController.user.matricule).then((response) {
       cartList.clear();
-      cartList.addAll(response); 
+      cartList.addAll(response);
       change(cartList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -91,6 +94,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -103,7 +107,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       _isLoading.value = true;
       final cartModel = CartModel(
           idProductCart: achat.idProduct,
-          quantityCart: controllerQuantityCart.text,
+          quantityCart: controllerQuantityCart.toString(),
           priceCart: achat.prixVenteUnit,
           priceAchatUnit: achat.priceAchatUnit,
           unite: achat.unite,
@@ -113,8 +117,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           succursale: profilController.user.succursale,
           signature: profilController.user.matricule,
           created: DateTime.now(),
-          createdAt: achat.created
-      );
+          createdAt: achat.created);
       await cartApi.insertData(cartModel).then((value) async {
         var qty =
             double.parse(achat.quantity) - double.parse(value.quantityCart);
@@ -147,6 +150,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         });
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -168,7 +172,6 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           .then((value) async {
         // Genere le numero de la facture
         numberFactureField(value.client, value.succursale, value.signature);
- 
 
         // Ajout des items dans historique
         venteHisotory(cartList);
@@ -188,6 +191,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         });
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -212,10 +216,13 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in factureList) {
         facture = item;
       }
-      final pdfFile = await FactureCartPDF.generate(facture!, monnaieStorage.monney);
+      final pdfFile =
+          await FactureCartPDF.generate(facture!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
     } catch (e) {
-      Get.snackbar("Erreur lors de l'ouverture", "$e",
+      _isLoading.value = false;
+      _isLoading.value = false;
+      Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
@@ -253,6 +260,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         });
       });
     } catch (e) {
+      _isLoading.value = false; 
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -280,10 +288,12 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in creanceList) {
         creance = item;
       }
-      final pdfFile = await CreanceCartPDF.generate(creance!, monnaieStorage.monney);
+      final pdfFile =
+          await CreanceCartPDF.generate(creance!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
     } catch (e) {
-      Get.snackbar("Erreur lors de l'ouverture", "$e",
+      _isLoading.value = false;
+      Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
@@ -305,9 +315,8 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         .insertData(numberFactureModel);
   }
 
-  Future<void> venteHisotory(List<CartModel> cartItemList) async { 
-
-    cartItemList.forEach((item) async { 
+  Future<void> venteHisotory(List<CartModel> cartItemList) async {
+    cartItemList.forEach((item) async {
       double priceTotal = 0;
       if (double.parse(item.quantityCart) >= double.parse(item.qtyRemise)) {
         priceTotal =
@@ -327,8 +336,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           succursale: item.succursale,
           signature: item.signature,
           created: item.created,
-          createdAt: item.createdAt
-        );
+          createdAt: item.createdAt);
       await venteCartController.venteCartApi.insertData(venteCartModel);
     });
 
@@ -356,8 +364,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
     // }
   }
 
-  Future<void> gainVentes(List<CartModel> cartItemList) async { 
-
+  Future<void> gainVentes(List<CartModel> cartItemList) async {
     cartItemList.forEach((item) async {
       double gainTotal = 0;
       if (double.parse(item.quantityCart) >= double.parse(item.qtyRemise)) {

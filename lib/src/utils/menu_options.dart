@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart'; 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
@@ -34,7 +35,7 @@ class MenuOptions {
 
       case MenuItems.itemLogout:
         controller.logout();  
-        // Phoenix.rebirth(context);
+        Phoenix.rebirth(context);
     }
   }
 }

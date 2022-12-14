@@ -30,7 +30,7 @@ class _ProfileAuthState extends State<ProfileAuth> {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
 
     final String firstLettter2 = controller.user.prenom[0];
-    final String firstLettter = controller.user.nom[0];
+    final String firstLettter = controller.user.nom[0]; 
 
     return Scaffold(
       key: scaffoldKey,

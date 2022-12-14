@@ -33,11 +33,12 @@ import '../pages/comptabilites/controller/dahsboard/dashboard_comptabilite_contr
 
 class WMBindings extends Bindings {
   @override
-  void dependencies() {
+  void dependencies() async {
     Get.put<SplashController>(SplashController());
     // Authentification
     // Get.put<LoginController>(LoginController());
-    Get.put<ProfilController>(ProfilController(), permanent: true);
+    Get.putAsync(() async => ProfilController());
+    // Get.put<ProfilController>(ProfilController());
     // Get.put<ChangePasswordController>(ChangePasswordController());
     // Get.put<ForgotPasswordController>(ForgotPasswordController());
 
@@ -81,8 +82,7 @@ class WMBindings extends Bindings {
     // Get.put<LignBudgetaireController>(LignBudgetaireController());
 
     // Comptabilites
-    Get.put<DashboardComptabiliteController>(
-          DashboardComptabiliteController());
+    Get.put<DashboardComptabiliteController>(DashboardComptabiliteController());
     Get.put<ComptabiliteNotifyController>(ComptabiliteNotifyController());
     // Get.put<BalanceController>(BalanceController());
     // Get.put<BalanceRefController>(BalanceRefController());
@@ -110,8 +110,7 @@ class WMBindings extends Bindings {
     // Get.put<FinExterieurController>(FinExterieurController());
     Get.put<FinExterieurNameController>(FinExterieurNameController());
     Get.put<FinanceNotifyController>(FinanceNotifyController());
-    Get.put<ObservationNotifyController>(
-        ObservationNotifyController());
+    Get.put<ObservationNotifyController>(ObservationNotifyController());
 
     // Marketing
     Get.put<MarketingNotifyController>(MarketingNotifyController());
