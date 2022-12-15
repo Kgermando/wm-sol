@@ -66,7 +66,7 @@ class ActionnaireController extends GetxController
     }); 
   }
 
-  detailView(int id) async {
+   detailView(int id) async {
     final data = await actionnaireApi.getOneData(id);
     return data;
   }

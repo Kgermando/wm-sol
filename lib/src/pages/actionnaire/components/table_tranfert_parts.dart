@@ -94,7 +94,7 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
           'matriculeEnvoi': PlutoCell(value: item.matriculeEnvoi),
           'matriculeRecu': PlutoCell(value: item.matriculeRecu), 
           'montant':
-              PlutoCell(value: "${item.montant} ${widget.monnaie}"),
+              PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),

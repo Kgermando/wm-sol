@@ -105,8 +105,7 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                                                     },
                                                     icon: const Icon(
                                                         Icons.refresh,
-                                                        color:
-                                                            Colors.green)),
+                                                        color: Colors.green)),
                                                 SelectableText(
                                                     DateFormat("dd-MM-yy HH:mm")
                                                         .format(widget
@@ -260,14 +259,27 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
   }
 
   Widget total(List<ActionnaireCotisationModel> state) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     var totalCotisation = state
         .where((element) => element.reference == widget.actionnaireModel.id!)
         .toList();
+    var totalTransfer = actionnaireTransfertController.actionnaireTransfertList
+        .where((element) =>
+            element.matriculeRecu == widget.actionnaireModel.matricule)
+        .toList();
+
     double motantCotise = 0.0;
+    double motantRecuTransfert = 0.0;
 
     for (var element in totalCotisation) {
       motantCotise += double.parse(element.montant);
     }
+    for (var element in totalTransfer) {
+      motantRecuTransfert += double.parse(element.montant);
+    }
+
+    double montantTransferer =
+        widget.actionnaireModel.cotisations - motantCotise;
 
     return Card(
       child: Padding(
@@ -277,18 +289,40 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Total',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                    overflow: TextOverflow.ellipsis),
-                if (widget.actionnaireModel.cotisations == motantCotise)
-                  Text(
-                      '${NumberFormat.decimalPattern('fr').format(widget.actionnaireModel.cotisations)} ${monnaieStorage.monney}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.red.shade700)),
+                Text('Total cotiser', style: headline6),
+                Text(
+                    '${NumberFormat.decimalPattern('fr').format(widget.actionnaireModel.cotisations)} ${monnaieStorage.monney}',
+                    style: headline6!.copyWith(color: Colors.red.shade700, fontWeight: FontWeight.bold)),
               ],
             ),
+            Divider(
+              color: Colors.red.shade700,
+            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Montant transferer', style: headline6),
+                  (montantTransferer.isNegative) 
+                    ? Text(
+                      '${NumberFormat.decimalPattern('fr').format(0.0)} ${monnaieStorage.monney}',
+                      style: headline6.copyWith(color: Colors.orange.shade700)) 
+                    : Text(
+                      '${NumberFormat.decimalPattern('fr').format(montantTransferer)} ${monnaieStorage.monney}',
+                      style: headline6.copyWith(color: Colors.orange.shade700)),
+                ],
+              ),
+            Divider(
+              color: Colors.red.shade700,
+            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Montant reçu par transfer', style: headline6),
+                  Text(
+                      '${NumberFormat.decimalPattern('fr').format(motantRecuTransfert)} ${monnaieStorage.monney}',
+                      style: headline6.copyWith(color: Colors.brown.shade700)),
+                ],
+              ),
           ],
         ),
       ),
@@ -343,7 +377,7 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                         const SizedBox(
                           height: p50,
                         ),
-                        BtnWidget(
+                        Obx(() => BtnWidget(
                             title: "Soumettre",
                             press: () {
                               final form = controller.formKey.currentState!;
@@ -354,7 +388,7 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                                 Navigator.pop(context, 'ok');
                               }
                             },
-                            isLoading: controller.isLoading)
+                            isLoading: controller.isLoading))
                       ],
                     ),
                   ),
@@ -393,24 +427,28 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                           const SizedBox(
                             height: p20,
                           ),
-                          montant(),
-                          matriculeRecuField(),
+                          montantTransfert(),
+                          matriculeRecuTransfert(),
                           const SizedBox(
                             height: p20,
                           ),
-                          BtnWidget(
+                          Obx(() => BtnWidget(
                               title: "Soumettre",
                               press: () {
                                 final form = actionnaireTransfertController
                                     .formKey.currentState!;
                                 if (form.validate()) {
                                   actionnaireTransfertController
-                                      .transfertAction(widget.actionnaireModel);
+                                      .transfertAction( 
+                                          widget.actionnaireModel,
+                                          actionnaireTransfertController
+                                              .montantController.text,
+                                          widget.actionnaireModel.matricule);
                                   form.reset();
                                   Navigator.pop(context, 'ok');
                                 }
                               },
-                              isLoading: controller.isLoading)
+                              isLoading: controller.isLoading))
                         ],
                       ),
                     ),
@@ -422,40 +460,6 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
       child: const Icon(
         Icons.menu,
         color: Colors.white,
-      ),
-    );
-  }
-
-  Widget matriculeRecuField() {
-    var actionnaireList = actionnaireController.actionnaireList
-        .map((e) => e.matricule)
-        .toSet()
-        .toList();
-    actionnaireList.remove(widget.actionnaireModel.matricule);
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          labelText: 'Selectionner le matricule',
-          labelStyle: const TextStyle(),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          contentPadding: const EdgeInsets.only(left: 5.0),
-        ),
-        value: actionnaireTransfertController.matriculeRecu,
-        isExpanded: true,
-        items: actionnaireList.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        validator: (value) =>
-            value == null ? "Select matricule reception" : null,
-        onChanged: (value) {
-          setState(() {
-            actionnaireTransfertController.matriculeRecu = value;
-          });
-        },
       ),
     );
   }
@@ -552,5 +556,63 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
             }
           },
         ));
+  }
+
+  Widget montantTransfert() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: actionnaireTransfertController.montantController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+          ],
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Montant ${monnaieStorage.monney}',
+          ),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
+
+  Widget matriculeRecuTransfert() {
+    var actionnaireList = actionnaireController.actionnaireList
+        .map((e) => e.matricule)
+        .toSet()
+        .toList();
+    actionnaireList.remove(widget.actionnaireModel.matricule);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Selectionner le matricule',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: actionnaireTransfertController.matriculeRecu,
+        isExpanded: true,
+        items: actionnaireList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) =>
+            value == null ? "Select matricule reception" : null,
+        onChanged: (value) {
+          setState(() {
+            actionnaireTransfertController.matriculeRecu = value;
+          });
+        },
+      ),
+    );
   }
 }

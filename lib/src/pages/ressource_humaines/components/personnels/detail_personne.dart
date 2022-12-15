@@ -3,7 +3,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart'; 
+import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -32,7 +32,6 @@ class _DetailPersonneState extends State<DetailPersonne> {
 
   bool statutAgent = false;
   String statutPersonel = 'false';
- 
 
   @override
   Widget build(BuildContext context) {
@@ -105,140 +104,157 @@ class _DetailPersonneState extends State<DetailPersonne> {
       isStatutPersonne = false;
     }
 
-    var isActionnaireActif = actionnaireController.actionnaireList
-        .where((element) => element.matricule == widget.personne.matricule)
-        .toList(); 
-
-    return salaireController.obx(onLoading: loadingMini(), (state) {
-      var isPayE = state!
+    return actionnaireController.obx(onLoading: loadingMini(), (actionnaires) {
+      var isActionnaireActif = actionnaires!
           .where((element) => element.matricule == widget.personne.matricule)
           .toList();
-      return SpeedDial(
-        closedForegroundColor: themeColor,
-        openForegroundColor: Colors.white,
-        closedBackgroundColor: themeColor,
-        openBackgroundColor: themeColor,
-        speedDialChildren: <SpeedDialChild>[
-          SpeedDialChild(
-            child: const Icon(
-              Icons.content_paste_sharp,
-              size: 15.0,
-            ),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.orange.shade700,
-            label: 'Modifier CV profil',
-            onPressed: () {
-              Get.toNamed(RhRoutes.rhPersonnelsUpdate,
-                  arguments: widget.personne);
-            },
-          ),
-          // if (int.parse(user.role) <= 2)
-          SpeedDialChild(
-            child: const Icon(Icons.safety_divider, size: 15.0),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.red.shade700,
-            label:
-                (isStatutPersonne) ? "Désactiver le profil" : "Activer profil",
-            onPressed: () {
-              agentStatutDialog(personnelsController, usersController);
-            },
-          ),
-          SpeedDialChild(
-              child: const Icon(Icons.monetization_on),
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.blue.shade700,
-              label: (isPayE.isEmpty) ? 'Bulletin de paie' : 'Déja générer',
-              onPressed: () {
-                if (isPayE.isEmpty) {
-                  Get.toNamed(RhRoutes.rhPaiementAdd,
-                      arguments: widget.personne);
-                }
-              }),
-          if (userRole <= 2)
-            SpeedDialChild(
-                child: const Icon(Icons.sensor_occupied),
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.teal.shade700,
-                label: (isActionnaireActif.isEmpty)
-                    ? 'Ajouté actionnaire'
-                    : 'Déja Ajouté',
-                onPressed: () {
 
-                  
-                  showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        color: Colors.amber.shade100,
-                        padding: const EdgeInsets.all(p20),
-                        child: Form(
-                          key: actionnaireController.formKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: Text(
-                                          "Ajouté ${widget.personne.prenom} comme Actionnaire."
-                                              .toUpperCase(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium)),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                      child: Text("Actionnaire",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall)),
-                                  Expanded(
-                                    child: FlutterSwitch(
-                                      width: 225.0,
-                                      height: 50.0,
-                                      activeColor: Colors.green,
-                                      inactiveColor: Colors.red,
-                                      valueFontSize: 25.0,
-                                      toggleSize: 45.0,
-                                      value: isActionnaireActif.isNotEmpty,
-                                      borderRadius: 30.0,
-                                      padding: 8.0,
-                                      showOnOff: true,
-                                      activeText: 'Ajouté',
-                                      inactiveText: 'Retiré',
-                                      onToggle: (val) {
-                                        setState(() {
-                                          actionnaireController
-                                              .submit(widget.personne);
-                                        });
-                                      },
+      return salaireController.obx(onLoading: loadingMini(), (state) {
+        var isPayE = state!
+            .where((element) => element.matricule == widget.personne.matricule)
+            .toList();
+        return SpeedDial(
+          closedForegroundColor: themeColor,
+          openForegroundColor: Colors.white,
+          closedBackgroundColor: themeColor,
+          openBackgroundColor: themeColor,
+          speedDialChildren: <SpeedDialChild>[
+            SpeedDialChild(
+              child: const Icon(
+                Icons.content_paste_sharp,
+                size: 15.0,
+              ),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.orange.shade700,
+              label: 'Modifier CV profil',
+              onPressed: () {
+                Get.toNamed(RhRoutes.rhPersonnelsUpdate,
+                    arguments: widget.personne);
+              },
+            ),
+            // if (int.parse(user.role) <= 2)
+            SpeedDialChild(
+              child: const Icon(Icons.safety_divider, size: 15.0),
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red.shade700,
+              label: (isStatutPersonne)
+                  ? "Désactiver le profil"
+                  : "Activer profil",
+              onPressed: () {
+                agentStatutDialog(personnelsController, usersController);
+              },
+            ),
+            SpeedDialChild(
+                child: const Icon(Icons.monetization_on),
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue.shade700,
+                label: (isPayE.isEmpty) ? 'Bulletin de paie' : 'Déja générer',
+                onPressed: () {
+                  if (isPayE.isEmpty) {
+                    Get.toNamed(RhRoutes.rhPaiementAdd,
+                        arguments: widget.personne);
+                  }
+                }),
+            if (userRole <= 1)
+              SpeedDialChild(
+                  child: const Icon(Icons.sensor_occupied),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.teal.shade700,
+                  label: (isActionnaireActif.isEmpty)
+                      ? 'Ajouté actionnaire'
+                      : 'Déja Ajouté',
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          color: Colors.amber.shade100,
+                          padding: const EdgeInsets.all(p20),
+                          child: Form(
+                            key: actionnaireController.formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text(
+                                            (isActionnaireActif.isNotEmpty)
+                                                ? "Retiré ${widget.personne.prenom} comme Actionnaire"
+                                                    .toUpperCase()
+                                                : "Ajouté ${widget.personne.prenom} comme Actionnaire"
+                                                    .toUpperCase(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium)),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: p20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                        child: Text("Actionnaire",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall)),
+                                    Expanded(
+                                      child: FlutterSwitch(
+                                        width: 225.0,
+                                        height: 50.0,
+                                        activeColor: Colors.green,
+                                        inactiveColor: Colors.red,
+                                        valueFontSize: 25.0,
+                                        toggleSize: 45.0,
+                                        value: isActionnaireActif.isNotEmpty,
+                                        borderRadius: 30.0,
+                                        padding: 8.0,
+                                        showOnOff: true,
+                                        activeText: 'Retiré',
+                                        inactiveText: 'Ajouté',
+                                        onToggle: (val) {
+                                          setState(() { 
+                                            if (isActionnaireActif.isNotEmpty) {
+                                              var actionnaire = actionnaires
+                                                  .where((element) =>
+                                                      element.matricule ==
+                                                      widget.personne.matricule)
+                                                  .first;
+                                              if(actionnaire.cotisations ==0) {
+                                                actionnaireController
+                                                    .deleteData(
+                                                        actionnaire.id!); 
+                                              } 
+                                            } else {
+                                              actionnaireController
+                                                  .submit(widget.personne);
+                                            }
+                                          });
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: p50,
-                              ),
-                            ],
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: p50,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                })
-        ],
-        child: const Icon(
-          Icons.menu,
-          color: Colors.white,
-        ),
-      );
+                        );
+                      },
+                    );
+                  })
+          ],
+          child: const Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+        );
+      });
     });
   }
 

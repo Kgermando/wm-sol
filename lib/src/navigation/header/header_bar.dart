@@ -91,20 +91,20 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
       
       if (Platform.isWindows &&
           updateController.updateVersionList.isNotEmpty &&
-          updateController.sumVersionCloud > updateController.sumLocalVersion)
-        IconButton(
+          updateController.sumVersionCloud > updateController.sumLocalVersion) 
+        Obx(() => IconButton(
             iconSize: 40,
             tooltip: 'Téléchargement',
             onPressed: () {
               updateController.downloadNetworkSoftware(
                   url: updateController.updateVersionList.last.urlUpdate);
             },
-            icon: (updateController.downloading)
+            icon: (updateController.isDownloading)
                 ? (updateController.progressString == "100%")
                     ? const Icon(Icons.check)
                     : Obx(() => AutoSizeText(updateController.progressString,
                         maxLines: 1, style: const TextStyle(fontSize: 12.0)))
-                : Icon(Icons.download, color: Colors.red.shade700)),
+                : Icon(Icons.download, color: Colors.red.shade700))) ,
       if (departementList.contains('Exploitations') || departementList.contains('Marketing'))
         IconButton(
             tooltip: 'Tâches',

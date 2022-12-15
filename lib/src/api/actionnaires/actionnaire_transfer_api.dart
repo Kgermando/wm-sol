@@ -66,7 +66,7 @@ class ActionnaireTransfertApi extends GetConnect {
     var data = actionnaireTransfertModel.toJson();
     var body = jsonEncode(data);
     var updateUrl = Uri.parse(
-        "$mainUrl/admin/actionnaire-transferts/update-actionnaire-transfert/");
+        "$mainUrl/admin/actionnaire-transferts/update-actionnaire-tranfert/");
 
     var res = await client.put(updateUrl, headers: header, body: body);
     if (res.statusCode == 200) {
@@ -80,7 +80,7 @@ class ActionnaireTransfertApi extends GetConnect {
     Map<String, String> header = headers;
 
     var deleteUrl = Uri.parse(
-        "$mainUrl/admin/actionnaire-transferts/delete-actionnaire-transfert/$id");
+        "$mainUrl/admin/actionnaire-transferts/delete-actionnaire-tranfert/$id");
 
     var res = await client.delete(deleteUrl, headers: header);
     if (res.statusCode == 200) {

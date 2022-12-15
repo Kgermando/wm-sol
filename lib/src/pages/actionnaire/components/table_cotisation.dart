@@ -105,7 +105,7 @@ class _TableCotisationState extends State<TableCotisation> {
           'postNom': PlutoCell(value: item.postNom),
           'prenom': PlutoCell(value: item.prenom),
           'matricule': PlutoCell(value: item.matricule),
-          'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
+          'montant': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
           'note': PlutoCell(value: item.note),
           'moyenPaiement': PlutoCell(value: item.moyenPaiement),
           'numeroTransaction': PlutoCell(value: item.numeroTransaction),

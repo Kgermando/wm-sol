@@ -7,6 +7,7 @@ import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:open_app_file/open_app_file.dart';
 
 class UpdateController extends GetxController
     with StateMixin<List<UpdateModel>> {
@@ -30,12 +31,14 @@ class UpdateController extends GetxController
   final _sumVersionCloud = 0.0.obs; // Version mis en ligne
   double get sumVersionCloud => _sumVersionCloud.value;
 
-  bool downloading = false;
   final _progressString = '0'.obs;
   String get progressString => _progressString.value;
 
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
+
+   final _isDownloading = false.obs;
+  bool get isDownloading => _isDownloading.value;
   final _isUploadingDone = false.obs;
   bool get isUploadingDone => _isUploadingDone.value;
 
@@ -50,27 +53,28 @@ class UpdateController extends GetxController
     });
   }
 
-  Future<void> downloadNetworkSoftware({required String url}) async {
+  void downloadNetworkSoftware({required String url}) async {
     Dio dio = Dio();
     try {
       var dir = await getDownloadsDirectory();
       final name = url.split('/').last;
       final fileName = '${dir!.path}/$name';
-      Get.snackbar("Téléchargement en cours", "Patientez svp...",
-          backgroundColor: Colors.blue,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
+      // Get.snackbar("Téléchargement en cours", "Patientez svp...",
+      //     backgroundColor: Colors.blue,
+      //     icon: const Icon(Icons.check),
+      //     snackPosition: SnackPosition.TOP);
       await dio.download(url, fileName, onReceiveProgress: (received, total) {
-        downloading = true;
+        _isDownloading.value = true;
         _progressString.value =
             "${((received / total) * 100).toStringAsFixed(0)}%";
         update();
-      }).then((value) {
+      }).then((value) async {
+        _isDownloading.value = false;
         Get.snackbar("Téléchargement réussi!", " ",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
-        // OpenFile.open(fileName);
+        await OpenAppFile.open(fileName); 
       });
     } catch (e) {
       Get.snackbar("Erreur de Téléchargement", "$e",
@@ -78,7 +82,7 @@ class UpdateController extends GetxController
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-  }
+  } 
 
   @override
   void onInit() {
