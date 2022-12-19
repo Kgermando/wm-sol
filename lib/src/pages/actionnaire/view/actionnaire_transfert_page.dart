@@ -6,14 +6,15 @@ import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/actionnaire/components/table_tranfert_parts.dart';
-import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart'; 
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
 class ActionnaireTransfertPage extends StatefulWidget {
   const ActionnaireTransfertPage({super.key});
 
   @override
-  State<ActionnaireTransfertPage> createState() => _ActionnaireTransfertPageState();
+  State<ActionnaireTransfertPage> createState() =>
+      _ActionnaireTransfertPageState();
 }
 
 class _ActionnaireTransfertPageState extends State<ActionnaireTransfertPage> {

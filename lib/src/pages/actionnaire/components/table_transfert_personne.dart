@@ -1,32 +1,43 @@
 import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
+import 'package:wm_solution/src/models/actionnaire/actionnaire_transfert_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/actionnaire/actionnaire_cotisation_model.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-class TableCotisationPersonne extends StatefulWidget {
-  const TableCotisationPersonne({super.key, required this.state});
-  final List<ActionnaireCotisationModel> state;
+class TableTransfertPersonne extends StatefulWidget {
+  const TableTransfertPersonne({super.key, required this.state});
+  final List<ActionnaireTransfertModel> state;
 
   @override
-  State<TableCotisationPersonne> createState() =>
-      _TableCotisationPersonneState();
+  State<TableTransfertPersonne> createState() => _TableTransfertPersonneState();
 }
 
-class _TableCotisationPersonneState extends State<TableCotisationPersonne> {
+class _TableTransfertPersonneState extends State<TableTransfertPersonne> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  EasyTableModel<ActionnaireCotisationModel>? _model;
+  EasyTableModel<ActionnaireTransfertModel>? _model;
 
   @override
   void initState() {
     super.initState();
 
-    List<ActionnaireCotisationModel> rows =
+    List<ActionnaireTransfertModel> rows =
         List.generate(widget.state.length, (index) => widget.state[index]);
-    _model = EasyTableModel<ActionnaireCotisationModel>(rows: rows, columns: [
+    _model = EasyTableModel<ActionnaireTransfertModel>(rows: rows, columns: [
+      EasyTableColumn(
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
+          name: 'Transfer De',
+          width: 200,
+          stringValue: (row) => row.matriculeEnvoi),
+      EasyTableColumn(
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
+          name: 'Transfer A',
+          width: 200,
+          stringValue: (row) => row.matriculeRecu),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
@@ -34,24 +45,6 @@ class _TableCotisationPersonneState extends State<TableCotisationPersonne> {
           width: 150,
           stringValue: (row) =>
               "${NumberFormat.decimalPattern('fr').format(double.parse(row.montant))} ${monnaieStorage.monney}"),
-      EasyTableColumn(
-          headerAlignment: Alignment.center,
-          cellAlignment: Alignment.center,
-          name: 'Note',
-          width: 300,
-          stringValue: (row) => row.note),
-      EasyTableColumn(
-          headerAlignment: Alignment.center,
-          cellAlignment: Alignment.center,
-          name: 'Moyen de Paiement',
-          width: 200,
-          stringValue: (row) => row.moyenPaiement),
-      EasyTableColumn(
-          headerAlignment: Alignment.center,
-          cellAlignment: Alignment.center,
-          name: 'Numero Transaction',
-          width: 200,
-          stringValue: (row) => row.numeroTransaction),
       EasyTableColumn(
           headerAlignment: Alignment.center,
           cellAlignment: Alignment.center,
@@ -77,9 +70,9 @@ class _TableCotisationPersonneState extends State<TableCotisationPersonne> {
             height: 400,
             child: Column(
               children: [
-                const TitleWidget(title: "Historique de Cotisations"),
+                const TitleWidget(title: "Historique de Transfert"),
                 Expanded(
-                  child: EasyTable<ActionnaireCotisationModel>(_model,
+                  child: EasyTable<ActionnaireTransfertModel>(_model,
                       multiSort: true),
                 ),
               ],

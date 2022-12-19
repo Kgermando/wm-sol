@@ -54,19 +54,19 @@ class ActionnaireController extends GetxController
       actionnaireList.addAll(response);
 
       await actionnaireApi.getAllDataLimit().then((response) {
-      actionnaireLimitList.clear();
-      actionnaireLimitList.addAll(response);
+        actionnaireLimitList.clear();
+        actionnaireLimitList.addAll(response);
+        change(actionnaireList, status: RxStatus.success());
+      }, onError: (err) {
+        change(null, status: RxStatus.error(err.toString()));
+      });
       change(actionnaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
-    }); 
-      change(actionnaireList, status: RxStatus.success());
-    }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
-    }); 
+    });
   }
 
-   detailView(int id) async {
+  detailView(int id) async {
     final data = await actionnaireApi.getOneData(id);
     return data;
   }
@@ -125,5 +125,4 @@ class ActionnaireController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
- 
 }

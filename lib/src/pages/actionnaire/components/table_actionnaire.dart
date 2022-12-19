@@ -62,6 +62,7 @@ class _TableActionnaireState extends State<TableActionnaire> {
                 onPressed: () {
                   Navigator.pushNamed(
                       context, ActionnaireRoute.actionnairePage);
+                  widget.controller.getList();
                 },
                 icon: Icon(Icons.refresh, color: Colors.green.shade700))
           ],
@@ -117,14 +118,15 @@ class _TableActionnaireState extends State<TableActionnaire> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'matricule': PlutoCell(value: item.matricule),
-          'cotisations':
-              PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(item.cotisations)} ${monnaieStorage.monney}"),
+          'cotisations': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(item.cotisations)} ${monnaieStorage.monney}"),
           'nom': PlutoCell(value: item.nom),
           'postNom': PlutoCell(value: item.postNom),
           'prenom': PlutoCell(value: item.prenom),
           'email': PlutoCell(value: item.email),
           'telephone': PlutoCell(value: item.telephone),
-          'sexe': PlutoCell(value: item.sexe),  
+          'sexe': PlutoCell(value: item.sexe),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -174,6 +176,7 @@ class _TableActionnaireState extends State<TableActionnaire> {
           return Text(
             rendererContext.cell.value.toString(),
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: mainColor,
             ),
@@ -253,8 +256,7 @@ class _TableActionnaireState extends State<TableActionnaire> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 220,
         minWidth: 150,
-      ), 
-      
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Signature',

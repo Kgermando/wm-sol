@@ -120,14 +120,15 @@ class _ActionnaireDashboardState extends State<ActionnaireDashboard> {
                                           icon: Icons.male,
                                           color: Colors.brown.shade700),
                                     ],
-                                  ), 
+                                  ),
                                   const SizedBox(height: p20),
                                   ResponsiveChildWidget(
-                                    mainAxisAlignment:
+                                      mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       child1: ChartBarActions(state: state),
                                       child2: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           ChartPieAction(state: state),
                                           const SizedBox(height: p20),

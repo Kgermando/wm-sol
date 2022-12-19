@@ -232,22 +232,32 @@ class PersonnelsController extends GetxController
               : experienceController.text,
           statutAgent: 'Inactif',
           createdAt: DateTime.now(),
-          photo: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+          photo: (uploadedFileUrl == '') ? 'https://www.jea.com/cdn/images/avatar.png' : uploadedFileUrl.toString(),
           salaire:
               (salaireController.text == '') ? '-' : salaireController.text,
           signature: profilController.user.matricule,
           created: DateTime.now());
       await personnelsApi.insertData(agentModel).then((value) async {
-        clear();
-        submitPerformence();
-        personnelsList.clear();
-        getList();
-        Get.back();
-        Get.snackbar(
-            "Enregistrement effectué!", "Le document a bien été sauvegadé",
+        
+        final performenceModel = PerformenceModel(
+          agent: value.matricule,
+          departement: value.departement,
+          nom: value.nom,
+          postnom: value.postNom,
+          prenom: value.prenom,
+          signature: profilController.user.matricule,
+          created: DateTime.now());
+        await performenceApi.insertData(performenceModel).then((value) {
+          clear();
+          personnelsList.clear();
+          getList();
+          Get.back();
+          Get.snackbar(
+            "Enregistrement effectué!", "Le document a bien été créé!",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
+        }); 
       });
       _isLoading.value = false;
     } catch (e) {
@@ -260,28 +270,7 @@ class PersonnelsController extends GetxController
     }
   }
 
-  Future submitPerformence() async {
-    var departement = jsonEncode(departementSelectedList);
-    final performenceModel = PerformenceModel(
-        agent: matricule,
-        departement: departement,
-        nom: nomController.text,
-        postnom: postNomController.text,
-        prenom: prenomController.text,
-        signature: profilController.user.matricule,
-        created: DateTime.now());
-    await performenceApi.insertData(performenceModel).then((value) {
-      personnelsList.clear();
-      getList();
-      Get.back();
-      Get.snackbar(
-          "Enregistrement effectué!", "Le document a bien été sauvegadé",
-          backgroundColor: Colors.green,
-          icon: const Icon(Icons.check),
-          snackPosition: SnackPosition.TOP);
-    });
-  }
-
+  
   Future submitUpdate(AgentModel personne) async {
     var departement = jsonEncode(departementSelectedUpdateList);
     final agentModel = AgentModel(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/constants/app_theme.dart'; 
-import 'package:wm_solution/src/models/actionnaire/actionnaire_transfert_model.dart';  
+import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/models/actionnaire/actionnaire_transfert_model.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableTransfertParts extends StatefulWidget {
-  const TableTransfertParts({super.key, required this.state, required this.monnaie});
+  const TableTransfertParts(
+      {super.key, required this.state, required this.monnaie});
   final List<ActionnaireTransfertModel> state;
   final String monnaie;
 
@@ -32,7 +33,7 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
   Widget build(BuildContext context) {
     return PlutoGrid(
       columns: columns,
-      rows: rows, 
+      rows: rows,
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
@@ -92,9 +93,8 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'matriculeEnvoi': PlutoCell(value: item.matriculeEnvoi),
-          'matriculeRecu': PlutoCell(value: item.matriculeRecu), 
-          'montant':
-              PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
+          'matriculeRecu': PlutoCell(value: item.matriculeRecu),
+          'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -118,7 +118,7 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Transfer De',
@@ -156,6 +156,7 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
           return Text(
             rendererContext.cell.value.toString(),
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: mainColor,
             ),
@@ -163,7 +164,7 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
         },
         width: 150,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Signature',

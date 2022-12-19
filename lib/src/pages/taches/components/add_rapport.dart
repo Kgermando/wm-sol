@@ -7,8 +7,7 @@ import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart'; 
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class AddRapport extends StatefulWidget {
@@ -25,7 +24,7 @@ class _AddRapportState extends State<AddRapport> {
   String title = "Rapports";
   String subTitle = "Nouveau rapport";
 
-  final FocusNode _focusNode = FocusNode();
+  // final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {

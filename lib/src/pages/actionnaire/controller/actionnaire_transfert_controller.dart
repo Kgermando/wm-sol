@@ -7,7 +7,6 @@ import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_transfert_model.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
 
 class ActionnaireTransfertController extends GetxController
     with StateMixin<List<ActionnaireTransfertModel>> {
@@ -121,7 +120,7 @@ class ActionnaireTransfertController extends GetxController
               created: data.created,
               cotisations: data.cotisations - double.parse(value.montant));
           await actionnaireApi.updateData(dataItem).then((value) async {
-            clear(); 
+            clear();
             actionnaireTransfertList.clear();
             getList();
             Get.snackbar("Transferer effectuée avec succès!",

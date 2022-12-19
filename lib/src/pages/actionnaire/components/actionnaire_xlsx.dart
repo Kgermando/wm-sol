@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:excel/excel.dart'; 
+import 'package:excel/excel.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
@@ -10,7 +10,7 @@ class ActionnaireXlsx {
     var excel = Excel.createExcel();
     String title = "Actionnaires";
     Sheet sheetObject = excel[title];
-    sheetObject.insertRowIterables([ 
+    sheetObject.insertRowIterables([
       "Nom",
       "PostNom",
       "Prenom",
@@ -24,7 +24,7 @@ class ActionnaireXlsx {
     ], 0);
 
     for (int i = 0; i < dataList.length; i++) {
-      List<String> data = [ 
+      List<String> data = [
         dataList[i].nom,
         dataList[i].postNom,
         dataList[i].prenom,

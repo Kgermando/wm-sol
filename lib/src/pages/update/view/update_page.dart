@@ -1,12 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:wm_solution/src/pages/update/components/table_update.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/update/components/table_update.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -25,91 +25,124 @@ class _UpdatePageState extends State<UpdatePage> {
   String title = "Mise à jours";
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, ''),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text("Mise à jour"),
-          tooltip: "Add Update",
-          icon: const Icon(Icons.download),
-          onPressed: () {
-            if(profilController.user.matricule.contains("Support")) {
-              Get.bottomSheet(
-                useRootNavigator: true,
-                Scaffold(
-                  body: Container(
-                    // color: Colors.amber.shade100,
-                    padding: const EdgeInsets.all(p20),
-                    child: Form(
-                      key: controller.formKey,
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Text("Nouvelle mise à jour",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall)),
-                            ],
+        floatingActionButton: (profilController.user.matricule
+                .contains("Support"))
+            ? FloatingActionButton.extended(
+                label: const Text("Mise à jour"),
+                tooltip: "Add Update",
+                icon: const Icon(Icons.download),
+                onPressed: () {
+                  Get.bottomSheet(
+                      useRootNavigator: true,
+                      Scaffold(
+                        body: Container(
+                          // color: Colors.amber.shade100,
+                          padding: const EdgeInsets.all(p20),
+                          child: Form(
+                            key: controller.formKey,
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text("Nouvelle mise à jour",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall)),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: p20,
+                                ),
+                                versionWidget(),
+                                motifWidget(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    fichierWidget(),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: p20,
+                                ),
+                                BtnWidget(
+                                    title: 'Soumettre',
+                                    press: () {
+                                      final form =
+                                          controller.formKey.currentState!;
+                                      if (form.validate()) {
+                                        controller.submit();
+                                        form.reset();
+                                        Navigator.of(context).pop();
+                                      }
+                                    },
+                                    isLoading: controller.isLoading)
+                              ],
+                            ),
                           ),
-                          const SizedBox(
-                            height: p20,
-                          ),
-                          versionWidget(),
-                          motifWidget(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              fichierWidget(),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: p20,
-                          ),
-                          BtnWidget(
-                              title: 'Ajouter maintenant',
-                              press: () {
-                                final form = controller.formKey.currentState!;
-                                if (form.validate()) {
-                                  controller.submit();
-                                  form.reset();
-                                  Navigator.of(context).pop();
-                                }
-                              },
-                              isLoading: controller.isLoading)
-                        ],
-                      ),
-                    ),
-                  ),
-                ));
-            }
-          },
-        ),
-        body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!),
-            (state) => Row(
-                  children: [
-                    Visibility(
-                        visible: !Responsive.isMobile(context),
-                        child: const Expanded(flex: 1, child: DrawerMenu())),
-                    Expanded(
-                        flex: 5,
-                        child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, right: p20, left: p20, bottom: p8),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: TableUpdate(
-                                updateList: state!, controller: controller))),
-                  ],
-                )));
+                        ),
+                      ));
+                },
+              )
+            : Container(),
+        body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (state) => Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableUpdate(
+                            updateList: state!, controller: controller)
+
+                        // Column(
+                        //   children: [
+                        //     const TitleWidget(title: "Mise à jour"),
+                        //     const SizedBox(height: p20),
+                        //     Expanded(
+                        //       child: ListView.builder(
+                        //           itemCount: state!.length,
+                        //           itemBuilder: (context, index) {
+                        //             UpdateModel version = state[index];
+                        //             return Card(
+                        //               child: ListTile(
+                        //                 title: Text(version.version),
+                        //                 subtitle: Text(version.motif),
+                        //                 trailing: (controller.isDownloading)
+                        //       ? (controller.progressString == "100%")
+                        //         ? const Icon(Icons.check)
+                        //         : Obx(() => AutoSizeText(controller.progressString,
+                        //              maxLines: 1, style: const TextStyle(fontSize: 12.0)))
+                        //       : IconButton(onPressed: () {
+                        //                    controller.downloadNetworkSoftware(
+                        //                           url: version.urlUpdate);
+                        //                 }, icon: const Icon(Icons.download, color: Colors.orange)),
+
+                        //               ),
+                        //             );
+                        //       }),
+                        //     ),
+                        //   ],
+                        // )
+                        ))),
+          ],
+        ));
   }
 
   Widget versionWidget() {

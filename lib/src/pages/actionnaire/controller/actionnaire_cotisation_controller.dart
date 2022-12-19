@@ -44,7 +44,7 @@ class ActionnaireCotisationController extends GetxController
   void clear() {
     montantController.clear();
     noteController.clear();
-    // moyenPaiementController = null;
+    moyenPaiementController.clear();
     numeroTransactionController.clear();
   }
 

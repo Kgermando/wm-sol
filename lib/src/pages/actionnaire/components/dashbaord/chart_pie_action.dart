@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 
@@ -11,7 +12,7 @@ class ChartPieAction extends StatefulWidget {
 }
 
 class _ChartPieActionState extends State<ChartPieAction> {
-     TooltipBehavior? _tooltipBehavior;
+  TooltipBehavior? _tooltipBehavior;
 
   @override
   void initState() {
@@ -21,7 +22,7 @@ class _ChartPieActionState extends State<ChartPieAction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card( 
+    return Card(
       child: SfCircularChart(
           enableMultiSelection: true,
           title: ChartTitle(
@@ -29,12 +30,14 @@ class _ChartPieActionState extends State<ChartPieAction> {
               textStyle: const TextStyle(fontWeight: FontWeight.bold)),
           legend: Legend(isVisible: true, isResponsive: true),
           tooltipBehavior: _tooltipBehavior,
+          palette: listColors,
           series: <CircularSeries>[
             // Render pie chart
             PieSeries<ActionnaireModel, String>(
                 dataSource: widget.state,
                 // pointColorMapper: (ChartData data, _) => data.color,
-                xValueMapper: (ActionnaireModel data, _) => "${data.prenom} ${data.nom} ${data.postNom}",
+                xValueMapper: (ActionnaireModel data, _) =>
+                    "${data.prenom} ${data.nom} ${data.postNom}",
                 yValueMapper: (ActionnaireModel data, _) => data.cotisations)
           ]),
     );

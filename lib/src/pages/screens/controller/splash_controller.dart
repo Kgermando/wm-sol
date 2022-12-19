@@ -24,8 +24,9 @@ import 'package:wm_solution/src/routes/routes.dart';
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  final ProfilController profilController =  Get.put(ProfilController());
+  final ProfilController profilController = Get.put(ProfilController());
   final MaillingController maillingController = Get.put(MaillingController());
+  final UsersController usersController = Get.put(UsersController());
 
   final getStorge = GetStorage();
 
@@ -33,19 +34,18 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
     String? idToken = getStorge.read('idToken');
-    if (idToken != null) { 
+    if (idToken != null) {
       isLoggIn();
+      print("idToken $idToken");
     } else {
       Get.offAllNamed(UserRoutes.login);
     }
   }
 
-  void isLoggIn() async { 
-    
-    Get.put(UsersController());
+  void isLoggIn() async {
     await loginController.authApi.getUserId().then((userData) async {
       var departement = jsonDecode(userData.departement);
-      if (departement.first == "Administration") { 
+      if (departement.first == "Administration") {
         Get.put(AdminDashboardController());
         Get.put(DashobardRHController());
         Get.put(DashboardComController());
@@ -62,7 +62,7 @@ class SplashController extends GetxController {
         } else {
           Get.offAndToNamed(AdminRoutes.adminComptabilite);
         }
-      } else if (departement.first == "Finances") { 
+      } else if (departement.first == "Finances") {
         Get.put(DashboardFinanceController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(FinanceRoutes.financeDashboard);
@@ -86,7 +86,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
         }
       } else if (departement.first == "Ressources Humaines") {
-        
         Get.put(DashobardRHController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(RhRoutes.rhDashboard);
@@ -94,7 +93,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(RhRoutes.rhPresence);
         }
       } else if (departement.first == "Exploitations") {
-        
         Get.put(DashboardExpController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ExploitationRoutes.expDashboard);
@@ -102,7 +100,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(TacheRoutes.tachePage);
         }
       } else if (departement.first == "Marketing") {
-        
         Get.put(DashboardMarketingController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(MarketingRoutes.marketingDashboard);
@@ -110,7 +107,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(MarketingRoutes.marketingAnnuaire);
         }
       } else if (departement.first == "Commercial") {
-        
         Get.put(DashboardComController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ComRoutes.comDashboard);
@@ -118,7 +114,6 @@ class SplashController extends GetxController {
           Get.offAndToNamed(ComRoutes.comVente);
         }
       } else if (departement.first == "Logistique") {
-        
         Get.put(DashboardLogController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(LogistiqueRoutes.logDashboard);
@@ -134,22 +129,20 @@ class SplashController extends GetxController {
         Get.put(AdminDashboardController());
 
         Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
-
       } else if (departement.first == "Support") {
-        
-      //  Get.put(MaillingController());
-      //   Get.put(PersonnelsController());
-      //   Get.put(CreanceController());
-      //   Get.put(DetteController());
-      //   Get.put(AdminDashboardController());
-      //   Get.put(DashobardRHController());
-      //   Get.put(DashboardComController());
-      //   Get.put(DashboardBudgetController());
-      //   Get.put(DashboardMarketingController());
-      //   Get.put(DashboardComptabiliteController());
-      //   Get.put(DashboardExpController());
-      //   Get.put(DashboardFinanceController());
-      //   Get.put(DashboardLogController());
+        //  Get.put(MaillingController());
+        //   Get.put(PersonnelsController());
+        //   Get.put(CreanceController());
+        //   Get.put(DetteController());
+        //   Get.put(AdminDashboardController());
+        //   Get.put(DashobardRHController());
+        //   Get.put(DashboardComController());
+        //   Get.put(DashboardBudgetController());
+        //   Get.put(DashboardMarketingController());
+        //   Get.put(DashboardComptabiliteController());
+        //   Get.put(DashboardExpController());
+        //   Get.put(DashboardFinanceController());
+        //   Get.put(DashboardLogController());
 
         Get.offAndToNamed(AdminRoutes.adminDashboard);
       }

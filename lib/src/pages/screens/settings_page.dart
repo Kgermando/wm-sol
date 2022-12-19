@@ -213,7 +213,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             content:
-                Text('Version: ${InfoSystem().version()} \nDate: 01-12-2022')),
+                Text('Version: ${InfoSystem().version()} \nDate: ${InfoSystem().date()}')),
       ),
     );
   }

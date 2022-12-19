@@ -16,5 +16,5 @@ class InfoSystem {
   String iDNat() => "01-H5300-N8539IR";
   String email() => "-";
   String phone() => "+243 972 361 000";
-  
+  String date() => "15-12-2022";
 }

@@ -105,7 +105,7 @@ class AuthApi extends GetConnect {
     final box = GetStorage();
 
     String? idToken = box.read('idToken');
-    int id = (idToken == null) ? 0 : int.parse(jsonDecode(idToken));
+    int id = (idToken == null || idToken != '-') ? 0 : int.parse(jsonDecode(idToken));
     if (kDebugMode) {
       print("id: $id");
     }

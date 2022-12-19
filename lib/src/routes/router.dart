@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/bindings/network_bindings.dart';
-import 'package:wm_solution/src/bindings/wm_binding.dart';
-import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart'; 
+import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
-import 'package:wm_solution/src/models/commercial/achat_model.dart'; 
-import 'package:wm_solution/src/models/commercial/bon_livraison.dart'; 
+import 'package:wm_solution/src/models/commercial/achat_model.dart';
+import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
 import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
@@ -14,10 +13,10 @@ import 'package:wm_solution/src/models/commercial/prod_model.dart';
 import 'package:wm_solution/src/models/commercial/restitution_model.dart';
 import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/models/commercial/succursale_model.dart';
-import 'package:wm_solution/src/models/commercial/vente_cart_model.dart'; 
-import 'package:wm_solution/src/models/comptabilites/balance_model.dart'; 
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 import 'package:wm_solution/src/models/comptabilites/bilan_model.dart';
-import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';  
+import 'package:wm_solution/src/models/comptabilites/compte_resultat_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/models/exploitations/fourniseur_model.dart';
 import 'package:wm_solution/src/models/exploitations/production_model.dart';
@@ -50,6 +49,7 @@ import 'package:wm_solution/src/models/rh/paiement_salaire_model.dart';
 import 'package:wm_solution/src/models/rh/perfomence_model.dart';
 import 'package:wm_solution/src/models/rh/presence_model.dart';
 import 'package:wm_solution/src/models/rh/transport_restauration_model.dart';
+import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/404/error.dart';
 import 'package:wm_solution/src/pages/actionnaire/binding/actionnaire_binding.dart';
@@ -128,13 +128,13 @@ import 'package:wm_solution/src/pages/commercial/components/commercial/succursal
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/update_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/vente_effectue/detail_vente_effectue.dart';
 import 'package:wm_solution/src/pages/commercial/view/commercials/vente_effectue_page.dart';
-import 'package:wm_solution/src/pages/comptabilites/bindings/balance_binding.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/bindings/balance_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_ref_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/compte_resultat_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/dashboard_comptabilite_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/journal_binding.dart';
-import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
 import 'package:wm_solution/src/pages/devis/bindings/devis_binding.dart';
 import 'package:wm_solution/src/pages/devis/bindings/devis_list_objet_binding.dart';
 import 'package:wm_solution/src/pages/exploitations/bindings/dashboard_exploitation_binding.dart';
@@ -200,17 +200,17 @@ import 'package:wm_solution/src/pages/commercial/view/commercials/vente_page.dar
 import 'package:wm_solution/src/pages/commercial/view/dashboard_comm_page.dart';
 import 'package:wm_solution/src/pages/marketing/view/agenda_page.dart';
 import 'package:wm_solution/src/pages/marketing/view/annuaire_page.dart';
-import 'package:wm_solution/src/pages/marketing/view/campaign_page.dart'; 
+import 'package:wm_solution/src/pages/marketing/view/campaign_page.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/bilan/detail_bilan.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/add_compte_resultat.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/detail_compte_resultat.dart';
-import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/update_compte_resultat.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/update_compte_resultat.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/grand_livre/search_grand_livre.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/balance_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/bilan_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/compte_resultat_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/dashboard_comptabilite.dart';
-import 'package:wm_solution/src/pages/comptabilites/view/dd_comptabilie.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/view/dd_comptabilie.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/journal_comptabilite.dart';
 import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
 import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
@@ -238,7 +238,7 @@ import 'package:wm_solution/src/pages/finances/view/observation_page.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_accuse_reception.dart';
 import 'package:wm_solution/src/pages/logistique/components/approvisionnements/detail_approvisionnement.dart';
 import 'package:wm_solution/src/pages/logistique/components/trajets/add_trajet.dart';
-import 'package:wm_solution/src/pages/logistique/components/trajets/detail_trajet.dart'; 
+import 'package:wm_solution/src/pages/logistique/components/trajets/detail_trajet.dart';
 import 'package:wm_solution/src/pages/logistique/components/entretiens/detail_entretien.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/add_etat_materiel.dart';
 import 'package:wm_solution/src/pages/logistique/components/etat_materiels/detail_etat_materiel.dart';
@@ -292,7 +292,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/personnels_rh.dart
 import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/view/users_actif_page.dart'; 
+import 'package:wm_solution/src/pages/ressource_humaines/view/users_actif_page.dart';
 import 'package:wm_solution/src/pages/screens/help_page.dart';
 import 'package:wm_solution/src/pages/screens/settings_page.dart';
 import 'package:wm_solution/src/pages/screens/splash_page.dart';
@@ -302,28 +302,26 @@ import 'package:wm_solution/src/pages/taches/components/add_rapport.dart';
 import 'package:wm_solution/src/pages/taches/components/detail_rapport.dart';
 import 'package:wm_solution/src/pages/taches/components/detail_tache.dart';
 import 'package:wm_solution/src/pages/taches/view/tache_page.dart';
+import 'package:wm_solution/src/pages/update/components/detail_update.dart';
 import 'package:wm_solution/src/pages/update/view/update_page.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 List<GetPage<dynamic>>? getPages = [
   // 404
-   GetPage(
-    name: ExceptionRoutes.notFound, 
-    page: () => const PageNotFound(),
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
-
+  GetPage(
+      name: ExceptionRoutes.notFound,
+      page: () => const PageNotFound(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   // Settings
   GetPage(
-    name: SettingsRoutes.splash,
-    // binding: WMBindings(), 
-    bindings: [
-      
-    ],
-    page: () => const SplashView(),
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
+      name: SettingsRoutes.splash,
+      // binding: WMBindings(),
+      bindings: [],
+      page: () => const SplashView(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   // UserRoutes
   GetPage(
@@ -333,25 +331,25 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.logout, 
+      name: UserRoutes.logout,
       bindings: [LoginBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const LoginAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.profil, 
+      name: UserRoutes.profil,
       bindings: [ProfilBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const ProfileAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.changePassword, 
+      name: UserRoutes.changePassword,
       bindings: [ChangePasswordBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const ChangePasswordAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: UserRoutes.forgotPassword, 
+      name: UserRoutes.forgotPassword,
       bindings: [ForgotPaswordBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const ForgotPassword(),
       transition: Transition.cupertino,
@@ -375,30 +373,44 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: MailRoutes.mails,
       bindings: [
-        MailBinding(), 
+        MailBinding(),
         UsersBinding(),
-        ProfilBinding(), NetworkBindings()],
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const MailPages(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.addMail,
-      bindings: [MailBinding(),
-        UsersBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MailBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const NewMail(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailSend,
-      bindings: [MailBinding(),
-        UsersBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MailBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const MailSend(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: MailRoutes.mailDetail,
-      bindings: [MailBinding(),
-        UsersBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MailBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         MailColor mailColor = Get.arguments as MailColor;
         return DetailMail(mailColor: mailColor);
@@ -406,9 +418,13 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MailRoutes.mailRepondre, 
-      bindings: [MailBinding(),
-        UsersBinding(), ProfilBinding(), NetworkBindings()],
+      name: MailRoutes.mailRepondre,
+      bindings: [
+        MailBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         MailModel mailModel = Get.arguments as MailModel;
         return RepondreMail(mailModel: mailModel);
@@ -416,9 +432,13 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MailRoutes.mailTransfert, 
-      bindings: [MailBinding(),
-        UsersBinding(), ProfilBinding(), NetworkBindings()],
+      name: MailRoutes.mailTransfert,
+      bindings: [
+        MailBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         MailModel mailModel = Get.arguments as MailModel;
         return TransfertMail(mailModel: mailModel);
@@ -434,7 +454,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: TacheRoutes.tacheDetail, 
+      name: TacheRoutes.tacheDetail,
       bindings: [TacheBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         TacheModel tacheModel = Get.arguments as TacheModel;
@@ -444,7 +464,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: TacheRoutes.rapportDetail,
-      bindings: [RapportBinding(), TacheBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        RapportBinding(),
+        TacheBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         RapportModel rapportModel = Get.arguments as RapportModel;
         return DetailRapport(rapportModel: rapportModel);
@@ -454,7 +479,12 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: TacheRoutes.rapportAdd,
       binding: RapportBinding(),
-      bindings: [RapportBinding(), TacheBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        RapportBinding(),
+        TacheBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         TacheModel tacheModel = Get.arguments as TacheModel;
         return AddRapport(tacheModel: tacheModel);
@@ -465,13 +495,23 @@ List<GetPage<dynamic>>? getPages = [
   // Archives
   GetPage(
       name: ArchiveRoutes.archives,
-      bindings: [ArchiveBinding(), ArchiveFolderBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const ArchiveFolderPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ArchiveRoutes.archiveTable,
-      bindings: [ArchiveBinding(), ArchiveFolderBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         ArchiveFolderModel archiveFolderModel =
             Get.arguments as ArchiveFolderModel;
@@ -480,8 +520,13 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.addArchives, 
-      bindings: [ArchiveBinding(), ArchiveFolderBinding(), ProfilBinding(), NetworkBindings()],
+      name: ArchiveRoutes.addArchives,
+      bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         ArchiveFolderModel archiveFolderModel =
             Get.arguments as ArchiveFolderModel;
@@ -490,7 +535,7 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.archivesDetail, 
+      name: ArchiveRoutes.archivesDetail,
       bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         ArchiveModel archiveModel = Get.arguments as ArchiveModel;
@@ -499,11 +544,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.archivePdf, 
-      bindings: [
-        ArchiveBinding(), 
-        ProfilBinding(), NetworkBindings()
-      ],
+      name: ArchiveRoutes.archivePdf,
+      bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         String url = Get.arguments as String;
         return ArchivePdfViewer(url: url);
@@ -518,42 +560,62 @@ List<GetPage<dynamic>>? getPages = [
         DashboardNotifyBinding(),
         PersonnelBinding(),
         SalaireBinding(),
-        TransportRestBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
+        TransportRestBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const DashboardRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhDD,
       bindings: [
-        SalaireBinding(), 
+        SalaireBinding(),
         TransportRestBinding(),
-        UsersBinding(), ProfilBinding(), NetworkBindings()],
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const DDRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsPage,
-      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        PersonnelBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const PersonnelsPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhPersonnelsAdd,
-      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        PersonnelBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         List<AgentModel> personnelList = Get.arguments as List<AgentModel>;
         return AddPersonnel(personnelList: personnelList);
       }),
   GetPage(
       name: RhRoutes.rhPersonnelsDetail,
-      bindings: [PersonnelBinding(), 
+      bindings: [
+        PersonnelBinding(),
         PerformenceBinding(),
-        PerformenceNoteBinding(), 
-        UsersBinding(), 
+        PerformenceNoteBinding(),
+        UsersBinding(),
         PresenceBinding(),
         PrersencePersonneBinding(),
         ActionnaireBinding(),
-        ProfilBinding(), NetworkBindings()],
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return DetailPersonne(personne: personne);
@@ -561,15 +623,20 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: RhRoutes.rhPersonnelsUpdate, 
-      bindings: [PersonnelBinding(), UsersBinding(), ProfilBinding(), NetworkBindings()],
+      name: RhRoutes.rhPersonnelsUpdate,
+      bindings: [
+        PersonnelBinding(),
+        UsersBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return UpdatePersonnel(personne: personne);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-      
+
   GetPage(
       name: RhRoutes.rhPaiement,
       bindings: [SalaireBinding(), ProfilBinding(), NetworkBindings()],
@@ -586,11 +653,8 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: RhRoutes.rhPaiementAdd, 
-      bindings: [ 
-        SalaireBinding(),
-        ProfilBinding(), NetworkBindings()
-      ],
+      name: RhRoutes.rhPaiementAdd,
+      bindings: [SalaireBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         AgentModel personne = Get.arguments as AgentModel;
         return AddSalaire(personne: personne);
@@ -606,8 +670,11 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: RhRoutes.rhTransportRestDetail,
-      bindings: [TransportRestBinding(), TransportRestPersonnelBinding(),
-        ProfilBinding(), NetworkBindings()
+      bindings: [
+        TransportRestBinding(),
+        TransportRestPersonnelBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         TransportRestaurationModel transportRestaurationModel =
@@ -620,8 +687,12 @@ List<GetPage<dynamic>>? getPages = [
 
   GetPage(
       name: RhRoutes.rhPerformence,
-      bindings: [PerformenceBinding(),
-        PerformenceNoteBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        PerformenceBinding(),
+        PerformenceNoteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const PerformenceRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -629,7 +700,10 @@ List<GetPage<dynamic>>? getPages = [
       name: RhRoutes.rhPerformenceDetail,
       bindings: [
         PerformenceBinding(),
-        PerformenceNoteBinding(), ProfilBinding(), NetworkBindings()],
+        PerformenceNoteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         PerformenceModel performenceModel = Get.arguments as PerformenceModel;
         return DetailPerformence(performenceModel: performenceModel);
@@ -637,10 +711,12 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: RhRoutes.rhPerformenceAddNote, 
-      bindings: [ PerformenceBinding(),
+      name: RhRoutes.rhPerformenceAddNote,
+      bindings: [
+        PerformenceBinding(),
         PerformenceNoteBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         PerformenceModel performenceModel = Get.arguments as PerformenceModel;
@@ -659,8 +735,9 @@ List<GetPage<dynamic>>? getPages = [
       name: RhRoutes.rhPresenceDetail,
       bindings: [
         PresenceBinding(),
-        PrersencePersonneBinding(), 
-        ProfilBinding(), NetworkBindings()
+        PrersencePersonneBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final PresenceModel presenceModel = Get.arguments as PresenceModel;
@@ -670,11 +747,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: RhRoutes.rhdetailUser, 
-      bindings: [ 
+      name: RhRoutes.rhdetailUser,
+      bindings: [
         UsersBinding(),
         PersonnelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final UserModel userModel = Get.arguments as UserModel;
@@ -708,7 +786,8 @@ List<GetPage<dynamic>>? getPages = [
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardBudget(),
       transition: Transition.cupertino,
@@ -716,7 +795,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: BudgetRoutes.budgetDD,
       bindings: [
-        BudgetPrevisionnelBinding(), 
+        BudgetPrevisionnelBinding(),
         LignBudgetaireBinding(),
         SalaireBinding(),
         CampaignBinding(),
@@ -725,7 +804,8 @@ List<GetPage<dynamic>>? getPages = [
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DDBudget(),
       transition: Transition.cupertino,
@@ -733,7 +813,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: BudgetRoutes.budgetBudgetPrevisionel,
       bindings: [
-        BudgetPrevisionnelBinding(), 
+        BudgetPrevisionnelBinding(),
         LignBudgetaireBinding(),
         SalaireBinding(),
         CampaignBinding(),
@@ -742,7 +822,8 @@ List<GetPage<dynamic>>? getPages = [
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const BudgetPrevisionnelPage(),
       transition: Transition.cupertino,
@@ -750,7 +831,7 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: BudgetRoutes.historiqueBudgetPrevisionel,
       bindings: [
-        BudgetPrevisionnelBinding(), 
+        BudgetPrevisionnelBinding(),
         LignBudgetaireBinding(),
         SalaireBinding(),
         CampaignBinding(),
@@ -759,7 +840,8 @@ List<GetPage<dynamic>>? getPages = [
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const HistoriqueBudget(),
       transition: Transition.cupertino,
@@ -767,8 +849,8 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: BudgetRoutes.budgetBudgetPrevisionelDetail,
       bindings: [
-        BudgetPrevisionnelBinding(), 
-        LignBudgetaireBinding(), 
+        BudgetPrevisionnelBinding(),
+        LignBudgetaireBinding(),
         SalaireBinding(),
         CampaignBinding(),
         DevisBinding(),
@@ -776,7 +858,8 @@ List<GetPage<dynamic>>? getPages = [
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final DepartementBudgetModel departementBudgetModel =
@@ -788,8 +871,11 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetLignebudgetaireDetail,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
-        ProfilBinding(), NetworkBindings()
+      bindings: [
+        BudgetPrevisionnelBinding(),
+        LignBudgetaireBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final LigneBudgetaireModel ligneBudgetaireModel =
@@ -801,8 +887,11 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: BudgetRoutes.budgetLignebudgetaireAdd,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
-        ProfilBinding(), NetworkBindings()
+      bindings: [
+        BudgetPrevisionnelBinding(),
+        LignBudgetaireBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final DepartementBudgetModel departementBudgetModel =
@@ -818,12 +907,13 @@ List<GetPage<dynamic>>? getPages = [
       name: ComptabiliteRoutes.comptabiliteDashboard,
       bindings: [
         DashboardComptabiliteBinding(),
-        BalanceBinding(), 
+        BalanceBinding(),
         BilanBinding(),
         BilanRefBinding(),
         CompteResultatBinding(),
-        JournalBinding(), 
-        ProfilBinding(), NetworkBindings()
+        JournalBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardComptabilite(),
       transition: Transition.cupertino,
@@ -831,23 +921,23 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: ComptabiliteRoutes.comptabiliteDD,
       bindings: [
-        BalanceBinding(), 
+        BalanceBinding(),
         BilanBinding(),
         BilanRefBinding(),
         CompteResultatBinding(),
-        JournalBinding(), 
-        ProfilBinding(), NetworkBindings()
+        JournalBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DDComptabilite(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComptabiliteRoutes.comptabiliteBalance, 
-      bindings: [BalanceBinding(),  ProfilBinding(), NetworkBindings()],
+      name: ComptabiliteRoutes.comptabiliteBalance,
+      bindings: [BalanceBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const BalanceComptabilite(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteBilan,
@@ -859,11 +949,13 @@ List<GetPage<dynamic>>? getPages = [
       name: ComptabiliteRoutes.comptabiliteBilanDetail,
       bindings: [
         BilanBinding(),
-        BilanRefBinding(), ProfilBinding(), NetworkBindings()
+        BilanRefBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final BilanModel bilanModel = Get.arguments as BilanModel;
-        return DetailBilan(bilanModel: bilanModel); 
+        return DetailBilan(bilanModel: bilanModel);
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -912,7 +1004,7 @@ List<GetPage<dynamic>>? getPages = [
       ],
       page: () => const JournalLivreComptabilite(),
       transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)), 
+      transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
       name: ComptabiliteRoutes.comptabiliteGrandLivre,
@@ -924,35 +1016,37 @@ List<GetPage<dynamic>>? getPages = [
       ],
       page: () => const GrandLivre(),
       transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),    
-GetPage(
-    name: ComptabiliteRoutes.comptabiliteGrandLivreSearch, 
-    bindings: [
-      JournalBinding(),
-      BalanceBinding(),
-      ProfilBinding(),
-      NetworkBindings()
-    ],
-    page: () {
-      final List<BalanceModel> search = Get.arguments as List<BalanceModel>;
-      return SearchGrandLivre(search: search);
-    },
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)),
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComptabiliteRoutes.comptabiliteGrandLivreSearch,
+      bindings: [
+        JournalBinding(),
+        BalanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
+      page: () {
+        final List<BalanceModel> search = Get.arguments as List<BalanceModel>;
+        return SearchGrandLivre(search: search);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   // DevisRoutes
   GetPage(
-      name: DevisRoutes.devis, 
-      bindings: [
-        DevisBinding(),
-        ProfilBinding(), NetworkBindings()
-      ],
+      name: DevisRoutes.devis,
+      bindings: [DevisBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const DevisPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: DevisRoutes.devisDetail,
-      bindings: [DevisBinding(), DevisListObjetBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        DevisBinding(),
+        DevisListObjetBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final DevisModel devisModel = Get.arguments as DevisModel;
         return DetailDevis(devisModel: devisModel);
@@ -981,7 +1075,8 @@ GetPage(
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboadFinance(),
       transition: Transition.cupertino,
@@ -999,14 +1094,15 @@ GetPage(
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DDFinance(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.finObservation,
-      bindings: [ 
+      bindings: [
         ObservationNotifyBinding(),
         SalaireBinding(),
         CampaignBinding(),
@@ -1014,8 +1110,9 @@ GetPage(
         DevisListObjetBinding(),
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
-        ProjetBinding(), 
-        ProfilBinding(), NetworkBindings()
+        ProjetBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       binding: ObservationNotifyBinding(),
       page: () => const ObservationPage(),
@@ -1025,7 +1122,9 @@ GetPage(
       name: '/transactions-banque/:id',
       bindings: [
         BanqueNameBinding(),
-        BanqueBinding(), ProfilBinding(), NetworkBindings()
+        BanqueBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final BanqueNameModel banqueNameModel =
@@ -1038,7 +1137,9 @@ GetPage(
       name: FinanceRoutes.transactionsBanqueDetail,
       bindings: [
         BanqueNameBinding(),
-        BanqueBinding(), ProfilBinding(), NetworkBindings()
+        BanqueBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final BanqueModel banqueModel = Get.arguments as BanqueModel;
@@ -1050,7 +1151,9 @@ GetPage(
       name: '/transactions-caisse/:id',
       bindings: [
         CaisseNameBinding(),
-        CaisseBinding(), ProfilBinding(), NetworkBindings()
+        CaisseBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final CaisseNameModel caisseNameModel =
@@ -1063,7 +1166,9 @@ GetPage(
       name: FinanceRoutes.transactionsCaisseDetail,
       bindings: [
         CaisseNameBinding(),
-        CaisseBinding(), ProfilBinding(), NetworkBindings()
+        CaisseBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final CaisseModel caisseModel = Get.arguments as CaisseModel;
@@ -1073,13 +1178,23 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsCreances,
-      bindings: [CreanceBinding(), CreanceDetteBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        CreanceBinding(),
+        CreanceDetteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const CreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: FinanceRoutes.transactionsCreanceDetail,
-      bindings: [CreanceBinding(), CreanceDetteBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        CreanceBinding(),
+        CreanceDetteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final CreanceModel creanceModel = Get.arguments as CreanceModel;
         return DetailCreance(creanceModel: creanceModel);
@@ -1090,7 +1205,9 @@ GetPage(
       name: FinanceRoutes.transactionsDettes,
       bindings: [
         CreanceDetteBinding(),
-        DetteBinding(), ProfilBinding(), NetworkBindings()
+        DetteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DettePage(),
       transition: Transition.cupertino,
@@ -1099,7 +1216,9 @@ GetPage(
       name: FinanceRoutes.transactionsDetteDetail,
       bindings: [
         CreanceDetteBinding(),
-        DetteBinding(), ProfilBinding(), NetworkBindings()
+        DetteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final DetteModel detteModel = Get.arguments as DetteModel;
@@ -1112,7 +1231,8 @@ GetPage(
       bindings: [
         FinExterieurNameBinding(),
         FinExterieurBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final FinExterieurNameModel finExterieurNameModel =
@@ -1126,7 +1246,8 @@ GetPage(
       bindings: [
         FinExterieurNameBinding(),
         FinExterieurBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final FinanceExterieurModel financeExterieurModel =
@@ -1144,7 +1265,8 @@ GetPage(
         AgendaBinding(),
         AnnuaireBinding(),
         CampaignBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardMarketingPage(),
       transition: Transition.cupertino,
@@ -1162,7 +1284,7 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingCampaignAdd, 
+      name: MarketingRoutes.marketingCampaignAdd,
       bindings: [CampaignBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const AddCampaign(),
       transition: Transition.cupertino,
@@ -1175,7 +1297,8 @@ GetPage(
         RapportBinding(),
         PersonnelsRoleBinding(),
         PersonnelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final CampaignModel campaignModel = Get.arguments as CampaignModel;
@@ -1184,10 +1307,14 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingCampaignUpdate, 
-      bindings: [CampaignBinding(),
+      name: MarketingRoutes.marketingCampaignUpdate,
+      bindings: [
+        CampaignBinding(),
         PersonnelsRoleBinding(),
-        PersonnelBinding(), ProfilBinding(), NetworkBindings()],
+        PersonnelBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final CampaignModel campaignModel = Get.arguments as CampaignModel;
         return UpdateCampaign(campaignModel: campaignModel);
@@ -1208,7 +1335,7 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAnnuaireDetail, 
+      name: MarketingRoutes.marketingAnnuaireDetail,
       bindings: [AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final AnnuaireColor annuaireColor = Get.arguments as AnnuaireColor;
@@ -1217,7 +1344,7 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAnnuaireEdit, 
+      name: MarketingRoutes.marketingAnnuaireEdit,
       bindings: [AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final AnnuaireModel annuaireModel = Get.arguments as AnnuaireModel;
@@ -1233,7 +1360,7 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAgendaDetail, 
+      name: MarketingRoutes.marketingAgendaDetail,
       bindings: [AgendaBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final AgendaColor agendaColor = Get.arguments as AgendaColor;
@@ -1242,7 +1369,7 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: MarketingRoutes.marketingAgendaUpdate, 
+      name: MarketingRoutes.marketingAgendaUpdate,
       bindings: [AgendaBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final AgendaColor agendaColor = Get.arguments as AgendaColor;
@@ -1260,8 +1387,9 @@ GetPage(
         GainCartBinding(),
         VenteCartBinding(),
         FactureCreanceBinding(),
-        SuccursaleBinding(), 
-        ProfilBinding(), NetworkBindings()
+        SuccursaleBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardCommPage(),
       transition: Transition.cupertino,
@@ -1283,31 +1411,43 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursale,
-      bindings: [SuccursaleBinding(),
+      bindings: [
+        SuccursaleBinding(),
         AchatBinding(),
         GainCartBinding(),
         VenteCartBinding(),
-        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
+        FactureCreanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const SuccursalePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comSuccursaleAdd,
-      bindings: [SuccursaleBinding(),
+      bindings: [
+        SuccursaleBinding(),
         AchatBinding(),
         GainCartBinding(),
         VenteCartBinding(),
-        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
+        FactureCreanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const AddSuccursale(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comSuccursaleDetail, 
-      bindings: [SuccursaleBinding(),
+      name: ComRoutes.comSuccursaleDetail,
+      bindings: [
+        SuccursaleBinding(),
         AchatBinding(),
         GainCartBinding(),
         VenteCartBinding(),
-        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
+        FactureCreanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final SuccursaleModel succursaleModel =
             Get.arguments as SuccursaleModel;
@@ -1316,12 +1456,16 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comSuccursaleUpdate, 
-      bindings: [SuccursaleBinding(),
+      name: ComRoutes.comSuccursaleUpdate,
+      bindings: [
+        SuccursaleBinding(),
         AchatBinding(),
         GainCartBinding(),
         VenteCartBinding(),
-        FactureCreanceBinding(), ProfilBinding(), NetworkBindings()],
+        FactureCreanceBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final SuccursaleModel succursaleModel =
             Get.arguments as SuccursaleModel;
@@ -1330,9 +1474,13 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comVente, 
-      bindings: [VenteCartBinding(),
-        CartBinding(), ProfilBinding(), NetworkBindings()],
+      name: ComRoutes.comVente,
+      bindings: [
+        VenteCartBinding(),
+        CartBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const VentePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1346,7 +1494,8 @@ GetPage(
         LivraisonBinding(),
         HistoryRavitaillementBinding(),
         ProduitModelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const StockGlobalPage(),
       transition: Transition.cupertino,
@@ -1357,7 +1506,8 @@ GetPage(
         StockGlobalBinding(),
         ProduitModelBinding(),
         HistoryRavitaillementBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AddStockGlobal(),
       transition: Transition.cupertino,
@@ -1372,7 +1522,8 @@ GetPage(
         LivraisonBinding(),
         ProduitModelBinding(),
         HistoryRavitaillementBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
@@ -1388,7 +1539,8 @@ GetPage(
         BonLivraisonBinding(),
         LivraisonBinding(),
         ProduitModelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
@@ -1404,7 +1556,8 @@ GetPage(
         RavitaillementBinding(),
         ProduitModelBinding(),
         ProduitModelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final StocksGlobalMOdel stocksGlobalMOdel =
@@ -1420,7 +1573,8 @@ GetPage(
         RestitutionBinding(),
         AchatBinding(),
         StockGlobalBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const RestitutionPage(),
       transition: Transition.cupertino,
@@ -1431,7 +1585,8 @@ GetPage(
         RestitutionBinding(),
         AchatBinding(),
         StockGlobalBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final RestitutionModel restitutionModel =
@@ -1453,7 +1608,7 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comProduitModelDetail, 
+      name: ComRoutes.comProduitModelDetail,
       bindings: [ProduitModelBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final ProductModel productModel = Get.arguments as ProductModel;
@@ -1462,8 +1617,8 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comProduitModelUpdate, 
-      bindings: [ProduitModelBinding(), ProfilBinding(), NetworkBindings()], 
+      name: ComRoutes.comProduitModelUpdate,
+      bindings: [ProduitModelBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final ProductModel productModel = Get.arguments as ProductModel;
         return UpdateProductModele(productModel: productModel);
@@ -1472,29 +1627,46 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: ComRoutes.comHistoryRavitaillement, 
-      bindings: [HistoryRavitaillementBinding(), ProfilBinding(), NetworkBindings()], 
+      name: ComRoutes.comHistoryRavitaillement,
+      bindings: [
+        HistoryRavitaillementBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const HistoryRavitaillementPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comHistoryLivraison, 
-      bindings: [HistoryLivraisonBinding(),
-        CartBinding(), ProfilBinding(), NetworkBindings()], 
+      name: ComRoutes.comHistoryLivraison,
+      bindings: [
+        HistoryLivraisonBinding(),
+        CartBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const HistoryLivraisonPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
       name: ComRoutes.comFacture,
-      bindings: [FactureBinding(), CartBinding(), ProfilBinding(), NetworkBindings()], 
+      bindings: [
+        FactureBinding(),
+        CartBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const FacturePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ComRoutes.comCreance, 
-      bindings: [FactureCreanceBinding(),
-        CartBinding(), ProfilBinding(), NetworkBindings()], 
+      name: ComRoutes.comCreance,
+      bindings: [
+        FactureCreanceBinding(),
+        CartBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const FactureCreancePage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1503,8 +1675,9 @@ GetPage(
       bindings: [
         FactureBinding(),
         CartBinding(),
-        ProfilBinding(), NetworkBindings()
-      ], 
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final FactureCartModel factureCartModel =
             Get.arguments as FactureCartModel;
@@ -1517,8 +1690,9 @@ GetPage(
       bindings: [
         FactureCreanceBinding(),
         CartBinding(),
-        ProfilBinding(), NetworkBindings()
-      ], 
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final CreanceCartModel creanceCartModel =
             Get.arguments as CreanceCartModel;
@@ -1537,7 +1711,8 @@ GetPage(
         GainCartBinding(),
         NumeroFactureBinding(),
         VenteCartBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const CartPage(),
       transition: Transition.cupertino,
@@ -1552,7 +1727,8 @@ GetPage(
         GainCartBinding(),
         NumeroFactureBinding(),
         VenteCartBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final CartModel cart = Get.arguments as CartModel;
@@ -1567,7 +1743,8 @@ GetPage(
         BonLivraisonBinding(),
         AchatBinding(),
         LivraisonBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const BonLivraisonPage(),
       transition: Transition.cupertino,
@@ -1578,7 +1755,8 @@ GetPage(
         BonLivraisonBinding(),
         AchatBinding(),
         LivraisonBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final BonLivraisonModel bonLivraisonModel =
@@ -1595,7 +1773,8 @@ GetPage(
         BonLivraisonBinding(),
         VenteCartBinding(),
         SuccursaleBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AchatPage(),
       transition: Transition.cupertino,
@@ -1607,7 +1786,8 @@ GetPage(
         BonLivraisonBinding(),
         VenteCartBinding(),
         SuccursaleBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final AchatModel achatModel = Get.arguments as AchatModel;
@@ -1615,16 +1795,16 @@ GetPage(
       },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  
+
   GetPage(
-      name: ComRoutes.comVenteEffectue, 
+      name: ComRoutes.comVenteEffectue,
       binding: VenteEffectueBinding(),
       page: () => const VenteEffectue(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ComRoutes.comVenteEffectueDetail,
-      binding: VenteEffectueBinding(), 
+      binding: VenteEffectueBinding(),
       page: () {
         final VenteCartModel venteCartModel = Get.arguments as VenteCartModel;
         return DetailVenteEffectue(venteCartModel: venteCartModel);
@@ -1643,9 +1823,10 @@ GetPage(
         VersementBinding(),
         TacheBinding(),
         RapportBinding(),
-        ProfilBinding(), 
+        ProfilBinding(),
         ProduitModelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardExp(),
       transition: Transition.cupertino,
@@ -1656,7 +1837,8 @@ GetPage(
         ProductionExpBinding(),
         ProduitModelBinding(),
         ProjetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const ExpDD(),
       transition: Transition.cupertino,
@@ -1670,10 +1852,7 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ExploitationRoutes.expFournisseurDetail,
-      bindings: [
-        FourniseurBinding(),
-        ProfilBinding(), NetworkBindings()
-      ], 
+      bindings: [FourniseurBinding(), ProfilBinding(), NetworkBindings()],
       page: () {
         final FournisseurModel fournisseurModel =
             Get.arguments as FournisseurModel;
@@ -1688,9 +1867,10 @@ GetPage(
         ProductionExpBinding(),
         FourniseurBinding(),
         AnnuaireBinding(),
-        ProfilBinding(), 
+        ProfilBinding(),
         ProduitModelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const ProductionExpPage(),
       transition: Transition.cupertino,
@@ -1701,7 +1881,8 @@ GetPage(
         ProductionExpBinding(),
         FourniseurBinding(),
         AnnuaireBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ProductionModel productionModel =
@@ -1713,14 +1894,15 @@ GetPage(
 
   GetPage(
       name: ExploitationRoutes.expProjet,
-      bindings: [ 
+      bindings: [
         ProjetBinding(),
         VersementBinding(),
         TacheBinding(),
         RapportBinding(),
         ProfilBinding(),
         ProduitModelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const ProjetPage(),
       transition: Transition.cupertino,
@@ -1748,7 +1930,8 @@ GetPage(
         RapportBinding(),
         PersonnelsRoleBinding(),
         PersonnelBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       binding: ProjetBinding(),
       page: () {
@@ -1780,7 +1963,8 @@ GetPage(
       bindings: [
         ProjetBinding(),
         VersementBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const VersementPage(),
       transition: Transition.cupertino,
@@ -1789,7 +1973,9 @@ GetPage(
       name: ExploitationRoutes.expVersementAdd,
       bindings: [
         ProjetBinding(),
-        VersementBinding(), ProfilBinding(), NetworkBindings()
+        VersementBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ProjetModel projetModel = Get.arguments as ProjetModel;
@@ -1802,7 +1988,8 @@ GetPage(
       bindings: [
         ProjetBinding(),
         VersementBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final VersementProjetModel versementProjetModel =
@@ -1824,7 +2011,8 @@ GetPage(
         MaterielBinding(),
         MobilierBinding(),
         TrajetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const DashboardLog(),
       transition: Transition.cupertino,
@@ -1839,7 +2027,8 @@ GetPage(
         MaterielBinding(),
         MobilierBinding(),
         TrajetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const LogDD(),
       transition: Transition.cupertino,
@@ -1848,19 +2037,23 @@ GetPage(
   GetPage(
       name: LogistiqueRoutes.logMateriel,
       binding: MaterielBinding(),
-      bindings: [ 
+      bindings: [
         MaterielBinding(),
         TrajetBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const MaterielPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logMaterielRoulant, 
+      name: LogistiqueRoutes.logMaterielRoulant,
       bindings: [
         MaterielBinding(),
-        TrajetBinding(), ProfilBinding(), NetworkBindings()],
+        TrajetBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const MaterielRoulantPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1869,15 +2062,22 @@ GetPage(
       bindings: [
         MaterielBinding(),
         TrajetBinding(),
-        AnnuaireBinding(), ProfilBinding(), NetworkBindings()
+        AnnuaireBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AddMateriel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logMaterielDetail,
-      bindings: [MaterielBinding(),
-        TrajetBinding(), AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        MaterielBinding(),
+        TrajetBinding(),
+        AnnuaireBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return DetailMateriel(materielModel: materielModel);
@@ -1888,7 +2088,11 @@ GetPage(
       name: LogistiqueRoutes.logMaterielUpdate,
       bindings: [
         MaterielBinding(),
-        TrajetBinding(), AnnuaireBinding(), ProfilBinding(), NetworkBindings()],
+        TrajetBinding(),
+        AnnuaireBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return UpdateMateriel(materielModel: materielModel);
@@ -1898,13 +2102,23 @@ GetPage(
 
   GetPage(
       name: LogistiqueRoutes.logTrajetAuto,
-      bindings: [TrajetBinding(), MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        TrajetBinding(),
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const TrajetPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logAddTrajetAuto,
-      bindings: [TrajetBinding(), MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        TrajetBinding(),
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final MaterielModel materielModel = Get.arguments as MaterielModel;
         return AddTrajet(materielModel: materielModel);
@@ -1913,7 +2127,12 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logTrajetAutoDetail,
-      bindings: [TrajetBinding(), MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        TrajetBinding(),
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final TrajetModel trajetModel = Get.arguments as TrajetModel;
         return DetailTrajet(trajetModel: trajetModel);
@@ -1925,25 +2144,27 @@ GetPage(
       name: LogistiqueRoutes.logEntretien,
       bindings: [
         EntretienBinding(),
-        ObjetRemplaceBinding(), 
+        ObjetRemplaceBinding(),
         MaterielBinding(),
         ImmobilierBinding(),
         MobilierBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const EntretiensPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-  
+
   GetPage(
       name: LogistiqueRoutes.logEntretienDetail,
       bindings: [
-        EntretienBinding(), 
+        EntretienBinding(),
         ObjetRemplaceBinding(),
         ImmobilierBinding(),
-        MobilierBinding(), 
+        MobilierBinding(),
         MaterielBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final EntretienModel entretienModel = Get.arguments as EntretienModel;
@@ -1955,10 +2176,7 @@ GetPage(
   GetPage(
       name: LogistiqueRoutes.logEtatMateriel,
       binding: EtatMaterielBinding(),
-      bindings: [
-        EtatMaterielBinding(), 
-        ProfilBinding(), NetworkBindings()
-      ],
+      bindings: [EtatMaterielBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const EtatMaterielPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -1967,14 +2185,20 @@ GetPage(
       bindings: [
         EtatMaterielBinding(),
         MaterielBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AddEtatMateriel(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logEtatMaterielDetail,
-      bindings: [EtatMaterielBinding(), MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        EtatMaterielBinding(),
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final EtatMaterielModel etatMaterielModel =
             Get.arguments as EtatMaterielModel;
@@ -1984,7 +2208,12 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logEtatMaterielUpdate,
-      bindings: [EtatMaterielBinding(), MaterielBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        EtatMaterielBinding(),
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final EtatMaterielModel etatMaterielModel =
             Get.arguments as EtatMaterielModel;
@@ -1994,7 +2223,7 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: LogistiqueRoutes.logImmobilierMateriel, 
+      name: LogistiqueRoutes.logImmobilierMateriel,
       bindings: [ImmobilierBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const ImmobilierPage(),
       transition: Transition.cupertino,
@@ -2021,10 +2250,13 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
 
   GetPage(
-      name: LogistiqueRoutes.logMobilierMateriel, 
+      name: LogistiqueRoutes.logMobilierMateriel,
       bindings: [
         MobilierBinding(),
-        MaterielBinding(), ProfilBinding(), NetworkBindings()],
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const MobilierPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -2032,7 +2264,10 @@ GetPage(
       name: LogistiqueRoutes.logMobilierMaterielDetail,
       bindings: [
         MobilierBinding(),
-        MaterielBinding(), ProfilBinding(), NetworkBindings()],
+        MaterielBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         final MobilierModel mobilierModel = Get.arguments as MobilierModel;
         return DetailMobiler(mobilierModel: mobilierModel);
@@ -2049,12 +2284,13 @@ GetPage(
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: LogistiqueRoutes.logApprovisionnement, 
+      name: LogistiqueRoutes.logApprovisionnement,
       bindings: [
         ApprovisionnementBinding(),
         AnnuaireBinding(),
         ApprovisionReceptionBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const ApprovisionnementPage(),
       transition: Transition.cupertino,
@@ -2066,7 +2302,8 @@ GetPage(
         ApprovisionReceptionBinding(),
         AnnuaireBinding(),
         ProfilBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ApprovisionnementModel approvisionnementModel =
@@ -2079,18 +2316,22 @@ GetPage(
   GetPage(
       name: LogistiqueRoutes.logApprovisionReception,
       bindings: [
-        ApprovisionnementBinding(), 
+        ApprovisionnementBinding(),
         ApprovisionReceptionBinding(),
         ProfilBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AccuseReceptionPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: LogistiqueRoutes.logApprovisionReceptionDetail,
-      bindings: [ApprovisionnementBinding(), ApprovisionReceptionBinding(),
-        ProfilBinding(), NetworkBindings()
+      bindings: [
+        ApprovisionnementBinding(),
+        ApprovisionReceptionBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () {
         final ApprovisionReceptionModel approvisionReceptionModel =
@@ -2105,31 +2346,31 @@ GetPage(
   GetPage(
       name: AdminRoutes.adminDashboard,
       bindings: [
-        AdminDashboardBinding(), 
-        ProfilBinding(), 
+        AdminDashboardBinding(),
+        ProfilBinding(),
         NetworkBindings(),
-        PersonnelBinding(),  
-        BanqueBinding(), 
+        PersonnelBinding(),
+        BanqueBinding(),
         CaisseBinding(),
         CreanceBinding(),
         CreanceDetteBinding(),
         DetteBinding(),
-        FinExterieurBinding(), 
+        FinExterieurBinding(),
         SalaireBinding(),
         CampaignBinding(),
         DevisBinding(),
         DevisListObjetBinding(),
         TransportRestBinding(),
         TransportRestPersonnelBinding(),
-        ProjetBinding(), 
+        ProjetBinding(),
         BudgetPrevisionnelBinding(),
-        LignBudgetaireBinding(),  
+        LignBudgetaireBinding(),
         DashboardComptabiliteBinding(),
         BalanceBinding(),
         BilanBinding(),
         BilanRefBinding(),
         CompteResultatBinding(),
-        JournalBinding(), 
+        JournalBinding(),
         DashboardComBinding(),
         VenteCartBinding(),
         GainCartBinding(),
@@ -2142,54 +2383,72 @@ GetPage(
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminBudget,
-      bindings: [BudgetPrevisionnelBinding(), LignBudgetaireBinding(),
+      bindings: [
+        BudgetPrevisionnelBinding(),
+        LignBudgetaireBinding(),
         CampaignBinding(),
-        ProfilBinding(), NetworkBindings()
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AdminBudget(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: AdminRoutes.adminMarketing, 
-      bindings: [ 
-        CampaignBinding(),
-        ProfilBinding(), NetworkBindings()
-      ],
+      name: AdminRoutes.adminMarketing,
+      bindings: [CampaignBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const AdminMarketing(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: AdminRoutes.adminComm, 
+      name: AdminRoutes.adminComm,
       bindings: [SuccursaleBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const AdminComm(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminExploitation,
-      bindings: [ProjetBinding(),
-        ProduitModelBinding(), ProductionExpBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        ProjetBinding(),
+        ProduitModelBinding(),
+        ProductionExpBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const AdminExploitation(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminFinance,
-      bindings: [DetteBinding(), CreanceBinding(), CreanceDetteBinding(),
-        ProfilBinding(), NetworkBindings()
+      bindings: [
+        DetteBinding(),
+        CreanceBinding(),
+        CreanceDetteBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AdminFinance(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminLogistique,
-      bindings: [MaterielBinding(), ImmobilierBinding(), DevisBinding(),
-        ProfilBinding(), NetworkBindings()
+      bindings: [
+        MaterielBinding(),
+        ImmobilierBinding(),
+        DevisBinding(),
+        ProfilBinding(),
+        NetworkBindings()
       ],
       page: () => const AdminLogistique(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: AdminRoutes.adminRH,
-      bindings: [SalaireBinding(), TransportRestBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        SalaireBinding(),
+        TransportRestBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () => const AdminRH(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -2234,7 +2493,17 @@ GetPage(
   GetPage(
       name: UpdateRoutes.updatePage,
       page: () => const UpdatePage(),
+      bindings: [ ProfilBinding(), NetworkBindings()],
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: UpdateRoutes.updateDetail,
       bindings: [ProfilBinding(), NetworkBindings()],
+      page: () {
+        final UpdateModel updateModel =
+            Get.arguments as UpdateModel;
+        return DetailUpdate(updateModel: updateModel);
+      },
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 ];

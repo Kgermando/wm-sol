@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:pluto_grid/pluto_grid.dart'; 
 import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -35,6 +35,15 @@ class _TableUpdateState extends State<TableUpdate> {
     return PlutoGrid(
       columns: columns,
       rows: rows,
+      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
+        final dataId = tapEvent.row.cells.values;
+        final idPlutoRow = dataId.last;
+
+        final UpdateModel updateModel =
+            await widget.controller.detailView(idPlutoRow.value);
+
+        Get.toNamed(UpdateRoutes.updateDetail, arguments: updateModel);
+      },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;
         stateManager!.setShowColumnFilter(true);
@@ -49,8 +58,8 @@ class _TableUpdateState extends State<TableUpdate> {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, UpdateRoutes.updatePage);
+                      widget.controller.getList();
+                      Navigator.pushNamed(context, UpdateRoutes.updatePage);
                     },
                     icon: Icon(Icons.refresh, color: Colors.green.shade700)),
               ],
@@ -70,11 +79,7 @@ class _TableUpdateState extends State<TableUpdate> {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'version') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'isActive') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'motif') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'urlUpdate') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'id') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -98,10 +103,8 @@ class _TableUpdateState extends State<TableUpdate> {
           'numero': PlutoCell(value: i--),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'version': PlutoCell(value: item.version), 
-          'isActive': PlutoCell(value: item.isActive),
+          'version': PlutoCell(value: item.version),
           'motif': PlutoCell(value: item.motif),
-          'urlUpdate': PlutoCell(value: item.urlUpdate),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -146,18 +149,6 @@ class _TableUpdateState extends State<TableUpdate> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
-      PlutoColumn(
-        readOnly: true,
-        title: 'Actif',
-        field: 'isActive',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
-        minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
@@ -169,24 +160,6 @@ class _TableUpdateState extends State<TableUpdate> {
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Télécharger',
-        field: 'urlUpdate',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        renderer: (rendererContext) {
-          return IconButton(
-            onPressed: () {
-              rendererContext.cell.value.toString();
-            },
-            icon: Icon(Icons.download, color: mainColor));
-        },
         minWidth: 150,
       ),
       PlutoColumn(

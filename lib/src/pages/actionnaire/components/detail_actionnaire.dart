@@ -1,13 +1,15 @@
 import 'package:easy_autocomplete/easy_autocomplete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wm_solution/src/models/actionnaire/actionnaire_transfert_model.dart';
+import 'package:wm_solution/src/pages/actionnaire/components/table_transfert_personne.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/actionnaire/actionnaire_cotisation_model.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -32,6 +34,7 @@ class DetailActionnaire extends StatefulWidget {
 class _DetailActionnaireState extends State<DetailActionnaire> {
   final ActionnaireController actionnaireController = Get.find();
   final ActionnaireCotisationController controller = Get.find();
+  final ProfilController profilController = Get.find();
   final ActionnaireTransfertController actionnaireTransfertController =
       Get.find();
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
@@ -46,99 +49,116 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
 
   @override
   Widget build(BuildContext context) {
+    int role = int.parse(profilController.user.role);
     return Scaffold(
-      key: scaffoldKey,
-      appBar:
-          headerBar(context, scaffoldKey, title, widget.actionnaireModel.nom),
-      drawer: const DrawerMenu(),
-      floatingActionButton: speedialWidget(),
-      body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const TitleWidget(
-                                                title: 'Actionnaire'),
-                                            Column(
-                                              children: [
-                                                IconButton(
-                                                    tooltip: 'Actualiser',
-                                                    onPressed: () async {
-                                                      refresh().then((value) =>
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              ActionnaireRoute
-                                                                  .actionnaireDetail,
-                                                              arguments:
-                                                                  value));
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.refresh,
-                                                        color: Colors.green)),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yy HH:mm")
-                                                        .format(widget
-                                                            .actionnaireModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget(),
-                                        Divider(
-                                          color: mainColor,
-                                        ),
-                                        const SizedBox(height: p10),
-                                        total(state!),
-                                      ],
+        key: scaffoldKey,
+        appBar: headerBar(
+            context, scaffoldKey, title, widget.actionnaireModel.matricule),
+        drawer: const DrawerMenu(),
+        floatingActionButton: (role <= 1) ? speedialWidget() : Container(),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: actionnaireTransfertController.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (transfertList) => controller.obx(
+                        onLoading: loadingPage(context),
+                        onEmpty: const Text('Aucune donnée'),
+                        onError: (error) => loadingError(context, error!),
+                        (state) => SingleChildScrollView(
+                            controller: ScrollController(),
+                            physics: const ScrollPhysics(),
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  top: p20, bottom: p8, right: p20, left: p20),
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Column(
+                                children: [
+                                  Card(
+                                    elevation: 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: p20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const TitleWidget(
+                                                  title: 'Actionnaire'),
+                                              Column(
+                                                children: [
+                                                  IconButton(
+                                                      tooltip: 'Actualiser',
+                                                      onPressed: () async {
+                                                        refresh().then((value) =>
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                ActionnaireRoute
+                                                                    .actionnaireDetail,
+                                                                arguments:
+                                                                    value));
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.refresh,
+                                                          color: Colors.green)),
+                                                  SelectableText(
+                                                      DateFormat(
+                                                              "dd-MM-yy HH:mm")
+                                                          .format(widget
+                                                              .actionnaireModel
+                                                              .created),
+                                                      textAlign:
+                                                          TextAlign.start),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          dataWidget(),
+                                          Divider(
+                                            color: mainColor,
+                                          ),
+                                          const SizedBox(height: p10),
+                                          total(transfertList!),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: p20),
-                                TableCotisationPersonne(
-                                    state: state
-                                        .where((element) =>
-                                            element.reference ==
-                                            widget.actionnaireModel.id!)
-                                        .toList())
-                              ],
-                            ),
-                          )))
-                ],
-              )),
-    );
+                                  const SizedBox(height: p20),
+                                  TableCotisationPersonne(
+                                      state: state!
+                                          .where((element) =>
+                                              element.reference ==
+                                              widget.actionnaireModel.id!)
+                                          .toList()),
+                                  const SizedBox(height: p20),
+                                  TableTransfertPersonne(
+                                      state: transfertList
+                                          .where((element) =>
+                                              element.matriculeEnvoi ==
+                                                  widget.actionnaireModel
+                                                      .matricule ||
+                                              element.matriculeRecu ==
+                                                  widget.actionnaireModel
+                                                      .matricule)
+                                          .toList())
+                                ],
+                              ),
+                            )))))
+          ],
+        ));
   }
 
   Widget dataWidget() {
@@ -258,28 +278,27 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
     );
   }
 
-  Widget total(List<ActionnaireCotisationModel> state) {
+  Widget total(List<ActionnaireTransfertModel> transfertList) {
     final headline6 = Theme.of(context).textTheme.headline6;
-    var totalCotisation = state
-        .where((element) => element.reference == widget.actionnaireModel.id!)
+
+    var totalTransferEnvoie = transfertList
+        .where((element) =>
+            element.matriculeEnvoi == widget.actionnaireModel.matricule)
         .toList();
-    var totalTransfer = actionnaireTransfertController.actionnaireTransfertList
+    var totalTransferRecu = transfertList
         .where((element) =>
             element.matriculeRecu == widget.actionnaireModel.matricule)
         .toList();
 
-    double motantCotise = 0.0;
     double motantRecuTransfert = 0.0;
-
-    for (var element in totalCotisation) {
-      motantCotise += double.parse(element.montant);
+    double motantEnvoiTransfert = 0.0;
+    for (var element in totalTransferEnvoie) {
+      motantEnvoiTransfert += double.parse(element.montant);
     }
-    for (var element in totalTransfer) {
+
+    for (var element in totalTransferRecu) {
       motantRecuTransfert += double.parse(element.montant);
     }
-
-    double montantTransferer =
-        widget.actionnaireModel.cotisations - motantCotise;
 
     return Card(
       child: Padding(
@@ -292,37 +311,35 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                 Text('Total cotiser', style: headline6),
                 Text(
                     '${NumberFormat.decimalPattern('fr').format(widget.actionnaireModel.cotisations)} ${monnaieStorage.monney}',
-                    style: headline6!.copyWith(color: Colors.red.shade700, fontWeight: FontWeight.bold)),
+                    style: headline6!.copyWith(
+                        color: Colors.red.shade700,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
             Divider(
               color: Colors.red.shade700,
             ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Montant transferer', style: headline6),
-                  (montantTransferer.isNegative) 
-                    ? Text(
-                      '${NumberFormat.decimalPattern('fr').format(0.0)} ${monnaieStorage.monney}',
-                      style: headline6.copyWith(color: Colors.orange.shade700)) 
-                    : Text(
-                      '${NumberFormat.decimalPattern('fr').format(montantTransferer)} ${monnaieStorage.monney}',
-                      style: headline6.copyWith(color: Colors.orange.shade700)),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Montant transferer', style: headline6),
+                Text(
+                    '${NumberFormat.decimalPattern('fr').format(motantEnvoiTransfert)} ${monnaieStorage.monney}',
+                    style: headline6.copyWith(color: Colors.orange.shade700)),
+              ],
+            ),
             Divider(
               color: Colors.red.shade700,
             ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Montant reçu par transfer', style: headline6),
-                  Text(
-                      '${NumberFormat.decimalPattern('fr').format(motantRecuTransfert)} ${monnaieStorage.monney}',
-                      style: headline6.copyWith(color: Colors.brown.shade700)),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Montant reçu par transfer', style: headline6),
+                Text(
+                    '${NumberFormat.decimalPattern('fr').format(motantRecuTransfert)} ${monnaieStorage.monney}',
+                    style: headline6.copyWith(color: Colors.brown.shade700)),
+              ],
+            ),
           ],
         ),
       ),
@@ -439,7 +456,7 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                                     .formKey.currentState!;
                                 if (form.validate()) {
                                   actionnaireTransfertController
-                                      .transfertAction( 
+                                      .transfertAction(
                                           widget.actionnaireModel,
                                           actionnaireTransfertController
                                               .montantController.text,

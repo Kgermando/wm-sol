@@ -1,6 +1,6 @@
 import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -34,18 +34,18 @@ class _TableDahboardActionState extends State<TableDahboardAction> {
           width: 150,
           stringValue: (row) => row.matricule),
       EasyTableColumn(
-        headerAlignment: Alignment.center,
-        cellAlignment: Alignment.center,
-        cellTextStyle: TextStyle(color: Colors.red.shade700),
-        name: 'Cotisations',
-        width: 150,
-        stringValue: (row) =>
-          "${NumberFormat.decimalPattern('fr').format(row.cotisations)} ${monnaieStorage.monney}"), 
+          headerAlignment: Alignment.center,
+          cellAlignment: Alignment.center,
+          cellTextStyle: TextStyle(color: Colors.red.shade700),
+          name: 'Cotisations',
+          width: 150,
+          stringValue: (row) =>
+              "${NumberFormat.decimalPattern('fr').format(row.cotisations)} ${monnaieStorage.monney}"),
       EasyTableColumn(
           headerAlignment: Alignment.center,
-          cellAlignment: Alignment.center, 
-          name: 'Date',
-          width: 150,
+          cellAlignment: Alignment.center,
+          name: 'Temps écouler',
+          width: 300,
           stringValue: (row) => timeago.format(row.created, locale: 'fr')),
     ]);
   }
@@ -56,16 +56,15 @@ class _TableDahboardActionState extends State<TableDahboardAction> {
       child: Padding(
         padding: const EdgeInsets.all(p10),
         child: SizedBox(
-          height: 400,
-          child: Column(
-            children: [
-              const TitleWidget(title: "Recents cotisations"),
-              Expanded(
-                child: EasyTable<ActionnaireModel>(_model,
-                    multiSort: true),
-              ),
-            ],
-          )),
+            height: 400,
+            child: Column(
+              children: [
+                const TitleWidget(title: "Recents cotisations"),
+                Expanded(
+                  child: EasyTable<ActionnaireModel>(_model, multiSort: true),
+                ),
+              ],
+            )),
       ),
     );
   }

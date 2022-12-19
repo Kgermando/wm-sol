@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:get/get.dart';
+import 'package:open_app_file/open_app_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wm_solution/src/api/update/update_api.dart';
-import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
-import 'package:open_app_file/open_app_file.dart';
 
 class UpdateController extends GetxController
     with StateMixin<List<UpdateModel>> {
@@ -37,12 +37,13 @@ class UpdateController extends GetxController
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
 
-   final _isDownloading = false.obs;
+  String? uploadedFileUrl;
+
+  // Download
+  final _isDownloading = false.obs;
   bool get isDownloading => _isDownloading.value;
   final _isUploadingDone = false.obs;
   bool get isUploadingDone => _isUploadingDone.value;
-
-  String? uploadedFileUrl;
 
   void uploadFile(String file) async {
     _isUploading.value = true;
@@ -59,10 +60,6 @@ class UpdateController extends GetxController
       var dir = await getDownloadsDirectory();
       final name = url.split('/').last;
       final fileName = '${dir!.path}/$name';
-      // Get.snackbar("Téléchargement en cours", "Patientez svp...",
-      //     backgroundColor: Colors.blue,
-      //     icon: const Icon(Icons.check),
-      //     snackPosition: SnackPosition.TOP);
       await dio.download(url, fileName, onReceiveProgress: (received, total) {
         _isDownloading.value = true;
         _progressString.value =
@@ -74,15 +71,15 @@ class UpdateController extends GetxController
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
-        await OpenAppFile.open(fileName); 
+        await OpenAppFile.open(fileName);
       });
     } catch (e) {
       Get.snackbar("Erreur de Téléchargement", "$e",
           backgroundColor: Colors.red,
-          icon: const Icon(Icons.check),
+          icon: const Icon(Icons.close),
           snackPosition: SnackPosition.TOP);
     }
-  } 
+  }
 
   @override
   void onInit() {
@@ -98,6 +95,7 @@ class UpdateController extends GetxController
   }
 
   void clear() {
+    uploadedFileUrl = null;
     versionController.clear();
     motifController.clear();
   }
@@ -111,14 +109,17 @@ class UpdateController extends GetxController
         // // Version actuel
         var isVersion = isUpdateLocalVersion.split('.');
         for (var e in isVersion) {
-          _sumLocalVersion.value += double.parse(e); 
+          _sumLocalVersion.value += double.parse(e);
         }
+        print("sumVersionLocal ${_sumLocalVersion.value}");
 
         // Version Cloud
         var isVersionCloud = updateVersionList.first.version.split('.');
         for (var e in isVersionCloud) {
-          _sumVersionCloud.value += double.parse(e); 
+          _sumVersionCloud.value += double.parse(e);
         }
+
+        print("sumVersionCloud ${_sumVersionCloud.value}");
       }
       change(updateVersionList, status: RxStatus.success());
     }, onError: (err) {

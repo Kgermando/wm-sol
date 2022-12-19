@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/constants/app_theme.dart'; 
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_cotisation_model.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableCotisation extends StatefulWidget {
-  const TableCotisation({super.key, required this.state, required this.monnaie});
+  const TableCotisation(
+      {super.key, required this.state, required this.monnaie});
   final List<ActionnaireCotisationModel> state;
   final String monnaie;
 
@@ -105,7 +106,10 @@ class _TableCotisationState extends State<TableCotisation> {
           'postNom': PlutoCell(value: item.postNom),
           'prenom': PlutoCell(value: item.prenom),
           'matricule': PlutoCell(value: item.matricule),
-          'montant': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
+          'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
+          // 'montant': PlutoCell(
+          //     value:
+          //         "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
           'note': PlutoCell(value: item.note),
           'moyenPaiement': PlutoCell(value: item.moyenPaiement),
           'numeroTransaction': PlutoCell(value: item.numeroTransaction),
@@ -194,6 +198,7 @@ class _TableCotisationState extends State<TableCotisation> {
           return Text(
             rendererContext.cell.value.toString(),
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: mainColor,
             ),

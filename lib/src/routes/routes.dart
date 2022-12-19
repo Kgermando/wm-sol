@@ -13,6 +13,7 @@ class SettingsRoutes {
 class UpdateRoutes {
   static const updatePage = "/update-page";
   static const updateAdd = "/update-add";
+  static const updateDetail = "/update-detail";
 }
 
 class TacheRoutes {

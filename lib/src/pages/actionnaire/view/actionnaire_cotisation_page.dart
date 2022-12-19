@@ -5,7 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/actionnaire/components/table_cotisation.dart'; 
+import 'package:wm_solution/src/pages/actionnaire/components/table_cotisation.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
@@ -13,7 +13,8 @@ class ActionnaireCotisationPage extends StatefulWidget {
   const ActionnaireCotisationPage({super.key});
 
   @override
-  State<ActionnaireCotisationPage> createState() => _ActionnaireCotisationPageState();
+  State<ActionnaireCotisationPage> createState() =>
+      _ActionnaireCotisationPageState();
 }
 
 class _ActionnaireCotisationPageState extends State<ActionnaireCotisationPage> {
@@ -51,5 +52,4 @@ class _ActionnaireCotisationPageState extends State<ActionnaireCotisationPage> {
           ],
         ));
   }
-
 }

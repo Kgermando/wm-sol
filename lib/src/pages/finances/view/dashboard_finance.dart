@@ -7,7 +7,6 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_banque_mounth.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_banque_year.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_bar_banque.dart';
-import 'package:wm_solution/src/pages/finances/components/dahboard/caisse/courbe_caisse_mounth.dart';
 import 'package:wm_solution/src/pages/finances/components/dahboard/caisse/courbe_caisse_year.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
