@@ -3,26 +3,26 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class FinanceNav extends StatefulWidget {
-  const FinanceNav({super.key, required this.currentRoute, required this.user, required this.departementList});
+  const FinanceNav({super.key, required this.currentRoute, required this.user, required this.departementList, required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
+  final DepartementNotifyCOntroller controller;
 
   @override
   State<FinanceNav> createState() => _FinanceNavState();
 }
 
 class _FinanceNavState extends State<FinanceNav> {
-  final FinanceNotifyController financeNotifyController = Get.put(FinanceNotifyController());
   final BanqueNameController banqueNameController = Get.put(BanqueNameController());
   final CaisseNameController caisseNameController = Get.put(CaisseNameController());
   final FinExterieurNameController finExterieurNameController = Get.put(FinExterieurNameController());
@@ -68,11 +68,11 @@ class _FinanceNavState extends State<FinanceNav> {
               title: 'Directeur de departement',
               style: bodyText1!,
               badge: Badge(
-                showBadge: (int.parse(financeNotifyController.itemCount) >= 1)
+                showBadge: (int.parse(widget.controller.itemFinanceCount) >= 1)
                     ? true
                     : false,
                 badgeColor: Colors.teal,
-                badgeContent:Obx(() => Text(financeNotifyController.itemCount,
+                badgeContent:Obx(() => Text(widget.controller.itemFinanceCount,
                     style:
                         const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),
@@ -88,11 +88,11 @@ class _FinanceNavState extends State<FinanceNav> {
             title: 'Observations',
             style: bodyText1!,
             badge: Badge(
-              showBadge: (int.parse(financeNotifyController.itemCountObs) >= 1)
+              showBadge: (int.parse(widget.controller.itemFinanceCountObs) >= 1)
                   ? true
                   : false,
               badgeColor: Colors.purple,
-              badgeContent:Obx(() => Text(financeNotifyController.itemCountObs,
+              badgeContent:Obx(() => Text(widget.controller.itemFinanceCountObs,
                   style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_budget_previsionnel_dd.dart';
@@ -10,15 +11,11 @@ import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_devis_b
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_projet_budget.dart';
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_salaire_budget.dart';
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_transport_rest_budget.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
+import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
-import 'package:wm_solution/src/pages/exploitations/controller/notify/notify_exp.dart';
-import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart'; 
+import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
@@ -46,10 +43,7 @@ class _DDBudgetState extends State<DDBudget> {
   Widget build(BuildContext context) {
     final BudgetPrevisionnelController budgetPrevisionnelController =
         Get.find();
-    final BudgetNotifyController budgetNotifyController = Get.find();
-    final RHNotifyController rhNotifyController = Get.put(RHNotifyController());
-      final MarketingNotifyController marketingNotifyController = Get.put(MarketingNotifyController());
-    final NotifyExpController expController = Get.put(NotifyExpController());
+    final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find(); 
     final SalaireController salaireController = Get.put(SalaireController());
     final TransportRestController transportRestController = Get.put(TransportRestController());
     final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
@@ -98,7 +92,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle:Obx(() => Text(
-                          "Vous avez ${rhNotifyController.itemCountSalaireBudget} dossiers necessitent votre approbation",
+                          "Vous avez ${departementNotifyCOntroller.itemCountSalaireBudget} dossiers necessitent votre approbation",
                           style: bodyMedium!
                               .copyWith(color: Colors.white70))) ,
                       initiallyExpanded: false,
@@ -127,7 +121,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle:Obx(() => Text(
-                          "Vous ${rhNotifyController.itemCountTransRestBudget} dossiers necessitent votre approbation",
+                          "Vous ${departementNotifyCOntroller.itemCountTransRestBudget} dossiers necessitent votre approbation",
                           style: bodyMedium!.copyWith(
                               color: Colors.white70))) ,
                       initiallyExpanded: false,
@@ -155,7 +149,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle:Obx(() => Text(
-                          "Vous avez ${marketingNotifyController.campaignCountBudget} dossiers necessitent votre approbation",
+                          "Vous avez ${departementNotifyCOntroller.campaignCountBudget} dossiers necessitent votre approbation",
                           style: bodyMedium!.copyWith(
                               color: Colors.white70))) ,
                       initiallyExpanded: false,
@@ -184,7 +178,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle:Obx(() => Text(
-                          "Vous avez ${devisNotifyController.itemCountDevisBudget} dossiers necessitent votre approbation",
+                          "Vous avez ${departementNotifyCOntroller.itemLogCountDevisBudget} dossiers necessitent votre approbation",
                           style: bodyMedium!.copyWith(
                               color: Colors.white70))) ,
                       initiallyExpanded: false,
@@ -214,7 +208,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle:Obx(() => Text(
-                          "Vous avez ${expController.itemCountProjetBudget} dossiers necessitent votre approbation",
+                          "Vous avez ${departementNotifyCOntroller.itemCountProjetBudget} dossiers necessitent votre approbation",
                           style: bodyMedium!.copyWith(
                               color: Colors.white70))) ,
                       initiallyExpanded: false,
@@ -242,7 +236,7 @@ class _DDBudgetState extends State<DDBudget> {
                               : bodyLarge!
                                   .copyWith(color: Colors.white)),
                       subtitle:Obx(() => Text(
-                          "Vous avez ${budgetNotifyController.itemCountDD} dossiers necessitent votre approbation",
+                          "Vous avez ${departementNotifyCOntroller.itemBudgetCountDD} dossiers necessitent votre approbation",
                           style: bodyMedium!.copyWith(
                               color: Colors.white70))) ,
                       initiallyExpanded: false,

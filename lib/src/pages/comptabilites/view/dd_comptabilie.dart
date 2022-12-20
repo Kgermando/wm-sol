@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_blan_dd.dart';
 import 'package:wm_solution/src/pages/comptabilites/components/dd_comptabilite/table_compte_resultat_dd.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
 
 
 class DDComptabilite extends StatefulWidget {
@@ -31,7 +31,7 @@ class _DDComptabiliteState extends State<DDComptabilite> {
 
   @override
   Widget build(BuildContext context) {
-    final ComptabiliteNotifyController notify = Get.find(); 
+    final DepartementNotifyCOntroller notify = Get.find(); 
     final BilanController bilanController = Get.find();
     final CompteResultatController compteResultatController = Get.find();
     

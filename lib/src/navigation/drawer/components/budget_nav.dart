@@ -3,23 +3,28 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
-import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
 import 'package:wm_solution/src/routes/routes.dart';
 
 class BudgetNav extends StatefulWidget {
-  const BudgetNav({super.key, required this.currentRoute, required this.user, required this.departementList});
+  const BudgetNav(
+      {super.key,
+      required this.currentRoute,
+      required this.user,
+      required this.departementList,
+      required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
+  final DepartementNotifyCOntroller controller;
 
   @override
   State<BudgetNav> createState() => _BudgetNavState();
 }
 
-class _BudgetNavState extends State<BudgetNav> {
-  final BudgetNotifyController controller = Get.put(BudgetNotifyController());
+class _BudgetNavState extends State<BudgetNav> { 
   bool isOpen = false;
 
   @override
@@ -57,9 +62,9 @@ class _BudgetNavState extends State<BudgetNav> {
               title: 'Directeur de departement',
               style: bodyText1!,
               badge: Badge(
-                showBadge: (int.parse(controller.itemCount) >= 1) ? true : false,
+                showBadge: (int.parse(widget.controller.itemBudgetCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent:Obx(() => Text(controller.itemCount,
+                badgeContent:Obx(() => Text(widget.controller.itemBudgetCount,
                     style:
                         const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),

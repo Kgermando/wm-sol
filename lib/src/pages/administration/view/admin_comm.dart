@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';  
 import 'package:wm_solution/src/pages/administration/components/commercial/table_succursale_dg.dart';  
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_notify.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart'; 
 
 class AdminComm extends StatefulWidget {
   const AdminComm({super.key});
@@ -16,7 +16,7 @@ class AdminComm extends StatefulWidget {
 }
 
 class _AdminCommState extends State<AdminComm> { 
-  final ComNotifyController comNotifyController = Get.find();
+  final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find();
   final SuccursaleController succursaleController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
@@ -68,7 +68,7 @@ class _AdminCommState extends State<AdminComm> {
                                       : bodyLarge!
                                           .copyWith(color: Colors.white)),
                               subtitle:Obx(() => Text(
-                                  "Vous avez ${comNotifyController.succursaleCountDG} dossiers necessitent votre approbation",
+                                  "Vous avez ${departementNotifyCOntroller.succursaleCountDG} dossiers necessitent votre approbation",
                                   style: bodyMedium!.copyWith(
                                       color: Colors.white70))) ,
                               initiallyExpanded: false,

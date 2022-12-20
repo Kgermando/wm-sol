@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart';  
+import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';  
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/utils/regex.dart';
@@ -33,13 +34,16 @@ class _NewMailState extends State<NewMail> {
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
-      drawer: const MailsNAv(), 
+      drawer: const MailNav(), 
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-              visible: !Responsive.isMobile(context),
-              child: const Expanded(flex: 1, child: MailsNAv())),
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: MailNav())),
           Expanded(
               flex: 5,
               child: SingleChildScrollView(

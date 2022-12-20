@@ -5,6 +5,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/mail/mail_model.dart';
 import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -27,36 +28,39 @@ class _DetailMailState extends State<DetailMail> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.mailColor.mail.fullNameDest),
-              drawer: const MailsNAv(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: MailsNAv())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                              margin: const EdgeInsets.only(
-                                  top: p20, bottom: p8, right: p20, left: p20),
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: pageDetail())))
-                ],
-              ),
-            ));
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.mailColor.mail.fullNameDest),
+      drawer: const MailNav(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: MailNav())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                          margin: const EdgeInsets.only(
+                              top: p20, bottom: p8, right: p20, left: p20),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: pageDetail()))))
+        ],
+      ),
+    );
   }
 
   Widget pageDetail() {

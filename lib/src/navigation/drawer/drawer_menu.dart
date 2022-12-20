@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/helpers/get_local_storage.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/navigation/drawer/components/actionnaire_nav.dart';
@@ -21,11 +22,10 @@ import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
 import 'package:wm_solution/src/routes/routes.dart'; 
 import 'package:wm_solution/src/utils/info_system.dart'; 
 
-class DrawerMenu extends StatelessWidget {
+class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
   const DrawerMenu({Key? key}) : super(key: key);
-
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     final currentRoute = Get.currentRoute; 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Drawer(
@@ -57,7 +57,8 @@ class DrawerMenu extends StatelessWidget {
                      AdministrationNav(
                       currentRoute: currentRoute,
                       user: user,
-                      departementList: departementList),
+                      departementList: departementList,
+                      controller: controller),
                     
                     if (departementList.contains('Ressources Humaines') ||
                         departementList.contains('Administration') ||
@@ -65,7 +66,8 @@ class DrawerMenu extends StatelessWidget {
                         RhNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList), 
+                          departementList: departementList,
+                          controller: controller), 
 
                     if (departementList.contains('Budgets') ||
                         departementList.contains('Administration') ||
@@ -73,7 +75,8 @@ class DrawerMenu extends StatelessWidget {
                       BudgetNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
 
                     if (departementList.contains('Comptabilites') ||
                         departementList.contains('Administration') ||
@@ -81,7 +84,8 @@ class DrawerMenu extends StatelessWidget {
                       ComptabiliteNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
 
                     if (departementList.contains('Finances') ||
                         departementList.contains('Administration') ||
@@ -89,7 +93,8 @@ class DrawerMenu extends StatelessWidget {
                         FinanceNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
 
 
                     if (departementList.contains('Marketing') ||
@@ -98,7 +103,8 @@ class DrawerMenu extends StatelessWidget {
                       MaketingNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
 
 
                     if (departementList.contains('Commercial') ||
@@ -107,7 +113,8 @@ class DrawerMenu extends StatelessWidget {
                       CommercialNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
 
 
                     if (departementList.contains('Exploitations') ||
@@ -116,7 +123,8 @@ class DrawerMenu extends StatelessWidget {
                         ExploitationNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
 
 
                     if (departementList.contains('Logistique') ||
@@ -125,7 +133,8 @@ class DrawerMenu extends StatelessWidget {
                         LogistiqueNav(
                           currentRoute: currentRoute,
                           user: user,
-                          departementList: departementList),
+                          departementList: departementList,
+                          controller: controller),
                           
                     if (userRole <= 3)
                       DrawerWidget(

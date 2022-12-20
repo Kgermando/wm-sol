@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/components/budgets/table_budget_previsionnel_dg.dart'; 
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/notify/budget_notify_controller.dart'; 
+import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
 
 class AdminBudget extends StatefulWidget {
   const AdminBudget({super.key});
@@ -16,7 +16,7 @@ class AdminBudget extends StatefulWidget {
 }
 
 class _AdminBudgetState extends State<AdminBudget> {
-  final BudgetNotifyController budgetNotifyController = Get.find();
+  final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find();
   final BudgetPrevisionnelController budgetPrevisionnelController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
@@ -72,7 +72,7 @@ class _AdminBudgetState extends State<AdminBudget> {
                                             : bodyLarge!.copyWith(
                                                 color: Colors.white)),
                                     subtitle: Obx(() => Text(
-                                        "Vous avez ${budgetNotifyController.itemCountDG} dossiers necessitent votre approbation",
+                                        "Vous avez ${departementNotifyCOntroller.itemBudgetCountDG} dossiers necessitent votre approbation",
                                         style: bodyMedium!
                                             .copyWith(color: Colors.white70))) ,
                                     initiallyExpanded: false,

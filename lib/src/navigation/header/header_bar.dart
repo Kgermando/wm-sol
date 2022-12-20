@@ -10,8 +10,8 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/reponsiveness.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/constants/style.dart';
-import 'package:wm_solution/src/models/menu_item.dart';
-import 'package:wm_solution/src/navigation/header/controller/notify_header_controller.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
+import 'package:wm_solution/src/models/menu_item.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -23,15 +23,12 @@ import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
   final ProfilController profilController = Get.put(ProfilController());
-  final UpdateController updateController = Get.put(UpdateController());
-  final NotifyHeaderController notifyHeaderController =
-      Get.put(NotifyHeaderController());
+  final UpdateController updateController = Get.put(UpdateController()); 
+  final DepartementNotifyCOntroller departementNotifyCOntroller = Get.put(DepartementNotifyCOntroller()); 
 
-  List<dynamic> departementList = (notifyHeaderController
-              .profilController.user.departement ==
-          '-')
+  List<dynamic> departementList = (profilController.user.departement =='-')
       ? ["Support"]
-      : jsonDecode(notifyHeaderController.profilController.user.departement);
+      : jsonDecode(profilController.user.departement);
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
  
@@ -113,9 +110,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             },
             icon: Obx(() => Badge(
               showBadge:
-                  (notifyHeaderController.tacheItemCount >= 1) ? true : false,
+                  (departementNotifyCOntroller.tacheItemCount >= 1) ? true : false,
               badgeContent: Text(
-                  notifyHeaderController.tacheItemCount.toString(),
+                  departementNotifyCOntroller.tacheItemCount.toString(),
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.work_outline),
             )) ),
@@ -127,9 +124,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             },
             icon: Obx(() => Badge(
               showBadge:
-                  (notifyHeaderController.cartItemCount >= 1) ? true : false,
+                  (departementNotifyCOntroller.cartItemCount >= 1) ? true : false,
               badgeContent: Text(
-                  notifyHeaderController.cartItemCount.toString(),
+                  departementNotifyCOntroller.cartItemCount.toString(),
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.shopping_cart_outlined),
             )) ),
@@ -140,9 +137,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           },
           icon: Obx(() => Badge(
             showBadge:
-                (notifyHeaderController.agendaItemCount >= 1) ? true : false,
+                (departementNotifyCOntroller.agendaItemCount >= 1) ? true : false,
             badgeContent: Text(
-                notifyHeaderController.agendaItemCount.toString(),
+                departementNotifyCOntroller.agendaItemCount.toString(),
                 style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.note_alt_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),
@@ -154,8 +151,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           },
           icon: Obx(() => Badge(
             showBadge:
-                (notifyHeaderController.mailsItemCount >= 1) ? true : false,
-            badgeContent: Text(notifyHeaderController.mailsItemCount.toString(),
+                (departementNotifyCOntroller.mailsItemCount >= 1) ? true : false,
+            badgeContent: Text(
+                    departementNotifyCOntroller.mailsItemCount.toString(),
                 style: const TextStyle(color: Colors.white)),
             child: Icon(Icons.mail_outline_outlined,
                 size: (Responsive.isDesktop(context) ? 25 : 20)),

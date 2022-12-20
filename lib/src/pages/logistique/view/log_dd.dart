@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
@@ -18,8 +19,7 @@ import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_contr
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/notify/notify_log.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart'; 
 
 class LogDD extends StatefulWidget {
   const LogDD({super.key});
@@ -44,7 +44,7 @@ class _LogDDState extends State<LogDD> {
 
   @override
   Widget build(BuildContext context) {
-    final NotifyLogController controller = Get.find();
+    final DepartementNotifyCOntroller controller = Get.find();
     final DevisNotifyController devisNotifyController = Get.find();
     final MaterielController materielController = Get.find();
     final TrajetController trajetController = Get.find();
@@ -252,7 +252,7 @@ class _LogDDState extends State<LogDD> {
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
                                 subtitle: Obx(() => Text(
-                                    "Vous avez ${devisNotifyController.itemCountDevisDD} dossiers necessitent votre approbation",
+                                    "Vous avez ${controller.itemLogCountDevisDD} dossiers necessitent votre approbation",
                                     style: bodyMedium!.copyWith(
                                         color: Colors.white70))) ,
                                 initiallyExpanded: false,

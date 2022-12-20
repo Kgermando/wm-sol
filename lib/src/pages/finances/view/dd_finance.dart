@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart';
-import 'package:wm_solution/src/pages/exploitations/controller/notify/notify_exp.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart'; 
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_campaigns_fin.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_creance_dd.dart';
@@ -23,9 +22,7 @@ import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_co
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
@@ -43,9 +40,7 @@ class _DDFinanceState extends State<DDFinance> {
   final CaisseNameController caisseNameController = Get.find();
   final FinExterieurNameController finExterieurNameController = Get.find();
   final ProfilController profilController = Get.find();
-  final FinanceNotifyController financeNotifyController = Get.find();
-  final RHNotifyController rhNotifyController = Get.find();
-  final MarketingNotifyController marketingNotifyController =Get.find();
+  final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find(); 
   final SalaireController salaireController = Get.find();
   final TransportRestController transportRestController = Get.find();
   final DevisNotifyController devisNotifyController = Get.find();
@@ -53,8 +48,7 @@ class _DDFinanceState extends State<DDFinance> {
   final CreanceController creanceController = Get.find();
   final DetteController detteController = Get.find();
   final CampaignController campaignController = Get.find();
-  final ProjetController projetController = Get.find();
-  final NotifyExpController expController = Get.find();
+  final ProjetController projetController = Get.find(); 
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finance";
@@ -113,7 +107,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${rhNotifyController.itemCountSalaireFin} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.itemCountSalaireFin} dossiers necessitent votre approbation",
                                       style: bodyMedium!
                                           .copyWith(color: Colors.white70))) ,
                                   initiallyExpanded: false,
@@ -145,7 +139,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${rhNotifyController.itemCountTransRestFin} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.itemCountTransRestFin} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,
@@ -175,7 +169,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${marketingNotifyController.campaignCountFin} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.campaignCountFin} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,
@@ -206,7 +200,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${expController.itemCountProjetFin} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.itemCountProjetFin} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,
@@ -237,7 +231,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${devisNotifyController.itemCountDevisFin} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.itemLogCountDevisFin} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,
@@ -268,7 +262,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${financeNotifyController.detteCountDD} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.detteCountDD} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,
@@ -299,7 +293,7 @@ class _DDFinanceState extends State<DDFinance> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle:Obx(() => Text(
-                                      "Vous avez ${financeNotifyController.creanceCountDD} dossiers necessitent votre approbation",
+                                      "Vous avez ${departementNotifyCOntroller.creanceCountDD} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,

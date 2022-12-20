@@ -7,55 +7,55 @@ import 'package:wm_solution/src/models/notify/notify_model.dart';
 class DevisNotifyController extends GetxController {
   final DevisNotifyApi devisNotifyApi = DevisNotifyApi();
 
-  final _itemCountDevisDG = 0.obs;
-  int get itemCountDevisDG => _itemCountDevisDG.value;
-  final _itemCountDevisBudget = 0.obs;
-  int get itemCountDevisBudget => _itemCountDevisBudget.value;
-  final _itemCountDevisDD = 0.obs;
-  int get itemCountDevisDD => _itemCountDevisDD.value;
-  final _itemCountDevisFin = 0.obs;
-  int get itemCountDevisFin => _itemCountDevisFin.value;
-  final _itemCountDevisObs = 0.obs;
-  int get itemCountDevisObs => _itemCountDevisObs.value;
+  final _itemLogCountDevisDG = 0.obs;
+  int get itemLogCountDevisDG => _itemLogCountDevisDG.value;
+  final _itemLogCountDevisBudget = 0.obs;
+  int get itemLogCountDevisBudget => _itemLogCountDevisBudget.value;
+  final _itemLogCountDevisDD = 0.obs;
+  int get itemLogCountDevisDD => _itemLogCountDevisDD.value;
+  final _itemLogCountDevisFin = 0.obs;
+  int get itemLogCountDevisFin => _itemLogCountDevisFin.value;
+  final _itemLogCountDevisObs = 0.obs;
+  int get itemLogCountDevisObs => _itemLogCountDevisObs.value;
  
   @override
   void onInit() {
     super.onInit(); 
-    getCountDevisDG();
-        getCountDevisBudget();
-        getCountDevisSalaireDD();
-        getCountDevisFin();
-        getCountDeviseObs();
+    getLogCountDevisDG();
+    getLogCountDevisBudget();
+    getLogCountDevisSalaireDD();
+    getLogCountDevisFin();
+    getLogCountDeviseObs();
   }
 
   
-  void getCountDevisDG() async {
+  void getLogCountDevisDG() async {
     NotifyModel notifySum = await devisNotifyApi.getCountDG();
-    _itemCountDevisDG.value = notifySum.count;
+    _itemLogCountDevisDG.value = notifySum.count;
     update();
   }
 
-  void getCountDevisBudget() async {
+  void getLogCountDevisBudget() async {
     NotifyModel notifySum = await devisNotifyApi.getCountBudget();
-    _itemCountDevisBudget.value = notifySum.count;
+    _itemLogCountDevisBudget.value = notifySum.count;
     update();
   }
 
-  void getCountDevisSalaireDD() async {
+  void getLogCountDevisSalaireDD() async {
     NotifyModel notifySum = await devisNotifyApi.getCountDD();
-    _itemCountDevisDD.value = notifySum.count;
+    _itemLogCountDevisDD.value = notifySum.count;
     update();
   }
 
-  void getCountDevisFin() async {
+  void getLogCountDevisFin() async {
     NotifyModel notifySum = await devisNotifyApi.getCountFin();
-    _itemCountDevisFin.value = notifySum.count;
+    _itemLogCountDevisFin.value = notifySum.count;
     update();
   }
 
-  void getCountDeviseObs() async {
+  void getLogCountDeviseObs() async {
     NotifyModel notifySum = await devisNotifyApi.getCountObs();
-    _itemCountDevisObs.value = notifySum.count;
+    _itemLogCountDevisObs.value = notifySum.count;
     update();
   }
 }

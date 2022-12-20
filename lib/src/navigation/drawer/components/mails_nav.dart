@@ -3,24 +3,19 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
+import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 
-class MailsNAv extends StatefulWidget {
-  const MailsNAv({Key? key}) : super(key: key);
-
-  @override
-  State<MailsNAv> createState() => _MailsNAvState();
-}
-
-class _MailsNAvState extends State<MailsNAv> {
-  ProfilController profilController = Get.find();
-  bool isOpen = false;
+class MailNav extends GetView<DepartementNotifyCOntroller> {
+  const MailNav({super.key});
 
   @override
   Widget build(BuildContext context) { 
+    ProfilController profilController = Get.find();
     final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
     String? pageCurrente = ModalRoute.of(context)!.settings.name;
     return Drawer(
@@ -32,6 +27,7 @@ class _MailsNAvState extends State<MailsNAv> {
             width: 100,
             height: 100,
           )),
+          if(!Responsive.isMobile(context))
           IconButton(
               color: mainColor,
               onPressed: () async {
@@ -134,3 +130,5 @@ class _MailsNAvState extends State<MailsNAv> {
     );
   }
 }
+
+ 

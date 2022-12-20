@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/commercial/components/commercial/com_dd/table_produit_model_dd.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/com_dd/table_succursale_dd.dart'; 
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_notify.dart'; 
+ 
 
 class CommMarketingDD extends StatefulWidget {
   const CommMarketingDD({super.key});
@@ -28,7 +29,7 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
 
   @override
   Widget build(BuildContext context) {
-    final ComNotifyController comNotifyController = Get.find();
+    final DepartementNotifyCOntroller comNotifyController = Get.find();
     final SuccursaleController succursaleController = Get.find();
     final ProduitModelController produitModelController = Get.find();
     

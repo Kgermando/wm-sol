@@ -3,23 +3,28 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
-import 'package:wm_solution/src/pages/commercial/controller/notify/commercial_notify.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
 import 'package:wm_solution/src/routes/routes.dart';
 
 class CommercialNav extends StatefulWidget {
-  const CommercialNav({super.key, required this.currentRoute, required this.user, required this.departementList});
+  const CommercialNav(
+      {super.key,
+      required this.currentRoute,
+      required this.user,
+      required this.departementList,
+      required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
+  final DepartementNotifyCOntroller controller;
 
   @override
   State<CommercialNav> createState() => _CommercialNavState();
 }
 
-class _CommercialNavState extends State<CommercialNav> {
-      final ComNotifyController controller = Get.put(ComNotifyController());
+class _CommercialNavState extends State<CommercialNav> { 
   bool isOpen = false;
 
   @override
@@ -63,9 +68,9 @@ class _CommercialNavState extends State<CommercialNav> {
               style: bodyText1!,
               badge: Badge(
                 showBadge:
-                    (int.parse(controller.itemCount) >= 1) ? true : false,
+                    (int.parse(widget.controller.itemCommercialCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent: Obx(() => Text(controller.itemCount,
+                badgeContent: Obx(() => Text(widget.controller.itemCommercialCount,
                     style:
                         const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),

@@ -3,23 +3,29 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
-import 'package:wm_solution/src/pages/comptabilites/controller/notify/notify_comptabilite.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
 import 'package:wm_solution/src/routes/routes.dart';
 
 class ComptabiliteNav extends StatefulWidget {
-  const ComptabiliteNav({super.key, required this.currentRoute, required this.user, required this.departementList});
+  const ComptabiliteNav(
+      {super.key,
+      required this.currentRoute,
+      required this.user,
+      required this.departementList,
+      required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
+  final DepartementNotifyCOntroller controller;
 
   @override
   State<ComptabiliteNav> createState() => _ComptabiliteNavState();
 }
 
 class _ComptabiliteNavState extends State<ComptabiliteNav> {
-  final ComptabiliteNotifyController comptabiliteNotifyController = Get.put(ComptabiliteNotifyController());
+  
   bool isOpen = false;
 
   @override
@@ -60,9 +66,10 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
               title: 'Directeur departement',
               style: bodyText1!,
               badge: Badge(
-                showBadge: (int.parse(comptabiliteNotifyController.itemCount) >= 1) ? true : false,
+                showBadge: (int.parse(widget.controller.itemComptabiliteCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent: Obx(() => Text(comptabiliteNotifyController.itemCount,
+                badgeContent: Obx(() => Text(
+                    widget.controller.itemComptabiliteCount,
                     style:
                         const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),

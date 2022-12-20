@@ -3,23 +3,28 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
-import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
 import 'package:wm_solution/src/routes/routes.dart';
 
 class MaketingNav extends StatefulWidget {
-  const MaketingNav({super.key, required this.currentRoute, required this.user, required this.departementList});
+  const MaketingNav(
+      {super.key,
+      required this.currentRoute,
+      required this.user,
+      required this.departementList,
+      required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
+  final DepartementNotifyCOntroller controller;
 
   @override
   State<MaketingNav> createState() => _MaketingNavState();
 }
 
-class _MaketingNavState extends State<MaketingNav> {
-    final MarketingNotifyController controller = Get.put(MarketingNotifyController());
+class _MaketingNavState extends State<MaketingNav> { 
   bool isOpen = false;
 
   @override
@@ -64,9 +69,9 @@ class _MaketingNavState extends State<MaketingNav> {
               style: bodyText1!,
               badge: Badge(
                 showBadge:
-                    (int.parse(controller.itemCount) >= 1) ? true : false,
+                    (int.parse(widget.controller.itemMarketingCount) >= 1) ? true : false,
                 badgeColor: Colors.teal,
-                badgeContent:Obx(() => Text(controller.itemCount,
+                badgeContent:Obx(() => Text(widget.controller.itemMarketingCount,
                     style:
                         const TextStyle(fontSize: 10.0, color: Colors.white))) ,
                 child: const Icon(Icons.notifications),

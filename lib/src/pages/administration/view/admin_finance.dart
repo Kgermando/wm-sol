@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/components/finances/table_creance_dg.dart';
 import 'package:wm_solution/src/pages/administration/components/finances/table_dette_dg.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/notify/finance_notify_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart'; 
 
 class AdminFinance extends StatefulWidget {
   const AdminFinance({super.key});
@@ -18,7 +18,7 @@ class AdminFinance extends StatefulWidget {
 }
 
 class _AdminFinanceState extends State<AdminFinance> {
-  final FinanceNotifyController financeNotifyController = Get.find();
+  final DepartementNotifyCOntroller financeNotifyController = Get.find();
   final CreanceController creanceController = Get.find();
   final DetteController detteController = Get.find();
   

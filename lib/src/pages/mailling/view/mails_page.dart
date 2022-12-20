@@ -4,6 +4,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/mail/mail_model.dart';
 import 'package:wm_solution/src/navigation/drawer/components/mails_nav.dart';
+import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/mailling/components/list_mails.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
@@ -36,45 +37,46 @@ class _MailPagesState extends State<MailPages> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, ''),
-              drawer: const MailsNAv(),
-              floatingActionButton: FloatingActionButton.extended(
-                  icon: const Icon(Icons.add),
-                  label: const Text("Nouveau mail"),
-                  onPressed: () {
-                    Get.toNamed(MailRoutes.addMail);
-                  }),
-              body: Row(
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: MailsNAv())),
-                  Expanded(
-                      flex: 5,
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: p20, right: p20, left: p20, bottom: p8),
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: controller.mailList.length,
-                              itemBuilder: (context, index) {
-                                final mail = controller.mailList[index];
-                                final color = _lightColors[index];
-                                return pageWidget(mail, color);
-                              }))),
-                ],
-              ))),
-    );
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title, ''),
+        drawer: const MailNav(),
+        floatingActionButton: FloatingActionButton.extended(
+            icon: const Icon(Icons.add),
+            label: const Text("Nouveau mail"),
+            onPressed: () {
+              Get.toNamed(MailRoutes.addMail);
+            }),
+        body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: MailNav())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (data) => Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.mailList.length,
+                            itemBuilder: (context, index) {
+                              final mail = controller.mailList[index];
+                              final color = _lightColors[index];
+                              return pageWidget(mail, color);
+                            })))),
+          ],
+        ));
   }
 
   Widget pageWidget(MailModel mail, Color color) {

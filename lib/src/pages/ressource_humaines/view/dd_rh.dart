@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/trans_rest/table_transport_rest_dd.dart'; 
-import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/table_users_actifs.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/users_actifs/table_users_actifs.dart'; 
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dd_rh/salaires/table_salaire_dd.dart';
@@ -30,7 +30,7 @@ class _DDRHState extends State<DDRH> {
 
   @override
   Widget build(BuildContext context) {
-    final RHNotifyController controller = Get.find();
+    final DepartementNotifyCOntroller controller = Get.find();
     final SalaireController salaireController = Get.find();
     final TransportRestController transportRestController = Get.find();
     final UsersController usersController = Get.find();

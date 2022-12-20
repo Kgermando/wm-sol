@@ -2,16 +2,21 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/models/users/user_model.dart'; 
-import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/rh_notify_controller.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';  
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class RhNav extends StatefulWidget {
-  const RhNav({super.key, required this.currentRoute, required this.user, required this.departementList});
+  const RhNav(
+      {super.key,
+      required this.currentRoute,
+      required this.user,
+      required this.departementList, required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
+  final DepartementNotifyCOntroller controller;
 
   @override
   State<RhNav> createState() => _RhNavState();
@@ -21,8 +26,7 @@ class _RhNavState extends State<RhNav> {
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) { 
-    final RHNotifyController controller = Get.put(RHNotifyController());
+  Widget build(BuildContext context) {  
 
    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
     final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
@@ -61,9 +65,9 @@ class _RhNavState extends State<RhNav> {
             title: 'Directeur de département',
             style: bodyText1!,
             badge: Badge(
-              showBadge: (int.parse(controller.itemCount) >= 1) ? true : false,
+              showBadge: (int.parse(widget.controller.itemRHCount) >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent:Obx(() => Text(controller.itemCount,
+              badgeContent:Obx(() => Text(widget.controller.itemRHCount,
                   style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
               child: const Icon(Icons.notifications),
             ),

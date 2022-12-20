@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart'; 
 import 'package:wm_solution/src/pages/administration/components/markeing/table_campaigns_dg.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart'; 
+
 
 class AdminMarketing extends StatefulWidget {
   const AdminMarketing({super.key});
@@ -16,7 +17,7 @@ class AdminMarketing extends StatefulWidget {
 }
 
 class _AdminMarketingState extends State<AdminMarketing> {
-  final MarketingNotifyController marketingNotifyController = Get.find();
+  final DepartementNotifyCOntroller marketingNotifyController = Get.find();
   final CampaignController campaignController = Get.find();
    
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();

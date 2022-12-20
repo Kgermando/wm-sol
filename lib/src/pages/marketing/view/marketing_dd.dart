@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/components/dd/table_campaigns_dd.dart'; 
-import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/notify/marketing_notify.dart';  
+import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
 
 
 class MarketingDD extends StatefulWidget {
@@ -17,7 +17,7 @@ class MarketingDD extends StatefulWidget {
 }
 
 class _MarketingDDState extends State<MarketingDD> {
-  final MarketingNotifyController marketingNotifyController = Get.find();
+  final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find();
   final CampaignController campaignController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
@@ -68,7 +68,7 @@ class _MarketingDDState extends State<MarketingDD> {
                                         : bodyLarge!
                                             .copyWith(color: Colors.white)),
                                 subtitle: Obx(() => Text(
-                                    "Vous avez ${marketingNotifyController.campaignCountDD} dossiers necessitent votre approbation",
+                                    "Vous avez ${departementNotifyCOntroller.campaignCountDD} dossiers necessitent votre approbation",
                                     style: bodyMedium!
                                         .copyWith(color: Colors.white70))) ,
                                 initiallyExpanded: false,
