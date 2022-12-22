@@ -14,7 +14,6 @@ import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_transpo
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart'; 
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
@@ -46,7 +45,6 @@ class _DDBudgetState extends State<DDBudget> {
     final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find(); 
     final SalaireController salaireController = Get.put(SalaireController());
     final TransportRestController transportRestController = Get.put(TransportRestController());
-    final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController());
     final DevisController devisController = Get.put(DevisController());
     final CampaignController campaignController = Get.put(CampaignController());
     final ProjetController projetController = Get.put(ProjetController());

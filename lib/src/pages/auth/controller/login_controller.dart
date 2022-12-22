@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -61,15 +60,13 @@ class LoginController extends GetxController {
         _loadingLogin.value = true;
         await authApi
             .login(matriculeController.text, passwordController.text)
-            .then((value) {
+            .then((value) async {
           clear();
           _loadingLogin.value = false;
           if (value) {
             Get.put(UsersController());
 
-            authApi.getUserId().then((userData) async {
-              Get.put(ProfilController(), permanent: true);
-
+            await authApi.getUserId().then((userData) async {
               GetStorage box = GetStorage();
               box.write('userModel', json.encode(userData));
 

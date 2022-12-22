@@ -1,6 +1,7 @@
+ 
 import 'dart:io';
 import 'dart:typed_data';
-
+ 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -23,7 +24,8 @@ class BilanPdf {
       List<CompteBilanRefModel> compteActifList,
       List<CompteBilanRefModel> comptePassifList,
       MonnaieStorage monnaieStorage) async {
-    final pdf = Document();
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -204,7 +206,8 @@ class BilanPdf {
                   SizedBox(height: p30),
                   SizedBox(
                       // height: MediaQuery.of(context).size.height / 1.5,
-                      child: comptePassifWidget(comptePassifList, monnaieStorage))
+                      child:
+                          comptePassifWidget(comptePassifList, monnaieStorage))
                 ],
               ),
             ),

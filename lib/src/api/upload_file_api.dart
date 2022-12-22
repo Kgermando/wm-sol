@@ -9,11 +9,13 @@ import 'package:http/http.dart' as http;
 
 import 'dart:io';
 
+import 'package:wm_solution/src/api/route_api.dart';
+
 class FileApi {
   var client = http.Client(); 
 
   Future<String> uploadFiled(String fileName) async {
-    String urlApi = 'http://192.168.100.200:3000/uploadfile/upload';
+    String urlApi = '$baseUrl:3000/uploadfile/upload'; 
     var request = http.MultipartRequest('POST', Uri.parse(urlApi));
 
     request.files.add(http.MultipartFile('application',

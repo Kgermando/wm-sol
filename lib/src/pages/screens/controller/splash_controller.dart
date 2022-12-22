@@ -33,10 +33,11 @@ class SplashController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    // getStorge.erase();
     String? idToken = getStorge.read('idToken');
     if (idToken != null) {
       isLoggIn();
-      print("idToken $idToken");
+      print("idToken splash: $idToken");
     } else {
       Get.offAllNamed(UserRoutes.login);
     }

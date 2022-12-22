@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
@@ -12,7 +12,7 @@ import 'package:pdf/widgets.dart';
 class BonLivraisonPDF {
   static Future<File> generate(
       BonLivraisonModel bonLivraisonModel, monnaie) async {
-    final pdf = Document();
+    final pdf = Document(); 
 
     final user = await AuthApi().getUserId();
 

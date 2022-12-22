@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
@@ -23,6 +24,8 @@ class CreanceCartPDF {
       CreanceCartModel factureCartModel, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
 
+    final box = GetStorage();
+
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
@@ -39,8 +42,7 @@ class CreanceCartPDF {
     return PdfApi.saveDocument(name: 'creance', pdf: pdf);
   }
 
-  static Widget buildHeader(
-          CreanceCartModel factureCartModel, UserModel user,
+  static Widget buildHeader(CreanceCartModel factureCartModel, UserModel user,
           MonnaieStorage monnaieStorage) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,8 +83,8 @@ class CreanceCartPDF {
         ],
       );
 
-  static Widget buildInvoiceInfo(
-      CreanceCartModel factureCartModel, UserModel user, MonnaieStorage monnaieStorage) {
+  static Widget buildInvoiceInfo(CreanceCartModel factureCartModel,
+      UserModel user, MonnaieStorage monnaieStorage) {
     final titles = <String>[
       'RCCM:',
       'N° Impôt:',

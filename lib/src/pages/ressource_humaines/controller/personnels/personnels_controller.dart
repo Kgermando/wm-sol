@@ -183,7 +183,7 @@ class PersonnelsController extends GetxController
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
-    try {
+    try { 
       _isLoading.value = true;
       final agentModel = AgentModel(
           nom: (nomController.text == '') ? '-' : nomController.text,
@@ -238,7 +238,6 @@ class PersonnelsController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await personnelsApi.insertData(agentModel).then((value) async {
-        
         final performenceModel = PerformenceModel(
           agent: value.matricule,
           departement: value.departement,

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
@@ -15,7 +15,7 @@ import 'package:pdf/widgets.dart';
 class FacturePDF {
   static Future<File> generate(
       FactureCartModel creanceCartModel, String monnaie) async {
-    final pdf = Document();
+    final pdf = Document(); 
 
     final user = await AuthApi().getUserId();
 
@@ -66,12 +66,12 @@ class FacturePDF {
       );
 
   static Widget buildCustomerAddress(UserModel user) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(user.succursale.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold)), 
-    ],
-  );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(user.succursale.toUpperCase(),
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      );
 
   static Widget buildInvoiceInfo(
       FactureCartModel creanceCartModel, UserModel user) {

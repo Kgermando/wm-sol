@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/bindings/network_bindings.dart';
+import 'package:wm_solution/src/bindings/wm_binding.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
@@ -317,8 +318,8 @@ List<GetPage<dynamic>>? getPages = [
   // Settings
   GetPage(
       name: SettingsRoutes.splash,
-      // binding: WMBindings(),
-      bindings: [],
+      binding: WMBindings(),
+      // bindings: [],
       page: () => const SplashView(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

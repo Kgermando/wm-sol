@@ -2,9 +2,10 @@ class InfoSystem {
   String name() => "Work Management";
   String namelong() => "Solution Work Management";
   String description() => "Work Management pour entreprise priveée et public"; 
-  String version() => "3.0.0.15";
-  String logoSansFond() => "assets/images/logo_sans_fond.png";
+  String version() => "3.0.0.16";
   String logo() => "assets/images/logo.png";
+  String logoSansFond() => "assets/images/logo_sans_fond.png";
+  String logoIcon() => "assets/images/logo_icon.png";
 
   String nameClient() => "Work Management";
   String nameAdress() =>

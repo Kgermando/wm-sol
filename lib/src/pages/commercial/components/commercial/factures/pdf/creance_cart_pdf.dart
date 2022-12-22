@@ -2,7 +2,8 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:wm_solution/src/api/auth/auth_api.dart'; 
+import 'package:get_storage/get_storage.dart';
+import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
@@ -19,9 +20,10 @@ import 'package:pdf/widgets.dart';
 
 class CreanceCartPDF {
   static Future<File> generate(
-      CreanceCartModel factureCartModel,  
-      String monnaie) async {
+      CreanceCartModel factureCartModel, String monnaie) async {
     final pdf = Document();
+
+    final box = GetStorage();
 
     final user = await AuthApi().getUserId();
 
@@ -40,7 +42,7 @@ class CreanceCartPDF {
   }
 
   static Widget buildHeader(
-          CreanceCartModel factureCartModel, UserModel user, monnaieStorage ) =>
+          CreanceCartModel factureCartModel, UserModel user, monnaieStorage) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -75,7 +77,7 @@ class CreanceCartPDF {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(user.succursale.toUpperCase(),
-              style: TextStyle(fontWeight: FontWeight.bold)), 
+              style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       );
 
@@ -93,7 +95,7 @@ class CreanceCartPDF {
       InfoSystem().nImpot(),
       InfoSystem().iDNat(),
       factureCartModel.client,
-      DateFormat("dd/MM/yy HH:mm").format(factureCartModel.created), 
+      DateFormat("dd/MM/yy HH:mm").format(factureCartModel.created),
     ];
 
     return Column(
@@ -159,7 +161,7 @@ class CreanceCartPDF {
         item.idProductCart,
         (double.parse(item.quantityCart) >= double.parse(item.qtyRemise))
             ? '${NumberFormat.decimalPattern('fr').format(double.parse(item.remise))} $monnaie'
-            : '${NumberFormat.decimalPattern('fr').format(double.parse(item.priceCart))} $monnaie', 
+            : '${NumberFormat.decimalPattern('fr').format(double.parse(item.priceCart))} $monnaie',
         '${priceTotal.toStringAsFixed(2)} $monnaie',
         '${item.tva} %',
       ];
@@ -254,7 +256,8 @@ class CreanceCartPDF {
           // buildSimpleText(title: 'Address', value: invoice.supplier.address),
           // SizedBox(height: 1 * PdfPageFormat.mm),
           // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-          pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.', style: const TextStyle(fontSize: 10))
+          pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
+              style: const TextStyle(fontSize: 10))
         ],
       );
 

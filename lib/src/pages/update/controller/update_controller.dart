@@ -110,16 +110,14 @@ class UpdateController extends GetxController
         var isVersion = isUpdateLocalVersion.split('.');
         for (var e in isVersion) {
           _sumLocalVersion.value += double.parse(e);
-        }
-        print("sumVersionLocal ${_sumLocalVersion.value}");
+        }  
 
         // Version Cloud
         var isVersionCloud = updateVersionList.first.version.split('.');
         for (var e in isVersionCloud) {
           _sumVersionCloud.value += double.parse(e);
         }
-
-        print("sumVersionCloud ${_sumVersionCloud.value}");
+ 
       }
       change(updateVersionList, status: RxStatus.success());
     }, onError: (err) {

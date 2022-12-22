@@ -1,5 +1,6 @@
+ 
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:typed_data'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/models/commercial/restitution_model.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
@@ -15,7 +16,8 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 
 class RestitutionPdf {
   static Future<void> generate(RestitutionModel data) async {
-    final pdf = Document();
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [

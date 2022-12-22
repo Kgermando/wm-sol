@@ -105,9 +105,9 @@ class AuthApi extends GetConnect {
     final box = GetStorage();
 
     String? idToken = box.read('idToken');
-    int id = (idToken == null || idToken != '-') ? 0 : int.parse(jsonDecode(idToken));
+    int id = (idToken == null) ? 0 : int.parse(jsonDecode(idToken));
     if (kDebugMode) {
-      print("id: $id");
+      print("iddd: $id");
     }
 
     var userIdUrl = Uri.parse("$mainUrl/user/$id");
@@ -116,34 +116,36 @@ class AuthApi extends GetConnect {
       return UserModel.fromJson(json.decode(resp.body));
     } else if (resp.statusCode == 403) {
       return UserModel(
-          nom: '-',
-          prenom: '-',
-          email: '-',
-          telephone: '-',
-          matricule: '-',
-          departement: '-',
-          servicesAffectation: '-',
-          fonctionOccupe: '-',
-          role: '5',
-          isOnline: 'false',
-          createdAt: DateTime.now(),
-          passwordHash: '-',
-          succursale: '-');
+        nom: 'Error 403',
+        prenom: 'Error 403',
+        email: 'Error 403',
+        telephone: 'Error 403',
+        matricule: 'Error 403',
+        departement: 'Error 403',
+        servicesAffectation: 'Error 403',
+        fonctionOccupe: 'Error 403',
+        role: '5',
+        isOnline: 'false',
+        createdAt: DateTime.now(),
+        passwordHash: 'Error 403',
+        succursale: 'Error 403'
+      );
     } else if (resp.statusCode == 404) {
       return UserModel(
-          nom: '-',
-          prenom: '-',
-          email: '-',
-          telephone: '-',
-          matricule: '-',
-          departement: '-',
-          servicesAffectation: '-',
-          fonctionOccupe: '-',
-          role: '5',
-          isOnline: 'false',
-          createdAt: DateTime.now(),
-          passwordHash: '-',
-          succursale: '-');
+        nom: 'Error 404',
+        prenom: 'Error 404',
+        email: 'Error 404',
+        telephone: 'Error 404',
+        matricule: 'Error 404',
+        departement: 'Error 404',
+        servicesAffectation: 'Error 404',
+        fonctionOccupe: 'Error 404',
+        role: '5',
+        isOnline: 'false',
+        createdAt: DateTime.now(),
+        passwordHash: 'Error 404',
+        succursale: 'Error 404'
+      );
     } else {
       throw Exception(resp.statusCode);
     }

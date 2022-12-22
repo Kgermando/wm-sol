@@ -43,7 +43,7 @@ class _DDFinanceState extends State<DDFinance> {
   final DepartementNotifyCOntroller departementNotifyCOntroller = Get.find(); 
   final SalaireController salaireController = Get.find();
   final TransportRestController transportRestController = Get.find();
-  final DevisNotifyController devisNotifyController = Get.find();
+  final DevisNotifyController devisNotifyController = Get.put(DevisNotifyController()); 
   final DevisController devisController = Get.find();
   final CreanceController creanceController = Get.find();
   final DetteController detteController = Get.find();

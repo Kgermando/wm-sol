@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
-
+ 
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:typed_data'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -20,7 +20,8 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 class TransRestPdf {
   static Future<void> generate(List<TransRestAgentsModel> transRestAgentsList,
       TransportRestaurationModel data, MonnaieStorage monnaieStorage) async {
-    final pdf = Document();
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -202,7 +203,8 @@ class TransRestPdf {
         },
         children: [
           tableRowHeader(),
-          for (var item in transRestAgentsList) tableRow(item, data, monnaieStorage)
+          for (var item in transRestAgentsList)
+            tableRow(item, data, monnaieStorage)
         ],
       ),
     );
@@ -229,8 +231,8 @@ class TransRestPdf {
     ]);
   }
 
-  static TableRow tableRow(
-      TransRestAgentsModel item, TransportRestaurationModel data, MonnaieStorage monnaieStorage) {
+  static TableRow tableRow(TransRestAgentsModel item,
+      TransportRestaurationModel data, MonnaieStorage monnaieStorage) {
     return TableRow(children: [
       Container(
         padding: const EdgeInsets.all(p10),

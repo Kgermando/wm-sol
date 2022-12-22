@@ -37,26 +37,27 @@ class _PersonnelsPageState extends State<PersonnelsPage> {
         Get.toNamed(RhRoutes.rhPersonnelsAdd, arguments: controller.personnelsList);
       },
     ),
-    body: controller.obx(
-      onLoading: loadingPage(context),
-      onEmpty: const Text('Aucune donnée'),
-      onError: (error) => loadingError(context, error!),
-      (state) => Row(
+    body: Row(
         children: [
           Visibility(
               visible: !Responsive.isMobile(context),
               child: const Expanded(flex: 1, child: DrawerMenu())),
           Expanded(
               flex: 5,
-              child: Container(
+              child: controller.obx(
+      onLoading: loadingPage(context),
+      onEmpty: const Text('Aucune donnée'),
+      onError: (error) => loadingError(context, error!),
+      (state) => Container(
                   margin: const EdgeInsets.only(
                       top: p20, right: p20, left: p20, bottom: p8),
                   decoration: const BoxDecoration(
                       borderRadius:
                           BorderRadius.all(Radius.circular(20))),
                   child: TablePersonnels(
-                      personnelList: state!, controller: controller))),
+                      personnelList: state!, controller: controller))) ) 
         ],
-      )) );
+      ));
+     
   }
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
-
+ 
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:typed_data'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
@@ -18,7 +18,8 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 
 class AgentPdf {
   static Future<void> generate(AgentModel data) async {
-    final pdf = Document();
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -315,17 +316,17 @@ class AgentPdf {
   }
 
   static Widget buildFooter(UserModel user) => Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Divider(),
-      SizedBox(height: 2 * PdfPageFormat.mm),
-      // buildSimpleText(title: 'Address', value: invoice.supplier.address),
-      // SizedBox(height: 1 * PdfPageFormat.mm),
-      // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-      pw.Text(InfoSystem().namelong(),
-          style: const pw.TextStyle(fontSize: 10))
-    ],
-  );
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Divider(),
+          SizedBox(height: 2 * PdfPageFormat.mm),
+          // buildSimpleText(title: 'Address', value: invoice.supplier.address),
+          // SizedBox(height: 1 * PdfPageFormat.mm),
+          // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
+          pw.Text(InfoSystem().namelong(),
+              style: const pw.TextStyle(fontSize: 10))
+        ],
+      );
 
   static buildSimpleText({
     required String title,

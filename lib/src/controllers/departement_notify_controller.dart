@@ -296,7 +296,9 @@ class DepartementNotifyCOntroller extends GetxController {
   void onInit() {
     super.onInit();
 
-    List<dynamic> departement = jsonDecode(profilController.user.departement);
+    List<dynamic> departement = (profilController.user.departement == '-')
+        ? ["Support"]
+        : jsonDecode(profilController.user.departement);
     int userRole = int.parse(profilController.user.role);
     
     if (departement.contains("Administration") && userRole <= 1) {

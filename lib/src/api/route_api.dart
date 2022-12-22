@@ -1,6 +1,7 @@
-// const String mainUrl = "http://localhost/api";
-const String mainUrl = "http://192.168.100.200/api";
-// const String mainUrl = "http://161.35.239.245/api";
+
+
+const String baseUrl = "http://192.168.100.200";
+const String mainUrl = "$baseUrl/api";
 
 // Notifications departements
 var adminDepartementNotifyUrl = "$mainUrl/counts/departement-admin";

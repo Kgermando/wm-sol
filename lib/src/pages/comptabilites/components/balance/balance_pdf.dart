@@ -1,6 +1,7 @@
+ 
 import 'dart:io';
 import 'dart:typed_data';
-
+ 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -17,8 +18,10 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
 class BalancePdf {
-  static Future<void> generate(List<BalanceSumModel> data, MonnaieStorage monnaieStorage) async {
-    final pdf = Document();
+  static Future<void> generate(
+      List<BalanceSumModel> data, MonnaieStorage monnaieStorage) async {
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -203,7 +206,8 @@ class BalancePdf {
     ]);
   }
 
-  static Widget compteWidget(BalanceModel compte, MonnaieStorage monnaieStorage) {
+  static Widget compteWidget(
+      BalanceModel compte, MonnaieStorage monnaieStorage) {
     double solde = 0.0;
 
     return Column(

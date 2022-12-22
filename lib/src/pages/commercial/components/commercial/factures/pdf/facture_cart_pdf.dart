@@ -2,7 +2,8 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:wm_solution/src/api/auth/auth_api.dart'; 
+import 'package:get_storage/get_storage.dart';
+import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:wm_solution/src/models/commercial/facture_cart_model.dart';
@@ -17,6 +18,8 @@ class FactureCartPDF {
   static Future<File> generate(
       FactureCartModel factureCartModel, String monnaie) async {
     final pdf = Document();
+
+    final box = GetStorage();
 
     final user = await AuthApi().getUserId();
 
@@ -35,8 +38,7 @@ class FactureCartPDF {
   }
 
   static Widget buildHeader(
-          FactureCartModel factureCartModel, UserModel user,
-          monnaie) =>
+          FactureCartModel factureCartModel, UserModel user, monnaie) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,7 +73,7 @@ class FactureCartPDF {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(user.succursale.toUpperCase(),
-              style: TextStyle(fontWeight: FontWeight.bold)), 
+              style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       );
 
@@ -250,7 +252,7 @@ class FactureCartPDF {
           // buildSimpleText(title: 'Address', value: invoice.supplier.address),
           // SizedBox(height: 1 * PdfPageFormat.mm),
           // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-         pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
+          pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
               style: const TextStyle(fontSize: 10))
         ],
       );

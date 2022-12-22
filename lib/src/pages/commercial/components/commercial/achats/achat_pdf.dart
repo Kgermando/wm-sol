@@ -1,5 +1,6 @@
+ 
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:typed_data'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
@@ -17,8 +18,9 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 
 class AchatPdf {
   static Future<void> generate(AchatModel data, UserModel user,
-      List<VenteCartModel> venteCartList, MonnaieStorage monnaieStorage) async { 
-    final pdf = Document();
+      List<VenteCartModel> venteCartList, MonnaieStorage monnaieStorage) async {
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -123,8 +125,8 @@ class AchatPdf {
         ],
       );
 
-  static Widget buildBody(
-      AchatModel data, UserModel user, List<VenteCartModel> venteCartList, MonnaieStorage monnaieStorage) {
+  static Widget buildBody(AchatModel data, UserModel user,
+      List<VenteCartModel> venteCartList, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       headerTitle(data),
       SizedBox(
@@ -168,7 +170,8 @@ class AchatPdf {
         ));
   }
 
-  static Widget achats(AchatModel data, UserModel user, MonnaieStorage monnaieStorage) {
+  static Widget achats(
+      AchatModel data, UserModel user, MonnaieStorage monnaieStorage) {
     var roleAgent = int.parse(user.role) <= 3;
 
     var prixAchatTotal =

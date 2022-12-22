@@ -1,5 +1,6 @@
+ 
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:typed_data'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
@@ -15,8 +16,10 @@ import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
 class StockGlobalPdf {
-  static Future<void> generate(StocksGlobalMOdel data, MonnaieStorage monnaieStorage) async {
-    final pdf = Document();
+  static Future<void> generate(
+      StocksGlobalMOdel data, MonnaieStorage monnaieStorage) async {
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -121,7 +124,8 @@ class StockGlobalPdf {
         ],
       );
 
-  static Widget buildBody(StocksGlobalMOdel data, MonnaieStorage monnaieStorage) {
+  static Widget buildBody(
+      StocksGlobalMOdel data, MonnaieStorage monnaieStorage) {
     return pw.Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       achats(data, monnaieStorage),
       SizedBox(
@@ -139,7 +143,8 @@ class StockGlobalPdf {
     ]);
   }
 
-  static Widget achats(StocksGlobalMOdel stocksGlobalMOdel, MonnaieStorage monnaieStorage) {
+  static Widget achats(
+      StocksGlobalMOdel stocksGlobalMOdel, MonnaieStorage monnaieStorage) {
     var prixAchatTotal = double.parse(stocksGlobalMOdel.priceAchatUnit) *
         double.parse(stocksGlobalMOdel.quantityAchat);
 
@@ -249,7 +254,8 @@ class StockGlobalPdf {
     );
   }
 
-  static Widget disponibles(StocksGlobalMOdel stocksGlobalMOdel, MonnaieStorage monnaieStorage) {
+  static Widget disponibles(
+      StocksGlobalMOdel stocksGlobalMOdel, MonnaieStorage monnaieStorage) {
     var prixTotalRestante = double.parse(stocksGlobalMOdel.quantity) *
         double.parse(stocksGlobalMOdel.prixVenteUnit);
 

@@ -87,28 +87,30 @@ class _TransportRestaurationRHState extends State<TransportRestaurationRH> {
             );
           },
         ),
-        body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => Text(
-              "Une erreur s'est produite $error veiller actualiser votre application. Merçi."),
-          (data) => Row(
+        body: Row(
           children: [
             Visibility(
                 visible: !Responsive.isMobile(context),
                 child: const Expanded(flex: 1, child: DrawerMenu())),
             Expanded(
                 flex: 5,
-                child: Container(
+                child:controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => Text(
+              "Une erreur s'est produite $error veiller actualiser votre application. Merçi."),
+          (data) => Container(
                     margin: const EdgeInsets.only(
                         top: p20, right: p20, left: p20, bottom: p8),
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: TableTransportRest(
                         transportRestList: controller.transportRestaurationList,
-                        controller: controller))),
+                        controller: controller))) ),
           ],
-        )) );
+        )
+        
+         );
   }
 
   Widget titleWidget(TransportRestController controller) {

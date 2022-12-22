@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
@@ -15,7 +15,7 @@ import 'package:pdf/widgets.dart';
 class CreancePDF {
   static Future<File> generate(
       CreanceCartModel creanceCartModel, String monnaie) async {
-    final pdf = Document();
+    final pdf = Document(); 
 
     final user = await AuthApi().getUserId();
 
@@ -69,7 +69,7 @@ class CreancePDF {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(user.succursale.toUpperCase(),
-              style: TextStyle(fontWeight: FontWeight.bold)), 
+              style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       );
 
@@ -104,7 +104,7 @@ class CreancePDF {
   static Widget buildSupplierAddress(UserModel user) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(InfoSystem().nameClient(),
+          Text(InfoSystem().nameClient(),
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
           Text(InfoSystem().nameAdress()),
@@ -249,7 +249,7 @@ class CreancePDF {
           // buildSimpleText(title: 'Address', value: invoice.supplier.address),
           // SizedBox(height: 1 * PdfPageFormat.mm),
           // buildSimpleText(title: 'Paypal', value: invoice.supplier.paymentInfo),
-         pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
+          pw.Text('Les marchandises vendues ne sont ni reprises ni echangées.',
               style: const TextStyle(fontSize: 10))
         ],
       );

@@ -1,6 +1,7 @@
+ 
 import 'dart:io';
 import 'dart:typed_data';
-
+ 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -26,7 +27,8 @@ class CompteResultatPdf {
       double totalProduits123,
       double totalGeneralProduits,
       MonnaieStorage monnaieStorage) async {
-    final pdf = Document();
+    final pdf = Document(); 
+
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
       build: (context) => [
@@ -34,8 +36,15 @@ class CompteResultatPdf {
         SizedBox(height: 2 * PdfPageFormat.cm),
         buildTitle(data),
         Divider(),
-        buildBody(data, totalCharges1, totalCharges123, totalGeneralCharges,
-            totalProduits1, totalProduits123, totalGeneralProduits, monnaieStorage)
+        buildBody(
+            data,
+            totalCharges1,
+            totalCharges123,
+            totalGeneralCharges,
+            totalProduits1,
+            totalProduits123,
+            totalGeneralProduits,
+            monnaieStorage)
       ],
       footer: (context) => buildFooter(user),
     ));
@@ -173,8 +182,8 @@ class CompteResultatPdf {
                 ),
                 Divider(color: PdfColors.amber),
                 SizedBox(height: p30),
-                chargeWidget(
-                    data, totalCharges1, totalCharges123, totalGeneralCharges, monnaieStorage)
+                chargeWidget(data, totalCharges1, totalCharges123,
+                    totalGeneralCharges, monnaieStorage)
               ],
             ),
           ),
@@ -223,8 +232,11 @@ class CompteResultatPdf {
     ]);
   }
 
-  static Widget chargeWidget(CompteResulatsModel data, double totalCharges1,
-      double totalCharges123, double totalGeneralCharges,
+  static Widget chargeWidget(
+      CompteResulatsModel data,
+      double totalCharges1,
+      double totalCharges123,
+      double totalGeneralCharges,
       MonnaieStorage monnaieStorage) {
     return Column(
       children: [
@@ -690,8 +702,11 @@ class CompteResultatPdf {
     );
   }
 
-  static Widget produitWidget(CompteResulatsModel data, double totalProduits1,
-      double totalProduits123, double totalGeneralProduits,
+  static Widget produitWidget(
+      CompteResulatsModel data,
+      double totalProduits1,
+      double totalProduits123,
+      double totalGeneralProduits,
       MonnaieStorage monnaieStorage) {
     return Column(
       children: [

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 
 class ProfilController extends GetxController with StateMixin<UserModel> {
   final AuthApi authController = AuthApi();
+  final box = GetStorage();
 
   final _loadingProfil = false.obs;
   bool get isLoadingProfil => _loadingProfil.value;
@@ -37,6 +39,7 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
 
   void getUser() async {
     _loadingProfil.value = true;
+
     await authController.getUserId().then((value) {
       _user.value = value;
       _loadingProfil.value = false;

@@ -38,114 +38,113 @@ class _AddPersonnelState extends State<AddPersonnel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(context, scaffoldKey, title, subTitle),
-        drawer: const DrawerMenu(),
-        body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!),
-            (data) => Row(
-                  children: [
-                    Visibility(
-                        visible: !Responsive.isMobile(context),
-                        child: const Expanded(flex: 1, child: DrawerMenu())),
-                    Expanded(
-                        flex: 5,
-                        child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                // border: Border.all(
-                                //   // color: Colors.red,
-                                // ),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: p20),
-                                child: Form(
-                                  key: controller.formKey,
-                                  child: Column(
-                                    children: [
-                                      const TitleWidget(
-                                          title: "Nouveau profil"),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          fichierWidget(),
-                                        ],
-                                      ),
-                                      const SizedBox(height: p20),
-                                      ResponsiveChildWidget(
-                                          child1: nomWidget(),
-                                          child2: postNomWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: prenomWidget(),
-                                          child2: sexeWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: dateNaissanceWidget(),
-                                          child2: lieuNaissanceWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: nationaliteWidget(),
-                                          child2: adresseWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: emailWidget(),
-                                          child2: telephoneWidget()),
-                                      departmentWidget(),
-                                      servicesAffectationWidget(),
-                                      ResponsiveChildWidget(
-                                          child1: matriculeWidget(),
-                                          child2:
-                                              numeroSecuriteSocialeWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: fonctionOccupeWidget(),
-                                          child2: roleWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: typeContratWidget(),
-                                          child2: salaireWidget()),
-                                      ResponsiveChildWidget(
-                                          child1: dateDebutContratWidget(),
-                                          child2:
-                                              (controller.typeContrat == 'CDD')
-                                                  ? dateFinContratWidget()
-                                                  : Container()),
-                                      competanceWidget(),
-                                      experienceWidget(),
-                                      const SizedBox(height: p20),
-                                      BtnWidget(
-                                          title: 'Soumettre',
-                                          isLoading: controller.isLoading,
-                                          press: () {
-                                            final form = controller
-                                                .formKey.currentState!;
-                                            if (form.validate()) {
-                                              controller.submit();
-                                            }
-                                            form.reset();
-                                          })
-                                    ],
-                                  ),
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      body: Row(
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+            child: controller.obx(
+              onLoading: loadingPage(context),
+              onEmpty: const Text('Aucune donnée'),
+              onError: (error) => loadingError(context, error!),
+              (data) => SingleChildScrollView(
+                    controller: ScrollController(),
+                    physics: const ScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: Card(
+                        elevation: 3,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: p20),
+                          child: Form(
+                            key: controller.formKey,
+                            child: Column(
+                              children: [
+                                const TitleWidget(
+                                    title: "Nouveau profil"),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                  children: [
+                                    fichierWidget(),
+                                  ],
                                 ),
-                              ),
+                                const SizedBox(height: p20),
+                                ResponsiveChildWidget(
+                                    child1: nomWidget(),
+                                    child2: postNomWidget()),
+                                ResponsiveChildWidget(
+                                    child1: prenomWidget(),
+                                    child2: sexeWidget()),
+                                ResponsiveChildWidget(
+                                    child1: dateNaissanceWidget(),
+                                    child2: lieuNaissanceWidget()),
+                                ResponsiveChildWidget(
+                                    child1: nationaliteWidget(),
+                                    child2: adresseWidget()),
+                                ResponsiveChildWidget(
+                                    child1: emailWidget(),
+                                    child2: telephoneWidget()),
+                                departmentWidget(),
+                                servicesAffectationWidget(),
+                                ResponsiveChildWidget(
+                                    child1: matriculeWidget(),
+                                    child2:
+                                        numeroSecuriteSocialeWidget()),
+                                ResponsiveChildWidget(
+                                    child1: fonctionOccupeWidget(),
+                                    child2: roleWidget()),
+                                ResponsiveChildWidget(
+                                    child1: typeContratWidget(),
+                                    child2: salaireWidget()),
+                                ResponsiveChildWidget(
+                                    child1: dateDebutContratWidget(),
+                                    child2:
+                                        (controller.typeContrat == 'CDD')
+                                            ? dateFinContratWidget()
+                                            : Container()),
+                                competanceWidget(),
+                                experienceWidget(),
+                                const SizedBox(height: p20),
+                                BtnWidget(
+                                  title: 'Soumettre',
+                                  isLoading: controller.isLoading,
+                                  press: () {
+                                    final form = controller
+                                        .formKey.currentState!;
+                                    if (form.validate()) {
+                                      print("btn ok");
+                                      controller.submit();
+                                      form.reset();
+                                    }
+                                  }
+                                )
+                              ],
                             ),
                           ),
-                        )),
-                  ],
-                )));
+                        ),
+                      ),
+                    ),
+                  ))),
+            ],
+          ));
   }
 
   Widget fichierWidget() {
     return Container(
         padding: const EdgeInsets.all(2),
         margin: const EdgeInsets.all(2),
-        child: controller.isUploading
+        child: Obx(() => controller.isUploading
             ? const SizedBox(
                 height: 50.0, width: 50.0, child: LinearProgressIndicator())
             : Stack(
@@ -155,10 +154,10 @@ class _AddPersonnelState extends State<AddPersonnel> {
                     child: SizedBox(
                       height: 100.0,
                       width: 100.0,
-                      child: Obx(() => CircleAvatar(
+                      child: CircleAvatar(
                           child: (controller.uploadedFileUrl == '')
                               ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(controller.uploadedFileUrl))),
+                              : Image.network(controller.uploadedFileUrl)),
                     ),
                   ),
                   Positioned(
@@ -182,7 +181,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                           },
                           icon: const Icon(Icons.camera_alt)))
                 ],
-              ));
+              )));
   }
 
   Widget nomWidget() {

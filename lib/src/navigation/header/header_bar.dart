@@ -39,7 +39,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
         ? Image.asset(
-            InfoSystem().logoSansFond(),
+            InfoSystem().logoIcon(),
             width: 20,
             height: 20,
           )

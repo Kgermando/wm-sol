@@ -44,7 +44,7 @@ class ChangePasswordController extends GetxController {
   void submitChangePassword() async {
     try {
       _loadingChangePassword.value = true;
-      authController.getUserId().then((userModel) async {
+      await authController.getUserId().then((userModel) async {
         _user.value = userModel;
         final user = UserModel(
             id: userModel.id,
