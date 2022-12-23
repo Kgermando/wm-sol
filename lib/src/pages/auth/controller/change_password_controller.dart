@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
 
 class ChangePasswordController extends GetxController {
   final AuthApi authController = AuthApi();
   final UserApi userController = UserApi();
+  final LoginController controller = Get.put(LoginController());
 
   final _user = UserModel(
           nom: '-',
@@ -44,7 +46,7 @@ class ChangePasswordController extends GetxController {
   void submitChangePassword() async {
     try {
       _loadingChangePassword.value = true;
-      await authController.getUserId().then((userModel) async {
+      authController.getUserId().then((userModel) async {
         _user.value = userModel;
         final user = UserModel(
             id: userModel.id,
@@ -61,13 +63,14 @@ class ChangePasswordController extends GetxController {
             createdAt: userModel.createdAt,
             passwordHash: changePasswordController.text,
             succursale: userModel.succursale);
-        await userController.changePassword(user);
-        await authController.logout();
-        Get.snackbar(
-            "Mot de passe modifié avec succès!", "Vieillez vous reconnectez.",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
+        await userController.changePassword(user).then((value) {
+          controller.logout();
+          Get.snackbar(
+              "Mot de passe modifié avec succès!", "Vieillez vous reconnectez.",
+              backgroundColor: Colors.green,
+              icon: const Icon(Icons.check),
+              snackPosition: SnackPosition.TOP);
+        });
       });
     } catch (e) {
       _loadingChangePassword.value = false;
@@ -78,4 +81,6 @@ class ChangePasswordController extends GetxController {
       );
     }
   }
+
+   
 }
