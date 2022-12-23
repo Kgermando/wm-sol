@@ -168,7 +168,7 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 250,
         minWidth: 150,
       ),
       PlutoColumn(

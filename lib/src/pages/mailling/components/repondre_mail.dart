@@ -55,7 +55,7 @@ class _RepondreMailState extends State<RepondreMail> {
               visible: !Responsive.isMobile(context),
               child: const Expanded(flex: 1, child: MailNav())),
           Expanded(
-              flex: 5,
+              flex: 3,
               child: SingleChildScrollView(
                   controller: ScrollController(),
                   physics: const ScrollPhysics(),

@@ -8,8 +8,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/components/logistique/table_devis_dg.dart'; 
 import 'package:wm_solution/src/pages/administration/components/logistique/table_immobilier_dg.dart';
 import 'package:wm_solution/src/pages/administration/components/logistique/table_materiel_dg.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_notify.dart'; 
+import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 
@@ -21,8 +20,7 @@ class AdminLogistique extends StatefulWidget {
 }
 
 class _AdminLogistiqueState extends State<AdminLogistique> {
-  final DepartementNotifyCOntroller controller = Get.find();
-  final DevisNotifyController devisNotifyController = Get.find();
+  final DepartementNotifyCOntroller controller = Get.find(); 
   final MaterielController materielController = Get.find();
   final ImmobilierController immobilierController = Get.find();
   final DevisController devisController = Get.find();
@@ -131,7 +129,7 @@ class _AdminLogistiqueState extends State<AdminLogistique> {
                                           : bodyLarge!
                                               .copyWith(color: Colors.white)),
                                   subtitle: Obx(() => Text(
-                                      "Vous avez ${devisNotifyController.itemLogCountDevisDG} dossiers necessitent votre approbation",
+                                      "Vous avez ${controller.itemLogCountDevisDG} dossiers necessitent votre approbation",
                                       style: bodyMedium!.copyWith(
                                           color: Colors.white70))) ,
                                   initiallyExpanded: false,

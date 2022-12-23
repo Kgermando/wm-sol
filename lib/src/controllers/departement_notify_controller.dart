@@ -39,7 +39,17 @@ import 'package:wm_solution/src/models/notify/notify_sum_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
 class DepartementNotifyCOntroller extends GetxController {
-  Timer? timer;
+  Timer? timerAdmin;
+  Timer? timerBudgets;
+  Timer? timerCommercial;
+  Timer? timerComptabilites;
+  Timer? timerExploitations;
+  Timer? timerFinances;
+  Timer? timerLogistique;
+  Timer? timerMarketing;
+  Timer? timerRH;
+  Timer? timerSupport;
+
   final ProfilController profilController = Get.put(ProfilController());
 
   // Header
@@ -47,7 +57,6 @@ class DepartementNotifyCOntroller extends GetxController {
   TacheNotifyApi tacheNotifyApi = TacheNotifyApi();
   MailsNotifyApi mailsNotifyApi = MailsNotifyApi();
   AgendaNotifyApi agendaNotifyApi = AgendaNotifyApi();
- 
 
   // Administration
   AdminDepartementNotifyApi adminDepartementNotifyApi =
@@ -102,7 +111,6 @@ class DepartementNotifyCOntroller extends GetxController {
   SalaireNotifyApi salaireNotifyApi = SalaireNotifyApi();
   TransRestNotifyApi transRestNotifyApi = TransRestNotifyApi();
 
-
   // Header
   final _cartItemCount = 0.obs;
   int get cartItemCount => _cartItemCount.value;
@@ -115,7 +123,6 @@ class DepartementNotifyCOntroller extends GetxController {
 
   final _agendaItemCount = 0.obs;
   int get agendaItemCount => _agendaItemCount.value;
-  
 
   // Administration
   final _budgetCount = 0.obs;
@@ -229,9 +236,6 @@ class DepartementNotifyCOntroller extends GetxController {
   final _itemCountMaterielDD = 0.obs;
   int get itemCountMaterielDD => _itemCountMaterielDD.value;
 
-  final _itemCountCarburantDD = 0.obs;
-  int get itemCountCarburantDD => _itemCountCarburantDD.value;
-
   final _itemCountTrajetsDD = 0.obs;
   int get itemCountTrajetsDD => _itemCountTrajetsDD.value;
 
@@ -295,14 +299,131 @@ class DepartementNotifyCOntroller extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // getDataNotify();
+    timerAdmin = Timer.periodic(const Duration(seconds: 1), (timer) {
+      print("notify test");
+      getCountMail();
+      getCountAgenda();
+      getAdminCountBudget();
+      getAdminCountRh();
+      getAdminCountFinance();
+      getAdminCountComptabilite();
+      getAdminCountExploitation();
+      getAdminCountCom();
+      getAdminCountMarketing();
+      getAdminCountLogistique();
+
+      getBudgetCountDG();
+      getCommercialCountSuccursalesDG();
+      getCountProjetDG();
+      getCountProductionDG();
+      getFinanceCountCreanceDG();
+      getFinanceCountDetteDG();
+      getLogCountMaterielDG();
+      getLogCountImmobilierDG();
+      getCountTransRestDG();
+      getLogCountDevisDG();
+
+      getCountMail();
+      getCountAgenda();
+      getBudgetCountBudget();
+      getBudgetCountDD();
+      getCountSalaireBudget();
+      getCountTransRestBudget();
+      getMarketingCountCampaignBudget();
+      getLogCountDevisBudget();
+      getCountProjetBudget();
+
+      getCountMail();
+      getCountAgenda();
+      getCommercialCount();
+      getCommercialCountSuccursalesDD();
+      getCommercialCountProdModelDD();
+      getCountCart();
+
+      getCountMail();
+      getCountAgenda();
+      getCountCart();
+      getCountMail();
+      getCountAgenda();
+      getCountComptabilite();
+      getCountBilanDD();
+      getCountCompteResultatDD();
+
+      getCountMail();
+      getCountAgenda();
+      getExploitationCount();
+      getCountProjetDD();
+      getCountProductionDD();
+      getCountTache();
+
+      getCountMail();
+      getCountAgenda();
+      getCountTache();
+      getCountMail();
+      getCountAgenda();
+      getFinanceCountDD();
+      getFinanceCountCreanceDD();
+      getFinanceCountDetteDD();
+      getCountSalaireFin();
+      getCountTransRestFin();
+      getMarketingCountCampaignFin();
+      getLogCountDevisFin();
+      getCountProjetFin();
+      getFinanceCountObs();
+      getCountProjeteObs();
+      getLogCountDeviseObs();
+      getCountTransResteObs();
+      getMarketingCountCampaignObs();
+      getCountSalaireObs();
+
+      getCountMail();
+      getCountAgenda();
+      getFinanceCountObs();
+      getCountProjeteObs();
+      getLogCountDeviseObs();
+      getCountTransResteObs();
+      getMarketingCountCampaignObs();
+      getCountSalaireObs();
+      getCountMail();
+      getCountAgenda();
+      getLogCount();
+      getLogCountMaterielDD();
+      getLogCountTrajetsDD();
+      getLogCountImmobilierDD();
+      getLogCountMobilierDD();
+      getLogCountEntretienDD();
+      getLogCountEtatmaterielDD();
+      getLogCountDevisSalaireDD();
+
+      getCountMail();
+      getCountAgenda();
+      getMarketingCountComMarketing();
+      getMarketingCountCampaignDD();
+      getCountMail();
+      getCountAgenda();
+      getRHCount();
+      getCountSalaireDD();
+      getCountTransRestSalaireDD();
+      getCountMail();
+      getCountAgenda();
+      getCountSalaireObs();
+      getCountTransResteObs();
+      getCountMail();
+      getCountAgenda();
+    });
+  }
+
+  void getDataNotify() {
+    print("notify test");
 
     List<dynamic> departement = (profilController.user.departement == '-')
         ? ["Support"]
         : jsonDecode(profilController.user.departement);
     int userRole = int.parse(profilController.user.role);
-    
+
     if (departement.contains("Administration") && userRole <= 1) {
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerAdmin = Timer.periodic(const Duration(seconds: 1), (timer) {
         getCountMail();
         getCountAgenda();
         getAdminCountBudget();
@@ -326,10 +447,10 @@ class DepartementNotifyCOntroller extends GetxController {
         getLogCountDevisDG();
       });
     } else if (departement.contains("Budgets") && userRole <= 2) {
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerBudgets = Timer.periodic(const Duration(seconds: 1), (timer) {
         getCountMail();
         getCountAgenda();
-        getBudgetCountBudget(); 
+        getBudgetCountBudget();
         getBudgetCountDD();
         getCountSalaireBudget();
         getCountTransRestBudget();
@@ -339,33 +460,33 @@ class DepartementNotifyCOntroller extends GetxController {
       });
     } else if (departement.contains("Commercial")) {
       if (userRole <= 2) {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerCommercial = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
           getCommercialCount();
           getCommercialCountSuccursalesDD();
           getCommercialCountProdModelDD();
-          getCountCart(); 
+          getCountCart();
         });
       } else {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerCommercial = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
-          getCountCart(); 
+          getCountCart();
         });
-      } 
+      }
     } else if (departement.contains("Comptabilites") && userRole <= 2) {
-       timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerComptabilites = Timer.periodic(const Duration(seconds: 1), (timer) {
         getCountMail();
         getCountAgenda();
         getCountComptabilite();
         getCountBilanDD();
         getCountCompteResultatDD();
       });
-      
     } else if (departement.contains("Exploitations")) {
-      if(userRole <= 2) {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (userRole <= 2) {
+        timerExploitations =
+            Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
           getExploitationCount();
@@ -374,25 +495,26 @@ class DepartementNotifyCOntroller extends GetxController {
           getCountTache();
         });
       } else {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerExploitations =
+            Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
           getCountTache();
         });
-      } 
+      }
     } else if (departement.contains("Finances")) {
       if (userRole <= 2) {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerFinances = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
-          getFinanceCountDD(); 
+          getFinanceCountDD();
           getFinanceCountCreanceDD();
           getFinanceCountDetteDD();
           getCountSalaireFin();
           getCountTransRestFin();
           getMarketingCountCampaignFin();
           getLogCountDevisFin();
-          getCountProjetFin(); 
+          getCountProjetFin();
           getFinanceCountObs();
           getCountProjeteObs();
           getLogCountDeviseObs();
@@ -401,7 +523,7 @@ class DepartementNotifyCOntroller extends GetxController {
           getCountSalaireObs();
         });
       } else {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerFinances = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
           getFinanceCountObs();
@@ -413,7 +535,7 @@ class DepartementNotifyCOntroller extends GetxController {
         });
       }
     } else if (departement.contains("Logistique") && userRole <= 2) {
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerLogistique = Timer.periodic(const Duration(seconds: 1), (timer) {
         getCountMail();
         getCountAgenda();
         getLogCount();
@@ -422,11 +544,11 @@ class DepartementNotifyCOntroller extends GetxController {
         getLogCountImmobilierDD();
         getLogCountMobilierDD();
         getLogCountEntretienDD();
-        getLogCountEtatmaterielDD(); 
+        getLogCountEtatmaterielDD();
         getLogCountDevisSalaireDD();
       });
     } else if (departement.contains("Marketing") && userRole <= 2) {
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerMarketing = Timer.periodic(const Duration(seconds: 1), (timer) {
         getCountMail();
         getCountAgenda();
         getMarketingCountComMarketing();
@@ -434,7 +556,7 @@ class DepartementNotifyCOntroller extends GetxController {
       });
     } else if (departement.contains("Ressources Humaines")) {
       if (userRole <= 2) {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerRH = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
           getRHCount();
@@ -442,7 +564,7 @@ class DepartementNotifyCOntroller extends GetxController {
           getCountTransRestSalaireDD();
         });
       } else {
-        timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerRH = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
           getCountSalaireObs();
@@ -450,7 +572,7 @@ class DepartementNotifyCOntroller extends GetxController {
         });
       }
     } else if (departement.contains("Support")) {
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerSupport = Timer.periodic(const Duration(seconds: 1), (timer) {
         getCountMail();
         getCountAgenda();
       });
@@ -459,12 +581,21 @@ class DepartementNotifyCOntroller extends GetxController {
 
   @override
   void dispose() {
-    timer!.cancel();
+    timerAdmin!.cancel();
+    timerBudgets!.cancel();
+    timerCommercial!.cancel();
+    timerComptabilites!.cancel();
+    timerExploitations!.cancel();
+    timerFinances!.cancel();
+    timerLogistique!.cancel();
+    timerMarketing!.cancel();
+    timerRH!.cancel();
+    timerSupport!.cancel();
     super.dispose();
   }
 
   // Header
-   void getCountCart() async {
+  void getCountCart() async {
     NotifyModel notifySum =
         await cartNotifyApi.getCount(profilController.user.matricule);
     _cartItemCount.value = notifySum.count;

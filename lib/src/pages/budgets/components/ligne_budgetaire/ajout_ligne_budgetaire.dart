@@ -77,11 +77,13 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                                           const SizedBox(
                                             height: p30,
                                           ),
-                                          ResponsiveChildWidget(
-                                              child1: nomLigneBudgetaireWidget(
+                                          nomLigneBudgetaireWidget(
                                                   lignBudgetaireController),
-                                              child2: uniteChoisieWidget(
-                                                  lignBudgetaireController)),
+                                          // ResponsiveChildWidget(
+                                          //     child1: nomLigneBudgetaireWidget(
+                                          //         lignBudgetaireController),
+                                          //     child2: uniteChoisieWidget(
+                                          //         lignBudgetaireController)),
                                           ResponsiveChildWidget(
                                               child1: nombreUniteWidget(
                                                   lignBudgetaireController),
@@ -97,8 +99,9 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                                           Row(
                                             children: [
                                               Expanded(
-                                                  child: finExterieurValeur(
-                                                      lignBudgetaireController)),
+                                                child: finExterieurValeur(
+                                                    lignBudgetaireController)
+                                              ),
                                             ],
                                           ),
                                           const SizedBox(
@@ -156,27 +159,27 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
         ));
   }
 
-  Widget uniteChoisieWidget(LignBudgetaireController lignBudgetaireController) {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: lignBudgetaireController.uniteChoisieController,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Unité Choisie',
-          ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
+  // Widget uniteChoisieWidget(LignBudgetaireController lignBudgetaireController) {
+  //   return Container(
+  //       margin: const EdgeInsets.only(bottom: p20),
+  //       child: TextFormField(
+  //         controller: lignBudgetaireController.uniteChoisieController,
+  //         keyboardType: TextInputType.text,
+  //         decoration: InputDecoration(
+  //           border:
+  //               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+  //           labelText: 'Unité Choisie',
+  //         ),
+  //         style: const TextStyle(),
+  //         validator: (value) {
+  //           if (value != null && value.isEmpty) {
+  //             return 'Ce champs est obligatoire';
+  //           } else {
+  //             return null;
+  //           }
+  //         },
+  //       ));
+  // }
 
   Widget nombreUniteWidget(LignBudgetaireController lignBudgetaireController) {
     return Container(

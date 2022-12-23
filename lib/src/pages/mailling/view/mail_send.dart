@@ -53,7 +53,7 @@ class _MailSendState extends State<MailSend> {
               visible: !Responsive.isMobile(context),
               child: const Expanded(flex: 1, child: MailNav())),
       Expanded(
-              flex: 4,
+              flex: 3,
               child: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),

@@ -23,7 +23,7 @@ class LignBudgetaireController extends GetxController
   bool get isLoading => _isLoading.value;
 
   TextEditingController nomLigneBudgetaireController = TextEditingController();
-  TextEditingController uniteChoisieController = TextEditingController();
+  // TextEditingController uniteChoisieController = TextEditingController();
   double nombreUniteController = 0.0;
   double coutUnitaireController = 0.0;
   double caisseController = 0.0;
@@ -46,7 +46,7 @@ class LignBudgetaireController extends GetxController
   @override
   void dispose() {
     nomLigneBudgetaireController.dispose();
-    uniteChoisieController.dispose();
+    // uniteChoisieController.dispose();
 
     super.dispose();
   }
@@ -98,7 +98,7 @@ class LignBudgetaireController extends GetxController
           departement: data.departement,
           periodeBudgetDebut: data.periodeDebut,
           periodeBudgetFin: data.periodeFin,
-          uniteChoisie: uniteChoisieController.text,
+          uniteChoisie: "-", // uniteChoisieController.text,
           nombreUnite: nombreUniteController.toString(),
           coutUnitaire: coutUnitaireController.toString(),
           coutTotal: coutToal.toString(),

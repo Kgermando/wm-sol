@@ -12,10 +12,11 @@ class ApprovisionReceptionController extends GetxController
   final ApprovisionReceptionApi approvisionReceptionApi =
       ApprovisionReceptionApi();
   final ProfilController profilController = Get.find();
-  final ApprovisionnementController approvisionnementController = Get.find();
+  final ApprovisionnementController approvisionnementController =
+      Get.put(ApprovisionnementController());
 
   List<ApprovisionReceptionModel> approvisionReceptionList = [];
- 
+
   final GlobalKey<FormState> receptionFormKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -47,7 +48,7 @@ class ApprovisionReceptionController extends GetxController
     uniteController.clear();
   }
 
-  void getList() async { 
+  void getList() async {
     await approvisionReceptionApi.getAllData().then((response) {
       approvisionReceptionList.clear();
       approvisionReceptionList.addAll(response);

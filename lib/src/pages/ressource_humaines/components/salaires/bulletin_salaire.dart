@@ -159,6 +159,8 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
 
     List<dynamic> depList = jsonDecode(profilController.user.departement);
+    int userRole = int.parse(profilController.user.role);
+    
     return Column(
       children: [
         ResponsiveChildWidget(
@@ -240,16 +242,17 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
               widget.salaire.servicesAffectation,
               style: bodyMedium,
             )),
-        Divider(color: mainColor),
-        ResponsiveChildWidget(
-            child1: Text(
-              'Salaire',
-              style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
-            ),
-            child2: SelectableText(
-              "${NumberFormat.decimalPattern('fr').format(double.parse(widget.salaire.salaire))} USD",
-              style: bodyMedium.copyWith(color: Colors.blueGrey),
-            )),
+        if (userRole <= 3) Divider(color: mainColor),
+        if (userRole <= 3)
+          ResponsiveChildWidget(
+              child1: Text(
+                'Salaire',
+                style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
+              ),
+              child2: SelectableText(
+                "${NumberFormat.decimalPattern('fr').format(double.parse(widget.salaire.salaire))} USD",
+                style: bodyMedium.copyWith(color: Colors.blueGrey),
+              )),
         Divider(color: mainColor),
         ResponsiveChild3Widget(
             child1: Text(
@@ -1387,7 +1390,8 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
             double reste = double.parse(p0.coutTotal) - sortieTotal;
 
             return DateTime.now().isBefore(p0.periodeBudgetFin) &&
-                double.parse(p0.coutTotal) > sortieTotal && reste > double.parse(widget.salaire.salaire);
+                double.parse(p0.coutTotal) > sortieTotal &&
+                reste > double.parse(widget.salaire.salaire);
           })
           .map((e) => e.nomLigneBudgetaire)
           .toList();

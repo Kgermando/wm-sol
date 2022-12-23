@@ -43,7 +43,7 @@ class _DetailMailState extends State<DetailMail> {
               visible: !Responsive.isMobile(context),
               child: const Expanded(flex: 1, child: MailNav())),
           Expanded(
-              flex: 5,
+              flex: 3,
               child: controller.obx(
                   onLoading: loadingPage(context),
                   onEmpty: const Text('Aucune donnée'),

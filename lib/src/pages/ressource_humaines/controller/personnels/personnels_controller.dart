@@ -12,7 +12,7 @@ import 'package:wm_solution/src/utils/country.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/fonction_occupe.dart';
 import 'package:wm_solution/src/utils/service_affectation.dart';
-
+ 
 class PersonnelsController extends GetxController
     with StateMixin<List<AgentModel>> {
   PersonnelsApi personnelsApi = PersonnelsApi();

@@ -13,9 +13,9 @@ class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {
   final EntretienApi entretienApi = EntretienApi();
   final ProfilController profilController = Get.find();
-  final MaterielController materielController = Get.find();
-  final ImmobilierController immobilierController = Get.find();
-  final MobilierController mobilierController = Get.find();
+  final MaterielController materielController = Get.put(MaterielController());
+  final ImmobilierController immobilierController = Get.put(ImmobilierController());
+  final MobilierController mobilierController = Get.put(MobilierController());
 
   List<EntretienModel> entretienList = [];
 

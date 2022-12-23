@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
@@ -12,7 +13,6 @@ import 'package:wm_solution/src/pages/finances/components/observation/table_devi
 import 'package:wm_solution/src/pages/finances/components/observation/table_projet_obs.dart';
 import 'package:wm_solution/src/pages/finances/components/observation/table_salaire_obs.dart';
 import 'package:wm_solution/src/pages/finances/components/observation/table_transport_rest_obs.dart';
-import 'package:wm_solution/src/pages/finances/controller/notify/observation_notify_controller.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart'; 
 
@@ -24,7 +24,7 @@ class ObservationPage extends StatefulWidget {
 }
 
 class _ObservationPageState extends State<ObservationPage> {
-  final ObservationNotifyController controller = Get.find();
+  final DepartementNotifyCOntroller controller = Get.find();
   final SalaireController salaireController = Get.find();
   final TransportRestController transportRestController = Get.find();
   final DevisController devisController = Get.find();
@@ -81,7 +81,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                         style: headline6!
                                             .copyWith(color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${controller.salaireList.length} dossiers necessitent votre approbation",
+                                        "Vous avez ${controller.itemCountSalaireObs} dossiers necessitent votre approbation",
                                         style: bodyMedium!
                                             .copyWith(color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -109,7 +109,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                         style: headline6.copyWith(
                                             color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous ${controller.transRestList.length} dossiers necessitent votre approbation",
+                                        "Vous ${controller.itemCountTransRestObs} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -130,11 +130,11 @@ class _ObservationPageState extends State<ObservationPage> {
                                   child: ExpansionTile(
                                     leading: const Icon(Icons.folder,
                                         color: Colors.white),
-                                    title: Text('Dossier Campaigns',
+                                    title: Text('Dossier Campagne',
                                         style: headline6.copyWith(
                                             color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${controller.campaignList.length} dossiers necessitent votre approbation",
+                                        "Vous avez ${controller.campaignCountObs} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -161,7 +161,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                         style: headline6.copyWith(
                                             color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${controller.projetList.length} dossiers necessitent votre approbation",
+                                        "Vous avez ${controller.itemCountProjetObs} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,
@@ -188,7 +188,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                         style: headline6.copyWith(
                                             color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous avez ${controller.devisList.length} dossiers necessitent votre approbation",
+                                        "Vous avez ${controller.itemLogCountDevisObs} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,

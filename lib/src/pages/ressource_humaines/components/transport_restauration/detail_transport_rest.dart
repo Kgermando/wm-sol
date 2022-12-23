@@ -169,6 +169,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                   ),
                                 ),
                                 const SizedBox(height: p30),
+                                if(widget.transportRestaurationModel.isSubmit == "true")
                                 approbationWidget(
                                     controller, profilController, state!)
                               ],
@@ -186,8 +187,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
             return AlertDialog(
-              title: Text('Etes-vous sûr de vouloir faire ceci ?',
-                  style: TextStyle(color: mainColor)),
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: Colors.red)),
               content: const SizedBox(
                   // height: 100,
                   width: 100,
@@ -195,7 +196,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler', style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
                   onPressed: () {
@@ -203,7 +204,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                         .deleteData(widget.transportRestaurationModel.id!);
                     Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK'),
+                  child: const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );
@@ -554,10 +555,12 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         child: EasyAutocomplete(
           controller: controllerAgent.matriculeController,
           decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: "Matricule",
-              hintText: "-"),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0)
+            ),
+            labelText: "Matricule",
+            hintText: "-"
+          ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
           progressIndicatorBuilder: loading(),

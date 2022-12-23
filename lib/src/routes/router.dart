@@ -156,7 +156,6 @@ import 'package:wm_solution/src/pages/finances/bindings/dashboard_finance_bindin
 import 'package:wm_solution/src/pages/finances/bindings/dette_binding.dart';
 import 'package:wm_solution/src/pages/finances/bindings/fin_exterieur_binding.dart';
 import 'package:wm_solution/src/pages/finances/bindings/fin_exterieur_name_binding.dart';
-import 'package:wm_solution/src/pages/finances/bindings/observation_notify_binding.dart';
 import 'package:wm_solution/src/pages/logistique/bindings/approvision_reception_binding.dart';
 import 'package:wm_solution/src/pages/logistique/bindings/approvisionnment_binding.dart';
 import 'package:wm_solution/src/pages/logistique/bindings/dashboard_log_binding.dart';
@@ -521,20 +520,21 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.addArchives,
-      bindings: [
-        ArchiveBinding(),
-        ArchiveFolderBinding(),
-        ProfilBinding(),
-        NetworkBindings()
-      ],
-      page: () {
-        ArchiveFolderModel archiveFolderModel =
-            Get.arguments as ArchiveFolderModel;
-        return AddArchive(archiveFolderModel: archiveFolderModel);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+    name: ArchiveRoutes.addArchives,
+    bindings: [
+      ArchiveBinding(),
+      ArchiveFolderBinding(),
+      ProfilBinding(),
+      NetworkBindings()
+    ],
+    page: () {
+      ArchiveFolderModel archiveFolderModel =
+          Get.arguments as ArchiveFolderModel;
+      return AddArchive(archiveFolderModel: archiveFolderModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)
+  ),
   GetPage(
       name: ArchiveRoutes.archivesDetail,
       bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
@@ -545,14 +545,15 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-      name: ArchiveRoutes.archivePdf,
-      bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
-      page: () {
-        String url = Get.arguments as String;
-        return ArchivePdfViewer(url: url);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+    name: ArchiveRoutes.archivePdf,
+    bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
+    page: () {
+      String url = Get.arguments as String;
+      return ArchivePdfViewer(url: url);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)
+  ),
 
   // RH
   GetPage(
@@ -1104,7 +1105,6 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: FinanceRoutes.finObservation,
       bindings: [
-        ObservationNotifyBinding(),
         SalaireBinding(),
         CampaignBinding(),
         DevisBinding(),
@@ -1115,7 +1115,6 @@ List<GetPage<dynamic>>? getPages = [
         ProfilBinding(),
         NetworkBindings()
       ],
-      binding: ObservationNotifyBinding(),
       page: () => const ObservationPage(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

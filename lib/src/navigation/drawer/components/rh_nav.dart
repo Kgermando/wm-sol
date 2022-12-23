@@ -55,7 +55,7 @@ class _RhNavState extends State<RhNav> {
             style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhDashboard);
-              // Navigator.of(context).pop();
+              
             }),
           if (userRole <= 2)
         DrawerWidget(
@@ -73,9 +73,9 @@ class _RhNavState extends State<RhNav> {
             ),
             onTap: () {
               Navigator.pushNamed(context, RhRoutes.rhDD);
-              // Navigator.of(context).pop();
+              
             }),
-        if (userRole <= 3)
+        if (userRole <= 4)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhPersonnelsPage,
             icon: Icons.group,
@@ -84,7 +84,7 @@ class _RhNavState extends State<RhNav> {
             style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhPersonnelsPage);
-              // Navigator.of(context).pop();
+              
             }),
         if (userRole <= 3)
         DrawerWidget(
@@ -95,9 +95,9 @@ class _RhNavState extends State<RhNav> {
             style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhPaiement);
-              // Navigator.of(context).pop();
+              
             }),
-        if (userRole <= 3)
+        if (userRole <= 5)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhTransportRest,
             icon: Icons.restaurant,
@@ -106,7 +106,7 @@ class _RhNavState extends State<RhNav> {
             style: bodyText1!,
             onTap: () {
               Get.toNamed(RhRoutes.rhTransportRest);
-              // Navigator.of(context).pop();
+              
             }),
         DrawerWidget(
           selected: widget.currentRoute == RhRoutes.rhPresence,
@@ -116,7 +116,7 @@ class _RhNavState extends State<RhNav> {
           style: bodyText1!,
           onTap: () {
             Get.toNamed(RhRoutes.rhPresence);
-            // Navigator.of(context).pop();
+            
           }),  
       ],
     );
