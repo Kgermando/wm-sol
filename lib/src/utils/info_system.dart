@@ -2,7 +2,7 @@ class InfoSystem {
   String name() => "Work Management";
   String namelong() => "Solution Work Management";
   String description() => "Work Management pour entreprise priveée et public"; 
-  String version() => "3.0.0.18";
+  String version() => "3.0.0.19";
   String logo() => "assets/images/logo.png";
   String logoSansFond() => "assets/images/logo_sans_fond.png";
   String logoIcon() => "assets/images/logo_icon.png";
@@ -17,5 +17,5 @@ class InfoSystem {
   String iDNat() => "01-H5300-N8539IR";
   String email() => "-";
   String phone() => "+243 972 361 000";
-  String date() => "15-12-2022";
+  String date() => "25-12-2022";
 }
