@@ -28,22 +28,18 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
     final ProfilController profilController = Get.find();
 
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
-                label: const Text("Ajouter stock"),
-                tooltip: "Ajout le stock global",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Get.toNamed(ComRoutes.comStockGlobalAdd);
-                },
-              ),
-              body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter stock"),
+        tooltip: "Ajout le stock global",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(ComRoutes.comStockGlobalAdd);
+        },
+      ),
+      body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -51,43 +47,50 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          controller.getList();
-                                        },
-                                        icon: const Icon(Icons.refresh,
-                                            color: Colors.green))
-                                  ],
-                                ),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: controller.stockGlobalList.length,
-                                    itemBuilder: (context, index) {
-                                      final data =
-                                          controller.stockGlobalList[index];
-                                      return ListStockGlobal(
-                                          stocksGlobalMOdel: data,
-                                          role: profilController.user.role);
-                                    }),
-                              ],
-                            ),
-                          )))
+                      child:controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  controller.getList();
+                                },
+                                icon: const Icon(Icons.refresh,
+                                    color: Colors.green))
+                          ],
+                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.stockGlobalList.length,
+                            itemBuilder: (context, index) {
+                              final data =
+                                  controller.stockGlobalList[index];
+                              return ListStockGlobal(
+                                  stocksGlobalMOdel: data,
+                                  role: profilController.user.role);
+                            }),
+                      ],
+                    ),
+                  ))) )
                 ],
-              )) ,
+              )
+      
+      
+       ,
             );
      
   }

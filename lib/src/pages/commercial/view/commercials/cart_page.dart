@@ -37,11 +37,7 @@ class _CartPageState extends State<CartPage> {
       // bottomNavigationBar: SizedBox(
       //     width: MediaQuery.of(context).size.width / 2,
       //     child: totalCart(controller)),
-      body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Le panier est vide.'),
-          onError: (error) => loadingError(context, error!),
-          (state) => Row(
+      body:  Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -49,7 +45,11 @@ class _CartPageState extends State<CartPage> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child:  controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Le panier est vide.'),
+          onError: (error) => loadingError(context, error!),
+          (state) =>SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -83,9 +83,12 @@ class _CartPageState extends State<CartPage> {
                                     height: p50, child: totalCart(controller))
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
-              )),
+              )
+      
+      
+    ,
     );
   }
 

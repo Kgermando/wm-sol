@@ -7,6 +7,7 @@ import 'package:wm_solution/src/models/commercial/prod_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
+import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -35,8 +36,7 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
           TextEditingController(text: widget.productModel.sousCategorie2);
       controller.sousCategorie3Controller =
           TextEditingController(text: widget.productModel.sousCategorie3);
-      controller.uniteController =
-          TextEditingController(text: widget.productModel.sousCategorie4);
+      controller.uniteController = widget.productModel.sousCategorie4;
     });
     super.initState();
   }
@@ -224,28 +224,31 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
   }
 
   Widget sousCategorie4Widget(ProduitModelController controller) {
-    List<String> suggestionList = controller.produitModelList
-        .map((e) => e.sousCategorie4)
-        .toSet()
-        .toList();
+    List<String> suggestionList = Dropdown().unites;
     return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: EasyAutocomplete(
-          controller: controller.uniteController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: "Unité de vente",
-          ),
-          keyboardType: TextInputType.text,
-          suggestions: suggestionList,
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Unité de vente',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.uniteController,
+        isExpanded: true,
+        validator: (value) => value == null ? "Select Unité" : null,
+        items: suggestionList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            controller.uniteController = value;
+          });
+        },
+      ),
+    );
   }
 }

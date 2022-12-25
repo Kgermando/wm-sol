@@ -12,9 +12,16 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
 
   List<AchatModel> achatList = [];
 
+  final Rx<List<AchatModel>> _venteList =
+      Rx<List<AchatModel>>([]);
+  List<AchatModel> get venteList => _venteList.value; // For filter
+  
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
+
+  TextEditingController filterController = TextEditingController();
 
   @override
   void onInit() {
@@ -30,6 +37,21 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
+  }
+
+  void onSearchText(String text) async {
+    List<AchatModel> results = [];
+    if (text.isEmpty) {
+      results = achatList;
+    } else {
+      results = achatList
+          .where((element) => element.idProduct
+              .toString()
+              .toLowerCase()
+              .contains(text.toLowerCase()))
+          .toList();
+    }
+    _venteList.value = results;
   }
 
   detailView(int id) async {

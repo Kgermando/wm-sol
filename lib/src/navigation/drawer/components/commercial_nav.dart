@@ -87,7 +87,7 @@ class _CommercialNavState extends State<CommercialNav> {
             onTap: () {
               Get.toNamed(ComRoutes.comVente);
             }),
-        if (userRole <= 2)
+        if (userRole <= 3)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comSuccursale,
@@ -98,7 +98,7 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comSuccursale);
               }),
-        if (userRole <= 2)
+        if (userRole <= 3)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comProduitModel,
@@ -109,7 +109,7 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comProduitModel);
               }),
-        if (userRole <= 2)
+        if (userRole <= 3)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comStockGlobal,
@@ -141,13 +141,13 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comBonLivraison);
               }),
-        if (userRole <= 2)
+        if (userRole <= 3)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comRestitution,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
-              title: 'Restitution du produit',
+              title: 'Restitution',
               style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comRestitution);
@@ -191,7 +191,7 @@ class _CommercialNavState extends State<CommercialNav> {
             onTap: () {
               Get.toNamed(ComRoutes.comVenteEffectue);
             }), 
-        if (userRole <= 2)
+        if (userRole <= 3)
           DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comHistoryRavitaillement,

@@ -202,7 +202,7 @@ class LoginController extends GetxController {
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     try {
       _loadingLogin.value = true;
       await authApi.getUserId().then((value) {

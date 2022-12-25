@@ -34,8 +34,7 @@ class MenuOptions {
         break;
 
       case MenuItems.itemLogout:
-        controller.logout();  
-        Phoenix.rebirth(context);
+        controller.logout().then((value) => Phoenix.rebirth(context));   
     }
   }
 }

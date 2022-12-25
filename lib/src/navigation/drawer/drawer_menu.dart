@@ -28,14 +28,15 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
   Widget build(BuildContext context) {
     final currentRoute = Get.currentRoute; 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    return Drawer(
-        // backgroundColor: Colors.amber[50],
+    return Drawer( 
         child: FutureBuilder<UserModel>(
             future: GetLocalStorage().read(),
             builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
               if (snapshot.hasData) {
                 UserModel? user = snapshot.data;
-                List<dynamic> departementList = jsonDecode(user!.departement);
+                List<dynamic> departementList = (user!.departement =='-')
+                  ? ["Support"]
+                  : jsonDecode(user.departement); 
                 int userRole = int.parse(user.role);
                 return ListView(
                   shrinkWrap: true,

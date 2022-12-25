@@ -22,20 +22,11 @@ import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_ma
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
-import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
-import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
-import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart'; 
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart'; 
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
@@ -53,19 +44,17 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/vente_effectue/ventes_effectue_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
+ 
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_chart_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_chart_pie_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_sum_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart'; 
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
-import 'package:wm_solution/src/pages/exploitations/controller/dashboard/dashboard_controller.dart';
+import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart'; 
 import 'package:wm_solution/src/pages/exploitations/controller/production/fournisseur_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/production/production_exp_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
@@ -75,14 +64,13 @@ import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_co
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart'; 
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvision_reception_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/approvisions/approvisionnement_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
+
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/entretiens_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/entretiens/objet_remplace_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/etat_materiel/etat_materiel_controller.dart';
@@ -90,17 +78,13 @@ import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobili
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
-import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
-import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_note_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_personne_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
@@ -109,8 +93,8 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  // final ProfilController profilController = Get.put(ProfilController());
-  // final UsersController usersController = Get.put(UsersController());
+  final ProfilController profilController = Get.put(ProfilController());
+  final UsersController usersController = Get.put(UsersController());
 
 
   final getStorge = GetStorage();
@@ -119,8 +103,8 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
     // getStorge.erase();
+    // Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
 
-    Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
       // Mail
     Get.put<MaillingController>(MaillingController());
 

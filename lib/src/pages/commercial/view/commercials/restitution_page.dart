@@ -29,11 +29,7 @@ class _RestitutionPageState extends State<RestitutionPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
+      body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
@@ -41,7 +37,11 @@ class _RestitutionPageState extends State<RestitutionPage> {
               child: const Expanded(flex: 1, child: DrawerMenu())),
           Expanded(
               flex: 5,
-              child: SingleChildScrollView(
+              child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) =>  SingleChildScrollView(
                   controller: ScrollController(),
                   physics: const ScrollPhysics(),
                   child: Container(
@@ -51,17 +51,17 @@ class _RestitutionPageState extends State<RestitutionPage> {
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Column(
                       children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          controller.getList();
-                                        },
-                                        icon: const Icon(Icons.refresh,
-                                            color: Colors.green))
-                                  ],
-                                ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  controller.getList();
+                                },
+                                icon: const Icon(Icons.refresh,
+                                    color: Colors.green))
+                          ],
+                        ),
                         ListView.builder(
                             shrinkWrap: true,
                             itemCount: controller.restitutionList.length,
@@ -71,9 +71,12 @@ class _RestitutionPageState extends State<RestitutionPage> {
                             }),
                       ],
                     ),
-                  )))
+                  ))))
         ],
-      )) ,
+      )
+      
+      
+      ,
     );
   }
 

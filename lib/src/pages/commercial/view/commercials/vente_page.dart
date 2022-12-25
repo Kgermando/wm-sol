@@ -32,56 +32,99 @@ class _VentePageState extends State<VentePage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      body: controller.obx(
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
           onLoading: loadingPage(context),
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
-          (state) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                              margin: const EdgeInsets.only(
-                                  top: p20, bottom: p8, right: p20, left: p20),
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            controller.getList();
-                                            Navigator.pushNamed(context, ComRoutes.comVente);
-                                          },
-                                          icon: const Icon(Icons.refresh,
-                                              color: Colors.green))
-                                    ],
+          (state) => SingleChildScrollView(
+                controller: ScrollController(),
+                physics: const ScrollPhysics(),
+                child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Obx(() => Column(
+                      children: [
+                        Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                color: Theme.of(context).primaryColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ListTile(
+                                    leading: const Icon(Icons.search),
+                                    title: TextField(
+                                      controller: controller.filterController,
+                                      decoration: InputDecoration(
+                                        hintText: 'Search',
+                                        border: InputBorder.none,
+                                        suffixIcon: controller
+                                            .filterController
+                                            .text.isNotEmpty
+                                        ? GestureDetector(
+                                            child: const Icon(Icons.close,
+                                                color: Colors.red),
+                                            onTap: () {
+                                              controller
+                                                  .filterController
+                                                  .clear();
+                                              controller
+                                                  .onSearchText('');
+                                              FocusScope.of(context)
+                                                  .requestFocus(
+                                                      FocusNode());
+                                            },
+                                          )
+                                        : null,
+                                      ),
+                                     onChanged: (value) =>
+                                      controller.onSearchText(value),
+                                    ), 
                                   ),
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: state!.length,
-                                      itemBuilder: (context, index) {
-                                        final data = state[index];
-                                        return VenteItemWidget(
-                                            controller: controller,
-                                            achat: data,
-                                            profilController: profilController,
-                                            cartController: cartController);
-                                      }),
-                                ],
-                              ))))
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                controller.getList();
+                                Navigator.pushNamed(
+                                    context, ComRoutes.comVente);
+                              },
+                              icon: const Icon(Icons.refresh,
+                                  color: Colors.green))
+                          ],
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.venteList.length,
+                          itemBuilder: (context, index) {
+                            final data =
+                                controller.venteList[index];
+                            return VenteItemWidget(
+                                controller: controller,
+                                achat: data,
+                                profilController: profilController,
+                                cartController: cartController);
+                          })
+                      ],
+                    ))  ))) )
                 ],
-              )),
+              )
+      
+      
+     ,
     );
   }
 }

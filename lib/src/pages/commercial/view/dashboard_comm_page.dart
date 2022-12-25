@@ -29,7 +29,7 @@ class _DashboardCommPageState extends State<DashboardCommPage> {
 
   @override
   Widget build(BuildContext context) {
-    final DashboardComController controller = Get.find();
+    final DashboardComController controller = Get.put(DashboardComController());
 
     return Scaffold(
         key: scaffoldKey,

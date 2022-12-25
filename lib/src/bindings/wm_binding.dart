@@ -90,130 +90,131 @@ class WMBindings extends Bindings {
   @override
   void dependencies() async {
     Get.put<SplashController>(SplashController());
-    Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
+    Get.put<ProfilController>(ProfilController());
+    // Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
     
-    // Mail
-    Get.put<MaillingController>(MaillingController());
+    // // Mail
+    // Get.put<MaillingController>(MaillingController());
 
-    // Archive
-    Get.put<ArchiveFolderController>(ArchiveFolderController());
-    Get.put<ArchiveController>(ArchiveController());
+    // // Archive
+    // Get.put<ArchiveFolderController>(ArchiveFolderController());
+    // Get.put<ArchiveController>(ArchiveController());
 
-    // Personnels & Roles
-    Get.put<PersonnelsRolesController>(PersonnelsRolesController());
+    // // Personnels & Roles
+    // Get.put<PersonnelsRolesController>(PersonnelsRolesController());
 
-    // Authentification
-    Get.put<LoginController>(LoginController()); 
-    Get.put(ProfilController());
-    Get.put(ChangePasswordController());
-    Get.put(ForgotPasswordController());
+    // // Authentification
+    // Get.put<LoginController>(LoginController()); 
+    // Get.put(ProfilController());
+    // Get.put(ChangePasswordController());
+    // Get.put(ForgotPasswordController());
 
-    // Actionnaire
-    Get.put<ActionnaireController>(ActionnaireController());
-    Get.put<ActionnaireCotisationController>(ActionnaireCotisationController());
-    Get.put<ActionnaireTransfertController>(ActionnaireTransfertController());
-
-
-    // Administration
-    Get.put<AdminDashboardController>(AdminDashboardController());
-
-    // Budgets
-    Get.put<DashboardBudgetController>(DashboardBudgetController());
-    Get.put<BudgetPrevisionnelController>(BudgetPrevisionnelController()); 
-    Get.put<LignBudgetaireController>(LignBudgetaireController());
+    // // Actionnaire
+    // Get.put<ActionnaireController>(ActionnaireController());
+    // Get.put<ActionnaireCotisationController>(ActionnaireCotisationController());
+    // Get.put<ActionnaireTransfertController>(ActionnaireTransfertController());
 
 
-    // Commercial
-    Get.put<DashboardComController>(DashboardComController());
-    Get.put<AchatController>(AchatController());
-    Get.put<BonLivraisonController>(BonLivraisonController());
-    Get.put<CartController>(CartController());
-    Get.put<FactureController>(FactureController());
-    Get.put<FactureCreanceController>(FactureCreanceController());
-    Get.put<NumeroFactureController>(NumeroFactureController());
-    Get.put<GainCartController>(GainCartController());
-    Get.put<HistoryLivraisonController>(HistoryLivraisonController());
-    Get.put<HistoryRavitaillementController>(HistoryRavitaillementController());
-    Get.put<VenteCartController>(VenteCartController());
-    Get.put<ProduitModelController>(ProduitModelController());
-    Get.put<RestitutionController>(RestitutionController());
-    Get.put<LivraisonController>(LivraisonController());
-    Get.put<RavitaillementController>(RavitaillementController());
-    Get.put<StockGlobalController>(StockGlobalController());
-    Get.put<SuccursaleController>(SuccursaleController());
-    Get.put<VenteEffectueController>(VenteEffectueController());
+    // // Administration
+    // Get.put<AdminDashboardController>(AdminDashboardController());
+
+    // // Budgets
+    // Get.put<DashboardBudgetController>(DashboardBudgetController());
+    // Get.put<BudgetPrevisionnelController>(BudgetPrevisionnelController()); 
+    // Get.put<LignBudgetaireController>(LignBudgetaireController());
+
+
+    // // Commercial
+    // Get.put<DashboardComController>(DashboardComController());
+    // Get.put<AchatController>(AchatController());
+    // Get.put<BonLivraisonController>(BonLivraisonController());
+    // Get.put<CartController>(CartController());
+    // Get.put<FactureController>(FactureController());
+    // Get.put<FactureCreanceController>(FactureCreanceController());
+    // Get.put<NumeroFactureController>(NumeroFactureController());
+    // Get.put<GainCartController>(GainCartController());
+    // Get.put<HistoryLivraisonController>(HistoryLivraisonController());
+    // Get.put<HistoryRavitaillementController>(HistoryRavitaillementController());
+    // Get.put<VenteCartController>(VenteCartController());
+    // Get.put<ProduitModelController>(ProduitModelController());
+    // Get.put<RestitutionController>(RestitutionController());
+    // Get.put<LivraisonController>(LivraisonController());
+    // Get.put<RavitaillementController>(RavitaillementController());
+    // Get.put<StockGlobalController>(StockGlobalController());
+    // Get.put<SuccursaleController>(SuccursaleController());
+    // Get.put<VenteEffectueController>(VenteEffectueController());
     
-    // Comptabilites
-    Get.put<DashboardComptabiliteController>(DashboardComptabiliteController());
-    Get.put<BalanceChartController>(BalanceChartController());
-    Get.put<BalanceChartPieController>(BalanceChartPieController());
-    Get.put<BalanceController>(BalanceController());
-    Get.put<BalanceSumController>(BalanceSumController());
-    Get.put<BilanController>(BilanController());
-    Get.put<CompteBilanRefController>(CompteBilanRefController());
-    Get.put<CompteResultatController>(CompteResultatController());
-    Get.put<JournalController>(JournalController());
+    // // Comptabilites
+    // Get.put<DashboardComptabiliteController>(DashboardComptabiliteController());
+    // Get.put<BalanceChartController>(BalanceChartController());
+    // Get.put<BalanceChartPieController>(BalanceChartPieController());
+    // Get.put<BalanceController>(BalanceController());
+    // Get.put<BalanceSumController>(BalanceSumController());
+    // Get.put<BilanController>(BilanController());
+    // Get.put<CompteBilanRefController>(CompteBilanRefController());
+    // Get.put<CompteResultatController>(CompteResultatController());
+    // Get.put<JournalController>(JournalController());
     
-    // Exploitations
-    Get.put<DashboardExpController>(DashboardExpController());
-    Get.put<FourniseurController>(FourniseurController());
-    Get.put<ProductionExpController>(ProductionExpController());
-    Get.put<ProjetController>(ProjetController());
-    Get.put<SectionProjetController>(SectionProjetController());
+    // // Exploitations
+    // Get.put<DashboardExpController>(DashboardExpController());
+    // Get.put<FourniseurController>(FourniseurController());
+    // Get.put<ProductionExpController>(ProductionExpController());
+    // Get.put<ProjetController>(ProjetController());
+    // Get.put<SectionProjetController>(SectionProjetController());
   
 
-    // Finances
-    Get.put<DashboardFinanceController>(DashboardFinanceController());
-    Get.put<BanqueNameController>(BanqueNameController());
-    Get.put<CaisseNameController>(CaisseNameController());
-    Get.put<FinExterieurNameController>(FinExterieurNameController());
-    Get.put<BanqueController>(BanqueController());
-    Get.put<CaisseController>(CaisseController());
-    Get.put<CreanceDetteController>(CreanceDetteController());
-    Get.put<CreanceController>(CreanceController());
-    Get.put<DetteController>(DetteController());
-    Get.put<FinExterieurController>(FinExterieurController());
+    // // Finances
+    // Get.put<DashboardFinanceController>(DashboardFinanceController());
+    // Get.put<BanqueNameController>(BanqueNameController());
+    // Get.put<CaisseNameController>(CaisseNameController());
+    // Get.put<FinExterieurNameController>(FinExterieurNameController());
+    // Get.put<BanqueController>(BanqueController());
+    // Get.put<CaisseController>(CaisseController());
+    // Get.put<CreanceDetteController>(CreanceDetteController());
+    // Get.put<CreanceController>(CreanceController());
+    // Get.put<DetteController>(DetteController());
+    // Get.put<FinExterieurController>(FinExterieurController());
     
 
 
-    // Logistique
-    Get.put<DashboardLogController>(DashboardLogController());
-    Get.put<ApprovisionReceptionController>(ApprovisionReceptionController());
-    Get.put<ApprovisionnementController>(ApprovisionnementController());
-    Get.put<EntretienController>(EntretienController());
-    Get.put<ObjetRemplaceController>(ObjetRemplaceController());
-    Get.put<EtatMaterielController>(EtatMaterielController());
-    Get.put<ImmobilierController>(ImmobilierController());
-    Get.put<MaterielController>(MaterielController());
-    Get.put<MobilierController>(MobilierController());
-    Get.put<TrajetController>(TrajetController());
-    Get.put<DevisController>(DevisController());
-    Get.put<DevisListObjetController>(DevisListObjetController());
+    // // Logistique
+    // Get.put<DashboardLogController>(DashboardLogController());
+    // Get.put<ApprovisionReceptionController>(ApprovisionReceptionController());
+    // Get.put<ApprovisionnementController>(ApprovisionnementController());
+    // Get.put<EntretienController>(EntretienController());
+    // Get.put<ObjetRemplaceController>(ObjetRemplaceController());
+    // Get.put<EtatMaterielController>(EtatMaterielController());
+    // Get.put<ImmobilierController>(ImmobilierController());
+    // Get.put<MaterielController>(MaterielController());
+    // Get.put<MobilierController>(MobilierController());
+    // Get.put<TrajetController>(TrajetController());
+    // Get.put<DevisController>(DevisController());
+    // Get.put<DevisListObjetController>(DevisListObjetController());
 
 
     
-    // Marketing
-    Get.put<DashboardMarketingController>(DashboardMarketingController());
-    Get.put<AgendaController>(AgendaController()); 
-    Get.put<AnnuaireController>(AnnuaireController());
-    Get.put<CampaignController>(CampaignController());
+    // // Marketing
+    // Get.put<DashboardMarketingController>(DashboardMarketingController());
+    // Get.put<AgendaController>(AgendaController()); 
+    // Get.put<AnnuaireController>(AnnuaireController());
+    // Get.put<CampaignController>(CampaignController());
     
 
 
-    // RH
-    Get.put<DashobardRHController>(DashobardRHController());
-    Get.put<PerformenceController>(PerformenceController());
-    Get.put<PerformenceNoteController>(PerformenceNoteController());
-    Get.put<PersonnelsController>(PersonnelsController());
-    Get.put<UsersController>(UsersController());
-    Get.put<PresenceController>(PresenceController());
-    Get.put<PresencePersonneController>(PresencePersonneController());
-    Get.put<SalaireController>(SalaireController());
-    Get.put<TransportRestController>(TransportRestController());  
-    Get.put<TransportRestPersonnelsController>(TransportRestPersonnelsController());
+    // // RH
+    // Get.put<DashobardRHController>(DashobardRHController());
+    // Get.put<PerformenceController>(PerformenceController());
+    // Get.put<PerformenceNoteController>(PerformenceNoteController());
+    // Get.put<PersonnelsController>(PersonnelsController());
+    // Get.put<UsersController>(UsersController());
+    // Get.put<PresenceController>(PresenceController());
+    // Get.put<PresencePersonneController>(PresencePersonneController());
+    // Get.put<SalaireController>(SalaireController());
+    // Get.put<TransportRestController>(TransportRestController());  
+    // Get.put<TransportRestPersonnelsController>(TransportRestPersonnelsController());
 
 
     // Update Version
-    Get.put<UpdateController>(UpdateController());
+    // Get.put<UpdateController>(UpdateController());
   }
 }

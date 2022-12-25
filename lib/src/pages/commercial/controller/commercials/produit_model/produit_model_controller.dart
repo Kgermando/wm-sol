@@ -19,8 +19,7 @@ class ProduitModelController extends GetxController
   TextEditingController sousCategorie1Controller = TextEditingController();
   TextEditingController sousCategorie2Controller = TextEditingController();
   TextEditingController sousCategorie3Controller = TextEditingController();
-  TextEditingController uniteController =
-      TextEditingController(); // sousCategorie4
+  String? uniteController; // sousCategorie4
 
   // Approbations
   String approbationDD = '-';
@@ -37,8 +36,7 @@ class ProduitModelController extends GetxController
     categorieController.dispose();
     sousCategorie1Controller.dispose();
     sousCategorie2Controller.dispose();
-    sousCategorie3Controller.dispose();
-    uniteController.dispose();
+    sousCategorie3Controller.dispose(); 
 
     super.dispose();
   }
@@ -48,7 +46,7 @@ class ProduitModelController extends GetxController
     sousCategorie1Controller.clear();
     sousCategorie2Controller.clear();
     sousCategorie3Controller.clear();
-    uniteController.clear();
+    uniteController = null;
   }
 
   void getList() async {
@@ -93,7 +91,7 @@ class ProduitModelController extends GetxController
     try {
       _isLoading.value = true;
       final idProductform =
-          "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.text}";
+          "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.toString()}";
       final dataItem = ProductModel(
           categorie: categorieController.text,
           sousCategorie1: (sousCategorie1Controller.text == "")
@@ -106,8 +104,8 @@ class ProduitModelController extends GetxController
               ? '-'
               : sousCategorie3Controller.text,
           sousCategorie4:
-              (uniteController.text == "") ? '-' : uniteController.text,
-          idProduct: idProductform.toUpperCase(),
+              (uniteController == "") ? '-' : uniteController.toString(),
+          idProduct: idProductform.replaceAll(' ', '').toUpperCase(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDD: '-',
@@ -137,15 +135,22 @@ class ProduitModelController extends GetxController
     try {
       _isLoading.value = true;
       final idProductform =
-          "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.text}";
+          "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.toString()}";
       final dataItem = ProductModel(
           id: data.id,
           categorie: categorieController.text,
-          sousCategorie1: sousCategorie1Controller.text,
-          sousCategorie2: sousCategorie2Controller.text,
-          sousCategorie3: sousCategorie3Controller.text,
-          sousCategorie4: uniteController.text,
-          idProduct: idProductform.toUpperCase(),
+          sousCategorie1: (sousCategorie1Controller.text == "")
+              ? data.sousCategorie1
+              : sousCategorie1Controller.text,
+          sousCategorie2: (sousCategorie2Controller.text == "")
+              ? data.sousCategorie2
+              : sousCategorie2Controller.text,
+          sousCategorie3: (sousCategorie3Controller.text == "")
+              ? data.sousCategorie3
+              : sousCategorie3Controller.text,
+          sousCategorie4:
+              (uniteController == "") ? data.sousCategorie4 : uniteController.toString(), 
+          idProduct: idProductform.replaceAll(' ', '').toUpperCase(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
           approbationDD: '-',

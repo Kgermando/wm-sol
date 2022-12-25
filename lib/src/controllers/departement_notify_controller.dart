@@ -299,231 +299,116 @@ class DepartementNotifyCOntroller extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // getDataNotify();
-    timerAdmin = Timer.periodic(const Duration(seconds: 1), (timer) {
-      print("notify test");
-      getCountMail();
-      getCountAgenda();
-      getAdminCountBudget();
-      getAdminCountRh();
-      getAdminCountFinance();
-      getAdminCountComptabilite();
-      getAdminCountExploitation();
-      getAdminCountCom();
-      getAdminCountMarketing();
-      getAdminCountLogistique();
-
-      getBudgetCountDG();
-      getCommercialCountSuccursalesDG();
-      getCountProjetDG();
-      getCountProductionDG();
-      getFinanceCountCreanceDG();
-      getFinanceCountDetteDG();
-      getLogCountMaterielDG();
-      getLogCountImmobilierDG();
-      getCountTransRestDG();
-      getLogCountDevisDG();
-
-      getCountMail();
-      getCountAgenda();
-      getBudgetCountBudget();
-      getBudgetCountDD();
-      getCountSalaireBudget();
-      getCountTransRestBudget();
-      getMarketingCountCampaignBudget();
-      getLogCountDevisBudget();
-      getCountProjetBudget();
-
-      getCountMail();
-      getCountAgenda();
-      getCommercialCount();
-      getCommercialCountSuccursalesDD();
-      getCommercialCountProdModelDD();
-      getCountCart();
-
-      getCountMail();
-      getCountAgenda();
-      getCountCart();
-      getCountMail();
-      getCountAgenda();
-      getCountComptabilite();
-      getCountBilanDD();
-      getCountCompteResultatDD();
-
-      getCountMail();
-      getCountAgenda();
-      getExploitationCount();
-      getCountProjetDD();
-      getCountProductionDD();
-      getCountTache();
-
-      getCountMail();
-      getCountAgenda();
-      getCountTache();
-      getCountMail();
-      getCountAgenda();
-      getFinanceCountDD();
-      getFinanceCountCreanceDD();
-      getFinanceCountDetteDD();
-      getCountSalaireFin();
-      getCountTransRestFin();
-      getMarketingCountCampaignFin();
-      getLogCountDevisFin();
-      getCountProjetFin();
-      getFinanceCountObs();
-      getCountProjeteObs();
-      getLogCountDeviseObs();
-      getCountTransResteObs();
-      getMarketingCountCampaignObs();
-      getCountSalaireObs();
-
-      getCountMail();
-      getCountAgenda();
-      getFinanceCountObs();
-      getCountProjeteObs();
-      getLogCountDeviseObs();
-      getCountTransResteObs();
-      getMarketingCountCampaignObs();
-      getCountSalaireObs();
-      getCountMail();
-      getCountAgenda();
-      getLogCount();
-      getLogCountMaterielDD();
-      getLogCountTrajetsDD();
-      getLogCountImmobilierDD();
-      getLogCountMobilierDD();
-      getLogCountEntretienDD();
-      getLogCountEtatmaterielDD();
-      getLogCountDevisSalaireDD();
-
-      getCountMail();
-      getCountAgenda();
-      getMarketingCountComMarketing();
-      getMarketingCountCampaignDD();
-      getCountMail();
-      getCountAgenda();
-      getRHCount();
-      getCountSalaireDD();
-      getCountTransRestSalaireDD();
-      getCountMail();
-      getCountAgenda();
-      getCountSalaireObs();
-      getCountTransResteObs();
-      getCountMail();
-      getCountAgenda();
-    });
+    getDataNotify(); 
   }
 
   void getDataNotify() {
-    print("notify test");
+    
 
     List<dynamic> departement = (profilController.user.departement == '-')
         ? ["Support"]
         : jsonDecode(profilController.user.departement);
     int userRole = int.parse(profilController.user.role);
 
-    if (departement.contains("Administration") && userRole <= 1) {
+    if (departement.contains("Administration")) {
       timerAdmin = Timer.periodic(const Duration(seconds: 1), (timer) {
-        getCountMail();
-        getCountAgenda();
-        getAdminCountBudget();
-        getAdminCountRh();
-        getAdminCountFinance();
-        getAdminCountComptabilite();
-        getAdminCountExploitation();
-        getAdminCountCom();
-        getAdminCountMarketing();
-        getAdminCountLogistique();
+        print("notify Administration");
+        if (userRole <= 1) {
+          getBudgetCountDG();
+          getCommercialCountSuccursalesDG();
+          getCountProjetDG();
+          getCountProductionDG();
+          getFinanceCountCreanceDG();
+          getFinanceCountDetteDG();
+          getLogCountMaterielDG();
+          getLogCountImmobilierDG();
+          getCountTransRestDG();
+          getLogCountDevisDG();
 
-        getBudgetCountDG();
-        getCommercialCountSuccursalesDG();
-        getCountProjetDG();
-        getCountProductionDG();
-        getFinanceCountCreanceDG();
-        getFinanceCountDetteDG();
-        getLogCountMaterielDG();
-        getLogCountImmobilierDG();
-        getCountTransRestDG();
-        getLogCountDevisDG();
-      });
-    } else if (departement.contains("Budgets") && userRole <= 2) {
-      timerBudgets = Timer.periodic(const Duration(seconds: 1), (timer) {
-        getCountMail();
-        getCountAgenda();
-        getBudgetCountBudget();
-        getBudgetCountDD();
-        getCountSalaireBudget();
-        getCountTransRestBudget();
-        getMarketingCountCampaignBudget();
-        getLogCountDevisBudget();
-        getCountProjetBudget();
-      });
-    } else if (departement.contains("Commercial")) {
-      if (userRole <= 2) {
-        timerCommercial = Timer.periodic(const Duration(seconds: 1), (timer) {
           getCountMail();
           getCountAgenda();
+          getAdminCountBudget();
+          getAdminCountRh();
+          getAdminCountFinance();
+          getAdminCountComptabilite();
+          getAdminCountExploitation();
+          getAdminCountCom();
+          getAdminCountMarketing();
+          getAdminCountLogistique();
+        } 
+      });
+    } 
+    if (departement.contains("Budgets")) {
+      timerBudgets = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print("notify Budgets");
+        if (userRole <= 2) {
+          getBudgetCountBudget();
+          getBudgetCountDD();
+          getCountSalaireBudget();
+          getCountTransRestBudget();
+          getMarketingCountCampaignBudget();
+          getLogCountDevisBudget();
+          getCountProjetBudget();
+        }  
+        getCountMail();
+        getCountAgenda();
+       
+      });
+    } 
+    if (departement.contains("Commercial")) {
+      timerCommercial = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print("notify Commercial");
+        if (userRole <= 2) {
           getCommercialCount();
           getCommercialCountSuccursalesDD();
           getCommercialCountProdModelDD();
-          getCountCart();
-        });
-      } else {
-        timerCommercial = Timer.periodic(const Duration(seconds: 1), (timer) {
-          getCountMail();
-          getCountAgenda();
-          getCountCart();
-        });
-      }
-    } else if (departement.contains("Comptabilites") && userRole <= 2) {
+        }   
+        getCountMail();
+        getCountAgenda();
+        getCountCart();
+      });
+      
+    } 
+    if (departement.contains("Comptabilites")) {
       timerComptabilites = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print("notify Comptabilites");
+        if (userRole <= 2) {
+          getCountComptabilite();
+          getCountBilanDD();
+          getCountCompteResultatDD();
+        } 
         getCountMail();
         getCountAgenda();
-        getCountComptabilite();
-        getCountBilanDD();
-        getCountCompteResultatDD();
+        
       });
-    } else if (departement.contains("Exploitations")) {
-      if (userRole <= 2) {
-        timerExploitations =
-            Timer.periodic(const Duration(seconds: 1), (timer) {
-          getCountMail();
-          getCountAgenda();
-          getExploitationCount();
-          getCountProjetDD();
-          getCountProductionDD();
-          getCountTache();
-        });
-      } else {
-        timerExploitations =
-            Timer.periodic(const Duration(seconds: 1), (timer) {
+    }
+    if (departement.contains("Exploitations")) {
+       print("notify Exploitations");
+      timerExploitations =  Timer.periodic(const Duration(seconds: 1), (timer) {
+          if (userRole <= 2) { 
+            getExploitationCount();
+            getCountProjetDD();
+            getCountProductionDD(); 
+          } 
           getCountMail();
           getCountAgenda();
           getCountTache();
-        });
-      }
-    } else if (departement.contains("Finances")) {
-      if (userRole <= 2) {
+        }); 
+    }
+     if (departement.contains("Finances")) {
+ 
         timerFinances = Timer.periodic(const Duration(seconds: 1), (timer) {
-          getCountMail();
-          getCountAgenda();
-          getFinanceCountDD();
-          getFinanceCountCreanceDD();
-          getFinanceCountDetteDD();
-          getCountSalaireFin();
-          getCountTransRestFin();
-          getMarketingCountCampaignFin();
-          getLogCountDevisFin();
-          getCountProjetFin();
-          getFinanceCountObs();
-          getCountProjeteObs();
-          getLogCountDeviseObs();
-          getCountTransResteObs();
-          getMarketingCountCampaignObs();
-          getCountSalaireObs();
-        });
-      } else {
-        timerFinances = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print("notify Finances");
+          if (userRole <= 2) { 
+            getFinanceCountDD();
+            getFinanceCountCreanceDD();
+            getFinanceCountDetteDD();
+            getCountSalaireFin();
+            getCountTransRestFin();
+            getMarketingCountCampaignFin();
+            getLogCountDevisFin();
+            getCountProjetFin(); 
+          } 
           getCountMail();
           getCountAgenda();
           getFinanceCountObs();
@@ -533,46 +418,54 @@ class DepartementNotifyCOntroller extends GetxController {
           getMarketingCountCampaignObs();
           getCountSalaireObs();
         });
-      }
-    } else if (departement.contains("Logistique") && userRole <= 2) {
+   
+    }
+    if (departement.contains("Logistique")) {
       timerLogistique = Timer.periodic(const Duration(seconds: 1), (timer) {
+         print("notify Logistique");
+        if (userRole <= 2) {
+          getLogCount();
+           getLogCountMaterielDD();
+          getLogCountTrajetsDD();
+          getLogCountImmobilierDD();
+          getLogCountMobilierDD();
+          getLogCountEntretienDD();
+          getLogCountEtatmaterielDD();
+          getLogCountDevisSalaireDD();
+        } 
         getCountMail();
-        getCountAgenda();
-        getLogCount();
-        getLogCountMaterielDD();
-        getLogCountTrajetsDD();
-        getLogCountImmobilierDD();
-        getLogCountMobilierDD();
-        getLogCountEntretienDD();
-        getLogCountEtatmaterielDD();
-        getLogCountDevisSalaireDD();
+        getCountAgenda(); 
+        
       });
-    } else if (departement.contains("Marketing") && userRole <= 2) {
+    } 
+    if (departement.contains("Marketing")) {
       timerMarketing = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print("notify Marketing");
+        if (userRole <= 2) {
+          getMarketingCountComMarketing();
+          getMarketingCountCampaignDD();
+        } 
         getCountMail();
-        getCountAgenda();
-        getMarketingCountComMarketing();
-        getMarketingCountCampaignDD();
+        getCountAgenda(); 
       });
-    } else if (departement.contains("Ressources Humaines")) {
+    }
+    if (departement.contains("Ressources Humaines")) {
       if (userRole <= 2) {
         timerRH = Timer.periodic(const Duration(seconds: 1), (timer) {
+          print("notify Ressources Humaines");
           getCountMail();
           getCountAgenda();
           getRHCount();
           getCountSalaireDD();
           getCountTransRestSalaireDD();
         });
-      } else {
-        timerRH = Timer.periodic(const Duration(seconds: 1), (timer) {
-          getCountMail();
-          getCountAgenda();
-          getCountSalaireObs();
-          getCountTransResteObs();
-        });
-      }
-    } else if (departement.contains("Support")) {
+      } 
+      getCountMail();
+      getCountAgenda();
+    }
+    if (departement.contains("Support")) {
       timerSupport = Timer.periodic(const Duration(seconds: 1), (timer) {
+        print("notify Support");
         getCountMail();
         getCountAgenda();
       });

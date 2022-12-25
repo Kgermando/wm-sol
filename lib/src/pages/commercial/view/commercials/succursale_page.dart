@@ -27,76 +27,74 @@ class _SuccursalePageState extends State<SuccursalePage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(context, scaffoldKey, title, subTitle),
-        drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
-            label: const Text("Ajouter une succursale"),
-            tooltip: "Nouveau succursale",
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              setState(() {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Container(
-                        padding: const EdgeInsets.all(p20),
-                        child: Form(
-                          key: controller.formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.start,
-                                children: const [
-                                  TitleWidget(title: "Ajout Succursale")
-                                ],
-                              ),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              ResponsiveChildWidget(
-                                  child1: nameWidget(),
-                                  child2: provinceWidget()),
-                              // nameWidget(),
-                              // provinceWidget(),
-                              adresseWidget(),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              BtnWidget(
-                                  title: 'Soumettre',
-                                  isLoading: controller.isLoading,
-                                  press: () {
-                                    final form =
-                                        controller.formKey.currentState!;
-                                    if (form.validate()) {
-                                      controller.submit();
-                                      form.reset();
-                                    }
-                                  })
+    key: scaffoldKey,
+    appBar: headerBar(context, scaffoldKey, title, subTitle),
+    drawer: const DrawerMenu(),
+    floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Ajouter une succursale"),
+        tooltip: "Nouveau succursale",
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          setState(() {
+            showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                    padding: const EdgeInsets.all(p20),
+                    child: Form(
+                      key: controller.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: const [
+                              TitleWidget(title: "Ajout Succursale")
                             ],
                           ),
-                        ));
-                  },
-                );
-              });
-
-              // Get.toNamed(ComRoutes.comSuccursaleAdd);
-            }),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
+                          const SizedBox(
+                            height: p20,
+                          ),
+                          ResponsiveChildWidget(
+                              child1: nameWidget(),
+                              child2: provinceWidget()),
+                          // nameWidget(),
+                          // provinceWidget(),
+                          adresseWidget(),
+                          const SizedBox(
+                            height: p20,
+                          ),
+                          BtnWidget(
+                              title: 'Soumettre',
+                              isLoading: controller.isLoading,
+                              press: () {
+                                final form =
+                                    controller.formKey.currentState!;
+                                if (form.validate()) {
+                                  controller.submit();
+                                  form.reset();
+                                }
+                              })
+                        ],
+                      ),
+                    ));
+              },
+            );
+          }); 
+        }),
+      body: Row(
               children: [
                 Visibility(
                     visible: !Responsive.isMobile(context),
                     child: const Expanded(flex: 1, child: DrawerMenu())),
                 Expanded(
                     flex: 5,
-                    child: Container(
+                    child:controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => Container(
                         margin: const EdgeInsets.only(
                             top: p20, right: p20, left: p20, bottom: p8),
                         decoration: const BoxDecoration(
@@ -104,9 +102,12 @@ class _SuccursalePageState extends State<SuccursalePage> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: TableSuccursale(
                             succursaleList: state!,
-                            controller: controller))),
+                            controller: controller))) ),
               ],
-            )) );
+            )
+      
+      
+       );
     
      
   }
