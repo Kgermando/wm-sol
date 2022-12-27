@@ -29,9 +29,9 @@ class _CommMarketingDDState extends State<CommMarketingDD> {
 
   @override
   Widget build(BuildContext context) {
-    final DepartementNotifyCOntroller comNotifyController = Get.find();
-    final SuccursaleController succursaleController = Get.find();
-    final ProduitModelController produitModelController = Get.find();
+    final DepartementNotifyCOntroller comNotifyController = Get.put(DepartementNotifyCOntroller());
+    final SuccursaleController succursaleController = Get.put(SuccursaleController());
+    final ProduitModelController produitModelController = Get.put(ProduitModelController());
     
       final headline6 = Theme.of(context).textTheme.headline6;
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;

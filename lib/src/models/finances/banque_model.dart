@@ -13,8 +13,8 @@ class BanqueModel {
   late DateTime created;
   late String montantRetrait;
 
-  BanqueModel(
-      {this.id,
+  BanqueModel({
+    this.id,
     required this.nomComplet,
     required this.pieceJustificative,
     required this.libelle,
@@ -43,24 +43,23 @@ class BanqueModel {
         reference: row[9],
         banqueName: row[10],
         created: row[11],
-      montantRetrait: row[12]
-    );
+        montantRetrait: row[12]);
   }
 
   factory BanqueModel.fromJson(Map<String, dynamic> json) {
     return BanqueModel(
-        id: json['id'],
-        nomComplet: json['nomComplet'],
-        pieceJustificative: json['pieceJustificative'],
-        libelle: json['libelle'],
-        montantDepot: json['montantDepot'],
-        departement: json['departement'],
-        typeOperation: json['typeOperation'],
-        numeroOperation: json['numeroOperation'],
-        signature: json['signature'],
-        reference: json['reference'],
-        banqueName: json['banqueName'],
-        created: DateTime.parse(json['created']),
+      id: json['id'],
+      nomComplet: json['nomComplet'],
+      pieceJustificative: json['pieceJustificative'],
+      libelle: json['libelle'],
+      montantDepot: json['montantDepot'],
+      departement: json['departement'],
+      typeOperation: json['typeOperation'],
+      numeroOperation: json['numeroOperation'],
+      signature: json['signature'],
+      reference: json['reference'],
+      banqueName: json['banqueName'],
+      created: DateTime.parse(json['created']),
       montantRetrait: json['montantRetrait'],
     );
   }

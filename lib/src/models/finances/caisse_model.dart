@@ -13,36 +13,36 @@ class CaisseModel {
   late DateTime created;
   late String montantDecaissement;
 
-  CaisseModel(
-      {this.id,
-      required this.nomComplet,
-      required this.pieceJustificative,
-      required this.libelle,
-      required this.montantEncaissement,
-      required this.departement,
-      required this.typeOperation,
-      required this.numeroOperation,
-      required this.signature,
-      required this.reference,
-      required this.caisseName,
-      required this.created,
+  CaisseModel({
+    this.id,
+    required this.nomComplet,
+    required this.pieceJustificative,
+    required this.libelle,
+    required this.montantEncaissement,
+    required this.departement,
+    required this.typeOperation,
+    required this.numeroOperation,
+    required this.signature,
+    required this.reference,
+    required this.caisseName,
+    required this.created,
     required this.montantDecaissement,
   });
 
   factory CaisseModel.fromSQL(List<dynamic> row) {
     return CaisseModel(
-        id: row[0],
-        nomComplet: row[1],
-        pieceJustificative: row[2],
-        libelle: row[3],
-        montantEncaissement: row[4],
-        departement: row[5],
-        typeOperation: row[6],
-        numeroOperation: row[7],
-        signature: row[8],
-        reference: row[9],
-        caisseName: row[10],
-        created: row[11],
+      id: row[0],
+      nomComplet: row[1],
+      pieceJustificative: row[2],
+      libelle: row[3],
+      montantEncaissement: row[4],
+      departement: row[5],
+      typeOperation: row[6],
+      numeroOperation: row[7],
+      signature: row[8],
+      reference: row[9],
+      caisseName: row[10],
+      created: row[11],
       montantDecaissement: row[12],
     );
   }

@@ -34,10 +34,10 @@ class _BalanceComptabiliteState extends State<BalanceComptabilite> {
 key: scaffoldKey,
 appBar: headerBar(context, scaffoldKey, title, subTitle),
 drawer: const DrawerMenu(),
-body: balanceSumController.obx(
-    onLoading: loadingPage(context),
-    onEmpty: const Text('Aucune donnée'),
-    onError: (error) => loadingError(context, error!),
+body:balanceSumController.obx(
+  onLoading: loadingPage(context),
+  onEmpty: const Text('Aucune donnée'),
+  onError: (error) => loadingError(context, error!),
     (state) => Row(
           children: [
             Visibility(
@@ -92,7 +92,8 @@ body: balanceSumController.obx(
                       ],
                     ))),
           ],
-        )));
+        ))  
+);
   }
 
 

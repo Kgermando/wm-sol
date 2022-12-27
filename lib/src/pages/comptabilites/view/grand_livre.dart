@@ -41,27 +41,27 @@ class _GrandLivreState extends State<GrandLivre> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!),
-            (state) => Row(
-                  children: [
-                    Visibility(
-                        visible: !Responsive.isMobile(context),
-                        child: const Expanded(flex: 1, child: DrawerMenu())),
-                    Expanded(
-                        flex: 5,
-                        child: Card(
+        body: Row(
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (state) => Card(
                           child: Container(
                               margin: const EdgeInsets.all(p20),
                               decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
                               child: pageView(state!)),
-                        )),
-                  ],
-                )));
+                        ))),
+          ],
+        ));
   }
 
   Widget pageView(List<BalanceModel> data) {
@@ -77,7 +77,7 @@ class _GrandLivreState extends State<GrandLivre> {
                 IconButton(
                     color: Colors.green,
                     tooltip: "Actualiser la page",
-                    onPressed: () {
+                    onPressed: () { 
                       Navigator.pushNamed(
                           context, ComptabiliteRoutes.comptabiliteGrandLivre);
                     },
