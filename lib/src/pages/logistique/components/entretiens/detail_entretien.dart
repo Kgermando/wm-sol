@@ -90,10 +90,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                                 title:
                                                     widget.entretienModel.nom),
                                             Column(
-                                              children: [
-                                                if (widget.entretienModel
-                                                        .approbationDD ==
-                                                    "Unapproved")
+                                              children: [ 
                                                   Row(
                                                     children: [
                                                       IconButton(
@@ -126,17 +123,23 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                                             },
                                                             icon: const Icon(
                                                                 Icons.send)),
-                                                      // IconButton(
-                                                      //     tooltip: 'Modifier',
-                                                      //     onPressed: () {
-                                                      //       Get.toNamed(
-                                                      //           LogistiqueRoutes
-                                                      //               .logEntretienUpdate,
-                                                      //           arguments: widget
-                                                      //               .entretienModel);
-                                                      //     },
-                                                      //     icon: const Icon(
-                                                      //         Icons.edit)),
+                                                      if (widget.entretienModel
+                                                        .approbationDD !=
+                                                    "Approved")        
+                                                      IconButton(
+                                                          tooltip: 'Modifier',
+                                                          onPressed: () {
+                                                            Get.toNamed(
+                                                                LogistiqueRoutes
+                                                                    .logEntretienUpdate,
+                                                                arguments: widget
+                                                                    .entretienModel);
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.edit)),
+                                                if (widget.entretienModel
+                                                        .approbationDD !=
+                                                    "Approved") 
                                                       IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {

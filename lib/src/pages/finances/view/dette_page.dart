@@ -21,14 +21,14 @@ class DettePage extends StatefulWidget {
 }
 
 class _DettePageState extends State<DettePage> {
+  final DetteController controller = Get.put(DetteController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Dettes";
 
   @override
-  Widget build(BuildContext context) {
-    final DetteController controller = Get.find();
+  Widget build(BuildContext context) { 
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),

@@ -115,8 +115,8 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                                               color: Colors
                                                                   .green)),
                                                       if (widget.materielModel
-                                                            .approbationDD ==
-                                                        "Unapproved") IconButton(
+                                                        .approbationDD !=
+                                                    "Approved")     IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
                                                             Get.toNamed(
@@ -128,8 +128,9 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                                           icon: const Icon(
                                                               Icons.edit)),
                                                       if (widget.materielModel
-                                                            .approbationDD ==
-                                                        "Unapproved") IconButton(
+                                                        .approbationDD !=
+                                                    "Approved")
+                                                  IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog();

@@ -99,9 +99,9 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                                               Icons.refresh,
                                                               color: Colors
                                                                   .green)),
-                                                     if (widget.immobilierModel
-                                                            .approbationDD ==
-                                                        "Unapproved") IconButton(
+                                                    if (widget.immobilierModel
+                                                        .approbationDD !=
+                                                    "Approved") IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
                                                             Get.toNamed(
@@ -113,8 +113,8 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                                                           icon: const Icon(
                                                               Icons.edit)),
                                                     if (widget.immobilierModel
-                                                            .approbationDD ==
-                                                        "Unapproved")  IconButton(
+                                                        .approbationDD !=
+                                                    "Approved") IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog(

@@ -99,9 +99,8 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                                             Icons.refresh,
                                                             color:
                                                                 Colors.green)),
-                                                   if (widget.mobilierModel
-                                                            .approbationDD ==
-                                                        "Unapproved")    IconButton(
+                                                   if (widget.mobilierModel.approbationDD != "Approved")    
+                                                    IconButton(
                                                           tooltip: 'Modifier',
                                                           onPressed: () {
                                                             Get.toNamed(
@@ -112,9 +111,9 @@ class _DetailMobilerState extends State<DetailMobiler> {
                                                           },
                                                           icon: const Icon(
                                                               Icons.edit)),
-                                                     if (widget.mobilierModel
-                                                            .approbationDD ==
-                                                        "Unapproved")  IconButton(
+                                                    if (widget.mobilierModel
+                                                        .approbationDD !=
+                                                    "Approved")     IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog(

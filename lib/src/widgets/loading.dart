@@ -30,16 +30,21 @@ Widget loadingError(BuildContext context, String error) => Column(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Text("Une erreur s'est produite $error. Merçi.")),
-
-             ElevatedButton(onPressed: () => Get.back(), child: const Text("Revenir en arrière."))
+            Expanded(child: Text("Une erreur s'est produite $error. Merçi.")), 
           ],
         ),
+        const SizedBox(
+          height: 10,
+        ),
+        ElevatedButton(
+            onPressed: () => Get.back(),
+            child: Text("Revenir en arrière.",
+                style: Theme.of(context).textTheme.bodyMedium))
       ],
     );
  
 
-Widget loadingMega() => Scaffold(
+  Widget loadingMega() => Scaffold(
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

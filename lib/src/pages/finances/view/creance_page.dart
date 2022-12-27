@@ -21,6 +21,7 @@ class CreancePage extends StatefulWidget {
 }
 
 class _CreancePageState extends State<CreancePage> {
+  final CreanceController controller = Get.put(CreanceController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
@@ -28,7 +29,7 @@ class _CreancePageState extends State<CreancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final CreanceController controller = Get.find();
+    
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),

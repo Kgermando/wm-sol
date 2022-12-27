@@ -102,10 +102,9 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                                                 Icons.refresh,
                                                                 color: Colors
                                                                     .green)),
-                                                        if (widget
-                                                                .etatMaterielModel
-                                                                .approbationDD ==
-                                                            "Unapproved")
+                                                       if (widget.etatMaterielModel
+                                                            .approbationDD !=
+                                                        "Approved")
                                                           IconButton(
                                                               tooltip:
                                                                   'Modifier',
@@ -119,10 +118,9 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                                                               },
                                                               icon: const Icon(
                                                                   Icons.edit)),
-                                                          if (widget
-                                                                .etatMaterielModel
-                                                                .approbationDD ==
-                                                            "Unapproved")
+                                                          if (widget.etatMaterielModel
+                                                            .approbationDD !=
+                                                        "Approved")
                                                           IconButton(
                                                               tooltip:
                                                                   'Supprimer',

@@ -1,7 +1,7 @@
 name: wm_solution
 description: Solution Work Management.
  
-version: 3.0.1+19
+version: 3.0.1+20
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -108,7 +108,7 @@ msix_config:
   display_name: Work Management
   publisher_display_name: Work_Management
   identity_name: com.eventdrcTechnology.WorkManagement
-  msix_version: 3.0.0.19
+  msix_version: 3.0.0.20
   certificate_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\CERTIFICAT\astrid_v2\CERTIFICATE.pfx
   certificate_password: gk0813530838
   publisher: CN=Germain kataku, O=Eventdrc Technology

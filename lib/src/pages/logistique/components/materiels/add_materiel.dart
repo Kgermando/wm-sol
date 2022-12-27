@@ -9,10 +9,9 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
-import 'package:wm_solution/src/widgets/loading.dart'; 
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
-
 
 class AddMateriel extends StatefulWidget {
   const AddMateriel({super.key});
@@ -27,98 +26,96 @@ class _AddMaterielState extends State<AddMateriel> {
   String title = "Logistique";
   String subTitle = "Nouvel fiche technique";
 
-  
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, subTitle),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Form(
-                                      key: controller.formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleWidget(
-                                              title: "Nouvel Fiche technique"),
-                                          const SizedBox(
-                                            height: p20,
-                                          ), 
-                                          typeMaterielWidget(),
-                                          ResponsiveChildWidget(
-                                              child1: marqueWidget(),
-                                              child2: modeleWidget()),
-                                          ResponsiveChildWidget(
-                                              child1: numeroRefWidget(),
-                                              child2: couleurNomWidget()),
-                                          ResponsiveChildWidget(
-                                              child1:  genreWidget(),
-                                              child2: qtyMaxReservoirWidget()),
-                                          ResponsiveChildWidget(
-                                              child1: dateFabricationWidget(),
-                                              child2: (controller.typeMateriel == 'Materiel roulant') 
-                                                  ?  numeroPLaqueWidget()
-                                                      : Container()),
-                                          ResponsiveChildWidget(
-                                              child1: identifiantWidget(),
-                                              child2: kilometrageInitialeWidget()),
-                                          ResponsiveChildWidget(
-                                              child1: fournisseurWidget(),
-                                              child2: alimentationWidget()),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          BtnWidget(
-                                              title: 'Soumettre',
-                                              isLoading: controller.isLoading,
-                                              press: () {
-                                                final form = controller
-                                                    .formKey.currentState!;
-                                                if (form.validate()) {
-                                                  controller.submit();
-                                                  form.reset();
-                                                }
-                                              })
-                                        ],
-                                      ),
-                                    ),
+        (state) => SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: p20),
+                            child: Form(
+                              key: controller.formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const TitleWidget(
+                                      title: "Nouvel Fiche technique"),
+                                  const SizedBox(
+                                    height: p20,
                                   ),
-                                )
-                              ],
+                                  typeMaterielWidget(),
+                                  ResponsiveChildWidget(
+                                      child1: marqueWidget(),
+                                      child2: modeleWidget()),
+                                  ResponsiveChildWidget(
+                                      child1: numeroRefWidget(),
+                                      child2: couleurNomWidget()),
+                                  ResponsiveChildWidget(
+                                      child1: genreWidget(),
+                                      child2: qtyMaxReservoirWidget()),
+                                  ResponsiveChildWidget(
+                                      child1: dateFabricationWidget(),
+                                      child2: (controller.typeMateriel ==
+                                              'Materiel roulant')
+                                          ? numeroPLaqueWidget()
+                                          : Container()),
+                                  ResponsiveChildWidget(
+                                      child1: identifiantWidget(),
+                                      child2: kilometrageInitialeWidget()),
+                                  ResponsiveChildWidget(
+                                      child1: fournisseurWidget(),
+                                      child2: alimentationWidget()),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  BtnWidget(
+                                      title: 'Soumettre',
+                                      isLoading: controller.isLoading,
+                                      press: () {
+                                        final form =
+                                            controller.formKey.currentState!;
+                                        if (form.validate()) {
+                                          controller.submit();
+                                          form.reset();
+                                        }
+                                      })
+                                ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          ),
+                        )
+                      ],
+                    ),
+                  ))) )
+        ],
+      ),
+    );
   }
 
   Widget typeMaterielWidget() {
@@ -134,8 +131,7 @@ class _AddMaterielState extends State<AddMateriel> {
         ),
         value: controller.typeMateriel,
         isExpanded: true,
-        validator: (value) =>
-            value == null ? "Select Type Materiel" : null,
+        validator: (value) => value == null ? "Select Type Materiel" : null,
         items: suggestionList.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -157,10 +153,13 @@ class _AddMaterielState extends State<AddMateriel> {
         child: TextFormField(
           controller: controller.marqueController,
           decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: 'Marque',
-              hintText: 'Toyoka, Mercedes, ..'),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Marque',
+            hintText: (controller.typeMateriel == 'Materiel roulant')
+              ? 'Toyota, Mercedes, ..'
+              : 'HP, Lenovo, ..',
+          ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
           validator: (value) {
@@ -193,7 +192,7 @@ class _AddMaterielState extends State<AddMateriel> {
             }
           },
         ));
-  } 
+  }
 
   Widget numeroRefWidget() {
     return Container(
@@ -203,8 +202,9 @@ class _AddMaterielState extends State<AddMateriel> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: (controller.typeMateriel == 'Materiel roulant') 
-              ? 'Numéro chassie' : 'Numéro reference',
+            labelText: (controller.typeMateriel == 'Materiel roulant')
+                ? 'Numéro chassie'
+                : 'Numéro reference',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),
@@ -242,7 +242,7 @@ class _AddMaterielState extends State<AddMateriel> {
 
   Widget genreWidget() {
     List<String> suggestionList = controller.materielList
-      .where((p0) => p0.typeMateriel == 'Materiel roulant')
+        .where((p0) => p0.typeMateriel == 'Materiel roulant')
         .map((e) => e.genre)
         .toSet()
         .toList();
@@ -251,11 +251,13 @@ class _AddMaterielState extends State<AddMateriel> {
         child: EasyAutocomplete(
           controller: controller.genreController,
           decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: "Genre",
-            hintText: 'voiture, camion, bus,...'
-          ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+              labelText: "Genre",
+              hintText: (controller.typeMateriel == 'Materiel roulant')
+                  ? 'voiture, camion, bus,...'
+                  : 'Ordinateur, generateur, Imprimante,...',
+            ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
           validator: (value) {
@@ -268,7 +270,6 @@ class _AddMaterielState extends State<AddMateriel> {
         ));
   }
 
- 
   Widget qtyMaxReservoirWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
@@ -385,28 +386,36 @@ class _AddMaterielState extends State<AddMateriel> {
 
   Widget fournisseurWidget() {
     return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: TextFormField(
-        controller: controller.fournisseurController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Provenance(Pays)',
-        ),
-        keyboardType: TextInputType.text,
-        style: const TextStyle(),
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.fournisseurController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Provenance(Pays)',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 
   Widget alimentationWidget() {
-    List<String> suggestionList = ['Essence', 'Gasoil', 'Pétrole', 'Gaz', 'AC', 'DC', 'Autres'];
+    List<String> suggestionList = [
+      'Essence',
+      'Gasoil',
+      'Pétrole',
+      'Gaz',
+      'AC',
+      'DC',
+      'Autres'
+    ];
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(
@@ -418,7 +427,8 @@ class _AddMaterielState extends State<AddMateriel> {
         ),
         value: controller.alimentation,
         isExpanded: true,
-        validator: (value) => value == null ? "Select alimentation source" : null,
+        validator: (value) =>
+            value == null ? "Select alimentation source" : null,
         items: suggestionList.map((String value) {
           return DropdownMenuItem<String>(
             value: value,

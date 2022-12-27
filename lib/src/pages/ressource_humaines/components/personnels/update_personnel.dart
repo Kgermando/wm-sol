@@ -179,7 +179,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
     return Container(
         padding: const EdgeInsets.all(2),
         margin: const EdgeInsets.all(2),
-        child: controller.isUploading
+        child: Obx(() => controller.isUploading
             ? const SizedBox(
                 height: 50.0, width: 50.0, child: LinearProgressIndicator())
             : Stack(
@@ -190,9 +190,9 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: CircleAvatar(
-                          child: (widget.personne.photo == '-')
+                          child: (controller.uploadedFileUrl == '')
                               ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(widget.personne.photo!)),
+                              : Image.network(controller.uploadedFileUrl)),
                     ),
                   ),
                   Positioned(
@@ -216,7 +216,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                           },
                           icon: const Icon(Icons.camera_alt)))
                 ],
-              ));
+              )));
   }
 
   Widget nomWidget(PersonnelsController controller) {

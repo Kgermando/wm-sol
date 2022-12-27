@@ -91,6 +91,8 @@ class WMBindings extends Bindings {
   void dependencies() async {
     Get.put<SplashController>(SplashController());
     Get.put<ProfilController>(ProfilController());
+    Get.put<UsersController>(UsersController());
+    Get.put<LoginController>(LoginController());
     // Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
     
     // // Mail

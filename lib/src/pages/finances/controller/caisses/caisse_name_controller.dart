@@ -44,6 +44,7 @@ class CaisseNameController extends GetxController
 
   void getList() async {
     await caisseNameApi.getAllData().then((response) {
+      caisseNameList.clear();
       caisseNameList.assignAll(response);
       change(caisseNameList, status: RxStatus.success());
     }, onError: (err) {
@@ -82,7 +83,7 @@ class CaisseNameController extends GetxController
       _isLoading.value = true;
       final dataItem = CaisseNameModel(
           nomComplet: nomCompletController.text,
-          rccm: (rccmController.text == '') ? '-' : rccmController.text,
+          rccm: '-',
           idNat: (idNatController.text == '') ? '-' : idNatController.text,
           addresse:
               (addresseController.text == '') ? '-' : addresseController.text,
@@ -115,7 +116,7 @@ class CaisseNameController extends GetxController
           nomComplet: (nomCompletController.text == '')
               ? data.nomComplet
               : nomCompletController.text,
-          rccm: (rccmController.text == '') ? data.rccm : rccmController.text,
+          rccm: '-',
           idNat:
               (idNatController.text == '') ? data.idNat : idNatController.text,
           addresse: (addresseController.text == '')

@@ -104,8 +104,8 @@ class _DetailTrajetState extends State<DetailTrajet> {
                                                               color: Colors
                                                                   .green)),
                                                       if (widget.trajetModel
-                                                            .approbationDD ==
-                                                        "-") IconButton(
+                                                        .approbationDD !=
+                                                    "Approved") IconButton(
                                                           tooltip: 'Supprimer',
                                                           onPressed: () async {
                                                             alertDeleteDialog();
