@@ -135,6 +135,17 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
                 },
               ),
             ),
+            rowColorCallback: (rowColorContext) {
+              if (rowColorContext.row.cells.entries
+                      .elementAt(6)
+                      .value
+                      .value ==
+                  'Retrait') {
+                return Colors.orange;
+              }
+
+              return Colors.white;
+            },
             createFooter: (stateManager) {
               stateManager.setPageSize(20, notify: true); // default 40
               return PlutoPagination(stateManager);

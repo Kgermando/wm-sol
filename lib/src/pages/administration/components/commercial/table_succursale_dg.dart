@@ -61,6 +61,7 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.succursaleController.getList();
                         Navigator.pushNamed(context, AdminRoutes.adminComm);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),

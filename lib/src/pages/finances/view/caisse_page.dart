@@ -37,18 +37,18 @@ class _CaissePageState extends State<CaissePage> {
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
         floatingActionButton: speedialWidget(),
-        body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!),
-            (data) => Row(
+        body: Row(
                   children: [
                     Visibility(
                         visible: !Responsive.isMobile(context),
                         child: const Expanded(flex: 1, child: DrawerMenu())),
                     Expanded(
                         flex: 5,
-                        child: Container(
+                        child: controller.obx(
+            onLoading: loadingPage(context),
+            onEmpty: const Text('Aucune donnée'),
+            onError: (error) => loadingError(context, error!),
+            (data) => Container(
                             margin: const EdgeInsets.only(
                                 top: p20, right: p20, left: p20, bottom: p8),
                             decoration: const BoxDecoration(
@@ -61,9 +61,12 @@ class _CaissePageState extends State<CaissePage> {
                                         widget.caisseNameModel.nomComplet)
                                     .toList(),
                                 controller: controller,
-                                caisseNameModel: widget.caisseNameModel))),
+                                caisseNameModel: widget.caisseNameModel)) )),
                   ],
-                )));
+                )
+        
+        
+       );
   }
 
   SpeedDial speedialWidget() {
@@ -190,9 +193,7 @@ class _CaissePageState extends State<CaissePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              ResponsiveChildWidget(
-                                  child1: nomCompletWidget(),
-                                  child2: pieceJustificativeWidget()),
+                              nomCompletWidget(),
                               ResponsiveChildWidget(
                                   child1: libelleWidget(),
                                   child2: montantWidget()),

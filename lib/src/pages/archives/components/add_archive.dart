@@ -20,13 +20,12 @@ class AddArchive extends StatefulWidget {
 }
 
 class _AddArchiveState extends State<AddArchive> {
+   final ArchiveController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Archive";
 
   @override
-  Widget build(BuildContext context) {
-    final ArchiveController controller = Get.find();
-
+  Widget build(BuildContext context) { 
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(
@@ -73,23 +72,23 @@ class _AddArchiveState extends State<AddArchive> {
                                   ResponsiveChildWidget(
                                       child1: fichierWidget(controller),
                                       child2: Container()),
+                                  levelWidget(),
                                   descriptionWidget(controller),
                                   const SizedBox(
                                     height: p20,
                                   ),
                                   BtnWidget(
-                                    title: 'Soumettre',
-                                    isLoading: controller.isLoading,
-                                    press: () {
-                                      final form =
-                                          controller.formKey.currentState!;
-                                      if (form.validate()) {
-                                        controller.submit(
-                                            widget.archiveFolderModel);
-                                        form.reset();
-                                      }
-                                      
-                                    })
+                                      title: 'Soumettre',
+                                      isLoading: controller.isLoading,
+                                      press: () {
+                                        final form =
+                                            controller.formKey.currentState!;
+                                        if (form.validate()) {
+                                          controller.submit(
+                                              widget.archiveFolderModel);
+                                          form.reset();
+                                        }
+                                      })
                                 ],
                               ),
                             ),
@@ -180,5 +179,44 @@ class _AddArchiveState extends State<AddArchive> {
                             .copyWith(color: Colors.green.shade700))
                     : Text("Selectionner le fichier",
                         style: Theme.of(context).textTheme.bodyLarge))));
+  }
+
+  Widget levelWidget() {
+    List<String> roleList = ["1, 2, 3, 4, 5"];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 5,
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Level',
+                labelStyle: const TextStyle(),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0)),
+                contentPadding: const EdgeInsets.only(left: 5.0),
+              ),
+              value: controller.level,
+              isExpanded: true,
+              items: roleList.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              validator: (value) =>
+                  value == null ? "Select level" : null,
+              onChanged: (value) {
+                setState(() {
+                  controller.level = value!;
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

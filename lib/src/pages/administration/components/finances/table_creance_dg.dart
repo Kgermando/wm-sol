@@ -67,6 +67,7 @@ class _TableCreanceDGState extends State<TableCreanceDG> {
                       children: [
                         IconButton(
                             onPressed: () {
+                              widget.creanceController.getList();
                               Navigator.pushNamed(
                                   context, AdminRoutes.adminFinance);
                             },

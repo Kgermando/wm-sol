@@ -105,9 +105,6 @@ class _TablecaisseState extends State<Tablecaisse> {
                   } else if (column.field == 'nomComplet') {
                     return resolver<PlutoFilterTypeContains>()
                         as PlutoFilterType;
-                  } else if (column.field == 'pieceJustificative') {
-                    return resolver<PlutoFilterTypeContains>()
-                        as PlutoFilterType;
                   } else if (column.field == 'libelle') {
                     return resolver<PlutoFilterTypeContains>()
                         as PlutoFilterType;
@@ -134,6 +131,17 @@ class _TablecaisseState extends State<Tablecaisse> {
                 },
               ),
             ),
+            rowColorCallback: (rowColorContext) {
+              if (rowColorContext.row.cells.entries
+                      .elementAt(4)
+                      .value
+                      .value ==
+                  'Decaissement') {
+                return Colors.orange;
+              }
+
+              return Colors.white;
+            },
             createFooter: (stateManager) {
               stateManager.setPageSize(20, notify: true); // default 40
               return PlutoPagination(stateManager);
@@ -151,8 +159,7 @@ class _TablecaisseState extends State<Tablecaisse> {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'nomComplet': PlutoCell(value: item.nomComplet),
-          'pieceJustificative': PlutoCell(value: item.pieceJustificative),
+          'nomComplet': PlutoCell(value: item.nomComplet), 
           'libelle': PlutoCell(value: item.libelle),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'montantEncaissement': PlutoCell(
@@ -196,19 +203,7 @@ class _TablecaisseState extends State<Tablecaisse> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Pièce justificative',
-        field: 'pieceJustificative',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
+      ), 
       PlutoColumn(
         readOnly: true,
         title: 'Libelle',

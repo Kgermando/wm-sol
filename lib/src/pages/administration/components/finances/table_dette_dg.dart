@@ -67,6 +67,7 @@ class _TableDetteDGState extends State<TableDetteDG> {
                       children: [
                         IconButton(
                             onPressed: () {
+                              widget.detteController.getList();
                               Navigator.pushNamed(
                                   context, AdminRoutes.adminFinance);
                             },

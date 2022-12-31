@@ -61,6 +61,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
             const TitleWidget(title: "Budgets"),
             IconButton(
                 onPressed: () {
+                  widget.controller.getList();
                   Navigator.pushNamed(
                       context, BudgetRoutes.budgetBudgetPrevisionel);
                 },

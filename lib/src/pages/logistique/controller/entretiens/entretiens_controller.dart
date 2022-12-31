@@ -117,9 +117,7 @@ class EntretienController extends GetxController
         clear();
         entretienList.clear();
         getList();
-        // Get.back();
-        Get.toNamed(LogistiqueRoutes.logAddEntretien,
-            arguments: entretienList.last.id);
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

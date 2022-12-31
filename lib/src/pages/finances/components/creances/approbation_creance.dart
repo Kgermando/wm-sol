@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/finances/creances_model.dart'; 
@@ -21,10 +23,11 @@ class ApprobationCreance extends StatefulWidget {
   State<ApprobationCreance> createState() => _ApprobationCreanceState();
 }
 
-class _ApprobationCreanceState extends State<ApprobationCreance> {
+class _ApprobationCreanceState extends State<ApprobationCreance> { 
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    List<dynamic> depList = jsonDecode(widget.profilController.user.departement);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(p10),
@@ -162,7 +165,19 @@ class _ApprobationCreanceState extends State<ApprobationCreance> {
                         if (widget.data.approbationDD ==
                                 '-' &&
                             widget.profilController.user.fonctionOccupe ==
-                                "Directeur de finance") 
+                                "Directeur de finance"  ||
+                              depList.contains('Finances') && 
+                              widget.data.approbationDD == '-' &&
+                              widget.profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Finances') &&
+                              widget.data.approbationDD == '-' &&
+                              widget.profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Finances') &&
+                              widget.data.approbationDD == '-' &&
+                              widget.profilController.user.fonctionOccupe ==
+                                      "Directeur générale"  ) 
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(

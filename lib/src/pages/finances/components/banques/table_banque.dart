@@ -134,6 +134,14 @@ class _TableBanqueState extends State<TableBanque> {
                 },
               ),
             ),
+            rowColorCallback: (rowColorContext) {
+              if (rowColorContext.row.cells.entries
+                      .elementAt(4).value.value =='Retrait') {
+                return Colors.orange;
+              }
+
+              return Colors.white;
+            },
             createFooter: (stateManager) {
               stateManager.setPageSize(20, notify: true); // default 40
               return PlutoPagination(stateManager);

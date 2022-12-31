@@ -88,17 +88,17 @@ class FinExterieurController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = FinanceExterieurModel(
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montantDepot: montantController.text,
-          typeOperation: 'Depot',
-          numeroOperation:
-              'Transaction-fin-exterieur-${finExterieurList.length + 1}',
-          signature: profilController.user.matricule,
-          reference: data.id!,
-          financeExterieurName: data.nomComplet,
-          created: DateTime.now(),
+        nomComplet: nomCompletController.text,
+        pieceJustificative: pieceJustificativeController.text,
+        libelle: libelleController.text,
+        montantDepot: montantController.text,
+        typeOperation: 'Depot',
+        numeroOperation:
+            'Transaction-fin-exterieur-${finExterieurList.length + 1}',
+        signature: profilController.user.matricule,
+        reference: data.id!,
+        financeExterieurName: data.nomComplet,
+        created: DateTime.now(),
         montantRetrait: "0",
       );
       await finExterieurApi.insertData(dataItem).then((value) {
@@ -114,6 +114,7 @@ class FinExterieurController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+       _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -152,6 +153,7 @@ class FinExterieurController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+       _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

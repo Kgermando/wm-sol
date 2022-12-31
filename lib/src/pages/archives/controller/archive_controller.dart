@@ -20,8 +20,8 @@ class ArchiveController extends GetxController
 
   TextEditingController nomDocumentController = TextEditingController();
   String? departement;
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController fichierController = TextEditingController();
+  String? level;
+  TextEditingController descriptionController = TextEditingController(); 
 
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
@@ -48,8 +48,7 @@ class ArchiveController extends GetxController
   @override
   void dispose() {
     nomDocumentController.dispose();
-    descriptionController.dispose();
-    fichierController.dispose();
+    descriptionController.dispose(); 
 
     super.dispose();
   }
@@ -58,8 +57,7 @@ class ArchiveController extends GetxController
     departement = null;
     uploadedFileUrl = null;
     nomDocumentController.clear();
-    descriptionController.clear();
-    fichierController.clear();
+    descriptionController.clear(); 
   }
 
   void getList() async {
@@ -109,7 +107,9 @@ class ArchiveController extends GetxController
           fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
           signature: profilController.user.matricule,
           created: DateTime.now(),
-          reference: data.id!);
+          reference: data.id!,
+          level: level.toString()
+        );
       await archiveApi.insertData(archiveModel).then((value) {
         clear();
         archiveList.clear();
@@ -134,19 +134,21 @@ class ArchiveController extends GetxController
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveModel(
-          id: data.id,
-          departement: data.departement,
-          folderName: data.folderName,
-          nomDocument: (nomDocumentController.text == "")
-              ? nomDocumentController.text
-              : data.nomDocument,
-          description: (descriptionController.text == "")
-              ? descriptionController.text
-              : data.description,
-          fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-          signature: profilController.user.matricule,
-          created: DateTime.now(),
-          reference: data.reference);
+        id: data.id,
+        departement: data.departement,
+        folderName: data.folderName,
+        nomDocument: (nomDocumentController.text == "")
+            ? nomDocumentController.text
+            : data.nomDocument,
+        description: (descriptionController.text == "")
+            ? descriptionController.text
+            : data.description,
+        fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+        signature: profilController.user.matricule,
+        created: DateTime.now(),
+        reference: data.reference,
+        level: level.toString()
+      );
       await archiveApi.updateData(archiveModel).then((value) {
         clear();
         archiveList.clear();

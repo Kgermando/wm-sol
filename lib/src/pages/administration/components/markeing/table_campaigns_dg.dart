@@ -63,6 +63,7 @@ class _TableCampaignDGState extends State<TableCampaignDG> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.campaignController.getList();
                         Navigator.pushNamed(
                             context, AdminRoutes.adminMarketing);
                       },

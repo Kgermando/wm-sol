@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
@@ -7,6 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
+import 'package:wm_solution/src/utils/licence_wm.dart';
 import 'package:wm_solution/src/utils/monnaie_dropdown.dart';
 import 'package:wm_solution/src/widgets/change_theme_button_widget.dart';
 
@@ -36,7 +38,10 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       langues.first;
     });
+    LicenceWM().initMyLibrary();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -199,22 +204,47 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget getVersionField(BuildContext context) {
     final headline6 = Theme.of(context).textTheme.headline6;
-    return TextButton(
-      child: Text(InfoSystem().version(), style: headline6),
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(InfoSystem().logo(), height: 200, width: 200),
-                const SizedBox(height: p20),
-                Text(InfoSystem().name()),
-              ],
-            ),
-            content:
-                Text('Version: ${InfoSystem().version()} \nDate: ${InfoSystem().date()}')),
-      ),
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    return SizedBox(
+      height: 200,
+      width: 200,
+      child: TextButton(
+          child: Text(InfoSystem().version(), style: headline6),
+          onPressed: () => showAboutDialog(
+                  context: context,
+                  applicationName: InfoSystem().name(),
+                  applicationIcon: Image.asset(
+                    InfoSystem().logoIcon(),
+                    width: 50,
+                    height: 50,
+                  ),
+                  applicationVersion: InfoSystem().version(),
+                  children: [
+                    Text(
+                        "Work Management est une solution numerique \n pour les grandes, moyennes et petites entreprises \n ainsi que l'administration public. ",
+                        textAlign: TextAlign.justify,
+                        style: bodyMedium),
+                    const SizedBox(height: p20),
+                    Text("® Copyright Eventdrc Technology",
+                        style:
+                            bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+                  ])
+
+          // showDialog<String>(
+          //   context: context,
+          //   builder: (BuildContext context) => AlertDialog(
+          //       title: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: [
+          //           ,
+          //           const SizedBox(height: p20),
+          //           Text(),
+          //         ],
+          //       ),
+          //       content:
+          //           ),
+          // ),
+          ),
     );
   }
 }

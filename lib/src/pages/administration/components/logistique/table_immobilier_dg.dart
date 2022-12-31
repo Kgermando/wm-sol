@@ -61,6 +61,7 @@ class _TableImmobilierDGState extends State<TableImmobilierDG> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.immobilierController.getList();
                         Navigator.pushNamed(
                             context, AdminRoutes.adminLogistique);
                       },

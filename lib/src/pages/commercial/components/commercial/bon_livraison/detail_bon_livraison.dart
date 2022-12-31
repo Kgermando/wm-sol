@@ -38,7 +38,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
   }
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(
@@ -126,13 +126,14 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
   Widget dataWidget(
       BonLivraisonController controller, ProfilController profilController) {
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
+    int roleUser = int.parse(profilController.user.role);
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.bonLivraisonModel.succursale ==
-              profilController.user.succursale)
+              profilController.user.succursale && roleUser <= 3)
             accRecepetion(controller),
           const SizedBox(height: p20),
           Row(

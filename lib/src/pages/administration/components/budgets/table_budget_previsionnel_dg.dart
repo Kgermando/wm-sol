@@ -61,8 +61,8 @@ class _TableBudgetPrevisionnelDGState extends State<TableBudgetPrevisionnelDG> {
               const TitleWidget(title: "Budgets"),
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context, AdminRoutes.adminBudget);
+                    widget.budgetPrevisionnelController.getList();
+                    Navigator.pushNamed(context, AdminRoutes.adminBudget);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700))
             ],

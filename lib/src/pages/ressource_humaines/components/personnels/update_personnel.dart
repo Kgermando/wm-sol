@@ -734,7 +734,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
           ),
           value: controller.servicesAffectation,
           isExpanded: true,
-          items: controller.servAffectList
+          items: controller.servAffectList 
               .map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

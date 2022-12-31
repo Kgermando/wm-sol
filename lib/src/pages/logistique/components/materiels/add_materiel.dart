@@ -253,10 +253,10 @@ class _AddMaterielState extends State<AddMateriel> {
           decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: "Genre",
+              labelText: "Categorie",
               hintText: (controller.typeMateriel == 'Materiel roulant')
                   ? 'voiture, camion, bus,...'
-                  : 'Ordinateur, generateur, Imprimante,...',
+                  : 'Laptop, desktop, generateur, Imprimante,...',
             ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,

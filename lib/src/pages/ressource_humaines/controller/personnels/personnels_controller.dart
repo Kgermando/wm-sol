@@ -88,7 +88,7 @@ class PersonnelsController extends GetxController
   String? fonctionOccupe;
 
   List<String> servAffectList = [];
-  List<String> fonctionList = [];
+  List<String> fonctionList = [];  
 
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;

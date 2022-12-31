@@ -86,9 +86,8 @@ class _DetailEntretienState extends State<DetailEntretien> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            TitleWidget(
-                                                title:
-                                                    widget.entretienModel.nom),
+                                            const TitleWidget(
+                                                title: "Fiche d'entretien"),
                                             Column(
                                               children: [ 
                                                   Row(

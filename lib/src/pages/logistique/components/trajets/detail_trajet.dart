@@ -35,113 +35,112 @@ class _DetailTrajetState extends State<DetailTrajet> {
     return dataItem;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.trajetModel.conducteur),
-              drawer: const DrawerMenu(),
-              floatingActionButton: addKMRetourButton(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: controller.obx(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.trajetModel.conducteur),
+      drawer: const DrawerMenu(),
+      floatingActionButton: (widget.trajetModel.approbationDD == "Approved") ? addKMRetourButton() : Container(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
         (state) => SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: p20),
                             child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                               children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TitleWidget(
+                                        title: widget
+                                            .trajetModel.conducteur),
+                                    Column(
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            TitleWidget(
-                                                title: widget
-                                                    .trajetModel.conducteur),
-                                            Column(
-                                              children: [
-                                               
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          tooltip: 'Actualiser',
-                                                          onPressed: () async {
-                                                            refresh().then((value) =>
-                                                                Navigator.pushNamed(
-                                                                    context,
-                                                                    LogistiqueRoutes
-                                                                        .logTrajetAutoDetail,
-                                                                    arguments:
-                                                                        value));
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.refresh,
-                                                              color: Colors
-                                                                  .green)),
-                                                      if (widget.trajetModel
-                                                        .approbationDD !=
-                                                    "Approved") IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog();
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color:
-                                                              Colors.red.shade700),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yy HH:mm")
-                                                        .format(widget
-                                                            .trajetModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        dataWidget()
+                                        
+                                          Row(
+                                            children: [
+                                              IconButton(
+                                                  tooltip: 'Actualiser',
+                                                  onPressed: () async {
+                                                    refresh().then((value) =>
+                                                        Navigator.pushNamed(
+                                                            context,
+                                                            LogistiqueRoutes
+                                                                .logTrajetAutoDetail,
+                                                            arguments:
+                                                                value));
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.refresh,
+                                                      color: Colors
+                                                          .green)),
+                                              if (widget.trajetModel
+                                                .approbationDD !=
+                                            "Approved") IconButton(
+                                                  tooltip: 'Supprimer',
+                                                  onPressed: () async {
+                                                    alertDeleteDialog();
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.delete),
+                                                  color:
+                                                      Colors.red.shade700),
+                                            ],
+                                          ),
+                                        SelectableText(
+                                            DateFormat("dd-MM-yy HH:mm")
+                                                .format(widget
+                                                    .trajetModel
+                                                    .created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                  ),
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                ApprobationTrajet(
-                                    data: widget.trajetModel,
-                                    controller: controller,
-                                    profilController: profilController)
+                                dataWidget()
                               ],
                             ),
-                          ))) )
-                ],
-              ),
-            )
+                          ),
+                        ),
+                        const SizedBox(height: p20),
+                        ApprobationTrajet(
+                            data: widget.trajetModel,
+                            controller: controller,
+                            profilController: profilController)
+                      ],
+                    ),
+                  ))) )
+        ],
+      ),
+    )
     
     ;
   }

@@ -1,6 +1,6 @@
 
 
-const String baseUrl = "http://192.168.100.200";
+const String baseUrl = "http://44.212.22.197";
 const String mainUrl = "$baseUrl/api";
 
 // Notifications departements

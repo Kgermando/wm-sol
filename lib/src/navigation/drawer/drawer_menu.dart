@@ -159,7 +159,7 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
                           Navigator.pushNamed(context, ArchiveRoutes.archives);
                           // Navigator.of(context).pop();
                         }),
-                    if (userRole <= 3)
+                    if (userRole <= 2)
                       DrawerWidget(
                         selected:
                           currentRoute == RhRoutes.rhPerformence,

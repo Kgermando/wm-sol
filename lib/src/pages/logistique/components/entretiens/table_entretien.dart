@@ -61,6 +61,7 @@ class _TableEntretienState extends State<TableEntretien> {
               children: [
                 IconButton(
                     onPressed: () {
+                      widget.controller.getList();
                       Navigator.pushNamed(
                           context, LogistiqueRoutes.logEntretien);
                     },

@@ -93,8 +93,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             iconSize: 40,
             tooltip: 'Téléchargement',
             onPressed: () {
-              updateController.downloadNetworkSoftware(
-                  url: updateController.updateVersionList.last.urlUpdate);
+              // updateController.downloadNetworkSoftware(
+              //     url: updateController.updateVersionList.last.urlUpdate);
+              Get.toNamed(UpdateRoutes.updatePage);
             },
             icon: (updateController.isDownloading)
                 ? (updateController.progressString == "100%")
@@ -187,20 +188,20 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
       ),
       const SizedBox(width: p8),
       if (Responsive.isDesktop(context))
-        Row(
-          children: [
-            InkWell(
-              onTap: () {
-                Get.toNamed(UserRoutes.profil);
-              },
-              child: AutoSizeText(
-                "${profilController.user.prenom} ${profilController.user.nom}",
-                maxLines: 1,
-                style: bodyLarge,
-              ),
+      Row(
+        children: [
+          InkWell(
+            onTap: () {
+              Get.toNamed(UserRoutes.profil);
+            },
+            child: AutoSizeText(
+              "${profilController.user.prenom} ${profilController.user.nom}",
+              maxLines: 1,
+              style: bodyLarge,
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
       PopupMenuButton<MenuItemModel>(
         onSelected: (item) => MenuOptions().onSelected(context, item),
         itemBuilder: (context) => [

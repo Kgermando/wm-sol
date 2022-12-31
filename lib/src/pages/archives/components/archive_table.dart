@@ -69,6 +69,7 @@ class _TableArchiveState extends State<TableArchive> {
                 deleteButton(),
                 IconButton(
                     onPressed: () {
+                        widget.controller.getList();
                       Navigator.pushNamed(context, ArchiveRoutes.archivesDetail,
                           arguments: widget.archiveFolderModel);
                     },

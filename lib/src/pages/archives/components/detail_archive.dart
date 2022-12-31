@@ -10,6 +10,7 @@ import 'package:wm_solution/src/models/archive/archive_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 
@@ -22,6 +23,7 @@ class DetailArchive extends StatefulWidget {
 }
 
 class _DetailArchiveState extends State<DetailArchive> {
+  final ProfilController profilController = Get.find();
   final ArchiveController controller = Get.put(ArchiveController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Archive";
@@ -104,8 +106,10 @@ class _DetailArchiveState extends State<DetailArchive> {
 
   Widget dataWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    int roleUser = int.parse(profilController.user.role);
     var departementList = jsonDecode(widget.archiveModel.departement);
     String departement = departementList.first;
+    int level = int.parse(widget.archiveModel.level);
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
@@ -137,6 +141,7 @@ class _DetailArchiveState extends State<DetailArchive> {
               child2: SelectableText(widget.archiveModel.description,
                   textAlign: TextAlign.start, style: bodyMedium)),
           Divider(color: mainColor),
+          if(roleUser <= level)
           ResponsiveChildWidget(
             flex1: 1,
             flex2: 3,

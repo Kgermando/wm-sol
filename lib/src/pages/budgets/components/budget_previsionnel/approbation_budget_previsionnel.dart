@@ -167,7 +167,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
                               ],
                             )),
                         if (widget.data.approbationDD ==
-                                '-' &&
+                                 '-' &&
                             widget.profilController.user.fonctionOccupe ==
                                 "Directeur de budget"  ||
                               depList.contains('Budgets') && 

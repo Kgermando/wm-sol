@@ -62,6 +62,7 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.controller.getList();
                         Navigator.pushNamed(
                             context, AdminRoutes.adminLogistique);
                       },

@@ -58,6 +58,7 @@ class _TableDevisDGState extends State<TableDevisDG> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        widget.devisController.getList();
                         Navigator.pushNamed(
                             context, AdminRoutes.adminLogistique);
                       },

@@ -104,7 +104,7 @@ class CaisseController extends GetxController
           reference: data.id!,
           caisseName: data.nomComplet,
           created: DateTime.now(),
-          montantDecaissement: "0"
+          montantDecaissement: "0" 
         );
       await caisseApi.insertData(dataItem).then((value) {
         clear();
@@ -132,7 +132,7 @@ class CaisseController extends GetxController
       _isLoading.value = true;
       final dataItem = CaisseModel(
           nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
+          pieceJustificative: '-',
           libelle: libelleController.text,
           montantEncaissement: "0",
           departement: '-',
