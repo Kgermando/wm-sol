@@ -5,8 +5,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/charts/chart_finance.dart';
-import 'package:wm_solution/src/models/charts/courbe_chart_model.dart';
+import 'package:wm_solution/src/models/charts/chart_finance.dart'; 
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
 import 'package:http/http.dart' as http;
 
