@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/notifications/budgets/budget_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/commercial/cart_notify_api.dart';
@@ -312,7 +313,9 @@ class DepartementNotifyCOntroller extends GetxController {
 
     if (departement.contains("Administration")) {
       timerAdmin = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Administration");
+        if (kDebugMode) {
+          print("notify Administration");
+        }
         if (userRole <= 1) {
           getBudgetCountDG();
           getCommercialCountSuccursalesDG();
@@ -340,7 +343,9 @@ class DepartementNotifyCOntroller extends GetxController {
     } 
     if (departement.contains("Budgets")) {
       timerBudgets = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Budgets");
+        if (kDebugMode) {
+          print("notify Budgets");
+        }
         if (userRole <= 2) {
           getBudgetCountBudget();
           getBudgetCountDD();
@@ -357,7 +362,9 @@ class DepartementNotifyCOntroller extends GetxController {
     } 
     if (departement.contains("Commercial")) {
       timerCommercial = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Commercial");
+        if (kDebugMode) {
+          print("notify Commercial");
+        }
         if (userRole <= 2) {
           getCommercialCount();
           getCommercialCountSuccursalesDD();
@@ -371,7 +378,9 @@ class DepartementNotifyCOntroller extends GetxController {
     } 
     if (departement.contains("Comptabilites")) {
       timerComptabilites = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Comptabilites");
+        if (kDebugMode) {
+          print("notify Comptabilites");
+        }
         if (userRole <= 2) {
           getCountComptabilite();
           getCountBilanDD();
@@ -382,9 +391,11 @@ class DepartementNotifyCOntroller extends GetxController {
         
       });
     }
-    if (departement.contains("Exploitations")) {
-       print("notify Exploitations");
+    if (departement.contains("Exploitations")) { 
       timerExploitations =  Timer.periodic(const Duration(seconds: 1), (timer) {
+         if (kDebugMode) {
+          print("notify Exploitations");
+        }
           if (userRole <= 2) { 
             getExploitationCount();
             getCountProjetDD();
@@ -398,7 +409,9 @@ class DepartementNotifyCOntroller extends GetxController {
      if (departement.contains("Finances")) {
  
         timerFinances = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Finances");
+        if (kDebugMode) {
+          print("notify Finances");
+        }
           if (userRole <= 2) { 
             getFinanceCountDD();
             getFinanceCountCreanceDD();
@@ -422,7 +435,9 @@ class DepartementNotifyCOntroller extends GetxController {
     }
     if (departement.contains("Logistique")) {
       timerLogistique = Timer.periodic(const Duration(seconds: 1), (timer) {
-         print("notify Logistique");
+         if (kDebugMode) {
+           print("notify Logistique");
+         }
         if (userRole <= 2) {
           getLogCount();
            getLogCountMaterielDD();
@@ -440,7 +455,9 @@ class DepartementNotifyCOntroller extends GetxController {
     } 
     if (departement.contains("Marketing")) {
       timerMarketing = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Marketing");
+        if (kDebugMode) {
+          print("notify Marketing");
+        }
         if (userRole <= 2) {
           getMarketingCountComMarketing();
           getMarketingCountCampaignDD();
@@ -450,22 +467,26 @@ class DepartementNotifyCOntroller extends GetxController {
       });
     }
     if (departement.contains("Ressources Humaines")) {
-      if (userRole <= 2) {
-        timerRH = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerRH = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (kDebugMode) {
           print("notify Ressources Humaines");
-          getCountMail();
-          getCountAgenda();
+        }
+        if (userRole <= 2) {
           getRHCount();
           getCountSalaireDD();
           getCountTransRestSalaireDD();
-        });
-      } 
-      getCountMail();
-      getCountAgenda();
-    }
+        } 
+        getCountMail();
+        getCountAgenda();
+        
+      });
+    } 
+      
     if (departement.contains("Support")) {
       timerSupport = Timer.periodic(const Duration(seconds: 1), (timer) {
-        print("notify Support");
+        if (kDebugMode) {
+          print("notify Support");
+        }
         getCountMail();
         getCountAgenda();
       });

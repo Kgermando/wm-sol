@@ -1,5 +1,4 @@
-import 'package:get/get.dart';
-import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
+import 'package:get/get.dart'; 
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
@@ -51,6 +50,9 @@ import 'package:wm_solution/src/pages/finances/controller/banques/banque_control
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_banque_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_caisse_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exterieur_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
@@ -167,6 +169,9 @@ class WMBindings extends Bindings {
 
     // Finances
     Get.put<DashboardFinanceController>(DashboardFinanceController());
+    Get.put<ChartBanqueController>(ChartBanqueController());
+    Get.put<ChartCaisseController>(ChartCaisseController());
+    Get.put<ChartFinExterieurController>(ChartFinExterieurController());
     Get.put<BanqueNameController>(BanqueNameController());
     Get.put<CaisseNameController>(CaisseNameController());
     Get.put<FinExterieurNameController>(FinExterieurNameController());

@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
+import 'package:get_storage/get_storage.dart'; 
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
@@ -15,6 +14,9 @@ import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_contro
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/dashboard/dashboard_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_banque_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_caisse_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exterieur_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
@@ -174,6 +176,9 @@ class SplashController extends GetxController {
 
     // Finances
     Get.put<DashboardFinanceController>(DashboardFinanceController());
+    Get.put<ChartBanqueController>(ChartBanqueController());
+    Get.put<ChartCaisseController>(ChartCaisseController());
+    Get.put<ChartFinExterieurController>(ChartFinExterieurController());
     Get.put<BanqueNameController>(BanqueNameController());
     Get.put<CaisseNameController>(CaisseNameController());
     Get.put<FinExterieurNameController>(FinExterieurNameController());
@@ -223,8 +228,7 @@ class SplashController extends GetxController {
 
     String? idToken = getStorge.read('idToken');
     if (idToken != null) {
-      isLoggIn();
-      print("idToken splash: $idToken");
+      isLoggIn(); 
     } else {
       Get.offAllNamed(UserRoutes.login);
     }

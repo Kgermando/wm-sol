@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
+import 'package:wm_solution/src/models/charts/chart_finance.dart';
 import 'package:wm_solution/src/models/charts/courbe_chart_model.dart';
 import 'package:wm_solution/src/models/finances/caisse_model.dart';
 import 'package:http/http.dart' as http;
@@ -87,69 +88,20 @@ class CaisseApi extends GetConnect {
     }
   }
 
-  Future<List<CourbeChartModel>> getAllDataMouthEncaissement() async {
+
+  Future<List<ChartFinanceModel>> getAllDataChart() async {
     Map<String, String> header = headers;
 
-    var resp = await client.get(caisseEncaissementMouthUrl, headers: header);
+    var resp = await client.get(caisseChartUrl, headers: header);
     if (resp.statusCode == 200) {
       List<dynamic> bodyList = json.decode(resp.body);
-      List<CourbeChartModel> data = [];
+      List<ChartFinanceModel> data = [];
       for (var u in bodyList) {
-        data.add(CourbeChartModel.fromJson(u));
+        data.add(ChartFinanceModel.fromJson(u));
       }
       return data;
     } else {
       throw Exception(jsonDecode(resp.body)['message']);
     }
-  }
-
-  Future<List<CourbeChartModel>> getAllDataMouthDecaissement() async {
-    Map<String, String> header = headers;
-
-    var resp = await client.get(caisseDecaissementMouthUrl, headers: header);
-    if (resp.statusCode == 200) {
-      List<dynamic> bodyList = json.decode(resp.body);
-      List<CourbeChartModel> data = [];
-      for (var u in bodyList) {
-        data.add(CourbeChartModel.fromJson(u));
-      }
-      return data;
-    } else {
-      throw Exception(jsonDecode(resp.body)['message']);
-    }
-  }
-
-  Future<List<CourbeChartModel>> getAllDataYearEncaissement() async {
-    Map<String, String> header = headers;
-
-    var resp = await client.get(caisseEncaissementYearUrl, headers: header);
-
-    if (resp.statusCode == 200) {
-      List<dynamic> bodyList = json.decode(resp.body);
-      List<CourbeChartModel> data = [];
-      for (var u in bodyList) {
-        data.add(CourbeChartModel.fromJson(u));
-      }
-      return data;
-    } else {
-      throw Exception(jsonDecode(resp.body)['message']);
-    }
-  }
-
-  Future<List<CourbeChartModel>> getAllDataYearDecaissement() async {
-    Map<String, String> header = headers;
-
-    var resp = await client.get(caisseDecaissementYearUrl, headers: header);
-
-    if (resp.statusCode == 200) {
-      List<dynamic> bodyList = json.decode(resp.body);
-      List<CourbeChartModel> data = [];
-      for (var u in bodyList) {
-        data.add(CourbeChartModel.fromJson(u));
-      }
-      return data;
-    } else {
-      throw Exception(jsonDecode(resp.body)['message']);
-    }
-  }
+  } 
 }

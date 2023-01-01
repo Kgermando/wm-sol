@@ -109,12 +109,9 @@ var addFinExterieurNameUrl = Uri.parse(
 var banqueUrl = Uri.parse("$mainUrl/finances/transactions/banques/");
 var addBanqueUrl = Uri.parse(
     "$mainUrl/finances/transactions/banques/insert-new-transaction-banque");
-var banqueDepotMouthUrl =
-    Uri.parse("$mainUrl/finances/transactions/banques/chart-month-depot/");
-var banqueRetraitMountUrl =
-    Uri.parse("$mainUrl/finances/transactions/banques/chart-month-retrait/");
-var banqueDepotYearUrl =
-    Uri.parse("$mainUrl/finances/transactions/banques/chart-year-depot/");
+var banqueChartUrl =
+    Uri.parse("$mainUrl/finances/transactions/banques/chart/");
+ 
 var banqueRetraitYeartUrl =
     Uri.parse("$mainUrl/finances/transactions/banques/chart-year-retrait/");
 var coupureBilletUrl = Uri.parse("$mainUrl/finances/coupure-billets/");
@@ -124,14 +121,7 @@ var addCoupureBilleUrl =
 var caisseUrl = Uri.parse("$mainUrl/finances/transactions/caisses/");
 var addCaisseUrl = Uri.parse(
     "$mainUrl/finances/transactions/caisses/insert-new-transaction-caisse");
-var caisseEncaissementMouthUrl = Uri.parse(
-    "$mainUrl/finances/transactions/caisses/chart-month-encaissement/");
-var caisseDecaissementMouthUrl = Uri.parse(
-    "$mainUrl/finances/transactions/caisses/chart-month-decaissement/");
-var caisseEncaissementYearUrl = Uri.parse(
-    "$mainUrl/finances/transactions/caisses/chart-year-encaissement/");
-var caisseDecaissementYearUrl = Uri.parse(
-    "$mainUrl/finances/transactions/caisses/chart-year-decaissement/");
+var caisseChartUrl = Uri.parse("$mainUrl/finances/transactions/caisses/chart/"); 
 
 var creancesUrl = Uri.parse("$mainUrl/finances/transactions/creances/");
 var addCreancesUrl = Uri.parse(
@@ -145,6 +135,7 @@ var finExterieurUrl =
     Uri.parse("$mainUrl/finances/transactions/financements-exterieur/");
 var addfinExterieurUrl = Uri.parse(
     "$mainUrl/finances/transactions/financements-exterieur/insert-new-transaction-finExterieur");
+var finExterieurChartUrl = Uri.parse("$mainUrl/finances/transactions/financements-exterieur/chart/");
 
 var creacneDetteUrl = Uri.parse("$mainUrl/finances/creance-dettes/");
 var creacneDetteAddUrl =

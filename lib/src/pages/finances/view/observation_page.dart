@@ -69,7 +69,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
+                          child: Obx(() => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Card(
@@ -206,7 +206,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                     ],
                                   ),
                                 ),
-                            ]),
+                            ])) ,
                         )),
                   ))
             ],

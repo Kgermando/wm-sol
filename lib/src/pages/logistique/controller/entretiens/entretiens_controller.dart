@@ -7,7 +7,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
+ 
 
 class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {

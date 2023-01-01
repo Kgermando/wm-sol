@@ -89,7 +89,7 @@ class _DDFinanceState extends State<DDFinance> {
                       decoration: const BoxDecoration(
                           borderRadius:
                               BorderRadius.all(Radius.circular(20))),
-                      child: Column(
+                      child: Obx(() => Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Card(
@@ -309,7 +309,7 @@ class _DDFinanceState extends State<DDFinance> {
                                 ],
                               ),
                             ),
-                          ])),
+                          ])) ),
                 ))
           ],
         ));

@@ -122,8 +122,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                   press: () {
                                     final form = controller
                                         .formKey.currentState!;
-                                    if (form.validate()) {
-                                      print("btn ok");
+                                    if (form.validate()) { 
                                       controller.submit();
                                       form.reset();
                                     }

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
+import 'package:wm_solution/src/models/charts/chart_finance.dart';
 import 'package:wm_solution/src/models/finances/fin_exterieur_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -88,4 +89,21 @@ class FinExterieurApi extends GetConnect {
       throw Exception(json.decode(res.body)['message']);
     }
   }
+
+  
+  Future<List<ChartFinanceModel>> getAllDataChart() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(finExterieurChartUrl, headers: header);
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<ChartFinanceModel> data = [];
+      for (var u in bodyList) {
+        data.add(ChartFinanceModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(jsonDecode(resp.body)['message']);
+    }
+  } 
 }

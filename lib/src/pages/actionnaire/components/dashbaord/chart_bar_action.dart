@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -52,8 +53,11 @@ class _ChartBarActionsState extends State<ChartBarActions> {
           ],
           primaryXAxis: CategoryAxis(isVisible: true),
           primaryYAxis: NumericAxis(
-              edgeLabelPlacement: EdgeLabelPlacement.shift,
-              title: AxisTitle(text: 'Cotisations actionnaires en \$')),
+            edgeLabelPlacement: EdgeLabelPlacement.shift,
+            title: AxisTitle(text: 'Cotisations actionnaires'),
+            numberFormat:
+                NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
+          ),
         ),
       ),
     );

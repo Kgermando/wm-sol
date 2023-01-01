@@ -79,9 +79,7 @@ class _DetailTrajetState extends State<DetailTrajet> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    TitleWidget(
-                                        title: widget
-                                            .trajetModel.conducteur),
+                                    const TitleWidget(title: "Trajet"),
                                     Column(
                                       children: [
                                         

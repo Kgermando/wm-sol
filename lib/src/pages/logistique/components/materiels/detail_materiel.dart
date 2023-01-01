@@ -93,7 +93,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             if(!Responsive.isMobile(context))
-                                            TitleWidget(title: widget.materielModel.typeMateriel),
+                                            const TitleWidget(title: "Materiel"),
                                             Column(
                                               children: [
                                                

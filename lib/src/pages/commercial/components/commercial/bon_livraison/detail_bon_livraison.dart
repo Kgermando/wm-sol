@@ -331,6 +331,30 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
               ),
             ],
           ),
+          Divider(
+            color: mainColor,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Text('Succursale :',
+                    style: Responsive.isDesktop(context)
+                        ? const TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 20)
+                        : bodyText2,
+                    overflow: TextOverflow.ellipsis),
+              ),
+              Expanded(
+                child: Text(
+                    widget.bonLivraisonModel.succursale,
+                    style: Responsive.isDesktop(context)
+                        ? const TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 20)
+                        : bodyText2,
+                    overflow: TextOverflow.ellipsis),
+              ),
+            ],
+          ),
         ],
       ),
     );

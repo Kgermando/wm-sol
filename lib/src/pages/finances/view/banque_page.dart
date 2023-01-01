@@ -33,22 +33,22 @@ class _BanquePageState extends State<BanquePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(context, scaffoldKey, title, subTitle),
-        drawer: const DrawerMenu(),
-        floatingActionButton: speedialWidget(),
-        body: controller.obx(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, subTitle),
+      drawer: const DrawerMenu(),
+      floatingActionButton: speedialWidget(),
+      body: Row(
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
             onLoading: loadingPage(context),
             onEmpty: const Text('Aucune donnée'),
             onError: (error) => loadingError(context, error!),
-            (data) => Row(
-                  children: [
-                    Visibility(
-                        visible: !Responsive.isMobile(context),
-                        child: const Expanded(flex: 1, child: DrawerMenu())),
-                    Expanded(
-                        flex: 5,
-                        child: Container(
+            (data) => Container(
                             margin: const EdgeInsets.only(
                                 top: p20, right: p20, left: p20, bottom: p8),
                             decoration: const BoxDecoration(
@@ -61,9 +61,11 @@ class _BanquePageState extends State<BanquePage> {
                                         widget.banqueNameModel.nomComplet)
                                     .toList(),
                                 controller: controller,
-                                banqueNameModel: widget.banqueNameModel))),
+                                banqueNameModel: widget.banqueNameModel))) ),
                   ],
-                )));
+                )
+        
+       );
   }
 
   SpeedDial speedialWidget() {

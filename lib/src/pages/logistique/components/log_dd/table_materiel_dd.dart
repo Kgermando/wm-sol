@@ -57,7 +57,7 @@ class _TableMaterielDDState extends State<TableMaterielDD> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const TitleWidget(title: "Engins"),
+              const TitleWidget(title: "Materiels"),
               Row(
                 children: [
                   IconButton(

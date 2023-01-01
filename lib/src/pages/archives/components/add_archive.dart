@@ -182,40 +182,32 @@ class _AddArchiveState extends State<AddArchive> {
   }
 
   Widget levelWidget() {
-    List<String> roleList = ["1, 2, 3, 4, 5"];
+    List<String> roleList = ["1", "2", "3", "4", "5"];
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 5,
-            child: DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                labelText: 'Level',
-                labelStyle: const TextStyle(),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                contentPadding: const EdgeInsets.only(left: 5.0),
-              ),
-              value: controller.level,
-              isExpanded: true,
-              items: roleList.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              validator: (value) =>
-                  value == null ? "Select level" : null,
-              onChanged: (value) {
-                setState(() {
-                  controller.level = value!;
-                });
-              },
-            ),
-          ),
-        ],
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Level',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.level,
+        isExpanded: true,
+        items: roleList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        validator: (value) =>
+            value == null ? "Select level" : null,
+        onChanged: (value) {
+          setState(() {
+            controller.level = value!;
+          });
+        },
       ),
     );
   }

@@ -27,7 +27,7 @@ class DashboardCardWidget extends StatelessWidget {
     final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
     double width = MediaQuery.of(context).size.width;
     if (MediaQuery.of(context).size.width >= 1100) {
-      width = 250;
+      width = 300;
     } else if (MediaQuery.of(context).size.width < 1100 &&
         MediaQuery.of(context).size.width >= 650) {
       width = 300;

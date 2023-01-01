@@ -4,15 +4,15 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_banque_mounth.dart';
-import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_banque_year.dart';
-import 'package:wm_solution/src/pages/finances/components/dahboard/banque/courbe_bar_banque.dart';
-import 'package:wm_solution/src/pages/finances/components/dahboard/caisse/courbe_caisse_year.dart';
-import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
+import 'package:wm_solution/src/pages/finances/components/dashboard/banque/chart_banque.dart'; 
+import 'package:wm_solution/src/pages/finances/components/dashboard/caisse/chart_caisse.dart'; 
+import 'package:wm_solution/src/pages/finances/components/dashboard/fin_exterieur/chart_fin_exterieur.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_banque_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_caisse_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exterieur_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
-import 'package:wm_solution/src/widgets/dashboard_card_widget.dart';
-import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/dashboard_card_widget.dart'; 
 
 class DashboadFinance extends StatefulWidget {
   const DashboadFinance({super.key});
@@ -23,15 +23,15 @@ class DashboadFinance extends StatefulWidget {
 
 class _DashboadFinanceState extends State<DashboadFinance> {
   final DashboardFinanceController controller = Get.find();
-  final BanqueController banqueController = Get.find();
+  final ChartBanqueController chartBanqueController = Get.put(ChartBanqueController());
+  final ChartCaisseController chartCaisseController = Get.put(ChartCaisseController());
+  final ChartFinExterieurController chartFinExterieurController = Get.put(ChartFinExterieurController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Finances";
   String subTitle = "Dashboard";
 
   @override
-  Widget build(BuildContext context) {
-    
-
+  Widget build(BuildContext context) { 
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,
@@ -56,7 +56,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
+                          child: Obx(() => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Wrap(
@@ -66,20 +66,16 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                   direction: Axis.horizontal,
                                   children: [
                                     DashboardCardWidget(
-                                      gestureTapCallback: () {
-                                         
-                                      },
-                                      title: 'CAISSE',
+                                      gestureTapCallback: () {},
+                                      title: 'TOTAL CAISSE',
                                       icon: Icons.view_stream_outlined,
                                       montant: '${controller.soldeCaisse}',
                                       color: Colors.yellow.shade700,
                                       colorText: Colors.black,
                                     ),
                                     DashboardCardWidget(
-                                      gestureTapCallback: () {
-                                         
-                                      },
-                                      title: 'BANQUE',
+                                      gestureTapCallback: () {},
+                                      title: 'TOTAL BANQUE',
                                       icon: Icons.business,
                                       montant: '${controller.soldeBanque}',
                                       color: Colors.green.shade700,
@@ -119,10 +115,8 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                     //   colorText: Colors.white,
                                     // ),
                                     DashboardCardWidget(
-                                      gestureTapCallback: () {
-                                         
-                                      },
-                                      title: 'FIN. EXTERNE',
+                                      gestureTapCallback: () {},
+                                      title: 'TOTAL FIN. EXTERNE',
                                       icon: Icons.money_outlined,
                                       montant:
                                           '${controller.cumulFinanceExterieur}',
@@ -131,7 +125,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                     ),
                                     DashboardCardWidget(
                                       gestureTapCallback: () {},
-                                      title: 'DEPENSES',
+                                      title: 'TOTAL DEPENSES',
                                       icon: Icons.monetization_on,
                                       montant: '${controller.depenses}',
                                       color: Colors.orange.shade700,
@@ -139,7 +133,7 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                     ),
                                     DashboardCardWidget(
                                       gestureTapCallback: () {},
-                                      title: 'DIPONIBLES',
+                                      title: 'TOTAL DIPONIBLES',
                                       icon: Icons.attach_money,
                                       montant: '${controller.disponible}',
                                       color: Colors.blue.shade700,
@@ -150,19 +144,22 @@ class _DashboadFinanceState extends State<DashboadFinance> {
                                 const SizedBox(
                                   height: 20.0,
                                 ),
-                                 ResponsiveChildWidget(
-                                    child1: CourbeBarBanque(banqueList: banqueController.banqueList),
-                                    child2: const CourbeCaisseYear()),
+                                 Card(
+                                  child: ChartBanque(chartBanqueController: chartBanqueController)),
                                 const SizedBox(
                                   height: 20.0,
                                 ),
-                                const ResponsiveChildWidget(
-                                    child1: CourbeBanqueMounth(),
-                                    child2: CourbeBanqueYear()),
+                                Card(
+                                  child: ChartCaisse(chartCaisseController: chartCaisseController)) ,
                                 const SizedBox(
                                   height: 20.0,
                                 ),
-                              ]),
+                                Card(
+                                  child: ChartFinExterieur(chartFinExterieurController: chartFinExterieurController)),
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                              ])) ,
                         )),
                   ))
             ],
