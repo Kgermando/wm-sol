@@ -70,8 +70,20 @@ class _ChartBanqueState extends State<ChartBanque> {
             name: 'Retrait',
             color: const Color.fromARGB(255, 255, 107, 8),
             dataLabelSettings: const DataLabelSettings(isVisible: true),
+            // gradient: LinearGradient(
+            //     colors: [
+            //       Colors.purpleAccent[700],
+            //       Colors.purpleAccent[100],
+            //       Colors.purple[600],
+            //       Colors.deepPurpleAccent[400],
+            //       Colors.purple[900],
+            //     ],
+            //     stops: const <double>[0.1, 0.3, 0.5, 0.7, 0.9],
+            //     // Setting alignment for the series gradient
+            //     begin: Alignment.bottomLeft,
+            //     end: Alignment.topRight,
+            //   )
           ),
         ]);
   }
-}
-// DateFormat("dd-MM-yyyy HH:mm")
+} 

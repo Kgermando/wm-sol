@@ -108,7 +108,7 @@ msix_config:
   display_name: Work Management
   publisher_display_name: Work_Management
   identity_name: com.eventdrcTechnology.WorkManagement
-  msix_version: 3.0.0.23 
+  msix_version: 3.0.0.23
   certificate_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\CERTIFICAT\astrid_v2\CERTIFICATE.pfx
   certificate_password: gk0813530838
   publisher: CN=Germain kataku, O=Eventdrc Technology
