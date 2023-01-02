@@ -152,9 +152,16 @@ class _DetailArchiveState extends State<DetailArchive> {
                 ? const Text('-')
                 : TextButton(
                     onPressed: () {
-                      Get.toNamed(ArchiveRoutes.archivePdf,
+                      var extension = widget.archiveModel.fichier.split(".").last;
+                      if(extension == 'pdf') {
+                        Get.toNamed(ArchiveRoutes.archivePdf,
                           arguments: widget.archiveModel.fichier);
-                      pdfViewerKey.currentState?.openBookmarkView();
+                        pdfViewerKey.currentState?.openBookmarkView();
+                      }
+                      if (extension == 'png' || extension == 'jpg') {
+                        Get.toNamed(ArchiveRoutes.archiveImage,
+                              arguments: widget.archiveModel.fichier);
+                      } 
                     },
                     child: Text("Cliquer pour visualiser",
                         textAlign: TextAlign.start,

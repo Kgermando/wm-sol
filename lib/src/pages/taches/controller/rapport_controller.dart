@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -16,8 +18,8 @@ class RapportController extends GetxController
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
-
-  TextEditingController rapportController = TextEditingController();
+ 
+  QuillController quillControllerRead = QuillController.basic();
   QuillController quillController = QuillController.basic();
 
   @override
@@ -28,9 +30,14 @@ class RapportController extends GetxController
 
   @override
   void dispose() {
-    rapportController.dispose();
+    quillControllerRead.dispose();
     quillController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    quillControllerRead.clear();
+    quillController.clear();
   }
 
   void getList() async {
@@ -69,17 +76,19 @@ class RapportController extends GetxController
   }
 
   void submit(TacheModel data) async {
-    print("quill $quillController");
+    var json = jsonEncode(quillController.document.toDelta().toJson());
+    print("quill $json");
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
           nom: data.nom,
           numeroTache: data.numeroTache,
-          rapport: rapportController.text,
+          rapport: json, // rapportController.text,
           signature: profilController.user.matricule.toString(),
           created: DateTime.now(),
           reference: data.id!);
       await rapportApi.insertData(dataItem).then((value) {
+        clear();
         rapportList.clear();
         getList();
         Get.back();
@@ -99,17 +108,19 @@ class RapportController extends GetxController
   }
 
   void submitUpdate(RapportModel data) async {
+    var json = jsonEncode(quillController.document.toDelta().toJson());
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
           id: data.id,
           nom: data.nom,
           numeroTache: data.numeroTache,
-          rapport: rapportController.text,
+          rapport: json, // rapportController.text,
           signature: profilController.user.matricule.toString(),
           created: DateTime.now(),
           reference: data.id!);
       await rapportApi.updateData(dataItem).then((value) {
+        clear();
         rapportList.clear();
         getList();
         Get.back();

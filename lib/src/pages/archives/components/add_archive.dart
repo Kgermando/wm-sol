@@ -159,7 +159,7 @@ class _AddArchiveState extends State<AddArchive> {
                   FilePickerResult? result =
                       await FilePicker.platform.pickFiles(
                     type: FileType.custom,
-                    allowedExtensions: ['pdf'],
+                    allowedExtensions: ['pdf', 'png', 'jpg'],
                   );
                   if (result != null) {
                     controller.uploadFile(result.files.single.path!);

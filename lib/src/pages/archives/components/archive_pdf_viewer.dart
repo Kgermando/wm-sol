@@ -17,7 +17,7 @@ class _ArchivePdfViewerState extends State<ArchivePdfViewer> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Archive"; 
 
-    final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
   late PdfViewerController _pdfViewerController;
 

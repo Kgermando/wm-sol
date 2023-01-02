@@ -277,6 +277,7 @@ class ArchiveRoutes {
   static const addArchives = "/archives-add";
   static const archivesDetail = "/archives-detail";
   static const archivePdf = "/archives-pdf";
+  static const archiveImage = "/archives-image";
 }
 
 class MailRoutes {

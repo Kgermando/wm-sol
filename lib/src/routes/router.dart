@@ -71,6 +71,7 @@ import 'package:wm_solution/src/pages/administration/view/admin_rh.dart';
 import 'package:wm_solution/src/pages/archives/bindings/archive_binding.dart';
 import 'package:wm_solution/src/pages/archives/bindings/archive_folder_binding.dart';
 import 'package:wm_solution/src/pages/archives/components/add_archive.dart';
+import 'package:wm_solution/src/pages/archives/components/archive_image_reader.dart';
 import 'package:wm_solution/src/pages/archives/components/archive_pdf_viewer.dart';
 import 'package:wm_solution/src/pages/archives/components/detail_archive.dart';
 import 'package:wm_solution/src/pages/archives/views/archive_folder_page.dart';
@@ -554,6 +555,15 @@ List<GetPage<dynamic>>? getPages = [
     transition: Transition.cupertino,
     transitionDuration: const Duration(seconds: 1)
   ),
+  GetPage(
+      name: ArchiveRoutes.archiveImage,
+      bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
+      page: () {
+        String url = Get.arguments as String;
+        return ArchiveImageReader(url: url);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
 
   // RH
   GetPage(

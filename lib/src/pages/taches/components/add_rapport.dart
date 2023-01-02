@@ -24,7 +24,7 @@ class _AddRapportState extends State<AddRapport> {
   String title = "Rapports";
   String subTitle = "Nouveau rapport";
 
-  // final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +64,8 @@ class _AddRapportState extends State<AddRapport> {
                                   const SizedBox(
                                     height: p30,
                                   ),
-                                  // quillControllerWidget(), 
-                                  rapportControllerWidget(),
+                                  quillControllerWidget(), 
+                                  // rapportControllerWidget(),
                                   const SizedBox(
                                     height: p20,
                                   ),
@@ -93,56 +93,56 @@ class _AddRapportState extends State<AddRapport> {
     );
   }
 
-  // Widget quillControllerWidget() { 
-  //   return Column(
-  //     children: [ 
-  //       QuillToolbar.basic(controller: controller.quillController),
-  //       SizedBox(
-  //         height: 400,
-  //         // width: 400,
-  //         child: Row(
-  //           children: [ 
-  //             Expanded(
-  //               child: QuillEditor(
-  //                 controller: controller.quillController,
-  //                 readOnly: false, // true for view only mode
-  //                 scrollController: ScrollController(),
-  //                 scrollable: true,
-  //                 focusNode: _focusNode,
-  //                 autoFocus: false,
-  //                 placeholder: 'Ecrire votre rapport...', 
-  //                 expands: true,
-  //                 padding: EdgeInsets.zero,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
-
-  Widget rapportControllerWidget() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: controller.rapportController,
-          keyboardType: TextInputType.multiline,
-          minLines: 5,
-          maxLines: 50,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Ecrivez votre rapport ici...',
+  Widget quillControllerWidget() { 
+    return Column(
+      children: [ 
+        QuillToolbar.basic(controller: controller.quillController),
+        SizedBox(
+          height: 400,
+          // width: 400,
+          child: Row(
+            children: [ 
+              Expanded(
+                child: QuillEditor(
+                  controller: controller.quillController,
+                  readOnly: false, // true for view only mode
+                  scrollController: ScrollController(),
+                  scrollable: true,
+                  focusNode: _focusNode,
+                  autoFocus: false,
+                  placeholder: 'Ecrire votre rapport...', 
+                  expands: true,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ],
           ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
+        )
+      ],
+    );
   }
+
+  // Widget rapportControllerWidget() {
+  //   return Container(
+  //       margin: const EdgeInsets.only(bottom: p20),
+  //       child: TextFormField(
+  //         controller: controller.rapportController,
+  //         keyboardType: TextInputType.multiline,
+  //         minLines: 5,
+  //         maxLines: 50,
+  //         decoration: InputDecoration(
+  //           border:
+  //               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+  //           labelText: 'Ecrivez votre rapport ici...',
+  //         ),
+  //         style: const TextStyle(),
+  //         validator: (value) {
+  //           if (value != null && value.isEmpty) {
+  //             return 'Ce champs est obligatoire';
+  //           } else {
+  //             return null;
+  //           }
+  //         },
+  //       ));
+  // }
 }
