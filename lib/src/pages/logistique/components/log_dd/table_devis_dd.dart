@@ -103,7 +103,8 @@ class _TableDevisDDState extends State<TableDevisDD> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.devisController.devisList
-        .where((element) => element.approbationDD == '-' && element.isSubmit == 'true')
+        .where((element) =>
+            element.approbationDD == '-' && element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {
@@ -139,6 +140,12 @@ class _TableDevisDDState extends State<TableDevisDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -315,6 +322,12 @@ class _TableDevisDDState extends State<TableDevisDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

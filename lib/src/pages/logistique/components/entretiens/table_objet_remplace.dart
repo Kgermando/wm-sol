@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/models/logistiques/entretien_model.dart'; 
-import 'package:wm_solution/src/models/logistiques/objet_remplace_model.dart'; 
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/models/logistiques/entretien_model.dart';
+import 'package:wm_solution/src/models/logistiques/objet_remplace_model.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class TableObjetRemplace extends StatefulWidget {
-  const TableObjetRemplace({super.key, required this.objetRemplaceList, required this.entretienModel});
+  const TableObjetRemplace(
+      {super.key,
+      required this.objetRemplaceList,
+      required this.entretienModel});
   final List<ObjetRemplaceModel> objetRemplaceList;
   final EntretienModel entretienModel;
 
@@ -32,7 +35,7 @@ class _TableObjetRemplaceState extends State<TableObjetRemplace> {
       height: 400,
       child: PlutoGrid(
         columns: columns,
-        rows: rows, 
+        rows: rows,
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;
           stateManager!.setShowColumnFilter(true);
@@ -81,10 +84,11 @@ class _TableObjetRemplaceState extends State<TableObjetRemplace> {
     );
   }
 
-  Future<List<PlutoRow>> agentsRow() async { 
-    var dataLIst =  widget.objetRemplaceList
-      .where((element) => element.reference == widget.entretienModel.id).toList();
- 
+  Future<List<PlutoRow>> agentsRow() async {
+    var dataLIst = widget.objetRemplaceList
+        .where((element) => element.reference == widget.entretienModel.id)
+        .toList();
+
     var i = dataLIst.length;
     for (var item in dataLIst) {
       setState(() {
@@ -114,6 +118,12 @@ class _TableObjetRemplaceState extends State<TableObjetRemplace> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -174,6 +184,12 @@ class _TableObjetRemplaceState extends State<TableObjetRemplace> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

@@ -66,8 +66,8 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
                         },
                         icon: Icon(Icons.add, color: Colors.red.shade700)),
                   PrintWidget(onPressed: () {
-                    PersonnelsRolesXlsx()
-                        .exportToExcel(widget.personnelsRolesController.personnelsRoleList);
+                    PersonnelsRolesXlsx().exportToExcel(
+                        widget.personnelsRolesController.personnelsRoleList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -137,6 +137,12 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -173,6 +179,12 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }
@@ -204,7 +216,8 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
                 ),
                 TextButton(
                   onPressed: () {
-                    final form = widget.personnelsRolesController.formKey.currentState!;
+                    final form =
+                        widget.personnelsRolesController.formKey.currentState!;
                     if (form.validate()) {
                       widget.personnelsRolesController
                           .submit(widget.id, widget.departement);
@@ -220,8 +233,9 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
   }
 
   Widget agentWidget() {
-    List<String> suggestionList =
-        widget.personnelsController.personnelsList.map((e) => e.matricule).toList();
+    List<String> suggestionList = widget.personnelsController.personnelsList
+        .map((e) => e.matricule)
+        .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(

@@ -135,8 +135,8 @@ class _TableBanqueState extends State<TableBanque> {
               ),
             ),
             rowColorCallback: (rowColorContext) {
-              if (rowColorContext.row.cells.entries
-                      .elementAt(4).value.value =='Retrait') {
+              if (rowColorContext.row.cells.entries.elementAt(4).value.value ==
+                  'Retrait') {
                 return Colors.orange;
               }
 
@@ -168,7 +168,7 @@ class _TableBanqueState extends State<TableBanque> {
                   "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDepot))} ${monnaieStorage.monney}"),
           'montantRetrait': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantRetrait))} ${monnaieStorage.monney}"), 
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantRetrait))} ${monnaieStorage.monney}"),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy H:mm").format(item.created)),
@@ -192,6 +192,12 @@ class _TableBanqueState extends State<TableBanque> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -300,6 +306,12 @@ class _TableBanqueState extends State<TableBanque> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

@@ -163,6 +163,12 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         title: 'Statut',
@@ -194,7 +200,7 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        renderer: (rendererContext) { 
+        renderer: (rendererContext) {
           return Text(
             rendererContext.cell.value.toString(),
             style: TextStyle(
@@ -337,6 +343,12 @@ class _TablePersonnelsState extends State<TablePersonnels> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

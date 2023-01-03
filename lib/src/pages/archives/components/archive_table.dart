@@ -69,7 +69,7 @@ class _TableArchiveState extends State<TableArchive> {
                 deleteButton(),
                 IconButton(
                     onPressed: () {
-                        widget.controller.getList();
+                      widget.controller.getList();
                       Navigator.pushNamed(context, ArchiveRoutes.archivesDetail,
                           arguments: widget.archiveFolderModel);
                     },
@@ -86,6 +86,8 @@ class _TableArchiveState extends State<TableArchive> {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'nomDocument') {
+              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+            } else if (column.field == 'level') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'departement') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -119,6 +121,7 @@ class _TableArchiveState extends State<TableArchive> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nomDocument': PlutoCell(value: item.nomDocument),
+          'level': PlutoCell(value: item.level),
           'departement': PlutoCell(value: departement),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
@@ -143,6 +146,12 @@ class _TableArchiveState extends State<TableArchive> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -154,6 +163,24 @@ class _TableArchiveState extends State<TableArchive> {
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Level',
+        field: 'level',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -202,14 +229,17 @@ class _TableArchiveState extends State<TableArchive> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de faire cette action ?', style: TextStyle(color: Colors.red),),
+          title: const Text(
+            'Etes-vous sûr de faire cette action ?',
+            style: TextStyle(color: Colors.red),
+          ),
           content: const Text(
               'Cette action permet de permet de mettre ce fichier en corbeille.'),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context, 'cancel'),
-              child: const Text('Annuler', style: TextStyle(color: Colors.red))
-            ),
+                onPressed: () => Navigator.pop(context, 'cancel'),
+                child:
+                    const Text('Annuler', style: TextStyle(color: Colors.red))),
             TextButton(
               onPressed: () {
                 widget.controllerFolder

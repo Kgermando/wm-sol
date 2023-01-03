@@ -1,3 +1,4 @@
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,9 @@ import 'package:timeago/timeago.dart' as timeago;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init(); 
- 
+  String storageLocation = "C:\\Users\\K-GERMANDO\\Downloads";
+  await FastCachedImageConfig.init(
+      path: storageLocation, clearCacheAfter: const Duration(days: 15));
   // UserModel user = await AuthApi().getUserId();
   timeago.setLocaleMessages('fr', timeago.FrMessages()); // Add french messages
   runApp(Phoenix(

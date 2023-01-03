@@ -132,10 +132,7 @@ class _TablecaisseState extends State<Tablecaisse> {
               ),
             ),
             rowColorCallback: (rowColorContext) {
-              if (rowColorContext.row.cells.entries
-                      .elementAt(4)
-                      .value
-                      .value ==
+              if (rowColorContext.row.cells.entries.elementAt(4).value.value ==
                   'Decaissement') {
                 return Colors.orange;
               }
@@ -159,7 +156,7 @@ class _TablecaisseState extends State<Tablecaisse> {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'nomComplet': PlutoCell(value: item.nomComplet), 
+          'nomComplet': PlutoCell(value: item.nomComplet),
           'libelle': PlutoCell(value: item.libelle),
           'typeOperation': PlutoCell(value: item.typeOperation),
           'montantEncaissement': PlutoCell(
@@ -167,7 +164,7 @@ class _TablecaisseState extends State<Tablecaisse> {
                   "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantEncaissement))} ${monnaieStorage.monney}"),
           'montantDecaissement': PlutoCell(
               value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDecaissement))} ${monnaieStorage.monney}"), 
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDecaissement))} ${monnaieStorage.monney}"),
           'numeroOperation': PlutoCell(value: item.numeroOperation),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy H:mm").format(item.created)),
@@ -191,6 +188,12 @@ class _TablecaisseState extends State<Tablecaisse> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -203,7 +206,7 @@ class _TablecaisseState extends State<Tablecaisse> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Libelle',
@@ -287,6 +290,12 @@ class _TablecaisseState extends State<Tablecaisse> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

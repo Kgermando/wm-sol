@@ -103,11 +103,11 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.departementBudgetList
-      .where((element) =>
-          DateTime.now().millisecondsSinceEpoch <=
-              element.periodeFin.millisecondsSinceEpoch ||
-          element.isSubmit == 'false')
-      .toList();
+        .where((element) =>
+            DateTime.now().millisecondsSinceEpoch <=
+                element.periodeFin.millisecondsSinceEpoch ||
+            element.isSubmit == 'false')
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {
@@ -141,6 +141,12 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -150,17 +156,17 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left, 
-        renderer: (rendererContext) {  
+        titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
           return Row(
             children: [
               Icon(Icons.folder, color: mainColor),
               const SizedBox(width: p5),
               Text(
-                rendererContext.cell.value.toString(),  
+                rendererContext.cell.value.toString(),
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: mainColor, 
+                  color: mainColor,
                 ),
               ),
             ],
@@ -243,7 +249,7 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
             textColor = Colors.orange;
           }
           return Text(
-            rendererContext.cell.value.toString(), 
+            rendererContext.cell.value.toString(),
             style: TextStyle(
               color: textColor,
               fontWeight: FontWeight.bold,
@@ -262,6 +268,12 @@ class _TableBudgetPrevisionnelState extends State<TableBudgetPrevisionnel> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

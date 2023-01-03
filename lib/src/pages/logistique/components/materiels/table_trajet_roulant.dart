@@ -12,9 +12,7 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableTrajetRoulant extends StatefulWidget {
   const TableTrajetRoulant(
-      {super.key, 
-      required this.controller,
-      required this.materielModel}); 
+      {super.key, required this.controller, required this.materielModel});
   final TrajetController controller;
   final MaterielModel materielModel;
 
@@ -164,6 +162,12 @@ class _TableTrajetRoulantState extends State<TableTrajetRoulant> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -289,6 +293,12 @@ class _TableTrajetRoulantState extends State<TableTrajetRoulant> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

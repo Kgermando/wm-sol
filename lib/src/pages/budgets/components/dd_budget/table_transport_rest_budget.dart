@@ -72,7 +72,7 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                       Navigator.pushNamed(context, BudgetRoutes.budgetDD);
+                        Navigator.pushNamed(context, BudgetRoutes.budgetDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
@@ -171,6 +171,12 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -347,6 +353,12 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/marketing/campaign_model.dart'; 
+import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -168,6 +168,12 @@ class _TableCampaignDDState extends State<TableCampaignDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -380,6 +386,12 @@ class _TableCampaignDDState extends State<TableCampaignDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

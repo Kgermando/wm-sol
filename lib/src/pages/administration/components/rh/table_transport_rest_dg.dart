@@ -72,8 +72,7 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
                   IconButton(
                       onPressed: () {
                         widget.transportRestController.getList();
-                        Navigator.pushNamed(
-                            context, AdminRoutes.adminRH);
+                        Navigator.pushNamed(context, AdminRoutes.adminRH);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
@@ -169,6 +168,12 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -345,6 +350,12 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

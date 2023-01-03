@@ -60,8 +60,7 @@ class _TableBudgetPrevisionnelDDState extends State<TableBudgetPrevisionnelDD> {
               const TitleWidget(title: "Budgets"),
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context, BudgetRoutes.budgetDD);
+                    Navigator.pushNamed(context, BudgetRoutes.budgetDD);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700))
             ],
@@ -144,6 +143,12 @@ class _TableBudgetPrevisionnelDDState extends State<TableBudgetPrevisionnelDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -262,6 +267,12 @@ class _TableBudgetPrevisionnelDDState extends State<TableBudgetPrevisionnelDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

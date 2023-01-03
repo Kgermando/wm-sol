@@ -272,7 +272,7 @@ class ComRoutes {
 }
 
 class ArchiveRoutes {
-  static const archives = "/archives";
+  static const archivesFolder = "/archives";
   static const archiveTable = "/archives-table";
   static const addArchives = "/archives-add";
   static const archivesDetail = "/archives-detail";

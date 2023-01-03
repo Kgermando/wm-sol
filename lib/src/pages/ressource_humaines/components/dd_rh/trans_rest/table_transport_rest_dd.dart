@@ -71,7 +71,6 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        
                         Navigator.pushNamed(context, RhRoutes.rhDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
@@ -131,7 +130,7 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.transportRestController.transportRestaurationList
         .where((element) =>
-            element.approbationDD == '-' && 
+            element.approbationDD == '-' &&
             element.observation == 'false' &&
             element.isSubmit == 'true')
         .toList();
@@ -170,6 +169,12 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -346,6 +351,12 @@ class _TableTransportRestDDState extends State<TableTransportRestDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

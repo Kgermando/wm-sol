@@ -133,7 +133,7 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
             e.nom == widget.personne.nom)
         .toList();
     var i = dataList.length;
-    
+
     for (var item in dataList) {
       List<dynamic> depList = jsonDecode(item.departement);
       setState(() {
@@ -167,6 +167,12 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -191,6 +197,12 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -263,6 +275,12 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

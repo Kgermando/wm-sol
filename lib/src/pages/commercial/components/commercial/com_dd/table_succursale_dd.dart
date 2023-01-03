@@ -4,14 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/commercial/succursale_model.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/succursale_xlsx.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-
 class TableSuccursaleDD extends StatefulWidget {
-  const TableSuccursaleDD({super.key, required this.succursaleController}); 
+  const TableSuccursaleDD({super.key, required this.succursaleController});
   final SuccursaleController succursaleController;
 
   @override
@@ -62,12 +61,12 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, ComRoutes.comDD);
+                        Navigator.pushNamed(context, ComRoutes.comDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    SuccursaleXlsx().exportToExcel(widget.succursaleController.succursaleList);
+                    SuccursaleXlsx().exportToExcel(
+                        widget.succursaleController.succursaleList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -113,8 +112,9 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList =
-        widget.succursaleController.succursaleList.where((element) => element.approbationDD == "-").toList();
+    var dataList = widget.succursaleController.succursaleList
+        .where((element) => element.approbationDD == "-")
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {
@@ -146,6 +146,12 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -182,7 +188,7 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Approbation DG',
@@ -252,6 +258,12 @@ class _TableSuccursaleDDState extends State<TableSuccursaleDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

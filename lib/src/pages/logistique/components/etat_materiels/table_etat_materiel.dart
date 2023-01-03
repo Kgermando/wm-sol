@@ -143,6 +143,12 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -185,7 +191,7 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
             textColor = Colors.orange;
           } else if (rendererContext.cell.value == 'Déclasser') {
             textColor = Colors.red;
-          } 
+          }
           return Row(
             children: [
               Container(
@@ -262,6 +268,12 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

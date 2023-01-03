@@ -136,10 +136,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
               ),
             ),
             rowColorCallback: (rowColorContext) {
-              if (rowColorContext.row.cells.entries
-                      .elementAt(6)
-                      .value
-                      .value ==
+              if (rowColorContext.row.cells.entries.elementAt(6).value.value ==
                   'Retrait') {
                 return Colors.orange;
               }
@@ -196,6 +193,12 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -232,7 +235,7 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Type d\'operation',
@@ -304,6 +307,12 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

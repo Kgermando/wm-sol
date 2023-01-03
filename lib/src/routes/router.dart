@@ -495,7 +495,7 @@ List<GetPage<dynamic>>? getPages = [
 
   // Archives
   GetPage(
-      name: ArchiveRoutes.archives,
+      name: ArchiveRoutes.archivesFolder,
       bindings: [
         ArchiveBinding(),
         ArchiveFolderBinding(),
@@ -538,7 +538,12 @@ List<GetPage<dynamic>>? getPages = [
   ),
   GetPage(
       name: ArchiveRoutes.archivesDetail,
-      bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         ArchiveModel archiveModel = Get.arguments as ArchiveModel;
         return DetailArchive(archiveModel: archiveModel);
@@ -547,7 +552,12 @@ List<GetPage<dynamic>>? getPages = [
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
     name: ArchiveRoutes.archivePdf,
-    bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
+    bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
     page: () {
       String url = Get.arguments as String;
       return ArchivePdfViewer(url: url);
@@ -557,7 +567,12 @@ List<GetPage<dynamic>>? getPages = [
   ),
   GetPage(
       name: ArchiveRoutes.archiveImage,
-      bindings: [ArchiveBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
       page: () {
         String url = Get.arguments as String;
         return ArchiveImageReader(url: url);

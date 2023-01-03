@@ -132,7 +132,7 @@ class _AddArchiveState extends State<AddArchive> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Description',
+            labelText: 'Legende',
           ),
           keyboardType: TextInputType.multiline,
           minLines: 3,

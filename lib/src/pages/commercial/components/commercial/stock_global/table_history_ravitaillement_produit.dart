@@ -1,13 +1,11 @@
- 
-
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/commerciale/history_rabitaillement_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/commercial/history_ravitaillement_model.dart';
-import 'package:wm_solution/src/models/commercial/stocks_global_model.dart'; 
+import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/history_ravitaillement/history_ravitaillement_xlsx.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_ravitaillement_controller.dart';
@@ -49,8 +47,7 @@ class _TableHistoryRavitaillementProduitState
   }
 
   List<HistoryRavitaillementModel> dataList = [];
-  Future<void> getData() async { 
-
+  Future<void> getData() async {
     final userModel = await AuthApi().getUserId();
     List<HistoryRavitaillementModel> historyRavitaillements =
         await HistoryRavitaillementApi().getAllData();
@@ -160,6 +157,12 @@ class _TableHistoryRavitaillementProduitState
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -280,6 +283,12 @@ class _TableHistoryRavitaillementProduitState
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

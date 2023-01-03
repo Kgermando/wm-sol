@@ -142,6 +142,12 @@ class _StatsSuccursaleState extends State<StatsSuccursale> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,

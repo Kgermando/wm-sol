@@ -154,8 +154,9 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
               value: DateFormat("dd-MM-yyyy").format(item.periodeBudgetDebut)),
           'uniteChoisie': PlutoCell(value: item.uniteChoisie),
           'nombreUnite': PlutoCell(value: item.nombreUnite),
-          'coutUnitaire': PlutoCell(value: 
-          "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutUnitaire))} ${monnaieStorage.monney}"),
+          'coutUnitaire': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutUnitaire))} ${monnaieStorage.monney}"),
           'coutTotal': PlutoCell(value: item.coutTotal),
           'caisse': PlutoCell(
               value:
@@ -188,6 +189,12 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -320,6 +327,12 @@ class _LigneBudgetaireState extends State<LigneBudgetaire> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

@@ -150,13 +150,13 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
                               LogistiqueRoutes.logApprovisionReception);
                         }),
                     DrawerWidget(
-                        selected: currentRoute == ArchiveRoutes.archives,
+                        selected: currentRoute == ArchiveRoutes.archivesFolder,
                         icon: Icons.archive,
                         sizeIcon: 20.0,
                         title: 'Archives',
                         style: bodyMedium!,
                         onTap: () {
-                          Navigator.pushNamed(context, ArchiveRoutes.archives);
+                          Navigator.pushNamed(context, ArchiveRoutes.archivesFolder);
                           // Navigator.of(context).pop();
                         }),
                     if (userRole <= 2)

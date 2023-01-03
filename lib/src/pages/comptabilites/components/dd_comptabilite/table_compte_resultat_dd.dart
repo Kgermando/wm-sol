@@ -63,8 +63,8 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(context,
-                            ComptabiliteRoutes.comptabiliteDD);
+                        Navigator.pushNamed(
+                            context, ComptabiliteRoutes.comptabiliteDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
@@ -146,6 +146,12 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -223,6 +229,12 @@ class _TableCompteResultatDDState extends State<TableCompteResultatDD> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

@@ -142,11 +142,12 @@ class _TableMaterielRoulantState extends State<TableMaterielRoulant> {
           'couleur': PlutoCell(value: item.couleur),
           'numeroRef': PlutoCell(value: item.numeroRef),
           'numeroPLaque': PlutoCell(value: item.numeroPLaque),
-          'genre': PlutoCell(value: item.genre), 
+          'genre': PlutoCell(value: item.genre),
           'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
           'dateFabrication': PlutoCell(
               value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
-          'kilometrageInitiale': PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
+          'kilometrageInitiale':
+              PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
           'fournisseur': PlutoCell(value: item.fournisseur),
           'alimentation': PlutoCell(value: item.alimentation),
           'created': PlutoCell(
@@ -173,6 +174,12 @@ class _TableMaterielRoulantState extends State<TableMaterielRoulant> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -408,6 +415,12 @@ class _TableMaterielRoulantState extends State<TableMaterielRoulant> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

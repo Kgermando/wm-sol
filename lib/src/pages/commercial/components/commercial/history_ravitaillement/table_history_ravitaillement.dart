@@ -25,7 +25,7 @@ class TableHistoryRavitaillement extends StatefulWidget {
 
 class _TableHistoryRavitaillementState
     extends State<TableHistoryRavitaillement> {
-      final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -161,6 +161,12 @@ class _TableHistoryRavitaillementState
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -281,6 +287,12 @@ class _TableHistoryRavitaillementState
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

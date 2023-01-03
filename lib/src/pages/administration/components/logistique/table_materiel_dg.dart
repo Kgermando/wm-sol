@@ -10,8 +10,7 @@ import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableMaterielDG extends StatefulWidget {
-  const TableMaterielDG(
-      {super.key, required this.controller}); 
+  const TableMaterielDG({super.key, required this.controller});
   final MaterielController controller;
 
   @override
@@ -68,7 +67,8 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
-                    MaterielXlsx().exportToExcel(widget.controller.materielList);
+                    MaterielXlsx()
+                        .exportToExcel(widget.controller.materielList);
                     if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: const Text("Exportation effectué!"),
@@ -133,7 +133,7 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
     );
   }
 
-  Future<List<PlutoRow>> agentsRow() async { 
+  Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.controller.materielList
         .where((element) =>
             element.approbationDG == '-' && element.approbationDD == 'Approved')
@@ -149,11 +149,12 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
           'couleur': PlutoCell(value: item.couleur),
           'numeroRef': PlutoCell(value: item.numeroRef),
           'numeroPLaque': PlutoCell(value: item.numeroPLaque),
-          'genre': PlutoCell(value: item.genre), 
+          'genre': PlutoCell(value: item.genre),
           'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
           'dateFabrication': PlutoCell(
               value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
-          'kilometrageInitiale': PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
+          'kilometrageInitiale':
+              PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
           'fournisseur': PlutoCell(value: item.fournisseur),
           'alimentation': PlutoCell(value: item.alimentation),
           'created': PlutoCell(
@@ -180,6 +181,12 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -406,6 +413,12 @@ class _TableMaterielDGState extends State<TableMaterielDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

@@ -62,7 +62,7 @@ class _TableDevisDGState extends State<TableDevisDG> {
                         Navigator.pushNamed(
                             context, AdminRoutes.adminLogistique);
                       },
-                      icon: Icon(Icons.refresh, color: Colors.green.shade700)), 
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 ],
               ),
             ],
@@ -146,6 +146,12 @@ class _TableDevisDGState extends State<TableDevisDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -322,6 +328,12 @@ class _TableDevisDGState extends State<TableDevisDG> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

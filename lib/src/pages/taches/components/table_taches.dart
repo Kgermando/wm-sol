@@ -64,10 +64,10 @@ class _TableTachesState extends State<TableTaches> {
             Row(
               children: [
                 IconButton(
-                  onPressed: () { 
-                    Navigator.pushNamed(context, TacheRoutes.tachePage);
-                  },
-                  icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, TacheRoutes.tachePage);
+                    },
+                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                 PrintWidget(onPressed: () {
                   TacheXlsx().exportToExcel(widget.tachesController.tachesList);
                   if (!mounted) return;
@@ -159,6 +159,12 @@ class _TableTachesState extends State<TableTaches> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -257,6 +263,12 @@ class _TableTachesState extends State<TableTaches> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

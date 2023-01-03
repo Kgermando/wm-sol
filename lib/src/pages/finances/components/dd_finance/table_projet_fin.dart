@@ -117,7 +117,7 @@ class _TableProjetFinState extends State<TableProjetFin> {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'nomProjet': PlutoCell(value: item.nomProjet),
-          'responsable': PlutoCell(value: item.responsable), 
+          'responsable': PlutoCell(value: item.responsable),
           'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
           'typeFinancement': PlutoCell(value: item.typeFinancement),
           'created': PlutoCell(
@@ -146,6 +146,12 @@ class _TableProjetFinState extends State<TableProjetFin> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -170,7 +176,7 @@ class _TableProjetFinState extends State<TableProjetFin> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Date de Debut Et Fin',
@@ -334,6 +340,12 @@ class _TableProjetFinState extends State<TableProjetFin> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

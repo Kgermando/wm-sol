@@ -10,15 +10,17 @@ class TableHistoryLivraisonProvision extends StatefulWidget {
   const TableHistoryLivraisonProvision(
       {super.key,
       required this.approvisionReceptionList,
-      required this.approvisionReceptionModel });
+      required this.approvisionReceptionModel});
   final List<ApprovisionReceptionModel> approvisionReceptionList;
-  final ApprovisionReceptionModel approvisionReceptionModel; 
+  final ApprovisionReceptionModel approvisionReceptionModel;
 
   @override
-  State<TableHistoryLivraisonProvision> createState() => _TableHistoryLivraisonProvisionState();
+  State<TableHistoryLivraisonProvision> createState() =>
+      _TableHistoryLivraisonProvisionState();
 }
 
-class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonProvision> {
+class _TableHistoryLivraisonProvisionState
+    extends State<TableHistoryLivraisonProvision> {
   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
@@ -103,9 +105,9 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.approvisionReceptionList
-      .where((element) =>
-          element.departement == widget.approvisionReceptionModel.departement)
-      .toList();
+        .where((element) =>
+            element.departement == widget.approvisionReceptionModel.departement)
+        .toList();
     var i = dataList.length;
     for (var item in dataList) {
       setState(() {
@@ -117,10 +119,14 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
           'signatureLivraison': PlutoCell(value: item.signatureLivraison),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'accuseReception': PlutoCell(value: (item.accuseReception == "true") ?  'Déjà livré' : 'Non Livré'),
+          'accuseReception': PlutoCell(
+              value: (item.accuseReception == "true")
+                  ? 'Déjà livré'
+                  : 'Non Livré'),
           'signatureReception': PlutoCell(value: item.signatureReception),
           'createdReception': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.createdReception)),
+              value:
+                  DateFormat("dd-MM-yy HH:mm").format(item.createdReception)),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -141,6 +147,12 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 100,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
       PlutoColumn(
         readOnly: true,
@@ -217,7 +229,7 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
             textColor = Colors.green;
           } else if (rendererContext.cell.value == 'Non Livré') {
             textColor = Colors.orange;
-          }  
+          }
           return Row(
             children: [
               Container(
@@ -240,7 +252,7 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
           );
         },
         width: 300,
-        minWidth: 150, 
+        minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
@@ -265,7 +277,7 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Id',
@@ -277,6 +289,12 @@ class _TableHistoryLivraisonProvisionState extends State<TableHistoryLivraisonPr
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 80,
         minWidth: 80,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
       ),
     ];
   }

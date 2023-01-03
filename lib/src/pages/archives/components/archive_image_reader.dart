@@ -1,5 +1,5 @@
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart'; 
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
@@ -20,6 +20,7 @@ class _ArchiveImageReaderState extends State<ArchiveImageReader> {
 
   @override
   Widget build(BuildContext context) { 
+    final sized = MediaQuery.of(context).size;
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
@@ -42,7 +43,41 @@ class _ArchiveImageReaderState extends State<ArchiveImageReader> {
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
                   children: [
-                     Image.network(widget.url)
+                    //  Image.network(widget.url),
+                     Center(
+                       child: FastCachedImage(
+                          url: widget.url,
+                          fit: BoxFit.cover,
+                          height: sized.height / 1.2,
+                          // width: sized.height / 1.2,
+                          fadeInDuration: const Duration(seconds: 1),
+                          errorBuilder: (context, exception, stacktrace) {
+                            return Center(child: Text(stacktrace.toString()));
+                          },
+                          loadingBuilder: (context, progress) {
+                            return Center(
+                              child: Container(
+                                color: Colors.yellow,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    if (progress.isDownloading && progress.totalBytes != null)
+                                      Text('${progress.downloadedBytes ~/ 1024} / ${progress.totalBytes! ~/ 1024} kb',
+                                          style: const TextStyle(color: Colors.red)),
+                                    
+                                    SizedBox(
+                                        width: 120,
+                                        height: 120,
+                                        child:
+                                        CircularProgressIndicator(color: Colors.red, value: progress.progressPercentage.value)),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                     ),
+
                   ],
                 ),
               ))
