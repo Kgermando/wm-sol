@@ -76,8 +76,7 @@ class RapportController extends GetxController
   }
 
   void submit(TacheModel data) async {
-    var json = jsonEncode(quillController.document.toDelta().toJson());
-    print("quill $json");
+    var json = jsonEncode(quillController.document.toDelta().toJson()); 
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
