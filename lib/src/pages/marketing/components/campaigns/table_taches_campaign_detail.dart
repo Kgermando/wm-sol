@@ -190,9 +190,9 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
         enableDropToResize: true,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
-          if (rendererContext.cell.value == 'Lu') {
+          if (rendererContext.cell.value == 'Ouvert') {
             textColor = Colors.green;
-          } else if (rendererContext.cell.value == 'Non Lu') {
+          } else if (rendererContext.cell.value == 'Fermé') {
             textColor = Colors.red;
           }
           return Row(

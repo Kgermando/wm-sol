@@ -1,7 +1,7 @@
 name: wm_solution
 description: Solution Work Management.
  
-version: 3.0.1+24
+version: 3.0.1+25
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -62,7 +62,7 @@ dependencies:
   # device_info_plus: ^7.0.0
   ffi: ^2.0.1
   open_app_file: ^4.0.1
-  fast_cached_network_image: ^1.0.1
+  cached_network_image_builder: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -109,7 +109,7 @@ msix_config:
   display_name: Work Management
   publisher_display_name: Work_Management
   identity_name: com.eventdrcTechnology.WorkManagement
-  msix_version: 3.0.0.24
+  msix_version: 3.0.0.25
   certificate_path: C:\Users\K-GERMANDO\Documents\DEVELOPER\FLUTTER\CERTIFICAT\astrid_v2\CERTIFICATE.pfx
   certificate_password: gk0813530838
   publisher: CN=Germain kataku, O=Eventdrc Technology
