@@ -194,7 +194,7 @@ class _TableTachesState extends State<TableTaches> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom',
+        title: 'Titre',
         field: 'nom',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

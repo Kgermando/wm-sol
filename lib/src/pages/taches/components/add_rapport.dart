@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
@@ -8,7 +9,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart'; 
-import 'package:wm_solution/src/widgets/title_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart'; 
 
 class AddRapport extends StatefulWidget {
   const AddRapport({super.key, required this.tacheModel});
@@ -27,7 +28,7 @@ class _AddRapportState extends State<AddRapport> {
   final FocusNode _focusNode = FocusNode();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -60,7 +61,16 @@ class _AddRapportState extends State<AddRapport> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const TitleWidget(title: "Nouveau rapport"),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const TitleWidget(title: "Nouveau rapport"),
+                                      SelectableText(
+                                          DateFormat("Le dd-MM-yyyy").format(
+                                              DateTime.now()),
+                                          textAlign: TextAlign.start), 
+                                    ],
+                                  ),
                                   const SizedBox(
                                     height: p30,
                                   ),
@@ -93,12 +103,12 @@ class _AddRapportState extends State<AddRapport> {
     );
   }
 
-  Widget quillControllerWidget() { 
+  Widget quillControllerWidget() {
     return Column(
       children: [ 
         QuillToolbar.basic(controller: controller.quillController),
         SizedBox(
-          height: 400,
+          height: MediaQuery.of(context).size.height / 1.5,
           // width: 400,
           child: Row(
             children: [ 
@@ -110,7 +120,7 @@ class _AddRapportState extends State<AddRapport> {
                   scrollable: true,
                   focusNode: _focusNode,
                   autoFocus: false,
-                  placeholder: 'Ecrire votre rapport...', 
+                  placeholder: 'Ecrire votre rapport ici...', 
                   expands: true,
                   padding: EdgeInsets.zero,
                 ),

@@ -196,7 +196,7 @@ class _TableCampaignState extends State<TableCampaign> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Coût de la Campagne',
+        title: 'Coût',
         field: 'coutCampaign',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -208,7 +208,7 @@ class _TableCampaignState extends State<TableCampaign> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Lieu Ciblé',
+        title: 'Région',
         field: 'lieuCible',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

@@ -141,7 +141,7 @@ class _TableRapportState extends State<TableRapport> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom',
+        title: 'Titre',
         field: 'nom',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

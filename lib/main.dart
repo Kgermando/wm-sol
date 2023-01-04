@@ -11,10 +11,10 @@ import 'package:wm_solution/src/routes/router.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:timeago/timeago.dart' as timeago;
- 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init(); 
+  await GetStorage.init();
   String storageLocation = "C:\\Users\\K-GERMANDO\\Downloads";
   await FastCachedImageConfig.init(
       path: storageLocation, clearCacheAfter: const Duration(days: 15));

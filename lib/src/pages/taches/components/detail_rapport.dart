@@ -91,7 +91,7 @@ class _DetailRapportState extends State<DetailRapport> {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Text('Nom :',
+                                  child: Text('Titre :',
                                       textAlign: TextAlign.start,
                                       style: bodyMedium!.copyWith(
                                           fontWeight: FontWeight.bold)),

@@ -62,6 +62,8 @@ class _DetailCampaignState extends State<DetailCampaign> {
           onPressed: () {
             showModalBottomSheet<void>(
               context: context,
+              isScrollControlled: true,
+              useRootNavigator: true,
               builder: (BuildContext context) {
                 return Container(
                   color: Colors.amber.shade100,
@@ -121,133 +123,173 @@ class _DetailCampaignState extends State<DetailCampaign> {
                 child: const Expanded(flex: 1, child: DrawerMenu())),
             Expanded(
                 flex: 5,
-                child: controller.obx(
+                child:  controller.obx(
             onLoading: loadingPage(context),
             onEmpty: const Text('Aucune donnée'),
             onError: (error) => loadingError(context, error!),
-            (state) => SingleChildScrollView(
-                            controller: ScrollController(),
-                            physics: const ScrollPhysics(),
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  top: p20, bottom: p8, right: p20, left: p20),
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Column(
-                                children: [
-                                  Card(
-                                    elevation: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: p20),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              TitleWidget(
-                                                  title: widget.campaignModel
-                                                      .typeProduit),
-                                              Column(
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          IconButton(
-                                                              tooltip:
-                                                                  'Actualiser',
-                                                              onPressed:
-                                                                  () async {
-                                                                refresh().then((value) => Navigator.pushNamed(
-                                                                    context,
-                                                                    MarketingRoutes
-                                                                        .marketingCampaignDetail,
-                                                                    arguments:
-                                                                        value));
-                                                              },
-                                                              icon: const Icon(
-                                                                  Icons.refresh,
-                                                                  color: Colors
-                                                                      .green)),
-                                                          if (userRole <= 3)
-                                                            IconButton(
-                                                                tooltip:
-                                                                    "Modification du document",
-                                                                color: Colors
-                                                                    .purple,
-                                                                onPressed: () {
-                                                                  Get.toNamed(
-                                                                      MarketingRoutes
-                                                                          .marketingCampaignUpdate,
-                                                                      arguments:
-                                                                          widget
-                                                                              .campaignModel);
-                                                                },
-                                                                icon: const Icon(
-                                                                    Icons
-                                                                        .edit)),
-                                                          if (userRole <= 3 &&
-                                                              widget.campaignModel
-                                                                      .approbationDD ==
-                                                                  "-")
-                                                            deleteButton(
-                                                                controller),
-                                                        ],
-                                                      ),
-                                                      SelectableText(
-                                                          DateFormat(
-                                                                  "dd-MM-yyyy HH:mm")
-                                                              .format(widget
-                                                                  .campaignModel
-                                                                  .created),
-                                                          textAlign:
-                                                              TextAlign.start),
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          dataWidget(
-                                              controller, profilController),
-                                        ],
-                                      ),
+      (state) => SingleChildScrollView(
+              controller: ScrollController(),
+              physics: const ScrollPhysics(),
+              child: Container(
+                margin: const EdgeInsets.only(
+                    top: p20, bottom: p8, right: p20, left: p20),
+                decoration: const BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(20))),
+                child: Column(
+                  children: [
+                    Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: p20),
+                        child: Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                const TitleWidget(title: "Campagne"),
+                                Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            if (widget.campaignModel
+                                                .isSubmit ==
+                                            'false')
+                                          IconButton(
+                                              tooltip:
+                                                  'Soumettre chez le DD',
+                                              onPressed:
+                                                  () async {
+                                                controller.submitToDD(
+                                                    widget
+                                                        .campaignModel);
+                                                refresh().then((value) =>
+                                                    Navigator.pushNamed(
+                                                        context,
+                                                        ExploitationRoutes
+                                                            .expProjetDetail,
+                                                        arguments:
+                                                            value));
+                                              },
+                                              icon: Icon(
+                                                  Icons.send,
+                                                  color: Colors
+                                                      .teal
+                                                      .shade700)),
+                                            IconButton(
+                                                tooltip:
+                                                    'Actualiser',
+                                                onPressed:
+                                                    () async {
+                                                  refresh().then((value) => Navigator.pushNamed(
+                                                      context,
+                                                      MarketingRoutes
+                                                          .marketingCampaignDetail,
+                                                      arguments:
+                                                          value));
+                                                },
+                                                icon: const Icon(
+                                                    Icons.refresh,
+                                                    color: Colors
+                                                        .green)),
+                                              
+                                            if (widget.campaignModel.approbationDG == "Unapproved" ||
+                                                  widget.campaignModel
+                                                          .approbationDD ==
+                                                      "Unapproved" ||
+                                                  widget.campaignModel
+                                                          .approbationBudget ==
+                                                      "Unapproved" ||
+                                                  widget.campaignModel
+                                                          .approbationFin ==
+                                                      "Unapproved" ||
+                                                          widget.campaignModel
+                                                                  .isSubmit ==
+                                                              'false')
+                                              IconButton(
+                                                  tooltip:
+                                                      "Modification du document",
+                                                  color: Colors
+                                                      .purple,
+                                                  onPressed: () {
+                                                    Get.toNamed(
+                                                        MarketingRoutes
+                                                            .marketingCampaignUpdate,
+                                                        arguments:
+                                                            widget
+                                                                .campaignModel);
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons
+                                                          .edit)),
+                                            if (userRole <= 3 &&
+                                                widget.campaignModel
+                                                        .approbationDD ==
+                                                    "-")
+                                              deleteButton(
+                                                  controller),
+                                          ],
+                                        ),
+                                        SelectableText(
+                                            DateFormat(
+                                                    "dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .campaignModel
+                                                    .created),
+                                            textAlign:
+                                                TextAlign.start),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(height: p20),
-                                  TablePersonnelsRolesCampaign(
-                                    personnelsRolesController:
-                                        personnelsRolesController,
-                                    personnelsController: personnelsController,
-                                    approuvedDD:
-                                        widget.campaignModel.approbationDD,
-                                    id: widget.campaignModel.id!,
-                                    departement: 'Marketing',
-                                    campaignModel: widget.campaignModel,
-                                  ),
-                                  const SizedBox(height: p20),
-                                  TableTachesCampaignDetail(
-                                    tachesController: tachesController,
-                                    id: widget.campaignModel.id!,
-                                    departement: 'Marketing',
-                                    campaignModel: widget.campaignModel,
-                                  ),
-                                  const SizedBox(height: p20),
-                                  ApprobationCampaign(
-                                      campaignModel: widget.campaignModel,
-                                      controller: controller,
-                                      profilController: profilController)
-                                ],
-                              ),
-                            ))) )
+                                  ],
+                                )
+                              ],
+                            ),
+                            dataWidget(
+                                controller, profilController),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: p20),
+                    
+                    TablePersonnelsRolesCampaign(
+                      personnelsRolesController:
+                          personnelsRolesController,
+                      personnelsController: personnelsController,
+                      approuvedDD:
+                          widget.campaignModel.approbationDD,
+                      id: widget.campaignModel.id!,
+                      departement: 'Marketing',
+                      campaignModel: widget.campaignModel,
+                    ),
+                    const SizedBox(height: p20),
+                    TableTachesCampaignDetail(
+                      tachesController: tachesController,
+                      id: widget.campaignModel.id!,
+                      departement: 'Marketing',
+                      campaignModel: widget.campaignModel,
+                    ),
+                    const SizedBox(height: p20),
+                    if (widget.campaignModel.isSubmit == 'true')
+                    ApprobationCampaign(
+                        campaignModel: widget.campaignModel,
+                        controller: controller,
+                        profilController: profilController)
                   ],
+                ),
+              ))) 
+                
+                
                 )
-        
+          ],
+        )
+
         
         );
   }
@@ -314,7 +356,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                   style: bodyMedium)),
           Divider(color: mainColor),
           ResponsiveChildWidget(
-              child1: Text('Lieu Cible :',
+              child1: Text('Lieu ou region Ciblé :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.campaignModel.lieuCible,

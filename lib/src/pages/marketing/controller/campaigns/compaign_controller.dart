@@ -138,7 +138,7 @@ class CampaignController extends GetxController
           objectifs: objectifsController.text,
           observation: 'false',
           signature: profilController.user.matricule.toString(),
-          createdRef: DateTime.now(),
+          isSubmit: "false",
           created: DateTime.now(),
           approbationDG: '-',
           motifDG: '-',
@@ -155,6 +155,56 @@ class CampaignController extends GetxController
           ligneBudgetaire: '-',
           ressource: '-');
       await campaignApi.insertData(dataItem).then((value) {
+        clear();
+        campaignList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur lors de la soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submitUpdate(CampaignModel data) async {
+    try {
+      _isLoading.value = true;
+      final dataItem = CampaignModel(
+          id: data.id!,
+          typeProduit: typeProduitController.text,
+          dateDebutEtFin:
+              "Du ${DateFormat('dd/MM/yyyy').format(dateRange!.start)} - Au ${DateFormat('dd/MM/yyyy').format(dateRange!.end)}",
+          coutCampaign: coutCampaignController.text,
+          lieuCible: lieuCibleController.text,
+          promotion: promotionController.text,
+          objectifs: objectifsController.text,
+          observation: 'false',
+          signature: profilController.user.matricule.toString(),
+          isSubmit: 'false',
+          created: data.created,
+          approbationDG: data.approbationDG,
+          motifDG: data.motifDG,
+          signatureDG: data.signatureDG,
+          approbationBudget: data.approbationBudget,
+          motifBudget: data.motifBudget,
+          signatureBudget: data.signatureBudget,
+          approbationFin: data.approbationFin,
+          motifFin: data.motifFin,
+          signatureFin: data.signatureFin,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          ligneBudgetaire: data.ligneBudgetaire,
+          ressource: data.ressource);
+      await campaignApi.updateData(dataItem).then((value) {
+        clear();
         campaignList.clear();
         getList();
         Get.back();
@@ -185,7 +235,7 @@ class CampaignController extends GetxController
           objectifs: data.objectifs,
           observation: 'true',
           signature: data.signature,
-          createdRef: data.createdRef,
+          isSubmit: data.isSubmit,
           created: data.created,
           approbationDG: data.approbationDG,
           motifDG: data.motifDG,
@@ -202,6 +252,55 @@ class CampaignController extends GetxController
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await campaignApi.updateData(dataItem).then((value) {
+        clear();
+        campaignList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Effectuée avec succès!", "Le document a bien été soumis",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur lors de la soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submitToDD(CampaignModel data) async {
+    try {
+      _isLoading.value = true;
+      final dataItem = CampaignModel(
+          id: data.id!,
+          typeProduit: data.typeProduit,
+          dateDebutEtFin: data.dateDebutEtFin,
+          coutCampaign: data.coutCampaign,
+          lieuCible: data.lieuCible,
+          promotion: data.promotion,
+          objectifs: data.objectifs,
+          observation: data.observation,
+          signature: data.signature,
+          isSubmit: 'true',
+          created: data.created,
+          approbationDG: data.approbationDG,
+          motifDG: data.motifDG,
+          signatureDG: data.signatureDG,
+          approbationBudget: data.approbationBudget,
+          motifBudget: data.motifBudget,
+          signatureBudget: data.signatureBudget,
+          approbationFin: data.approbationFin,
+          motifFin: data.motifFin,
+          signatureFin: data.signatureFin,
+          approbationDD: data.approbationDD,
+          motifDD: data.motifDD,
+          signatureDD: data.signatureDD,
+          ligneBudgetaire: data.ligneBudgetaire,
+          ressource: data.ressource);
+      await campaignApi.updateData(dataItem).then((value) {
+        clear();
         campaignList.clear();
         getList();
         Get.back();
@@ -232,7 +331,7 @@ class CampaignController extends GetxController
         objectifs: data.objectifs,
         observation: data.observation,
         signature: data.signature,
-        createdRef: data.createdRef,
+        isSubmit: data.isSubmit,
         created: data.created,
         approbationDG: approbationDG,
         motifDG: (motifDGController.text == '') ? '-' : motifDGController.text,
@@ -250,6 +349,7 @@ class CampaignController extends GetxController
         ressource: '-',
       );
       await campaignApi.updateData(dataItem).then((value) {
+        clear();
         campaignList.clear();
         getList();
         Get.back();
@@ -280,7 +380,7 @@ class CampaignController extends GetxController
           objectifs: data.objectifs,
           observation: data.observation,
           signature: data.signature,
-          createdRef: data.createdRef,
+          isSubmit: data.isSubmit,
           created: data.created,
           approbationDG: '-',
           motifDG: '-',
@@ -298,6 +398,7 @@ class CampaignController extends GetxController
           ligneBudgetaire: '-',
           ressource: '-');
       await campaignApi.updateData(dataItem).then((value) {
+        clear();
         campaignList.clear();
         getList();
         Get.back();
@@ -328,7 +429,7 @@ class CampaignController extends GetxController
           objectifs: data.objectifs,
           observation: data.observation,
           signature: data.signature,
-          createdRef: data.createdRef,
+          isSubmit: data.isSubmit,
           created: data.created,
           approbationDG: data.approbationDG,
           motifDG: data.motifDG,
@@ -487,7 +588,7 @@ class CampaignController extends GetxController
           objectifs: data.objectifs,
           observation: data.observation,
           signature: data.signature,
-          createdRef: data.createdRef,
+          isSubmit: data.isSubmit,
           created: data.created,
           approbationDG: data.approbationDG,
           motifDG: data.motifDG,
@@ -505,6 +606,7 @@ class CampaignController extends GetxController
           ligneBudgetaire: data.ligneBudgetaire,
           ressource: data.ressource);
       await campaignApi.updateData(dataItem).then((value) {
+        clear();
         campaignList.clear();
         getList();
         Get.back();

@@ -164,7 +164,7 @@ class _AddCampaignState extends State<AddCampaign> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'Coût Campaign',
+                  labelText: 'Coût Campagne',
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -198,7 +198,7 @@ class _AddCampaignState extends State<AddCampaign> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Lieu Ciblé',
+            labelText: 'Lieu ou région Ciblé',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),

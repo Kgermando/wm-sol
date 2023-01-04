@@ -8,7 +8,7 @@ class CampaignModel {
   late String objectifs;
   late String observation;
   late String signature;
-  late DateTime createdRef;
+  late String isSubmit;
   late DateTime created;
 
   // Approbations DG
@@ -42,7 +42,7 @@ class CampaignModel {
       required this.objectifs,
       required this.observation,
       required this.signature,
-      required this.createdRef,
+      required this.isSubmit,
       required this.created,
       required this.approbationDG,
       required this.motifDG,
@@ -70,7 +70,7 @@ class CampaignModel {
         objectifs: row[6],
         observation: row[7],
         signature: row[8],
-        createdRef: row[9],
+        isSubmit: row[9],
         created: row[10],
         approbationDG: row[11],
         motifDG: row[12],
@@ -99,7 +99,7 @@ class CampaignModel {
         objectifs: json['objectifs'],
         observation: json["observation"],
         signature: json['signature'],
-        createdRef: DateTime.parse(json['createdRef']),
+        isSubmit: json['isSubmit'],
         created: DateTime.parse(json['created']),
         approbationDG: json['approbationDG'],
         motifDG: json['motifDG'],
@@ -128,7 +128,7 @@ class CampaignModel {
       'objectifs': objectifs,
       'observation': observation.toString(),
       'signature': signature,
-      'createdRef': createdRef.toIso8601String(),
+      'isSubmit': isSubmit,
       'created': created.toIso8601String(),
       'approbationDG': approbationDG,
       'motifDG': motifDG,

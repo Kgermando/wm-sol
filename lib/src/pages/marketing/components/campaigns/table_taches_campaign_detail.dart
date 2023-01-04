@@ -221,7 +221,7 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Nom',
+        title: 'Titre',
         field: 'nom',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

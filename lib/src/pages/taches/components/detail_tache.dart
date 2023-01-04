@@ -191,7 +191,7 @@ class _DetailTacheState extends State<DetailTache> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-              child1: Text('Nom :',
+              child1: Text('Titre :',
                   textAlign: TextAlign.start,
                   style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.tacheModel.nom,
