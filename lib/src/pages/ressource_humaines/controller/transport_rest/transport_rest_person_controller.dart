@@ -45,6 +45,7 @@ class TransportRestPersonnelsController extends GetxController
     nomController.clear();
     prenomController.clear();
     matriculeController.clear();
+    matriculeController.text.isEmpty;
     montantController.clear();
   }
 

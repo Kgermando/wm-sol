@@ -284,6 +284,7 @@ class _AddSalaireState extends State<AddSalaire> {
             child: Text(value),
           );
         }).toList(),
+        validator: (value) => value == null ? "Select Taux" : null,
         onChanged: (value) {
           setState(() {
             controller.tauxJourHeureMoisSalaire = value!;
@@ -310,6 +311,13 @@ class _AddSalaireState extends State<AddSalaire> {
             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
           ],
           style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
         ));
   }
 
@@ -329,6 +337,13 @@ class _AddSalaireState extends State<AddSalaire> {
             FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
           ],
           style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
         ));
   }
 

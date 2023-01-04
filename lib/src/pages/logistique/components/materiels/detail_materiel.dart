@@ -43,8 +43,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
               appBar: headerBar(context, scaffoldKey, title,
                   widget.materielModel.identifiant),
               drawer: const DrawerMenu(),
-              floatingActionButton: (widget.materielModel.typeMateriel == 'Materiel roulant') ? (profilController.user.fonctionOccupe !=
-                      'Directeur de departement')
+              floatingActionButton: (widget.materielModel.typeMateriel == 'Materiel roulant') 
                   ? FloatingActionButton.extended(
                       label: const Text("Ajouter un trajet"),
                       tooltip: "Ajouter un nouveau trajet",
@@ -53,8 +52,7 @@ class _DetailMaterielState extends State<DetailMateriel> {
                         Get.toNamed(LogistiqueRoutes.logAddTrajetAuto,
                             arguments: widget.materielModel);
                       },
-                    )
-                  : Container()
+                    ) 
                 : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -35,10 +35,11 @@ class DetailTransportRest extends StatefulWidget {
 
 class _DetailTransportRestState extends State<DetailTransportRest> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  final ProfilController profilController = Get.find();
-  final TransportRestController controller = Get.find();
-  final TransportRestPersonnelsController controllerAgent = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
+  final TransportRestController controller = Get.put(TransportRestController());
+  final TransportRestPersonnelsController controllerAgent = Get.put(TransportRestPersonnelsController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   String title = "Ressources Humaines";
 
   final ScrollController controllerTable = ScrollController();
@@ -63,11 +64,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                     detailAgentDialog(controller, controllerAgent);
                   },
                 ),
-      body: controllerAgent.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => Row(
+      body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -75,7 +72,11 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: controllerAgent.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => SingleChildScrollView(
                         controller: ScrollController(),
                         physics: const ScrollPhysics(),
                         child: Container(
@@ -174,9 +175,10 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                     controller, profilController, state!)
                               ],
                             )),
-                      ))
+                      )) )
                 ],
-              )),
+              )
+       
     );
   }
 
@@ -198,14 +200,14 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                   onPressed: () => Navigator.pop(context, 'Cancel'),
                   child: const Text('Annuler', style: TextStyle(color: Colors.red)),
                 ),
-                TextButton(
+                Obx(() => controller.isLoading ? loadingMini() : TextButton(
                   onPressed: () {
                     controller
                         .deleteData(widget.transportRestaurationModel.id!);
                     Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK', style: TextStyle(color: Colors.red)),
-                ),
+                )) ,
               ],
             );
           });
@@ -231,7 +233,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
           Divider(
             color: mainColor,
           ),
-          ResponsiveChild3Widget(
+          Obx(() => ResponsiveChild3Widget(
               flex1: 1,
               flex2: 3,
               flex3: 3,
@@ -254,7 +256,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                       'Non payé',
                       style:
                           bodyMedium.copyWith(color: Colors.redAccent.shade700),
-                    )),
+                    )))  ,
           Divider(
             color: mainColor,
           ),
