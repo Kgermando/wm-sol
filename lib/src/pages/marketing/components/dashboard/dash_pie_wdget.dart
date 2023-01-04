@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/models/charts/pie_chart_model.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_pie_controller.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 
 class DashMarketingPieWidget extends StatefulWidget {
   const DashMarketingPieWidget({Key? key, required this.controller})
@@ -41,7 +42,8 @@ class _DashMarketingPieWidgetState extends State<DashMarketingPieWidget> {
               xValueMapper: (CountPieChartModel data, _) => data.categorie,
               yValueMapper: (CountPieChartModel data, _) => data.count
             ),
-          ]
+          ],
+          palette: listColors,
         ),
       ),
     );
