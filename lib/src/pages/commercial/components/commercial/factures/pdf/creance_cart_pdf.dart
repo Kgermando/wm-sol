@@ -1,8 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:convert';
-import 'dart:io';
-import 'package:get_storage/get_storage.dart';
+import 'dart:io'; 
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
@@ -21,13 +20,12 @@ import 'package:pdf/widgets.dart';
 class CreanceCartPDF {
   static Future<File> generate(
       CreanceCartModel factureCartModel, String monnaie) async {
-    final pdf = Document();
-
-    final box = GetStorage();
+    final pdf = Document(); 
 
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
+      pageFormat: PdfPageFormat.a4,
       build: (context) => [
         buildHeader(factureCartModel, user, monnaie),
         SizedBox(height: 3 * PdfPageFormat.cm),

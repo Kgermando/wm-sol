@@ -323,6 +323,7 @@ var addAgendasUrl = Uri.parse("$mainUrl/agendas/insert-new-agenda");
 
 var annuairesUrl = Uri.parse("$mainUrl/annuaires/");
 var addAnnuairesUrl = Uri.parse("$mainUrl/annuaires/insert-new-annuaire");
+var annuairesPieUrl = Uri.parse("$mainUrl/annuaires/chart/");
 
 var campaignsUrl = Uri.parse("$mainUrl/campaigns/");
 var addCampaignsUrl = Uri.parse("$mainUrl/campaigns/insert-new-campaign");

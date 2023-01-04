@@ -63,3 +63,27 @@ class PieChartEnguinModel {
     return {'genre': genre, 'count': count};
   }
 }
+
+
+class CountPieChartModel {
+  final String categorie;
+  final int count;
+
+  CountPieChartModel({required this.categorie, required this.count});
+
+  factory CountPieChartModel.fromSQL(List<dynamic> row) {
+    return CountPieChartModel(
+      categorie: row[0],
+      count: row[1],
+    );
+  }
+
+  factory CountPieChartModel.fromJson(Map<String, dynamic> json) {
+    return CountPieChartModel(
+        categorie: json['categorie'], count: json['count']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'categorie': categorie, 'count': count};
+  }
+}

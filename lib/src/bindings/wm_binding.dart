@@ -72,6 +72,7 @@ import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_contr
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_pie_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
@@ -204,6 +205,7 @@ class WMBindings extends Bindings {
     Get.put<DashboardMarketingController>(DashboardMarketingController());
     Get.put<AgendaController>(AgendaController()); 
     Get.put<AnnuaireController>(AnnuaireController());
+    Get.put<AnnuairePieController>(AnnuairePieController());
     Get.put<CampaignController>(CampaignController());
     
 

@@ -8,18 +8,19 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/components/annuaire/annuaire_xlsx.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/search_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
-final _lightColors = [
-  Colors.pinkAccent.shade700,
-  Colors.tealAccent.shade700,
-  Colors.lightGreen.shade700,
-  Colors.lightBlue.shade700,
-  Colors.orange.shade700,
-];
+// final _lightColors = [
+//   Colors.pinkAccent.shade700,
+//   Colors.tealAccent.shade700,
+//   Colors.lightGreen.shade700,
+//   Colors.lightBlue.shade700,
+//   Colors.orange.shade700,
+// ];
 
 class AnnuairePage extends StatefulWidget {
   const AnnuairePage({super.key});
@@ -99,6 +100,7 @@ class _AnnuairePageState extends State<AnnuairePage> {
                                     ),
                                   ],
                                 ),
+                                buildSearch(controller),
                                 ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: controller.annuaireList.length,
@@ -136,7 +138,7 @@ class _AnnuairePageState extends State<AnnuairePage> {
   Widget buildAnnuaire(AnnuaireModel annuaireModel, int index) {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;
-    final color = _lightColors[index % _lightColors.length];
+    final color = listColors[index % listColors.length];
     return Card(
       child: ListTile(
         onTap: () {

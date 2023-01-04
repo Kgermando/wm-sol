@@ -115,8 +115,7 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
                           currentRoute: currentRoute,
                           user: user,
                           departementList: departementList,
-                          controller: controller),
-
+                          controller: controller), 
 
                     if (departementList.contains('Exploitations') ||
                         departementList.contains('Administration') ||
@@ -125,18 +124,26 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
                           currentRoute: currentRoute,
                           user: user,
                           departementList: departementList,
-                          controller: controller),
-
-
+                          controller: controller), 
                     if (departementList.contains('Logistique') ||
                         departementList.contains('Administration') ||
                         departementList.contains('Support')) 
-                        LogistiqueNav(
-                          currentRoute: currentRoute,
-                          user: user,
-                          departementList: departementList,
-                          controller: controller),
-                          
+                      LogistiqueNav(
+                        currentRoute: currentRoute,
+                        user: user,
+                        departementList: departementList,
+                        controller: controller
+                      ),
+                    
+                     DrawerWidget(
+                        selected: currentRoute == TacheRoutes.tachePage,
+                        icon: Icons.multiline_chart_sharp,
+                        sizeIcon: 20.0,
+                        title: 'Vos tâches',
+                        style: bodyMedium!,
+                        onTap: () {
+                          Get.toNamed(TacheRoutes.tachePage);
+                        }),      
                     if (userRole <= 3)
                       DrawerWidget(
                         selected: currentRoute ==
@@ -144,7 +151,7 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
                         icon: Icons.multiline_chart_sharp,
                         sizeIcon: 20.0,
                         title: 'Acc. Reception',
-                        style: bodyMedium!,
+                        style: bodyMedium,
                         onTap: () {
                           Get.toNamed(
                               LogistiqueRoutes.logApprovisionReception);
@@ -154,7 +161,7 @@ class DrawerMenu extends GetView<DepartementNotifyCOntroller> {
                         icon: Icons.archive,
                         sizeIcon: 20.0,
                         title: 'Archives',
-                        style: bodyMedium!,
+                        style: bodyMedium,
                         onTap: () {
                           Navigator.pushNamed(context, ArchiveRoutes.archivesFolder);
                           // Navigator.of(context).pop();

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart'; 
 import 'package:http/http.dart' as http;
+import 'package:wm_solution/src/models/charts/pie_chart_model.dart';
 import 'package:wm_solution/src/models/marketing/annuaire_model.dart';
 
 class AnnuaireApi extends GetConnect {
@@ -27,6 +28,23 @@ class AnnuaireApi extends GetConnect {
       throw Exception(jsonDecode(resp.body)['message']);
     }
   }
+
+  Future<List<CountPieChartModel>> getChartPie() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(annuairesPieUrl, headers: header);
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<CountPieChartModel> data = [];
+      for (var row in bodyList) {
+        data.add(CountPieChartModel.fromJson(row));
+      }
+      return data;
+    } else {
+      throw Exception(resp.statusCode);
+    }
+  }
+
 
   Future<List<AnnuaireModel>> getAllDataSearch(String query) async {
     Map<String, String> header = headers;

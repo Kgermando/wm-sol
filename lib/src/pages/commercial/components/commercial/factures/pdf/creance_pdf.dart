@@ -20,6 +20,7 @@ class CreancePDF {
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
+      pageFormat: PdfPageFormat.a4,
       build: (context) => [
         buildHeader(creanceCartModel, user),
         SizedBox(height: 3 * PdfPageFormat.cm),
@@ -125,7 +126,7 @@ class CreancePDF {
       );
 
   static Widget buildInvoice(CreanceCartModel creanceCartModel, monnaie) {
-    final headers = ['Quantité', 'Designation', 'PVU', 'TVA', 'Montant'];
+    final headers = ['Qté', 'Designation', 'PVU', 'TVA', 'Montant'];
 
     final jsonList = jsonDecode(creanceCartModel.cart) as List;
     List<CartModel> cartItemList = [];

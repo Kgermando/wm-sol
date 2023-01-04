@@ -20,6 +20,7 @@ import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exter
 import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
 import 'package:wm_solution/src/pages/mailling/controller/mailling_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_pie_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
@@ -207,6 +208,7 @@ class SplashController extends GetxController {
     Get.put<DashboardMarketingController>(DashboardMarketingController());
     Get.put<AgendaController>(AgendaController());
     Get.put<AnnuaireController>(AnnuaireController());
+    Get.put<AnnuairePieController>(AnnuairePieController());
     Get.put<CampaignController>(CampaignController());
 
     // RH

@@ -98,6 +98,7 @@ class AnnuaireController extends GetxController
     });
   }
 
+
   detailView(int id) async {
     final data = await annuaireApi.getOneData(id);
     return data;

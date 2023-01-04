@@ -34,9 +34,6 @@ class _CartPageState extends State<CartPage> {
       floatingActionButton: (controller.cartList.isNotEmpty)
           ? speedialWidget(controller)
           : Container(),
-      // bottomNavigationBar: SizedBox(
-      //     width: MediaQuery.of(context).size.width / 2,
-      //     child: totalCart(controller)),
       body:  Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -49,7 +46,7 @@ class _CartPageState extends State<CartPage> {
           onLoading: loadingPage(context),
           onEmpty: const Text('Le panier est vide.'),
           onError: (error) => loadingError(context, error!),
-          (state) =>SingleChildScrollView(
+          (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(

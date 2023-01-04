@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/commerciale/cart_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
@@ -44,6 +45,9 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
 
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
+
+  final _isLoadingCancel = false.obs;
+  bool get isLoadingCancel => _isLoadingCancel.value;
 
   // TextEditingController controllerQuantityCart = TextEditingController();
   String? controllerQuantityCart;
@@ -216,9 +220,20 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in factureList) {
         facture = item;
       }
+
+
+      GetStorage box = GetStorage();
+      final printer = box.read("printer");
+      if (printer == 'A4') {
+         
+      }
+      if (printer == 'A6') {
+         
+      }
       final pdfFile =
           await FactureCartPDF.generate(facture!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
+
     } catch (e) {
       _isLoading.value = false;
       _isLoading.value = false;
@@ -405,43 +420,54 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
   }
 
   updateAchat(CartModel cart) async {
-    final achatQtyList = achatController.achatList
-        .where((e) => e.idProduct == cart.idProductCart);
+    try {
+        _isLoadingCancel.value = true;
+      final achatQtyList = achatController.achatList
+          .where((e) => e.idProduct == cart.idProductCart);
 
-    final achatQty = achatQtyList
-        .map((e) => double.parse(e.quantity) + double.parse(cart.quantityCart))
-        .first;
+      final achatQty = achatQtyList
+          .map((e) => double.parse(e.quantity) + double.parse(cart.quantityCart))
+          .first;
 
-    final achatIdProduct = achatQtyList.map((e) => e.idProduct).first;
-    final achatQuantityAchat = achatQtyList.map((e) => e.quantityAchat).first;
-    final achatAchatUnit = achatQtyList.map((e) => e.priceAchatUnit).first;
-    final achatPrixVenteUnit = achatQtyList.map((e) => e.prixVenteUnit).first;
-    final achatUnite = achatQtyList.map((e) => e.unite).first;
-    final achatId = achatQtyList.map((e) => e.id).first;
-    final achattva = achatQtyList.map((e) => e.tva).first;
-    final achatRemise = achatQtyList.map((e) => e.remise).first;
-    final achatQtyRemise = achatQtyList.map((e) => e.qtyRemise).first;
-    final achatQtyLivre = achatQtyList.map((e) => e.qtyLivre).first;
-    final achatSuccursale = achatQtyList.map((e) => e.succursale).first;
-    final achatSignature = achatQtyList.map((e) => e.signature).first;
-    final achatCreated = achatQtyList.map((e) => e.created).first;
+      final achatIdProduct = achatQtyList.map((e) => e.idProduct).first;
+      final achatQuantityAchat = achatQtyList.map((e) => e.quantityAchat).first;
+      final achatAchatUnit = achatQtyList.map((e) => e.priceAchatUnit).first;
+      final achatPrixVenteUnit = achatQtyList.map((e) => e.prixVenteUnit).first;
+      final achatUnite = achatQtyList.map((e) => e.unite).first;
+      final achatId = achatQtyList.map((e) => e.id).first;
+      final achattva = achatQtyList.map((e) => e.tva).first;
+      final achatRemise = achatQtyList.map((e) => e.remise).first;
+      final achatQtyRemise = achatQtyList.map((e) => e.qtyRemise).first;
+      final achatQtyLivre = achatQtyList.map((e) => e.qtyLivre).first;
+      final achatSuccursale = achatQtyList.map((e) => e.succursale).first;
+      final achatSignature = achatQtyList.map((e) => e.signature).first;
+      final achatCreated = achatQtyList.map((e) => e.created).first;
 
-    final achatModel = AchatModel(
-        id: achatId!,
-        idProduct: achatIdProduct,
-        quantity: achatQty.toString(),
-        quantityAchat: achatQuantityAchat,
-        priceAchatUnit: achatAchatUnit,
-        prixVenteUnit: achatPrixVenteUnit,
-        unite: achatUnite,
-        tva: achattva,
-        remise: achatRemise,
-        qtyRemise: achatQtyRemise,
-        qtyLivre: achatQtyLivre,
-        succursale: achatSuccursale,
-        signature: achatSignature,
-        created: achatCreated);
-    await achatController.achatApi.updateData(achatModel);
-    deleteData(cart.id!);
+      final achatModel = AchatModel(
+          id: achatId!,
+          idProduct: achatIdProduct,
+          quantity: achatQty.toString(),
+          quantityAchat: achatQuantityAchat,
+          priceAchatUnit: achatAchatUnit,
+          prixVenteUnit: achatPrixVenteUnit,
+          unite: achatUnite,
+          tva: achattva,
+          remise: achatRemise,
+          qtyRemise: achatQtyRemise,
+          qtyLivre: achatQtyLivre,
+          succursale: achatSuccursale,
+          signature: achatSignature,
+          created: achatCreated);
+      await achatController.achatApi.updateData(achatModel);
+      deleteData(cart.id!);
+      _isLoadingCancel.value = false;
+    } catch (e) {
+      _isLoadingCancel.value = false;
+      Get.snackbar("Une Erreur ", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+   
   }
 }

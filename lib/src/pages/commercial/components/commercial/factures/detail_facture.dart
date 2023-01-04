@@ -47,11 +47,7 @@ class _DetailFactureState extends State<DetailFacture> {
         appBar: headerBar(
             context, scaffoldKey, title, widget.factureCartModel.client),
         drawer: const DrawerMenu(),
-        body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => Row(
+        body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
@@ -59,7 +55,11 @@ class _DetailFactureState extends State<DetailFacture> {
                   child: const Expanded(flex: 1, child: DrawerMenu())),
               Expanded(
                   flex: 5,
-                  child: SingleChildScrollView(
+                  child: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => SingleChildScrollView(
                       controller: ScrollController(),
                       physics: const ScrollPhysics(),
                       child: Container(
@@ -119,7 +119,7 @@ class _DetailFactureState extends State<DetailFacture> {
                                                 DateFormat("dd-MM-yy HH:mm")
                                                     .format(widget
                                                         .factureCartModel
-                                                        .created),
+                                                        .created), 
                                                 textAlign: TextAlign.start),
                                           ],
                                         )
@@ -144,10 +144,13 @@ class _DetailFactureState extends State<DetailFacture> {
                             )
                           ],
                         ),
-                      )))
+                      ))
+        ) )
             ],
           ),
-        ));
+        
+        
+       );
   }
 
   Widget dataWidget() {

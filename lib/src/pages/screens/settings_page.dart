@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -180,7 +181,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget formatImprimanteWidget(BuildContext context) {
-    List<String> formatList = ["A4", "A5", "A6"];
+    List<String> formatList = ["A4", "A6"];
     return DropdownButtonFormField<String>(
         decoration: const InputDecoration(
           labelStyle: TextStyle(),
@@ -197,6 +198,16 @@ class _SettingsPageState extends State<SettingsPage> {
         onChanged: (value) {
           setState(() {
             formatImprimante = value;
+            GetStorage box = GetStorage();
+
+            if (formatImprimante == 'A4') {
+              box.remove("printer");
+              box.write("printer", formatImprimante);
+            }
+            if (formatImprimante == 'A6') {
+              box.remove("printer");
+              box.write("printer", formatImprimante);
+            }
           });
         });
   }

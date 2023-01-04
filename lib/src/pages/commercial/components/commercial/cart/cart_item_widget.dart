@@ -6,6 +6,7 @@ import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:intl/intl.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 
 class CartItemWidget extends StatefulWidget {
   const CartItemWidget({Key? key, required this.cart, required this.controller})
@@ -135,13 +136,13 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   }
 
   Widget onCancel() {
-    return IconButton(
-        tooltip: 'Annuler',
-        onPressed: () {
-          setState(() {
-            widget.controller.updateAchat(widget.cart);
-          });
-        },
-        icon: const Icon(Icons.cancel, color: Colors.red));
+    return Obx(() => widget.controller.isLoadingCancel ? loadingMini() : IconButton(
+      tooltip: 'Annuler',
+      onPressed: () {
+        setState(() {
+          widget.controller.updateAchat(widget.cart);
+        });
+      },
+      icon: const Icon(Icons.cancel, color: Colors.red)));
   }
 }
