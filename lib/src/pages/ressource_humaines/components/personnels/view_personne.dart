@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
@@ -412,8 +415,15 @@ class _ViewPersonneState extends State<ViewPersonne> {
     );
   }
 
-  Widget competenceExperienceWidget() {
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+  Widget competenceExperienceWidget() { 
+    var competanceJson = jsonDecode(widget.personne.competance!);
+    widget.controller.competanceController = flutter_quill.QuillController(
+        document: flutter_quill.Document.fromJson(competanceJson),
+        selection: const TextSelection.collapsed(offset: 0));
+    // var experienceJson = jsonDecode(widget.personne.experience!);
+    // widget.controller.experienceController = flutter_quill.QuillController(
+    //     document: flutter_quill.Document.fromJson(experienceJson),
+    //     selection: const TextSelection.collapsed(offset: 0));
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
@@ -421,25 +431,28 @@ class _ViewPersonneState extends State<ViewPersonne> {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Formation :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-              SelectableText(widget.personne.competance!,
-                  textAlign: TextAlign.justify, style: bodyMedium)
+            children: [ 
+              flutter_quill.QuillEditor.basic(
+                controller: widget.controller.competanceController,
+                readOnly: true,
+                locale: const Locale('fr'),
+              )
             ],
           ),
           const SizedBox(height: p30),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Experience :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              SelectableText(widget.personne.experience!,
-                  textAlign: TextAlign.justify, style: bodyMedium)
-            ],
-          ),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     // Text('Experience :',
+          //     //     textAlign: TextAlign.start,
+          //     //     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+          //     flutter_quill.QuillEditor.basic(
+          //       controller: widget.controller.experienceController,
+          //       readOnly: true,
+          //       locale: const Locale('fr'),
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );

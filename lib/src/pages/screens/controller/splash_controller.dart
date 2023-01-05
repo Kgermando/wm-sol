@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart'; 
+import 'package:get_storage/get_storage.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
@@ -25,11 +26,11 @@ import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_ma
 import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashboard_rh_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
-import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/forgot_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
@@ -47,17 +48,17 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_gl
 import 'package:wm_solution/src/pages/commercial/controller/commercials/stock_global/stock_global_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/vente_effectue/ventes_effectue_controller.dart';
- 
+
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_chart_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_chart_pie_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/balance/balance_sum_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
-import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart'; 
+import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
 import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart'; 
+import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/production/fournisseur_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/production/production_exp_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
@@ -67,7 +68,7 @@ import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_co
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creance_dettes/creance_dette_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
@@ -87,7 +88,7 @@ import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_co
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_note_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart'; 
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_personne_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
@@ -96,9 +97,8 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  final ProfilController profilController = Get.put(ProfilController());
-  final UsersController usersController = Get.put(UsersController());
-
+  // final ProfilController profilController = Get.put(ProfilController());
+  // final UsersController usersController = Get.put(UsersController());
 
   final getStorge = GetStorage();
 
@@ -106,131 +106,133 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
     // getStorge.erase();
-    // Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
-
-      // Mail
-    Get.put<MaillingController>(MaillingController());
-
-    // Archive
-    Get.put<ArchiveFolderController>(ArchiveFolderController());
-    Get.put<ArchiveController>(ArchiveController());
-
-    // Personnels & Roles
-    Get.put<PersonnelsRolesController>(PersonnelsRolesController());
-
-    // Authentification
-    Get.put<LoginController>(LoginController());
-    Get.put(ProfilController());
-    Get.put(ChangePasswordController());
-    Get.put(ForgotPasswordController());
-
-    // Actionnaire
-    Get.put<ActionnaireController>(ActionnaireController());
-    Get.put<ActionnaireCotisationController>(ActionnaireCotisationController());
-    Get.put<ActionnaireTransfertController>(ActionnaireTransfertController());
-
-    // Administration
-    Get.put<AdminDashboardController>(AdminDashboardController());
-
-    // Budgets
-    Get.put<DashboardBudgetController>(DashboardBudgetController());
-    Get.put<BudgetPrevisionnelController>(BudgetPrevisionnelController());
-    Get.put<LignBudgetaireController>(LignBudgetaireController());
-
-    // Commercial
-    Get.put<DashboardComController>(DashboardComController());
-    Get.put<AchatController>(AchatController());
-    Get.put<BonLivraisonController>(BonLivraisonController());
-    Get.put<CartController>(CartController());
-    Get.put<FactureController>(FactureController());
-    Get.put<FactureCreanceController>(FactureCreanceController());
-    Get.put<NumeroFactureController>(NumeroFactureController());
-    Get.put<GainCartController>(GainCartController());
-    Get.put<HistoryLivraisonController>(HistoryLivraisonController());
-    Get.put<HistoryRavitaillementController>(HistoryRavitaillementController());
-    Get.put<VenteCartController>(VenteCartController());
-    Get.put<ProduitModelController>(ProduitModelController());
-    Get.put<RestitutionController>(RestitutionController());
-    Get.put<LivraisonController>(LivraisonController());
-    Get.put<RavitaillementController>(RavitaillementController());
-    Get.put<StockGlobalController>(StockGlobalController());
-    Get.put<SuccursaleController>(SuccursaleController());
-    Get.put<VenteEffectueController>(VenteEffectueController());
-
-    // // Comptabilites
-    Get.put<DashboardComptabiliteController>(DashboardComptabiliteController());
-    Get.put<BalanceChartController>(BalanceChartController());
-    Get.put<BalanceChartPieController>(BalanceChartPieController());
-    Get.put<BalanceController>(BalanceController());
-    Get.put<BalanceSumController>(BalanceSumController());
-    Get.put<BilanController>(BilanController());
-    Get.put<CompteBilanRefController>(CompteBilanRefController());
-    Get.put<CompteResultatController>(CompteResultatController());
-    Get.put<JournalController>(JournalController());
-
-    // Exploitations
-    Get.put<DashboardExpController>(DashboardExpController());
-    Get.put<FourniseurController>(FourniseurController());
-    Get.put<ProductionExpController>(ProductionExpController());
-    Get.put<ProjetController>(ProjetController());
-    Get.put<SectionProjetController>(SectionProjetController());
-
-    // Finances
-    Get.put<DashboardFinanceController>(DashboardFinanceController());
-    Get.put<ChartBanqueController>(ChartBanqueController());
-    Get.put<ChartCaisseController>(ChartCaisseController());
-    Get.put<ChartFinExterieurController>(ChartFinExterieurController());
-    Get.put<BanqueNameController>(BanqueNameController());
-    Get.put<CaisseNameController>(CaisseNameController());
-    Get.put<FinExterieurNameController>(FinExterieurNameController());
-    Get.put<BanqueController>(BanqueController());
-    Get.put<CaisseController>(CaisseController());
-    Get.put<CreanceDetteController>(CreanceDetteController());
-    Get.put<CreanceController>(CreanceController());
-    Get.put<DetteController>(DetteController());
-    Get.put<FinExterieurController>(FinExterieurController());
-
-    // Logistique
-    Get.put<DashboardLogController>(DashboardLogController());
-    Get.put<ApprovisionReceptionController>(ApprovisionReceptionController());
-    Get.put<ApprovisionnementController>(ApprovisionnementController());
-    Get.put<EntretienController>(EntretienController());
-    Get.put<ObjetRemplaceController>(ObjetRemplaceController());
-    Get.put<EtatMaterielController>(EtatMaterielController());
-    Get.put<ImmobilierController>(ImmobilierController());
-    Get.put<MaterielController>(MaterielController());
-    Get.put<MobilierController>(MobilierController());
-    Get.put<TrajetController>(TrajetController());
-    Get.put<DevisController>(DevisController());
-    Get.put<DevisListObjetController>(DevisListObjetController());
-
-    // Marketing
-    Get.put<DashboardMarketingController>(DashboardMarketingController());
-    Get.put<AgendaController>(AgendaController());
-    Get.put<AnnuaireController>(AnnuaireController());
-    Get.put<AnnuairePieController>(AnnuairePieController());
-    Get.put<CampaignController>(CampaignController());
-
-    // RH
-    Get.put<DashobardRHController>(DashobardRHController());
-    Get.put<PerformenceController>(PerformenceController());
-    Get.put<PerformenceNoteController>(PerformenceNoteController());
-    Get.put<PersonnelsController>(PersonnelsController());
-    Get.put<UsersController>(UsersController());
-    Get.put<PresenceController>(PresenceController());
-    Get.put<PresencePersonneController>(PresencePersonneController());
-    Get.put<SalaireController>(SalaireController());
-    Get.put<TransportRestController>(TransportRestController());
-    Get.put<TransportRestPersonnelsController>(
-        TransportRestPersonnelsController());
-
-     // Update Version
-    Get.put<UpdateController>(UpdateController());
-
 
     String? idToken = getStorge.read('idToken');
+    print("splash idToken $idToken");
     if (idToken != null) {
-      isLoggIn(); 
+      Get.put(ProfilController(), permanent: true);
+      Get.lazyPut(() => UsersController(), fenix: true);
+      Get.lazyPut(() => DepartementNotifyCOntroller(), fenix: true);
+
+      // Mail
+      Get.lazyPut(() => MaillingController(), fenix: true);
+
+      // Archive
+      Get.lazyPut(() => ArchiveFolderController(), fenix: true);
+      Get.lazyPut(() => ArchiveController(), fenix: true);
+
+      // Personnels & Roles
+      Get.lazyPut(() => PersonnelsRolesController(), fenix: true);
+
+      // Authentification
+      Get.lazyPut(() => LoginController(), fenix: true);
+      // Get.lazyPut(() => ProfilController(), fenix: true);
+      Get.lazyPut(() => ChangePasswordController(), fenix: true);
+      Get.lazyPut(() => ForgotPasswordController(), fenix: true);
+
+      // Actionnaire
+      Get.lazyPut(() => ActionnaireController(), fenix: true);
+      Get.lazyPut(() => ActionnaireCotisationController(), fenix: true);
+      Get.lazyPut(() => ActionnaireTransfertController(), fenix: true);
+
+      // Administration
+      Get.lazyPut(() => AdminDashboardController(), fenix: true);
+
+      // Budgets
+      Get.lazyPut(() => DashboardBudgetController(), fenix: true);
+      Get.lazyPut(() => BudgetPrevisionnelController(), fenix: true);
+      Get.lazyPut(() => LignBudgetaireController(), fenix: true);
+
+      // Commercial
+      Get.lazyPut(() => DashboardComController(), fenix: true);
+      Get.lazyPut(() => AchatController(), fenix: true);
+      Get.lazyPut(() => BonLivraisonController(), fenix: true);
+      Get.lazyPut(() => CartController(), fenix: true);
+      Get.lazyPut(() => FactureController(), fenix: true);
+      Get.lazyPut(() => FactureCreanceController(), fenix: true);
+      Get.lazyPut(() => NumeroFactureController(), fenix: true);
+      Get.lazyPut(() => GainCartController(), fenix: true);
+      Get.lazyPut(() => HistoryLivraisonController(), fenix: true);
+      Get.lazyPut(() => HistoryRavitaillementController(), fenix: true);
+      Get.lazyPut(() => VenteCartController(), fenix: true);
+      Get.lazyPut(() => ProduitModelController(), fenix: true);
+      Get.lazyPut(() => RestitutionController(), fenix: true);
+      Get.lazyPut(() => LivraisonController(), fenix: true);
+      Get.lazyPut(() => RavitaillementController(), fenix: true);
+      Get.lazyPut(() => StockGlobalController(), fenix: true);
+      Get.lazyPut(() => SuccursaleController(), fenix: true);
+      Get.lazyPut(() => VenteEffectueController(), fenix: true);
+
+      // // Comptabilites
+      Get.lazyPut(() => DashboardComptabiliteController(), fenix: true);
+      Get.lazyPut(() => BalanceChartController(), fenix: true);
+      Get.lazyPut(() => BalanceChartPieController(), fenix: true);
+      Get.lazyPut(() => BalanceController(), fenix: true);
+      Get.lazyPut(() => BalanceSumController(), fenix: true);
+      Get.lazyPut(() => BilanController(), fenix: true);
+      Get.lazyPut(() => CompteBilanRefController(), fenix: true);
+      Get.lazyPut(() => CompteResultatController(), fenix: true);
+      Get.lazyPut(() => JournalController(), fenix: true);
+
+      // Exploitations
+      Get.lazyPut(() => DashboardExpController(), fenix: true);
+      Get.lazyPut(() => FourniseurController(), fenix: true);
+      Get.lazyPut(() => ProductionExpController(), fenix: true);
+      Get.lazyPut(() => ProjetController(), fenix: true);
+      Get.lazyPut(() => SectionProjetController(), fenix: true);
+
+      // Finances
+      Get.lazyPut(() => DashboardFinanceController(), fenix: true);
+      Get.lazyPut(() => ChartBanqueController(), fenix: true);
+      Get.lazyPut(() => ChartCaisseController(), fenix: true);
+      Get.lazyPut(() => ChartFinExterieurController(), fenix: true);
+      Get.lazyPut(() => BanqueNameController(), fenix: true);
+      Get.lazyPut(() => CaisseNameController(), fenix: true);
+      Get.lazyPut(() => FinExterieurNameController(), fenix: true);
+      Get.lazyPut(() => BanqueController(), fenix: true);
+      Get.lazyPut(() => CaisseController(), fenix: true);
+      Get.lazyPut(() => CreanceDetteController(), fenix: true);
+      Get.lazyPut(() => CreanceController(), fenix: true);
+      Get.lazyPut(() => DetteController(), fenix: true);
+      Get.lazyPut(() => FinExterieurController(), fenix: true);
+
+      // Logistique
+      Get.lazyPut(() => DashboardLogController(), fenix: true);
+      Get.lazyPut(() => ApprovisionReceptionController(), fenix: true);
+      Get.lazyPut(() => ApprovisionnementController(), fenix: true);
+      Get.lazyPut(() => EntretienController(), fenix: true);
+      Get.lazyPut(() => ObjetRemplaceController(), fenix: true);
+      Get.lazyPut(() => EtatMaterielController(), fenix: true);
+      Get.lazyPut(() => ImmobilierController(), fenix: true);
+      Get.lazyPut(() => MaterielController(), fenix: true);
+      Get.lazyPut(() => MobilierController(), fenix: true);
+      Get.lazyPut(() => TrajetController(), fenix: true);
+      Get.lazyPut(() => DevisController(), fenix: true);
+      Get.lazyPut(() => DevisListObjetController(), fenix: true);
+
+      // Marketing
+      Get.lazyPut(() => DashboardMarketingController(), fenix: true);
+      Get.lazyPut(() => AgendaController(), fenix: true);
+      Get.lazyPut(() => AnnuaireController(), fenix: true);
+      Get.lazyPut(() => AnnuairePieController(), fenix: true);
+      Get.lazyPut(() => CampaignController(), fenix: true);
+
+      // RH
+      Get.lazyPut(() => DashobardRHController(), fenix: true);
+      Get.lazyPut(() => PerformenceController(), fenix: true);
+      Get.lazyPut(() => PerformenceNoteController(), fenix: true);
+      Get.lazyPut(() => PersonnelsController(), fenix: true);
+      Get.lazyPut(() => UsersController(), fenix: true);
+      Get.lazyPut(() => PresenceController(), fenix: true);
+      Get.lazyPut(() => PresencePersonneController(), fenix: true);
+      Get.lazyPut(() => SalaireController(), fenix: true);
+      Get.lazyPut(() => TransportRestController(), fenix: true);
+      Get.lazyPut(() => TransportRestPersonnelsController(), fenix: true);
+
+      // Update Version
+      Get.lazyPut(() => UpdateController(), fenix: true);
+
+      isLoggIn();
     } else {
       Get.offAllNamed(UserRoutes.login);
     }
@@ -240,54 +242,36 @@ class SplashController extends GetxController {
     await loginController.authApi.getUserId().then((userData) async {
       var departement = jsonDecode(userData.departement);
       if (departement.first == "Administration") {
-        Get.put(AdminDashboardController());
-        Get.put(DashobardRHController());
-        Get.put(DashboardComController());
-        Get.put(DashboardBudgetController());
-        Get.put(BudgetPrevisionnelController());
-        Get.put(LignBudgetaireController());
-        Get.put(DashboardMarketingController());
-        Get.put(DashboardComptabiliteController());
-        Get.put(DashboardExpController());
-        Get.put(DashboardFinanceController());
-        Get.put(DashboardLogController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(AdminRoutes.adminDashboard);
         } else {
           Get.offAndToNamed(AdminRoutes.adminComptabilite);
         }
       } else if (departement.first == "Finances") {
-        Get.put(DashboardFinanceController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(FinanceRoutes.financeDashboard);
         } else {
           Get.offAndToNamed(FinanceRoutes.transactionsDettes);
         }
       } else if (departement.first == "Comptabilites") {
-        Get.put(DashboardComptabiliteController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteDashboard);
         } else {
           Get.offAndToNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
         }
       } else if (departement.first == "Budgets") {
-        Get.put(DashboardBudgetController());
-        Get.put(BudgetPrevisionnelController());
-        Get.put(LignBudgetaireController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
         } else {
           Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
         }
       } else if (departement.first == "Ressources Humaines") {
-        Get.put(DashobardRHController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(RhRoutes.rhDashboard);
         } else {
           Get.offAndToNamed(RhRoutes.rhPresence);
         }
       } else if (departement.first == "Exploitations") {
-        Get.put(DashboardExpController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ExploitationRoutes.expDashboard);
         } else {
@@ -301,43 +285,20 @@ class SplashController extends GetxController {
           Get.offAndToNamed(MarketingRoutes.marketingAnnuaire);
         }
       } else if (departement.first == "Commercial") {
-        Get.put(DashboardComController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(ComRoutes.comDashboard);
         } else {
           Get.offAndToNamed(ComRoutes.comVente);
         }
       } else if (departement.first == "Logistique") {
-        Get.put(DashboardLogController());
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(LogistiqueRoutes.logDashboard);
         } else {
           Get.offAndToNamed(LogistiqueRoutes.logMateriel);
         }
       } else if (departement.first == "Actionnaire") {
-        Get.put<ActionnaireController>(ActionnaireController());
-        Get.put<ActionnaireCotisationController>(
-            ActionnaireCotisationController());
-        Get.put<ActionnaireTransfertController>(
-            ActionnaireTransfertController());
-        Get.put(AdminDashboardController());
-
         Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
       } else if (departement.first == "Support") {
-        //  Get.put(MaillingController());
-        //   Get.put(PersonnelsController());
-        //   Get.put(CreanceController());
-        //   Get.put(DetteController());
-        //   Get.put(AdminDashboardController());
-        //   Get.put(DashobardRHController());
-        //   Get.put(DashboardComController());
-        //   Get.put(DashboardBudgetController());
-        //   Get.put(DashboardMarketingController());
-        //   Get.put(DashboardComptabiliteController());
-        //   Get.put(DashboardExpController());
-        //   Get.put(DashboardFinanceController());
-        //   Get.put(DashboardLogController());
-
         Get.offAndToNamed(AdminRoutes.adminDashboard);
       }
     });

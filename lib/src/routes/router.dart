@@ -317,9 +317,8 @@ List<GetPage<dynamic>>? getPages = [
 
   // Settings
   GetPage(
-      name: SettingsRoutes.splash,
-      binding: WMBindings(),
-      // bindings: [],
+      name: SettingsRoutes.splash, 
+      bindings: [WMBindings(), NetworkBindings()],
       page: () => const SplashView(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
@@ -327,13 +326,13 @@ List<GetPage<dynamic>>? getPages = [
   // UserRoutes
   GetPage(
       name: UserRoutes.login,
-      bindings: [LoginBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [LoginBinding(), NetworkBindings()],
       page: () => const LoginAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: UserRoutes.logout,
-      bindings: [LoginBinding(), ProfilBinding(), NetworkBindings()],
+      bindings: [LoginBinding(), NetworkBindings()],
       page: () => const LoginAuth(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),

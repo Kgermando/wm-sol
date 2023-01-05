@@ -102,7 +102,7 @@ class _DetailUpdateState extends State<DetailUpdate> {
                                                                   fontSize:
                                                                       16.0)))
                                                   : IconButton(
-                                                      iconSize: p30,
+                                                      iconSize: 60,
                                                       tooltip:
                                                           "Télécharger cette version",
                                                       onPressed: () {
@@ -115,7 +115,7 @@ class _DetailUpdateState extends State<DetailUpdate> {
                                                       icon: const Icon(
                                                           Icons.download,
                                                           color:
-                                                              Colors.orange))),
+                                                              Colors.green))),
                                             ],
                                           ),
                                         ],

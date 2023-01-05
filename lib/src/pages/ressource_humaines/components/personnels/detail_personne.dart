@@ -72,7 +72,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                             maxHeight: MediaQuery.of(context).size.height),
                         child: TabBarView(
                           physics: const ScrollPhysics(),
-                          children: [
+                          children: [ 
                             SingleChildScrollView(
                                 child: ViewPersonne(
                                     personne: widget.personne,

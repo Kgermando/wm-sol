@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,9 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
   String title = "Ressources Humaines";
 
   List<String> departementSelected = [];
+
+  
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -74,10 +78,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
         text: widget.personne.dateDebutContrat.toString());
     controller.dateFinContratController =
         TextEditingController(text: widget.personne.dateFinContrat.toString());
-    controller.competanceController =
-        TextEditingController(text: widget.personne.competance);
-    controller.experienceController =
-        TextEditingController(text: widget.personne.experience);
+
     controller.salaireController =
         TextEditingController(text: widget.personne.salaire);
     super.initState();
@@ -152,8 +153,8 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                                 child2: (controller.typeContrat == 'CDD')
                                     ? dateFinContratWidget(controller)
                                     : Container()),
-                            competanceWidget(controller),
-                            experienceWidget(controller),
+                            competanceWidget(),
+                            // experienceWidget(),
                             const SizedBox(height: p20),
                             BtnWidget(
                                 title: 'Soumettre modification',
@@ -831,53 +832,74 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
         ));
   }
 
-  Widget competanceWidget(PersonnelsController controller) {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          keyboardType: TextInputType.multiline,
-          minLines: 5,
-          maxLines: 100,
-          controller: controller.competanceController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Formation',
-          ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
 
-  Widget experienceWidget(PersonnelsController controller) {
+  Widget competanceWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          keyboardType: TextInputType.multiline,
-          minLines: 5,
-          maxLines: 100,
-          controller: controller.experienceController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Experience',
-          ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
+        child: Column(
+          children: [
+            flutter_quill.QuillToolbar.basic(
+                controller: controller.competanceController),
+            SizedBox(
+              height: 400,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: flutter_quill.QuillEditor(
+                      controller: controller.competanceController,
+                      readOnly: false, // true for view only mode
+                      scrollController: ScrollController(),
+                      scrollable: true,
+                      focusNode: _focusNode,
+                      autoFocus: false,
+                      placeholder: 'Formation, Comptence, Experience, ...',
+                      expands: true,
+                      padding: EdgeInsets.zero,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        )
+      );
+    }
+
+  // Widget experienceWidget() {
+  //   var json = jsonDecode(widget.personne.experience!);
+  //   controller.experienceController = flutter_quill.QuillController(
+  //       document: flutter_quill.Document.fromJson(json),
+  //       selection: const TextSelection.collapsed(offset: 0));
+  //   return Container(
+  //       margin: const EdgeInsets.only(bottom: p20),
+  //       child: Column(
+  //         children: [
+  //           flutter_quill.QuillToolbar.basic(
+  //               controller: controller.experienceController),
+  //           SizedBox(
+  //             height: MediaQuery.of(context).size.height / 1.5,
+  //             child: Row(
+  //               children: [
+  //                 Expanded(
+  //                   child: flutter_quill.QuillEditor(
+  //                     controller: controller.experienceController,
+  //                     readOnly: false, // true for view only mode
+  //                     scrollController: ScrollController(),
+  //                     scrollable: true,
+  //                     focusNode: _focusNode,
+  //                     autoFocus: false,
+  //                     placeholder: 'Ecrire votre rapport ici...',
+  //                     expands: true,
+  //                     padding: EdgeInsets.zero,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           )
+  //         ],
+  //       ));
+  // }
+
 
   Widget salaireWidget(PersonnelsController controller) {
     return Container(

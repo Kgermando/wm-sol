@@ -38,18 +38,24 @@ class ProfilController extends GetxController with StateMixin<UserModel> {
   }
 
   void getUser() async {
-    _loadingProfil.value = true;
-    await authController.getUserId().then((response) {
-       _user.value = response; 
-       if (kDebugMode) {
-         print("Profil ${user.prenom}");
-       }
-      change(_user.value, status: RxStatus.success());
-       _loadingProfil.value = false;
-    }, onError: (err) {
-      change(null, status: RxStatus.error(err.toString()));
-       _loadingProfil.value = false;
-    });
+    final getStorge = GetStorage();
+    String? idToken = getStorge.read('idToken'); 
+
+    if (idToken != null) {
+      _loadingProfil.value = true;
+      await authController.getUserId().then((response) {
+        _user.value = response; 
+        if (kDebugMode) {
+          print("Profil ${user.prenom}");
+        }
+        change(_user.value, status: RxStatus.success());
+        _loadingProfil.value = false;
+      }, onError: (err) {
+        change(null, status: RxStatus.error(err.toString()));
+        _loadingProfil.value = false;
+      });
+    }
+    
   }
 
 

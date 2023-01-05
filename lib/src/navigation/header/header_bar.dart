@@ -20,12 +20,19 @@ import 'package:wm_solution/src/utils/menu_items.dart';
 import 'package:wm_solution/src/utils/menu_options.dart';
 import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
 
+
+//  UserModel user = await AuthApi().getUserId();
+//     List<dynamic> departement = (user.departement == '-')
+//         ? ["Support"]
+//         : jsonDecode(profilController.user.departement);
+
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
   final ProfilController profilController = Get.put(ProfilController());
   final UpdateController updateController = Get.put(UpdateController()); 
   final DepartementNotifyCOntroller departementNotifyCOntroller = Get.put(DepartementNotifyCOntroller()); 
 
+ 
   List<dynamic> departementList = (profilController.user.departement =='-')
       ? ["Support"]
       : jsonDecode(profilController.user.departement);

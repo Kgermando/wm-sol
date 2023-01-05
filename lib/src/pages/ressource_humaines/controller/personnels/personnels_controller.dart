@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:wm_solution/src/api/rh/performence_api.dart';
 import 'package:wm_solution/src/api/rh/personnels_api.dart';
 import 'package:wm_solution/src/api/upload_file_api.dart';
@@ -70,10 +71,11 @@ class PersonnelsController extends GetxController
   TextEditingController lieuNaissanceController = TextEditingController();
   TextEditingController dateDebutContratController = TextEditingController();
   TextEditingController dateFinContratController = TextEditingController();
-  TextEditingController competanceController = TextEditingController();
-
-  TextEditingController experienceController = TextEditingController();
   TextEditingController salaireController = TextEditingController();
+
+  flutter_quill.QuillController competanceController = flutter_quill.QuillController.basic();
+  // flutter_quill.QuillController experienceController = flutter_quill.QuillController.basic();
+
 
   int identifiant = 1;
   String matricule = "";
@@ -128,7 +130,7 @@ class PersonnelsController extends GetxController
     dateDebutContratController.dispose();
     dateFinContratController.dispose();
     competanceController.dispose();
-    experienceController.dispose();
+    // experienceController.dispose();
     salaireController.dispose();
 
     super.dispose();
@@ -148,7 +150,7 @@ class PersonnelsController extends GetxController
     dateDebutContratController.clear();
     dateFinContratController.clear();
     competanceController.clear();
-    experienceController.clear();
+    // experienceController.clear();
     salaireController.clear();
   }
 
@@ -183,6 +185,11 @@ class PersonnelsController extends GetxController
 
   Future submit() async {
     var departement = jsonEncode(departementSelectedList);
+    var competanceJson =
+        jsonEncode(competanceController.document.toDelta().toJson());
+    // var experienceJson =
+    //     jsonEncode(experienceController.document.toDelta().toJson());
+
     try { 
       _isLoading.value = true;
       final agentModel = AgentModel(
@@ -224,12 +231,8 @@ class PersonnelsController extends GetxController
           fonctionOccupe: (fonctionOccupe.toString() == '')
               ? '-'
               : fonctionOccupe.toString(),
-          competance: (competanceController.text == '')
-              ? '-'
-              : competanceController.text,
-          experience: (experienceController.text == '')
-              ? '-'
-              : experienceController.text,
+          competance: competanceJson,
+          experience: '-',
           statutAgent: 'Inactif',
           createdAt: DateTime.now(),
           photo: (uploadedFileUrl == '') ? 'https://www.jea.com/cdn/images/avatar.png' : uploadedFileUrl.toString(),
@@ -272,6 +275,10 @@ class PersonnelsController extends GetxController
   
   Future submitUpdate(AgentModel personne) async {
     var departement = jsonEncode(departementSelectedUpdateList);
+    var competanceJson =
+        jsonEncode(competanceController.document.toDelta().toJson());
+    // var experienceJson =
+    //     jsonEncode(experienceController.document.toDelta().toJson());
     final agentModel = AgentModel(
         id: personne.id,
         nom: (nomController.text == '') ? personne.nom : nomController.text,
@@ -323,12 +330,8 @@ class PersonnelsController extends GetxController
         fonctionOccupe: (fonctionOccupe.toString() == '')
             ? personne.fonctionOccupe
             : fonctionOccupe.toString(),
-        competance: (competanceController.text == '')
-            ? personne.competance
-            : competanceController.text,
-        experience: (experienceController.text == '')
-            ? personne.experience
-            : experienceController.text,
+        competance: competanceJson,
+        experience: personne.experience,
         statutAgent: personne.statutAgent,
         createdAt: personne.createdAt,
         photo: (uploadedFileUrl == '')

@@ -1,4 +1,5 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +35,8 @@ class _AddPersonnelState extends State<AddPersonnel> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
   String subTitle = "Add profil";
+
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +117,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                             ? dateFinContratWidget()
                                             : Container()),
                                 competanceWidget(),
-                                experienceWidget(),
+                                // experienceWidget(),
                                 const SizedBox(height: p20),
                                 BtnWidget(
                                   title: 'Soumettre',
@@ -810,53 +813,66 @@ class _AddPersonnelState extends State<AddPersonnel> {
         ));
   }
 
-  Widget competanceWidget() {
+  Widget competanceWidget() { 
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          keyboardType: TextInputType.multiline,
-          minLines: 5,
-          maxLines: 100,
-          controller: controller.competanceController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Formation',
+        child: Column(
+      children: [ 
+        flutter_quill.QuillToolbar.basic(controller: controller.competanceController),
+        SizedBox(
+          height: 400, 
+          child: Row(
+            children: [
+              Expanded(
+                child: flutter_quill.QuillEditor(
+                  controller: controller.competanceController,
+                  readOnly: false, // true for view only mode
+                  scrollController: ScrollController(),
+                  scrollable: true,
+                  focusNode: _focusNode,
+                  autoFocus: false,
+                  placeholder: 'Formation, Comptence, Experience, ...', 
+                  expands: true,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ],
           ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
+        )
+      ],
+    )
+    );
   }
 
-  Widget experienceWidget() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          keyboardType: TextInputType.multiline,
-          minLines: 5,
-          maxLines: 100,
-          controller: controller.experienceController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Experience',
-          ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
-  }
+  // Widget experienceWidget() {
+  //   return Container(
+  //       margin: const EdgeInsets.only(bottom: p20),
+  //       child: Column(
+  //     children: [ 
+  //       flutter_quill.QuillToolbar.basic(controller: controller.experienceController),
+  //       SizedBox(
+  //         height: 300, 
+  //         child: Row(
+  //           children: [
+  //             Expanded(
+  //               child: flutter_quill.QuillEditor(
+  //                 controller: controller.experienceController,
+  //                 readOnly: false, // true for view only mode
+  //                 scrollController: ScrollController(),
+  //                 scrollable: true,
+  //                 focusNode: _focusNode,
+  //                 autoFocus: false,
+  //                 placeholder: 'Experience...', 
+  //                 expands: true,
+  //                 padding: EdgeInsets.zero,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //     ],
+  //   ));
+  // }
 
   Widget salaireWidget() {
     return Container(

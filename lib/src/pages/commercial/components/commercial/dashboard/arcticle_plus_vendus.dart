@@ -25,8 +25,7 @@ class _ArticlePlusVendusState extends State<ArticlePlusVendus> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
+    return Card( 
       child: SfCartesianChart(
         title: ChartTitle(
             text: 'Produits les plus vendus',

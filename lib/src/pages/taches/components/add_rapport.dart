@@ -108,8 +108,7 @@ class _AddRapportState extends State<AddRapport> {
       children: [ 
         QuillToolbar.basic(controller: controller.quillController),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 1.5,
-          // width: 400,
+          height: MediaQuery.of(context).size.height / 1.5, 
           child: Row(
             children: [ 
               Expanded(

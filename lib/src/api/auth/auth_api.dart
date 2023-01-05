@@ -26,6 +26,9 @@ class AuthApi extends GetConnect {
     };
     var resp = await client.post(loginUrl, body: body, headers: headers);
     if (resp.statusCode == 200) {
+      GetStorage box = GetStorage(); 
+      box.erase();
+
       Token token = Token.fromJson(json.decode(resp.body));
       // Store the tokens
 
@@ -64,7 +67,7 @@ class AuthApi extends GetConnect {
       body: body,
       headers: header,
     );
-    if (resp.statusCode == 200) {
+    if (resp.statusCode == 200) { 
       Token token = Token.fromJson(json.decode(resp.body));
       GetLocalStorage().saveAccessToken(token.accessToken);
       GetLocalStorage().saveRefreshToken(token.refreshToken);
@@ -105,51 +108,68 @@ class AuthApi extends GetConnect {
     final box = GetStorage();
 
     String? idToken = box.read('idToken');
-    int id = (idToken == null) ? 0 : int.parse(jsonDecode(idToken));
+    int id = int.parse(jsonDecode(idToken!));
     if (kDebugMode) {
-      print("iddd: $id");
+      print("getUserId: $id");
     }
 
     var userIdUrl = Uri.parse("$mainUrl/user/$id");
     var resp = await client.get(userIdUrl, headers: header);
     if (resp.statusCode == 200) {
       return UserModel.fromJson(json.decode(resp.body));
-    } else if (resp.statusCode == 403) {
-      return UserModel(
-        nom: 'Error 403',
-        prenom: 'Error 403',
-        email: 'Error 403',
-        telephone: 'Error 403',
-        matricule: 'Error 403',
-        departement: 'Error 403',
-        servicesAffectation: 'Error 403',
-        fonctionOccupe: 'Error 403',
-        role: '5',
-        isOnline: 'false',
-        createdAt: DateTime.now(),
-        passwordHash: 'Error 403',
-        succursale: 'Error 403'
-      );
-    } else if (resp.statusCode == 404) {
-      return UserModel(
-        nom: 'Error 404',
-        prenom: 'Error 404',
-        email: 'Error 404',
-        telephone: 'Error 404',
-        matricule: 'Error 404',
-        departement: 'Error 404',
-        servicesAffectation: 'Error 404',
-        fonctionOccupe: 'Error 404',
-        role: '5',
-        isOnline: 'false',
-        createdAt: DateTime.now(),
-        passwordHash: 'Error 404',
-        succursale: 'Error 404'
-      );
     } else {
       throw Exception(resp.statusCode);
-    }
+    } 
   }
+
+  // Future<UserModel> getUserId() async {
+  //   Map<String, String> header = headers;
+  //   final box = GetStorage();
+
+  //   String? idToken = box.read('idToken');
+  //   int id = (idToken == null) ? 0 : int.parse(jsonDecode(idToken));
+  //   if (kDebugMode) {
+  //     print("iddd: $id");
+  //   }
+
+  //   var userIdUrl = Uri.parse("$mainUrl/user/$id");
+  //   var resp = await client.get(userIdUrl, headers: header);
+  //   if (resp.statusCode == 200) {
+  //     return UserModel.fromJson(json.decode(resp.body));
+  //   } else if (resp.statusCode == 403) {
+  //     return UserModel(
+  //         nom: 'Error 403',
+  //         prenom: 'Error 403',
+  //         email: 'Error 403',
+  //         telephone: 'Error 403',
+  //         matricule: 'Error 403',
+  //         departement: 'Support',
+  //         servicesAffectation: 'Error 403',
+  //         fonctionOccupe: 'Error 403',
+  //         role: '5',
+  //         isOnline: 'false',
+  //         createdAt: DateTime.now(),
+  //         passwordHash: 'Error 403',
+  //         succursale: 'Error 403');
+  //   } else if (resp.statusCode == 404) {
+  //     return UserModel(
+  //         nom: 'Error 404',
+  //         prenom: 'Error 404',
+  //         email: 'Error 404',
+  //         telephone: 'Error 404',
+  //         matricule: 'Error 404',
+  //         departement: 'Support',
+  //         servicesAffectation: 'Error 404',
+  //         fonctionOccupe: 'Error 404',
+  //         role: '5',
+  //         isOnline: 'false',
+  //         createdAt: DateTime.now(),
+  //         passwordHash: 'Error 404',
+  //         succursale: 'Error 404');
+  //   } else {
+  //     throw Exception(resp.statusCode);
+  //   }
+  // }
 
   Future<void> logout() async {
     Map<String, String> header = headers;

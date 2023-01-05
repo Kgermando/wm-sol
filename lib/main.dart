@@ -22,7 +22,7 @@ void main() async {
       popGesture: true,
       title: InfoSystem().name(),
       initialBinding: WMBindings(),
-      initialRoute: SettingsRoutes.splash, // redirectRoute(user),
+      initialRoute: SettingsRoutes.splash,
       unknownRoute: GetPage(
           name: '/not-found',
           page: () => const PageNotFound(),

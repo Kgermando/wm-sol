@@ -6,4 +6,6 @@ class NetworkBindings extends Bindings {
   void dependencies() {
     Get.put<NetworkController>(NetworkController());
   }
+
+
 }

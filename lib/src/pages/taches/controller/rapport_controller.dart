@@ -47,7 +47,7 @@ class RapportController extends GetxController
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
-  }
+  } 
 
   detailView(int id) async {
     final data = await rapportApi.getOneData(id);
