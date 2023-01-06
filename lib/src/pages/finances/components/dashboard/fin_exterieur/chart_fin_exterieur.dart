@@ -50,7 +50,7 @@ class _ChartFinExterieurState extends State<ChartFinExterieur> {
         primaryXAxis: CategoryAxis(isVisible: true),
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
-          title: AxisTitle(text: 'Transations'),
+          title: AxisTitle(text: 'Transations 3'),
           numberFormat:
               NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
         ),

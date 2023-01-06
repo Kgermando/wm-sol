@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 

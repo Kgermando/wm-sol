@@ -12,10 +12,8 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
 
   List<AchatModel> achatList = [];
 
-  final Rx<List<AchatModel>> _venteList =
-      Rx<List<AchatModel>>([]);
+  final Rx<List<AchatModel>> _venteList = Rx<List<AchatModel>>([]);
   List<AchatModel> get venteList => _venteList.value; // For filter
-  
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -27,6 +25,12 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   void onInit() {
     super.onInit();
     getList();
+  }
+
+  @override
+  void dispose() {
+    filterController.dispose();
+    super.dispose();
   }
 
   void getList() async {
@@ -43,6 +47,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
     List<AchatModel> results = [];
     if (text.isEmpty) {
       results = achatList;
+      
     } else {
       results = achatList
           .where((element) => element.idProduct

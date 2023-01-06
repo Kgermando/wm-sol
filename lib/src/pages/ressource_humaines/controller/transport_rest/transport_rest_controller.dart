@@ -126,7 +126,7 @@ class TransportRestController extends GetxController
           isSubmit: 'false');
       await transportRestaurationApi.insertData(transRest).then((value) {
         clear(); 
-        Get.toNamed(RhRoutes.rhTransportRestDetail, arguments: value);
+        Get.toNamed(RhRoutes.rhTransportRest);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

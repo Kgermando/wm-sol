@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
@@ -57,8 +58,8 @@ import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_cont
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/compte_bilan_ref_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/production/fournisseur_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/production/production_exp_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
@@ -108,129 +109,131 @@ class SplashController extends GetxController {
     // getStorge.erase();
 
     String? idToken = getStorge.read('idToken');
-    print("splash idToken $idToken");
+    if (kDebugMode) {
+      print("splash idToken $idToken");
+    }
     if (idToken != null) {
-      Get.put(ProfilController(), permanent: true);
-      Get.lazyPut(() => UsersController(), fenix: true);
-      Get.lazyPut(() => DepartementNotifyCOntroller(), fenix: true);
+      Get.lazyPut(() => ProfilController());
+      Get.lazyPut(() => UsersController());
+      Get.lazyPut(() => DepartementNotifyCOntroller());
 
       // Mail
-      Get.lazyPut(() => MaillingController(), fenix: true);
+      Get.lazyPut(() => MaillingController());
 
       // Archive
-      Get.lazyPut(() => ArchiveFolderController(), fenix: true);
-      Get.lazyPut(() => ArchiveController(), fenix: true);
+      Get.lazyPut(() => ArchiveFolderController());
+      Get.lazyPut(() => ArchiveController());
 
       // Personnels & Roles
-      Get.lazyPut(() => PersonnelsRolesController(), fenix: true);
+      Get.lazyPut(() => PersonnelsRolesController());
 
       // Authentification
-      Get.lazyPut(() => LoginController(), fenix: true);
-      // Get.lazyPut(() => ProfilController(), fenix: true);
-      Get.lazyPut(() => ChangePasswordController(), fenix: true);
-      Get.lazyPut(() => ForgotPasswordController(), fenix: true);
+      Get.lazyPut(() => LoginController());
+      // Get.lazyPut(() => ProfilController());
+      Get.lazyPut(() => ChangePasswordController());
+      Get.lazyPut(() => ForgotPasswordController());
 
       // Actionnaire
-      Get.lazyPut(() => ActionnaireController(), fenix: true);
-      Get.lazyPut(() => ActionnaireCotisationController(), fenix: true);
-      Get.lazyPut(() => ActionnaireTransfertController(), fenix: true);
+      Get.lazyPut(() => ActionnaireController());
+      Get.lazyPut(() => ActionnaireCotisationController());
+      Get.lazyPut(() => ActionnaireTransfertController());
 
       // Administration
-      Get.lazyPut(() => AdminDashboardController(), fenix: true);
+      Get.lazyPut(() => AdminDashboardController());
 
       // Budgets
-      Get.lazyPut(() => DashboardBudgetController(), fenix: true);
-      Get.lazyPut(() => BudgetPrevisionnelController(), fenix: true);
-      Get.lazyPut(() => LignBudgetaireController(), fenix: true);
+      Get.lazyPut(() => DashboardBudgetController());
+      Get.lazyPut(() => BudgetPrevisionnelController());
+      Get.lazyPut(() => LignBudgetaireController());
 
       // Commercial
-      Get.lazyPut(() => DashboardComController(), fenix: true);
-      Get.lazyPut(() => AchatController(), fenix: true);
-      Get.lazyPut(() => BonLivraisonController(), fenix: true);
-      Get.lazyPut(() => CartController(), fenix: true);
-      Get.lazyPut(() => FactureController(), fenix: true);
-      Get.lazyPut(() => FactureCreanceController(), fenix: true);
-      Get.lazyPut(() => NumeroFactureController(), fenix: true);
-      Get.lazyPut(() => GainCartController(), fenix: true);
-      Get.lazyPut(() => HistoryLivraisonController(), fenix: true);
-      Get.lazyPut(() => HistoryRavitaillementController(), fenix: true);
-      Get.lazyPut(() => VenteCartController(), fenix: true);
-      Get.lazyPut(() => ProduitModelController(), fenix: true);
-      Get.lazyPut(() => RestitutionController(), fenix: true);
-      Get.lazyPut(() => LivraisonController(), fenix: true);
-      Get.lazyPut(() => RavitaillementController(), fenix: true);
-      Get.lazyPut(() => StockGlobalController(), fenix: true);
-      Get.lazyPut(() => SuccursaleController(), fenix: true);
-      Get.lazyPut(() => VenteEffectueController(), fenix: true);
+      Get.lazyPut(() => DashboardComController());
+      Get.lazyPut(() => AchatController());
+      Get.lazyPut(() => BonLivraisonController());
+      Get.lazyPut(() => CartController());
+      Get.lazyPut(() => FactureController());
+      Get.lazyPut(() => FactureCreanceController());
+      Get.lazyPut(() => NumeroFactureController());
+      Get.lazyPut(() => GainCartController());
+      Get.lazyPut(() => HistoryLivraisonController());
+      Get.lazyPut(() => HistoryRavitaillementController());
+      Get.lazyPut(() => VenteCartController());
+      Get.lazyPut(() => ProduitModelController());
+      Get.lazyPut(() => RestitutionController());
+      Get.lazyPut(() => LivraisonController());
+      Get.lazyPut(() => RavitaillementController());
+      Get.lazyPut(() => StockGlobalController());
+      Get.lazyPut(() => SuccursaleController());
+      Get.lazyPut(() => VenteEffectueController());
 
       // // Comptabilites
-      Get.lazyPut(() => DashboardComptabiliteController(), fenix: true);
-      Get.lazyPut(() => BalanceChartController(), fenix: true);
-      Get.lazyPut(() => BalanceChartPieController(), fenix: true);
-      Get.lazyPut(() => BalanceController(), fenix: true);
-      Get.lazyPut(() => BalanceSumController(), fenix: true);
-      Get.lazyPut(() => BilanController(), fenix: true);
-      Get.lazyPut(() => CompteBilanRefController(), fenix: true);
-      Get.lazyPut(() => CompteResultatController(), fenix: true);
-      Get.lazyPut(() => JournalController(), fenix: true);
+      Get.lazyPut(() => DashboardComptabiliteController());
+      Get.lazyPut(() => BalanceChartController());
+      Get.lazyPut(() => BalanceChartPieController());
+      Get.lazyPut(() => BalanceController());
+      Get.lazyPut(() => BalanceSumController());
+      Get.lazyPut(() => BilanController());
+      Get.lazyPut(() => CompteBilanRefController());
+      Get.lazyPut(() => CompteResultatController());
+      Get.lazyPut(() => JournalController());
 
       // Exploitations
-      Get.lazyPut(() => DashboardExpController(), fenix: true);
-      Get.lazyPut(() => FourniseurController(), fenix: true);
-      Get.lazyPut(() => ProductionExpController(), fenix: true);
-      Get.lazyPut(() => ProjetController(), fenix: true);
-      Get.lazyPut(() => SectionProjetController(), fenix: true);
+      Get.lazyPut(() => DashboardExpController());
+      Get.lazyPut(() => FourniseurController());
+      Get.lazyPut(() => ProductionExpController());
+      Get.lazyPut(() => ProjetController());
+      Get.lazyPut(() => SectionProjetController());
 
       // Finances
-      Get.lazyPut(() => DashboardFinanceController(), fenix: true);
-      Get.lazyPut(() => ChartBanqueController(), fenix: true);
-      Get.lazyPut(() => ChartCaisseController(), fenix: true);
-      Get.lazyPut(() => ChartFinExterieurController(), fenix: true);
-      Get.lazyPut(() => BanqueNameController(), fenix: true);
-      Get.lazyPut(() => CaisseNameController(), fenix: true);
-      Get.lazyPut(() => FinExterieurNameController(), fenix: true);
-      Get.lazyPut(() => BanqueController(), fenix: true);
-      Get.lazyPut(() => CaisseController(), fenix: true);
-      Get.lazyPut(() => CreanceDetteController(), fenix: true);
-      Get.lazyPut(() => CreanceController(), fenix: true);
-      Get.lazyPut(() => DetteController(), fenix: true);
-      Get.lazyPut(() => FinExterieurController(), fenix: true);
+      Get.lazyPut(() => DashboardFinanceController());
+      Get.lazyPut(() => ChartBanqueController());
+      Get.lazyPut(() => ChartCaisseController());
+      Get.lazyPut(() => ChartFinExterieurController());
+      Get.lazyPut(() => BanqueNameController());
+      Get.lazyPut(() => CaisseNameController());
+      Get.lazyPut(() => FinExterieurNameController());
+      Get.lazyPut(() => BanqueController());
+      Get.lazyPut(() => CaisseController());
+      Get.lazyPut(() => CreanceDetteController());
+      Get.lazyPut(() => CreanceController());
+      Get.lazyPut(() => DetteController());
+      Get.lazyPut(() => FinExterieurController());
 
       // Logistique
-      Get.lazyPut(() => DashboardLogController(), fenix: true);
-      Get.lazyPut(() => ApprovisionReceptionController(), fenix: true);
-      Get.lazyPut(() => ApprovisionnementController(), fenix: true);
-      Get.lazyPut(() => EntretienController(), fenix: true);
-      Get.lazyPut(() => ObjetRemplaceController(), fenix: true);
-      Get.lazyPut(() => EtatMaterielController(), fenix: true);
-      Get.lazyPut(() => ImmobilierController(), fenix: true);
-      Get.lazyPut(() => MaterielController(), fenix: true);
-      Get.lazyPut(() => MobilierController(), fenix: true);
-      Get.lazyPut(() => TrajetController(), fenix: true);
-      Get.lazyPut(() => DevisController(), fenix: true);
-      Get.lazyPut(() => DevisListObjetController(), fenix: true);
+      Get.lazyPut(() => DashboardLogController());
+      Get.lazyPut(() => ApprovisionReceptionController());
+      Get.lazyPut(() => ApprovisionnementController());
+      Get.lazyPut(() => EntretienController());
+      Get.lazyPut(() => ObjetRemplaceController());
+      Get.lazyPut(() => EtatMaterielController());
+      Get.lazyPut(() => ImmobilierController());
+      Get.lazyPut(() => MaterielController());
+      Get.lazyPut(() => MobilierController());
+      Get.lazyPut(() => TrajetController());
+      Get.lazyPut(() => DevisController());
+      Get.lazyPut(() => DevisListObjetController());
 
       // Marketing
-      Get.lazyPut(() => DashboardMarketingController(), fenix: true);
-      Get.lazyPut(() => AgendaController(), fenix: true);
-      Get.lazyPut(() => AnnuaireController(), fenix: true);
-      Get.lazyPut(() => AnnuairePieController(), fenix: true);
-      Get.lazyPut(() => CampaignController(), fenix: true);
+      Get.lazyPut(() => DashboardMarketingController());
+      Get.lazyPut(() => AgendaController());
+      Get.lazyPut(() => AnnuaireController());
+      Get.lazyPut(() => AnnuairePieController());
+      Get.lazyPut(() => CampaignController());
 
       // RH
-      Get.lazyPut(() => DashobardRHController(), fenix: true);
-      Get.lazyPut(() => PerformenceController(), fenix: true);
-      Get.lazyPut(() => PerformenceNoteController(), fenix: true);
-      Get.lazyPut(() => PersonnelsController(), fenix: true);
-      Get.lazyPut(() => UsersController(), fenix: true);
-      Get.lazyPut(() => PresenceController(), fenix: true);
-      Get.lazyPut(() => PresencePersonneController(), fenix: true);
-      Get.lazyPut(() => SalaireController(), fenix: true);
-      Get.lazyPut(() => TransportRestController(), fenix: true);
-      Get.lazyPut(() => TransportRestPersonnelsController(), fenix: true);
+      Get.lazyPut(() => DashobardRHController());
+      Get.lazyPut(() => PerformenceController());
+      Get.lazyPut(() => PerformenceNoteController());
+      Get.lazyPut(() => PersonnelsController());
+      Get.lazyPut(() => UsersController());
+      Get.lazyPut(() => PresenceController());
+      Get.lazyPut(() => PresencePersonneController());
+      Get.lazyPut(() => SalaireController());
+      Get.lazyPut(() => TransportRestController());
+      Get.lazyPut(() => TransportRestPersonnelsController());
 
       // Update Version
-      Get.lazyPut(() => UpdateController(), fenix: true);
+      Get.lazyPut(() => UpdateController());
 
       isLoggIn();
     } else {

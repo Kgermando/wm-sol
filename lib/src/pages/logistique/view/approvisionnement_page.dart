@@ -155,7 +155,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
           decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-              labelText: 'Provision',
+              labelText: 'Produit',
               hintText: 'Cartouche, Papier,...'),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,

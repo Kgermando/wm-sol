@@ -13,7 +13,7 @@ import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_salaire
 import 'package:wm_solution/src/pages/budgets/components/dd_budget/table_transport_rest_budget.dart';
 import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';

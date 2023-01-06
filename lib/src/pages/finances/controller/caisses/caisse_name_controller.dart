@@ -82,7 +82,7 @@ class CaisseNameController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = CaisseNameModel(
-          nomComplet: nomCompletController.text,
+          nomComplet: nomCompletController.text.toUpperCase(),
           rccm: '-',
           idNat: (idNatController.text == '') ? '-' : idNatController.text,
           addresse:
@@ -115,7 +115,7 @@ class CaisseNameController extends GetxController
           id: data.id,
           nomComplet: (nomCompletController.text == '')
               ? data.nomComplet
-              : nomCompletController.text,
+              : nomCompletController.text.toUpperCase(),
           rccm: '-',
           idNat:
               (idNatController.text == '') ? data.idNat : idNatController.text,

@@ -7,7 +7,7 @@ import 'package:wm_solution/src/models/devis/devis_list_objets_model.dart';
 import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';

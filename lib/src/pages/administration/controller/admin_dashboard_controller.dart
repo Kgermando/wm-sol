@@ -5,8 +5,8 @@ import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_contro
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/bilans/bilan_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/journals/journal_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_controller.dart';

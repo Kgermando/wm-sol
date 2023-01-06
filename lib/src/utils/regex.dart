@@ -30,4 +30,15 @@ class RegExpIsValide {
       return null;
     }
   }
+
+  String? validateMobile(String? value) {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,15}$)';
+    RegExp regExp = RegExp(pattern);
+    if (value != null && value.isEmpty) {
+      return 'Please enter mobile number';
+    } else if (!regExp.hasMatch(value!)) {
+      return 'Please enter valid mobile number';
+    }
+    return null;
+  }  
 }

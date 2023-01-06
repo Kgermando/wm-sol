@@ -22,7 +22,7 @@ class _TrajetPageState extends State<TrajetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final TrajetController controller = Get.find();
+    final TrajetController controller = Get.put(TrajetController());
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),

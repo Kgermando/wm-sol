@@ -226,7 +226,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
       child: Column(
         children: [
           ResponsiveChildWidget(
-              child1: Text('Nom Complet :',
+              child1: Text('Titre :',
                   textAlign: TextAlign.start,
                   style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.entretienModel.nom,
@@ -351,7 +351,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
           TableRow(children: [
             Container(
               padding: const EdgeInsets.all(p10),
-              child: Text("Nom", textAlign: TextAlign.start, style: bodyMedium),
+              child: Text("Titre", textAlign: TextAlign.start, style: bodyMedium),
             ),
             Container(
               padding: const EdgeInsets.all(p10),
@@ -404,7 +404,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
               Container(
                 padding: const EdgeInsets.all(p10),
                 child:
-                    Text("Nom", textAlign: TextAlign.start, style: bodyMedium),
+                    Text("Titre", textAlign: TextAlign.start, style: bodyMedium),
               ),
               Container(
                 padding: const EdgeInsets.all(p10),
@@ -493,7 +493,7 @@ class _DetailEntretienState extends State<DetailEntretien> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Nom',
+            labelText: 'Titre',
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),

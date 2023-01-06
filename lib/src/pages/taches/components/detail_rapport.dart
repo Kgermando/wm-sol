@@ -27,8 +27,7 @@ class _DetailRapportState extends State<DetailRapport> {
   String title = "Rapports";
 
   @override
-  Widget build(BuildContext context) {
-    final bodySmall = Theme.of(context).textTheme.bodySmall;
+  Widget build(BuildContext context) { 
     final bodyMedium = Theme.of(context).textTheme.bodyMedium; 
     return Scaffold(
       key: scaffoldKey,
@@ -71,21 +70,20 @@ class _DetailRapportState extends State<DetailRapport> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ListTile(
-                              leading: const Icon(Icons.person, size: p50),
                               title: SelectableText(
                                 widget.rapportModel.signature,
-                                style: bodySmall,
+                                style: bodyMedium,
                               ),
                               subtitle: SelectableText(
-                                widget.rapportModel.numeroTache,
-                                style: bodySmall,
+                                "Tâche N° ${widget.rapportModel.numeroTache}",
+                                style: bodyMedium,
                               ),
                               trailing: SelectableText(
                                   timeago.format(
                                       widget.rapportModel.created,
                                       locale: 'fr_short'),
                                   textAlign: TextAlign.start,
-                                  style: bodySmall),
+                                  style: bodyMedium),
                             ),
                             Row(
                               children: [

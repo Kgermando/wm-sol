@@ -69,7 +69,7 @@ class PresenceController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now());
       await presenceApi.insertData(presenceModel).then((value) {
-        Get.toNamed(RhRoutes.rhPresenceDetail, arguments: value);
+        Get.toNamed(RhRoutes.rhPresence);
         Get.snackbar(
             "Liste Presence créé avec succès!", "Nouvelle liste de presence.",
             backgroundColor: Colors.green,

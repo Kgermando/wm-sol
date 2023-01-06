@@ -154,21 +154,7 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
                     style: bodyMedium),
               )
             ],
-          ),
-          Divider(color: mainColor),
-          Row(
-            children: [
-              Expanded(
-                child: Text('Département :',
-                    textAlign: TextAlign.start,
-                    style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              ),
-              Expanded(
-                child: SelectableText(widget.ligneBudgetaireModel.departement,
-                    textAlign: TextAlign.start, style: bodyMedium),
-              )
-            ],
-          ),
+          ), 
           Divider(color: mainColor),
           Row(
             children: [

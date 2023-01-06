@@ -32,11 +32,11 @@ class DetailActionnaire extends StatefulWidget {
 }
 
 class _DetailActionnaireState extends State<DetailActionnaire> {
-  final ActionnaireController actionnaireController = Get.find();
-  final ActionnaireCotisationController controller = Get.find();
+  final ActionnaireController actionnaireController = Get.put(ActionnaireController());
+  final ActionnaireCotisationController controller = Get.put(ActionnaireCotisationController());
   final ProfilController profilController = Get.find();
   final ActionnaireTransfertController actionnaireTransfertController =
-      Get.find();
+      Get.put(ActionnaireTransfertController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Actionnaire";

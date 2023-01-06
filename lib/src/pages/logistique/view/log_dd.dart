@@ -5,7 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart'; 
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_devis_dd.dart'; 
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_entretien_dd.dart';
 import 'package:wm_solution/src/pages/logistique/components/log_dd/table_etat_materiel_dd.dart';

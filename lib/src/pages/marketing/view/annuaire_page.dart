@@ -49,11 +49,7 @@ class _AnnuairePageState extends State<AnnuairePage> {
           Get.toNamed(MarketingRoutes.marketingAnnuaireAdd);
         },
       ),
-      body: controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => Row(
+      body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
@@ -61,7 +57,11 @@ class _AnnuairePageState extends State<AnnuairePage> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -100,41 +100,65 @@ class _AnnuairePageState extends State<AnnuairePage> {
                                     ),
                                   ],
                                 ),
-                                buildSearch(controller),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: controller.annuaireList.length,
-                                    itemBuilder: (context, index) {
-                                      final annuaireModel =
-                                          controller.annuaireList[index];
-                                      return buildAnnuaire(
-                                          annuaireModel, index);
-                                    }),
-                              ],
-                            ),
-                          )))
+                                Container(
+                                  color: Theme.of(context).primaryColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListTile(
+                                      leading: const Icon(Icons.search),
+                                      title: TextField(
+                                        controller:
+                                            controller.filterController,
+                                        decoration: InputDecoration(
+                                          hintText: 'Search',
+                                          border: InputBorder.none,
+                                          suffixIcon: controller
+                                                  .filterController
+                                                  .text
+                                                  .isNotEmpty
+                                              ? GestureDetector(
+                                                  child: const Icon(
+                                                      Icons.close,
+                                                      color: Colors.red),
+                                                  onTap: () {
+                                                    controller
+                                                        .filterController
+                                                        .clear();
+                                                    controller
+                                                        .onSearchText('');
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            FocusNode());
+                                                  },
+                                                )
+                                              : null,
+                                        ),
+                                        onChanged: (value) =>
+                                            controller.onSearchText(value),
+                                      ),
+                                    ),
+                                  ),
+                                ), 
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.annuaireFilterList.length,
+                            itemBuilder: (context, index) {
+                              final annuaireModel =
+                                  controller.annuaireFilterList[index];
+                              return buildAnnuaire(
+                                  annuaireModel, index);
+                            }),
+                        ],
+                      ),
+                    ))) )
                 ],
-              )),
+              )
+      
+     ,
     );
   }
 
-  Widget buildSearch(AnnuaireController controller) => SearchWidget(
-        text: controller.query,
-        hintText: 'Recherche rapide',
-        onChanged: (String value) {
-          searchAchat(controller, value);
-        },
-      );
-
-  Future searchAchat(AnnuaireController controller, String query) async =>
-      controller.debounce(() {
-        if (!mounted) return;
-        setState(() {
-          query = query;
-          controller.annuaireList;
-        });
-      });
-
+ 
   Widget buildAnnuaire(AnnuaireModel annuaireModel, int index) {
     final bodyText1 = Theme.of(context).textTheme.bodyText1;
     final bodyText2 = Theme.of(context).textTheme.bodyText2;

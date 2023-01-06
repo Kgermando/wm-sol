@@ -5,6 +5,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
+import 'package:wm_solution/src/utils/regex.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -160,14 +161,9 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        // validator: (value) {
-        //   if (value == null || value.isEmpty) {
-        //     return 'Ce champ est obligatoire';
-        //   }
-        //   return null;
-        // },
+        validator: (value) => RegExpIsValide().validateEmail(value),
       ),
-    );
+    ); 
   }
 
   Widget mobile1Field(AnnuaireController controller) {
@@ -183,12 +179,7 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Ce champ est obligatoire';
-          }
-          return null;
-        },
+        validator: (value) => RegExpIsValide().validateMobile(value),
       ),
     );
   }

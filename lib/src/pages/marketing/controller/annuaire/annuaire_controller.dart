@@ -14,6 +14,11 @@ class AnnuaireController extends GetxController
 
   List<AnnuaireModel> annuaireList = [];
 
+  final Rx<List<AnnuaireModel>> _annuaireFilterList =
+      Rx<List<AnnuaireModel>>([]);
+  List<AnnuaireModel> get annuaireFilterList =>
+      _annuaireFilterList.value; // For filter
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
@@ -33,18 +38,19 @@ class AnnuaireController extends GetxController
 
   String? categorie;
 
-  String query = '';
-  Timer? debouncer;
+  // Filter
+  TextEditingController filterController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     getList();
+    
   }
 
   @override
   void dispose() {
-    debouncer?.cancel();
+    filterController.dispose();
     nomPostnomPrenomController.dispose();
     emailController.dispose();
     mobile1Controller.dispose();
@@ -57,6 +63,7 @@ class AnnuaireController extends GetxController
   }
 
   void clear() {
+    filterController.clear();
     categorie = null;
     nomPostnomPrenomController.clear();
     emailController.clear();
@@ -66,17 +73,6 @@ class AnnuaireController extends GetxController
     nomEntrepriseController.clear();
     gradeController.clear();
     adresseEntrepriseController.clear();
-  }
-
-  void debounce(
-    VoidCallback callback, {
-    Duration duration = const Duration(milliseconds: 500),
-  }) {
-    if (debouncer != null) {
-      debouncer!.cancel();
-    }
-
-    debouncer = Timer(duration, callback);
   }
 
   Future<void> makePhoneCall(String phoneNumber) async {
@@ -89,15 +85,56 @@ class AnnuaireController extends GetxController
   }
 
   void getList() async {
-    await annuaireApi.getAllDataSearch(query).then((response) {
+    await annuaireApi.getAllData().then((response) {
       annuaireList.clear();
       annuaireList.addAll(response);
+      onSearchText('');
       change(annuaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
   }
 
+  void onSearchText(String text) async {
+    List<AnnuaireModel> results = [];
+    if (text.isEmpty) {
+      results = annuaireList;
+      print("results $results");
+    } else {
+      results = annuaireList
+          .where((element) =>
+              element.categorie
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()) ||
+              element.nomPostnomPrenom
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()) ||
+              element.email
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()) ||
+              element.mobile1
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()) ||
+              element.secteurActivite
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()) ||
+              element.nomEntreprise
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()) ||
+              element.succursale
+                  .toString()
+                  .toLowerCase()
+                  .contains(text.toLowerCase()))
+          .toList();
+    }
+    _annuaireFilterList.value = results;
+  }
 
   detailView(int id) async {
     final data = await annuaireApi.getOneData(id);

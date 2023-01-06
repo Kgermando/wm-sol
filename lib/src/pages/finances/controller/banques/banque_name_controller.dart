@@ -81,7 +81,7 @@ class BanqueNameController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = BanqueNameModel(
-          nomComplet: nomCompletController.text,
+          nomComplet: nomCompletController.text.toUpperCase(),
           rccm: (rccmController.text == '') ? '-' : rccmController.text,
           idNat: (idNatController.text == '') ? '-' : idNatController.text,
           addresse:
@@ -114,7 +114,7 @@ class BanqueNameController extends GetxController
           id: data.id,
           nomComplet: (nomCompletController.text == '')
               ? data.nomComplet
-              : nomCompletController.text,
+              : nomCompletController.text.toUpperCase(),
           rccm: (rccmController.text == '') ? data.rccm : rccmController.text,
           idNat:
               (idNatController.text == '') ? data.idNat : idNatController.text,

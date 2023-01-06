@@ -20,8 +20,7 @@ class BudgetPrevisionnelController extends GetxController
 
   // String? departement;
   TextEditingController titleController = TextEditingController();
-
-  // List<String> departementList = Dropdown().departement;
+ 
 
   // Approbations
   final formKeyBudget = GlobalKey<FormState>();
@@ -110,7 +109,7 @@ class BudgetPrevisionnelController extends GetxController
           .insertData(departementBudgetModel)
           .then((value) {
         clear(); 
-        Get.toNamed(BudgetRoutes.budgetBudgetPrevisionelDetail, arguments: value); 
+        Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel); 
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

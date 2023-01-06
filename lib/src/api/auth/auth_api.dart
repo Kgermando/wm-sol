@@ -12,6 +12,7 @@ import 'package:wm_solution/src/api/route_api.dart';
 import 'package:wm_solution/src/helpers/get_local_storage.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:wm_solution/src/routes/routes.dart';
 
 class AuthApi extends GetConnect {
   var client = http.Client();
@@ -103,7 +104,7 @@ class AuthApi extends GetConnect {
     }
   }
 
-  Future<UserModel> getUserId() async {
+  Future<dynamic> getUserId() async {
     Map<String, String> header = headers;
     final box = GetStorage();
 
@@ -117,6 +118,10 @@ class AuthApi extends GetConnect {
     var resp = await client.get(userIdUrl, headers: header);
     if (resp.statusCode == 200) {
       return UserModel.fromJson(json.decode(resp.body));
+    } else if(resp.statusCode == 404) {
+      GetStorage box = GetStorage();
+      box.erase();
+      return Get.offAllNamed(UserRoutes.login);
     } else {
       throw Exception(resp.statusCode);
     } 

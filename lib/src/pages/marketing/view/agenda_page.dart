@@ -51,11 +51,7 @@ class _AgendaPageState extends State<AgendaPage> {
           newFicheDialog(controller, profilController);
         },
       ),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
+      body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
@@ -63,7 +59,11 @@ class _AgendaPageState extends State<AgendaPage> {
               child: const Expanded(flex: 1, child: DrawerMenu())),
           Expanded(
               flex: 5,
-              child: SingleChildScrollView(
+              child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                   controller: ScrollController(),
                   physics: const ScrollPhysics(),
                   child: Container(
@@ -72,9 +72,11 @@ class _AgendaPageState extends State<AgendaPage> {
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: buildAgenda(controller, profilController),
-                  )))
+                  ))) )
         ],
-      )) ,
+      )
+      
+      ,
     );
   }
 

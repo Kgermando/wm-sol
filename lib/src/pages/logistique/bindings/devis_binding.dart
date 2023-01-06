@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
 
 class DevisBinding extends Bindings {
   @override

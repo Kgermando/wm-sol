@@ -137,8 +137,8 @@ import 'package:wm_solution/src/pages/comptabilites/bindings/compte_resultat_bin
 import 'package:wm_solution/src/pages/comptabilites/bindings/dashboard_comptabilite_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/journal_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/grand_livre.dart';
-import 'package:wm_solution/src/pages/devis/bindings/devis_binding.dart';
-import 'package:wm_solution/src/pages/devis/bindings/devis_list_objet_binding.dart';
+import 'package:wm_solution/src/pages/logistique/bindings/devis_binding.dart';
+import 'package:wm_solution/src/pages/logistique/bindings/devis_list_objet_binding.dart';
 import 'package:wm_solution/src/pages/exploitations/bindings/dashboard_exploitation_binding.dart';
 import 'package:wm_solution/src/pages/exploitations/bindings/fournisseur_binding.dart';
 import 'package:wm_solution/src/pages/exploitations/bindings/production_exp_binding.dart';
@@ -213,8 +213,8 @@ import 'package:wm_solution/src/pages/comptabilites/view/compte_resultat_comptab
 import 'package:wm_solution/src/pages/comptabilites/view/dashboard_comptabilite.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/dd_comptabilie.dart';
 import 'package:wm_solution/src/pages/comptabilites/view/journal_comptabilite.dart';
-import 'package:wm_solution/src/pages/devis/components/detail_devis.dart';
-import 'package:wm_solution/src/pages/devis/view/devis_page.dart';
+import 'package:wm_solution/src/pages/logistique/components/devis/detail_devis.dart';
+import 'package:wm_solution/src/pages/logistique/view/devis_page.dart';
 import 'package:wm_solution/src/pages/exploitations/components/fournisseurs/detail_fournisseur.dart';
 import 'package:wm_solution/src/pages/exploitations/components/productions/detail_production_exp.dart';
 import 'package:wm_solution/src/pages/exploitations/components/projets/detail_projet.dart';

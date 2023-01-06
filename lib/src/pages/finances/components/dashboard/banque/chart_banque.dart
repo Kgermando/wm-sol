@@ -50,7 +50,7 @@ class _ChartBanqueState extends State<ChartBanque> {
         primaryXAxis: CategoryAxis(isVisible: true),
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
-          title: AxisTitle(text: 'Transations'),
+          title: AxisTitle(text: 'Transations 1'),
           numberFormat:
               NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
         ),

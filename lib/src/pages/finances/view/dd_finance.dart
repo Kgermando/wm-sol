@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart'; 
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart'; 
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_campaigns_fin.dart';
 import 'package:wm_solution/src/pages/finances/components/dd_finance/table_creance_dd.dart';

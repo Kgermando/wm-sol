@@ -18,7 +18,7 @@ class ActionnaireCotisationPage extends StatefulWidget {
 }
 
 class _ActionnaireCotisationPageState extends State<ActionnaireCotisationPage> {
-  final ActionnaireCotisationController controller = Get.find();
+  final ActionnaireCotisationController controller = Get.put(ActionnaireCotisationController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Actionnaire";

@@ -11,9 +11,9 @@ import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/devis/components/approbation_devis.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_list_objet_controller.dart';
+import 'package:wm_solution/src/pages/logistique/components/devis/approbation_devis.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_list_objet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
@@ -46,129 +46,123 @@ class _DetailDevisState extends State<DetailDevis> {
 
   @override
   Widget build(BuildContext context) {
-    return devisListObjetController.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.devisModel.title),
-              drawer: const DrawerMenu(),
-              floatingActionButton: (widget.devisModel.isSubmit == 'false')
-                  ? addObjetDevisButton()
-                  : Container(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, widget.devisModel.title),
+      drawer: const DrawerMenu(),
+      floatingActionButton: (widget.devisModel.isSubmit == 'false')
+          ? addObjetDevisButton()
+          : Container(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: devisListObjetController.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        TitleWidget(
+                                            title:
+                                                "Ticket n° ${widget.devisModel.id}"),
+                                        Column(
                                           children: [
-                                            TitleWidget(
-                                                title:
-                                                    "Ticket n° ${widget.devisModel.id}"),
-                                            Column(
-                                              children: [ 
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          tooltip: 'Actualiser',
-                                                          color: Colors
-                                                              .green.shade700,
-                                                          onPressed: () {
-                                                             refresh().then((value) =>
-                                                                Navigator.pushNamed(
-                                                                    context,
-                                                                    DevisRoutes
-                                                                        .devisDetail,
-                                                                    arguments:
-                                                                        value));
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.refresh)),
-                                                      if (widget.devisModel
-                                                              .isSubmit ==
-                                                          'false')
-                                                        IconButton(
-                                                            tooltip:
-                                                                'Soumettre chez le DD',
-                                                            color: Colors
-                                                                .teal.shade700,
-                                                            onPressed: () {
-                                                              controller.sendDD(
-                                                                  widget
-                                                                      .devisModel);
-                                                            },
-                                                            icon: const Icon(
-                                                                Icons.send)),
-                                                      if (widget.devisModel
-                                                            .approbationDD ==
-                                                        "Unapproved")
-                                                      deleteButton(controller),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yyyy")
-                                                        .format(widget
-                                                            .devisModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    color:
+                                                        Colors.green.shade700,
+                                                    onPressed: () {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              DevisRoutes
+                                                                  .devisDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh)),
+                                                if (widget
+                                                        .devisModel.isSubmit ==
+                                                    'false')
+                                                  IconButton(
+                                                      tooltip:
+                                                          'Soumettre chez le DD',
+                                                      color:
+                                                          Colors.teal.shade700,
+                                                      onPressed: () {
+                                                        controller.sendDD(
+                                                            widget.devisModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.send)),
+                                                if (widget.devisModel
+                                                        .approbationDD ==
+                                                    "Unapproved")
+                                                  deleteButton(controller),
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy").format(
+                                                    widget.devisModel.created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        dataWidget(
-                                            controller, profilController),
-                                        SizedBox(
-                                          height: 400,
-                                          width: double.infinity,
-                                          child: SingleChildScrollView(
-                                              child: tableDevisListObjet(
-                                                  devisListObjetController)),
-                                        ),
+                                        )
                                       ],
                                     ),
-                                  ),
+                                    dataWidget(controller, profilController),
+                                    SizedBox(
+                                      height: 400,
+                                      width: double.infinity,
+                                      child: SingleChildScrollView(
+                                          child: tableDevisListObjet(
+                                              devisListObjetController)),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                ApprobationDevis(
-                                  devisModel: widget.devisModel,
-                                  controller: controller,
-                                  profilController: profilController,
-                                  state: state!,
-                                )
-                              ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            ));
+                            const SizedBox(height: p20),
+                            ApprobationDevis(
+                              devisModel: widget.devisModel,
+                              controller: controller,
+                              profilController: profilController,
+                              state: state!,
+                            )
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   Widget dataWidget(

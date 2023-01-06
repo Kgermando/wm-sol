@@ -18,7 +18,7 @@ class ActionnaireTransfertPage extends StatefulWidget {
 }
 
 class _ActionnaireTransfertPageState extends State<ActionnaireTransfertPage> {
-  final ActionnaireTransfertController controller = Get.find();
+  final ActionnaireTransfertController controller = Get.put(ActionnaireTransfertController());
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Actionnaire";

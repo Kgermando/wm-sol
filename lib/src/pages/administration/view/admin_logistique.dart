@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/components/logistique/table_devis_dg.dart'; 
 import 'package:wm_solution/src/pages/administration/components/logistique/table_immobilier_dg.dart';
 import 'package:wm_solution/src/pages/administration/components/logistique/table_materiel_dg.dart';
-import 'package:wm_solution/src/pages/devis/controller/devis_controller.dart'; 
+import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart'; 
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart'; 
 
