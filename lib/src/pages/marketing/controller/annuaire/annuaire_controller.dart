@@ -98,8 +98,7 @@ class AnnuaireController extends GetxController
   void onSearchText(String text) async {
     List<AnnuaireModel> results = [];
     if (text.isEmpty) {
-      results = annuaireList;
-      print("results $results");
+      results = annuaireList; 
     } else {
       results = annuaireList
           .where((element) =>
