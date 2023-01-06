@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 
 final GlobalKey<ScaffoldState> scaffoldNetworkKey = GlobalKey();
 
 Widget noNetworkWidget(BuildContext context) => Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Icon(Icons.network_check, size: p50),
-        const SizedBox(
-          height: p20,
-        ),
-        Text("Pas de connexion internet.",
-            style: Theme.of(context).textTheme.headline6),
-        const SizedBox(
-          height: p20,
-        ),
-        TextButton(onPressed: () {}, child: const Text("Reessayer"))
-      ],
-    ),
-  );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.network_check, size: p50),
+          const SizedBox(
+            height: p20,
+          ),
+          Text("Pas de connexion internet.",
+              style: Theme.of(context).textTheme.headline6),
+          const SizedBox(
+            height: p20,
+          ),
+          TextButton(
+              onPressed: () {
+                Phoenix.rebirth(context);
+              },
+              child: const Text("Reessayer"))
+        ],
+      ),
+    );
 
 
 

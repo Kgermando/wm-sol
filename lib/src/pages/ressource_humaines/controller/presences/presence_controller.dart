@@ -71,7 +71,7 @@ class PresenceController extends GetxController
       await presenceApi.insertData(presenceModel).then((value) {
         Get.toNamed(RhRoutes.rhPresence);
         Get.snackbar(
-            "Liste Presence créé avec succès!", "Nouvelle liste de presence.",
+            "La fiche de presence a été genéré avec succès!", "Liste de presence.",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

@@ -25,6 +25,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   void onInit() {
     super.onInit();
     getList();
+    onSearchText('');
   }
 
   @override
@@ -47,7 +48,6 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
     List<AchatModel> results = [];
     if (text.isEmpty) {
       results = achatList;
-      
     } else {
       results = achatList
           .where((element) => element.idProduct

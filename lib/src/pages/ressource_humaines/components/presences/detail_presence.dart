@@ -26,8 +26,9 @@ class DetailPresence extends StatefulWidget {
 }
 
 class _DetailPresenceState extends State<DetailPresence> {
-    final PresenceController controller = Get.put(PresenceController());
-  final PresencePersonneController controllerPresencePersonne = Get.put(PresencePersonneController());
+  final PresenceController controller = Get.put(PresenceController());
+  final PresencePersonneController controllerPresencePersonne =
+      Get.put(PresencePersonneController());
   final PersonnelsController controllerPersonnels = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
@@ -39,141 +40,126 @@ class _DetailPresenceState extends State<DetailPresence> {
 
   @override
   Widget build(BuildContext context) {
-  
-
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Scaffold(
       key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.presenceModel.title),
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.presenceModel.title),
       drawer: const DrawerMenu(),
-      floatingActionButton: speedialWidget(controllerPresencePersonne),
-      body: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Card(
-                                        elevation: 3,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: p20),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                TitleWidget(
-                                    title: widget
-                                        .presenceModel.title),
-                                Row(
-                                  children: [
-                                    deleteDialog(controller),
-                                    Container(
-                                      width: 2,
-                                      height: 22,
-                                      color: lightGrey,
-                                    ),
-                                    const SizedBox(width: p8),
-                                    RichText(
-                                        textAlign:
-                                            TextAlign.start,
-                                        text: TextSpan(
-                                          style: Theme.of(
-                                                  context)
-                                              .textTheme
-                                              .bodyMedium,
+      floatingActionButton:
+          (DateTime.now().day.isEqual(widget.presenceModel.created.day))
+              ? speedialWidget(controllerPresencePersonne)
+              : Container(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controllerPresencePersonne.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: p20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const TextSpan(
-                                                text:
-                                                    "Créé à "),
-                                            TextSpan(
-                                                text: DateFormat(
-                                                        "HH:mm")
-                                                    .format(widget
-                                                        .presenceModel
-                                                          .created))
-                                                              ]))
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                              Divider(color: mainColor),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              p10),
-                                                      child: Text(
-                                                          'Fiche créé par :',
-                                                          textAlign:
-                                                              TextAlign.start,
-                                                          style: bodyMedium!
-                                                              .copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: SelectableText(
-                                                        widget.presenceModel
-                                                            .signature,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: bodyMedium),
-                                                  )
-                                                ],
-                                              ),
-                                              Divider(color: mainColor),
-                                              const TitleWidget(
-                                                  title: "Personnels presents"),
-                                              const SizedBox(height: p20),
-                                              presencePersonnelWidget(
-                                                  controllerPresencePersonne,
-                                                  controllerPersonnels)
-                                            ],
-                                          ),
+                                            TitleWidget(
+                                                title:
+                                                    widget.presenceModel.title),
+                                            Row(
+                                              children: [
+                                                deleteDialog(controller),
+                                                Container(
+                                                  width: 2,
+                                                  height: 22,
+                                                  color: lightGrey,
+                                                ),
+                                                const SizedBox(width: p8),
+                                                RichText(
+                                                    textAlign: TextAlign.start,
+                                                    text: TextSpan(
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                        children: [
+                                                          const TextSpan(
+                                                              text: "Créé à "),
+                                                          TextSpan(
+                                                              text: DateFormat(
+                                                                      "HH:mm")
+                                                                  .format(widget
+                                                                      .presenceModel
+                                                                      .created))
+                                                        ]))
+                                              ],
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                        Divider(color: mainColor),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(p10),
+                                                child: Text('Fiche créé par :',
+                                                    textAlign: TextAlign.start,
+                                                    style: bodyMedium!.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: SelectableText(
+                                                  widget
+                                                      .presenceModel.signature,
+                                                  textAlign: TextAlign.start,
+                                                  style: bodyMedium),
+                                            )
+                                          ],
+                                        ),
+                                        Divider(color: mainColor),
+                                        const SizedBox(height: p20),
+                                        presencePersonnelWidget(
+                                            controllerPresencePersonne,
+                                            controllerPersonnels)
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          )))
-                ],
-              )) ,
-            ); 
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   Widget deleteDialog(PresenceController controller) {
@@ -184,21 +170,21 @@ class _DetailPresenceState extends State<DetailPresence> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous sûr de vouloir faire ceci ?',
-              style: TextStyle(color: mainColor)),
+          title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+              style: TextStyle(color: Colors.red)),
           content: const Text(
               'Cette action permet de supprimer la liste de presence.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Annuler'),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () async {
                 controller.deleteData(widget.presenceModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
@@ -315,26 +301,32 @@ class _DetailPresenceState extends State<DetailPresence> {
               } else if (personne.sortie == 'false') {
                 isSortie = false;
               }
-              return ListTile(
-                leading: const Icon(
-                  Icons.person,
-                  size: 40.0,
-                  // color: Colors.green.shade700,
+              return Card(
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    size: 40.0,
+                    color: mainColor,
+                  ),
+                  title: Text(personne.identifiant),
+                  subtitle: Text(
+                      "Arrivé à ${DateFormat("HH:mm").format(personne.created)}"),
+                  trailing: IconButton(
+                      tooltip: "Sortie agent",
+                      onPressed: () {
+                        if(personne.sortie == 'false') {
+                          sortiePresenceDialog(
+                            controllerPresencePersonne, personne);
+                        }
+                      },
+                      icon: Icon(Icons.logout,
+                          color: (personne.sortie == 'true')
+                              ? Colors.red
+                              : Colors.green)),
+                  onLongPress: () {
+                    detailAgentDialog(personne);
+                  },
                 ),
-                title: Text(personne.identifiant),
-                subtitle: Text("Ajouté par ${personne.signature} "),
-                trailing: IconButton(
-                    onPressed: () {
-                      sortiePresenceDialog(
-                          controllerPresencePersonne, personne);
-                    },
-                    icon: Icon(Icons.logout,
-                        color: (personne.sortie == 'true')
-                            ? Colors.green
-                            : Colors.red)),
-                onLongPress: () {
-                  detailAgentDialog(personne);
-                },
               );
             }));
   }
@@ -412,7 +404,7 @@ class _DetailPresenceState extends State<DetailPresence> {
                       Row(
                         children: [
                           const Expanded(
-                              child: Text("Ajouté le: ",
+                              child: Text("Entrer le: ",
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                           Expanded(
@@ -455,60 +447,26 @@ class _DetailPresenceState extends State<DetailPresence> {
         barrierDismissible: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, StateSetter setState) {
-            Color getColor(Set<MaterialState> states) {
-              const Set<MaterialState> interactiveStates = <MaterialState>{
-                MaterialState.pressed,
-                MaterialState.hovered,
-                MaterialState.focused,
-              };
-              if (states.any(interactiveStates.contains)) {
-                return Colors.red;
-              }
-              return Colors.green;
-            }
-
-            checkboxRead(PresencePersonneController controllerPresencePersonne,
-                PresencePersonnelModel personne) {
-              return ListTile(
-                leading: Checkbox(
-                  checkColor: Colors.white,
-                  fillColor: MaterialStateProperty.resolveWith(getColor),
-                  value: isSortie,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isSortie = value!;
-                      if (isSortie) {
-                        sortieBoolean = 'true';
-                        controllerPresencePersonne.submitSortie(
-                            widget.presenceModel, personne, sortieBoolean);
-                      } else {
-                        sortieBoolean = 'false';
-                        controllerPresencePersonne.submitSortie(
-                            widget.presenceModel, personne, sortieBoolean);
-                      }
-                    });
-                  },
-                ),
-                title: Text(
-                    "Cocher pour marquer la sortie de ${personne.identifiant}"),
-              );
-            }
-
             return AlertDialog(
-              title:
-                  Text('Sortie presence', style: TextStyle(color: mainColor)),
-              content: SizedBox(
+              title: Text('Sortie de ${personne.identifiant}',
+                  style: const TextStyle(color: Colors.red)),
+              content: const SizedBox(
                   height: 100,
                   width: 300,
-                  child: checkboxRead(controllerPresencePersonne, personne)),
+                  child: Text("Cette action indique que l'individu est sortie.")),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler'),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'ok'),
-                  child: const Text('OK'),
+                  onPressed: () {
+                    controllerPresencePersonne.submitSortie(personne);
+                    Navigator.pop(context, 'ok');
+                  },
+                  child:
+                      const Text('OK', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );

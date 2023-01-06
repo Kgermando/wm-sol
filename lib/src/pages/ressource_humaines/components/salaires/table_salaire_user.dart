@@ -63,7 +63,8 @@ class _TableSalaireUserState extends State<TableSalaireUser> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.toNamed(RhRoutes.rhPaiement);
+                        widget.controller.getList();
+                        Navigator.pushNamed(context, RhRoutes.rhPaiement);  
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
+import 'package:wm_solution/src/controllers/network_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
@@ -98,8 +99,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  // final ProfilController profilController = Get.put(ProfilController());
-  // final UsersController usersController = Get.put(UsersController());
+  final NetworkController networkController = Get.put(NetworkController()); 
 
   final getStorge = GetStorage();
 

@@ -55,9 +55,8 @@ dependencies:
   easy_autocomplete: ^1.6.0
   easy_table: ^2.0.1
   flutter_slidable: ^2.0.0 
-  flutter_breadcrumb: ^1.0.1
-  # connectivity_plus: ^3.0.2
-  # internet_connection_checker: ^1.0.0+1  # sauf le Web
+  flutter_breadcrumb: ^1.0.1 
+  internet_connection_checker: ^1.0.0+1  # sauf le Web
   flutter_quill: ^6.1.6  # sauf le android
   # device_info_plus: ^7.0.0
   ffi: ^2.0.1

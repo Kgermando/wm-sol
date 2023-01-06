@@ -49,11 +49,12 @@ class PresencePersonneController extends GetxController
     identifiantController.dispose();
     motifController.dispose();
     super.dispose();
-  }  
-  
+  }
+
   void clear() {
     identifiantController.clear();
-    motifController.clear(); 
+    identifiantController.text = '';
+    motifController.clear();
   }
 
   void getList() async {
@@ -123,16 +124,15 @@ class PresencePersonneController extends GetxController
     }
   }
 
-  void submitSortie(PresenceModel data, PresencePersonnelModel personne,
-      String sortieBoolean) async {
+  void submitSortie(PresencePersonnelModel personne) async {
     try {
       _isLoading.value = true;
       final presence = PresencePersonnelModel(
           id: personne.id,
-          reference: data.id!,
+          reference: personne.reference,
           identifiant: personne.identifiant,
           motif: personne.motif,
-          sortie: sortieBoolean,
+          sortie: 'true',
           signature: personne.signature,
           signatureFermeture: profilController.user.matricule,
           created: personne.created,
@@ -141,9 +141,9 @@ class PresencePersonneController extends GetxController
         clear();
         presencePersonneList.clear();
         getList();
-        Get.back();
-        Get.snackbar("Sortie effectuée avec succès!",
-            "${identifiantController.text} est sortie",
+        // Get.back();
+        Get.snackbar(
+            "Sortie effectuée avec succès!", "${value.identifiant} est sortie",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
