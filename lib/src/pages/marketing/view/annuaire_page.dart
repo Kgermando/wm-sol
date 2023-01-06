@@ -10,8 +10,7 @@ import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_con
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
-import 'package:wm_solution/src/widgets/print_widget.dart';
-import 'package:wm_solution/src/widgets/search_widget.dart';
+import 'package:wm_solution/src/widgets/print_widget.dart'; 
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 // final _lightColors = [
