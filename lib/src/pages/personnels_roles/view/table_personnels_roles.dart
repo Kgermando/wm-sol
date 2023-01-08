@@ -15,12 +15,16 @@ class TablePersonnelsRoles extends StatefulWidget {
       required this.personnelsController,
       required this.approuvedDD,
       required this.id,
-      required this.departement});
+      required this.departement,
+      required this.route,
+      required this.routeArgument});
   final PersonnelsRolesController personnelsRolesController;
   final PersonnelsController personnelsController;
   final String approuvedDD; // Verrouiller after approbation DD
   final int id;
   final String departement;
+  final String route;
+  final String routeArgument;
 
   @override
   State<TablePersonnelsRoles> createState() => _TablePersonnelsRolesState();
@@ -65,6 +69,11 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
                           addAgentDialog();
                         },
                         icon: Icon(Icons.add, color: Colors.red.shade700)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, widget.route, arguments: widget.routeArgument);
+                      },
+                      icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {
                     PersonnelsRolesXlsx().exportToExcel(
                         widget.personnelsRolesController.personnelsRoleList);
@@ -239,7 +248,7 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: widget.personnelsRolesController.agentController,
+          // controller: widget.personnelsRolesController.agentController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -248,6 +257,9 @@ class _TablePersonnelsRolesState extends State<TablePersonnelsRoles> {
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
           validator: (value) => value == null ? "Select Service" : null,
+          onChanged: (value) {
+            widget.personnelsRolesController.agentController = value;
+          },
         ));
   }
 

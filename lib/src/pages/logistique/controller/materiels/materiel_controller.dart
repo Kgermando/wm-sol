@@ -31,7 +31,7 @@ class MaterielController extends GetxController
   TextEditingController modeleController = TextEditingController();
   TextEditingController numeroRefController = TextEditingController();
   TextEditingController couleurController = TextEditingController();
-  TextEditingController genreController = TextEditingController();
+  String? genreController;
   TextEditingController qtyMaxReservoirController = TextEditingController();
   TextEditingController dateFabricationController = TextEditingController();
   TextEditingController numeroPLaqueController = TextEditingController();
@@ -52,8 +52,7 @@ class MaterielController extends GetxController
     modeleController.dispose();
     marqueController.dispose();
     numeroRefController.dispose();
-    couleurController.dispose();
-    genreController.dispose();
+    couleurController.dispose(); 
     qtyMaxReservoirController.dispose();
     dateFabricationController.dispose();
     numeroPLaqueController.dispose();
@@ -64,15 +63,15 @@ class MaterielController extends GetxController
   }
 
   void clear() {
-    approbationDG = '-';
-    approbationDD = '-';
+    approbationDG == '-';
+    approbationDD == '-';
     motifDGController.clear();
     motifDDController.clear();
     modeleController.clear();
     marqueController.clear();
     numeroRefController.clear();
     couleurController.clear();
-    genreController.clear();
+    genreController == null;
     qtyMaxReservoirController.clear();
     dateFabricationController.clear();
     numeroPLaqueController.clear();
@@ -134,7 +133,7 @@ class MaterielController extends GetxController
           modele: modeleController.text,
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre: (genreController.text == '') ? 'Autres' : genreController.text,
+          genre: (genreController.toString() == '') ? 'Autres' : genreController.toString(),
           qtyMaxReservoir: (qtyMaxReservoirController.text == '')
               ? '0'
               : qtyMaxReservoirController.text,
@@ -191,18 +190,22 @@ class MaterielController extends GetxController
           marque: marqueController.text,
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre: genreController.text,
+          genre: (genreController.toString() == '')
+              ? data.genre
+              : genreController.toString(),
           qtyMaxReservoir: (qtyMaxReservoirController.text == '')
-              ? '0'
+              ? data.qtyMaxReservoir
               : qtyMaxReservoirController.text,
           dateFabrication: DateTime.parse(dateFabricationController.text),
           numeroPLaque: numeroPLaqueController.text,
           identifiant: data.identifiant,
           kilometrageInitiale: (kilometrageInitialeController.text == '')
-              ? '0'
+              ? data.kilometrageInitiale
               : kilometrageInitialeController.text,
           fournisseur: fournisseurController.text,
-          alimentation: alimentation.toString(),
+          alimentation: (alimentation.toString() == '')
+              ? data.alimentation
+              : alimentation.toString(),
           signature: profilController.user.matricule,
           created: data.created,
           approbationDG: '-',

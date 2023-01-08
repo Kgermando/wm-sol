@@ -227,6 +227,12 @@ class _TableCreanceState extends State<TableCreance> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

@@ -80,12 +80,14 @@ class RapportController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-          nom: data.nom,
-          numeroTache: data.numeroTache,
-          rapport: json, // rapportController.text,
-          signature: profilController.user.matricule.toString(),
-          created: DateTime.now(),
-          reference: data.id!);
+        nom: data.nom,
+        numeroTache: data.numeroTache,
+        rapport: json, // rapportController.text,
+        signature: profilController.user.matricule.toString(),
+        created: DateTime.now(),
+        reference: data.id!,
+        readRapport: 'Non Lu'
+      );
       await rapportApi.insertData(dataItem).then((value) {
         clear();
         rapportList.clear();
@@ -117,7 +119,40 @@ class RapportController extends GetxController
           rapport: json, // rapportController.text,
           signature: profilController.user.matricule.toString(),
           created: DateTime.now(),
-          reference: data.id!);
+          reference: data.reference,
+          readRapport: data.readRapport);
+      await rapportApi.updateData(dataItem).then((value) {
+        clear();
+        rapportList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été sauvegadé",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submiReadRapport(RapportModel data) async {
+    try {
+      _isLoading.value = true;
+      final dataItem = RapportModel(
+          id: data.id,
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          rapport: data.rapport,
+          signature: data.signature,
+          created: data.created,
+          reference: data.reference,
+          readRapport: 'Lu');
       await rapportApi.updateData(dataItem).then((value) {
         clear();
         rapportList.clear();

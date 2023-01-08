@@ -37,7 +37,8 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final ProfilController profilController = Get.put(ProfilController());
   final TransportRestController controller = Get.put(TransportRestController());
-  final TransportRestPersonnelsController controllerAgent = Get.put(TransportRestPersonnelsController());
+  final TransportRestPersonnelsController controllerAgent =
+      Get.put(TransportRestPersonnelsController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   String title = "Ressources Humaines";
@@ -49,137 +50,159 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.transportRestaurationModel.title),
-      drawer: const DrawerMenu(),
-      floatingActionButton:
-          (widget.transportRestaurationModel.isSubmit == "true")
-              ? Container()
-              : FloatingActionButton.extended(
-                  label: const Text("Ajouter une personne"),
-                  tooltip: "Ajout personne à la liste",
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    detailAgentDialog(controller, controllerAgent);
-                  },
-                ),
-      body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: controllerAgent.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => SingleChildScrollView(
-                        controller: ScrollController(),
-                        physics: const ScrollPhysics(),
-                        child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              if (!Responsive.isMobile(context))
-                                                TitleWidget(
-                                                    title: widget
-                                                        .transportRestaurationModel
-                                                        .title),
-                                             
-                                              Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      if (widget
-                                                              .transportRestaurationModel
-                                                              .isSubmit ==
-                                                          "false")
-                                                        IconButton(
-                                                            color: Colors
-                                                                .teal.shade700,
-                                                            onPressed: () {
-                                                              controller.sendDD(
-                                                                  widget
-                                                                      .transportRestaurationModel);
-                                                            },
-                                                            icon: const Icon(
-                                                                Icons.send)),
-                                                      if (widget
-                                                              .transportRestaurationModel
-                                                              .isSubmit ==
-                                                          "false")
-                                                        IconButton(
-                                                            tooltip:
-                                                                'Supprimer',
-                                                            onPressed:
-                                                                () async {
-                                                              alertDeleteDialog();
-                                                            },
-                                                            icon: const Icon(
-                                                                Icons.delete),
-                                                            color: Colors
-                                                                .red.shade700),
-                                                      PrintWidget(
-                                                          onPressed: () async {
-                                                        await TransRestPdf.generate(
-                                                            state!,
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title,
+            widget.transportRestaurationModel.title),
+        drawer: const DrawerMenu(),
+        floatingActionButton:
+            (widget.transportRestaurationModel.isSubmit == "true")
+                ? Container()
+                : FloatingActionButton.extended(
+                    label: const Text("Ajouter une personne"),
+                    tooltip: "Ajout personne à la liste",
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      ajoutPersonDialog(controller, controllerAgent);
+                    },
+                  ),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controllerAgent.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (state) => SingleChildScrollView(
+                          controller: ScrollController(),
+                          physics: const ScrollPhysics(),
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  top: p20, bottom: p8, right: p20, left: p20),
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Column(
+                                children: [
+                                  Card(
+                                    elevation: 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: p20),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                if (!Responsive.isMobile(
+                                                    context))
+                                                  TitleWidget(
+                                                      title: widget
+                                                          .transportRestaurationModel
+                                                          .title),
+                                                Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        if (widget.transportRestaurationModel
+                                                                    .isSubmit ==
+                                                                "false" ||
+                                                            widget.transportRestaurationModel
+                                                                    .approbationDG ==
+                                                                "Unapproved" ||
                                                             widget
-                                                                .transportRestaurationModel,
-                                                            monnaieStorage);
-                                                      }),
-                                                    ],
-                                                  ),
-                                                  SelectableText(
-                                                      DateFormat(
-                                                              "dd-MM-yyyy HH:mm")
-                                                          .format(widget
-                                                              .transportRestaurationModel
-                                                              .created),
-                                                      textAlign:
-                                                          TextAlign.start),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          dataWidget(controller),
-                                          tableListAgents(
-                                              controllerAgent,
-                                              controllerAgent
-                                                  .transRestAgentList),
-                                        ]),
+                                                                    .transportRestaurationModel
+                                                                    .approbationDD ==
+                                                                "Unapproved" ||
+                                                            widget.transportRestaurationModel
+                                                                    .approbationBudget ==
+                                                                "Unapproved" ||
+                                                            widget.transportRestaurationModel
+                                                                    .approbationFin ==
+                                                                "Unapproved")
+                                                          IconButton(
+                                                              color: Colors.teal
+                                                                  .shade700,
+                                                              onPressed: () {
+                                                                controller.sendDD(
+                                                                    widget
+                                                                        .transportRestaurationModel);
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.send)),
+                                                        if (widget
+                                                                .transportRestaurationModel
+                                                                .isSubmit ==
+                                                            "false" || widget.transportRestaurationModel
+                                                                    .approbationDG ==
+                                                                "Unapproved" ||
+                                                            widget.transportRestaurationModel
+                                                                    .approbationDD ==
+                                                                "Unapproved" || widget.transportRestaurationModel
+                                                                    .approbationBudget ==
+                                                                "Unapproved" || widget.transportRestaurationModel
+                                                                    .approbationFin ==
+                                                                "Unapproved")
+                                                          IconButton(
+                                                              tooltip:
+                                                                  'Supprimer',
+                                                              onPressed:
+                                                                  () async {
+                                                                alertDeleteDialog();
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.delete),
+                                                              color: Colors.red
+                                                                  .shade700),
+                                                        PrintWidget(onPressed:
+                                                            () async {
+                                                          await TransRestPdf.generate(
+                                                              state!,
+                                                              widget
+                                                                  .transportRestaurationModel,
+                                                              monnaieStorage);
+                                                        }),
+                                                      ],
+                                                    ),
+                                                    SelectableText(
+                                                        DateFormat(
+                                                                "dd-MM-yyyy HH:mm")
+                                                            .format(widget
+                                                                .transportRestaurationModel
+                                                                .created),
+                                                        textAlign:
+                                                            TextAlign.start),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            dataWidget(controller),
+                                            tableListAgents(
+                                                controllerAgent,
+                                                controllerAgent
+                                                    .transRestAgentList),
+                                          ]),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: p30),
-                                if(widget.transportRestaurationModel.isSubmit == "true")
-                                approbationWidget(
-                                    controller, profilController, state!)
-                              ],
-                            )),
-                      )) )
-                ],
-              )
-       
-    );
+                                  const SizedBox(height: p30),
+                                  if (widget.transportRestaurationModel
+                                          .isSubmit ==
+                                      "true")
+                                    approbationWidget(
+                                        controller, profilController, state!)
+                                ],
+                              )),
+                        )))
+          ],
+        ));
   }
 
   alertDeleteDialog() {
@@ -198,16 +221,20 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Annuler', style: TextStyle(color: Colors.red)),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
                 ),
-                Obx(() => controller.isLoading ? loadingMini() : TextButton(
-                  onPressed: () {
-                    controller
-                        .deleteData(widget.transportRestaurationModel.id!);
-                    Navigator.pop(context, 'ok');
-                  },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
-                )) ,
+                Obx(() => controller.isLoading
+                    ? loadingMini()
+                    : TextButton(
+                        onPressed: () {
+                          controller.deleteData(
+                              widget.transportRestaurationModel.id!);
+                          Navigator.pop(context, 'ok');
+                        },
+                        child: const Text('OK',
+                            style: TextStyle(color: Colors.red)),
+                      )),
               ],
             );
           });
@@ -256,7 +283,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                       'Non payé',
                       style:
                           bodyMedium.copyWith(color: Colors.redAccent.shade700),
-                    )))  ,
+                    ))),
           Divider(
             color: mainColor,
           ),
@@ -449,7 +476,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
     );
   }
 
-  detailAgentDialog(TransportRestController controller,
+  ajoutPersonDialog(TransportRestController controller,
       TransportRestPersonnelsController controllerAgent) {
     return showDialog(
         context: context,
@@ -491,13 +518,13 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                   onPressed: () => Navigator.pop(context, 'Cancel'),
                   child: const Text('Annuler'),
                 ),
-                TextButton(
+                Obx(() => TextButton(
                   onPressed: () {
                     controllerAgent.submitTransRestAgents(
                         widget.transportRestaurationModel);
                   },
-                  child: const Text('OK'),
-                ),
+                  child: (controllerAgent.isLoading) ? loadingMini() : const Text('OK'),
+                ),) 
               ],
             );
           });
@@ -554,15 +581,12 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
         controllerPersonnels.personnelsList.map((e) => e.matricule).toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: EasyAutocomplete(
-          controller: controllerAgent.matriculeController,
+        child: EasyAutocomplete( 
           decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0)
-            ),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
             labelText: "Matricule",
-            hintText: "-"
-          ),
+            hintText: "-"),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
           progressIndicatorBuilder: loading(),
@@ -572,6 +596,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
             } else {
               return null;
             }
+          },
+          onChanged: (value) {
+            controllerAgent.matricule = value;
           },
         ));
   }
@@ -682,13 +709,13 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                     )
                                   : Container(),
                               child3: Column(
-                                      children: [
-                                        const Text("Signature"),
-                                        const SizedBox(height: p20),
-                                        Text(widget.transportRestaurationModel
-                                            .signatureDG),
-                                      ],
-                                    )),
+                                children: [
+                                  const Text("Signature"),
+                                  const SizedBox(height: p20),
+                                  Text(widget
+                                      .transportRestaurationModel.signatureDG),
+                                ],
+                              )),
                           if (widget.transportRestaurationModel.approbationDD ==
                                   "Approved" &&
                               widget.transportRestaurationModel.approbationDG ==

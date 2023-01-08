@@ -274,7 +274,7 @@ class PersonnelsController extends GetxController
 
   
   Future submitUpdate(AgentModel personne) async {
-    var departement = jsonEncode(departementSelectedUpdateList);
+    var departement = jsonEncode(departementSelectedUpdateList.toSet().toList());
     var competanceJson =
         jsonEncode(competanceController.document.toDelta().toJson());
     // var experienceJson =

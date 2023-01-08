@@ -12,6 +12,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/salaire_pdf.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child4_widget.dart';
@@ -80,6 +81,19 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              if (widget.salaire.approbationDD ==
+                      "Unapproved" ||
+                  widget.salaire.approbationBudget ==
+                      "Unapproved" ||
+                  widget.salaire.approbationFin ==
+                      "Unapproved")
+              IconButton(
+                    tooltip: 'Supprimer',
+                    onPressed: () async {
+                      alertDeleteDialog();
+                    },
+                    icon: const Icon(Icons.delete),
+                    color: Colors.red.shade700),
               PrintWidget(onPressed: () async {
                 await SalairePdf.generate(widget.salaire);
               }),
@@ -153,6 +167,43 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
         ]),
       ),
     );
+  }
+
+
+  alertDeleteDialog() {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, StateSetter setState) {
+            return AlertDialog(
+              title: const Text('Etes-vous sûr de vouloir faire ceci ?',
+                  style: TextStyle(color: Colors.red)),
+              content: const SizedBox(
+                  // height: 100,
+                  width: 100,
+                  child: Text("Cette action permet de supprimer le document")),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Annuler',
+                      style: TextStyle(color: Colors.red)),
+                ),
+                Obx(() => controller.isLoading
+                    ? loadingMini()
+                    : TextButton(
+                        onPressed: () {
+                          controller.deleteData(
+                              widget.salaire.id!);
+                          Navigator.pop(context, 'ok');
+                        },
+                        child: const Text('OK',
+                            style: TextStyle(color: Colors.red)),
+                      )),
+              ],
+            );
+          });
+        });
   }
 
   Widget agentWidget(SalaireController controller) {

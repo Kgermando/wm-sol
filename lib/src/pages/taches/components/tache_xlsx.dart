@@ -29,7 +29,6 @@ class TacheXlsx {
         dataList[i].tache,
         dataList[i].signatureResp,
         DateFormat("dd/MM/yy HH-mm").format(dataList[i].created),
-        dataList[i].read
       ];
 
       sheetObject.insertRowIterables(data, i + 1);

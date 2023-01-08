@@ -121,6 +121,8 @@ class DepartementNotifyCOntroller extends GetxController {
 
   final _tacheItemCount = 0.obs;
   int get tacheItemCount => _tacheItemCount.value;
+  final _tacheRapportItemCount = 0.obs;
+  int get tacheRapportItemCount => _tacheRapportItemCount.value;
 
   final _mailsItemCount = 0.obs;
   int get mailsItemCount => _mailsItemCount.value;
@@ -312,7 +314,7 @@ class DepartementNotifyCOntroller extends GetxController {
     if (idToken != null) {
       UserModel user = await AuthApi().getUserId();
       List<dynamic> departement = jsonDecode(user.departement);
-      int userRole = int.parse(profilController.user.role); 
+      int userRole = int.parse(profilController.user.role);
 
       if (departement.contains("Administration")) {
         timerAdmin = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -378,7 +380,8 @@ class DepartementNotifyCOntroller extends GetxController {
         });
       }
       if (departement.contains("Comptabilites")) {
-        timerComptabilites = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerComptabilites =
+            Timer.periodic(const Duration(seconds: 1), (timer) {
           if (kDebugMode) {
             print("notify Comptabilites");
           }
@@ -392,7 +395,8 @@ class DepartementNotifyCOntroller extends GetxController {
         });
       }
       if (departement.contains("Exploitations")) {
-        timerExploitations = Timer.periodic(const Duration(seconds: 1), (timer) {
+        timerExploitations =
+            Timer.periodic(const Duration(seconds: 1), (timer) {
           if (kDebugMode) {
             print("notify Exploitations");
           }
@@ -404,6 +408,7 @@ class DepartementNotifyCOntroller extends GetxController {
           getCountMail();
           getCountAgenda();
           getCountTache();
+          getCountTacheRapport();
         });
       }
       if (departement.contains("Finances")) {
@@ -488,7 +493,6 @@ class DepartementNotifyCOntroller extends GetxController {
         });
       }
     }
-    
   }
 
   @override
@@ -516,8 +520,15 @@ class DepartementNotifyCOntroller extends GetxController {
 
   void getCountTache() async {
     NotifyModel notifySum =
-        await tacheNotifyApi.getCount(profilController.user.matricule);
+        await tacheNotifyApi.getCountTache(profilController.user.matricule);
     _tacheItemCount.value = notifySum.count;
+    update();
+  }
+
+  void getCountTacheRapport() async {
+    NotifyModel notifySum =
+        await tacheNotifyApi.getCountRapport(profilController.user.matricule);
+    _tacheRapportItemCount.value = notifySum.count;
     update();
   }
 

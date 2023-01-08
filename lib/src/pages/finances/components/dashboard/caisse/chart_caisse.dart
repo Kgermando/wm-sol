@@ -60,7 +60,7 @@ class _ChartCaisseState extends State<ChartCaisse> {
             xValueMapper: (ChartFinanceModel data, _) => data.name,
             yValueMapper: (ChartFinanceModel data, _) => data.depot,
             name: 'Encaissements',
-            color: const Color.fromRGBO(8, 142, 255, 1),
+            color: const Color.fromARGB(255, 31, 224, 118),
             dataLabelSettings: const DataLabelSettings(isVisible: true),
           ),
           ColumnSeries<ChartFinanceModel, String>(
@@ -68,7 +68,7 @@ class _ChartCaisseState extends State<ChartCaisse> {
             xValueMapper: (ChartFinanceModel data, _) => data.name,
             yValueMapper: (ChartFinanceModel data, _) => data.retrait,
             name: 'Décaissements',
-            color: const Color.fromARGB(255, 255, 107, 8),
+            color: const Color.fromARGB(216, 202, 43, 22),
             dataLabelSettings: const DataLabelSettings(isVisible: true),
           ),
         ]);

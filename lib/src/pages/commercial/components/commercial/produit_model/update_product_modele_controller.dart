@@ -8,7 +8,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -28,14 +28,10 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
   @override
   initState() {
     setState(() {
-      controller.categorieController =
-          TextEditingController(text: widget.productModel.categorie);
-      controller.sousCategorie1Controller =
-          TextEditingController(text: widget.productModel.sousCategorie1);
-      controller.sousCategorie2Controller =
-          TextEditingController(text: widget.productModel.sousCategorie2);
-      controller.sousCategorie3Controller =
-          TextEditingController(text: widget.productModel.sousCategorie3);
+      controller.categorieController = widget.productModel.categorie;
+      controller.sousCategorie1Controller = widget.productModel.sousCategorie1;
+      controller.sousCategorie2Controller = widget.productModel.sousCategorie2;
+      controller.sousCategorie3Controller = widget.productModel.sousCategorie3;
       controller.uniteController = widget.productModel.sousCategorie4;
     });
     super.initState();
@@ -44,81 +40,74 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.productModel.idProduct),
-        drawer: const DrawerMenu(),
-        body: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Visibility(
-                visible: !Responsive.isMobile(context),
-                child: const Expanded(flex: 1, child: DrawerMenu())),
-            Expanded(
-                flex: 5,
-                child: SingleChildScrollView(
-                    controller: ScrollController(),
-                    physics: const ScrollPhysics(),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          top: p20, bottom: p8, right: p20, left: p20),
-                      decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
-                      child: Form(
-                        key: controller.formKey,
-                        child: Column(
-                          children: [
-                            Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(p20),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    const TitleWidget(
-                                        title: 'Produit Modèle'),
-                                    const SizedBox(
-                                      height: p20,
-                                    ),
-                                    categorieWidget(controller),
-                                    ResponsiveChildWidget(
-                                        child1: sousCategorie1Widget(
-                                            controller),
-                                        child2: sousCategorie2Widget(
-                                            controller)),
-                                    ResponsiveChildWidget(
-                                        child1: sousCategorie3Widget(
-                                            controller),
-                                        child2: sousCategorie4Widget(
-                                            controller)),
-                                    const SizedBox(
-                                      height: p20,
-                                    ),
-                                    BtnWidget(
-                                        title: 'Soumettre',
-                                        isLoading: controller.isLoading,
-                                        press: () {
-                                          final form = controller
-                                              .formKey.currentState!;
-                                          if (form.validate()) {
-                                            controller.submitUpdate(
-                                                widget.productModel);
-                                            form.reset();
-                                          }
-                                        })
-                                  ],
-                                ),
+      key: scaffoldKey,
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.productModel.idProduct),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  physics: const ScrollPhysics(),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        top: p20, bottom: p8, right: p20, left: p20),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Form(
+                      key: controller.formKey,
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.all(p20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const TitleWidget(title: 'Produit Modèle'),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  categorieWidget(controller),
+                                  ResponsiveChildWidget(
+                                      child1: sousCategorie1Widget(controller),
+                                      child2: sousCategorie2Widget(controller)),
+                                  ResponsiveChildWidget(
+                                      child1: sousCategorie3Widget(controller),
+                                      child2: sousCategorie4Widget(controller)),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                  BtnWidget(
+                                      title: 'Soumettre',
+                                      isLoading: controller.isLoading,
+                                      press: () {
+                                        final form =
+                                            controller.formKey.currentState!;
+                                        if (form.validate()) {
+                                          controller.submitUpdate(
+                                              widget.productModel);
+                                          form.reset();
+                                        }
+                                      })
+                                ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
-                    )))
-          ],
-        ),
-      );
+                    ),
+                  )))
+        ],
+      ),
+    );
   }
 
   Widget categorieWidget(ProduitModelController controller) {
@@ -127,7 +116,6 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.categorieController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -142,6 +130,9 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
               return null;
             }
           },
+          onChanged: (value) {
+            controller.categorieController = value;
+          },
         ));
   }
 
@@ -153,7 +144,6 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.sousCategorie1Controller,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -168,6 +158,9 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
               return null;
             }
           },
+          onChanged: (value) {
+            controller.sousCategorie1Controller = value;
+          },
         ));
   }
 
@@ -179,7 +172,6 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.sousCategorie2Controller,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -194,6 +186,9 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
               return null;
             }
           },
+          onChanged: (value) {
+            controller.sousCategorie2Controller = value;
+          },
         ));
   }
 
@@ -205,7 +200,6 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.sousCategorie3Controller,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -219,6 +213,9 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
             } else {
               return null;
             }
+          },
+          onChanged: (value) {
+            controller.sousCategorie3Controller = value;
           },
         ));
   }

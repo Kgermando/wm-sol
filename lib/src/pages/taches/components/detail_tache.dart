@@ -26,7 +26,7 @@ class DetailTache extends StatefulWidget {
 class _DetailTacheState extends State<DetailTache> {
    final TachesController controller = Get.put(TachesController());
   final ProfilController profilController = Get.find();
-  final RapportController rapportController = Get.find();
+  final RapportController rapportController = Get.put(RapportController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Tâches";
 
@@ -99,6 +99,19 @@ class _DetailTacheState extends State<DetailTache> {
                                                             .tacheModel
                                                             .created),
                                                     textAlign: TextAlign.start),
+                                                if (widget.tacheModel.readResponsable == 'Fermer')
+                                                Text("✅ Tâche Fermer !",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            color: Colors
+                                                                .green.shade700)),
+                                              if (widget.tacheModel.signatureResp ==
+                                                      profilController
+                                                          .user.matricule &&
+                                                  widget.tacheModel.readResponsable == 'Ouvert')
+                                                checkboxRead(controller), 
                                               ],
                                             )
                                           ],
@@ -107,19 +120,8 @@ class _DetailTacheState extends State<DetailTache> {
                                         Divider(
                                           color: mainColor,
                                         ),
-                                        if (widget.tacheModel.read == 'true')
-                                          Text("✅ Tâche cloturer !",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      color: Colors
-                                                          .green.shade700)),
-                                        if (widget.tacheModel.signatureResp ==
-                                                profilController
-                                                    .user.matricule &&
-                                            widget.tacheModel.read == 'false')
-                                          checkboxRead(controller), 
+
+                                        
                                       ],
                                     ),
                                   ),
@@ -129,7 +131,9 @@ class _DetailTacheState extends State<DetailTache> {
                                 ),
                                 TableRapport(
                                     rapportController: rapportController,
-                                    tacheModel: widget.tacheModel),
+                                    tacheModel: widget.tacheModel,
+                                  profilController: profilController,
+                                ),
                               ],
                             ),
                           ))) )
@@ -155,12 +159,12 @@ class _DetailTacheState extends State<DetailTache> {
 
   checkboxRead(TachesController controller) {
     bool read = false;
-    if (widget.tacheModel.read == 'true') {
+    if (widget.tacheModel.readResponsable == 'Ouvert') {
       read = true;
-    } else if (widget.tacheModel.read == 'false') {
+    } else if (widget.tacheModel.readResponsable == 'Fermer') {
       read = false;
     }
-    return ListTile(
+    return Obx(() => ListTile(
       leading: Checkbox(
         checkColor: Colors.white,
         fillColor: MaterialStateProperty.resolveWith(getColor),
@@ -168,11 +172,7 @@ class _DetailTacheState extends State<DetailTache> {
         onChanged: (bool? value) {
           setState(() {
             read = value!;
-            if (read) {
-              controller.submitRead(widget.tacheModel, 'true');
-            } else {
-              controller.submitRead(widget.tacheModel, 'false');
-            }
+            controller.submitRead(widget.tacheModel);
              refresh().then((value) => Navigator.pushNamed(
                 context, ExploitationRoutes.expProjetDetail,
                 arguments: value));
@@ -181,7 +181,7 @@ class _DetailTacheState extends State<DetailTache> {
         },
       ),
       title: const Text("Cloturer cette tâche."),
-    );
+    )) ;
   }
 
   Widget dataWidget() {
@@ -191,6 +191,8 @@ class _DetailTacheState extends State<DetailTache> {
       child: Column(
         children: [
           ResponsiveChildWidget(
+            flex1: 1,
+            flex2: 3,
               child1: Text('Titre :',
                   textAlign: TextAlign.start,
                   style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
@@ -200,6 +202,8 @@ class _DetailTacheState extends State<DetailTache> {
             color: mainColor,
           ),
           ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
               child1: Text('Numero Tâche :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
@@ -209,6 +213,8 @@ class _DetailTacheState extends State<DetailTache> {
             color: mainColor,
           ),
           ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
               child1: Text('Jalon du projet :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
@@ -218,6 +224,8 @@ class _DetailTacheState extends State<DetailTache> {
             color: mainColor,
           ),
           ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
               child1: Text('Personne :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
@@ -227,6 +235,8 @@ class _DetailTacheState extends State<DetailTache> {
             color: mainColor,
           ),
           ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
               child1: Text('Responsable :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
@@ -236,6 +246,8 @@ class _DetailTacheState extends State<DetailTache> {
             color: mainColor,
           ),
           ResponsiveChildWidget(
+              flex1: 1,
+              flex2: 3,
               child1: Text('Tâche :',
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),

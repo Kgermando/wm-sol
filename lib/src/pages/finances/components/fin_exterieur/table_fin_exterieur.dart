@@ -257,6 +257,12 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
@@ -269,6 +275,12 @@ class _TableFinExterieurState extends State<TableFinExterieur> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

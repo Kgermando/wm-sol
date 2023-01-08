@@ -86,9 +86,11 @@ class TachesController extends GetxController
           tache: tacheController.text,
           signatureResp: profilController.user.matricule,
           created: DateTime.now(),
-          read: 'false',
+          readResponsable: 'Ouvert',
           departement: departement,
-          reference: id);
+          reference: id,
+          readAgent: 'Non Lu'
+        );
       await tachesApi.insertData(dataItem).then((value) {
         clear();
         tachesList.clear();
@@ -121,9 +123,10 @@ class TachesController extends GetxController
         tache: tacheController.text,
         signatureResp: profilController.user.matricule,
         created: data.created,
-        read: data.read,
+        readResponsable: data.readResponsable,
         departement: data.departement,
-        reference: data.reference
+        reference: data.reference,
+        readAgent: data.readAgent,
       );
       await tachesApi.updateData(dataItem).then((value) {
         clear();
@@ -145,7 +148,7 @@ class TachesController extends GetxController
     }
   }
 
-  void submitRead(TacheModel data, String read) async {
+  void submitRead(TacheModel data) async {
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
@@ -157,9 +160,46 @@ class TachesController extends GetxController
           tache: tacheController.text,
           signatureResp: profilController.user.matricule,
           created: data.created,
-          read: read,
+          readResponsable: 'Fermer',
           departement: data.departement,
-          reference: data.reference);
+          reference: data.reference,
+        readAgent: data.readAgent
+      );
+      await tachesApi.updateData(dataItem).then((value) {
+        clear();
+        tachesList.clear();
+        getList();
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été sauvegadé",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
+  void submitReadAgent(TacheModel data) async {
+    try {
+      _isLoading.value = true;
+      final dataItem = TacheModel(
+          id: data.id,
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          agent: agent.toString(),
+          jalon: jalonController.text,
+          tache: tacheController.text,
+          signatureResp: profilController.user.matricule,
+          created: data.created,
+          readResponsable: data.readResponsable,
+          departement: data.departement,
+          reference: data.reference,
+          readAgent: 'Lu');
       await tachesApi.updateData(dataItem).then((value) {
         clear();
         tachesList.clear();

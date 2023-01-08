@@ -249,7 +249,7 @@ class _AddMaterielState extends State<AddMateriel> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.genreController,
+          // controller: controller.genreController,
           decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -266,6 +266,9 @@ class _AddMaterielState extends State<AddMateriel> {
             } else {
               return null;
             }
+          },
+          onChanged: (value) {
+            controller.genreController = value;
           },
         ));
   }

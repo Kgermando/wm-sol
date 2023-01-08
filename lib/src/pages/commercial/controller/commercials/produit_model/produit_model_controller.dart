@@ -15,10 +15,10 @@ class ProduitModelController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  TextEditingController categorieController = TextEditingController();
-  TextEditingController sousCategorie1Controller = TextEditingController();
-  TextEditingController sousCategorie2Controller = TextEditingController();
-  TextEditingController sousCategorie3Controller = TextEditingController();
+  String? categorieController;
+  String? sousCategorie1Controller;
+  String? sousCategorie2Controller;
+  String? sousCategorie3Controller ;
   String? uniteController; // sousCategorie4
 
   // Approbations
@@ -31,21 +31,12 @@ class ProduitModelController extends GetxController
     getList();
   }
 
-  @override
-  void dispose() {
-    categorieController.dispose();
-    sousCategorie1Controller.dispose();
-    sousCategorie2Controller.dispose();
-    sousCategorie3Controller.dispose(); 
-
-    super.dispose();
-  }
-
+ 
   void clear() {
-    categorieController.clear();
-    sousCategorie1Controller.clear();
-    sousCategorie2Controller.clear();
-    sousCategorie3Controller.clear();
+    categorieController == null;
+    sousCategorie1Controller == null;
+    sousCategorie2Controller == null;
+    sousCategorie3Controller == null;
     uniteController = null;
   }
 
@@ -91,18 +82,18 @@ class ProduitModelController extends GetxController
     try {
       _isLoading.value = true;
       final idProductform =
-          "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.toString()}";
+          "${categorieController.toString()}-${sousCategorie1Controller.toString()}-${sousCategorie2Controller.toString()}-${sousCategorie3Controller.toString()}-${uniteController.toString()}";
       final dataItem = ProductModel(
-          categorie: categorieController.text,
-          sousCategorie1: (sousCategorie1Controller.text == "")
+          categorie: categorieController.toString(),
+          sousCategorie1: (sousCategorie1Controller.toString() == "")
               ? '-'
-              : sousCategorie1Controller.text,
-          sousCategorie2: (sousCategorie2Controller.text == "")
+              : sousCategorie1Controller.toString(),
+          sousCategorie2: (sousCategorie2Controller.toString() == "")
               ? '-'
-              : sousCategorie2Controller.text,
-          sousCategorie3: (sousCategorie3Controller.text == "")
+              : sousCategorie2Controller.toString(),
+          sousCategorie3: (sousCategorie3Controller.toString() == "")
               ? '-'
-              : sousCategorie3Controller.text,
+              : sousCategorie3Controller.toString(),
           sousCategorie4:
               (uniteController == "") ? '-' : uniteController.toString(),
           idProduct: idProductform.replaceAll(' ', '').toUpperCase(),
@@ -135,21 +126,21 @@ class ProduitModelController extends GetxController
     try {
       _isLoading.value = true;
       final idProductform =
-          "${categorieController.text}-${sousCategorie1Controller.text}-${sousCategorie2Controller.text}-${sousCategorie3Controller.text}-${uniteController.toString()}";
+          "${categorieController.toString()}-${sousCategorie1Controller.toString()}-${sousCategorie2Controller.toString()}-${sousCategorie3Controller.toString()}-${uniteController.toString()}";
       final dataItem = ProductModel(
           id: data.id,
-          categorie: categorieController.text,
-          sousCategorie1: (sousCategorie1Controller.text == "")
-              ? data.sousCategorie1
-              : sousCategorie1Controller.text,
-          sousCategorie2: (sousCategorie2Controller.text == "")
-              ? data.sousCategorie2
-              : sousCategorie2Controller.text,
-          sousCategorie3: (sousCategorie3Controller.text == "")
-              ? data.sousCategorie3
-              : sousCategorie3Controller.text,
+          categorie: categorieController.toString(),
+          sousCategorie1: (sousCategorie1Controller.toString() == "")
+              ? '-'
+              : sousCategorie1Controller.toString(),
+          sousCategorie2: (sousCategorie2Controller.toString() == "")
+              ? '-'
+              : sousCategorie2Controller.toString(),
+          sousCategorie3: (sousCategorie3Controller.toString() == "")
+              ? '-'
+              : sousCategorie3Controller.toString(),
           sousCategorie4:
-              (uniteController == "") ? data.sousCategorie4 : uniteController.toString(), 
+              (uniteController == "") ? '-' : uniteController.toString(),
           idProduct: idProductform.replaceAll(' ', '').toUpperCase(),
           signature: profilController.user.matricule,
           created: DateTime.now(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/responsive.dart'; 
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart'; 
@@ -66,7 +67,10 @@ class _CourbeLignBudgetaireState extends State<CourbeLignBudgetaire> {
           primaryXAxis: CategoryAxis(isVisible: false),
           primaryYAxis: NumericAxis(
               edgeLabelPlacement: EdgeLabelPlacement.shift,
-              title: AxisTitle(text: 'Budgets')),
+              title: AxisTitle(text: 'Budgets'),
+          numberFormat:
+              NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
+        ),
         ),
     );
     

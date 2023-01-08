@@ -132,8 +132,7 @@ class _TablecaisseState extends State<Tablecaisse> {
               ),
             ),
             rowColorCallback: (rowColorContext) {
-              if (rowColorContext.row.cells.entries.elementAt(4).value.value ==
-                  'Decaissement') {
+              if (rowColorContext.row.cells.entries.elementAt(3).value.value == 'Decaissement') {
                 return Colors.orange;
               }
 
@@ -240,6 +239,12 @@ class _TablecaisseState extends State<Tablecaisse> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
@@ -252,6 +257,12 @@ class _TablecaisseState extends State<Tablecaisse> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

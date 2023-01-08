@@ -37,7 +37,7 @@ class _CourbeVenteGainYearState extends State<CourbeVenteGainYear> {
               primaryXAxis: CategoryAxis(),
               // Chart title
               title: ChartTitle(
-                  text: 'Courbe de Ventes par an',
+                  text: 'Courbe de Ventes par AN',
                   textStyle: const TextStyle(fontWeight: FontWeight.bold)),
               // Enable legend
               legend: Legend(

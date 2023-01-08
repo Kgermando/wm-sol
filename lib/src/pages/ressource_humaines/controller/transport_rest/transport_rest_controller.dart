@@ -142,6 +142,48 @@ class TransportRestController extends GetxController
     }
   }
 
+  void submitUpdate(TransportRestaurationModel transportRestaurationModel) async {
+    try {
+      _isLoading.value = true;
+      final transRest = TransportRestaurationModel(
+          title: titleController.text,
+          observation: 'false',
+          signature: profilController.user.matricule.toString(),
+          createdRef: transportRestaurationModel.createdRef,
+          created: DateTime.now(),
+          approbationDG: '-',
+          motifDG: '-',
+          signatureDG: '-',
+          approbationBudget: '-',
+          motifBudget: '-',
+          signatureBudget: '-',
+          approbationFin: '-',
+          motifFin: '-',
+          signatureFin: '-',
+          approbationDD: '-',
+          motifDD: '-',
+          signatureDD: '-',
+          ligneBudgetaire: '-',
+          ressource: '-',
+          isSubmit: 'false');
+      await transportRestaurationApi.updateData(transRest).then((value) {
+        clear();
+        Get.toNamed(RhRoutes.rhTransportRest);
+        Get.snackbar("Soumission effectuée avec succès!",
+            "Le document a bien été sauvegadé",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
   void sendDD(TransportRestaurationModel data) async {
     try {
       _isLoading.value = true;

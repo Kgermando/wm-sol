@@ -110,7 +110,7 @@ class _NewMailState extends State<NewMail> {
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child:  EasyAutocomplete(
-        controller: controller.emailController,
+        // controller: controller.emailController,
         decoration: InputDecoration(
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -119,6 +119,9 @@ class _NewMailState extends State<NewMail> {
         keyboardType: TextInputType.emailAddress,
         suggestions: suggestionList,
         validator: (value) => RegExpIsValide().validateEmail(value),
+        onChanged: (value) {
+            controller.emailController = value;
+          },
       ) );
   }
 

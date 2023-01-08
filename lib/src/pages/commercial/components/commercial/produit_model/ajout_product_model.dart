@@ -101,8 +101,7 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
         controller.produitModelList.map((e) => e.categorie).toSet().toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: EasyAutocomplete(
-          controller: controller.categorieController,
+        child: EasyAutocomplete( 
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -117,6 +116,9 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
               return null;
             }
           },
+          onChanged: (value) {
+            controller.categorieController = value;
+          },
         ));
   }
 
@@ -127,8 +129,7 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
         .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: EasyAutocomplete(
-          controller: controller.sousCategorie1Controller,
+        child: EasyAutocomplete( 
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -143,6 +144,9 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
               return null;
             }
           },
+          onChanged: (value) {
+            controller.sousCategorie1Controller = value;
+          },
         ));
   }
 
@@ -153,8 +157,7 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
         .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: EasyAutocomplete(
-          controller: controller.sousCategorie2Controller,
+        child: EasyAutocomplete( 
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -169,6 +172,9 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
               return null;
             }
           },
+          onChanged: (value) {
+            controller.sousCategorie2Controller = value;
+          },
         ));
   }
 
@@ -179,8 +185,7 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
         .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
-        child: EasyAutocomplete(
-          controller: controller.sousCategorie3Controller,
+        child: EasyAutocomplete( 
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -194,6 +199,9 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
             } else {
               return null;
             }
+          },
+          onChanged: (value) {
+            controller.sousCategorie3Controller = value;
           },
         ));
   }

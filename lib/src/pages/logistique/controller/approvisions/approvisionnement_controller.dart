@@ -20,7 +20,7 @@ class ApprovisionnementController extends GetxController
 
   List<String> unitesList = Dropdown().unites;
 
-  TextEditingController provisionController = TextEditingController();
+  String? provisionController;
   TextEditingController quantityController = TextEditingController();
   String? unite;
   String? fournisseur;
@@ -32,14 +32,13 @@ class ApprovisionnementController extends GetxController
   }
 
   @override
-  void dispose() {
-    provisionController.dispose();
+  void dispose() { 
     quantityController.dispose();
     super.dispose();
   }
 
   void clear() {
-    provisionController.clear();
+    provisionController == null;
     quantityController.clear();
   }
 
@@ -87,7 +86,7 @@ class ApprovisionnementController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = ApprovisionnementModel(
-          provision: provisionController.text,
+          provision: provisionController.toString(),
           quantityTotal: quantityController.text,
           quantity: quantityController.text,
           unite: unite.toString(),

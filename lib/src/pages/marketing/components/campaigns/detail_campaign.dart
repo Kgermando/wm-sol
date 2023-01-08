@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -8,19 +7,14 @@ import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/marketing/components/campaigns/approbation_campaign.dart';
-import 'package:wm_solution/src/pages/marketing/components/campaigns/table_personnels_roles_campaign.dart';
-import 'package:wm_solution/src/pages/marketing/components/campaigns/table_taches_campaign_detail.dart';
+import 'package:wm_solution/src/pages/marketing/components/campaigns/stats_campaign.dart';
+import 'package:wm_solution/src/pages/marketing/components/campaigns/view_campaign.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
 import 'package:wm_solution/src/pages/taches/controller/taches_controller.dart';
-import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
-import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
-import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
-import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailCampaign extends StatefulWidget {
   const DetailCampaign({super.key, required this.campaignModel});
@@ -49,13 +43,13 @@ class _DetailCampaignState extends State<DetailCampaign> {
 
   @override
   Widget build(BuildContext context) {
-    int userRole = int.parse(profilController.user.role);
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(
             context, scaffoldKey, title, widget.campaignModel.typeProduit),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: (widget.campaignModel.isSubmit == "true")
+            ? FloatingActionButton.extended(
           label: const Text("Nouvelle tâche"),
           tooltip: "Ajouter une tâche pour les personnels.",
           icon: const Icon(Icons.add),
@@ -114,7 +108,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
               },
             );
           },
-        ),
+        ) : Container(),
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -123,318 +117,63 @@ class _DetailCampaignState extends State<DetailCampaign> {
                 child: const Expanded(flex: 1, child: DrawerMenu())),
             Expanded(
                 flex: 5,
-                child:  controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!),
-      (state) => SingleChildScrollView(
-              controller: ScrollController(),
-              physics: const ScrollPhysics(),
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: p20, bottom: p8, right: p20, left: p20),
-                decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(20))),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: p20),
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (state) => DefaultTabController(
+                        length: 2,
+                        child: ListView(
+                          shrinkWrap: true,
                           children: [
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              children: [
-                                const TitleWidget(title: "Campagne"),
-                                Column(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            if (widget.campaignModel
-                                                .isSubmit ==
-                                            'false')
-                                          IconButton(
-                                              tooltip:
-                                                  'Soumettre chez le DD',
-                                              onPressed:
-                                                  () async {
-                                                controller.submitToDD(
-                                                    widget
-                                                        .campaignModel);
-                                                refresh().then((value) =>
-                                                    Navigator.pushNamed(
-                                                        context,
-                                                        ExploitationRoutes
-                                                            .expProjetDetail,
-                                                        arguments:
-                                                            value));
-                                              },
-                                              icon: Icon(
-                                                  Icons.send,
-                                                  color: Colors
-                                                      .teal
-                                                      .shade700)),
-                                            IconButton(
-                                                tooltip:
-                                                    'Actualiser',
-                                                onPressed:
-                                                    () async {
-                                                  refresh().then((value) => Navigator.pushNamed(
-                                                      context,
-                                                      MarketingRoutes
-                                                          .marketingCampaignDetail,
-                                                      arguments:
-                                                          value));
-                                                },
-                                                icon: const Icon(
-                                                    Icons.refresh,
-                                                    color: Colors
-                                                        .green)),
-                                              
-                                            if (widget.campaignModel.approbationDG == "Unapproved" ||
-                                                  widget.campaignModel
-                                                          .approbationDD ==
-                                                      "Unapproved" ||
-                                                  widget.campaignModel
-                                                          .approbationBudget ==
-                                                      "Unapproved" ||
-                                                  widget.campaignModel
-                                                          .approbationFin ==
-                                                      "Unapproved" ||
-                                                          widget.campaignModel
-                                                                  .isSubmit ==
-                                                              'false')
-                                              IconButton(
-                                                  tooltip:
-                                                      "Modification du document",
-                                                  color: Colors
-                                                      .purple,
-                                                  onPressed: () {
-                                                    Get.toNamed(
-                                                        MarketingRoutes
-                                                            .marketingCampaignUpdate,
-                                                        arguments:
-                                                            widget
-                                                                .campaignModel);
-                                                  },
-                                                  icon: const Icon(
-                                                      Icons
-                                                          .edit)),
-                                            if (userRole <= 3 &&
-                                                widget.campaignModel
-                                                        .approbationDD ==
-                                                    "-")
-                                              deleteButton(
-                                                  controller),
-                                          ],
-                                        ),
-                                        SelectableText(
-                                            DateFormat(
-                                                    "dd-MM-yyyy HH:mm")
-                                                .format(widget
-                                                    .campaignModel
-                                                    .created),
-                                            textAlign:
-                                                TextAlign.start),
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
+                            const SizedBox(
+                              height: 30,
+                              child: TabBar(
+                                physics: ScrollPhysics(),
+                                tabs: [Tab(text: "View"), Tab(text: "Stats")],
+                              ),
                             ),
-                            dataWidget(
-                                controller, profilController),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: p20, bottom: p8, right: p20, left: p20),
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              constraints: BoxConstraints(
+                                  maxHeight:
+                                      MediaQuery.of(context).size.height),
+                              child: TabBarView(
+                                physics: const ScrollPhysics(),
+                                children: [
+                                  SingleChildScrollView(
+                                      child: ViewCampaign(
+                                          campaignModel: widget.campaignModel,
+                                          monnaieStorage: monnaieStorage,
+                                          controller: controller,
+                                          profilController: profilController,
+                                          personnelsRolesController:
+                                              personnelsRolesController,
+                                          personnelsController:
+                                              personnelsController,
+                                          tachesController: tachesController)),
+                                  SingleChildScrollView(
+                                      child: StatsCampaign(
+                                          campaignModel: widget.campaignModel,
+                                          monnaieStorage: monnaieStorage,
+                                          controller: controller,
+                                          profilController: profilController,
+                                          personnelsRolesController:
+                                              personnelsRolesController,
+                                          personnelsController:
+                                              personnelsController,
+                                          tachesController: tachesController))
+                                ],
+                              ),
+                            )
                           ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: p20),
-                    
-                    TablePersonnelsRolesCampaign(
-                      personnelsRolesController:
-                          personnelsRolesController,
-                      personnelsController: personnelsController,
-                      approuvedDD:
-                          widget.campaignModel.approbationDD,
-                      id: widget.campaignModel.id!,
-                      departement: 'Marketing',
-                      campaignModel: widget.campaignModel,
-                    ),
-                    const SizedBox(height: p20),
-                    TableTachesCampaignDetail(
-                      tachesController: tachesController,
-                      id: widget.campaignModel.id!,
-                      departement: 'Marketing',
-                      campaignModel: widget.campaignModel,
-                    ),
-                    const SizedBox(height: p20),
-                    if (widget.campaignModel.isSubmit == 'true')
-                    ApprobationCampaign(
-                        campaignModel: widget.campaignModel,
-                        controller: controller,
-                        profilController: profilController)
-                  ],
-                ),
-              ))) 
-                
-                
-                )
+                        ))))
           ],
-        )
-
-        
-        );
-  }
-
-  Widget deleteButton(CampaignController controller) {
-    return IconButton(
-      color: Colors.red.shade700,
-      icon: const Icon(Icons.delete),
-      tooltip: "Suppression",
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de supprimé ceci?', style: TextStyle(color: Colors.red)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
-            ),
-            TextButton(
-              onPressed: () {
-                controller.campaignApi.deleteData(widget.campaignModel.id!);
-              },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget dataWidget(
-      CampaignController controller, ProfilController profilController) {
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
-    return Padding(
-      padding: const EdgeInsets.all(p10),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: p20,
-          ),
-          ResponsiveChildWidget(
-              child1: Text('Produit :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.campaignModel.typeProduit,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(color: mainColor),
-          ResponsiveChildWidget(
-              child1: Text('Date Debut Et Fin :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.campaignModel.dateDebutEtFin,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(color: mainColor),
-          ResponsiveChildWidget(
-              child1: Text('Coût de la Campagne :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(widget.campaignModel.coutCampaign))} ${monnaieStorage.monney}",
-                  textAlign: TextAlign.start,
-                  style: bodyMedium)),
-          Divider(color: mainColor),
-          ResponsiveChildWidget(
-              child1: Text('Lieu ou region Ciblé :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.campaignModel.lieuCible,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(color: mainColor),
-          ResponsiveChildWidget(
-              child1: Text('Objet de la Promotion :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.campaignModel.promotion,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(color: mainColor),
-          ResponsiveChildWidget(
-              child1: Text('Objectifs :',
-                  textAlign: TextAlign.start,
-                  style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              child2: SelectableText(widget.campaignModel.objectifs,
-                  textAlign: TextAlign.start, style: bodyMedium)),
-          Divider(color: mainColor),
-          ResponsiveChild3Widget(
-            child1: Text('Observation :',
-                textAlign: TextAlign.start,
-                style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-            child2: (widget.campaignModel.observation == 'false' &&
-                    profilController.user.departement == "Finances")
-                ? checkboxRead(controller)
-                : Container(),
-            child3: (widget.campaignModel.observation == 'true')
-                ? SelectableText(
-                    'Payé',
-                    style:
-                        bodyMedium.copyWith(color: Colors.greenAccent.shade700),
-                  )
-                : SelectableText(
-                    'Non payé',
-                    style:
-                        bodyMedium.copyWith(color: Colors.redAccent.shade700),
-                  ),
-          ),
-          Divider(color: mainColor),
-        ],
-      ),
-    );
-  }
-
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  checkboxRead(CampaignController controller) {
-    bool isChecked = false;
-    if (widget.campaignModel.observation == 'true') {
-      isChecked = true;
-    } else if (widget.campaignModel.observation == 'false') {
-      isChecked = false;
-    }
-    return ListTile(
-      leading: Checkbox(
-        checkColor: Colors.white,
-        fillColor: MaterialStateProperty.resolveWith(getColor),
-        value: isChecked,
-        onChanged: (bool? value) {
-          setState(() {
-            isChecked = value!;
-            controller.submitObservation(widget.campaignModel);
-          });
-        },
-      ),
-      title: const Text("Confirmation de payement"),
-    );
+        ));
   }
 
   Widget agentWidget(TachesController tachesController,

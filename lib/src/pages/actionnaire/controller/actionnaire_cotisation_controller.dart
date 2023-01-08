@@ -22,8 +22,10 @@ class ActionnaireCotisationController extends GetxController
 
   TextEditingController montantController = TextEditingController();
   TextEditingController noteController = TextEditingController();
-  TextEditingController moyenPaiementController = TextEditingController();
+  // TextEditingController moyenPaiementController = TextEditingController();
   TextEditingController numeroTransactionController = TextEditingController();
+
+  String? moyenPaiementController;
 
   @override
   void onInit() {
@@ -35,7 +37,7 @@ class ActionnaireCotisationController extends GetxController
   void dispose() {
     montantController.dispose();
     noteController.dispose();
-    moyenPaiementController.dispose();
+    moyenPaiementController == null;
     numeroTransactionController.dispose();
 
     super.dispose();
@@ -44,7 +46,7 @@ class ActionnaireCotisationController extends GetxController
   void clear() {
     montantController.clear();
     noteController.clear();
-    moyenPaiementController.clear();
+    // moyenPaiementController.clear();
     numeroTransactionController.clear();
   }
 
@@ -94,7 +96,7 @@ class ActionnaireCotisationController extends GetxController
           montant:
               (montantController.text == "") ? '0.0' : montantController.text,
           note: (noteController.text == "") ? '-' : noteController.text,
-          moyenPaiement: moyenPaiementController.text,
+          moyenPaiement: moyenPaiementController.toString(),
           numeroTransaction: numeroTransactionController.text,
           signature: profilController.user.matricule,
           created: DateTime.now());

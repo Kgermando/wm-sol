@@ -151,7 +151,7 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.provisionController,
+          // controller: controller.provisionController,
           decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -165,6 +165,9 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
             } else {
               return null;
             }
+          },
+          onChanged: (value) {
+            controller.provisionController = value;
           },
         ));
   }

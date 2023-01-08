@@ -100,7 +100,7 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
             resolveDefaultColumnFilter: (column, resolver) {
               if (column.field == 'numero') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-              } else if (column.field == 'read') {
+              } else if (column.field == 'readResponsable') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'nom') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -136,17 +136,11 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
         .toList();
 
     var i = dataList.length;
-    for (var item in dataList) {
-      bool read = false;
-      if (item.read == 'true') {
-        read = true;
-      } else if (item.read == 'false') {
-        read = false;
-      }
+    for (var item in dataList) { 
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'read': PlutoCell(value: (read) ? "Lu" : "Non Lu"),
+          'readResponsable': PlutoCell(value: item.readResponsable),
           'nom': PlutoCell(value: item.nom),
           'numeroTache': PlutoCell(value: item.numeroTache),
           'agent': PlutoCell(value: item.agent),
@@ -183,16 +177,16 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
       PlutoColumn(
         readOnly: true,
         title: 'Statut',
-        field: 'read',
+        field: 'readResponsable',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
-          if (rendererContext.cell.value == 'Ouvert') {
+          if (rendererContext.cell.value == 'Fermer') {
             textColor = Colors.green;
-          } else if (rendererContext.cell.value == 'Fermé') {
+          } else if (rendererContext.cell.value == 'Ouvert') {
             textColor = Colors.red;
           }
           return Row(

@@ -110,9 +110,22 @@ class _DetailDevisState extends State<DetailDevis> {
                                                     },
                                                     icon: const Icon(
                                                         Icons.refresh)),
-                                                if (widget
-                                                        .devisModel.isSubmit ==
-                                                    'false')
+                                                if (widget.devisModel
+                                                            .isSubmit ==
+                                                        "false" ||
+                                                    widget.devisModel
+                                                            .approbationDG ==
+                                                        "Unapproved" ||
+                                                    widget
+                                                            .devisModel
+                                                            .approbationDD ==
+                                                        "Unapproved" ||
+                                                    widget.devisModel
+                                                            .approbationBudget ==
+                                                        "Unapproved" ||
+                                                    widget.devisModel
+                                                            .approbationFin ==
+                                                        "Unapproved")
                                                   IconButton(
                                                       tooltip:
                                                           'Soumettre chez le DD',
@@ -125,8 +138,21 @@ class _DetailDevisState extends State<DetailDevis> {
                                                       icon: const Icon(
                                                           Icons.send)),
                                                 if (widget.devisModel
-                                                        .approbationDD ==
-                                                    "Unapproved")
+                                                            .isSubmit ==
+                                                        "false" ||
+                                                    widget.devisModel
+                                                            .approbationDG ==
+                                                        "Unapproved" ||
+                                                    widget
+                                                            .devisModel
+                                                            .approbationDD ==
+                                                        "Unapproved" ||
+                                                    widget.devisModel
+                                                            .approbationBudget ==
+                                                        "Unapproved" ||
+                                                    widget.devisModel
+                                                            .approbationFin ==
+                                                        "Unapproved")
                                                   deleteButton(controller),
                                               ],
                                             ),

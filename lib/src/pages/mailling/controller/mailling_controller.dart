@@ -23,7 +23,7 @@ class MaillingController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  TextEditingController emailController = TextEditingController();
+  String? emailController;
   TextEditingController objetController = TextEditingController();
   TextEditingController messageController = TextEditingController();
   TextEditingController pieceJointeController = TextEditingController();
@@ -53,8 +53,7 @@ class MaillingController extends GetxController
   }
 
   @override
-  void dispose() {
-    emailController.dispose();
+  void dispose() { 
     objetController.dispose();
     messageController.dispose();
     pieceJointeController.dispose();
@@ -63,8 +62,8 @@ class MaillingController extends GetxController
   }
 
   void clear() {
-    uploadedFileUrl = null;
-    emailController.clear();
+    uploadedFileUrl == null;
+    emailController == null;
     objetController.clear();
     messageController.clear();
     pieceJointeController.clear();
@@ -119,12 +118,12 @@ class MaillingController extends GetxController
     try {
       _isLoading.value = true;
       var userSelect = usersController.usersList
-          .where((element) => element.email == emailController.text)
+          .where((element) => element.email == emailController.toString())
           .first;
       var ccJson = jsonEncode(ccList);
       final mailModel = MailModel(
           fullName: "${userSelect.prenom} ${userSelect.nom}",
-          email: emailController.text,
+          email: emailController.toString(),
           cc: ccJson,
           objet: objetController.text,
           message: messageController.text,

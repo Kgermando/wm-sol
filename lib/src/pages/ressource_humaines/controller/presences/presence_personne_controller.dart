@@ -24,7 +24,7 @@ class PresencePersonneController extends GetxController
   int get isJoursWork => _isJoursWork.value;
   int get isHoursWork => _isHoursWork.value;
 
-  TextEditingController identifiantController = TextEditingController();
+  String? identifiantController;
   TextEditingController motifController = TextEditingController();
 
   @override
@@ -45,15 +45,13 @@ class PresencePersonneController extends GetxController
   }
 
   @override
-  void dispose() {
-    identifiantController.dispose();
+  void dispose() { 
     motifController.dispose();
     super.dispose();
   }
 
   void clear() {
-    identifiantController.clear();
-    identifiantController.text = '';
+    identifiantController == null;
     motifController.clear();
   }
 
@@ -97,7 +95,7 @@ class PresencePersonneController extends GetxController
       _isLoading.value = true;
       final presence = PresencePersonnelModel(
           reference: data.id!,
-          identifiant: identifiantController.text,
+          identifiant: identifiantController.toString(),
           motif: motifController.text,
           sortie: 'false',
           signature: profilController.user.matricule,
@@ -110,7 +108,7 @@ class PresencePersonneController extends GetxController
         getList();
         Get.back();
         Get.snackbar("Presence effectuée avec succès!",
-            "${identifiantController.text} est présent",
+            "${identifiantController.toString()} est présent",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

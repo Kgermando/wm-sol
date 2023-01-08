@@ -23,8 +23,9 @@ class TransportRestPersonnelsController extends GetxController
 
   final TextEditingController nomController = TextEditingController();
   final TextEditingController prenomController = TextEditingController();
-  final TextEditingController matriculeController = TextEditingController();
+  // final TextEditingController matriculeController = TextEditingController();
   final TextEditingController montantController = TextEditingController();
+  String? matricule;
 
   @override
   void onInit() {
@@ -36,7 +37,7 @@ class TransportRestPersonnelsController extends GetxController
   void dispose() {
     nomController.dispose();
     prenomController.dispose();
-    matriculeController.dispose();
+    // matriculeController.dispose();
     montantController.dispose();
     super.dispose();
   }
@@ -44,8 +45,8 @@ class TransportRestPersonnelsController extends GetxController
   void clear() {
     nomController.clear();
     prenomController.clear();
-    matriculeController.clear();
-    matriculeController.text.isEmpty;
+    matricule == null;
+    // matriculeController.clear();
     montantController.clear();
   }
 
@@ -73,7 +74,7 @@ class TransportRestPersonnelsController extends GetxController
             reference: data.id!,
             nom: nomController.text,
             prenom: prenomController.text,
-            matricule: matriculeController.text,
+            matricule: matricule.toString(),
             montant: montantController.text,
             observation: "false");
         await transRestAgentsApi.insertData(transRest).then((value) {

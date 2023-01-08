@@ -124,6 +124,23 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.work_outline),
             )) ),
+      if (departementList.contains('Exploitations') ||
+          departementList.contains('Marketing'))
+        IconButton(
+            tooltip: 'Rapports reçus',
+            onPressed: () {
+              Get.toNamed(TacheRoutes.tachePage);
+            },
+            icon: Obx(() => Badge(
+                  showBadge: (departementNotifyCOntroller.tacheRapportItemCount >= 1)
+                      ? true
+                      : false,
+                  badgeContent: Text(
+                      departementNotifyCOntroller.tacheRapportItemCount
+                          .toString(),
+                      style: const TextStyle(color: Colors.white)),
+                  child: const Icon(Icons.article_outlined),
+                ))),
       if (departementList.contains('Commercial'))
         IconButton(
             tooltip: 'Panier',
@@ -176,28 +193,27 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
         color: lightGrey,
       ),
       if (!Responsive.isMobile(context))
-        const SizedBox(
-          width: p20,
-        ),
+      const SizedBox(
+        width: p20,
+      ),
       Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
         ),
         padding: const EdgeInsets.all(2),
         margin: const EdgeInsets.all(2),
-        child: CircleAvatar(
-          // backgroundColor: lightGrey,
+        child: CircleAvatar( 
           child: AutoSizeText(
             '$firstLettter$firstLettter2'.toUpperCase(),
             maxLines: 1,
           ),
-        ),
+        ) 
       ),
       const SizedBox(width: p8),
       if (Responsive.isDesktop(context))
       Row(
         children: [
-          InkWell(
+          Obx(() =>  InkWell(
             onTap: () {
               Get.toNamed(UserRoutes.profil);
             },
@@ -206,7 +222,7 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
               maxLines: 1,
               style: bodyLarge,
             ),
-          ),
+          )) ,
         ],
       ),
       PopupMenuButton<MenuItemModel>(

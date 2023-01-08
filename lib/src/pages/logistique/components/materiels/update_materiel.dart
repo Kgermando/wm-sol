@@ -33,7 +33,7 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
     controller.modeleController = TextEditingController(text: widget.materielModel.modele);
     controller.numeroRefController = TextEditingController(text: widget.materielModel.numeroRef);
     controller.couleurController = TextEditingController(text: widget.materielModel.couleur);
-    controller.genreController = TextEditingController(text: widget.materielModel.genre);
+    controller.genreController = widget.materielModel.genre;
     controller.qtyMaxReservoirController = TextEditingController(text: widget.materielModel.qtyMaxReservoir);
     controller.numeroPLaqueController = TextEditingController(text: widget.materielModel.numeroPLaque);
     controller.kilometrageInitialeController =TextEditingController(text: widget.materielModel.kilometrageInitiale);
@@ -257,19 +257,23 @@ Widget marqueWidget() {
         ));
   }
 
-  Widget genreWidget() {
-    List<String> suggestionList =
-        controller.materielList
+   Widget genreWidget() {
+    List<String> suggestionList = controller.materielList
         .where((p0) => p0.typeMateriel == 'Materiel roulant')
-        .map((e) => e.genre).toSet().toList();
+        .map((e) => e.genre)
+        .toSet()
+        .toList();
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controller.genreController,
+          // controller: controller.genreController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: "Genre",
+            labelText: "Categorie",
+            hintText: (controller.typeMateriel == 'Materiel roulant')
+                ? 'voiture, camion, bus,...'
+                : 'Laptop, desktop, generateur, Imprimante,...',
           ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
@@ -279,6 +283,9 @@ Widget marqueWidget() {
             } else {
               return null;
             }
+          },
+          onChanged: (value) {
+            controller.genreController = value;
           },
         ));
   }

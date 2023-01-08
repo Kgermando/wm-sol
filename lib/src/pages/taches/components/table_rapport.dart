@@ -4,15 +4,17 @@ import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableRapport extends StatefulWidget {
   const TableRapport(
-      {super.key, required this.rapportController, required this.tacheModel});
+      {super.key, required this.rapportController, required this.tacheModel, required this.profilController});
   final RapportController rapportController;
   final TacheModel tacheModel;
+  final ProfilController profilController;
 
   @override
   State<TableRapport> createState() => _TableRapportState();
@@ -44,6 +46,9 @@ class _TableRapportState extends State<TableRapport> {
 
           final RapportModel rapportModel =
               await widget.rapportController.detailView(idPlutoRow.value);
+          if(widget.tacheModel.signatureResp == widget.profilController.user.matricule) {
+             widget.rapportController.submiReadRapport(rapportModel);
+          } 
 
           Get.toNamed(TacheRoutes.rapportDetail, arguments: rapportModel);
         },
@@ -111,7 +116,7 @@ class _TableRapportState extends State<TableRapport> {
           'nom': PlutoCell(value: item.nom),
           'numeroTache': PlutoCell(value: item.numeroTache),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'id': PlutoCell(value: item.id)
         }));
       });
@@ -148,18 +153,24 @@ class _TableRapportState extends State<TableRapport> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Numero Tâche',
+        title: 'N° Tache',
         field: 'numeroTache',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 150,
         minWidth: 150,
       ),

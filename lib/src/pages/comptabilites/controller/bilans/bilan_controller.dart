@@ -91,7 +91,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
           signatureDD: '-');
       await bilanApi.insertData(bilan).then((value) {
         clear(); 
-        Get.toNamed(ComptabiliteRoutes.comptabiliteBilanDetail, arguments: value);
+        Get.toNamed(ComptabiliteRoutes.comptabiliteBilan);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

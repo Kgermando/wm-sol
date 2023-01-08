@@ -53,7 +53,7 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: p20),
-                          child: Column(
+                          child: GetBuilder(builder: (DashboardBudgetController controller) => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Wrap(
@@ -107,9 +107,8 @@ class _DashboardBudgetState extends State<DashboardBudget> {
                                 //         controller.ligneBudgetaireList),
                                 const SizedBox(height: p30),
                                 CourbeLignBudgetaire(ligneBudgetaireList: controller.ligneBudgetaireList)
-
                                         
-                              ]),
+                              ])) ,
                         )),
                   ))
             ],

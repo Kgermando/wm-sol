@@ -85,72 +85,65 @@ class _DetailBilanState extends State<DetailBilan> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: Column(
                           children: [
-                            Card(
-                              elevation: 3,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: p20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                    const TitleWidget(title: "Bilan"),
+                                    Column(
                                       children: [
-                                        const TitleWidget(title: "Bilan"),
-                                        Column(
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () async {
-                                                      refresh().then((value) =>
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              ComptabiliteRoutes
-                                                                  .comptabiliteBilanDetail,
-                                                              arguments:
-                                                                  value));
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.refresh,
-                                                        color: Colors.green)),
-                                                if (widget
-                                                        .bilanModel.isSubmit ==
-                                                    'false') // Uniqyement celui a remplit le document
-                                                  sendButton(),
-                                                if (widget.bilanModel
-                                                        .approbationDD ==
-                                                    "Unapproved")
-                                                  deleteButton(),
-                                                PrintWidget(
-                                                    tooltip:
-                                                        'Imprimer le document',
-                                                    onPressed: () async {
-                                                      await BilanPdf.generate(
-                                                          widget.bilanModel,
-                                                          controller
-                                                              .compteActifList,
-                                                          controller
-                                                              .comptePassifList,
-                                                          monnaieStorage);
-                                                    }),
-                                              ],
-                                            ),
-                                            Text(
-                                                DateFormat("dd-MM-yyyy HH:mm")
-                                                    .format(widget
-                                                        .bilanModel.created),
-                                                textAlign: TextAlign.start),
+                                            IconButton(
+                                                onPressed: () async {
+                                                  refresh().then((value) =>
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          ComptabiliteRoutes
+                                                              .comptabiliteBilanDetail,
+                                                          arguments:
+                                                              value));
+                                                },
+                                                icon: const Icon(
+                                                    Icons.refresh,
+                                                    color: Colors.green)),
+                                            if (widget
+                                                    .bilanModel.isSubmit ==
+                                                'false') // Uniqyement celui a remplit le document
+                                              sendButton(),
+                                            if (widget.bilanModel
+                                                    .approbationDD ==
+                                                "Unapproved")
+                                              deleteButton(),
+                                            PrintWidget(
+                                                tooltip:
+                                                    'Imprimer le document',
+                                                onPressed: () async {
+                                                  await BilanPdf.generate(
+                                                      widget.bilanModel,
+                                                      controller
+                                                          .compteActifList,
+                                                      controller
+                                                          .comptePassifList,
+                                                      monnaieStorage);
+                                                }),
                                           ],
-                                        )
+                                        ),
+                                        Text(
+                                            DateFormat("dd-MM-yyyy HH:mm")
+                                                .format(widget
+                                                    .bilanModel.created),
+                                            textAlign: TextAlign.start),
                                       ],
-                                    ),
-                                    dataWidget(state!),
-                                    totalMontant(controller)
+                                    )
                                   ],
                                 ),
-                              ),
+                                dataWidget(state!),
+                                totalMontant(controller)
+                              ],
                             ),
                             const SizedBox(height: p20),
                             if (widget.bilanModel.isSubmit == 'true')

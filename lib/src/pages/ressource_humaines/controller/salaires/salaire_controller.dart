@@ -177,6 +177,27 @@ class SalaireController extends GetxController
     return data;
   }
 
+  void deleteData(int id) async {
+    try {
+      _isLoading.value = true;
+      await paiementSalaireApi.deleteData(id).then((value) {
+        paiementSalaireList.clear();
+        getList();
+        Get.back();
+        Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
+            backgroundColor: Colors.green,
+            icon: const Icon(Icons.check),
+            snackPosition: SnackPosition.TOP);
+        _isLoading.value = false;
+      });
+    } catch (e) {
+      Get.snackbar("Erreur de soumission", "$e",
+          backgroundColor: Colors.red,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+    }
+  }
+
   Future submit(AgentModel agentModel) async {
     final form = formKey.currentState!;
     if (form.validate()) {

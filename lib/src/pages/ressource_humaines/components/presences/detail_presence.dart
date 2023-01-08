@@ -312,7 +312,9 @@ class _DetailPresenceState extends State<DetailPresence> {
                   subtitle: Text(
                       "Arrivé à ${DateFormat("HH:mm").format(personne.created)}"),
                   trailing: IconButton(
-                      tooltip: "Sortie agent",
+                      tooltip: (personne.sortie == 'true')
+                              ?  "Sortie agent."
+                              : "Déjà sortie.",
                       onPressed: () {
                         if(personne.sortie == 'false') {
                           sortiePresenceDialog(
@@ -372,12 +374,12 @@ class _DetailPresenceState extends State<DetailPresence> {
                             const Expanded(
                                 flex: 3,
                                 child: Text("Déjà sortie",
-                                    style: TextStyle(color: Colors.green))),
+                                    style: TextStyle(color: Colors.red))),
                           if (personne.sortie == 'false')
                             const Expanded(
                                 flex: 3,
                                 child: Text("Pas encore sortie",
-                                    style: TextStyle(color: Colors.red)))
+                                    style: TextStyle(color: Colors.green)))
                         ],
                       ),
                       Divider(color: mainColor),
@@ -479,7 +481,7 @@ class _DetailPresenceState extends State<DetailPresence> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: EasyAutocomplete(
-          controller: controllerPresencePersonne.identifiantController,
+          // controller: controllerPresencePersonne.identifiantController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -487,7 +489,10 @@ class _DetailPresenceState extends State<DetailPresence> {
           ),
           keyboardType: TextInputType.text,
           suggestions: suggestionList,
-          validator: (value) => value == null ? "Select Service" : null,
+          validator: (value) => value == null ? "Select Identifiant" : null,
+          onChanged: (value) {
+            controllerPresencePersonne.identifiantController = value;
+          },
         ));
   }
 

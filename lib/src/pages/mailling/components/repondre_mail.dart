@@ -32,8 +32,7 @@ class _RepondreMailState extends State<RepondreMail> {
 
   @override
   initState() {
-    controller.emailController =
-        TextEditingController(text: widget.mailModel.email);
+    controller.emailController = widget.mailModel.email;
     controller.objetController =
         TextEditingController(text: widget.mailModel.objet);
     super.initState();
@@ -117,7 +116,7 @@ class _RepondreMailState extends State<RepondreMail> {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
-          controller: controller.emailController,
+          // controller: controller.emailController,
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -126,6 +125,9 @@ class _RepondreMailState extends State<RepondreMail> {
           keyboardType: TextInputType.text,
           style: const TextStyle(),
           validator: (value) => RegExpIsValide().validateEmail(value),
+          onChanged: (value) {
+            controller.emailController = value;
+          },
         ));
   }
 

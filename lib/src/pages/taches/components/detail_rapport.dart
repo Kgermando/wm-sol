@@ -32,7 +32,7 @@ class _DetailRapportState extends State<DetailRapport> {
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(
-          context, scaffoldKey, title, widget.rapportModel.numeroTache),
+          context, scaffoldKey, title, "Tâche N°${widget.rapportModel.numeroTache}"),
       drawer: const DrawerMenu(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,6 +56,7 @@ class _DetailRapportState extends State<DetailRapport> {
               controller: ScrollController(),
               physics: const ScrollPhysics(),
               child: Container(
+                padding: const EdgeInsets.all(p20),
                 margin: const EdgeInsets.only(
                     top: p20, bottom: p8, right: p20, left: p20),
                 decoration: const BoxDecoration(
@@ -68,30 +69,54 @@ class _DetailRapportState extends State<DetailRapport> {
                             const EdgeInsets.symmetric(horizontal: p20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: SelectableText(
-                                widget.rapportModel.signature,
-                                style: bodyMedium,
-                              ),
-                              subtitle: SelectableText(
-                                "Tâche N° ${widget.rapportModel.numeroTache}",
-                                style: bodyMedium,
-                              ),
-                              trailing: SelectableText(
-                                  timeago.format(
-                                      widget.rapportModel.created,
-                                      locale: 'fr_short'),
-                                  textAlign: TextAlign.start,
-                                  style: bodyMedium),
+                          children: [ 
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text('Date :',
+                                      textAlign: TextAlign.start,
+                                      style: bodyMedium!.copyWith(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                            timeago.format(
+                                                widget.rapportModel.created,
+                                                locale: 'fr_short'),
+                                      textAlign: TextAlign.start,
+                                      style: bodyMedium),
+                                )
+                              ],
                             ),
+                            Divider(color: mainColor),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text('N° tâche :',
+                                      textAlign: TextAlign.start,
+                                      style: bodyMedium.copyWith(
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                        widget.rapportModel.numeroTache,
+                                      textAlign: TextAlign.start,
+                                      style: bodyMedium),
+                                )
+                              ],
+                            ),
+                            Divider(color: mainColor),
                             Row(
                               children: [
                                 Expanded(
                                   flex: 1,
                                   child: Text('Titre :',
                                       textAlign: TextAlign.start,
-                                      style: bodyMedium!.copyWith(
+                                      style: bodyMedium.copyWith(
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 Expanded(
@@ -107,15 +132,8 @@ class _DetailRapportState extends State<DetailRapport> {
                               controller: controller.quillControllerRead,
                               readOnly: true,
                               locale: const Locale('fr'),
-                            )
-                           
-                            // Text(
-                            //     widget.rapportModel.rapport
-                            //         .replaceAll('\n', ' '),
-                            //     maxLines: 3,
-                            //     overflow: TextOverflow.ellipsis,
-                            //     style: bodyMedium,
-                            //     textAlign: TextAlign.justify),
+                            ), 
+                            const SizedBox(height: p30),
                           ],
                         ),
                       ),

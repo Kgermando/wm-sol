@@ -9,13 +9,13 @@ class PersonnelsRolesController extends GetxController
   final AgentRoleApi personnelsRoleApi = AgentRoleApi();
   final ProfilController profilController = Get.find();
 
-  List<AgentRoleModel> personnelsRoleList = [];
+  RxList<AgentRoleModel> personnelsRoleList = <AgentRoleModel>[].obs;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  TextEditingController agentController = TextEditingController();
+  String? agentController; 
   TextEditingController roleController = TextEditingController();
 
   @override
@@ -26,15 +26,19 @@ class PersonnelsRolesController extends GetxController
 
   @override
   void dispose() {
-    agentController.dispose();
     roleController.dispose();
     super.dispose();
+  }
+
+  void clear() {
+    agentController == null;
+    roleController.clear();
   }
 
   void getList() async {
     await personnelsRoleApi.getAllData().then((response) {
       personnelsRoleList.clear();
-      personnelsRoleList.addAll(response);
+      personnelsRoleList.assignAll(response);
       change(personnelsRoleList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -73,10 +77,11 @@ class PersonnelsRolesController extends GetxController
       final dataItem = AgentRoleModel(
           reference: id,
           departement: departement,
-          agent: agentController.text,
+          agent: agentController.toString(),
           role: roleController.text,
           created: DateTime.now());
       await personnelsRoleApi.insertData(dataItem).then((value) {
+        clear();
         personnelsRoleList.clear();
         getList();
         Get.back();
@@ -101,10 +106,11 @@ class PersonnelsRolesController extends GetxController
       final dataItem = AgentRoleModel(
           reference: data.reference,
           departement: data.departement,
-          agent: agentController.text,
+          agent: agentController.toString(),
           role: roleController.text,
           created: data.created);
       await personnelsRoleApi.updateData(dataItem).then((value) {
+        clear();
         personnelsRoleList.clear();
         getList();
         Get.back();

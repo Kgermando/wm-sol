@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/taches/components/tache_xlsx.dart';
@@ -48,6 +49,7 @@ class _TableTachesState extends State<TableTaches> {
 
         final TacheModel tacheModel =
             await widget.tachesController.detailView(idPlutoRow.value);
+        widget.tachesController.submitReadAgent(tacheModel);
 
         Get.toNamed(TacheRoutes.tacheDetail, arguments: tacheModel);
       },
@@ -89,7 +91,7 @@ class _TableTachesState extends State<TableTaches> {
           resolveDefaultColumnFilter: (column, resolver) {
             if (column.field == 'numero') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'read') {
+            } else if (column.field == 'readResponsable') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
             } else if (column.field == 'nom') {
               return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -122,17 +124,11 @@ class _TableTachesState extends State<TableTaches> {
         .toList();
 
     var i = dataList.length;
-    for (var item in dataList) {
-      bool read = false;
-      if (item.read == 'true') {
-        read = true;
-      } else if (item.read == 'false') {
-        read = false;
-      }
+    for (var item in dataList) { 
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
-          'read': PlutoCell(value: (read) ? "Lu" : "Non Lu"),
+          'readResponsable': PlutoCell(value: item.readResponsable),
           'nom': PlutoCell(value: item.nom),
           'numeroTache': PlutoCell(value: item.numeroTache),
           'agent': PlutoCell(value: item.agent),
@@ -169,24 +165,37 @@ class _TableTachesState extends State<TableTaches> {
       PlutoColumn(
         readOnly: true,
         title: 'Statut',
-        field: 'read',
+        field: 'readResponsable',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
-          if (rendererContext.cell.value == 'true') {
+          if (rendererContext.cell.value == 'Fermer') {
             textColor = Colors.green;
-          } else if (rendererContext.cell.value == 'false') {
+          } else if (rendererContext.cell.value == 'Ouvert') {
             textColor = Colors.red;
           }
-          return Text(
-            rendererContext.cell.value.toString(),
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-            ),
+          return Row(
+            children: [
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: textColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: p5),
+              Text(
+                rendererContext.cell.value.toString(),
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           );
         },
         width: 150,
@@ -206,13 +215,19 @@ class _TableTachesState extends State<TableTaches> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Numero Tache',
+        title: 'N° Tache',
         field: 'numeroTache',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 150,
         minWidth: 150,
       ),
