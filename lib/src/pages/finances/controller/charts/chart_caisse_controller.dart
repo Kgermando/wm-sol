@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/finances/caisse_api.dart'; 
-import 'package:wm_solution/src/models/charts/chart_finance.dart'; 
+import 'package:wm_solution/src/models/charts/chart_multi.dart'; 
 
 class ChartCaisseController extends GetxController
     with StateMixin<List<ChartFinanceModel>> {

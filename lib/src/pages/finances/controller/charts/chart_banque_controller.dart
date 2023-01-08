@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/finances/banque_api.dart';
-import 'package:wm_solution/src/models/charts/chart_finance.dart';
+import 'package:wm_solution/src/models/charts/chart_multi.dart';
 
 class ChartBanqueController extends GetxController
     with StateMixin<List<ChartFinanceModel>> {

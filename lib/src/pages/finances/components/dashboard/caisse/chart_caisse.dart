@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:wm_solution/src/models/charts/chart_finance.dart';
+import 'package:wm_solution/src/models/charts/chart_multi.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_caisse_controller.dart';
 
 class ChartCaisse extends StatefulWidget {

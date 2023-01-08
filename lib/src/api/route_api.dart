@@ -233,6 +233,7 @@ var addApprovisionReceptionsUrl =
 
 // Exploitations
 var projetsUrl = Uri.parse("$mainUrl/projets/");
+var projetChartPieUrl = Uri.parse("$mainUrl/projets/chart-pie/");
 var addProjetssUrl = Uri.parse("$mainUrl/projets/insert-new-projet");
 var sectionProjetsUrl = Uri.parse("$mainUrl/section-projets/");
 var addSectionProjetssUrl = Uri.parse("$mainUrl/section-projets/insert-new-section-projet");
@@ -252,6 +253,7 @@ var addagentsRolesUrl =
     Uri.parse("$mainUrl/agents-roles/insert-new-agent-role");
 
 var productionUrl = Uri.parse("$mainUrl/productions/");
+var productionChartUrl = Uri.parse("$mainUrl/productions/chart/");
 var addProductionUrl =
     Uri.parse("$mainUrl/productions/insert-new-production");
 

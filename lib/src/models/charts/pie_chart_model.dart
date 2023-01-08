@@ -87,3 +87,28 @@ class CountPieChartModel {
     return {'categorie': categorie, 'count': count};
   }
 }
+
+
+class TypeFinancementPieChartModel {
+  final String typeFinancement;
+  final int count;
+
+  TypeFinancementPieChartModel(
+      {required this.typeFinancement, required this.count});
+
+  factory TypeFinancementPieChartModel.fromSQL(List<dynamic> row) {
+    return TypeFinancementPieChartModel(
+      typeFinancement: row[0],
+      count: row[1],
+    );
+  }
+
+  factory TypeFinancementPieChartModel.fromJson(Map<String, dynamic> json) {
+    return TypeFinancementPieChartModel(
+        typeFinancement: json['type_financement'], count: json['count']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'type_financement': typeFinancement, 'count': count};
+  }
+}
