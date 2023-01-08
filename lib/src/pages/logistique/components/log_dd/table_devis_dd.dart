@@ -104,7 +104,9 @@ class _TableDevisDDState extends State<TableDevisDD> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.devisController.devisList
         .where((element) =>
-            element.approbationDD == '-' && element.isSubmit == 'true')
+            element.approbationDD == '-' &&
+            element.observation == 'false' &&
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

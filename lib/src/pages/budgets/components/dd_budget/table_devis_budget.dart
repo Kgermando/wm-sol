@@ -102,7 +102,9 @@ class _TableDevisBudgetState extends State<TableDevisBudget> {
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
-            element.approbationBudget == '-')
+            element.approbationBudget == '-' &&
+            element.observation == 'false' &&
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

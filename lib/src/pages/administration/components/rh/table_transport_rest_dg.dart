@@ -131,7 +131,9 @@ class _TableTransportRestDGState extends State<TableTransportRestDG> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.transportRestController.transportRestaurationList
         .where((element) =>
-            element.approbationDG == '-' && element.approbationDD == 'Approved')
+            element.approbationDG == '-' && element.approbationDD == 'Approved' &&
+            element.observation == 'false' &&
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

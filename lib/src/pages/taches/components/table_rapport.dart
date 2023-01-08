@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
@@ -143,6 +144,45 @@ class _TableRapportState extends State<TableRapport> {
             textAlign: TextAlign.center,
           );
         },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Statut',
+        field: 'readResponsable',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'Lu') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'Non Lu') {
+            textColor = Colors.red;
+          }
+          return Row(
+            children: [
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: textColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: p5),
+              Text(
+                rendererContext.cell.value.toString(),
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          );
+        },
+        width: 150,
+        minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,

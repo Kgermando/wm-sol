@@ -133,7 +133,8 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
-            element.approbationBudget == '-' &&
+            element.approbationBudget == '-' && 
+            element.observation == 'false' &&
             element.isSubmit == 'true')
         .toList();
     var i = dataList.length;

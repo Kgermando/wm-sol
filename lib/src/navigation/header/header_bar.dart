@@ -118,8 +118,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             },
             icon: Obx(() => Badge(
               showBadge:
-                  (departementNotifyCOntroller.tacheItemCount >= 1) ? true : false,
-              badgeContent: Text(
+                  (departementNotifyCOntroller.tacheItemCount >= 1) 
+                    ? true : false,
+              badgeContent:  Text(
                   departementNotifyCOntroller.tacheItemCount.toString(),
                   style: const TextStyle(color: Colors.white)),
               child: const Icon(Icons.work_outline),

@@ -109,7 +109,9 @@ class _TableProjetFinState extends State<TableProjetFin> {
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
             element.approbationBudget == 'Approved' &&
-            element.approbationFin == "-")
+            element.approbationFin == "-" &&
+            element.observation == 'false' &&
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

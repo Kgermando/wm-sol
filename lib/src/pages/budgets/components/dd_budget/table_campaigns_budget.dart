@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
@@ -130,7 +131,9 @@ class _TableCampaignBudgetState extends State<TableCampaignBudget> {
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
-            element.approbationBudget == '-')
+            element.approbationBudget == '-' &&
+            element.observation == 'false' &&
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {
@@ -139,8 +142,9 @@ class _TableCampaignBudgetState extends State<TableCampaignBudget> {
           'numero': PlutoCell(value: i--),
           'typeProduit': PlutoCell(value: item.typeProduit),
           'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
-          'coutCampaign':
-              PlutoCell(value: "${item.coutCampaign} ${monnaieStorage.monney}"),
+          'coutCampaign': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutCampaign))} ${monnaieStorage.monney}"),
           'lieuCible': PlutoCell(value: item.lieuCible),
           'promotion': PlutoCell(value: item.promotion),
           'objectifs': PlutoCell(value: item.objectifs),
@@ -203,13 +207,20 @@ class _TableCampaignBudgetState extends State<TableCampaignBudget> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Coût de la Campagne',
+        title: 'Coût',
         field: 'coutCampaign',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: mainColor),
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

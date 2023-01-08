@@ -49,7 +49,10 @@ class _TableTachesState extends State<TableTaches> {
 
         final TacheModel tacheModel =
             await widget.tachesController.detailView(idPlutoRow.value);
-        widget.tachesController.submitReadAgent(tacheModel);
+        if (tacheModel.agent ==
+            widget.profilController.user.matricule) {
+          widget.tachesController.submitReadAgent(tacheModel);
+        }
 
         Get.toNamed(TacheRoutes.tacheDetail, arguments: tacheModel);
       },
@@ -176,7 +179,7 @@ class _TableTachesState extends State<TableTaches> {
             textColor = Colors.green;
           } else if (rendererContext.cell.value == 'Ouvert') {
             textColor = Colors.red;
-          }
+          } 
           return Row(
             children: [
               Container(

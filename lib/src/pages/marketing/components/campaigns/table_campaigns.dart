@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/campaign_xlxs.dart';
@@ -132,13 +133,14 @@ class _TableCampaignState extends State<TableCampaign> {
           'numero': PlutoCell(value: i--),
           'typeProduit': PlutoCell(value: item.typeProduit),
           'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
-          'coutCampaign':
-              PlutoCell(value: "${item.coutCampaign} ${monnaieStorage.monney}"),
+          'coutCampaign': PlutoCell(
+              value:
+                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutCampaign))} ${monnaieStorage.monney}"),
           'lieuCible': PlutoCell(value: item.lieuCible),
           'promotion': PlutoCell(value: item.promotion),
           'objectifs': PlutoCell(value: item.objectifs),
           'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'approbationDG': PlutoCell(value: item.approbationDG),
           'approbationDD': PlutoCell(value: item.approbationDD),
           'approbationBudget': PlutoCell(value: item.approbationBudget),
@@ -203,6 +205,13 @@ class _TableCampaignState extends State<TableCampaign> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) { 
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: mainColor),
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

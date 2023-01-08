@@ -110,7 +110,10 @@ class _TableDevisDGState extends State<TableDevisDG> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.devisController.devisList
         .where((element) =>
-            element.approbationDG == '-' && element.approbationDD == 'Approved')
+            element.approbationDG == '-' &&
+            element.approbationDD == 'Approved' &&
+            element.observation == 'false' &&
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

@@ -133,7 +133,8 @@ class _TableCampaignObsState extends State<TableCampaignObs> {
             element.approbationDD == 'Approved' &&
             element.approbationBudget == 'Approved' &&
             element.approbationFin == 'Approved' &&
-            element.observation == "false")
+            element.observation == "false" && 
+            element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {
