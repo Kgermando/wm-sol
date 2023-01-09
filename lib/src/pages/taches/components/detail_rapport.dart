@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
@@ -11,7 +12,9 @@ import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/taches/controller/rapport_controller.dart';
-import 'package:wm_solution/src/widgets/loading.dart'; 
+import 'package:wm_solution/src/widgets/loading.dart';
+import 'package:wm_solution/src/widgets/print_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart'; 
 
 class DetailRapport extends StatefulWidget {
   const DetailRapport({super.key, required this.rapportModel});
@@ -55,10 +58,9 @@ class _DetailRapportState extends State<DetailRapport> {
             return SingleChildScrollView(
               controller: ScrollController(),
               physics: const ScrollPhysics(),
-              child: Container(
-                padding: const EdgeInsets.all(p20),
-                margin: const EdgeInsets.only(
-                    top: p20, bottom: p8, right: p20, left: p20),
+              child: Container( 
+                // margin: const EdgeInsets.only(
+                //     top: p20, bottom: p8, right: p20, left: p20),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 child: Column(
@@ -66,38 +68,35 @@ class _DetailRapportState extends State<DetailRapport> {
                     Card(
                       child: Padding(
                         padding:
-                            const EdgeInsets.symmetric(horizontal: p20),
+                            const EdgeInsets.all(p20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [ 
                             Row(
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text('Date :',
-                                      textAlign: TextAlign.start,
-                                      style: bodyMedium!.copyWith(
-                                          fontWeight: FontWeight.bold)),
+                                const TitleWidget(title: "Rapport"),
+                                Column(
+                                  children: [
+                                    PrintWidget(
+                                      tooltip: 'Imprimer le document',
+                                      onPressed: () {},
+                                    ),
+                                    SelectableText(
+                                        DateFormat("dd-MM-yyyy HH:mm").format(
+                                            widget.rapportModel.created),
+                                        textAlign: TextAlign.start),
+                                  ],
                                 ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                            timeago.format(
-                                                widget.rapportModel.created,
-                                                locale: 'fr_short'),
-                                      textAlign: TextAlign.start,
-                                      style: bodyMedium),
-                                )
                               ],
-                            ),
-                            Divider(color: mainColor),
+                            ), 
+                            const SizedBox(height: p20),
                             Row(
                               children: [
                                 Expanded(
                                   flex: 1,
                                   child: Text('N° tâche :',
                                       textAlign: TextAlign.start,
-                                      style: bodyMedium.copyWith(
+                                      style: bodyMedium!.copyWith(
                                           fontWeight: FontWeight.bold)),
                                 ),
                                 Expanded(

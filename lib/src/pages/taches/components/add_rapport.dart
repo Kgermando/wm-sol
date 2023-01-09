@@ -122,6 +122,7 @@ class _AddRapportState extends State<AddRapport> {
                   placeholder: 'Ecrire votre rapport ici...', 
                   expands: true,
                   padding: EdgeInsets.zero,
+                  locale: const Locale('fr'),
                 ),
               ),
             ],

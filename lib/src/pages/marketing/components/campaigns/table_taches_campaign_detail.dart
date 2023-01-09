@@ -136,7 +136,7 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
         .toList();
 
     var i = dataList.length;
-    for (var item in dataList) { 
+    for (var item in dataList) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
@@ -222,18 +222,25 @@ class _TableTachesCampaignDetailState extends State<TableTachesCampaignDetail> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Numero Tache',
+        title: 'N° Tache',
         field: 'numeroTache',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.blueGrey),
+          );
+        },
         width: 150,
         minWidth: 150,
       ),

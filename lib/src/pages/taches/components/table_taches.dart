@@ -49,12 +49,14 @@ class _TableTachesState extends State<TableTaches> {
 
         final TacheModel tacheModel =
             await widget.tachesController.detailView(idPlutoRow.value);
-        if (tacheModel.agent ==
+        if (tacheModel.readAgent == 'Non Lu' && tacheModel.agent ==
             widget.profilController.user.matricule) {
           widget.tachesController.submitReadAgent(tacheModel);
+          
         }
-
         Get.toNamed(TacheRoutes.tacheDetail, arguments: tacheModel);
+
+        
       },
       onLoaded: (PlutoGridOnLoadedEvent event) {
         stateManager = event.stateManager;

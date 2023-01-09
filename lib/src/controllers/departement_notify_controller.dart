@@ -20,7 +20,7 @@ import 'package:wm_solution/src/api/notifications/departements/finance_departeme
 import 'package:wm_solution/src/api/notifications/departements/logistique_departement.dart';
 import 'package:wm_solution/src/api/notifications/departements/marketing_departement.dart';
 import 'package:wm_solution/src/api/notifications/departements/rh_departement.dart';
-import 'package:wm_solution/src/api/notifications/devis/devis_notify_api.dart';
+import 'package:wm_solution/src/api/notifications/logistique/devis_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/exploitations/production_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/exploitations/projet_notify_api.dart';
 import 'package:wm_solution/src/api/notifications/exploitations/taches_notify_api.dart';

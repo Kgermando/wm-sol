@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/exploitations/taches_api.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
@@ -7,7 +10,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 class TachesController extends GetxController
     with StateMixin<List<TacheModel>> {
   final TachesApi tachesApi = TachesApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
 
   var tachesList = <TacheModel>[].obs;
 
@@ -16,7 +19,10 @@ class TachesController extends GetxController
   bool get isLoading => _isLoading.value;
 
   TextEditingController jalonController = TextEditingController();
-  TextEditingController tacheController = TextEditingController();
+  // TextEditingController tacheController = TextEditingController();
+  flutter_quill.QuillController quillController =
+      flutter_quill.QuillController.basic();
+
   String? agent;
   bool soumettre = false;
 
@@ -29,15 +35,17 @@ class TachesController extends GetxController
   @override
   void dispose() {
     jalonController.dispose();
-    tacheController.dispose();
+    // tacheController.dispose();
+    quillController.dispose();
 
     super.dispose();
   }
 
   void clear() {
-    agent = null;
+    agent == null;
     jalonController.clear();
-    tacheController.clear();
+    // tacheController.clear();
+    quillController.clear();
   }
 
   void getList() async {
@@ -76,6 +84,7 @@ class TachesController extends GetxController
   }
 
   void submit(String nom, int length, int id, String departement) async {
+    var json = jsonEncode(quillController.document.toDelta().toJson());
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
@@ -83,14 +92,13 @@ class TachesController extends GetxController
           numeroTache: "${length + 1}",
           agent: agent.toString(),
           jalon: jalonController.text,
-          tache: tacheController.text,
+          tache: json,
           signatureResp: profilController.user.matricule,
           created: DateTime.now(),
           readResponsable: 'Ouvert',
           departement: departement,
           reference: id,
-          readAgent: 'Non Lu'
-        );
+          readAgent: 'Non Lu');
       await tachesApi.insertData(dataItem).then((value) {
         clear();
         tachesList.clear();
@@ -112,6 +120,7 @@ class TachesController extends GetxController
   }
 
   void submitUpdate(TacheModel data) async {
+    var json = jsonEncode(quillController.document.toDelta().toJson());
     try {
       _isLoading.value = true;
       final dataItem = TacheModel(
@@ -120,7 +129,7 @@ class TachesController extends GetxController
         numeroTache: data.numeroTache,
         agent: agent.toString(),
         jalon: jalonController.text,
-        tache: tacheController.text,
+        tache: json,
         signatureResp: profilController.user.matricule,
         created: data.created,
         readResponsable: data.readResponsable,
@@ -155,20 +164,20 @@ class TachesController extends GetxController
           id: data.id,
           nom: data.nom,
           numeroTache: data.numeroTache,
-          agent: agent.toString(),
-          jalon: jalonController.text,
-          tache: tacheController.text,
-          signatureResp: profilController.user.matricule,
+          agent: data.agent,
+          jalon: data.jalon,
+          tache: data.tache,
+          signatureResp: data.signatureResp,
           created: data.created,
           readResponsable: 'Fermer',
           departement: data.departement,
           reference: data.reference,
-        readAgent: data.readAgent
-      );
+          readAgent: data.readAgent);
       await tachesApi.updateData(dataItem).then((value) {
         clear();
         tachesList.clear();
         getList();
+        Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
@@ -191,10 +200,10 @@ class TachesController extends GetxController
           id: data.id,
           nom: data.nom,
           numeroTache: data.numeroTache,
-          agent: agent.toString(),
-          jalon: jalonController.text,
-          tache: tacheController.text,
-          signatureResp: profilController.user.matricule,
+          agent: data.agent,
+          jalon: data.jalon,
+          tache: data.tache,
+          signatureResp: data.signatureResp,
           created: data.created,
           readResponsable: data.readResponsable,
           departement: data.departement,

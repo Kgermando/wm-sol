@@ -86,7 +86,8 @@ class RapportController extends GetxController
         signature: profilController.user.matricule.toString(),
         created: DateTime.now(),
         reference: data.id!,
-        readRapport: 'Non Lu'
+        readRapport: 'Non Lu',
+        signatureResp: '-'
       );
       await rapportApi.insertData(dataItem).then((value) {
         clear();
@@ -113,14 +114,16 @@ class RapportController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-          id: data.id,
-          nom: data.nom,
-          numeroTache: data.numeroTache,
-          rapport: json, // rapportController.text,
-          signature: profilController.user.matricule.toString(),
-          created: DateTime.now(),
-          reference: data.reference,
-          readRapport: data.readRapport);
+        id: data.id,
+        nom: data.nom,
+        numeroTache: data.numeroTache,
+        rapport: json, // rapportController.text,
+        signature: profilController.user.matricule.toString(),
+        created: DateTime.now(),
+        reference: data.reference,
+        readRapport: data.readRapport,
+        signatureResp: data.signatureResp
+      );
       await rapportApi.updateData(dataItem).then((value) {
         clear();
         rapportList.clear();
@@ -145,19 +148,21 @@ class RapportController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-          id: data.id,
-          nom: data.nom,
-          numeroTache: data.numeroTache,
-          rapport: data.rapport,
-          signature: data.signature,
-          created: data.created,
-          reference: data.reference,
-          readRapport: 'Lu');
+        id: data.id,
+        nom: data.nom,
+        numeroTache: data.numeroTache,
+        rapport: data.rapport,
+        signature: data.signature,
+        created: data.created,
+        reference: data.reference,
+        readRapport: 'Lu',
+        signatureResp: profilController.user.matricule.toString()
+      );
       await rapportApi.updateData(dataItem).then((value) {
         clear();
         rapportList.clear();
         getList();
-        Get.back();
+        // Get.back();
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

@@ -155,12 +155,14 @@ class _ViewCampaignState extends State<ViewCampaign> {
           );
         }), 
         const SizedBox(height: p20),
-        TableTachesCampaignDetail(
+       widget.tachesController.obx(
+            onLoading: loadingPage(context),
+          (state) => TableTachesCampaignDetail(
           tachesController: widget.tachesController,
           id: widget.campaignModel.id!,
           departement: 'Marketing',
           campaignModel: widget.campaignModel,
-        ),
+        ))  ,
         const SizedBox(height: p20),
         if (widget.campaignModel.isSubmit == 'true')
           ApprobationCampaign(
@@ -190,7 +192,7 @@ class _ViewCampaignState extends State<ViewCampaign> {
             ),
             TextButton(
               onPressed: () {
-                controller.campaignApi.deleteData(widget.campaignModel.id!);
+                controller.deleteData(widget.campaignModel.id!);
               },
               child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),

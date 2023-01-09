@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -41,6 +42,8 @@ class _DetailCampaignState extends State<DetailCampaign> {
     return dataItem;
   }
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +51,11 @@ class _DetailCampaignState extends State<DetailCampaign> {
         appBar: headerBar(
             context, scaffoldKey, title, widget.campaignModel.typeProduit),
         drawer: const DrawerMenu(),
-        floatingActionButton: (widget.campaignModel.isSubmit == "true")
+        floatingActionButton: (widget.campaignModel.isSubmit == "true" && 
+            widget.campaignModel.approbationDG =="Approved" &&
+            widget.campaignModel.approbationDD == "Approved" &&
+                widget.campaignModel.approbationBudget == "Approved" &&
+                widget.campaignModel.approbationFin == "Approved")
             ? FloatingActionButton.extended(
           label: const Text("Nouvelle tâche"),
           tooltip: "Ajouter une tâche pour les personnels.",
@@ -58,6 +65,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
               context: context,
               isScrollControlled: true,
               useRootNavigator: true,
+              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 1.5),
               builder: (BuildContext context) {
                 return Container(
                   color: Colors.amber.shade100,
@@ -82,7 +90,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                         agentWidget(
                             tachesController, personnelsRolesController),
                         jalonControllerWidget(tachesController),
-                        tacheControllerWidget(tachesController),
+                        quillControllerWidget(),
                         const SizedBox(
                           height: p20,
                         ),
@@ -210,49 +218,78 @@ class _DetailCampaignState extends State<DetailCampaign> {
 
   Widget jalonControllerWidget(TachesController tachesController) {
     return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: tachesController.jalonController,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Jalon',
-          ),
-          keyboardType: TextInputType.multiline,
-          minLines: 1,
-          maxLines: 3,
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
+      margin: const EdgeInsets.only(bottom: p20),
+      child: TextFormField(
+        controller: tachesController.jalonController,
+        decoration: InputDecoration(
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+          labelText: 'Jalon',
+        ),
+        keyboardType: TextInputType.multiline,
+        minLines: 1,
+        maxLines: 3,
+        style: const TextStyle(),
+        validator: (value) {
+          if (value != null && value.isEmpty) {
+            return 'Ce champs est obligatoire';
+          } else {
+            return null;
+          }
+        },
+      ));
   }
 
-  Widget tacheControllerWidget(TachesController tachesController) {
-    return Container(
-        margin: const EdgeInsets.only(bottom: p20),
-        child: TextFormField(
-          controller: tachesController.tacheController,
-          keyboardType: TextInputType.multiline,
-          minLines: 5,
-          maxLines: 10,
-          decoration: InputDecoration(
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Tâches',
+  // Widget tacheControllerWidget(TachesController tachesController) {
+  //   return Container(
+  //       margin: const EdgeInsets.only(bottom: p20),
+  //       child: TextFormField(
+  //         controller: tachesController.tacheController,
+  //         keyboardType: TextInputType.multiline,
+  //         minLines: 5,
+  //         maxLines: 10,
+  //         decoration: InputDecoration(
+  //           border:
+  //               OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+  //           labelText: 'Tâches',
+  //         ),
+  //         style: const TextStyle(),
+  //         validator: (value) {
+  //           if (value != null && value.isEmpty) {
+  //             return 'Ce champs est obligatoire';
+  //           } else {
+  //             return null;
+  //           }
+  //         },
+  //       ));
+  // }
+
+  Widget quillControllerWidget() {
+    return Column(
+      children: [
+        flutter_quill.QuillToolbar.basic(controller: tachesController.quillController),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 5,
+          child: Row(
+            children: [
+              Expanded(
+                child: flutter_quill.QuillEditor(
+                  controller: tachesController.quillController,
+                  readOnly: false, // true for view only mode
+                  scrollController: ScrollController(),
+                  locale: const Locale('fr'),
+                  scrollable: true,
+                  focusNode: _focusNode,
+                  autoFocus: false,
+                  placeholder: 'Ecrire votre Tâche ici...',
+                  expands: true,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ],
           ),
-          style: const TextStyle(),
-          validator: (value) {
-            if (value != null && value.isEmpty) {
-              return 'Ce champs est obligatoire';
-            } else {
-              return null;
-            }
-          },
-        ));
+        )
+      ],
+    );
   }
 }

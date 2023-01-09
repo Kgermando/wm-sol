@@ -12,10 +12,15 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableRapport extends StatefulWidget {
   const TableRapport(
-      {super.key, required this.rapportController, required this.tacheModel, required this.profilController});
+      {super.key,
+      required this.rapportController,
+      required this.tacheModel,
+      required this.profilController,
+      required  this.state});
   final RapportController rapportController;
   final TacheModel tacheModel;
   final ProfilController profilController;
+  final List<RapportModel> state;
 
   @override
   State<TableRapport> createState() => _TableRapportState();
@@ -47,10 +52,11 @@ class _TableRapportState extends State<TableRapport> {
 
           final RapportModel rapportModel =
               await widget.rapportController.detailView(idPlutoRow.value);
-          if(widget.tacheModel.signatureResp == widget.profilController.user.matricule) {
-             widget.rapportController.submiReadRapport(rapportModel);
-          } 
-
+          if (widget.tacheModel.signatureResp == "Non Lu" && widget.tacheModel.signatureResp ==
+              widget.profilController.user.matricule) {
+            widget.rapportController.submiReadRapport(rapportModel);
+            
+          }
           Get.toNamed(TacheRoutes.rapportDetail, arguments: rapportModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
@@ -84,6 +90,8 @@ class _TableRapportState extends State<TableRapport> {
             resolveDefaultColumnFilter: (column, resolver) {
               if (column.field == 'numero') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'readResponsable') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'nom') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'numeroTache') {
@@ -106,14 +114,12 @@ class _TableRapportState extends State<TableRapport> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.rapportController.rapportList
-        .where((element) => element.reference == widget.tacheModel.id);
-
-    var i = dataList.length;
-    for (var item in dataList) {
+    var i = widget.state.length;
+    for (var item in widget.state) {
       setState(() {
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
+          'readRapport': PlutoCell(value: item.readRapport),
           'nom': PlutoCell(value: item.nom),
           'numeroTache': PlutoCell(value: item.numeroTache),
           'created': PlutoCell(
@@ -148,7 +154,7 @@ class _TableRapportState extends State<TableRapport> {
       PlutoColumn(
         readOnly: true,
         title: 'Statut',
-        field: 'readResponsable',
+        field: 'readRapport',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,

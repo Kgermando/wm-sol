@@ -7,6 +7,7 @@ class RapportModel {
   late DateTime created;
   late int reference;
   late String readRapport; // Notifie au chef d'un nouveau rapport
+  late String signatureResp;
 
   RapportModel(
       {this.id,
@@ -16,7 +17,8 @@ class RapportModel {
       required this.signature,
       required this.created,
       required this.reference,
-      required this.readRapport});
+      required this.readRapport,
+      required this.signatureResp});
 
   factory RapportModel.fromSQL(List<dynamic> row) {
     return RapportModel(
@@ -27,20 +29,21 @@ class RapportModel {
         signature: row[4],
         created: row[5],
         reference: row[6],
-        readRapport: row[7]);
+        readRapport: row[7],
+        signatureResp: row[8]);
   }
 
   factory RapportModel.fromJson(Map<String, dynamic> json) {
     return RapportModel(
-      id: json['id'],
-      nom: json['nom'],
-      numeroTache: json['numeroTache'],
-      rapport: json['rapport'],
-      signature: json['signature'],
-      created: DateTime.parse(json['created']),
-      reference: json['reference'],
-      readRapport: json['readRapport'],
-    );
+        id: json['id'],
+        nom: json['nom'],
+        numeroTache: json['numeroTache'],
+        rapport: json['rapport'],
+        signature: json['signature'],
+        created: DateTime.parse(json['created']),
+        reference: json['reference'],
+        readRapport: json['readRapport'],
+        signatureResp: json['signatureResp']);
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +56,7 @@ class RapportModel {
       'created': created.toIso8601String(),
       'reference': reference,
       'readRapport': readRapport,
+      'signatureResp': signatureResp
     };
   }
 }

@@ -29,8 +29,9 @@ class DetailBudgetPrevisionnel extends StatefulWidget {
 }
 
 class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
-  final ProfilController profilController = Get.find();
-  final BudgetPrevisionnelController controller = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
+  final BudgetPrevisionnelController controller =
+      Get.put(BudgetPrevisionnelController());
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -115,13 +116,13 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                                                 IconButton(
                                                     tooltip: 'Rafraichir',
                                                     onPressed: () {
-                                                     refresh().then((value) =>
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          BudgetRoutes
-                                                              .budgetBudgetPrevisionelDetail,
-                                                          arguments:
-                                                              value));
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              BudgetRoutes
+                                                                  .budgetBudgetPrevisionelDetail,
+                                                              arguments:
+                                                                  value));
                                                     },
                                                     icon: Icon(Icons.refresh,
                                                         color: Colors
@@ -138,8 +139,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                                                       },
                                                       icon: const Icon(
                                                           Icons.send),
-                                                      color: Colors
-                                                          .teal),
+                                                      color: Colors.teal),
                                                 if (widget
                                                         .departementBudgetModel
                                                         .isSubmit ==
@@ -377,8 +377,10 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
     List<LigneBudgetaireModel> ligneBudgetaireCoutTotalList = [];
 
     // Cout total ligne budgetaires
-    ligneBudgetaireCoutTotalList = state.where((element) =>
-      element.reference == widget.departementBudgetModel.id).toList();
+    ligneBudgetaireCoutTotalList = state
+        .where(
+            (element) => element.reference == widget.departementBudgetModel.id)
+        .toList();
 
     for (var element in ligneBudgetaireCoutTotalList) {
       coutTotal += double.parse(element.coutTotal);
@@ -396,7 +398,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
 
     poursentExecutionTotal =
         (caisseSolde + banqueSolde + finExterieurSolde) * 100 / coutTotal;
-    
+
     poursentExecution = 100 - poursentExecutionTotal;
 
     return SoldeBudgets(
@@ -462,8 +464,7 @@ class _DetailBudgetPrevisionnelState extends State<DetailBudgetPrevisionnel> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller
-                        .deleteData(widget.departementBudgetModel.id!);
+                    controller.deleteData(widget.departementBudgetModel.id!);
                     Navigator.pop(context, 'ok');
                   },
                   child:

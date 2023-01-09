@@ -10,7 +10,7 @@ import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_contro
 class CampaignController extends GetxController
     with StateMixin<List<CampaignModel>> {
   final CampaignApi campaignApi = CampaignApi();
-  final ProfilController profilController = Get.find();
+  final ProfilController profilController = Get.put(ProfilController());
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
 

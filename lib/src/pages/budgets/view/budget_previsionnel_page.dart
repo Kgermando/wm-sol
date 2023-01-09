@@ -18,7 +18,7 @@ class BudgetPrevisionnelPage extends StatefulWidget {
 }
 
 class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
-  final BudgetPrevisionnelController controller = Get.find();
+  final BudgetPrevisionnelController controller = Get.put(BudgetPrevisionnelController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
   String subTitle = "Budgets previsionnels";
