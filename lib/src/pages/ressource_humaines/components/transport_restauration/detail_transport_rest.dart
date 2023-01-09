@@ -783,10 +783,18 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
                                       .transportRestaurationModel.signatureDD),
                                 ],
                               )),
-                          if (widget.transportRestaurationModel.approbationDD ==
-                                  '-' &&
-                              profilController.user.fonctionOccupe ==
-                                  "Directeur de departement")
+                          if (depList.contains('Ressources Humaines') &&
+                                  widget.transportRestaurationModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Ressources Humaines') &&
+                                  widget.transportRestaurationModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Ressources Humaines') &&
+                                  widget.transportRestaurationModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale") 
                             Padding(
                                 padding: const EdgeInsets.all(p10),
                                 child: ResponsiveChildWidget(

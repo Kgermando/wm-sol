@@ -57,7 +57,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
                 Get.toNamed(ComptabiliteRoutes.comptabiliteDashboard);  
                 // Navigator.of(context).pop();
               }),
-        if (userRole <= 2)
+        if (widget.departementList.contains('Comptabilites') && userRole <= 2)
           DrawerWidget(
               selected:
                   widget.currentRoute == ComptabiliteRoutes.comptabiliteDD,

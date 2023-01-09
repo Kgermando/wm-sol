@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/exploitations/projet_model.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/projets/projet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -16,7 +17,7 @@ class TableProjetBudget extends StatefulWidget {
 }
 
 class _TableProjetBudgetState extends State<TableProjetBudget> {
-  List<PlutoColumn> columns = [];
+   List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -42,7 +43,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
           final ProjetModel projetModel =
               await widget.projetController.detailView(idPlutoRow.value);
 
-          Get.toNamed(ExploitationRoutes.expProjet, arguments: projetModel);
+          Get.toNamed(ExploitationRoutes.expProjetDetail, arguments: projetModel);
         },
         onLoaded: (PlutoGridOnLoadedEvent event) {
           stateManager = event.stateManager;
@@ -56,7 +57,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
               const TitleWidget(title: "Projets"),
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, BudgetRoutes.budgetDD);
+                    Navigator.pushNamed(context, ExploitationRoutes.expProjet);
                   },
                   icon: Icon(Icons.refresh, color: Colors.green.shade700))
             ],
@@ -68,7 +69,9 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
               ...FilterHelper.defaultFilters,
             ],
             resolveDefaultColumnFilter: (column, resolver) {
-              if (column.field == 'numero') {
+               if (column.field == 'numero') {
+                return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
+              } else if (column.field == 'statut') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
               } else if (column.field == 'nomProjet') {
                 return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
@@ -104,7 +107,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.projetController.projetList
+     var dataList = widget.projetController.projetList
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
@@ -116,7 +119,8 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
     for (var item in dataList) {
       setState(() {
         rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
+           'numero': PlutoCell(value: i--),
+          'statut': PlutoCell(value: item.statut),
           'nomProjet': PlutoCell(value: item.nomProjet),
           'responsable': PlutoCell(value: item.responsable),
           'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
@@ -156,6 +160,50 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
       ),
       PlutoColumn(
         readOnly: true,
+        title: 'Statut',
+        field: 'statut',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        width: 200,
+        minWidth: 150,
+        renderer: (rendererContext) {
+          Color textColor = Colors.black;
+          if (rendererContext.cell.value == 'En cours') {
+            textColor = Colors.green;
+          } else if (rendererContext.cell.value == 'En constitution') {
+            textColor = Colors.purple;
+          } else if (rendererContext.cell.value == 'En attente') {
+            textColor = Colors.orange;
+          } else if (rendererContext.cell.value == 'Cloturer') {
+            textColor = mainColor;
+          }
+          return Row(
+            children: [
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: textColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: p5),
+              Text(
+                rendererContext.cell.value.toString(),
+                style: TextStyle(
+                  color: textColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+      PlutoColumn(
+        readOnly: true,
         title: 'Nom projet',
         field: 'nomProjet',
         type: PlutoColumnType.text(),
@@ -175,7 +223,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 250,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -223,7 +271,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
@@ -252,7 +300,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
@@ -281,7 +329,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
@@ -310,7 +358,7 @@ class _TableProjetBudgetState extends State<TableProjetBudget> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 300,
+        width: 200,
         minWidth: 150,
         renderer: (rendererContext) {
           Color textColor = Colors.black;

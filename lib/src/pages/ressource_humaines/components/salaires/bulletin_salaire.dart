@@ -1027,11 +1027,18 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
                                 Text(widget.salaire.signatureDD),
                               ],
                             )),
-                        if (widget.salaire.approbationDD == '-' &&
+                        if (depList.contains('Ressources Humaines') &&
+                                widget.salaire.approbationDD == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur de finance" ||
+                            depList.contains('Ressources Humaines') &&
+                                widget.salaire.approbationDD == '-' &&
                                 profilController.user.fonctionOccupe ==
                                     "Directeur de departement" ||
-                            profilController.user.fonctionOccupe ==
-                                "Directeur administratif")
+                            depList.contains('Ressources Humaines') &&
+                                widget.salaire.approbationDD == '-' &&
+                                profilController.user.fonctionOccupe ==
+                                    "Directeur générale") 
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(

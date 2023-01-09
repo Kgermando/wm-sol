@@ -58,7 +58,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
                 Navigator.pushNamed(context, LogistiqueRoutes.logDashboard);
                 // Navigator.of(context).pop();
               }),
-        if (userRole <= 2)
+        if (widget.departementList.contains('Logistique') && userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute == LogistiqueRoutes.logDD,
               icon: Icons.manage_accounts,

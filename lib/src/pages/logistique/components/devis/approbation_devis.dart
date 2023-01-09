@@ -163,9 +163,18 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
                                   Text(widget.devisModel.signatureDD),
                                 ],
                               )),
-                          if (widget.devisModel.approbationDD == '-' &&
-                              profilController.user.fonctionOccupe ==
-                                  "Directeur de departement")
+                          if (depList.contains('Logistique') &&
+                                  widget.devisModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Logistique') &&
+                                  widget.devisModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Logistique') &&
+                                  widget.devisModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                             Padding(
                                 padding: const EdgeInsets.all(p10),
                                 child: ResponsiveChildWidget(

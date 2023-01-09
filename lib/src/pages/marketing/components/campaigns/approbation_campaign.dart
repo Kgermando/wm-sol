@@ -162,9 +162,18 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                                   Text(widget.campaignModel.signatureDD),
                                 ],
                               )),
-                          if (widget.campaignModel.approbationDD == '-' &&
-                              profilController.user.fonctionOccupe ==
-                                  "Directeur de departement")
+                          if (depList.contains('Marketing') &&
+                                  widget.campaignModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Marketing') &&
+                                  widget.campaignModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Marketing') &&
+                                  widget.campaignModel.approbationDD == '-' &&
+                                  profilController.user.fonctionOccupe ==
+                                      "Directeur générale") 
                             Padding(
                                 padding: const EdgeInsets.all(p10),
                                 child: ResponsiveChildWidget(

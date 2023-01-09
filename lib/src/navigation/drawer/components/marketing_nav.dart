@@ -59,7 +59,7 @@ class _MaketingNavState extends State<MaketingNav> {
               onTap: () {
                 Get.toNamed(MarketingRoutes.marketingDashboard);
               }),
-        if (userRole <= 2)
+        if (widget.departementList.contains('Marketing') && userRole <= 2)
           DrawerWidget(
               selected:
                   widget.currentRoute == MarketingRoutes.marketingDD,

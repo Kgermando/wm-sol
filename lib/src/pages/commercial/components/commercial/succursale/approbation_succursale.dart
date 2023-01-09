@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/constants/app_theme.dart'; 
 import 'package:wm_solution/src/models/commercial/succursale_model.dart'; 
@@ -25,6 +27,8 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    List<dynamic> depList =
+        jsonDecode(widget.profilController.user.departement);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(p10),
@@ -156,10 +160,18 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
                                     .data.signatureDD),
                               ],
                             )),
-                        if (widget.data.approbationDD ==
-                                '-' &&
-                            widget.profilController.user.fonctionOccupe ==
-                                "Directeur de departement")
+                        if (depList.contains('Commercial') &&
+                                  widget.data.approbationDD == '-' &&
+                                  widget.profilController.user.fonctionOccupe ==
+                                      "Directeur de finance" ||
+                              depList.contains('Commercial') &&
+                                  widget.data.approbationDD == '-' &&
+                                  widget.profilController.user.fonctionOccupe ==
+                                      "Directeur de departement" ||
+                              depList.contains('Commercial') &&
+                                  widget.data.approbationDD == '-' &&
+                                  widget.profilController.user.fonctionOccupe ==
+                                      "Directeur générale")
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(

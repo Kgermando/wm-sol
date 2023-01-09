@@ -54,7 +54,7 @@ class _BudgetNavState extends State<BudgetNav> {
                 Get.toNamed(BudgetRoutes.budgetDashboard); 
                 // Navigator.of(context).pop();
               }),
-        if (userRole <= 2)
+        if (widget.departementList.contains('Budgets') && userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute == BudgetRoutes.budgetDD,
               icon: Icons.manage_accounts,

@@ -60,7 +60,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 Get.toNamed(FinanceRoutes.financeDashboard);
                 // Navigator.of(context).pop();
               }),
-        if (userRole <= 2)
+        if (widget.departementList.contains('Finances') && userRole <= 2)
           DrawerWidget(
               selected: widget.currentRoute == FinanceRoutes.finDD,
               icon: Icons.manage_accounts,

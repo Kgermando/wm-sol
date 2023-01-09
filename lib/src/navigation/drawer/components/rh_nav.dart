@@ -57,7 +57,7 @@ class _RhNavState extends State<RhNav> {
               Get.toNamed(RhRoutes.rhDashboard);
               
             }),
-          if (userRole <= 2)
+          if (widget.departementList.contains('Ressources Humaines') && userRole <= 2)
         DrawerWidget(
             selected: widget.currentRoute == RhRoutes.rhDD,
             icon: Icons.manage_accounts,

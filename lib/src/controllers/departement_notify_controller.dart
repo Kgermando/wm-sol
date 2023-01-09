@@ -681,7 +681,7 @@ class DepartementNotifyCOntroller extends GetxController {
 
   void getCountProjetBudget() async {
     NotifyModel notifySum = await projetNotifyApi.getCountBudget();
-    _itemCountProjetBudget.value = notifySum.count;
+    _itemCountProjetBudget.value = notifySum.count; 
     update();
   }
 

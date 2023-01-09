@@ -58,7 +58,7 @@ class _CommercialNavState extends State<CommercialNav> {
               onTap: () {
                 Get.toNamed(ComRoutes.comDashboard);
               }),
-        if (userRole <= 2)
+        if (widget.departementList.contains('Commercial') && userRole <= 2)
           DrawerWidget(
               selected:
                   widget.currentRoute == ComRoutes.comDD,
