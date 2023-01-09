@@ -681,7 +681,7 @@ class DepartementNotifyCOntroller extends GetxController {
 
   void getCountProjetBudget() async {
     NotifyModel notifySum = await projetNotifyApi.getCountBudget();
-    _itemCountProjetBudget.value = notifySum.count; 
+    _itemCountProjetBudget.value = notifySum.count;
     update();
   }
 
@@ -844,42 +844,37 @@ class DepartementNotifyCOntroller extends GetxController {
   void getMarketingCountComMarketing() async {
     NotifySumModel notifySum =
         await marketingDepartementNotifyApi.getCountMarketing();
-    _campaignCountDG.value = 0;
     _itemMarketingCount.value = notifySum.sum;
     update();
   }
 
   void getMarketingCountCampaignDG() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountDG();
-    _campaignCountDG.value = 0;
     _campaignCountDG.value = notifyModel.count;
     update();
   }
 
   void getMarketingCountCampaignDD() async {
-    NotifyModel notifyModel = await campaignNotifyApi.getCountDD();
-    _campaignCountDG.value = 0;
+    NotifyModel notifyModel = await campaignNotifyApi.getCountDD(); 
     _campaignCountDD.value = notifyModel.count;
     update();
   }
 
   void getMarketingCountCampaignBudget() async {
-    NotifyModel notifyModel = await campaignNotifyApi.getCountBudget();
-    _campaignCountDG.value = 0;
+    NotifyModel notifyModel = await campaignNotifyApi.getCountBudget(); 
     _campaignCountBudget.value = notifyModel.count;
     update();
   }
 
   void getMarketingCountCampaignFin() async {
     NotifyModel notifyModel = await campaignNotifyApi.getCountFin();
-    _campaignCountDG.value = 0;
+
     _campaignCountFin.value = notifyModel.count;
     update();
   }
 
   void getMarketingCountCampaignObs() async {
-    NotifyModel notifyModel = await campaignNotifyApi.getCountObs();
-    _campaignCountDG.value = 0;
+    NotifyModel notifyModel = await campaignNotifyApi.getCountObs(); 
     _campaignCountObs.value = notifyModel.count;
     update();
   }

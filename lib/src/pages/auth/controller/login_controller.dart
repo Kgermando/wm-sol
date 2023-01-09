@@ -142,7 +142,7 @@ class LoginController extends GetxController {
           clear();
           _loadingLogin.value = false;
           if (value) { 
-            Get.lazyPut(() => ProfilController());
+            Get.lazyPut(() => ProfilController(), fenix: true);
             Get.lazyPut(() => UsersController());
             Get.lazyPut(() => DepartementNotifyCOntroller());
 

@@ -65,7 +65,7 @@ class _TableCampaignDDState extends State<TableCampaignDD> {
                   IconButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, MarketingRoutes.marketingCampaign);
+                            context, MarketingRoutes.marketingDD);
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
                   PrintWidget(onPressed: () {

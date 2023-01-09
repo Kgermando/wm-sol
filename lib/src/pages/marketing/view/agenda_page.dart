@@ -11,16 +11,17 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/marketing/components/agenda/agenda_card_widget.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 
-final _lightColors = [
-  Colors.amber.shade300,
-  Colors.lightGreen.shade300,
-  Colors.lightBlue.shade300,
-  Colors.orange.shade300,
-  Colors.pinkAccent.shade100,
-  Colors.tealAccent.shade100
-];
+// final _lightColors = [
+//   Colors.amber.shade300,
+//   Colors.lightGreen.shade300,
+//   Colors.lightBlue.shade300,
+//   Colors.orange.shade300,
+//   Colors.pinkAccent.shade100,
+//   Colors.tealAccent.shade100
+// ];
 
 class AgendaPage extends StatefulWidget {
   const AgendaPage({super.key});
@@ -30,14 +31,15 @@ class AgendaPage extends StatefulWidget {
 }
 
 class _AgendaPageState extends State<AgendaPage> {
+  final AgendaController controller = Get.find();
+    final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Marketing";
   String subTitle = "Agenda";
 
   @override
   Widget build(BuildContext context) {
-    final AgendaController controller = Get.find();
-    final ProfilController profilController = Get.find();
+    
 
     return Scaffold(
       key: scaffoldKey,
@@ -48,7 +50,7 @@ class _AgendaPageState extends State<AgendaPage> {
         tooltip: "Ajout un rappel",
         icon: const Icon(Icons.add),
         onPressed: () {
-          newFicheDialog(controller, profilController);
+          newFicheDialog();
         },
       ),
       body: Row(
@@ -91,7 +93,7 @@ class _AgendaPageState extends State<AgendaPage> {
       crossAxisSpacing: 16.0,
       children: List.generate(dataList.length, (index) {
         final agenda = dataList[index];
-        final color = _lightColors[index % _lightColors.length];
+        final color = listColors[index % listColors.length];
         return GestureDetector(
           onTap: () {
             Get.toNamed(MarketingRoutes.marketingAgendaDetail,
@@ -104,8 +106,7 @@ class _AgendaPageState extends State<AgendaPage> {
     );
   }
 
-  newFicheDialog(
-      AgendaController controller, ProfilController profilController) {
+  newFicheDialog() {
     return showDialog(
         context: context,
         barrierDismissible: true,
@@ -137,7 +138,7 @@ class _AgendaPageState extends State<AgendaPage> {
                   onPressed: () => Navigator.pop(context, 'Cancel'),
                   child: const Text('Annuler'),
                 ),
-                TextButton(
+                Obx(() => TextButton(
                   onPressed: () {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
@@ -145,8 +146,8 @@ class _AgendaPageState extends State<AgendaPage> {
                       form.reset();
                     }
                   },
-                  child: const Text('OK'),
-                ),
+                  child: controller.isLoading ? loadingMini() : const Text('OK'),
+                ),) 
               ],
             );
           });
