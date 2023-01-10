@@ -173,7 +173,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
                               depList.contains('Marketing') &&
                                   widget.campaignModel.approbationDD == '-' &&
                                   profilController.user.fonctionOccupe ==
-                                      "Directeur générale") 
+                                      "Directeur générale")
                             Padding(
                                 padding: const EdgeInsets.all(p10),
                                 child: ResponsiveChildWidget(

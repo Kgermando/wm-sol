@@ -44,7 +44,7 @@ class _DetailUserState extends State<DetailUser> {
               appBar: headerBar(context, scaffoldKey, title,
                   "${widget.user.prenom} ${widget.user.nom}"),
               drawer: const DrawerMenu(),
-              floatingActionButton: FloatingActionButton.extended(
+              floatingActionButton: (widget.user.succursale == 'Commercial') ? FloatingActionButton.extended(
                 label: const Text("Affecter une succursale"),
                 tooltip: "Affecter une succursale à cet utilisateur",
                 icon: const Icon(Icons.home_work),
@@ -102,7 +102,7 @@ class _DetailUserState extends State<DetailUser> {
                     },
                   );
                 },
-              ),
+              ) : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
