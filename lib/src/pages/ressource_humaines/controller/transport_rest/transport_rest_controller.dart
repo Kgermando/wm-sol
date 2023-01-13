@@ -18,7 +18,7 @@ class TransportRestController extends GetxController
   final LignBudgetaireController lignBudgetaireController =
       Get.put(LignBudgetaireController());
 
-  List<TransportRestaurationModel> transportRestaurationList = [] ;
+  List<TransportRestaurationModel> transportRestaurationList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -93,6 +93,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -125,7 +126,7 @@ class TransportRestController extends GetxController
           ressource: '-',
           isSubmit: 'false');
       await transportRestaurationApi.insertData(transRest).then((value) {
-        clear(); 
+        clear();
         Get.toNamed(RhRoutes.rhTransportRest);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
@@ -135,6 +136,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -142,7 +144,8 @@ class TransportRestController extends GetxController
     }
   }
 
-  void submitUpdate(TransportRestaurationModel transportRestaurationModel) async {
+  void submitUpdate(
+      TransportRestaurationModel transportRestaurationModel) async {
     try {
       _isLoading.value = true;
       final transRest = TransportRestaurationModel(
@@ -177,6 +180,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -222,6 +226,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -267,6 +272,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -312,6 +318,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -357,6 +364,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -519,6 +527,7 @@ class TransportRestController extends GetxController
       });
     } catch (e) {
       _isLoading.value = false;
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -564,6 +573,7 @@ class TransportRestController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,

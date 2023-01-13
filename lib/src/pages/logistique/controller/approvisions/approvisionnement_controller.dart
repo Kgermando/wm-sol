@@ -32,7 +32,7 @@ class ApprovisionnementController extends GetxController
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     quantityController.dispose();
     super.dispose();
   }
@@ -75,6 +75,7 @@ class ApprovisionnementController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -106,6 +107,7 @@ class ApprovisionnementController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -142,6 +144,7 @@ class ApprovisionnementController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -177,6 +180,7 @@ class ApprovisionnementController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

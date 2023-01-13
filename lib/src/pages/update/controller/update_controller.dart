@@ -110,14 +110,13 @@ class UpdateController extends GetxController
         var isVersion = isUpdateLocalVersion.split('.');
         for (var e in isVersion) {
           _sumLocalVersion.value += double.parse(e);
-        }  
+        }
 
         // Version Cloud
         var isVersionCloud = updateVersionList.first.version.split('.');
         for (var e in isVersionCloud) {
           _sumVersionCloud.value += double.parse(e);
         }
- 
       }
       change(updateVersionList, status: RxStatus.success());
     }, onError: (err) {
@@ -144,6 +143,7 @@ class UpdateController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -174,6 +174,7 @@ class UpdateController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

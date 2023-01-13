@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/vente_cart_api.dart';
-import 'package:wm_solution/src/models/commercial/vente_cart_model.dart'; 
+import 'package:wm_solution/src/api/commerciale/commercial/vente_cart_api.dart';
+import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 
-class VenteEffectueController extends GetxController with StateMixin<List<VenteCartModel>> {
-  final VenteCartApi venteCartApi = VenteCartApi();  
+class VenteEffectueController extends GetxController
+    with StateMixin<List<VenteCartModel>> {
+  final VenteCartApi venteCartApi = VenteCartApi();
 
   List<VenteCartModel> venteCartList = [];
 
- 
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
- 
 
   @override
   void onInit() {
     getList();
     super.onInit();
-    
   }
 
- 
   void getList() async {
     await venteCartApi.getAllData().then((response) {
       venteCartList.clear();
@@ -50,11 +47,11 @@ class VenteEffectueController extends GetxController with StateMixin<List<VenteC
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
   }
- 
 }

@@ -15,7 +15,7 @@ class PersonnelsRolesController extends GetxController
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
 
-  String? agentController; 
+  String? agentController;
   TextEditingController roleController = TextEditingController();
 
   @override
@@ -64,6 +64,7 @@ class PersonnelsRolesController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -93,6 +94,7 @@ class PersonnelsRolesController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -122,6 +124,7 @@ class PersonnelsRolesController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

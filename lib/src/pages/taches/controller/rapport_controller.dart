@@ -18,7 +18,7 @@ class RapportController extends GetxController
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
- 
+
   QuillController quillControllerRead = QuillController.basic();
   QuillController quillController = QuillController.basic();
 
@@ -47,7 +47,7 @@ class RapportController extends GetxController
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
     });
-  } 
+  }
 
   detailView(int id) async {
     final data = await rapportApi.getOneData(id);
@@ -68,6 +68,7 @@ class RapportController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -76,19 +77,18 @@ class RapportController extends GetxController
   }
 
   void submit(TacheModel data) async {
-    var json = jsonEncode(quillController.document.toDelta().toJson()); 
+    var json = jsonEncode(quillController.document.toDelta().toJson());
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-        nom: data.nom,
-        numeroTache: data.numeroTache,
-        rapport: json, // rapportController.text,
-        signature: profilController.user.matricule.toString(),
-        created: DateTime.now(),
-        reference: data.id!,
-        readRapport: 'Non Lu',
-        signatureResp: '-'
-      );
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          rapport: json, // rapportController.text,
+          signature: profilController.user.matricule.toString(),
+          created: DateTime.now(),
+          reference: data.id!,
+          readRapport: 'Non Lu',
+          signatureResp: '-');
       await rapportApi.insertData(dataItem).then((value) {
         clear();
         rapportList.clear();
@@ -102,6 +102,7 @@ class RapportController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -114,16 +115,15 @@ class RapportController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-        id: data.id,
-        nom: data.nom,
-        numeroTache: data.numeroTache,
-        rapport: json, // rapportController.text,
-        signature: profilController.user.matricule.toString(),
-        created: DateTime.now(),
-        reference: data.reference,
-        readRapport: data.readRapport,
-        signatureResp: data.signatureResp
-      );
+          id: data.id,
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          rapport: json, // rapportController.text,
+          signature: profilController.user.matricule.toString(),
+          created: DateTime.now(),
+          reference: data.reference,
+          readRapport: data.readRapport,
+          signatureResp: data.signatureResp);
       await rapportApi.updateData(dataItem).then((value) {
         clear();
         rapportList.clear();
@@ -137,6 +137,7 @@ class RapportController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -148,16 +149,15 @@ class RapportController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = RapportModel(
-        id: data.id,
-        nom: data.nom,
-        numeroTache: data.numeroTache,
-        rapport: data.rapport,
-        signature: data.signature,
-        created: data.created,
-        reference: data.reference,
-        readRapport: 'Lu',
-        signatureResp: profilController.user.matricule.toString()
-      );
+          id: data.id,
+          nom: data.nom,
+          numeroTache: data.numeroTache,
+          rapport: data.rapport,
+          signature: data.signature,
+          created: data.created,
+          reference: data.reference,
+          readRapport: 'Lu',
+          signatureResp: profilController.user.matricule.toString());
       await rapportApi.updateData(dataItem).then((value) {
         clear();
         rapportList.clear();
@@ -171,6 +171,7 @@ class RapportController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

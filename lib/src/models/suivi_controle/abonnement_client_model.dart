@@ -1,68 +1,70 @@
 class AbonnementClientModel {
   late int? id;
-  late String duree;
-  late String typeContrat;
-  late String sommeContrat;
-  late String receptionniste;
-  late String dateSignatureContrat;
-  late String signataireContratEntreprise;
+  late int reference;
+  late DateTime dateFinContrat;
+  late String typeContrat; // Abonnement // Achat Licence
+  late String montant; // Montant du contrat
+  late String dateDebutEtFinContrat; // Date et de fin du contrat
+  late String
+      signataireContrat; // Personne qui signé le contrat pour l'entreprise
   late String signature;
   late DateTime created;
-
-
-AbonnementClientModel({this.id,
-      required this.duree,
+  late String nomSocial;
+ 
+  AbonnementClientModel(
+      {this.id,
+      required this.reference,
+      required this.dateFinContrat,
       required this.typeContrat,
-      required this.sommeContrat,
-      required this.receptionniste,
-      required this.dateSignatureContrat,
-      required this.signataireContratEntreprise,
+      required this.montant,
+      required this.dateDebutEtFinContrat,
+      required this.signataireContrat,
       required this.signature,
-      required this.created
+      required this.created,
+      required this.nomSocial});
 
-    });
-
-
-     factory AbonnementClientModel.fromSQL(List<dynamic> row) {
+  factory AbonnementClientModel.fromSQL(List<dynamic> row) {
     return AbonnementClientModel(
-     id: row[0],
-      duree: row[1],
-      typeContrat: row[2],
-      sommeContrat: row[3],
-      receptionniste: row[4],
-      dateSignatureContrat: row[5],
-      signataireContratEntreprise: row[6],
+      id: row[0],
+      reference: row[1],
+      dateFinContrat: row[2],
+      typeContrat: row[3],
+      montant: row[4],
+      dateDebutEtFinContrat: row[5],
+      signataireContrat: row[6],
       signature: row[7],
-      created: row[8]
+      created: row[8],
+      nomSocial: row[9]
     );
   }
 
-    factory AbonnementClientModel.fromJson(Map<String, dynamic> json) {
+  factory AbonnementClientModel.fromJson(Map<String, dynamic> json) {
     return AbonnementClientModel(
-     id: json['id'],
-      duree: json['duree'],
+      id: json['id'],
+      reference: json['reference'],
+      dateFinContrat: DateTime.parse(json['dateFinContrat']),
       typeContrat: json['typeContrat'],
-      sommeContrat: json['sommeContrat'],
-      receptionniste: json['receptionniste'],
-      dateSignatureContrat: json['dateSignatureContrat'],
-      signataireContratEntreprise: json['signataireContratEntreprise'],
+      montant: json['montant'],
+      dateDebutEtFinContrat: json['dateDebutEtFinContrat'],
+      signataireContrat: json['signataireContrat'],
       signature: json['signature'],
-      created: DateTime.parse(json['created'])
+      created: DateTime.parse(json['created']),
+      nomSocial: json['nomSocial'],
     );
-  } 
-  
-   Map<String, dynamic> toJson() {
+  }
+
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'duree': duree,
+      'reference': reference,
+      'dateFinContrat': dateFinContrat.toIso8601String(),
       'typeContrat': typeContrat,
-      'sommeContrat': sommeContrat,
-      'receptionniste': receptionniste,
-      'dateSignatureContrat': dateSignatureContrat,
-      'signataireContratEntreprise': signataireContratEntreprise,
+      'montant': montant,
+      'dateDebutEtFinContrat': dateDebutEtFinContrat,
+      'signataireContrat': signataireContrat,
       'signature': signature,
-      'created': created,
-  
+      'created': created.toIso8601String(),
+      'nomSocial': nomSocial
     };
   }
 }

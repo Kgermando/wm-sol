@@ -172,7 +172,7 @@ class _DetailProductModelState extends State<DetailProductModel> {
             ),
             TextButton(
               onPressed: () {
-                controller.produitModelApi.deleteData(widget.productModel.id!);
+                controller.deleteData(widget.productModel.id!);
                 Navigator.pop(context, 'ok');
               },
               child: const Text('OK'),

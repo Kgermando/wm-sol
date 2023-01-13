@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/succursale_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/succursale_api.dart';
 import 'package:wm_solution/src/models/commercial/succursale_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/utils/province.dart';
@@ -78,6 +78,7 @@ class SuccursaleController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -113,6 +114,7 @@ class SuccursaleController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -150,6 +152,7 @@ class SuccursaleController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -186,6 +189,7 @@ class SuccursaleController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -222,6 +226,7 @@ class SuccursaleController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

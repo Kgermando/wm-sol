@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/achat_api.dart';
-import 'package:wm_solution/src/api/commerciale/creance_facture_api.dart';
-import 'package:wm_solution/src/api/commerciale/gain_api.dart';
-import 'package:wm_solution/src/api/commerciale/vente_cart_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/achat_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/creance_facture_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/gain_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/vente_cart_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';

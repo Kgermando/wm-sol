@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:wm_solution/src/api/commerciale/cart_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/cart_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
@@ -196,6 +196,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       });
     } catch (e) {
       _isLoading.value = false;
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -221,19 +222,13 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         facture = item;
       }
 
-
       GetStorage box = GetStorage();
       final printer = box.read("printer");
-      if (printer == 'A4') {
-         
-      }
-      if (printer == 'A6') {
-         
-      }
+      if (printer == 'A4') {}
+      if (printer == 'A6') {}
       final pdfFile =
           await FactureCartPDF.generate(facture!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
-
     } catch (e) {
       _isLoading.value = false;
       _isLoading.value = false;
@@ -275,7 +270,8 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         });
       });
     } catch (e) {
-      _isLoading.value = false; 
+      _isLoading.value = false;
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -307,6 +303,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           await CreanceCartPDF.generate(creance!, monnaieStorage.monney);
       PdfApi.openFile(pdfFile);
     } catch (e) {
+      _isLoading.value = false;
       _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
@@ -421,12 +418,13 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
 
   updateAchat(CartModel cart) async {
     try {
-        _isLoadingCancel.value = true;
+      _isLoadingCancel.value = true;
       final achatQtyList = achatController.achatList
           .where((e) => e.idProduct == cart.idProductCart);
 
       final achatQty = achatQtyList
-          .map((e) => double.parse(e.quantity) + double.parse(cart.quantityCart))
+          .map(
+              (e) => double.parse(e.quantity) + double.parse(cart.quantityCart))
           .first;
 
       final achatIdProduct = achatQtyList.map((e) => e.idProduct).first;
@@ -468,6 +466,5 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
-   
   }
 }

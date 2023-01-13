@@ -173,7 +173,7 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
             ),
             TextButton(
               onPressed: () {
-                controller.succursaleApi.deleteData(widget.succursaleModel.id!);
+                controller.deleteData(widget.succursaleModel.id!);
                 Navigator.pop(context, 'ok');
               },
               child: const Text('OK', style: TextStyle(color: Colors.red)),

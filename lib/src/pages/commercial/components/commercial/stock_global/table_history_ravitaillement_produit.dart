@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
-import 'package:wm_solution/src/api/commerciale/history_rabitaillement_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/history_rabitaillement_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/commercial/history_ravitaillement_model.dart';
 import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/achat_api.dart';
-import 'package:wm_solution/src/api/commerciale/cart_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/achat_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/cart_api.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -78,6 +78,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -132,7 +133,8 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   //       });
   //     });
   //   } catch (e) {
-  //     Get.snackbar("Erreur de soumission", "$e",
+  //     _isLoading.value = false;
+      // Get.snackbar("Erreur de soumission", "$e",
   //         backgroundColor: Colors.red,
   //         icon: const Icon(Icons.check),
   //         snackPosition: SnackPosition.TOP);

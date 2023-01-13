@@ -104,8 +104,7 @@ class BanqueController extends GetxController
           reference: data.id!,
           banqueName: data.nomComplet,
           created: DateTime.now(),
-          montantRetrait: "0"
-        );
+          montantRetrait: "0");
       await banqueApi.insertData(dataItem).then((value) {
         clear();
         banqueList.clear();
@@ -142,8 +141,7 @@ class BanqueController extends GetxController
           reference: data.id!,
           banqueName: data.nomComplet,
           created: DateTime.now(),
-          montantRetrait: montantController.text
-        );
+          montantRetrait: montantController.text);
       await banqueApi.insertData(dataItem).then((value) {
         clear();
         banqueList.clear();
@@ -164,6 +162,4 @@ class BanqueController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-  
 }

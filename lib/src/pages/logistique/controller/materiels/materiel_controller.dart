@@ -52,7 +52,7 @@ class MaterielController extends GetxController
     modeleController.dispose();
     marqueController.dispose();
     numeroRefController.dispose();
-    couleurController.dispose(); 
+    couleurController.dispose();
     qtyMaxReservoirController.dispose();
     dateFabricationController.dispose();
     numeroPLaqueController.dispose();
@@ -109,6 +109,7 @@ class MaterielController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -133,7 +134,9 @@ class MaterielController extends GetxController
           modele: modeleController.text,
           numeroRef: numeroRefController.text,
           couleur: couleurController.text,
-          genre: (genreController.toString() == '') ? 'Autres' : genreController.toString(),
+          genre: (genreController.toString() == '')
+              ? 'Autres'
+              : genreController.toString(),
           qtyMaxReservoir: (qtyMaxReservoirController.text == '')
               ? '0'
               : qtyMaxReservoirController.text,
@@ -173,6 +176,7 @@ class MaterielController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.close),
@@ -219,10 +223,10 @@ class MaterielController extends GetxController
         materielList.clear();
         getList();
         if (value.typeMateriel == 'Materiel roulant') {
-          Get.toNamed(LogistiqueRoutes.logMaterielRoulant); 
+          Get.toNamed(LogistiqueRoutes.logMaterielRoulant);
         }
         if (value.typeMateriel == 'Materiel') {
-          Get.toNamed(LogistiqueRoutes.logMateriel); 
+          Get.toNamed(LogistiqueRoutes.logMateriel);
         }
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
@@ -232,6 +236,7 @@ class MaterielController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -278,6 +283,7 @@ class MaterielController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -325,6 +331,7 @@ class MaterielController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

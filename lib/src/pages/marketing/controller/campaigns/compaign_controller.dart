@@ -118,6 +118,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -166,6 +167,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -215,6 +217,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -263,6 +266,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -311,6 +315,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -360,6 +365,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -409,6 +415,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -568,6 +575,7 @@ class CampaignController extends GetxController
         }
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -617,6 +625,7 @@ class CampaignController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,

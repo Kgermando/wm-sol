@@ -102,6 +102,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -148,6 +149,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -195,6 +197,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -242,6 +245,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -289,6 +293,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -336,6 +341,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -498,6 +504,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         }
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -544,6 +551,7 @@ class DevisController extends GetxController with StateMixin<List<DevisModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

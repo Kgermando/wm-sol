@@ -351,16 +351,16 @@ var addUpdateVerionrUrl =
 // Suivis & controlles
 var abonnementClientUrl = Uri.parse("$mainUrl/abonnement-clients/");
 var addAbonnementClientUrl =
-    Uri.parse("$mainUrl/entreprise-infos/insert-new-abonnement-client");
+    Uri.parse("$mainUrl/abonnement-clients/insert-new-abonnement-client");
 
 var entrepriseInfoUrl = Uri.parse("$mainUrl/entreprise-infos/");
 var addEntrepriseInfoUrl =
-    Uri.parse("$mainUrl/update-versions/insert-new-entreprise-info");
+    Uri.parse("$mainUrl/entreprise-infos/insert-new-entreprise-info");
 
 var suivisUrl = Uri.parse("$mainUrl/suivis/");
 var addSuivisUrl =
-    Uri.parse("$mainUrl/update-versions/insert-new-suivi");
-
+    Uri.parse("$mainUrl/suivis/insert-new-suivi");
+ 
 
 // Settings
 var monnaieUrl = Uri.parse("$mainUrl/settings/monnaies/");

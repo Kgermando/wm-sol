@@ -71,6 +71,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -90,7 +91,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
           motifDD: '-',
           signatureDD: '-');
       await bilanApi.insertData(bilan).then((value) {
-        clear(); 
+        clear();
         Get.toNamed(ComptabiliteRoutes.comptabiliteBilan);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
@@ -100,6 +101,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -132,6 +134,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -165,6 +168,7 @@ class BilanController extends GetxController with StateMixin<List<BilanModel>> {
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

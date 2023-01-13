@@ -45,7 +45,7 @@ class PresencePersonneController extends GetxController
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     motifController.dispose();
     super.dispose();
   }
@@ -83,6 +83,7 @@ class PresencePersonneController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -115,6 +116,7 @@ class PresencePersonneController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -148,6 +150,7 @@ class PresencePersonneController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

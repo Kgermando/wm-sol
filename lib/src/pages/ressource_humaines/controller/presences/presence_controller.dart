@@ -53,6 +53,7 @@ class PresenceController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -70,14 +71,15 @@ class PresenceController extends GetxController
           created: DateTime.now());
       await presenceApi.insertData(presenceModel).then((value) {
         Get.toNamed(RhRoutes.rhPresence);
-        Get.snackbar(
-            "La fiche de presence a été genéré avec succès!", "Liste de presence.",
+        Get.snackbar("La fiche de presence a été genéré avec succès!",
+            "Liste de presence.",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

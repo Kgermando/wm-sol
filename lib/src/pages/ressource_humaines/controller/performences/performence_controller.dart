@@ -21,7 +21,7 @@ class PerformenceController extends GetxController
   }
 
   void getList() async {
-    await performenceApi.getAllData().then((response) { 
+    await performenceApi.getAllData().then((response) {
       performenceList.clear();
       performenceList.addAll(response);
       change(performenceList, status: RxStatus.success());
@@ -49,6 +49,7 @@ class PerformenceController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

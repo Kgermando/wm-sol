@@ -7,14 +7,14 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/materiels/materiel_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/mobiliers/mobilier_controller.dart';
- 
 
 class EntretienController extends GetxController
     with StateMixin<List<EntretienModel>> {
   final EntretienApi entretienApi = EntretienApi();
   final ProfilController profilController = Get.find();
   final MaterielController materielController = Get.put(MaterielController());
-  final ImmobilierController immobilierController = Get.put(ImmobilierController());
+  final ImmobilierController immobilierController =
+      Get.put(ImmobilierController());
   final MobilierController mobilierController = Get.put(MobilierController());
 
   List<EntretienModel> entretienList = [];
@@ -92,6 +92,7 @@ class EntretienController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -126,6 +127,7 @@ class EntretienController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -161,6 +163,7 @@ class EntretienController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -196,6 +199,7 @@ class EntretienController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -232,6 +236,7 @@ class EntretienController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

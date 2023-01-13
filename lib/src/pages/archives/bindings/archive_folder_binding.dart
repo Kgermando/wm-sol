@@ -7,3 +7,4 @@ class ArchiveFolderBinding extends Bindings {
     Get.put<ArchiveFolderController>(ArchiveFolderController());
   }
 }
+// 

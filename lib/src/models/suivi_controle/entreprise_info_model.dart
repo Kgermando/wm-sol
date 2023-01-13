@@ -1,6 +1,6 @@
 class EntrepriseInfoModel {
   late int? id;
-  late String nomSocial;
+  late String nomSocial; // Nom de l'entreprise
   late String nomGerant;
   late String emailEntreprise;
   late String emailGerant;
@@ -13,8 +13,11 @@ class EntrepriseInfoModel {
   late String adressePhysiqueEntreprise;
   late String signature;
   late DateTime created;
-
- EntrepriseInfoModel(
+  late DateTime dateFinContrat;
+  late String typeContrat;
+  late String typeEntreprise;
+ 
+  EntrepriseInfoModel(
       {this.id,
       required this.nomSocial,
       required this.nomGerant,
@@ -28,44 +31,49 @@ class EntrepriseInfoModel {
       required this.secteurActivite,
       required this.adressePhysiqueEntreprise,
       required this.signature,
-      required this.created
-    }
-  );
+      required this.created,
+      required this.dateFinContrat,
+      required this.typeContrat,
+      required this.typeEntreprise});
   factory EntrepriseInfoModel.fromSQL(List<dynamic> row) {
     return EntrepriseInfoModel(
-      id: row[0],
-      nomSocial: row[1],
-      nomGerant: row[2],
-      emailEntreprise: row[3],
-      emailGerant: row[4],
-      telephone1: row[5],
-      telephone2: row[6],
-      rccm: row[7],
-      identificationNationale: row[8],
-      numerosImpot: row[9],
-      secteurActivite: row[10],
-      adressePhysiqueEntreprise: row[11],
-      signature: row[12],
-      created: row[13]
-    );
+        id: row[0],
+        nomSocial: row[1],
+        nomGerant: row[2],
+        emailEntreprise: row[3],
+        emailGerant: row[4],
+        telephone1: row[5],
+        telephone2: row[6],
+        rccm: row[7],
+        identificationNationale: row[8],
+        numerosImpot: row[9],
+        secteurActivite: row[10],
+        adressePhysiqueEntreprise: row[11],
+        signature: row[12],
+        created: row[13],
+        dateFinContrat: row[14],
+        typeContrat: row[15],
+        typeEntreprise: row[16]);
   }
-factory EntrepriseInfoModel.fromJson(Map<String, dynamic> json) {
+  factory EntrepriseInfoModel.fromJson(Map<String, dynamic> json) {
     return EntrepriseInfoModel(
-      id: json['id'],
-      nomSocial: json['nomSocial'],
-      nomGerant: json['nomGerant'],
-      emailEntreprise: json['emailEntreprise'],
-      emailGerant: json['emailGerant'],
-      telephone1: json['telephone1'],
-      telephone2: json['telephone2'],
-      rccm: json['rccm'],
-      identificationNationale: json['identificationNationale'],
-      numerosImpot: json['numerosImpot'],
-      secteurActivite: json['secteurActivite'],
-      adressePhysiqueEntreprise: json["adressePhysiqueEntreprise"],
-      signature: json['signature'],
-      created: DateTime.parse(json['created'])
-    );
+        id: json['id'],
+        nomSocial: json['nomSocial'],
+        nomGerant: json['nomGerant'],
+        emailEntreprise: json['emailEntreprise'],
+        emailGerant: json['emailGerant'],
+        telephone1: json['telephone1'],
+        telephone2: json['telephone2'],
+        rccm: json['rccm'],
+        identificationNationale: json['identificationNationale'],
+        numerosImpot: json['numerosImpot'],
+        secteurActivite: json['secteurActivite'],
+        adressePhysiqueEntreprise: json["adressePhysiqueEntreprise"],
+        signature: json['signature'],
+        created: DateTime.parse(json['created']),
+        dateFinContrat: DateTime.parse(json['dateFinContrat']),
+        typeContrat: json['typeContrat'],
+        typeEntreprise: json['typeEntreprise']);
   }
 
   Map<String, dynamic> toJson() {
@@ -83,8 +91,10 @@ factory EntrepriseInfoModel.fromJson(Map<String, dynamic> json) {
       'secteurActivite': secteurActivite,
       'adressePhysiqueEntreprise': adressePhysiqueEntreprise,
       'signature': signature,
-      'created': created.toIso8601String()
+      'created': created.toIso8601String(),
+      'dateFinContrat': dateFinContrat.toIso8601String(),
+      'typeContrat': typeContrat,
+      'typeEntreprise': typeEntreprise
     };
   }
 }
-

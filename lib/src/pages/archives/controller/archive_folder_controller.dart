@@ -61,6 +61,7 @@ class ArchiveFolderController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -88,6 +89,7 @@ class ArchiveFolderController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -115,7 +117,8 @@ class ArchiveFolderController extends GetxController
   //       _isLoading.value = false;
   //     });
   //   } catch (e) {
-  //     Get.snackbar("Erreur de soumission", "$e",
+  //     _isLoading.value = false;
+      // Get.snackbar("Erreur de soumission", "$e",
   //         backgroundColor: Colors.red,
   //         icon: const Icon(Icons.check),
   //         snackPosition: SnackPosition.TOP);

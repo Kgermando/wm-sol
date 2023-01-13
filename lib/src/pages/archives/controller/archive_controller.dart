@@ -21,7 +21,7 @@ class ArchiveController extends GetxController
   TextEditingController nomDocumentController = TextEditingController();
   String? departement;
   String? level;
-  TextEditingController descriptionController = TextEditingController(); 
+  TextEditingController descriptionController = TextEditingController();
 
   final _isUploading = false.obs;
   bool get isUploading => _isUploading.value;
@@ -48,7 +48,7 @@ class ArchiveController extends GetxController
   @override
   void dispose() {
     nomDocumentController.dispose();
-    descriptionController.dispose(); 
+    descriptionController.dispose();
 
     super.dispose();
   }
@@ -57,7 +57,7 @@ class ArchiveController extends GetxController
     departement = null;
     uploadedFileUrl = null;
     nomDocumentController.clear();
-    descriptionController.clear(); 
+    descriptionController.clear();
   }
 
   void getList() async {
@@ -89,6 +89,7 @@ class ArchiveController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -108,8 +109,7 @@ class ArchiveController extends GetxController
           signature: profilController.user.matricule,
           created: DateTime.now(),
           reference: data.id!,
-          level: level.toString()
-        );
+          level: level.toString());
       await archiveApi.insertData(archiveModel).then((value) {
         clear();
         archiveList.clear();
@@ -123,6 +123,7 @@ class ArchiveController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -134,21 +135,20 @@ class ArchiveController extends GetxController
     try {
       _isLoading.value = true;
       final archiveModel = ArchiveModel(
-        id: data.id,
-        departement: data.departement,
-        folderName: data.folderName,
-        nomDocument: (nomDocumentController.text == "")
-            ? nomDocumentController.text
-            : data.nomDocument,
-        description: (descriptionController.text == "")
-            ? descriptionController.text
-            : data.description,
-        fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
-        signature: profilController.user.matricule,
-        created: DateTime.now(),
-        reference: data.reference,
-        level: level.toString()
-      );
+          id: data.id,
+          departement: data.departement,
+          folderName: data.folderName,
+          nomDocument: (nomDocumentController.text == "")
+              ? nomDocumentController.text
+              : data.nomDocument,
+          description: (descriptionController.text == "")
+              ? descriptionController.text
+              : data.description,
+          fichier: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+          signature: profilController.user.matricule,
+          created: DateTime.now(),
+          reference: data.reference,
+          level: level.toString());
       await archiveApi.updateData(archiveModel).then((value) {
         clear();
         archiveList.clear();
@@ -162,6 +162,7 @@ class ArchiveController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

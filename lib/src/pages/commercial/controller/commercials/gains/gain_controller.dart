@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/gain_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/gain_api.dart';
 import 'package:wm_solution/src/models/commercial/gain_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
-class GainCartController extends GetxController with StateMixin<List<GainModel>> {
+class GainCartController extends GetxController
+    with StateMixin<List<GainModel>> {
   final GainApi gainApi = GainApi();
   final ProfilController profilController = Get.find();
 
@@ -48,6 +49,7 @@ class GainCartController extends GetxController with StateMixin<List<GainModel>>
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

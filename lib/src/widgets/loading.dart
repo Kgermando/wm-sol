@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart'; 
 import 'package:wm_solution/src/constants/app_theme.dart'; 
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -12,7 +12,7 @@ Widget loadingPage(BuildContext context) => Center(
           SizedBox(
             height: p20,
           ),
-          Text('Patientez svp...', style: TextStyle())
+          Text('Patientez svp...', textAlign: TextAlign.center, style: TextStyle())
         ],
       ),
     );
@@ -30,15 +30,15 @@ Widget loadingError(BuildContext context, String error) => Column(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Text("Une erreur s'est produite $error. Merçi.")), 
+            Expanded(child: Text("Une erreur s'est produite $error. Merçi.", textAlign: TextAlign.center,)), 
           ],
         ),
         const SizedBox(
           height: 10,
         ),
         ElevatedButton(
-            onPressed: () => Get.back(),
-            child: Text("Revenir en arrière.",
+            onPressed: () => Phoenix.rebirth(context),
+            child: Text("Revenir en arrière.", textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium))
       ],
     );

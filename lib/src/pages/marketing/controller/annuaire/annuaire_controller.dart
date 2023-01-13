@@ -45,7 +45,6 @@ class AnnuaireController extends GetxController
   void onInit() {
     super.onInit();
     getList();
-    
   }
 
   @override
@@ -98,7 +97,7 @@ class AnnuaireController extends GetxController
   void onSearchText(String text) async {
     List<AnnuaireModel> results = [];
     if (text.isEmpty) {
-      results = annuaireList; 
+      results = annuaireList;
     } else {
       results = annuaireList
           .where((element) =>
@@ -154,6 +153,7 @@ class AnnuaireController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -190,6 +190,7 @@ class AnnuaireController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -227,6 +228,7 @@ class AnnuaireController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

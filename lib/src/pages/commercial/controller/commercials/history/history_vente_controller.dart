@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/vente_cart_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/vente_cart_api.dart';
 import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -50,6 +50,7 @@ class VenteCartController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

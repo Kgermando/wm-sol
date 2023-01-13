@@ -32,7 +32,7 @@ class DevisListObjetController extends GetxController
   }
 
   void clear() {
-    designationController.clear(); 
+    designationController.clear();
   }
 
   void getList() async {
@@ -63,6 +63,7 @@ class DevisListObjetController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -94,6 +95,7 @@ class DevisListObjetController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -125,6 +127,7 @@ class DevisListObjetController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

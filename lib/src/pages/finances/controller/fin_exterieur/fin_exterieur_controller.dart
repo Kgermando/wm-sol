@@ -77,6 +77,7 @@ class FinExterieurController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -114,7 +115,7 @@ class FinExterieurController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
-       _isLoading.value = false;
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -126,18 +127,18 @@ class FinExterieurController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = FinanceExterieurModel(
-          id: data.id,
-          nomComplet: nomCompletController.text,
-          pieceJustificative: pieceJustificativeController.text,
-          libelle: libelleController.text,
-          montantDepot: "0",
-          typeOperation: 'Retrait',
-          numeroOperation:
-              'Transaction-fin-exterieur-${finExterieurList.length + 1}',
-          signature: profilController.user.matricule,
-          reference: data.id!,
-          financeExterieurName: data.nomComplet,
-          created: data.created,
+        id: data.id,
+        nomComplet: nomCompletController.text,
+        pieceJustificative: pieceJustificativeController.text,
+        libelle: libelleController.text,
+        montantDepot: "0",
+        typeOperation: 'Retrait',
+        numeroOperation:
+            'Transaction-fin-exterieur-${finExterieurList.length + 1}',
+        signature: profilController.user.matricule,
+        reference: data.id!,
+        financeExterieurName: data.nomComplet,
+        created: data.created,
         montantRetrait: montantController.text,
       );
       await finExterieurApi.insertData(dataItem).then((value) {
@@ -153,7 +154,7 @@ class FinExterieurController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
-       _isLoading.value = false;
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

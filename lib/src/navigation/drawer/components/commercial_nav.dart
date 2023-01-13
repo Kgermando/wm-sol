@@ -26,6 +26,8 @@ class CommercialNav extends StatefulWidget {
 
 class _CommercialNavState extends State<CommercialNav> { 
   bool isOpen = false;
+  bool isOpen1 = false;
+  bool isOpen2 = false;
 
   @override
   Widget build(BuildContext context) {  
@@ -60,151 +62,161 @@ class _CommercialNavState extends State<CommercialNav> {
               }),
         if (widget.departementList.contains('Commercial') && userRole <= 2)
           DrawerWidget(
-              selected:
-                  widget.currentRoute == ComRoutes.comDD,
-              icon: Icons.manage_accounts,
-              sizeIcon: 20.0,
-              title: 'Directeur de departement',
+            selected:
+                widget.currentRoute == ComRoutes.comDD,
+            icon: Icons.manage_accounts,
+            sizeIcon: 20.0,
+            title: 'Directeur de departement',
+            style: bodyText1!,
+            badge: Badge(
+              showBadge:
+                  (int.parse(widget.controller.itemCommercialCount) >= 1) ? true : false,
+              badgeColor: Colors.teal,
+              badgeContent: Obx(() => Text(widget.controller.itemCommercialCount,
+                  style:
+                      const TextStyle(fontSize: 10.0, color: Colors.white))) ,
+              child: const Icon(Icons.notifications),
+            ),
+            onTap: () {
+              Get.toNamed(ComRoutes.comDD); 
+            }), 
+        ExpansionTile(
+          leading: const Icon(Icons.shopping_cart, size: 20.0),
+          title: Text('Ventes', style: bodyText1),
+          initiallyExpanded: false,
+          onExpansionChanged: (val) {
+            setState(() {
+              isOpen1 = !val;
+            });
+          },
+          children: [
+              DrawerWidget(
+              selected: widget.currentRoute == ComRoutes.comVente,
+              icon: Icons.arrow_right,
+              sizeIcon: 15.0,
+              title: 'Ventes',
               style: bodyText1!,
-              badge: Badge(
-                showBadge:
-                    (int.parse(widget.controller.itemCommercialCount) >= 1) ? true : false,
-                badgeColor: Colors.teal,
-                badgeContent: Obx(() => Text(widget.controller.itemCommercialCount,
-                    style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
-                child: const Icon(Icons.notifications),
-              ),
               onTap: () {
-                Get.toNamed(ComRoutes.comDD); 
+                Get.toNamed(ComRoutes.comVente);
+              }),
+          if (userRole <= 3)
+            DrawerWidget(
+                selected: widget.currentRoute ==
+                    ComRoutes.comSuccursale,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Succursale',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comSuccursale);
+                }),
+          if (userRole <= 3)
+            DrawerWidget(
+                selected: widget.currentRoute ==
+                    ComRoutes.comProduitModel,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Produit modèle',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comProduitModel);
+                }),
+          if (userRole <= 3)
+            DrawerWidget(
+                selected: widget.currentRoute ==
+                    ComRoutes.comStockGlobal,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Stocks global',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comStockGlobal);
+                }),
+          DrawerWidget(
+              selected:
+                  widget.currentRoute == ComRoutes.comAchat,
+              icon: Icons.arrow_right,
+              sizeIcon: 15.0,
+              title: 'Stock',
+              style: bodyText1,
+              onTap: () {
+                Get.toNamed(ComRoutes.comAchat);
+              }),
+          if (userRole <= 3)
+            DrawerWidget(
+                selected: widget.currentRoute ==
+                    ComRoutes.comBonLivraison,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Bon de livraison',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comBonLivraison);
+                }),
+          if (userRole <= 3)
+            DrawerWidget(
+                selected: widget.currentRoute ==
+                    ComRoutes.comRestitution,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Restitution',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comRestitution);
+                }),
+          DrawerWidget(
+              selected:
+                  widget.currentRoute == ComRoutes.comFacture,
+              icon: Icons.arrow_right,
+              sizeIcon: 15.0,
+              title: 'Factures',
+              style: bodyText1,
+              onTap: () {
+                Get.toNamed(ComRoutes.comFacture);
+              }),
+          DrawerWidget(
+              selected:
+                  widget.currentRoute == ComRoutes.comCreance,
+              icon: Icons.arrow_right,
+              sizeIcon: 15.0,
+              title: 'Factures créance',
+              style: bodyText1,
+              onTap: () {
+                Get.toNamed(ComRoutes.comCreance);
               }), 
           DrawerWidget(
-            selected: widget.currentRoute == ComRoutes.comVente,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Ventes',
-            style: bodyText1!,
-            onTap: () {
-              Get.toNamed(ComRoutes.comVente);
-            }),
-        if (userRole <= 3)
-          DrawerWidget(
-              selected: widget.currentRoute ==
-                  ComRoutes.comSuccursale,
+              selected:
+                  widget.currentRoute == ComRoutes.comCart,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
-              title: 'Succursale',
+              title: 'Panier',
               style: bodyText1,
               onTap: () {
-                Get.toNamed(ComRoutes.comSuccursale);
+                Get.toNamed(ComRoutes.comCart);
               }),
-        if (userRole <= 3)
           DrawerWidget(
-              selected: widget.currentRoute ==
-                  ComRoutes.comProduitModel,
+              selected: widget.currentRoute == ComRoutes.comVenteEffectue,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
-              title: 'Produit modèle',
+              title: 'Vos Ventes',
               style: bodyText1,
               onTap: () {
-                Get.toNamed(ComRoutes.comProduitModel);
-              }),
-        if (userRole <= 3)
-          DrawerWidget(
-              selected: widget.currentRoute ==
-                  ComRoutes.comStockGlobal,
-              icon: Icons.arrow_right,
-              sizeIcon: 15.0,
-              title: 'Stocks global',
-              style: bodyText1,
-              onTap: () {
-                Get.toNamed(ComRoutes.comStockGlobal);
-              }),
-        DrawerWidget(
-            selected:
-                widget.currentRoute == ComRoutes.comAchat,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Stock',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(ComRoutes.comAchat);
-            }),
-        if (userRole <= 3)
-          DrawerWidget(
-              selected: widget.currentRoute ==
-                  ComRoutes.comBonLivraison,
-              icon: Icons.arrow_right,
-              sizeIcon: 15.0,
-              title: 'Bon de livraison',
-              style: bodyText1,
-              onTap: () {
-                Get.toNamed(ComRoutes.comBonLivraison);
-              }),
-        if (userRole <= 3)
-          DrawerWidget(
-              selected: widget.currentRoute ==
-                  ComRoutes.comRestitution,
-              icon: Icons.arrow_right,
-              sizeIcon: 15.0,
-              title: 'Restitution',
-              style: bodyText1,
-              onTap: () {
-                Get.toNamed(ComRoutes.comRestitution);
-              }),
-        DrawerWidget(
-            selected:
-                widget.currentRoute == ComRoutes.comFacture,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Factures',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(ComRoutes.comFacture);
-            }),
-        DrawerWidget(
-            selected:
-                widget.currentRoute == ComRoutes.comCreance,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Factures créance',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(ComRoutes.comCreance);
-            }), 
-        DrawerWidget(
-            selected:
-                widget.currentRoute == ComRoutes.comCart,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Panier',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(ComRoutes.comCart);
-            }),
-        DrawerWidget(
-            selected: widget.currentRoute == ComRoutes.comVenteEffectue,
-            icon: Icons.arrow_right,
-            sizeIcon: 15.0,
-            title: 'Vos Ventes',
-            style: bodyText1,
-            onTap: () {
-              Get.toNamed(ComRoutes.comVenteEffectue);
-            }), 
-        if (userRole <= 3)
-          DrawerWidget(
-              selected: widget.currentRoute ==
-                  ComRoutes.comHistoryRavitaillement,
-              icon: Icons.arrow_right,
-              sizeIcon: 15.0,
-              title: 'Historique de ravitaillement',
-              style: bodyText1,
-              onTap: () {
-                Get.toNamed(
-                    ComRoutes.comHistoryRavitaillement);
-              }),
-        if (userRole <= 3)
-          DrawerWidget(
+                Get.toNamed(ComRoutes.comVenteEffectue);
+              }), 
+          if (userRole <= 3)
+            DrawerWidget(
+                selected: widget.currentRoute ==
+                    ComRoutes.comHistoryRavitaillement,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Historique de ravitaillement',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(
+                      ComRoutes.comHistoryRavitaillement);
+                }),
+          if (userRole <= 3)
+            DrawerWidget(
               selected: widget.currentRoute ==
                   ComRoutes.comHistoryLivraison,
               icon: Icons.arrow_right,
@@ -213,8 +225,50 @@ class _CommercialNavState extends State<CommercialNav> {
               style: bodyText1,
               onTap: () {
                 Get.toNamed(ComRoutes.comHistoryLivraison);
-              }),
-       
+              }
+            ),
+          ],
+        ),
+        ExpansionTile(
+          leading: const Icon(Icons.done_all, size: 20.0),
+          title: Text('Suivis', style: bodyText1),
+          initiallyExpanded: false,
+          onExpansionChanged: (val) {
+            setState(() {
+              isOpen2 = !val;
+            });
+          },
+          children: [
+            DrawerWidget(
+              selected: widget.currentRoute == ComRoutes.comEntreprise,
+              icon: Icons.arrow_right,
+              sizeIcon: 15.0,
+              title: 'Entreprises',
+              style: bodyText1,
+              onTap: () {
+                Get.toNamed(ComRoutes.comEntreprise);
+              }
+            ),
+            DrawerWidget(
+                selected: widget.currentRoute == ComRoutes.comSuivis,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Suivis',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comSuivis);
+                }),
+            DrawerWidget(
+                selected: widget.currentRoute == ComRoutes.comAbonnements,
+                icon: Icons.arrow_right,
+                sizeIcon: 15.0,
+                title: 'Licences & Contrats',
+                style: bodyText1,
+                onTap: () {
+                  Get.toNamed(ComRoutes.comAbonnements);
+                }),
+          ],
+        ),
       ],
     );
   }

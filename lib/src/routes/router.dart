@@ -35,6 +35,8 @@ import 'package:wm_solution/src/models/mail/mail_model.dart';
 import 'package:wm_solution/src/models/marketing/agenda_model.dart';
 import 'package:wm_solution/src/models/marketing/annuaire_model.dart';
 import 'package:wm_solution/src/models/marketing/campaign_model.dart';
+import 'package:wm_solution/src/models/suivi_controle/abonnement_client_model.dart';
+import 'package:wm_solution/src/models/suivi_controle/entreprise_info_model.dart';
 import 'package:wm_solution/src/models/taches/rapport_model.dart';
 import 'package:wm_solution/src/models/taches/tache_model.dart';
 import 'package:wm_solution/src/models/finances/banque_model.dart';
@@ -94,24 +96,27 @@ import 'package:wm_solution/src/pages/budgets/view/budget_previsionnel_page.dart
 import 'package:wm_solution/src/pages/budgets/view/dashboard_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/dd_budget.dart';
 import 'package:wm_solution/src/pages/budgets/view/historique_budgets.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/achat_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/bon_livraison_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/cart_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/dashboard_com_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/facture_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/facture_creance_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/gain_cart_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/history_livraison_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/history_ravitaillement_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/livraison_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/numero_facture_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/produit_model_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/ravitaillement_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/restitution_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/stock_global_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/succursale_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/vente_cart_binding.dart';
-import 'package:wm_solution/src/pages/commercial/bindings/vente_effectue_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/suivi_controle/abonnement_client_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/suivi_controle/entreprise_infos_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/suivi_controle/suivis_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/achat_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/bon_livraison_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/cart_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/dashboard_com_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/facture_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/facture_creance_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/gain_cart_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/history_livraison_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/history_ravitaillement_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/livraison_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/numero_facture_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/produit_model_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/ravitaillement_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/restitution_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/stock_global_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/succursale_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/vente_cart_binding.dart';
+import 'package:wm_solution/src/pages/commercial/bindings/ventes/vente_effectue_binding.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/achats/detail_achat.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/bon_livraison/detail_bon_livraison.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/cart/detail_cart.dart';
@@ -129,7 +134,17 @@ import 'package:wm_solution/src/pages/commercial/components/commercial/succursal
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/detail_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/update_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/vente_effectue/detail_vente_effectue.dart';
-import 'package:wm_solution/src/pages/commercial/view/commercials/vente_effectue_page.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/add_abonnement_client.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/detail_abonnement_client.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/update_abonnement_client.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/entreprise_infos/add_entreprise_infos.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/entreprise_infos/detail_entreprise_infos.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/entreprise_infos/update_entreprise_infos.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/suivis/detail_suivis.dart';
+import 'package:wm_solution/src/pages/commercial/view/commercials/vente_effectue_page.dart'; 
+import 'package:wm_solution/src/pages/commercial/view/suivi_controle/abonnement_client_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/suivi_controle/entreprise_infos_page.dart';
+import 'package:wm_solution/src/pages/commercial/view/suivi_controle/suivis_page.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/balance_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_binding.dart';
 import 'package:wm_solution/src/pages/comptabilites/bindings/bilan_ref_binding.dart';
@@ -317,7 +332,7 @@ List<GetPage<dynamic>>? getPages = [
 
   // Settings
   GetPage(
-      name: SettingsRoutes.splash, 
+      name: SettingsRoutes.splash,
       bindings: [WMBindings(), NetworkBindings()],
       page: () => const SplashView(),
       transition: Transition.cupertino,
@@ -520,21 +535,20 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ArchiveRoutes.addArchives,
-    bindings: [
-      ArchiveBinding(),
-      ArchiveFolderBinding(),
-      ProfilBinding(),
-      NetworkBindings()
-    ],
-    page: () {
-      ArchiveFolderModel archiveFolderModel =
-          Get.arguments as ArchiveFolderModel;
-      return AddArchive(archiveFolderModel: archiveFolderModel);
-    },
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)
-  ),
+      name: ArchiveRoutes.addArchives,
+      bindings: [
+        ArchiveBinding(),
+        ArchiveFolderBinding(),
+        ProfilBinding(),
+        NetworkBindings()
+      ],
+      page: () {
+        ArchiveFolderModel archiveFolderModel =
+            Get.arguments as ArchiveFolderModel;
+        return AddArchive(archiveFolderModel: archiveFolderModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ArchiveRoutes.archivesDetail,
       bindings: [
@@ -550,20 +564,19 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
-    name: ArchiveRoutes.archivePdf,
-    bindings: [
+      name: ArchiveRoutes.archivePdf,
+      bindings: [
         ArchiveBinding(),
         ArchiveFolderBinding(),
         ProfilBinding(),
         NetworkBindings()
       ],
-    page: () {
-      String url = Get.arguments as String;
-      return ArchivePdfViewer(url: url);
-    },
-    transition: Transition.cupertino,
-    transitionDuration: const Duration(seconds: 1)
-  ),
+      page: () {
+        String url = Get.arguments as String;
+        return ArchivePdfViewer(url: url);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: ArchiveRoutes.archiveImage,
       bindings: [
@@ -1836,6 +1849,99 @@ List<GetPage<dynamic>>? getPages = [
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
 
+  GetPage(
+      name: ComRoutes.comEntreprise,
+      binding: EnntrepriseInfosBinding(),
+      page: () => const EntrepriseInfoPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComRoutes.comEntrepriseAdd,
+      binding: EnntrepriseInfosBinding(),
+      page: () => const AddEntrepriseInfos(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+    name: ComRoutes.comEntrepriseDetail,
+    binding: EnntrepriseInfosBinding(),
+    page: () {
+      final EntrepriseInfoModel entrepriseInfoModel = Get.arguments as EntrepriseInfoModel;
+      return DetailEntrepriseInfos(entrepriseInfoModel: entrepriseInfoModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)
+  ),
+  GetPage(
+    name: ComRoutes.comEntrepriseUpdate,
+    binding: EnntrepriseInfosBinding(),
+    page: () {
+      final EntrepriseInfoModel entrepriseInfoModel =
+          Get.arguments as EntrepriseInfoModel;
+      return UpdateEntrperiseInfos(entrepriseInfoModel: entrepriseInfoModel);
+    },
+    transition: Transition.cupertino,
+    transitionDuration: const Duration(seconds: 1)
+  ),
+
+
+  GetPage(
+      name: ComRoutes.comAbonnements,
+      binding: AbonnementClientBinding(),
+      page: () => const AbonnementClientPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComRoutes.comAbonnementAdd,
+      binding: AbonnementClientBinding(),
+      page: () {
+        final EntrepriseInfoModel entrepriseInfoModel =
+            Get.arguments as EntrepriseInfoModel;
+        return AddAbonnementClient(entrepriseInfoModel: entrepriseInfoModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComRoutes.comAbonnementDetail,
+      binding: AbonnementClientBinding(),
+      page: () {
+        final AbonnementClientModel abonnementClientModel =
+            Get.arguments as AbonnementClientModel;
+        return DetailAbonnementClient(
+            abonnementClientModel: abonnementClientModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComRoutes.comAbonnementUpdate,
+      binding: AbonnementClientBinding(),
+      page: () {
+        final AbonnementClientModel abonnementClientModel =
+            Get.arguments as AbonnementClientModel;
+        return UpdateAbonnementClient(
+            abonnementClientModel: abonnementClientModel);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+  GetPage(
+      name: ComRoutes.comSuivis,
+      binding: SuivisBinding(),
+      page: () => const SuivisPage(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: ComRoutes.comSuivisDetail,
+      binding: SuivisBinding(),
+      page: () {
+        final DateTime dateTime = Get.arguments as DateTime;
+        return DetailSuivis(dateTime: dateTime);
+      },
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1)),
+
+
+
+
   // Exploitations
   GetPage(
       name: ExploitationRoutes.expDashboard,
@@ -2517,15 +2623,14 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(
       name: UpdateRoutes.updatePage,
       page: () => const UpdatePage(),
-      bindings: [ ProfilBinding(), NetworkBindings()],
+      bindings: [ProfilBinding(), NetworkBindings()],
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: UpdateRoutes.updateDetail,
       bindings: [ProfilBinding(), NetworkBindings()],
       page: () {
-        final UpdateModel updateModel =
-            Get.arguments as UpdateModel;
+        final UpdateModel updateModel = Get.arguments as UpdateModel;
         return DetailUpdate(updateModel: updateModel);
       },
       transition: Transition.cupertino,

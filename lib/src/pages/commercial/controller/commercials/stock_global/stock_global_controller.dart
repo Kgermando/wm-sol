@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/stock_global_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/stock_global_api.dart';
 import 'package:wm_solution/src/models/commercial/prod_model.dart';
 import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
@@ -88,6 +88,7 @@ class StockGlobalController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -125,6 +126,7 @@ class StockGlobalController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -148,7 +150,8 @@ class StockGlobalController extends GetxController
   //       _isLoading.value = false;
   //     });
   //   } catch (e) {
-  //     Get.snackbar("Erreur de soumission", "$e",
+  //     _isLoading.value = false;
+      // Get.snackbar("Erreur de soumission", "$e",
   //         backgroundColor: Colors.red,
   //         icon: const Icon(Icons.check),
   //         snackPosition: SnackPosition.TOP);

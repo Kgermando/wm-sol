@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/restitution_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/restitution_api.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/models/commercial/restitution_model.dart';
 import 'package:wm_solution/src/models/commercial/stocks_global_model.dart';
@@ -71,6 +71,7 @@ class RestitutionController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

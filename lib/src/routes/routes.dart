@@ -269,6 +269,21 @@ class ComRoutes {
   static const comVente = "/com-vente";
   static const comVenteEffectue = "/com-vente-effectue";
   static const comVenteEffectueDetail = "/com-vente-effectue-detail";
+
+  // Suivis & Controlle
+  static const comEntreprise = "/com-entreprise";
+  static const comEntrepriseDetail = "/com-entreprise-detail";
+  static const comEntrepriseAdd = "/com-entreprise-add";
+  static const comEntrepriseUpdate = "/com-entreprise-update";
+  static const comSuivis = "/com-suivis";
+  static const comSuivisDetail = "/com-suivis-detail";
+  static const comSuivisAdd = "/com-suivis-add";
+  static const comSuivisUpdate = "/com-suivis-update";
+  static const comAbonnements = "/com-abonnements";
+  static const comAbonnementDetail = "/com-abonnement-detail";
+  static const comAbonnementAdd = "/com-abonnements-add";
+  static const comAbonnementUpdate = "/com-abonnements-update";
+
 }
 
 class ArchiveRoutes {

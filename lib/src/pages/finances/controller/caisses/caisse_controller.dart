@@ -104,8 +104,7 @@ class CaisseController extends GetxController
           reference: data.id!,
           caisseName: data.nomComplet,
           created: DateTime.now(),
-          montantDecaissement: "0" 
-        );
+          montantDecaissement: "0");
       await caisseApi.insertData(dataItem).then((value) {
         clear();
         caisseList.clear();
@@ -131,19 +130,19 @@ class CaisseController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = CaisseModel(
-          nomComplet: nomCompletController.text,
-          pieceJustificative: '-',
-          libelle: libelleController.text,
-          montantEncaissement: "0",
-          departement: '-',
-          typeOperation: 'Decaissement',
-          numeroOperation: 'Transaction-Caisse-${caisseList.length + 1}',
-          signature: profilController.user.matricule,
-          reference: data.id!,
-          caisseName: data.nomComplet,
-          created: DateTime.now(),
-          montantDecaissement: montantController.text,
-        );
+        nomComplet: nomCompletController.text,
+        pieceJustificative: '-',
+        libelle: libelleController.text,
+        montantEncaissement: "0",
+        departement: '-',
+        typeOperation: 'Decaissement',
+        numeroOperation: 'Transaction-Caisse-${caisseList.length + 1}',
+        signature: profilController.user.matricule,
+        reference: data.id!,
+        caisseName: data.nomComplet,
+        created: DateTime.now(),
+        montantDecaissement: montantController.text,
+      );
       await caisseApi.insertData(dataItem).then((value) {
         clear();
         caisseList.clear();
@@ -164,6 +163,4 @@ class CaisseController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
-
-  
 }

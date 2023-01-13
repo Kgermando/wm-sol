@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/produit_model_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/produit_model_api.dart';
 import 'package:wm_solution/src/models/commercial/prod_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -18,7 +18,7 @@ class ProduitModelController extends GetxController
   String? categorieController;
   String? sousCategorie1Controller;
   String? sousCategorie2Controller;
-  String? sousCategorie3Controller ;
+  String? sousCategorie3Controller;
   String? uniteController; // sousCategorie4
 
   // Approbations
@@ -31,7 +31,6 @@ class ProduitModelController extends GetxController
     getList();
   }
 
- 
   void clear() {
     categorieController == null;
     sousCategorie1Controller == null;
@@ -71,6 +70,7 @@ class ProduitModelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -115,6 +115,7 @@ class ProduitModelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -160,6 +161,7 @@ class ProduitModelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -197,6 +199,7 @@ class ProduitModelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

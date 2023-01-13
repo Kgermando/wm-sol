@@ -34,7 +34,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
   final PersonnelsController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
-  String subTitle = "Add profil";
+  String subTitle = "New profil";
 
   final FocusNode _focusNode = FocusNode();
 

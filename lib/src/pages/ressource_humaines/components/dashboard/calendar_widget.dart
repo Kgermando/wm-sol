@@ -18,7 +18,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       child: Card(
         elevation: 10,
         child: SfCalendar(
-          view: CalendarView.month,
+          view: CalendarView.month, 
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wm_solution/src/api/commerciale/bon_livraison_api.dart';
+import 'package:wm_solution/src/api/commerciale/commercial/bon_livraison_api.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
 import 'package:wm_solution/src/models/commercial/livraiason_history_model.dart';
@@ -13,9 +13,10 @@ class BonLivraisonController extends GetxController
   final BonLivraisonApi bonLivraisonApi = BonLivraisonApi();
   final ProfilController profilController = Get.find();
   final AchatController achatController = Get.put(AchatController());
-  final HistoryLivraisonController historyLivraisonController = Get.put(HistoryLivraisonController());
+  final HistoryLivraisonController historyLivraisonController =
+      Get.put(HistoryLivraisonController());
 
-  List<BonLivraisonModel> bonLivraisonList = [] ;
+  List<BonLivraisonModel> bonLivraisonList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -56,6 +57,7 @@ class BonLivraisonController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -164,9 +166,8 @@ class BonLivraisonController extends GetxController
             });
           });
         } else {
-          
           // add to Stocks au comptant
-          final achatModel = AchatModel( 
+          final achatModel = AchatModel(
               idProduct: data.idProduct,
               quantity: data.quantityAchat,
               quantityAchat: data.quantityAchat, // Qty de livraison (entrant)
@@ -180,33 +181,38 @@ class BonLivraisonController extends GetxController
               succursale: data.succursale,
               signature: profilController.user.matricule,
               created: DateTime.now());
-          await achatController.achatApi.insertData(achatModel).then((value) async {
-             // Add Livraison history si la succursale == la succursale de ravitaillement
-          var margeBenMap = (double.parse(value.prixVenteUnit) - double.parse(value.priceAchatUnit)) *
-              double.parse(value.quantity);
+          await achatController.achatApi
+              .insertData(achatModel)
+              .then((value) async {
+            // Add Livraison history si la succursale == la succursale de ravitaillement
+            var margeBenMap = (double.parse(value.prixVenteUnit) -
+                    double.parse(value.priceAchatUnit)) *
+                double.parse(value.quantity);
 
-          var margeBenRemise = (double.parse(value.remise) - double.parse(value.priceAchatUnit)) *
-              double.parse(value.quantity);
-          // Insert to Historique de Livraisons Stocks au comptant
-          final livraisonHistoryModel = LivraisonHistoryModel(
-            idProduct: data.idProduct,
-            quantityAchat: value.quantityAchat,
-            quantity: value.quantity,
-            priceAchatUnit: value.priceAchatUnit,
-            prixVenteUnit: value.prixVenteUnit,
-            unite: data.unite,
-            margeBen: margeBenMap.toString(),
-            tva: value.tva,
-            remise: value.remise,
-            qtyRemise: value.qtyRemise,
-            margeBenRemise: margeBenRemise.toString(),
-            qtyLivre: value.quantityAchat,
-            succursale: value.succursale,
-            signature: data.signature,
-            created: value.created,
-          );
-          await historyLivraisonController.livraisonHistorylivraisonHistoryApi
-            .insertData(livraisonHistoryModel).then((value) {
+            var margeBenRemise = (double.parse(value.remise) -
+                    double.parse(value.priceAchatUnit)) *
+                double.parse(value.quantity);
+            // Insert to Historique de Livraisons Stocks au comptant
+            final livraisonHistoryModel = LivraisonHistoryModel(
+              idProduct: data.idProduct,
+              quantityAchat: value.quantityAchat,
+              quantity: value.quantity,
+              priceAchatUnit: value.priceAchatUnit,
+              prixVenteUnit: value.prixVenteUnit,
+              unite: data.unite,
+              margeBen: margeBenMap.toString(),
+              tva: value.tva,
+              remise: value.remise,
+              qtyRemise: value.qtyRemise,
+              margeBenRemise: margeBenRemise.toString(),
+              qtyLivre: value.quantityAchat,
+              succursale: value.succursale,
+              signature: data.signature,
+              created: value.created,
+            );
+            await historyLivraisonController.livraisonHistorylivraisonHistoryApi
+                .insertData(livraisonHistoryModel)
+                .then((value) {
               bonLivraisonList.clear();
               getList();
               Get.back();
@@ -216,11 +222,12 @@ class BonLivraisonController extends GetxController
                   icon: const Icon(Icons.check),
                   snackPosition: SnackPosition.TOP);
               _isLoading.value = false;
-              });  
+            });
           });
         }
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

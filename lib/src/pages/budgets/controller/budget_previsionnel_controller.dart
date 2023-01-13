@@ -20,7 +20,6 @@ class BudgetPrevisionnelController extends GetxController
 
   // String? departement;
   TextEditingController titleController = TextEditingController();
- 
 
   // Approbations
   final formKeyBudget = GlobalKey<FormState>();
@@ -45,7 +44,7 @@ class BudgetPrevisionnelController extends GetxController
   }
 
   void clear() {
-    dateRange = null;
+    dateRange == null;
     titleController.clear();
     motifDGController.clear();
     motifDDController.clear();
@@ -80,6 +79,7 @@ class BudgetPrevisionnelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -108,8 +108,8 @@ class BudgetPrevisionnelController extends GetxController
       await depeartementBudgetApi
           .insertData(departementBudgetModel)
           .then((value) {
-        clear(); 
-        Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel); 
+        clear();
+        Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
         Get.snackbar("Soumission effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
@@ -118,6 +118,7 @@ class BudgetPrevisionnelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -158,6 +159,7 @@ class BudgetPrevisionnelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -199,6 +201,7 @@ class BudgetPrevisionnelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
@@ -240,6 +243,7 @@ class BudgetPrevisionnelController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),

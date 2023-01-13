@@ -18,7 +18,8 @@ class BudgetPrevisionnelPage extends StatefulWidget {
 }
 
 class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
-  final BudgetPrevisionnelController controller = Get.put(BudgetPrevisionnelController());
+  final BudgetPrevisionnelController controller =
+      Get.put(BudgetPrevisionnelController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Budgets";
   String subTitle = "Budgets previsionnels";
@@ -37,27 +38,29 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
             newFicheDialog();
           },
         ),
-        body:  controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (data) => Row(
+        body: Row(
           children: [
             Visibility(
                 visible: !Responsive.isMobile(context),
                 child: const Expanded(flex: 1, child: DrawerMenu())),
             Expanded(
                 flex: 5,
-                child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, right: p20, left: p20, bottom: p8),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: TableBudgetPrevisionnel(
-                        departementBudgetList: controller.departementBudgetList,
-                        controller: controller))),
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!),
+                    (data) => Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, right: p20, left: p20, bottom: p8),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableBudgetPrevisionnel(
+                            departementBudgetList:
+                                controller.departementBudgetList,
+                            controller: controller)))),
           ],
-        )) );
+        ));
   }
 
   newFicheDialog() {
@@ -140,7 +143,7 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
             }
           },
         ));
-  } 
+  }
 
   Future pickDateRange(BuildContext context) async {
     final initialDateRange = DateTimeRange(

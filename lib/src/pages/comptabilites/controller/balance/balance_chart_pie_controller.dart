@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/comptabilite/balance_api.dart';
-import 'package:wm_solution/src/models/comptabilites/balance_model.dart';  
+import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 
 class BalanceChartPieController extends GetxController
     with StateMixin<List<BalancePieChartModel>> {
-  final BalanceApi balanceApi = BalanceApi(); 
- 
+  final BalanceApi balanceApi = BalanceApi();
+
   List<BalancePieChartModel> balanceChartPieList = [];
 
   ScrollController balanceScroll = ScrollController();
 
-
   final _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
- 
+
   @override
   void onInit() {
     super.onInit();
     getList();
   }
 
- 
- 
   void getList() async {
     balanceScroll.addListener(() {
       if (balanceScroll.position.pixels ==
           balanceScroll.position.maxScrollExtent) {}
     });
-     
+
     await balanceApi.getAllChartPieData().then((response) {
       balanceChartPieList.clear();
       balanceChartPieList.addAll(response);
@@ -57,12 +54,11 @@ class BalanceChartPieController extends GetxController
         _isLoading.value = false;
       });
     } catch (e) {
+      _isLoading.value = false;
       Get.snackbar("Erreur de soumission", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.check),
           snackPosition: SnackPosition.TOP);
     }
   }
- 
- 
 }
