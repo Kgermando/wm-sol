@@ -91,7 +91,7 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -101,7 +101,7 @@ class _AddStockGlobalState extends State<AddStockGlobal> {
                                           controller.submit();
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

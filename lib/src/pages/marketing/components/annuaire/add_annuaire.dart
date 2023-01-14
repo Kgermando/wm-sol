@@ -75,7 +75,7 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -85,7 +85,7 @@ class _AddAnnuaireState extends State<AddAnnuaire> {
                                       controller.submit();
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

@@ -97,7 +97,7 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Ravitailler',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -108,7 +108,7 @@ class _RavitaillementStockState extends State<RavitaillementStock> {
                                               .submit(widget.stocksGlobalMOdel);
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

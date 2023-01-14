@@ -80,7 +80,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          BtnWidget(
+                                          Obx(() => BtnWidget(
                                               title: 'Soumettre',
                                               isLoading: controller.isLoading,
                                               press: () {
@@ -91,7 +91,7 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
                                                       widget.etatMaterielModel);
                                                   form.reset();
                                                 }
-                                              })
+                                              }))  
                                         ],
                                       ),
                                     ),

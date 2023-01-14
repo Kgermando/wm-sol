@@ -72,7 +72,7 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -82,7 +82,7 @@ class _AjoutProductModelState extends State<AjoutProductModel> {
                                           controller.submit();
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

@@ -144,7 +144,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -155,7 +155,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                                           widget.finExterieurNameModel);
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),
@@ -207,7 +207,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -218,7 +218,7 @@ class _FinExterieurPageState extends State<FinExterieurPage> {
                                           widget.finExterieurNameModel);
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

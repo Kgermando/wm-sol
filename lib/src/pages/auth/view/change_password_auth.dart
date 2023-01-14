@@ -77,11 +77,11 @@ class _ChangePasswordAuthState extends State<ChangePasswordAuth> {
                                 const SizedBox(
                                   height: p20,
                                 ),
-                                BtnWidget(
+                                Obx(() => BtnWidget(
                                     title: 'Soumettre',
                                     isLoading:
                                         controller.isLoadingChangePassword,
-                                    press: controller.submitChangePassword)
+                                    press: controller.submitChangePassword)) 
                               ],
                             ),
                           ),

@@ -60,7 +60,7 @@ class _DevisPageState extends State<DevisPage> {
                           const SizedBox(
                             height: p20,
                           ),
-                          BtnWidget(
+                          Obx(() => BtnWidget(
                               title: 'Crée maintenant',
                               press: () {
                                 final form = controller.formKey.currentState!;
@@ -69,7 +69,7 @@ class _DevisPageState extends State<DevisPage> {
                                   form.reset();
                                 }
                               },
-                              isLoading: controller.isLoading)
+                              isLoading: controller.isLoading)) 
                         ],
                       ),
                     ),

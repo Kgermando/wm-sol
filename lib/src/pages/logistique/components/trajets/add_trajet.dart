@@ -95,7 +95,7 @@ class _AddTrajetState extends State<AddTrajet> {
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          BtnWidget(
+                                          Obx(() => BtnWidget(
                                               title: 'Soumettre',
                                               isLoading: controller.isLoading,
                                               press: () {
@@ -106,7 +106,7 @@ class _AddTrajetState extends State<AddTrajet> {
                                                       widget.materielModel);
                                                   form.reset();
                                                 }
-                                              })
+                                              })) 
                                         ],
                                       ),
                                     ),

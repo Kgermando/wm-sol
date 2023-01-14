@@ -90,7 +90,7 @@ class _RepondreMailState extends State<RepondreMail> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Envoyez',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -100,7 +100,7 @@ class _RepondreMailState extends State<RepondreMail> {
                                       controller.send();
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

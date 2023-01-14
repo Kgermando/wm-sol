@@ -92,7 +92,7 @@ class _UpdateCampaignState extends State<UpdateCampaign> {
                                       child1: promotionWidget(),
                                       child2: objectifsWidget()),
                                   const SizedBox(height: p20),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -102,7 +102,7 @@ class _UpdateCampaignState extends State<UpdateCampaign> {
                                           controller.submit();
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

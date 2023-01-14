@@ -69,7 +69,7 @@ class _TransportRestaurationRHState extends State<TransportRestaurationRH> {
                         const SizedBox(
                           height: p20,
                         ),
-                        BtnWidget(
+                        Obx(() => BtnWidget(
                             title: 'Créer maintenant',
                             press: () {
                               final form = controller.formKey.currentState!;
@@ -78,7 +78,7 @@ class _TransportRestaurationRHState extends State<TransportRestaurationRH> {
                                 form.reset();
                               }
                             },
-                            isLoading: controller.isLoading)
+                            isLoading: controller.isLoading)) 
                       ],
                     ),
                   ),

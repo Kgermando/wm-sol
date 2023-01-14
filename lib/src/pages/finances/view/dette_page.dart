@@ -104,7 +104,7 @@ class _DettePageState extends State<DettePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -114,7 +114,7 @@ class _DettePageState extends State<DettePage> {
                                       controller.submit();
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

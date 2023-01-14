@@ -85,7 +85,7 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -96,7 +96,7 @@ class _UpdateProductModeleState extends State<UpdateProductModele> {
                                               widget.productModel);
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

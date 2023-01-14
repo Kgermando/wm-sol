@@ -140,7 +140,7 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
                                 const SizedBox(
                                   height: p20,
                                 ),
-                                BtnWidget(
+                                Obx(() =>  BtnWidget(
                                     title: 'Soumettre',
                                     isLoading: controller.isLoading,
                                     press: () {
@@ -151,7 +151,7 @@ class _UpdateCompteResultatState extends State<UpdateCompteResultat> {
                                             widget.compteResulatsModel);
                                         form.reset();
                                       }
-                                    })
+                                    })) 
                               ],
                             ),
                           ),

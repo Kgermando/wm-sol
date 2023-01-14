@@ -94,7 +94,7 @@ class _AddMaterielState extends State<AddMateriel> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -104,7 +104,7 @@ class _AddMaterielState extends State<AddMateriel> {
                                           controller.submit();
                                           form.reset();
                                         }
-                                      })
+                                      }))   
                                 ],
                               ),
                             ),

@@ -82,7 +82,7 @@ class _TransfertMailState extends State<TransfertMail> {
                     const SizedBox(
                       height: p20,
                     ), 
-                    BtnWidget(
+                    Obx(() => BtnWidget(
                         title: 'Envoyez',
                         isLoading: controller.isLoading,
                         press: () {
@@ -92,7 +92,7 @@ class _TransfertMailState extends State<TransfertMail> {
                             controller.send();
                             form.reset();
                           }
-                        })
+                        })) 
                   ],
                 ),
               ),

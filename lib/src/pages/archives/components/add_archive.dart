@@ -77,7 +77,7 @@ class _AddArchiveState extends State<AddArchive> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -88,7 +88,7 @@ class _AddArchiveState extends State<AddArchive> {
                                               widget.archiveFolderModel);
                                           form.reset();
                                         }
-                                      })
+                                      }))  
                                 ],
                               ),
                             ),

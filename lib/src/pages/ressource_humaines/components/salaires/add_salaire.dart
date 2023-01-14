@@ -119,12 +119,12 @@ class _AddSalaireState extends State<AddSalaire> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
                                     controller.submit(widget.personne);
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

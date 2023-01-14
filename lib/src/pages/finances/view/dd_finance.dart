@@ -402,7 +402,7 @@ class _DDFinanceState extends State<DDFinance> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: banqueNameController.isLoading,
                                   press: () {
@@ -412,7 +412,7 @@ class _DDFinanceState extends State<DDFinance> {
                                       banqueNameController.submit();
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),
@@ -461,7 +461,7 @@ class _DDFinanceState extends State<DDFinance> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: caisseNameController.isLoading,
                                   press: () {
@@ -471,7 +471,7 @@ class _DDFinanceState extends State<DDFinance> {
                                       caisseNameController.submit();
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),
@@ -530,7 +530,7 @@ class _DDFinanceState extends State<DDFinance> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading:
                                       finExterieurNameController.isLoading,
@@ -541,7 +541,7 @@ class _DDFinanceState extends State<DDFinance> {
                                       finExterieurNameController.submit();
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

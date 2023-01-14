@@ -146,7 +146,7 @@ class _AddPerformenceNoteState extends State<AddPerformenceNote> {
                                 const SizedBox(
                                   height: p20,
                                 ),
-                                BtnWidget(
+                                Obx(() => BtnWidget(
                                     title: 'Soumettre',
                                     isLoading: controllerNote.isLoading,
                                     press: () {
@@ -157,7 +157,7 @@ class _AddPerformenceNoteState extends State<AddPerformenceNote> {
                                             .submit(widget.performenceModel);
                                       }
                                       form.reset();
-                                    })
+                                    }))  
                               ],
                             ),
                           )),

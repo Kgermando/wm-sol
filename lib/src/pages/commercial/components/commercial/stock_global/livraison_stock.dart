@@ -92,7 +92,7 @@ class _LivraisonStockState extends State<LivraisonStock> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Livré à ${controller.succursale}',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -103,7 +103,7 @@ class _LivraisonStockState extends State<LivraisonStock> {
                                               .submit(widget.stocksGlobalMOdel);
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

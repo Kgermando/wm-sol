@@ -73,7 +73,7 @@ class _DetailSuivisState extends State<DetailSuivis> {
                             const SizedBox(
                               height: p20,
                             ),
-                            BtnWidget(
+                            Obx(() => BtnWidget(
                                 title: 'Soumettre',
                                 press: () {
                                   final form = controller.formKey.currentState!;
@@ -82,7 +82,7 @@ class _DetailSuivisState extends State<DetailSuivis> {
                                     form.reset();
                                   }
                                 },
-                                isLoading: controller.isLoading)
+                                isLoading: controller.isLoading)) 
                           ],
                         ),
                       ),

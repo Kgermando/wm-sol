@@ -141,7 +141,7 @@ class _BanquePageState extends State<BanquePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -152,7 +152,7 @@ class _BanquePageState extends State<BanquePage> {
                                           widget.banqueNameModel);
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),
@@ -204,7 +204,7 @@ class _BanquePageState extends State<BanquePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -215,7 +215,7 @@ class _BanquePageState extends State<BanquePage> {
                                           .submitDepot(widget.banqueNameModel);
                                       form.reset();
                                     }
-                                  })
+                                  }))  
                             ],
                           ),
                         ),

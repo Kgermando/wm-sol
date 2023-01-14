@@ -99,7 +99,7 @@ class _UpdateMobilierState extends State<UpdateMobilier> {
                                         const SizedBox(
                                           height: p20,
                                         ),
-                                        BtnWidget(
+                                        Obx(() => BtnWidget(
                                             title: 'Soumettre',
                                             isLoading: controller.isLoading,
                                             press: () {
@@ -110,7 +110,7 @@ class _UpdateMobilierState extends State<UpdateMobilier> {
                                                     widget.mobilierModel);
                                                 form.reset();
                                               }
-                                            })
+                                            })) 
                                       ],
                                     ),
                                   ),

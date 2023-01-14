@@ -103,7 +103,7 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          BtnWidget(
+                                          Obx(() => BtnWidget(
                                               title: 'Soumettre',
                                               isLoading: controller.isLoading,
                                               press: () {
@@ -114,7 +114,7 @@ class _UpdateImmobimierState extends State<UpdateImmobimier> {
                                                       widget.immobilierModel);
                                                   form.reset();
                                                 }
-                                              })
+                                              })) 
                                         ],
                                       ),
                                     ),

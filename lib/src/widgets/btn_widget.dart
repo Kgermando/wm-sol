@@ -30,7 +30,7 @@ class BtnWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.0),
               ),
             ),
-            onPressed: press,
+            onPressed: isLoading ? () {} : press,
             child: isLoading
               ? loadingWhite() 
               : Text(

@@ -1,7 +1,6 @@
- 
 import 'dart:io';
 import 'dart:typed_data';
- 
+
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
@@ -27,7 +26,7 @@ class CompteResultatPdf {
       double totalProduits123,
       double totalGeneralProduits,
       MonnaieStorage monnaieStorage) async {
-    final pdf = Document(); 
+    final pdf = Document();
 
     final user = await AuthApi().getUserId();
     pdf.addPage(MultiPage(
@@ -65,7 +64,8 @@ class CompteResultatPdf {
               Container(
                 height: 50,
                 width: 50,
-                child: BarcodeWidget(barcode: Barcode.qrCode(), data: "FOKAD"),
+                child: BarcodeWidget(
+                    barcode: Barcode.qrCode(), data: InfoSystem().name()),
               ),
             ],
           ),

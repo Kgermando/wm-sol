@@ -94,7 +94,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                         const SizedBox(
                           height: p20,
                         ),
-                        BtnWidget(
+                        Obx(() => BtnWidget(
                             title: 'Soumettre',
                             press: () {
                               final form =
@@ -108,7 +108,7 @@ class _DetailCampaignState extends State<DetailCampaign> {
                                 form.reset();
                               }
                             },
-                            isLoading: tachesController.isLoading)
+                            isLoading: tachesController.isLoading)) 
                       ],
                     ),
                   ),

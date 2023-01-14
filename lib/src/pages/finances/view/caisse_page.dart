@@ -142,7 +142,7 @@ class _CaissePageState extends State<CaissePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -153,7 +153,7 @@ class _CaissePageState extends State<CaissePage> {
                                           widget.caisseNameModel);
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),
@@ -203,7 +203,7 @@ class _CaissePageState extends State<CaissePage> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -214,7 +214,7 @@ class _CaissePageState extends State<CaissePage> {
                                           widget.caisseNameModel);
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

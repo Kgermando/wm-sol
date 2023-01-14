@@ -78,7 +78,7 @@ class _AddSuccursaleState extends State<AddSuccursale> {
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          BtnWidget(
+                                          Obx(() => BtnWidget(
                                               title: 'Soumettre',
                                               isLoading: controller.isLoading,
                                               press: () {
@@ -88,7 +88,7 @@ class _AddSuccursaleState extends State<AddSuccursale> {
                                                   controller.submit();
                                                   form.reset();
                                                 }
-                                              })
+                                              })) 
                                         ],
                                       ),
                                     ),

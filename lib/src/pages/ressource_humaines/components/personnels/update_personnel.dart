@@ -156,7 +156,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                             competanceWidget(),
                             // experienceWidget(),
                             const SizedBox(height: p20),
-                            BtnWidget(
+                            Obx(() => BtnWidget(
                                 title: 'Soumettre modification',
                                 isLoading: controller.isLoading,
                                 press: () {
@@ -165,7 +165,7 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                                     controller.submitUpdate(widget.personne);
                                     form.reset();
                                   }
-                                })
+                                })) 
                           ]),
                         ),
                       ),

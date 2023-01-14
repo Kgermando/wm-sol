@@ -105,7 +105,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                                           const SizedBox(
                                             height: p20,
                                           ),
-                                          BtnWidget(
+                                          Obx(() => BtnWidget(
                                               title: 'Soumettre',
                                               isLoading:
                                                   lignBudgetaireController
@@ -120,7 +120,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                                                           .departementBudgetModel);
                                                   form.reset();
                                                 }
-                                              })
+                                              })) 
                                         ],
                                       ),
                                     ),

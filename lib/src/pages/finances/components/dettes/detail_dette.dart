@@ -370,7 +370,7 @@ class _DetailDetteState extends State<DetailDette> {
                                     fontWeight: FontWeight.bold)),
                       if (widget.detteModel.approbationDG == "Approved" &&
                           widget.detteModel.approbationDD == "Approved")
-                        BtnWidget(
+                        Obx(() => BtnWidget(
                             title: 'Soumettre',
                             isLoading: creanceDetteController.isLoading,
                             press: () {
@@ -381,7 +381,7 @@ class _DetailDetteState extends State<DetailDette> {
                                     .submitDette(widget.detteModel);
                                 form.reset();
                               }
-                            })
+                            })) 
                     ],
                   ),
                 ),

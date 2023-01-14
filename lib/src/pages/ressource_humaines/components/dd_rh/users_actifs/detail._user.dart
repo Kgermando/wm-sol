@@ -84,7 +84,7 @@ class _DetailUserState extends State<DetailUser> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   press: () {
                                     final form =
@@ -94,7 +94,7 @@ class _DetailUserState extends State<DetailUser> {
                                       form.reset();
                                     }
                                   },
-                                  isLoading: controller.isLoading)
+                                  isLoading: controller.isLoading)) 
                             ],
                           ),
                         ),

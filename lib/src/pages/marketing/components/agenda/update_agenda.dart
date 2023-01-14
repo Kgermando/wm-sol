@@ -76,7 +76,7 @@ class _UpdateAgendaState extends State<UpdateAgenda> {
                                 const SizedBox(
                                   height: p20,
                                 ),
-                                BtnWidget(
+                                Obx(() => BtnWidget(
                                     title: 'Soumettre',
                                     isLoading: controller.isLoading,
                                     press: () {
@@ -87,7 +87,7 @@ class _UpdateAgendaState extends State<UpdateAgenda> {
                                             widget.agendaColor.agendaModel);
                                         form.reset();
                                       }
-                                    })
+                                    })) 
                               ],
                             ),
                           ),

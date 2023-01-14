@@ -119,7 +119,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                 competanceWidget(),
                                 // experienceWidget(),
                                 const SizedBox(height: p20),
-                                BtnWidget(
+                                Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -130,7 +130,7 @@ class _AddPersonnelState extends State<AddPersonnel> {
                                       form.reset();
                                     }
                                   }
-                                )
+                                )) 
                               ],
                             ),
                           ),

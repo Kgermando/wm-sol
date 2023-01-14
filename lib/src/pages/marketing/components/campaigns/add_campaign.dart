@@ -74,7 +74,7 @@ class _AddCampaignState extends State<AddCampaign> {
                                       child1: promotionWidget(),
                                       child2: objectifsWidget()),
                                   const SizedBox(height: p20),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -84,7 +84,7 @@ class _AddCampaignState extends State<AddCampaign> {
                                           controller.submit();
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),

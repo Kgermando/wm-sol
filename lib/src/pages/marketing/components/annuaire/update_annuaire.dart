@@ -96,7 +96,7 @@ class _UpdateAnnuaireState extends State<UpdateAnnuaire> {
                               const SizedBox(
                                 height: p20,
                               ),
-                              BtnWidget(
+                              Obx(() => BtnWidget(
                                   title: 'Soumettre',
                                   isLoading: controller.isLoading,
                                   press: () {
@@ -107,7 +107,7 @@ class _UpdateAnnuaireState extends State<UpdateAnnuaire> {
                                           .submitUpdate(widget.annuaireModel);
                                       form.reset();
                                     }
-                                  })
+                                  })) 
                             ],
                           ),
                         ),

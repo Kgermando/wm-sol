@@ -376,7 +376,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                                     fontWeight: FontWeight.bold)),
                       if (widget.creanceModel.approbationDG == "Approved" &&
                           widget.creanceModel.approbationDD == "Approved")
-                        BtnWidget(
+                        Obx(() => BtnWidget(
                             title: 'Soumettre',
                             isLoading: creanceDetteController.isLoading,
                             press: () {
@@ -387,7 +387,7 @@ class _DetailCreanceState extends State<DetailCreance> {
                                     .submitCreance(widget.creanceModel);
                                 form.reset();
                               }
-                            })
+                            })) 
                     ],
                   ),
                 ),

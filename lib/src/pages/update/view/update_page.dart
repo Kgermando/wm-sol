@@ -71,7 +71,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                 const SizedBox(
                                   height: p20,
                                 ),
-                                BtnWidget(
+                                Obx(() => BtnWidget(
                                     title: 'Soumettre',
                                     press: () {
                                       final form =
@@ -82,7 +82,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                         Navigator.of(context).pop();
                                       }
                                     },
-                                    isLoading: controller.isLoading)
+                                    isLoading: controller.isLoading)) 
                               ],
                             ),
                           ),

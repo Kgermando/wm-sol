@@ -351,7 +351,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                           ),
                         ),
                         montantWidget(),
-                        BtnWidget(
+                        Obx(() => BtnWidget(
                             title: 'Soumettre',
                             press: () {
                               final form = controller.formKey.currentState!;
@@ -361,7 +361,7 @@ class _JournalLivreComptabiliteState extends State<JournalLivreComptabilite> {
                                 Navigator.pop(context, 'ok');
                               }
                             },
-                            isLoading: controller.isLoading)
+                            isLoading: controller.isLoading)) 
                       ],
                     )));
           });

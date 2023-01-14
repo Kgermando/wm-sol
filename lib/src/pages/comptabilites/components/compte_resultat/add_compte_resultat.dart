@@ -77,7 +77,7 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
                                     const SizedBox(
                                       height: p20,
                                     ),
-                                    BtnWidget(
+                                    Obx(() => BtnWidget(
                                         title: 'Soumettre',
                                         isLoading: controller.isLoading,
                                         press: () {
@@ -87,7 +87,7 @@ class _AddCompteResultatState extends State<AddCompteResultat> {
                                             controller.submit();
                                             form.reset();
                                           }
-                                        })
+                                        })) 
                                   ],
                                 ),
                               ),
