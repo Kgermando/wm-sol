@@ -6,9 +6,12 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/logistique/components/dashboard/materiel_pie.dart';
 import 'package:wm_solution/src/pages/logistique/components/dashboard/etat_materiel_pie.dart';
+import 'package:wm_solution/src/pages/logistique/components/dashboard/table_dashboard_trajet.dart';
 import 'package:wm_solution/src/pages/logistique/controller/dashboard/dashboard_log_controller.dart';
+import 'package:wm_solution/src/pages/logistique/controller/trajets/trajet_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/dash_number_widget.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart'; 
 
 class DashboardLog extends StatefulWidget {
@@ -20,6 +23,7 @@ class DashboardLog extends StatefulWidget {
 
 class _DashboardLogState extends State<DashboardLog> {
   final DashboardLogController controller = Get.find();
+  final TrajetController trajetController  = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
   String subTitle = "Dashboard";
@@ -132,7 +136,16 @@ class _DashboardLogState extends State<DashboardLog> {
                               const ResponsiveChildWidget(
                                 child1: EtatMaterielPie(), 
                                 child2: MaterielPie()
-                              ) 
+                              ),
+                            trajetController.obx(
+                                onLoading: loadingPage(context),
+                                onEmpty: const Text('Aucune donnée'),
+                                onError: (error) =>
+                                    loadingError(context, error!),
+                                (state) => TableDahboardTrajet(
+                                    state: state!,
+                                    controller: trajetController))
+                              
                             ])) ,
                       )),
                 ))

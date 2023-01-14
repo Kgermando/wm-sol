@@ -47,7 +47,7 @@ class AbonnementClientApi extends GetConnect {
     var data = dataItem.toJson();
     var body = jsonEncode(data);
 
-    var resp = await client.post(addEntrepriseInfoUrl, headers: header, body: body);
+    var resp = await client.post(addAbonnementClientUrl, headers: header, body: body);
     if (resp.statusCode == 200) {
       return AbonnementClientModel.fromJson(json.decode(resp.body));
     } else if (resp.statusCode == 401) {

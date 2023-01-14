@@ -172,7 +172,7 @@ class _AddArchiveState extends State<AddArchive> {
                         color: Colors.green.shade700)
                     : const Icon(Icons.upload_file),
                 label: controller.isUploadingDone
-                    ? Text("Téléchargement terminé",
+                    ? Text("Upload terminé",
                         style: Theme.of(context)
                             .textTheme
                             .bodyLarge!

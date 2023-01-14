@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/suivi_controle/abonnement_client_model.dart';
 import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/abonnement_client_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -19,7 +18,7 @@ class TableAbonnementClient extends StatefulWidget {
 }
 
 class _TableAbonnementClientState extends State<TableAbonnementClient> {
-   List<PlutoColumn> columns = [];
+  List<PlutoColumn> columns = [];
   List<PlutoRow> rows = [];
   PlutoGridStateManager? stateManager;
   PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
@@ -99,13 +98,14 @@ class _TableAbonnementClientState extends State<TableAbonnementClient> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.state.length;
-    for (var item in widget.state) { 
+    for (var item in widget.state) {
       setState(() {
         rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--), 
-          'typeContrat': PlutoCell(value: item.typeContrat), 
+          'numero': PlutoCell(value: i--),
+          'typeContrat': PlutoCell(value: item.typeContrat),
+          'nomSocial': PlutoCell(value: item.nomSocial),
           'dateDebutEtFinContrat': PlutoCell(value: item.dateDebutEtFinContrat),
-          'signataireContrat': PlutoCell(value: item.signataireContrat), 
+          'signataireContrat': PlutoCell(value: item.signataireContrat),
           'signature': PlutoCell(value: item.signature),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
@@ -152,20 +152,26 @@ class _TableAbonnementClientState extends State<TableAbonnementClient> {
           } else if (rendererContext.cell.value == 'Licence') {
             textColor = Colors.blue;
           }
-          return Row(
-            children: [
-              Icon(Icons.folder, color: textColor),
-              const SizedBox(width: p5),
-              Text(
-                rendererContext.cell.value.toString(),
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: textColor,
-                ),
-              ),
-            ],
+          return Text(
+            rendererContext.cell.value.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: textColor,
+            ),
           );
         },
+        width: 200,
+        minWidth: 150,
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Nom Social',
+        field: 'nomSocial',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
       ),
@@ -180,7 +186,7 @@ class _TableAbonnementClientState extends State<TableAbonnementClient> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 300,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Signataire Contrat',

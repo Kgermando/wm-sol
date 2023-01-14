@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/api/commerciale/suivi_controle/abonnement_client_api.dart';
 import 'package:wm_solution/src/api/commerciale/suivi_controle/entreprise_info_api.dart';
+import 'package:wm_solution/src/api/upload_file_api.dart';
 import 'package:wm_solution/src/models/suivi_controle/abonnement_client_model.dart';
 import 'package:wm_solution/src/models/suivi_controle/entreprise_info_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class AbonnementClientController extends GetxController
     with StateMixin<List<AbonnementClientModel>> {
@@ -24,6 +27,25 @@ class AbonnementClientController extends GetxController
   TextEditingController typeContratController = TextEditingController();
   TextEditingController montantController = TextEditingController();
   TextEditingController signataireContratController = TextEditingController();
+
+
+  final _isUploading = false.obs;
+  bool get isUploading => _isUploading.value;
+  final _isUploadingDone = false.obs;
+  bool get isUploadingDone => _isUploadingDone.value;
+
+  String? uploadedFileUrl;
+
+  void uploadFile(String file) async {
+    _isUploading.value = true;
+    await FileApi().uploadFiled(file).then((value) {
+      _isUploading.value = false;
+      _isUploadingDone.value = true;
+      uploadedFileUrl = value;
+    });
+  }
+
+
 
   @override
   void onInit() {
@@ -96,13 +118,14 @@ class AbonnementClientController extends GetxController
           typeContrat: typeContrat.toString(),
           montant: montantController.text,
           dateDebutEtFinContrat:
-              "${dateFinContrat!.start}-${dateFinContrat!.end}",
+              "${DateFormat("dd-MM-yyyy").format(dateFinContrat!.start)}-${DateFormat("dd-MM-yyyy").format(dateFinContrat!.end)}",
           signataireContrat: signataireContratController.text,
           signature: profilController.user.matricule,
           created: DateTime.now(),
-          nomSocial: data.nomSocial);
-      await abonnementClientApi
-          .insertData(abonnementClient)
+          nomSocial: data.nomSocial,
+          scanContrat: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+        );
+      await abonnementClientApi.insertData(abonnementClient)
           .then((value) async {
         final dataItem = EntrepriseInfoModel(
           id: data.id,
@@ -127,7 +150,7 @@ class AbonnementClientController extends GetxController
           clear();
           abonnementClientList.clear();
           getList();
-          Get.back();
+          Get.toNamed(ComRoutes.comAbonnements);
           Get.snackbar("Soumission effectuée avec succès!",
               "Le document a bien été sauvegadé",
               backgroundColor: Colors.green,
@@ -155,6 +178,7 @@ class AbonnementClientController extends GetxController
           .first;
 
       final dataItem = AbonnementClientModel(
+          id: data.id,
           reference: abonnement.reference,
           dateFinContrat: dateFinContrat!.end,
           typeContrat: typeContratController.text,
@@ -164,7 +188,9 @@ class AbonnementClientController extends GetxController
           signataireContrat: signataireContratController.text,
           signature: profilController.user.matricule,
           created: abonnement.created,
-          nomSocial: data.nomSocial);
+          nomSocial: data.nomSocial,
+        scanContrat: (uploadedFileUrl == '') ? '-' : uploadedFileUrl.toString(),
+      );
       await abonnementClientApi.updateData(dataItem).then((value) async {
         final dataItem = EntrepriseInfoModel(
           id: data.id,

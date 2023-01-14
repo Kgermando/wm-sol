@@ -54,19 +54,10 @@ class _SuivisPageState extends State<SuivisPage> {
                             child: SfCalendar(
                               view: CalendarView.month,
                               onTap: (calendarTapDetails) {
-                                print("date ${calendarTapDetails.date}");
                                 Get.toNamed(ComRoutes.comSuivisDetail,
                                     arguments: calendarTapDetails.date);
                               },
-                              appointmentBuilder:
-                                  (context, calendarAppointmentDetails) {
-                                print(
-                                    "date2 ${calendarAppointmentDetails.date}");
-                                return Container(
-                                  color: Colors.red,
-                                  width: p20,
-                                );
-                              },
+                              // cellBorderColor:  Colors.red, 
                             ),
                           ),
                         )))),

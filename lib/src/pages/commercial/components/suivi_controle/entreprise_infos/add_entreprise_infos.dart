@@ -87,7 +87,7 @@ class _AddEntrepriseInfosState extends State<AddEntrepriseInfos> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                       title: 'Soumettre',
                                       isLoading: controller.isLoading,
                                       press: () {
@@ -97,7 +97,7 @@ class _AddEntrepriseInfosState extends State<AddEntrepriseInfos> {
                                           controller.submit();
                                           form.reset();
                                         }
-                                      })
+                                      })) 
                                 ],
                               ),
                             ),
@@ -176,6 +176,7 @@ class _AddEntrepriseInfosState extends State<AddEntrepriseInfos> {
                 return null;
               }
             }
+            return null;
           },
         ));
   }
@@ -199,7 +200,7 @@ class _AddEntrepriseInfosState extends State<AddEntrepriseInfos> {
               } else {
                 return null;
               }
-            } 
+            } return null;
           },
         ));
   }

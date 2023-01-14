@@ -107,7 +107,7 @@ class _UpdateEntrperiseInfosState extends State<UpdateEntrperiseInfos> {
                                   const SizedBox(
                                     height: p20,
                                   ),
-                                  BtnWidget(
+                                  Obx(() => BtnWidget(
                                     title: 'Soumettre',
                                     isLoading: controller.isLoading,
                                     press: () {
@@ -118,7 +118,7 @@ class _UpdateEntrperiseInfosState extends State<UpdateEntrperiseInfos> {
                                         form.reset();
                                       }
                                     }
-                                  )
+                                  )) 
                                 ],
                               ),
                             ),

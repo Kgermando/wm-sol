@@ -135,8 +135,7 @@ import 'package:wm_solution/src/pages/commercial/components/commercial/succursal
 import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/update_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/vente_effectue/detail_vente_effectue.dart';
 import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/add_abonnement_client.dart';
-import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/detail_abonnement_client.dart';
-import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/update_abonnement_client.dart';
+import 'package:wm_solution/src/pages/commercial/components/suivi_controle/abonnement_client/detail_abonnement_client.dart'; 
 import 'package:wm_solution/src/pages/commercial/components/suivi_controle/entreprise_infos/add_entreprise_infos.dart';
 import 'package:wm_solution/src/pages/commercial/components/suivi_controle/entreprise_infos/detail_entreprise_infos.dart';
 import 'package:wm_solution/src/pages/commercial/components/suivi_controle/entreprise_infos/update_entreprise_infos.dart';
@@ -1910,18 +1909,7 @@ List<GetPage<dynamic>>? getPages = [
             abonnementClientModel: abonnementClientModel);
       },
       transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: ComRoutes.comAbonnementUpdate,
-      binding: AbonnementClientBinding(),
-      page: () {
-        final AbonnementClientModel abonnementClientModel =
-            Get.arguments as AbonnementClientModel;
-        return UpdateAbonnementClient(
-            abonnementClientModel: abonnementClientModel);
-      },
-      transition: Transition.cupertino,
-      transitionDuration: const Duration(seconds: 1)),
+      transitionDuration: const Duration(seconds: 1)), 
 
   GetPage(
       name: ComRoutes.comSuivis,

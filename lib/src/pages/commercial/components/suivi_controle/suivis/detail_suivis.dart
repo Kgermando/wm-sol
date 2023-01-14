@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
@@ -112,8 +113,9 @@ class _DetailSuivisState extends State<DetailSuivis> {
                         child: TableSuivis(
                             controller: controller,
                             state: state!
-                                .where((element) => element.createdDay
-                                    .isAtSameMomentAs(widget.dateTime))
+                                .where((element) => DateFormat("dd-MM-yyyy")
+                                                .format(element.createdDay) == DateFormat("dd-MM-yyyy")
+                                      .format(widget.dateTime))
                                 .toList(),
                             dateTime: widget.dateTime,
                           )))),

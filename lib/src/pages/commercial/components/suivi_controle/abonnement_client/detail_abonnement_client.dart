@@ -1,19 +1,23 @@
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/suivi_controle/abonnement_client_model.dart'; 
+import 'package:wm_solution/src/models/suivi_controle/abonnement_client_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/abonnement_client_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/abonnement_client_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailAbonnementClient extends StatefulWidget {
-  const DetailAbonnementClient({super.key, required this.abonnementClientModel});
+  const DetailAbonnementClient(
+      {super.key, required this.abonnementClientModel});
   final AbonnementClientModel abonnementClientModel;
 
   @override
@@ -22,11 +26,21 @@ class DetailAbonnementClient extends StatefulWidget {
 
 class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
- final AbonnementClientController controller =
+  final AbonnementClientController controller =
       Get.put(AbonnementClientController());
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+  late PdfViewerController _pdfViewerController;
+
   String title = "Commercial";
+
+  @override
+  void initState() {
+    _pdfViewerController = PdfViewerController();
+    super.initState();
+  }
 
   Future<AbonnementClientModel> refresh() async {
     final AbonnementClientModel dataItem =
@@ -39,8 +53,8 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
     int roleUser = int.parse(profilController.user.role);
     return Scaffold(
       key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.abonnementClientModel.typeContrat),
+      appBar: headerBar(context, scaffoldKey, title,
+          widget.abonnementClientModel.typeContrat),
       drawer: const DrawerMenu(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +86,8 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const TitleWidget(title: "Abonnement Client"),
+                                    const TitleWidget(
+                                        title: "Abonnement Client"),
                                     Column(
                                       children: [
                                         Row(
@@ -103,7 +118,8 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
                                     )
                                   ],
                                 ),
-                                dataWidget()
+                                dataWidget(),
+                                viewerWidget()
                               ],
                             ),
                           ),
@@ -131,7 +147,10 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: Text('Annuler', style: TextStyle(color: Colors.purple.shade700),),
+              child: Text(
+                'Annuler',
+                style: TextStyle(color: Colors.purple.shade700),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -139,8 +158,8 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
                 Get.toNamed(ComRoutes.comAbonnementUpdate,
                     arguments: widget.abonnementClientModel);
               },
-              child: Text('OK',
-                  style: TextStyle(color: Colors.purple.shade700)),
+              child:
+                  Text('OK', style: TextStyle(color: Colors.purple.shade700)),
             ),
           ],
         ),
@@ -162,16 +181,15 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: Text('Annuler',
-                  style: TextStyle(color: Colors.red.shade700)),
+              child:
+                  Text('Annuler', style: TextStyle(color: Colors.red.shade700)),
             ),
             TextButton(
               onPressed: () {
                 controller.deleteData(widget.abonnementClientModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: Text('OK',
-                  style: TextStyle(color: Colors.red.shade700)),
+              child: Text('OK', style: TextStyle(color: Colors.red.shade700)),
             ),
           ],
         ),
@@ -184,7 +202,7 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
-        children: [ 
+        children: [
           Divider(color: mainColor),
           Row(
             children: [
@@ -203,13 +221,13 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
           Row(
             children: [
               Expanded(
-                child: Text('Date de d"but et Fin du Contrat :',
+                child: Text('Date de début et Fin du Contrat :',
                     textAlign: TextAlign.start,
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
                 child: SelectableText(
-                  widget.abonnementClientModel.dateDebutEtFinContrat,
+                    widget.abonnementClientModel.dateDebutEtFinContrat,
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -239,7 +257,7 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
               ),
               Expanded(
                 child: SelectableText(
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(widget.abonnementClientModel.montant))} ${monnaieStorage.monney}",
+                    "${NumberFormat.decimalPattern('fr').format(double.parse(widget.abonnementClientModel.montant))} ${monnaieStorage.monney}",
                     textAlign: TextAlign.start,
                     style: bodyMedium),
               )
@@ -254,12 +272,14 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
-                child: SelectableText(widget.abonnementClientModel.signataireContrat,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    widget.abonnementClientModel.signataireContrat,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
-          Divider(color: mainColor),  
+          Divider(color: mainColor),
           Row(
             children: [
               Expanded(
@@ -277,5 +297,79 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
         ],
       ),
     );
+  }
+
+  Widget viewerWidget() {
+    final sized = MediaQuery.of(context).size;
+    var extension = widget.abonnementClientModel.scanContrat.split(".").last;
+    if (extension == 'pdf') {
+      return SizedBox(
+        height: sized.height / 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const TitleWidget(title: "Aperçu contrat"),
+                Row( children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.keyboard_arrow_up,
+                    ),
+                    onPressed: () {
+                      _pdfViewerController.previousPage();
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down,
+                    ),
+                    onPressed: () {
+                      _pdfViewerController.nextPage();
+                    },
+                  )
+                ]),
+              ],
+            ),
+            Expanded(
+              child: SfPdfViewer.network(
+                widget.abonnementClientModel.scanContrat,
+                controller: _pdfViewerController,
+                enableDocumentLinkAnnotation: false,
+                key: _pdfViewerKey,
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    if (extension == 'png' || extension == 'jpg') {
+      return Column(
+        children: [
+          const TitleWidget(title: "Aperçu contrat"),
+          Center(
+            child: CachedNetworkImageBuilder(
+              url: widget.abonnementClientModel.scanContrat,
+              builder: (image) {
+                return Center(
+                    child: Image.file(
+                  image,
+                  height: sized.height / 2,
+                ));
+              },
+              // Optional Placeholder widget until image loaded from url
+              placeHolder: Center(child: loading()),
+              // Optional error widget
+              errorWidget: Image.asset('assets/images/error.png'),
+              // Optional describe your image extensions default values are; jpg, jpeg, gif and png
+              imageExtensions: const ['jpg', 'png'],
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Text('-', style: Theme.of(context).textTheme.headline6);
   }
 }

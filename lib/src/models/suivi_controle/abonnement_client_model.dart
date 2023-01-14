@@ -10,7 +10,8 @@ class AbonnementClientModel {
   late String signature;
   late DateTime created;
   late String nomSocial;
- 
+  late String scanContrat;
+
   AbonnementClientModel(
       {this.id,
       required this.reference,
@@ -21,21 +22,22 @@ class AbonnementClientModel {
       required this.signataireContrat,
       required this.signature,
       required this.created,
-      required this.nomSocial});
+      required this.nomSocial,
+      required this.scanContrat});
 
   factory AbonnementClientModel.fromSQL(List<dynamic> row) {
     return AbonnementClientModel(
-      id: row[0],
-      reference: row[1],
-      dateFinContrat: row[2],
-      typeContrat: row[3],
-      montant: row[4],
-      dateDebutEtFinContrat: row[5],
-      signataireContrat: row[6],
-      signature: row[7],
-      created: row[8],
-      nomSocial: row[9]
-    );
+        id: row[0],
+        reference: row[1],
+        dateFinContrat: row[2],
+        typeContrat: row[3],
+        montant: row[4],
+        dateDebutEtFinContrat: row[5],
+        signataireContrat: row[6],
+        signature: row[7],
+        created: row[8],
+        nomSocial: row[9],
+        scanContrat: row[10]);
   }
 
   factory AbonnementClientModel.fromJson(Map<String, dynamic> json) {
@@ -50,6 +52,7 @@ class AbonnementClientModel {
       signature: json['signature'],
       created: DateTime.parse(json['created']),
       nomSocial: json['nomSocial'],
+      scanContrat: json['scanContrat'],
     );
   }
 
@@ -64,7 +67,8 @@ class AbonnementClientModel {
       'signataireContrat': signataireContrat,
       'signature': signature,
       'created': created.toIso8601String(),
-      'nomSocial': nomSocial
+      'nomSocial': nomSocial,
+      'scanContrat': scanContrat
     };
   }
 }

@@ -113,36 +113,38 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.state.length;
-    for (var item in widget.state) {
-      String colors = '';
-
-      int dayNow = DateTime.now().day;
-      int monthNow = DateTime.now().month;
-      int yearNow = DateTime.now().year;
-
-      int day = item.dateFinContrat.day;
-      int month = item.dateFinContrat.month;
-      int year = item.dateFinContrat.year;
-
-      int dayDifference = day - dayNow;
-
-      if (item.dateFinContrat.isAfter(DateTime.now())) {
-        colors == 'green';
-      } else if (year <= yearNow && month <= monthNow && day == dayNow) {
-        colors == 'red';
-      } else if (year <= yearNow && month <= monthNow) {
-        colors == 'red';
-      } else if (year <= yearNow) {
-        colors == 'red';
-      } else if (year == yearNow && month == monthNow && dayDifference <= 5) {
-        colors == 'orange';
-      } else if (year == yearNow && month == monthNow && dayDifference <= 10) {
-        colors == 'amber';
-      } else if (year == 2100 && month == 12 && day == 30) {
-        colors == 'blueGrey';
-      }
-
+    for (var item in widget.state) { 
       setState(() {
+        String colors = '-';
+
+        int dayNow = DateTime.now().day;
+        int monthNow = DateTime.now().month;
+        int yearNow = DateTime.now().year;
+
+        int day = item.dateFinContrat.day;
+        int month = item.dateFinContrat.month;
+        int year = item.dateFinContrat.year;
+
+        int dayDifference = day - dayNow;
+
+        if (item.dateFinContrat.isAfter(DateTime.now()) && 
+          item.dateFinContrat.isBefore(DateTime.parse("2100-12-31 00:00:00"))) {
+          colors = 'Bon';
+        } else if (year <= yearNow && month <= monthNow && day == dayNow) {
+          colors = 'Expirer';
+        } else if (year <= yearNow && month <= monthNow) {
+          colors = 'Expirer';
+        } else if (year <= yearNow) {
+          colors = 'Expirer';
+        } else if (year == yearNow && month == monthNow && dayDifference <= 5) {
+          colors = 'Expirer dans 5 jours';
+        } else if (year == yearNow && month == monthNow &&
+            dayDifference <= 10) {
+          colors = 'Expirer dans 10 jours';
+        } else if (item.dateFinContrat
+            .isAfter(DateTime.parse("2100-12-31 00:00:00"))) {
+          colors = 'Pas de contrat';
+        }
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'dateFinContrat': PlutoCell(value: colors),
@@ -188,7 +190,7 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Fin Contrat',
+        title: 'Status',
         field: 'dateFinContrat',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
@@ -197,29 +199,23 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
         titleTextAlign: PlutoColumnTextAlign.left,
         renderer: (rendererContext) {
           Color textColor = Colors.black;
-          String text = '';
-          if (rendererContext.cell.value == 'green') {
-            textColor = Colors.green;
-            text = 'Bon';
-          } else if (rendererContext.cell.value == 'red') {
-            textColor = Colors.red;
-            text = 'Expirer';
-          } else if (rendererContext.cell.value == 'orange') {
-            textColor = Colors.orange;
-            text = 'Expirer dans 5 jours';
-          } else if (rendererContext.cell.value == 'amber') {
-            textColor = Colors.amber;
-            text = 'Expirer dans 10 jours';
-          } else if (rendererContext.cell.value == 'blueGrey') {
-            textColor = Colors.blueGrey;
-            text = 'Pas de contrat';
+          if (rendererContext.cell.value == 'Bon') {
+            textColor = Colors.green.shade700;
+          } else if (rendererContext.cell.value == 'Expirer') {
+            textColor = Colors.red.shade700;
+          } else if (rendererContext.cell.value == 'Expirer dans 5 jours') {
+            textColor = Colors.orange.shade700;
+          } else if (rendererContext.cell.value == 'Expirer dans 10 jours') {
+            textColor = Colors.amber.shade700;
+          } else if (rendererContext.cell.value == 'Pas de contrat') {
+            textColor = Colors.blueGrey.shade700;
           }
           return Row(
             children: [
-              Icon(Icons.folder, color: textColor),
+              Icon(Icons.business, color: textColor),
               const SizedBox(width: p5),
               Text(
-                text,
+                rendererContext.cell.value.toString(),
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: textColor,
@@ -228,7 +224,7 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
             ],
           );
         },
-        width: 400,
+        width: 300,
         minWidth: 150,
       ),
       PlutoColumn(
@@ -253,24 +249,18 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
         renderer: (rendererContext) {
-          Color textColor = Colors.black; 
+          Color textColor = Colors.black;
           if (rendererContext.cell.value == 'Entreprise') {
-            textColor = Colors.teal; 
+            textColor = Colors.teal;
           } else if (rendererContext.cell.value == 'Particulier') {
-            textColor = Colors.blue; 
-          }  
-          return Row(
-            children: [
-              Icon(Icons.folder, color: textColor),
-              const SizedBox(width: p5),
-              Text(
-                rendererContext.cell.value.toString(),
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: textColor,
-                ),
-              ),
-            ],
+            textColor = Colors.blue;
+          }
+          return Text(
+            rendererContext.cell.value.toString(),
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: textColor,
+            ),
           );
         },
         width: 200,
@@ -287,7 +277,7 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ), 
+      ),
       PlutoColumn(
         readOnly: true,
         title: 'Email',
@@ -297,7 +287,7 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
+        width: 250,
         minWidth: 150,
       ),
       PlutoColumn(
