@@ -143,8 +143,8 @@ class _DetailAgendaState extends State<DetailAgenda> {
         context: context,
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Etes-vous sûr de supprimé ceci?'),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),

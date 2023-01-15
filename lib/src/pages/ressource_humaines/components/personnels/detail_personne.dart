@@ -31,7 +31,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
   String title = "Ressources Humaines";
 
   bool statutAgent = false;
-  String statutPersonel = 'false';
+  String statutPersonel = 'Inactif';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
           "${widget.personne.prenom} ${widget.personne.nom}"),
       drawer: const DrawerMenu(),
       floatingActionButton:
-          speedialWidget(personnelsController, usersController),
+          speedialWidget(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -75,8 +75,10 @@ class _DetailPersonneState extends State<DetailPersonne> {
                           children: [ 
                             SingleChildScrollView(
                                 child: ViewPersonne(
-                                    personne: widget.personne,
-                                    controller: personnelsController)),
+                                personne: widget.personne,
+                                controller: personnelsController,
+                                usersController: usersController
+                              )),
                             SingleChildScrollView(
                                 child: InfosPersonne(personne: widget.personne))
                           ],
@@ -89,8 +91,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
     );
   }
 
-  Widget speedialWidget(PersonnelsController personnelsController,
-      UsersController usersController) {
+  Widget speedialWidget() {
     final SalaireController salaireController = Get.put(SalaireController());
     final ActionnaireController actionnaireController =
         Get.put(ActionnaireController());
@@ -125,12 +126,12 @@ class _DetailPersonneState extends State<DetailPersonne> {
                 size: 15.0,
               ),
               foregroundColor: Colors.white,
-              backgroundColor: Colors.orange.shade700,
+              backgroundColor: Colors.purple.shade700,
               label: 'Modifier CV profil',
-              onPressed: () {
+              onPressed: () { 
                 Get.toNamed(RhRoutes.rhPersonnelsUpdate,
-                    arguments: widget.personne);
-              },
+                      arguments: widget.personne);
+              }
             ),
             // if (int.parse(user.role) <= 2)
             SpeedDialChild(
@@ -141,7 +142,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                   ? "Désactiver le profil"
                   : "Activer profil",
               onPressed: () {
-                agentStatutDialog(personnelsController, usersController);
+                agentStatutDialog();
               },
             ),
             SpeedDialChild(
@@ -258,8 +259,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
     });
   }
 
-  agentStatutDialog(PersonnelsController personnelsController,
-      UsersController usersController) {
+  agentStatutDialog() {
     statutPersonel = widget.personne.statutAgent;
     if (statutPersonel == 'Actif') {
       statutAgent = true;
@@ -276,48 +276,55 @@ class _DetailPersonneState extends State<DetailPersonne> {
               content: SizedBox(
                 height: 100,
                 width: 200,
-                child: Column(
-                  children: [
-                    FlutterSwitch(
-                      width: 225.0,
-                      height: 55.0,
-                      activeColor: Colors.green,
-                      inactiveColor: Colors.red,
-                      valueFontSize: 25.0,
-                      toggleSize: 45.0,
-                      value: statutAgent,
-                      borderRadius: 30.0,
-                      padding: 8.0,
-                      showOnOff: true,
-                      activeText: 'Active',
-                      inactiveText: 'Inactive',
-                      onToggle: (val) {
-                        // isLoading == true;
-                        setState(() {
-                          statutAgent = val;
-                          String vrai = '';
-                          if (statutAgent) {
-                            vrai = 'true';
-                            statutPersonel = 'Actif';
-                          } else {
-                            vrai = 'false';
-                            statutPersonel = 'Inactif';
-                          }
-                          if (vrai == 'true') {
-                            usersController.createUser(widget.personne);
-                            personnelsController.updateStatus(
-                                widget.personne, statutPersonel);
-                          } else if (vrai == 'false') {
-                            usersController.deleteUser(widget.personne);
-                            personnelsController.updateStatus(
-                                widget.personne, statutPersonel);
-                          }
-                          personnelsController.detailView(widget.personne.id!);
-                        });
-                      },
-                    ),
-                  ],
-                ),
+                child: Obx(() => personnelsController.isLoading 
+                  ? loading()
+                  : Column(
+                    children: [
+                      FlutterSwitch(
+                        width: 225.0,
+                        height: 55.0,
+                        activeColor: Colors.green,
+                        inactiveColor: Colors.red,
+                        valueFontSize: 25.0,
+                        toggleSize: 45.0,
+                        value: statutAgent,
+                        borderRadius: 30.0,
+                        padding: 8.0,
+                        showOnOff: true,
+                        activeText: 'Active',
+                        inactiveText: 'Inactive',
+                        onToggle: (val) {
+                          setState(() {
+                            statutAgent = val;
+                            // String vrai = '';
+                            if (statutAgent) {
+                              // vrai = 'true';
+                              statutPersonel = 'Actif';
+                              usersController.createUser(widget.personne);
+                                  personnelsController.updateStatus(
+                                      widget.personne, statutPersonel);
+                            } else {
+                              // vrai = 'false';
+                              statutPersonel = 'Inactif';
+                              usersController.deleteUser(widget.personne);
+                                  personnelsController.updateStatus(
+                                      widget.personne, statutPersonel);
+                            }
+
+                            // if (vrai == 'true') {
+                            //   usersController.createUser(widget.personne);
+                            //   personnelsController.updateStatus(
+                            //       widget.personne, statutPersonel);
+                            // } else if (vrai == 'false') {
+                            //   usersController.deleteUser(widget.personne);
+                            //   personnelsController.updateStatus(
+                            //       widget.personne, statutPersonel);
+                            // }
+                          });
+                        },
+                      ),
+                    ],
+                  )) ,
               ),
               actions: <Widget>[
                 TextButton(
@@ -329,4 +336,6 @@ class _DetailPersonneState extends State<DetailPersonne> {
           });
         });
   }
+
+ 
 }

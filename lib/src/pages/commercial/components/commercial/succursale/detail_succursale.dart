@@ -8,7 +8,7 @@ import 'package:wm_solution/src/models/commercial/succursale_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/approbation_succursale.dart'; 
+import 'package:wm_solution/src/pages/commercial/components/commercial/succursale/approbation_succursale.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -39,10 +39,8 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
     return dataItem;
   }
 
-
   @override
   Widget build(BuildContext context) {
-  
     int userRole = int.parse(profilController.user.role);
 
     return Scaffold(
@@ -164,8 +162,8 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Etes-vous sûr de supprimé ceci?',
               style: TextStyle(color: Colors.red)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -281,7 +279,8 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                         "${NumberFormat.decimalPattern('fr').format(sumAchatRevenue)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center,
                         maxLines: 1,
-                        style: headline6.copyWith(color: Colors.orange.shade700)),
+                        style:
+                            headline6.copyWith(color: Colors.orange.shade700)),
                   ],
                 ),
               ),
@@ -301,11 +300,12 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                         "${NumberFormat.decimalPattern('fr').format(sumAchatMarge)} ${monnaieStorage.monney}",
                         textAlign: TextAlign.center,
                         maxLines: 1,
-                        style: headline6.copyWith(color: Colors.green.shade700)),
+                        style:
+                            headline6.copyWith(color: Colors.green.shade700)),
                   ],
                 ),
               ),
-            ) 
+            )
           ],
         ),
       )),

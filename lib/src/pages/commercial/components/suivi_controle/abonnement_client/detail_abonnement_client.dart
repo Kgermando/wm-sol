@@ -142,8 +142,7 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
         builder: (BuildContext context) => AlertDialog(
           title: Text('Etes-vous sûr de modifier ceci?',
               style: TextStyle(color: mainColor)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text('Cette action permet de modifier ce document'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -174,10 +173,10 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous sûr de modifier ceci?',
+          title: Text('Etes-vous sûr de supprimer ceci?',
               style: TextStyle(color: mainColor)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -312,7 +311,7 @@ class _DetailAbonnementClientState extends State<DetailAbonnementClient> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const TitleWidget(title: "Aperçu contrat"),
-                Row( children: [
+                Row(children: [
                   IconButton(
                     icon: const Icon(
                       Icons.keyboard_arrow_up,

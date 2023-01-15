@@ -96,9 +96,9 @@ class _DetailTacheState extends State<DetailTache> {
                                         const TitleWidget(title: 'Votre tache'),
                                         Column(
                                           children: [
-                                             Row(
-                                               children: [
-                                                 IconButton(
+                                            Row(
+                                              children: [
+                                                IconButton(
                                                     tooltip: 'Actualiser',
                                                     onPressed: () async {
                                                       refresh().then((value) =>
@@ -106,15 +106,17 @@ class _DetailTacheState extends State<DetailTache> {
                                                               context,
                                                               MarketingRoutes
                                                                   .marketingCampaignDetail,
-                                                              arguments: value));
+                                                              arguments:
+                                                                  value));
                                                     },
-                                                    icon: const Icon(Icons.refresh,
+                                                    icon: const Icon(
+                                                        Icons.refresh,
                                                         color: Colors.green)),
                                                 if (userRole <= 3 &&
-                                                rapportList.isEmpty)
-                                              deleteButton(),        
-                                               ],
-                                             ), 
+                                                    rapportList.isEmpty)
+                                                  deleteButton(),
+                                              ],
+                                            ),
                                             SelectableText(
                                                 DateFormat("dd-MM-yyyy HH:mm")
                                                     .format(widget
@@ -156,9 +158,9 @@ class _DetailTacheState extends State<DetailTache> {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Obx(() => ElevatedButton.icon(
         onPressed: () {
-          if(widget.tacheModel.readResponsable == 'Ouvert') {
+          if (widget.tacheModel.readResponsable == 'Ouvert') {
             controller.submitRead(widget.tacheModel);
-          } 
+          }
         },
         icon: const Icon(Icons.check),
         label: controller.isLoading
@@ -284,8 +286,8 @@ class _DetailTacheState extends State<DetailTache> {
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Etes-vous sûr de supprimé ceci?',
               style: TextStyle(color: Colors.red)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),

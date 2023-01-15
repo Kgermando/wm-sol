@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/exploitations/agent_role_model.dart'; 
+import 'package:wm_solution/src/models/exploitations/agent_role_model.dart';
 import 'package:wm_solution/src/models/marketing/campaign_model.dart';
-import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart'; 
-import 'package:wm_solution/src/pages/marketing/components/campaigns/approbation_campaign.dart'; 
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/pages/marketing/components/campaigns/approbation_campaign.dart';
 import 'package:wm_solution/src/pages/marketing/components/campaigns/table_taches_campaign_detail.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
@@ -28,8 +28,7 @@ class ViewCampaign extends StatefulWidget {
       required this.profilController,
       required this.personnelsRolesController,
       required this.personnelsController,
-      required this.tachesController
-      });
+      required this.tachesController});
   final CampaignModel campaignModel;
   final MonnaieStorage monnaieStorage;
   final CampaignController controller;
@@ -47,7 +46,7 @@ class _ViewCampaignState extends State<ViewCampaign> {
     final CampaignModel dataItem =
         await widget.controller.detailView(widget.campaignModel.id!);
     return dataItem;
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +144,7 @@ class _ViewCampaignState extends State<ViewCampaign> {
                   element.reference == widget.campaignModel.id)
               .toList();
           return TablePersonnelsRolesFilter(
-            state: dataList, 
+            state: dataList,
             personnelsController: widget.personnelsController,
             personnelsRolesController: widget.personnelsRolesController,
             departement: 'Marketing',
@@ -153,16 +152,16 @@ class _ViewCampaignState extends State<ViewCampaign> {
             route: MarketingRoutes.marketingCampaignDetail,
             argument2: widget.campaignModel,
           );
-        }), 
+        }),
         const SizedBox(height: p20),
-       widget.tachesController.obx(
+        widget.tachesController.obx(
             onLoading: loadingPage(context),
-          (state) => TableTachesCampaignDetail(
-          tachesController: widget.tachesController,
-          id: widget.campaignModel.id!,
-          departement: 'Marketing',
-          campaignModel: widget.campaignModel,
-        ))  ,
+            (state) => TableTachesCampaignDetail(
+                  tachesController: widget.tachesController,
+                  id: widget.campaignModel.id!,
+                  departement: 'Marketing',
+                  campaignModel: widget.campaignModel,
+                )),
         const SizedBox(height: p20),
         if (widget.campaignModel.isSubmit == 'true')
           ApprobationCampaign(
@@ -183,8 +182,8 @@ class _ViewCampaignState extends State<ViewCampaign> {
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Etes-vous sûr de supprimé ceci?',
               style: TextStyle(color: Colors.red)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),

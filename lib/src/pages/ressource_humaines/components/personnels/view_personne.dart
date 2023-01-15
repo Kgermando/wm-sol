@@ -12,6 +12,7 @@ import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/agent_pdf.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
@@ -20,16 +21,19 @@ import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class ViewPersonne extends StatefulWidget {
   const ViewPersonne(
-      {super.key, required this.personne, required this.controller});
+      {super.key,
+      required this.personne,
+      required this.controller,
+      required this.usersController});
   final AgentModel personne;
   final PersonnelsController controller;
+  final UsersController usersController;
 
   @override
   State<ViewPersonne> createState() => _ViewPersonneState();
 }
 
 class _ViewPersonneState extends State<ViewPersonne> {
-
   Future<AgentModel> refresh() async {
     final AgentModel dataItem =
         await widget.controller.detailView(widget.personne.id!);
@@ -38,6 +42,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
 
   @override
   Widget build(BuildContext context) {
+    int roleUser = int.parse(widget.controller.profilController.user.role);
     return Card(
       elevation: 3,
       child: Padding(
@@ -48,15 +53,16 @@ class _ViewPersonneState extends State<ViewPersonne> {
             children: [
               const TitleWidget(title: 'Curriculum vitæ'),
               Row(
-                children: [ 
+                children: [
                   IconButton(
                       tooltip: 'Actualiser',
-                      onPressed: () { 
+                      onPressed: () {
                         refresh().then((value) => Navigator.pushNamed(
                             context, RhRoutes.rhPersonnelsDetail,
                             arguments: value));
                       },
                       icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                  if (roleUser <= 2) deleteButton(),
                   PrintWidget(
                       tooltip: "Imprimer le CV",
                       onPressed: () async {
@@ -75,12 +81,47 @@ class _ViewPersonneState extends State<ViewPersonne> {
     );
   }
 
+  Widget deleteButton() {
+    return IconButton(
+      icon: Icon(Icons.delete, color: Colors.red.shade700),
+      tooltip: "Supprimer",
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Etes-vous sûr de supprimer ceci?',
+              style: TextStyle(color: mainColor)),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child:
+                  Text('Annuler', style: TextStyle(color: Colors.red.shade700)),
+            ),
+            Obx(
+              () => TextButton(
+                onPressed: () {
+                  widget.usersController.deleteUser(widget.personne);
+                  widget.controller.deleteData(widget.personne.id!);
+                  Navigator.pop(context, 'ok');
+                },
+                child: widget.controller
+                  .isLoading ? loadingMini() 
+                  : Text('OK', style: TextStyle(color: Colors.red.shade700)),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget identiteWidget() {
     final bodyMedium = Theme.of(context).textTheme.bodyMedium;
     return Padding(
       padding: const EdgeInsets.all(p10),
       child: Column(
-        children: [ 
+        children: [
           Responsive.isMobile(context)
               ? Column(
                   children: [
@@ -111,12 +152,12 @@ class _ViewPersonneState extends State<ViewPersonne> {
                               Obx(() => Text(widget.personne.statutAgent,
                                   textAlign: TextAlign.start,
                                   style: bodyMedium.copyWith(
-                                      color: Colors.green.shade700)))  ,
+                                      color: Colors.green.shade700))),
                             if (widget.personne.statutAgent == 'Inactif')
                               Obx(() => Text(widget.personne.statutAgent,
                                   textAlign: TextAlign.start,
                                   style: bodyMedium.copyWith(
-                                      color: Colors.orange.shade700)))  
+                                      color: Colors.orange.shade700)))
                           ],
                         ),
                         Row(
@@ -312,7 +353,8 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   textAlign: TextAlign.start,
                   style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               child2: SelectableText(widget.personne.matricule,
-                  textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.teal.shade700))),
+                  textAlign: TextAlign.start,
+                  style: bodyMedium.copyWith(color: Colors.teal.shade700))),
           ResponsiveChildWidget(
               child1: Text('Numéro de sécurité sociale :',
                   textAlign: TextAlign.start,
@@ -415,7 +457,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
     );
   }
 
-  Widget competenceExperienceWidget() { 
+  Widget competenceExperienceWidget() {
     var competanceJson = jsonDecode(widget.personne.competance!);
     widget.controller.competanceController = flutter_quill.QuillController(
         document: flutter_quill.Document.fromJson(competanceJson),
@@ -431,7 +473,7 @@ class _ViewPersonneState extends State<ViewPersonne> {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ 
+            children: [
               flutter_quill.QuillEditor.basic(
                 controller: widget.controller.competanceController,
                 readOnly: true,

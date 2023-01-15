@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
-import 'package:wm_solution/src/constants/responsive.dart'; 
+import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/suivi_controle/entreprise_info_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
@@ -37,15 +37,16 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
     int roleUser = int.parse(profilController.user.role);
     return Scaffold(
       key: scaffoldKey,
-      appBar:
-          headerBar(context, scaffoldKey, title, widget.entrepriseInfoModel.nomSocial),
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.entrepriseInfoModel.nomSocial),
       drawer: const DrawerMenu(),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Nouvel Abonnemnt"),
         tooltip: "Ajouter un nouveau abonnement",
         icon: const Icon(Icons.add),
         onPressed: () {
-          Get.toNamed(ComRoutes.comAbonnementAdd, arguments: widget.entrepriseInfoModel);
+          Get.toNamed(ComRoutes.comAbonnementAdd,
+              arguments: widget.entrepriseInfoModel);
         },
       ),
       body: Row(
@@ -79,7 +80,8 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     TitleWidget(
-                                      title: widget.entrepriseInfoModel.typeEntreprise),
+                                        title: widget.entrepriseInfoModel
+                                            .typeEntreprise),
                                     Column(
                                       children: [
                                         Row(
@@ -95,10 +97,8 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                                                 },
                                                 icon: const Icon(Icons.refresh,
                                                     color: Colors.green)),
-                                            if (roleUser <= 2)
-                                              editButton(),
-                                            if (roleUser <= 2)
-                                              deleteButton(),
+                                            if (roleUser <= 2) editButton(),
+                                            if (roleUser <= 2) deleteButton(),
                                           ],
                                         ),
                                         SelectableText(
@@ -116,7 +116,7 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: p20), 
+                        const SizedBox(height: p20),
                       ],
                     ),
                   )))
@@ -134,8 +134,7 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
         builder: (BuildContext context) => AlertDialog(
           title: Text('Etes-vous sûr de modifier ceci?',
               style: TextStyle(color: mainColor)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text('Cette action permet de modifier ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -148,8 +147,8 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                 Get.toNamed(ComRoutes.comEntrepriseUpdate,
                     arguments: widget.entrepriseInfoModel);
               },
-              child: Text('OK',
-                  style: TextStyle(color: Colors.purple.shade700)),
+              child:
+                  Text('OK', style: TextStyle(color: Colors.purple.shade700)),
             ),
           ],
         ),
@@ -164,23 +163,22 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous sûr de modifier ceci?',
+          title: Text('Etes-vous sûr de supprimer ceci?',
               style: TextStyle(color: mainColor)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: Text('Annuler',
-                  style: TextStyle(color: Colors.red.shade700)),
+              child:
+                  Text('Annuler', style: TextStyle(color: Colors.red.shade700)),
             ),
             TextButton(
               onPressed: () {
                 controller.deleteData(widget.entrepriseInfoModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: Text('OK',
-                  style: TextStyle(color: Colors.red.shade700)),
+              child: Text('OK', style: TextStyle(color: Colors.red.shade700)),
             ),
           ],
         ),
@@ -244,8 +242,10 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
-                child: SelectableText(widget.entrepriseInfoModel.emailEntreprise,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    widget.entrepriseInfoModel.emailEntreprise,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -314,8 +314,10 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
-                child: SelectableText(widget.entrepriseInfoModel.identificationNationale,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    widget.entrepriseInfoModel.identificationNationale,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -342,8 +344,10 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
-                child: SelectableText(widget.entrepriseInfoModel.secteurActivite,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    widget.entrepriseInfoModel.secteurActivite,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -356,8 +360,10 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                     style: bodyMedium.copyWith(fontWeight: FontWeight.bold)),
               ),
               Expanded(
-                child: SelectableText(widget.entrepriseInfoModel.adressePhysiqueEntreprise,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                child: SelectableText(
+                    widget.entrepriseInfoModel.adressePhysiqueEntreprise,
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
@@ -375,7 +381,8 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
               )
             ],
           ),
-          Divider(color: mainColor),Row(
+          Divider(color: mainColor),
+          Row(
             children: [
               Expanded(
                 child: Text('Date de Fin de Contrat :',
@@ -386,11 +393,13 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                 child: SelectableText(
                     DateFormat("dd-MM-yyyy")
                         .format(widget.entrepriseInfoModel.dateFinContrat),
-                    textAlign: TextAlign.start, style: bodyMedium),
+                    textAlign: TextAlign.start,
+                    style: bodyMedium),
               )
             ],
           ),
-          Divider(color: mainColor),Row(
+          Divider(color: mainColor),
+          Row(
             children: [
               Expanded(
                 child: Text('Signature :',

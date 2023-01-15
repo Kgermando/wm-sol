@@ -14,6 +14,7 @@ import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/regex.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
@@ -31,6 +32,7 @@ class UpdatePersonnel extends StatefulWidget {
 class _UpdatePersonnelState extends State<UpdatePersonnel> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   final PersonnelsController controller = Get.find();
+  final UsersController usersController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
@@ -162,7 +164,11 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                                 press: () {
                                   final form = controller.formKey.currentState!;
                                   if (form.validate()) {
-                                    controller.submitUpdate(widget.personne);
+                                    if(widget.personne.statutAgent ==
+                                        "Actif") {
+                                      usersController.deleteUser(widget.personne);
+                                    }
+                                    controller.submitUpdate(widget.personne); 
                                     form.reset();
                                   }
                                 })) 

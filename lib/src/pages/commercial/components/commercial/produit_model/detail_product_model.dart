@@ -21,8 +21,7 @@ class DetailProductModel extends StatefulWidget {
 }
 
 class _DetailProductModelState extends State<DetailProductModel> {
-  final ProduitModelController controller =
-      Get.put(ProduitModelController());
+  final ProduitModelController controller = Get.put(ProduitModelController());
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
@@ -34,7 +33,7 @@ class _DetailProductModelState extends State<DetailProductModel> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar:
@@ -133,8 +132,7 @@ class _DetailProductModelState extends State<DetailProductModel> {
         builder: (BuildContext context) => AlertDialog(
           title: Text('Etes-vous sûr de modifier ceci?',
               style: TextStyle(color: mainColor)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text('Cette action permet de modifier ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -161,10 +159,10 @@ class _DetailProductModelState extends State<DetailProductModel> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: Text('Etes-vous sûr de modifier ceci?',
+          title: Text('Etes-vous sûr de supprimer ceci?',
               style: TextStyle(color: mainColor)),
-          content:
-              const Text('Cette action permet de supprimer définitivement.'),
+          content: const Text(
+              'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
