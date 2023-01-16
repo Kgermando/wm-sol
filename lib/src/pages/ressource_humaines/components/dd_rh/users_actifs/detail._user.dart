@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
@@ -12,6 +14,7 @@ import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailUser extends StatefulWidget {
   const DetailUser({super.key, required this.user});
@@ -23,7 +26,8 @@ class DetailUser extends StatefulWidget {
 
 class _DetailUserState extends State<DetailUser> {
   final UsersController controller = Get.find();
-    final SuccursaleController succursaleController = Get.put(SuccursaleController());
+  final SuccursaleController succursaleController =
+      Get.put(SuccursaleController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Ressources Humaines";
 
@@ -33,8 +37,9 @@ class _DetailUserState extends State<DetailUser> {
   }
 
   @override
-  Widget build(BuildContext context) { 
-    final bodyMedium = Theme.of(context).textTheme.bodyMedium; 
+  Widget build(BuildContext context) {
+    final bodyMedium = Theme.of(context).textTheme.bodyMedium;
+    List<dynamic> depList = jsonDecode(widget.user.departement);
     return controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
@@ -44,65 +49,68 @@ class _DetailUserState extends State<DetailUser> {
               appBar: headerBar(context, scaffoldKey, title,
                   "${widget.user.prenom} ${widget.user.nom}"),
               drawer: const DrawerMenu(),
-              floatingActionButton: (widget.user.succursale == 'Commercial') ? FloatingActionButton.extended(
-                label: const Text("Affecter une succursale"),
-                tooltip: "Affecter une succursale à cet utilisateur",
-                icon: const Icon(Icons.home_work),
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    context: context, 
-                    builder: (BuildContext context) {
-                      return Container(
-                        color: Colors.amber.shade100,
-                        padding: const EdgeInsets.all(p20),
-                        child: Form(
-                          key: controller.formKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: (widget.user.succursale =="-") 
-                                      ? Text(
-                                          "Affecter une succursale à cet utilisateur",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall)
-                                      : Text(
-                                          "Modifier la succursale pour cet utilisateur",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headlineSmall)
-                                  ),
-                                ],
+              floatingActionButton: depList.contains("Commercial")
+                  ? FloatingActionButton.extended(
+                      label: const Text("Affecter une succursale"),
+                      tooltip: "Affecter une succursale à cet utilisateur",
+                      icon: const Icon(Icons.home_work),
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              color: Colors.amber.shade100,
+                              padding: const EdgeInsets.all(p20),
+                              child: Form(
+                                key: controller.formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: (widget.user.succursale ==
+                                                    "-")
+                                                ? Text(
+                                                    "Affecter une succursale à cet utilisateur",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headlineSmall)
+                                                : Text(
+                                                    "Modifier la succursale pour cet utilisateur",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headlineSmall)),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: p20,
+                                    ),
+                                    succursaleWidget(),
+                                    const SizedBox(
+                                      height: p20,
+                                    ),
+                                    Obx(() => BtnWidget(
+                                        title: 'Soumettre',
+                                        press: () {
+                                          final form =
+                                              controller.formKey.currentState!;
+                                          if (form.validate()) {
+                                            controller
+                                                .succursaleUser(widget.user);
+                                            form.reset();
+                                          }
+                                        },
+                                        isLoading: controller.isLoading))
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              succursaleWidget(),
-                              const SizedBox(
-                                height: p20,
-                              ),
-                              Obx(() => BtnWidget(
-                                  title: 'Soumettre',
-                                  press: () {
-                                    final form =
-                                        controller.formKey.currentState!;
-                                    if (form.validate()) {
-                                      controller.succursaleUser(widget.user);
-                                      form.reset();
-                                    }
-                                  },
-                                  isLoading: controller.isLoading)) 
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ) : Container(),
+                            );
+                          },
+                        );
+                      },
+                    )
+                  : Container(),
               body: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -133,8 +141,9 @@ class _DetailUserState extends State<DetailUser> {
                                       children: [
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.end,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
+                                            const TitleWidget(title: "Utitlisateur actif"),
                                             IconButton(
                                                 tooltip: 'Actualiser',
                                                 onPressed: () {
@@ -254,16 +263,15 @@ class _DetailUserState extends State<DetailUser> {
                                         Divider(color: mainColor),
                                         const SizedBox(height: p20),
                                         ResponsiveChildWidget(
-                                          child1: Text('Succursale :',
-                                              textAlign: TextAlign.start,
-                                              style: bodyMedium.copyWith(
-                                                  fontWeight:
-                                                      FontWeight.bold)),
-                                          child2:  SelectableText(
-                                              widget.user.succursale,
-                                              textAlign: TextAlign.start,
-                                              style: bodyMedium) 
-                                        ),
+                                            child1: Text('Succursale :',
+                                                textAlign: TextAlign.start,
+                                                style: bodyMedium.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            child2: SelectableText(
+                                                widget.user.succursale,
+                                                textAlign: TextAlign.start,
+                                                style: bodyMedium.copyWith(color: mainColor, fontWeight: FontWeight.bold))),
                                       ],
                                     ),
                                   ),
@@ -275,9 +283,6 @@ class _DetailUserState extends State<DetailUser> {
               ),
             ));
   }
-
-
-
 
   Widget succursaleWidget() {
     var succList =
@@ -303,7 +308,7 @@ class _DetailUserState extends State<DetailUser> {
         validator: (value) => value == null ? "Select Succursale" : null,
         onChanged: (value) {
           setState(() {
-            controller.succursale = value!; 
+            controller.succursale = value!;
           });
         },
       ),

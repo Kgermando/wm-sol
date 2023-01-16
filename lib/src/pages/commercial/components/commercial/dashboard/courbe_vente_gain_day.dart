@@ -6,17 +6,18 @@ import 'package:wm_solution/src/models/commercial/courbe_vente_gain_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
 
-class CourbeVenteGainMounth extends StatefulWidget {
-  const CourbeVenteGainMounth({Key? key, required this.controller, required this.monnaieStorage})
+class CourbeVenteGainDay extends StatefulWidget {
+  const CourbeVenteGainDay(
+      {Key? key, required this.controller, required this.monnaieStorage})
       : super(key: key);
   final DashboardComController controller;
   final MonnaieStorage monnaieStorage;
 
   @override
-  State<CourbeVenteGainMounth> createState() => _CourbeVenteGainMounthState();
+  State<CourbeVenteGainDay> createState() => _CourbeVenteGainDayState();
 }
 
-class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
+class _CourbeVenteGainDayState extends State<CourbeVenteGainDay> {
   TooltipBehavior? _tooltipBehavior;
 
   bool? isCardView;
@@ -40,7 +41,7 @@ class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
               primaryXAxis: CategoryAxis(),
               // Chart title
               title: ChartTitle(
-                  text: 'Courbe de Ventes par Mois',
+                  text: 'Courbe de Ventes par Jour',
                   textStyle: const TextStyle(fontWeight: FontWeight.bold)),
               // Enable legend
               legend: Legend(
@@ -57,19 +58,20 @@ class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
               tooltipBehavior: _tooltipBehavior,
               primaryYAxis: NumericAxis(
                 edgeLabelPlacement: EdgeLabelPlacement.shift,
-                title: AxisTitle(text: DateFormat("MM-yyyy").format(DateTime.now())),
-                numberFormat: NumberFormat.currency(           
+                title: AxisTitle(text: DateFormat("dd-MM-yyyy")
+                        .format(DateTime.now())),
+                numberFormat: NumberFormat.currency(
                     symbol: '${widget.monnaieStorage.monney} ',
                     decimalDigits: 1),
               ),
               series: <LineSeries>[
                 LineSeries<CourbeGainModel, String>(
                   name: 'Gains',
-                  dataSource: widget.controller.gainMouthList,
+                  dataSource: widget.controller.gainDayList,
                   sortingOrder: SortingOrder.ascending,
                   markerSettings: const MarkerSettings(isVisible: true),
                   xValueMapper: (CourbeGainModel ventes, _) =>
-                      "Le ${ventes.created}",
+                      "${ventes.created} H",
                   yValueMapper: (CourbeGainModel ventes, _) =>
                       double.parse(ventes.sum.toStringAsFixed(2)),
                   // Enable data label
@@ -77,15 +79,16 @@ class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
                 ),
                 LineSeries<CourbeVenteModel, String>(
                   name: 'Ventes',
-                  dataSource: widget.controller.venteMouthList,
+                  dataSource: widget.controller.venteDayList,
                   sortingOrder: SortingOrder.ascending,
                   markerSettings: const MarkerSettings(isVisible: true),
-                  xValueMapper: (CourbeVenteModel ventes, _) => "Le ${ventes.created}",
+                  xValueMapper: (CourbeVenteModel ventes, _) =>
+                      "${ventes.created} H",
                   yValueMapper: (CourbeVenteModel ventes, _) =>
                       double.parse(ventes.sum.toStringAsFixed(2)),
                   // Enable data label
                   dataLabelSettings: const DataLabelSettings(isVisible: true),
-                ), 
+                ),
               ]),
         ],
       ),

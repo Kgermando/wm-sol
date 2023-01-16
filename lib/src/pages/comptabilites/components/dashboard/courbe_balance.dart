@@ -61,8 +61,7 @@ class _CourbeBalanceState extends State<CourbeBalance> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Balance'),
-          numberFormat:
-              NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
         ),
       ),
     );

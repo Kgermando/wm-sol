@@ -5,9 +5,11 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/sal
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 
 class DashobardRHController extends GetxController {
-  final PersonnelsController personnelsController = Get.put(PersonnelsController());
+  final PersonnelsController personnelsController =
+      Get.put(PersonnelsController());
   final SalaireController salaireController = Get.put(SalaireController());
-  final TransportRestController transportRestController = Get.put(TransportRestController());
+  final TransportRestController transportRestController =
+      Get.put(TransportRestController());
 
   List<PaiementSalaireModel> salaireList = [];
 
@@ -32,7 +34,7 @@ class DashobardRHController extends GetxController {
   final _agentNonPaye = 0.obs;
   int get agentNonPaye => _agentNonPaye.value;
 
-  @override
+   @override
   void onInit() {
     super.onInit();
     getData();
@@ -41,19 +43,15 @@ class DashobardRHController extends GetxController {
 
   void getData() async {
     var personnels = await personnelsController.personnelsApi.getAllData();
-    _agentsCount.value = personnels.length; 
-    _agentActifCount.value = personnels
-        .where((element) => element.statutAgent == 'Actif')
-        .length;
-    _agentInactifCount.value = personnels
-        .where((element) => element.statutAgent == 'Inactif')
-        .length;
-    _agentFemmeCount.value = personnels
-        .where((element) => element.sexe == 'Femme')
-        .length;
-    _agentHommeCount.value = personnels
-        .where((element) => element.sexe == 'Homme')
-        .length;
+    _agentsCount.value = personnels.length;
+    _agentActifCount.value =
+        personnels.where((element) => element.statutAgent == 'Actif').length;
+    _agentInactifCount.value =
+        personnels.where((element) => element.statutAgent == 'Inactif').length;
+    _agentFemmeCount.value =
+        personnels.where((element) => element.sexe == 'Femme').length;
+    _agentHommeCount.value =
+        personnels.where((element) => element.sexe == 'Homme').length;
 
     var salaires = await salaireController.paiementSalaireApi.getAllData();
     _agentNonPaye.value = salaires

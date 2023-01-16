@@ -113,38 +113,26 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.state.length;
-    for (var item in widget.state) { 
+    for (var item in widget.state) {
       setState(() {
         String colors = '-';
+        var isDate = item.dateFinContrat.difference(DateTime.now());
 
-        int dayNow = DateTime.now().day;
-        int monthNow = DateTime.now().month;
-        int yearNow = DateTime.now().year;
-
-        int day = item.dateFinContrat.day;
-        int month = item.dateFinContrat.month;
-        int year = item.dateFinContrat.year;
-
-        int dayDifference = day - dayNow;
-
-        if (item.dateFinContrat.isAfter(DateTime.now()) && 
-          item.dateFinContrat.isBefore(DateTime.parse("2100-12-31 00:00:00"))) {
+        if (item.dateFinContrat.year ==
+            DateTime.parse("2100-12-31 00:00:00").year) {
+          colors = 'Pas de contrat';     
+        } else if (isDate.inDays >= 11) {
           colors = 'Bon';
-        } else if (year <= yearNow && month <= monthNow && day == dayNow) {
-          colors = 'Expirer';
-        } else if (year <= yearNow && month <= monthNow) {
-          colors = 'Expirer';
-        } else if (year <= yearNow) {
-          colors = 'Expirer';
-        } else if (year == yearNow && month == monthNow && dayDifference <= 5) {
-          colors = 'Expirer dans 5 jours';
-        } else if (year == yearNow && month == monthNow &&
-            dayDifference <= 10) {
-          colors = 'Expirer dans 10 jours';
-        } else if (item.dateFinContrat
-            .isAfter(DateTime.parse("2100-12-31 00:00:00"))) {
-          colors = 'Pas de contrat';
+        } else if (isDate.inDays <= 1) {
+          colors = "Expire demain"; 
+        } else if (isDate.inDays < 0) {
+          colors = 'Expirer'; 
+        } else if (isDate.inDays <= 5) {
+          colors = 'Expirer dans moins de 5 jours';  
+        } else if (isDate.inDays <= 10) {
+          colors = 'Expirer dans moins de 10 jours';  
         }
+
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'dateFinContrat': PlutoCell(value: colors),
@@ -203,9 +191,12 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
             textColor = Colors.green.shade700;
           } else if (rendererContext.cell.value == 'Expirer') {
             textColor = Colors.red.shade700;
-          } else if (rendererContext.cell.value == 'Expirer dans 5 jours') {
+          } else if (rendererContext.cell.value == 'Expire demain') {
+            textColor = Colors.pink.shade700;
+          } else if (rendererContext.cell.value ==
+              'Expirer dans moins de 5 jours') {
             textColor = Colors.orange.shade700;
-          } else if (rendererContext.cell.value == 'Expirer dans 10 jours') {
+          } else if (rendererContext.cell.value == 'Expirer dans moins de 10 jours') {
             textColor = Colors.amber.shade700;
           } else if (rendererContext.cell.value == 'Pas de contrat') {
             textColor = Colors.blueGrey.shade700;
@@ -254,6 +245,8 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
             textColor = Colors.teal;
           } else if (rendererContext.cell.value == 'Particulier') {
             textColor = Colors.blue;
+          } else if (rendererContext.cell.value == 'ONG & ASBL') {
+            textColor = Colors.orange;
           }
           return Text(
             rendererContext.cell.value.toString(),

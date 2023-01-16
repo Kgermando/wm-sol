@@ -14,7 +14,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
-class FactureCartPDF {
+class FactureCartPDFA6 {
   static Future<File> generate(
       FactureCartModel factureCartModel, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
@@ -22,6 +22,7 @@ class FactureCartPDF {
     final user = await AuthApi().getUserId();
 
     pdf.addPage(MultiPage(
+      pageFormat: PdfPageFormat.a6,
       build: (context) => [
         buildInvoiceInfo(factureCartModel, user, monnaieStorage),
         buildTitle(factureCartModel),
@@ -30,8 +31,11 @@ class FactureCartPDF {
         buildTotal(factureCartModel, monnaieStorage),
       ],
       footer: (context) => buildFooter(user),
-    ));
+    )); 
+   
+   
     return PdfApi.saveDocument(name: 'facture', pdf: pdf);
+    
   }
  
  static Widget buildInvoiceInfo(FactureCartModel factureCartModel,

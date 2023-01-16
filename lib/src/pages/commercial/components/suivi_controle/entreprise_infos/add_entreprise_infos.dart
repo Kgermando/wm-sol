@@ -165,7 +165,7 @@ class _AddEntrepriseInfosState extends State<AddEntrepriseInfos> {
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-            labelText: 'Email entreprise',
+            labelText: (controller.typeEntreprise == 'Entreprise') ? 'Email entreprise' : 'Email',
           ),
           style: const TextStyle(),
           validator: (value) {
@@ -365,7 +365,7 @@ class _AddEntrepriseInfosState extends State<AddEntrepriseInfos> {
  
 
   Widget typeEntrepriseWidget() {
-    List<String> suggestionList = ['Entreprise', 'Particulier'];
+    List<String> suggestionList = ['Entreprise', 'Particulier', 'ONG & ASBL'];
     return Container(
       margin: const EdgeInsets.only(bottom: p20),
       child: DropdownButtonFormField<String>(

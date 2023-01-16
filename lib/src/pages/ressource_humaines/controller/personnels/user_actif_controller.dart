@@ -58,7 +58,7 @@ class UsersController extends GetxController with StateMixin<List<UserModel>> {
       await userApi.deleteData(id).then((value) {
         usersList.clear();
         getList();
-        // Get.back();
+        Get.back();
         Get.snackbar("Suppression de l'accès avec succès!",
             "Cet élément a bien été supprimé",
             backgroundColor: Colors.purple,

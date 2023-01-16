@@ -51,8 +51,7 @@ class _ChartCaisseState extends State<ChartCaisse> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Transations 2'),
-          numberFormat:
-              NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
         ),
         series: <ChartSeries<ChartFinanceModel, String>>[
           ColumnSeries<ChartFinanceModel, String>(

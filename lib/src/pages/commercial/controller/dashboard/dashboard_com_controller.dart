@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:wm_solution/src/pages/commercial/controller/commercials/factures
 import 'package:wm_solution/src/pages/commercial/controller/commercials/gains/gain_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/history/history_vente_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/entreprise_infos_controller.dart';
 
 class DashboardComController extends GetxController {
   final VenteGainApi venteGainApi = VenteGainApi();
@@ -19,10 +21,18 @@ class DashboardComController extends GetxController {
       Get.put(FactureCreanceController());
   final SuccursaleController succursaleController =
       Get.put(SuccursaleController());
+  final EntrepriseInfosController entrepriseInfosController =
+      Get.put(EntrepriseInfosController());
 
-  List<VenteChartModel> venteChartModel = [];
-  List<CourbeVenteModel> venteMouthList = [];
+  // 10 produits le plus vendu
+  List<VenteChartModel> venteChartList = [];
+
+  List<CourbeVenteModel> venteDayList = []; 
+  List<CourbeGainModel> gainDayList = [];
+
+  List<CourbeVenteModel> venteMouthList = []; 
   List<CourbeGainModel> gainMouthList = [];
+
   List<CourbeVenteModel> venteYearList = [];
   List<CourbeGainModel> gainYearList = [];
 
@@ -40,6 +50,17 @@ class DashboardComController extends GetxController {
   final _sumDCreance = 0.0.obs;
   double get sumDCreance => _sumDCreance.value;
 
+  final _entrepriseInfosCount = 0.obs;
+  int get entrepriseInfosCount => _entrepriseInfosCount.value;
+  final _entrepriseInfosActiveCount = 0.obs;
+  int get entrepriseInfosActiveCount => _entrepriseInfosActiveCount.value;
+  final _entrepriseCount = 0.obs;
+  int get entrepriseCount => _entrepriseCount.value;
+  final _particulierCount = 0.obs;
+  int get particulierCount => _particulierCount.value;
+  final _ongAsblCount = 0.obs;
+  int get ongAsblCount => _ongAsblCount.value;
+
   @override
   void onInit() {
     super.onInit();
@@ -48,17 +69,43 @@ class DashboardComController extends GetxController {
 
   Future<void> getData() async {
     var getVenteChart = await VenteGainApi().getVenteChart();
-    var getAllDataGainMouth = await VenteGainApi().getAllDataGainMouth();
+
+    var getAllDataVenteDay = await VenteGainApi().getAllDataVenteDay();
+    var getAllDataGainDay = await VenteGainApi().getAllDataGainDay();
+    
     var getAllDataVenteMouth = await VenteGainApi().getAllDataVenteMouth();
-    var getAllDataGainYear = await VenteGainApi().getAllDataGainYear();
+    var getAllDataGainMouth = await VenteGainApi().getAllDataGainMouth();
+    
     var getAllDataVenteYear = await VenteGainApi().getAllDataVenteYear();
+    var getAllDataGainYear = await VenteGainApi().getAllDataGainYear();
+    
     var succursales = await succursaleController.succursaleApi.getAllData();
     var gains = await gainController.gainApi.getAllData();
     var ventes = await venteCartController.venteCartApi.getAllData();
     var factureCreance =
         await factureCreanceController.creanceFactureApi.getAllData();
 
-    venteChartModel.addAll(getVenteChart);
+    // Suivis & Controlle
+    var entreprise =
+        await entrepriseInfosController.entrepriseInfoApi.getAllData();
+
+    _entrepriseInfosCount.value = entreprise.length;
+    _entrepriseInfosActiveCount.value =
+        entreprise.where((element) => DateTime.now().isBefore(element.dateFinContrat)).length;
+
+    _entrepriseCount.value = entreprise
+        .where((element) => element.typeEntreprise == 'Entreprise')
+        .length;
+    _particulierCount.value = entreprise
+        .where((element) => element.typeEntreprise == 'Particulier')
+        .length;
+    _ongAsblCount.value = entreprise
+        .where((element) => element.typeEntreprise == 'ONG & ASBL')
+        .length;
+
+    venteChartList.addAll(getVenteChart);
+    venteDayList.addAll(getAllDataVenteDay);
+    gainDayList.addAll(getAllDataGainDay);
     venteMouthList.addAll(getAllDataVenteMouth);
     gainMouthList.addAll(getAllDataGainMouth);
     venteYearList.addAll(getAllDataVenteYear);

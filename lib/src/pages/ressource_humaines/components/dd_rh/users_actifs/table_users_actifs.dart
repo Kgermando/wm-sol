@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/user_actif_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -112,12 +113,12 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
     for (var item in widget.usersController.usersList) {
       rows.add(PlutoRow(cells: {
         'numero': PlutoCell(value: i--),
+        'matricule': PlutoCell(value: item.matricule),
         'nom': PlutoCell(value: item.nom),
         'prenom': PlutoCell(value: item.prenom),
         'email': PlutoCell(value: item.email),
         'telephone': PlutoCell(value: item.telephone),
         'role': PlutoCell(value: "Niveau ${item.role}"),
-        'matricule': PlutoCell(value: item.matricule),
         'createdAt':
             PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
         'departement': PlutoCell(value: item.departement),
@@ -146,6 +147,27 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
             textAlign: TextAlign.center,
           );
         },
+      ),
+      PlutoColumn(
+        readOnly: true,
+        title: 'Matricule',
+        field: 'matricule',
+        type: PlutoColumnType.text(),
+        enableRowDrag: true,
+        enableContextMenu: false,
+        enableDropToResize: true,
+        titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            style: TextStyle(
+              color: mainColor,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        },
+        width: 200,
+        minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
@@ -206,19 +228,7 @@ class _TableUsersActifsState extends State<TableUsersActifs> {
         titleTextAlign: PlutoColumnTextAlign.left,
         width: 200,
         minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Matricule',
-        field: 'matricule',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
+      ), 
       PlutoColumn(
         readOnly: true,
         title: 'createdAt',

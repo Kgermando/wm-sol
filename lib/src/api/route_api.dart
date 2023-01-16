@@ -295,8 +295,10 @@ var addVentesUrl = Uri.parse("$mainUrl/ventes/insert-new-vente");
 
 // Chart Commercial
 var venteChartsUrl = Uri.parse("$mainUrl/ventes/vente-chart/");
+var venteChartDayUrl = Uri.parse("$mainUrl/ventes/vente-chart-day/");
 var venteChartMonthsUrl = Uri.parse("$mainUrl/ventes/vente-chart-month/");
 var venteChartYearsUrl = Uri.parse("$mainUrl/ventes/vente-chart-year/");
+var gainChartDayUrl = Uri.parse("$mainUrl/gains/gain-chart-day/");
 var gainChartMonthsUrl = Uri.parse("$mainUrl/gains/gain-chart-month/");
 var gainChartYearsUrl = Uri.parse("$mainUrl/gains/gain-chart-year/");
 

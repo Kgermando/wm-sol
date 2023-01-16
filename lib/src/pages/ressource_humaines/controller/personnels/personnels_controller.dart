@@ -413,7 +413,7 @@ class PersonnelsController extends GetxController
           created: personne.created);
       await personnelsApi.updateData(agentModel).then((value) {
         clear(); 
-        // Get.back();
+        Get.back();
         Get.snackbar("Modification du statut effectué!",
             "Le document a bien été mise à jour.",
             backgroundColor: Colors.green,

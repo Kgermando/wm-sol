@@ -68,6 +68,7 @@ class BonLivraisonController extends GetxController
   // Livraison vers succursale
   void bonLivraisonStock(BonLivraisonModel data) async {
     try {
+      _isLoading.value = true;
       // Update Bon livraison
       final bonLivraisonModel = BonLivraisonModel(
           id: data.id!,

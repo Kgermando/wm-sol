@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/actionnaire/actionnaire_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:wm_solution/src/utils/list_colors.dart';
@@ -14,6 +16,7 @@ class ChartBarActions extends StatefulWidget {
 }
 
 class _ChartBarActionsState extends State<ChartBarActions> {
+  final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
   late TooltipBehavior _tooltipBehavior;
 
   @override
@@ -55,8 +58,8 @@ class _ChartBarActionsState extends State<ChartBarActions> {
           primaryYAxis: NumericAxis(
             edgeLabelPlacement: EdgeLabelPlacement.shift,
             title: AxisTitle(text: 'Cotisations actionnaires'),
-            numberFormat:
-                NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
+            numberFormat: NumberFormat.currency(
+                symbol: '${monnaieStorage.monney} ', decimalDigits: 1),
           ),
         ),
       ),

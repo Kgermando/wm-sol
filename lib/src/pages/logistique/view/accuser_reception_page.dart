@@ -33,27 +33,27 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: controller.obx(
-            onLoading: loadingPage(context),
-            onEmpty: const Text('Aucune donnée'),
-            onError: (error) => loadingError(context, error!), (state) {
-          var dataList = [];
-          List<dynamic> departementList =
-              jsonDecode(profilController.user.departement);
-          for (var element in departementList) {
-            dataList = controller.approvisionReceptionList
-                .where((p0) => p0.departement == element)
-                .toList();
-          }
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child: SingleChildScrollView( 
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
+                    onLoading: loadingPage(context),
+                    onEmpty: const Text('Aucune donnée'),
+                    onError: (error) => loadingError(context, error!), (state) {
+                  var dataList = [];
+                  List<dynamic> departementList =
+                      jsonDecode(profilController.user.departement);
+                  for (var element in departementList) {
+                    dataList = controller.approvisionReceptionList
+                        .where((p0) => p0.departement == element)
+                        .toList();
+                  }
+                  return SingleChildScrollView(
                       physics: const ScrollPhysics(),
                       child: Container(
                         margin: const EdgeInsets.only(
@@ -68,10 +68,10 @@ class _AccuseReceptionPageState extends State<AccuseReceptionPage> {
                               final data = dataList[index];
                               return bonLivraisonItemWidget(data);
                             }),
-                      )))
-            ],
-          );
-        }));
+                      ));
+                }))
+          ],
+        ));
   }
 
   Widget bonLivraisonItemWidget(

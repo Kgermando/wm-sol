@@ -201,7 +201,7 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
               ),
               Expanded(
                 child: SelectableText(widget.entrepriseInfoModel.typeEntreprise,
-                    textAlign: TextAlign.start, style: bodyMedium),
+                    textAlign: TextAlign.start, style: bodyMedium.copyWith(color: Colors.blueGrey)),
               )
             ],
           ),
@@ -394,7 +394,7 @@ class _DetailEntrepriseInfosState extends State<DetailEntrepriseInfos> {
                     DateFormat("dd-MM-yyyy")
                         .format(widget.entrepriseInfoModel.dateFinContrat),
                     textAlign: TextAlign.start,
-                    style: bodyMedium),
+                    style: bodyMedium.copyWith(color: Colors.orange)),
               )
             ],
           ),

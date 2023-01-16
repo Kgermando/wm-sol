@@ -132,13 +132,13 @@ class _TableHistoryRavitaillementState
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'idProduct': PlutoCell(value: item.idProduct),
-          'quantity': PlutoCell(value: '${item.quantity} ${item.unite}'),
-          'quantityAchat': PlutoCell(value: item.quantityAchat),
-          'priceAchatUnit': PlutoCell(value: item.priceAchatUnit),
-          'prixVenteUnit': PlutoCell(value: item.prixVenteUnit),
-          'margeBen': PlutoCell(value: item.margeBen),
-          'tva': PlutoCell(value: item.tva),
-          'qtyRavitailler': PlutoCell(value: item.qtyRavitailler),
+          'quantity': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.quantity))} ${item.unite}"),
+          'quantityAchat': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.quantityAchat))} ${item.unite}"),
+          'priceAchatUnit': PlutoCell(value: '${NumberFormat.decimalPattern('fr').format(double.parse(item.priceAchatUnit))} ${monnaieStorage.monney}'), 
+          'prixVenteUnit': PlutoCell(value: '${NumberFormat.decimalPattern('fr').format(double.parse(item.prixVenteUnit))} ${monnaieStorage.monney}'),
+          'margeBen': PlutoCell(value: '${NumberFormat.decimalPattern('fr').format(double.parse(item.margeBen))} ${monnaieStorage.monney}'),
+          'tva': PlutoCell(value: "${item.tva} %"),
+          'qtyRavitailler': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.qtyRavitailler))} ${item.unite}"),
           'created': PlutoCell(
               value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
           'id': PlutoCell(value: item.id)
@@ -189,6 +189,12 @@ class _TableHistoryRavitaillementState
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
@@ -201,30 +207,48 @@ class _TableHistoryRavitaillementState
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix d\'Achat Unitaire ${monnaieStorage.monney}',
+        title: 'Prix d\'Achat Unitaire',
         field: 'priceAchatUnit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Prix de vente Unitaire ${monnaieStorage.monney}',
+        title: 'Prix de vente Unitaire',
         field: 'prixVenteUnit',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
@@ -237,18 +261,30 @@ class _TableHistoryRavitaillementState
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'TVA %',
+        title: 'TVA',
         field: 'tva',
         type: PlutoColumnType.text(),
         enableRowDrag: true,
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),
@@ -261,6 +297,12 @@ class _TableHistoryRavitaillementState
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
+        renderer: (rendererContext) {
+          return Text(
+            rendererContext.cell.value.toString(),
+            textAlign: TextAlign.center,
+          );
+        },
         width: 200,
         minWidth: 150,
       ),

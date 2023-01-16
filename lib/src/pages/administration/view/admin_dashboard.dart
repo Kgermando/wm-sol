@@ -8,8 +8,8 @@ import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/dashboard/courbe_vente_gain_day.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/dashboard/courbe_vente_gain_mounth.dart';
-import 'package:wm_solution/src/pages/commercial/components/commercial/dashboard/courbe_vente_gain_year.dart';
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/dashboard/dash_pie_wdget.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -170,10 +170,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                               .size
                                               .width /
                                           1.1,
-                                      frontWidget: CourbeVenteGainYear(
-                                          controller: dashboardcomController),
-                                      backWidget: CourbeVenteGainMounth(
-                                          controller: dashboardcomController)),
+                                      frontWidget: CourbeVenteGainMounth(
+                                          controller: dashboardcomController,
+                                          monnaieStorage: monnaieStorage,
+                                      ),
+                                      backWidget: CourbeVenteGainDay(
+                                          controller: dashboardcomController,
+                                        monnaieStorage: monnaieStorage,
+                                      )),
                                   child2: DashRHPieWidget(
                                       controller: personnelsController))
                             ])) ),

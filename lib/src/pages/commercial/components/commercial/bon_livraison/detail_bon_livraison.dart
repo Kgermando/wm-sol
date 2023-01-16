@@ -11,6 +11,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/bon_livraison/bon_livraison_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -407,7 +408,7 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
 
   checkboxRead(BonLivraisonController controller) {
     isChecked = widget.bonLivraisonModel.accuseReception == 'true';
-    return Checkbox(
+    return Obx(() => controller.isLoading ? loadingMini() : Checkbox(
       checkColor: Colors.white,
       fillColor: MaterialStateProperty.resolveWith(getColor),
       value: isChecked,
@@ -417,6 +418,6 @@ class _DetailBonLivraisonState extends State<DetailBonLivraison> {
           controller.bonLivraisonStock(widget.bonLivraisonModel);
         });
       },
-    );
+    )) ;
   }
 }

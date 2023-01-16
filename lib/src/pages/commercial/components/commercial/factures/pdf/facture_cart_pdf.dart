@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:get_storage/get_storage.dart';
+import 'package:printing/printing.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
@@ -35,8 +36,13 @@ class FactureCartPDF {
       ],
       footer: (context) => buildFooter(user),
     ));
+
+    await Printing.layoutPdf(
+      name: 'facture',
+        onLayout: (PdfPageFormat format) async => pdf.save());
     return PdfApi.saveDocument(name: 'facture', pdf: pdf);
-  }
+  } 
+
 
   static Widget buildHeader(
           FactureCartModel factureCartModel, UserModel user, monnaie) =>

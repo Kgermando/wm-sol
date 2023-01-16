@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'dart:convert';
+import 'dart:convert'; 
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +18,7 @@ import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/creance_cart_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/facture_cart_pdf.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf_a6/facture_cart_a6_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_creance_controller.dart';
@@ -185,12 +186,12 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         cleanCart().then((value) {
           cartList.clear();
           getList();
-          // Get.back();
-          Get.snackbar("Succursale ajoutée avec succès!",
-              "Le document a bien été soumis",
-              backgroundColor: Colors.green,
-              icon: const Icon(Icons.check),
-              snackPosition: SnackPosition.TOP);
+          Get.back();
+          // Get.snackbar("Ajoutée avec succès!",
+          //     "Le document a bien été soumis",
+          //     backgroundColor: Colors.green,
+          //     icon: const Icon(Icons.check),
+          //     snackPosition: SnackPosition.TOP);
           _isLoading.value = false;
         });
       });
@@ -223,12 +224,18 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       }
 
       GetStorage box = GetStorage();
-      final printer = box.read("printer");
-      if (printer == 'A4') {}
-      if (printer == 'A6') {}
-      final pdfFile =
-          await FactureCartPDF.generate(facture!, monnaieStorage.monney);
-      PdfApi.openFile(pdfFile);
+      final printer = box.read("printer"); 
+      if (printer == 'A4') {
+        // final  pdfFile =
+            await FactureCartPDF.generate(facture!, monnaieStorage.monney);
+        // PdfApi.openFile(pdfFile);
+      }
+      if (printer == 'A6') {
+      //  final pdfFile =
+            await FactureCartPDFA6.generate(facture!, monnaieStorage);
+        // PdfApi.openFile(pdfFile);
+      }
+      
     } catch (e) {
       _isLoading.value = false;
       _isLoading.value = false;
@@ -260,17 +267,16 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         cleanCart().then((value) {
           cartList.clear();
           getList();
-          // Get.back();
-          Get.snackbar("Succursale ajoutée avec succès!",
-              "Le document a bien été soumis",
-              backgroundColor: Colors.green,
-              icon: const Icon(Icons.check),
-              snackPosition: SnackPosition.TOP);
+          Get.back();
+          // Get.snackbar("Ajoutée avec succès!",
+          //     "Le document a bien été soumis",
+          //     backgroundColor: Colors.green,
+          //     icon: const Icon(Icons.check),
+          //     snackPosition: SnackPosition.TOP);
           _isLoading.value = false;
         });
       });
-    } catch (e) {
-      _isLoading.value = false;
+    } catch (e) { 
       _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,

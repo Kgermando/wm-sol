@@ -29,6 +29,23 @@ class VenteGainApi extends GetConnect {
     }
   }
 
+  Future<List<CourbeVenteModel>> getAllDataVenteDay() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(venteChartDayUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<CourbeVenteModel> data = [];
+      for (var u in bodyList) {
+        data.add(CourbeVenteModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(resp.statusCode);
+    }
+  }
+
   Future<List<CourbeVenteModel>> getAllDataVenteMouth() async {
     Map<String, String> header = headers;
 
@@ -60,6 +77,23 @@ class VenteGainApi extends GetConnect {
       return data;
     } else {
       throw Exception(jsonDecode(resp.body)['message']);
+    }
+  }
+
+  Future<List<CourbeGainModel>> getAllDataGainDay() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(gainChartDayUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<CourbeGainModel> data = [];
+      for (var u in bodyList) {
+        data.add(CourbeGainModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(resp.body);
     }
   }
 

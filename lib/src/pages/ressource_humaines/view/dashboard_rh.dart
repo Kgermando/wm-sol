@@ -149,7 +149,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                   child1: DashRHPieWidget(
                                       controller:
                                           controller.personnelsController),
-                                  child2: const CalendarWidget())
+                                  child2: const CalendarWidget())  
                             ]),
                       )),
                 ))

@@ -51,8 +51,7 @@ class _ChartBanqueState extends State<ChartBanque> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Transations 1'),
-          numberFormat:
-              NumberFormat.compactCurrency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
         ),
         series: <ChartSeries<ChartFinanceModel, String>>[
           ColumnSeries<ChartFinanceModel, String>(
@@ -86,4 +85,4 @@ class _ChartBanqueState extends State<ChartBanque> {
           ),
         ]);
   }
-} 
+}
