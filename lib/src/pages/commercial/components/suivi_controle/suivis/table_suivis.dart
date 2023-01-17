@@ -203,7 +203,7 @@ class _TableSuivisState extends State<TableSuivis> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 350,
+        width: 400,
         minWidth: 150,
       ),
       PlutoColumn(
