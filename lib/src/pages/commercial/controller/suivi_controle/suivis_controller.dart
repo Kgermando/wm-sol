@@ -18,6 +18,8 @@ class SuivisController extends GetxController
   String? nomSocial;
   TextEditingController travailEffectueController = TextEditingController();
   TextEditingController accuseeReceptionController = TextEditingController();
+  String? background;
+  String? eventName;
 
   @override
   void onInit() {
@@ -86,7 +88,9 @@ class SuivisController extends GetxController
         accuseeReception: accuseeReceptionController.text,
         signature: profilController.user.matricule,
         created: DateTime.now(),
-        createdDay: date
+        createdDay: date,
+        background: background.toString(),
+        eventName: eventName.toString()
       );
       await suivisApi.insertData(dataItem).then((value) {
         clear();
@@ -118,7 +122,9 @@ class SuivisController extends GetxController
         accuseeReception: accuseeReceptionController.text,
         signature: profilController.user.matricule,
         created: data.created,
-        createdDay: data.createdDay
+        createdDay: data.createdDay,
+        background: background.toString(),
+        eventName: eventName.toString()
       );
       await suivisApi.updateData(dataItem).then((value) {
         clear();

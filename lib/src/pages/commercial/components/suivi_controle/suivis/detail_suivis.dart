@@ -70,6 +70,7 @@ class _DetailSuivisState extends State<DetailSuivis> {
                             nomSocialWidget(),
                             accuseeReceptionWidget(),
                             travailEffectueWidget(),
+                            backgroundWidget(),
                             const SizedBox(
                               height: p20,
                             ),
@@ -82,7 +83,7 @@ class _DetailSuivisState extends State<DetailSuivis> {
                                     form.reset();
                                   }
                                 },
-                                isLoading: controller.isLoading)) 
+                                isLoading: controller.isLoading))
                           ],
                         ),
                       ),
@@ -111,14 +112,16 @@ class _DetailSuivisState extends State<DetailSuivis> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         child: TableSuivis(
-                            controller: controller,
-                            state: state!
-                                .where((element) => DateFormat("dd-MM-yyyy")
-                                                .format(element.createdDay) == DateFormat("dd-MM-yyyy")
+                          controller: controller,
+                          state: state!
+                              .where((element) =>
+                                  DateFormat("dd-MM-yyyy")
+                                      .format(element.createdDay) ==
+                                  DateFormat("dd-MM-yyyy")
                                       .format(widget.dateTime))
-                                .toList(),
-                            dateTime: widget.dateTime,
-                          )))),
+                              .toList(),
+                          dateTime: widget.dateTime,
+                        )))),
           ],
         ));
   }
@@ -198,5 +201,41 @@ class _DetailSuivisState extends State<DetailSuivis> {
             }
           },
         ));
+  }
+
+  Widget backgroundWidget() {
+    List<String> suggestionList = ['Effectuer', 'Interrompu', 'Non Effectuer'];
+    return Container(
+      margin: const EdgeInsets.only(bottom: p20),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Travail',
+          labelStyle: const TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: const EdgeInsets.only(left: 5.0),
+        ),
+        value: controller.eventName,
+        isExpanded: true,
+        validator: (value) => value == null ? "Select Type background" : null,
+        items: suggestionList.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() { 
+            if (value == 'Effectuer') {
+              controller.background = 0xFF43A047.toString();
+            } else if (value == 'Interrompu') {
+              controller.background = 0xFFFF9000.toString();
+            } else if (value == 'Non Effectuer') {
+              controller.background = 0xFFE53935.toString();
+            }
+            controller.eventName = value;
+          });
+        },
+      ),
+    );
   }
 }
