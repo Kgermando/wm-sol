@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/helpers/monnaire_storage.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart'; 
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
@@ -40,8 +40,6 @@ class _SettingsPageState extends State<SettingsPage> {
     });
     LicenceWM().initMyLibrary();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +155,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget deviseWidget(BuildContext context) {
+    final MonnaieStorage controller = Get.put(MonnaieStorage());
+
     return DropdownButtonFormField<String>(
         decoration: const InputDecoration(
           labelText: 'Devise',
@@ -173,9 +173,16 @@ class _SettingsPageState extends State<SettingsPage> {
         }).toList(),
         onChanged: (value) {
           setState(() {
-            devise = value;
-            monnaieStorage.removeData();
-            monnaieStorage.setData(devise);
+            devise = value; 
+            if (devise == "\$") {
+
+            } else if (devise == "€") {
+
+            } else if (devise == "CDF") {
+
+            } else if (devise == "FCFA") {
+              
+            }
           });
         });
   }

@@ -4,9 +4,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:wm_solution/src/api/header_http.dart';
-import 'package:wm_solution/src/api/route_api.dart';
-import 'package:wm_solution/src/models/monnaie_model.dart'; 
+import 'package:wm_solution/src/api/route_api.dart'; 
 import 'package:http/http.dart' as http;
+import 'package:wm_solution/src/models/settings/monnaie_model.dart';
 
 class MonnaieApi extends GetConnect {
   var client = http.Client();
