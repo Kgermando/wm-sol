@@ -111,7 +111,7 @@ class RavitaillementController extends GetxController {
           clear();
           stockGlobalController.stockGlobalList;
           Get.back();
-          Get.snackbar("Livraison effectuée avec succès!",
+          Get.snackbar("Ravitaillement effectuée avec succès!",
               "La Livraison a bien été envoyée",
               backgroundColor: Colors.green,
               icon: const Icon(Icons.check),

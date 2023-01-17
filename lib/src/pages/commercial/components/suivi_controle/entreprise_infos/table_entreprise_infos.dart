@@ -120,17 +120,19 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
 
         if (item.dateFinContrat.year ==
             DateTime.parse("2100-12-31 00:00:00").year) {
-          colors = 'Pas de contrat';     
+          colors = 'Pas de contrat';
         } else if (isDate.inDays >= 11) {
           colors = 'Bon';
+        }  else if (isDate.inDays == 0) {
+          colors = "Expire aujourd'hui"; 
         } else if (isDate.inDays <= 1) {
           colors = "Expire demain"; 
-        } else if (isDate.inDays < 0) {
-          colors = 'Expirer'; 
+        }else if (isDate.inDays < 0) {
+          colors = 'Expirer';
         } else if (isDate.inDays <= 5) {
-          colors = 'Expirer dans moins de 5 jours';  
+          colors = 'Expirer dans moins de 5 jours';
         } else if (isDate.inDays <= 10) {
-          colors = 'Expirer dans moins de 10 jours';  
+          colors = 'Expirer dans moins de 10 jours';
         }
 
         rows.add(PlutoRow(cells: {
@@ -192,11 +194,14 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
           } else if (rendererContext.cell.value == 'Expirer') {
             textColor = Colors.red.shade700;
           } else if (rendererContext.cell.value == 'Expire demain') {
-            textColor = Colors.pink.shade700;
+            textColor = Colors.pink.shade400;
+          } else if (rendererContext.cell.value == "Expire aujourd'hui") {
+            textColor = Colors.pink.shade600;
           } else if (rendererContext.cell.value ==
               'Expirer dans moins de 5 jours') {
             textColor = Colors.orange.shade700;
-          } else if (rendererContext.cell.value == 'Expirer dans moins de 10 jours') {
+          } else if (rendererContext.cell.value ==
+              'Expirer dans moins de 10 jours') {
             textColor = Colors.amber.shade700;
           } else if (rendererContext.cell.value == 'Pas de contrat') {
             textColor = Colors.blueGrey.shade700;
