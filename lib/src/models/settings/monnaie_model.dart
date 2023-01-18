@@ -4,30 +4,36 @@ class MonnaieModel {
   late String monnaieEnlettre;
   late String signature; // celui qui fait le document
   late DateTime created;
+  late String isActive;
 
   MonnaieModel(
       {this.id,
       required this.monnaie,
       required this.monnaieEnlettre,
       required this.signature,
-      required this.created});
+      required this.created,
+      required this.isActive});
 
   factory MonnaieModel.fromSQL(List<dynamic> row) {
     return MonnaieModel(
-        id: row[0],
-        monnaie: row[1],
-        monnaieEnlettre: row[2],
-        signature: row[3],
-        created: row[4]);
+      id: row[0],
+      monnaie: row[1],
+      monnaieEnlettre: row[2],
+      signature: row[3],
+      created: row[4],
+      isActive: row[5]
+    );
   }
 
   factory MonnaieModel.fromJson(Map<String, dynamic> json) {
     return MonnaieModel(
-        id: json['id'],
-        monnaie: json['monnaie'],
-        monnaieEnlettre: json['monnaieEnlettre'],
-        signature: json['signature'],
-        created: DateTime.parse(json['created']));
+      id: json['id'],
+      monnaie: json['monnaie'],
+      monnaieEnlettre: json['monnaieEnlettre'],
+      signature: json['signature'],
+      created: DateTime.parse(json['created']),
+      isActive: json['isActive']
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -36,7 +42,8 @@ class MonnaieModel {
       'monnaie': monnaie,
       'monnaieEnlettre': monnaieEnlettre,
       'signature': signature,
-      'created': created.toIso8601String()
+      'created': created.toIso8601String(),
+      'isActive': isActive
     };
   }
 }

@@ -8,6 +8,7 @@ class SettingsRoutes {
   static const settings = "/settings";
   static const splash = "/splash";
   static const pageVerrouillage = "/page-verrouillage";
+  static const monnaiePage = "/monnaie-page";
 }
 
 class UpdateRoutes {

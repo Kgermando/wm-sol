@@ -308,6 +308,8 @@ import 'package:wm_solution/src/pages/ressource_humaines/view/presence_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/salaires_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/transport_restauration_rh.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/view/users_actif_page.dart';
+import 'package:wm_solution/src/pages/screens/binding/setting_binfing.dart';
+import 'package:wm_solution/src/pages/screens/components/settings/monnaie_page.dart';
 import 'package:wm_solution/src/pages/screens/help_page.dart';
 import 'package:wm_solution/src/pages/screens/settings_page.dart';
 import 'package:wm_solution/src/pages/screens/splash_page.dart';
@@ -336,6 +338,23 @@ List<GetPage<dynamic>>? getPages = [
       page: () => const SplashView(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
+    GetPage(
+      name: SettingsRoutes.settings,
+      page: () => const SettingsPage(),
+      transition: Transition.upToDown,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: SettingsRoutes.helps,
+      page: () => const HelpPage(),
+      transition: Transition.upToDown,
+      transitionDuration: const Duration(seconds: 1)),
+  GetPage(
+      name: SettingsRoutes.monnaiePage,
+      binding: SettingsBinding(),
+      page: () => const MonnaiePage(),
+      transition: Transition.leftToRight,
+      transitionDuration: const Duration(seconds: 1)),
+
 
   // UserRoutes
   GetPage(
@@ -348,19 +367,19 @@ List<GetPage<dynamic>>? getPages = [
       name: UserRoutes.logout,
       bindings: [LoginBinding(), NetworkBindings()],
       page: () => const LoginAuth(),
-      transition: Transition.cupertino,
+      transition: Transition.upToDown,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: UserRoutes.profil,
       bindings: [ProfilBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const ProfileAuth(),
-      transition: Transition.cupertino,
+      transition: Transition.upToDown,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: UserRoutes.changePassword,
       bindings: [ChangePasswordBinding(), ProfilBinding(), NetworkBindings()],
       page: () => const ChangePasswordAuth(),
-      transition: Transition.cupertino,
+      transition: Transition.downToUp,
       transitionDuration: const Duration(seconds: 1)),
   GetPage(
       name: UserRoutes.forgotPassword,
@@ -368,20 +387,7 @@ List<GetPage<dynamic>>? getPages = [
       page: () => const ForgotPassword(),
       transition: Transition.cupertino,
       transitionDuration: const Duration(seconds: 1)),
-
-  // Settings
-  GetPage(
-      name: SettingsRoutes.settings,
-      page: () => const SettingsPage(),
-      transition: Transition.upToDown,
-      transitionDuration: const Duration(seconds: 1)),
-  GetPage(
-      name: SettingsRoutes.helps,
-      page: () => const HelpPage(),
-      transition: Transition.upToDown,
-      transitionDuration: const Duration(seconds: 1)),
-  // GetPage(name: SettingsRoutes.pageVerrouillage, page: page),
-  // GetPage(name: SettingsRoutes.splash, page: page),
+ 
 
   // Mails
   GetPage(

@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
-import 'package:wm_solution/src/helpers/monnaire_storage.dart'; 
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
+import 'package:wm_solution/src/models/settings/monnaie_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
@@ -11,6 +12,7 @@ import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/licence_wm.dart';
 import 'package:wm_solution/src/utils/monnaie_dropdown.dart';
 import 'package:wm_solution/src/widgets/change_theme_button_widget.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -95,10 +97,24 @@ class _SettingsPageState extends State<SettingsPage> {
                         Card(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ListSettings(
-                                icon: Icons.monetization_on,
-                                title: 'Devise',
-                                options: deviseWidget(context)),
+                            child: monnaieStorage.obx(
+                              onLoading: loadingPage(context),
+                                onEmpty: const Text('Aucune donnée'),
+                                onError: (error) =>
+                                    loadingError(context, error!),
+                              (state) {
+                              MonnaieModel monnaie = state!
+                                  .where(
+                                      (element) => element.isActive == 'true')
+                                  .first;
+                              return ListSettings(
+                                  icon: Icons.monetization_on,
+                                  title: 'Devise',
+                                  options: Text(monnaie.monnaie,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6));
+                            }),
                           ),
                         ),
                         const SizedBox(
@@ -150,39 +166,6 @@ class _SettingsPageState extends State<SettingsPage> {
         onChanged: (value) {
           setState(() {
             langue = value;
-          });
-        });
-  }
-
-  Widget deviseWidget(BuildContext context) {
-    final MonnaieStorage controller = Get.put(MonnaieStorage());
-
-    return DropdownButtonFormField<String>(
-        decoration: const InputDecoration(
-          labelText: 'Devise',
-          labelStyle: TextStyle(),
-          contentPadding: EdgeInsets.only(left: 5.0),
-        ),
-        value: devise,
-        isExpanded: true,
-        items: deviseList.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            devise = value; 
-            if (devise == "\$") {
-
-            } else if (devise == "€") {
-
-            } else if (devise == "CDF") {
-
-            } else if (devise == "FCFA") {
-              
-            }
           });
         });
   }
