@@ -26,7 +26,6 @@ class _SuivisPageState extends State<SuivisPage> {
 
   @override
   Widget build(BuildContext context) {
-    final sized = MediaQuery.of(context).size;
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),

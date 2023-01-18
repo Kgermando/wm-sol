@@ -123,18 +123,18 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
           colors = 'Pas de contrat';
         } else if (isDate.inDays >= 11) {
           colors = 'Bon';
-        }  else if (isDate.inDays == 0) {
+        } else if (isDate.inDays == 0) {
           colors = "Expire aujourd'hui"; 
+        } else if (isDate.inDays < 0) {
+          colors = 'Expirer';
         } else if (isDate.inDays <= 1) {
           colors = "Expire demain"; 
-        }else if (isDate.inDays < 0) {
-          colors = 'Expirer';
         } else if (isDate.inDays <= 5) {
           colors = 'Expirer dans moins de 5 jours';
         } else if (isDate.inDays <= 10) {
           colors = 'Expirer dans moins de 10 jours';
         }
-
+ 
         rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'dateFinContrat': PlutoCell(value: colors),

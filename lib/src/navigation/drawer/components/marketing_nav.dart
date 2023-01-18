@@ -1,11 +1,11 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
+import 'package:wm_solution/src/pages/marketing/controller/dahboard/dashboard_marketing_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class MaketingNav extends StatefulWidget {
@@ -24,23 +24,21 @@ class MaketingNav extends StatefulWidget {
   State<MaketingNav> createState() => _MaketingNavState();
 }
 
-class _MaketingNavState extends State<MaketingNav> { 
+class _MaketingNavState extends State<MaketingNav> {
+  final DashboardMarketingController dashboardMarketingController = Get.find();
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final bodyMedium = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium;
     int userRole = int.parse(widget.user.role);
 
     return ExpansionTile(
       leading: const Icon(Icons.campaign, size: 30.0),
-      title:
-          AutoSizeText('Marketing', maxLines: 1, style: bodyMedium),
+      title: AutoSizeText('Marketing', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-        widget.departementList.contains('Marketing')
-              ? true
-              : false,
+          widget.departementList.contains('Marketing') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;
@@ -50,38 +48,40 @@ class _MaketingNavState extends State<MaketingNav> {
       children: [
         if (userRole <= 2)
           DrawerWidget(
-              selected: widget.currentRoute ==
-                  MarketingRoutes.marketingDashboard,
+              selected:
+                  widget.currentRoute == MarketingRoutes.marketingDashboard,
               icon: Icons.dashboard,
               sizeIcon: 20.0,
               title: 'Dashboard',
               style: bodyText1!,
               onTap: () {
+                dashboardMarketingController.getList();
                 Get.toNamed(MarketingRoutes.marketingDashboard);
               }),
         if (widget.departementList.contains('Marketing') && userRole <= 2)
           DrawerWidget(
-              selected:
-                  widget.currentRoute == MarketingRoutes.marketingDD,
+              selected: widget.currentRoute == MarketingRoutes.marketingDD,
               icon: Icons.manage_accounts,
               sizeIcon: 20.0,
               title: 'Directeur de departement',
               style: bodyText1!,
               badge: Badge(
                 showBadge:
-                    (int.parse(widget.controller.itemMarketingCount) >= 1) ? true : false,
+                    (int.parse(widget.controller.itemMarketingCount) >= 1)
+                        ? true
+                        : false,
                 badgeColor: Colors.teal,
-                badgeContent:Obx(() => Text(widget.controller.itemMarketingCount,
+                badgeContent: Obx(() => Text(
+                    widget.controller.itemMarketingCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
+                        const TextStyle(fontSize: 10.0, color: Colors.white))),
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {
-                Get.toNamed(MarketingRoutes.marketingDD); 
+                Get.toNamed(MarketingRoutes.marketingDD);
               }),
         DrawerWidget(
-            selected:
-                widget.currentRoute == MarketingRoutes.marketingAnnuaire,
+            selected: widget.currentRoute == MarketingRoutes.marketingAnnuaire,
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Annuaire',
@@ -90,8 +90,7 @@ class _MaketingNavState extends State<MaketingNav> {
               Get.toNamed(MarketingRoutes.marketingAnnuaire);
             }),
         DrawerWidget(
-            selected:
-                widget.currentRoute == MarketingRoutes.marketingAgenda,
+            selected: widget.currentRoute == MarketingRoutes.marketingAgenda,
             icon: Icons.arrow_right,
             sizeIcon: 15.0,
             title: 'Agenda',
@@ -101,8 +100,8 @@ class _MaketingNavState extends State<MaketingNav> {
             }),
         if (userRole <= 3)
           DrawerWidget(
-              selected: widget.currentRoute ==
-                  MarketingRoutes.marketingCampaign,
+              selected:
+                  widget.currentRoute == MarketingRoutes.marketingCampaign,
               icon: Icons.arrow_right,
               sizeIcon: 15.0,
               title: 'Campagnes',
@@ -120,7 +119,6 @@ class _MaketingNavState extends State<MaketingNav> {
             onTap: () {
               Get.toNamed(TacheRoutes.tachePage);
             }),
-         
       ],
     );
   }

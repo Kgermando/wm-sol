@@ -1,11 +1,11 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
+import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart'; 
 import 'package:wm_solution/src/routes/routes.dart';
 
 class BudgetNav extends StatefulWidget {
@@ -24,18 +24,20 @@ class BudgetNav extends StatefulWidget {
   State<BudgetNav> createState() => _BudgetNavState();
 }
 
-class _BudgetNavState extends State<BudgetNav> { 
+class _BudgetNavState extends State<BudgetNav> {
+  final DashboardBudgetController dashboardBudgetController = Get.find();
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) { 
-   final bodyMedium = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
+  Widget build(BuildContext context) {
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium;
     int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.fact_check, size: 30.0),
       title: AutoSizeText('Budgets', maxLines: 1, style: bodyMedium),
-      initiallyExpanded: widget.departementList.contains('Budgets') ? true : false,
+      initiallyExpanded:
+          widget.departementList.contains('Budgets') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;
@@ -51,8 +53,8 @@ class _BudgetNavState extends State<BudgetNav> {
               title: 'Dashboard',
               style: bodyText1!,
               onTap: () {
-                Get.toNamed(BudgetRoutes.budgetDashboard); 
-                // Navigator.of(context).pop();
+                dashboardBudgetController.getData();
+                Get.toNamed(BudgetRoutes.budgetDashboard);
               }),
         if (widget.departementList.contains('Budgets') && userRole <= 2)
           DrawerWidget(
@@ -62,15 +64,17 @@ class _BudgetNavState extends State<BudgetNav> {
               title: 'Directeur de departement',
               style: bodyText1!,
               badge: Badge(
-                showBadge: (int.parse(widget.controller.itemBudgetCount) >= 1) ? true : false,
+                showBadge: (int.parse(widget.controller.itemBudgetCount) >= 1)
+                    ? true
+                    : false,
                 badgeColor: Colors.teal,
-                badgeContent:Obx(() => Text(widget.controller.itemBudgetCount,
+                badgeContent: Obx(() => Text(widget.controller.itemBudgetCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
+                        const TextStyle(fontSize: 10.0, color: Colors.white))),
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {
-                Get.toNamed(BudgetRoutes.budgetDD);  
+                Get.toNamed(BudgetRoutes.budgetDD);
                 // Navigator.of(context).pop();
               }),
         DrawerWidget(
@@ -81,23 +85,22 @@ class _BudgetNavState extends State<BudgetNav> {
             title: 'Budgets previsonels',
             style: bodyText1!,
             onTap: () {
-              Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);   
+              Get.toNamed(BudgetRoutes.budgetBudgetPrevisionel);
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
-            selected: widget.currentRoute ==
-                BudgetRoutes.historiqueBudgetPrevisionel,
+            selected:
+                widget.currentRoute == BudgetRoutes.historiqueBudgetPrevisionel,
             icon: Icons.history_sharp,
             sizeIcon: 20.0,
             title: 'Historique Budgetaires',
             style: bodyText1,
             onTap: () {
-              Get.toNamed(BudgetRoutes.historiqueBudgetPrevisionel);  
+              Get.toNamed(BudgetRoutes.historiqueBudgetPrevisionel);
               Navigator.pushNamed(
                   context, BudgetRoutes.historiqueBudgetPrevisionel);
               // Navigator.of(context).pop();
             }),
-        
       ],
     );
   }

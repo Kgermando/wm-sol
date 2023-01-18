@@ -1,11 +1,11 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';  
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
+import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class ComptabiliteNav extends StatefulWidget {
@@ -25,13 +25,14 @@ class ComptabiliteNav extends StatefulWidget {
 }
 
 class _ComptabiliteNavState extends State<ComptabiliteNav> {
-  
+  final DashboardComptabiliteController dashboardComptabiliteController =
+      Get.find();
   bool isOpen = false;
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     final bodyMedium = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium;
     int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.table_view, size: 30.0),
@@ -54,8 +55,8 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
               title: 'Dashboard',
               style: bodyText1!,
               onTap: () {
-                Get.toNamed(ComptabiliteRoutes.comptabiliteDashboard);  
-                // Navigator.of(context).pop();
+                dashboardComptabiliteController.getData();
+                Get.toNamed(ComptabiliteRoutes.comptabiliteDashboard);
               }),
         if (widget.departementList.contains('Comptabilites') && userRole <= 2)
           DrawerWidget(
@@ -66,16 +67,19 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
               title: 'Directeur departement',
               style: bodyText1!,
               badge: Badge(
-                showBadge: (int.parse(widget.controller.itemComptabiliteCount) >= 1) ? true : false,
+                showBadge:
+                    (int.parse(widget.controller.itemComptabiliteCount) >= 1)
+                        ? true
+                        : false,
                 badgeColor: Colors.teal,
                 badgeContent: Obx(() => Text(
                     widget.controller.itemComptabiliteCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
+                        const TextStyle(fontSize: 10.0, color: Colors.white))),
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {
-                Get.toNamed(ComptabiliteRoutes.comptabiliteDD); 
+                Get.toNamed(ComptabiliteRoutes.comptabiliteDD);
                 // Navigator.of(context).pop();
               }),
         DrawerWidget(
@@ -86,7 +90,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             title: 'Balance',
             style: bodyText1!,
             onTap: () {
-              Get.toNamed(ComptabiliteRoutes.comptabiliteBalance); 
+              Get.toNamed(ComptabiliteRoutes.comptabiliteBalance);
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
@@ -97,7 +101,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             title: 'Bilan',
             style: bodyText1,
             onTap: () {
-              Get.toNamed(ComptabiliteRoutes.comptabiliteBilan); 
+              Get.toNamed(ComptabiliteRoutes.comptabiliteBilan);
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
@@ -108,7 +112,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             title: 'Compte resultats',
             style: bodyText1,
             onTap: () {
-              Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultat); 
+              Get.toNamed(ComptabiliteRoutes.comptabiliteCompteResultat);
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
@@ -119,7 +123,7 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             title: 'Grand livre',
             style: bodyText1,
             onTap: () {
-              Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivre); 
+              Get.toNamed(ComptabiliteRoutes.comptabiliteGrandLivre);
               // Navigator.of(context).pop();
             }),
         DrawerWidget(
@@ -130,10 +134,9 @@ class _ComptabiliteNavState extends State<ComptabiliteNav> {
             title: 'Journal',
             style: bodyText1,
             onTap: () {
-              Get.toNamed(ComptabiliteRoutes.comptabiliteJournalLivre);   
+              Get.toNamed(ComptabiliteRoutes.comptabiliteJournalLivre);
               // Navigator.of(context).pop();
-            }), 
-         
+            }),
       ],
     );
   }

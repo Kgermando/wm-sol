@@ -39,7 +39,7 @@ class _DashboardCommPageState extends State<DashboardCommPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        body: Obx(() => Row(
+        body: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Visibility(
@@ -59,7 +59,8 @@ class _DashboardCommPageState extends State<DashboardCommPage> {
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: p20),
-                            child: Column(
+                            child: GetBuilder( 
+                              builder: (DashboardComController controller) => Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Wrap(
@@ -180,10 +181,10 @@ class _DashboardCommPageState extends State<DashboardCommPage> {
                                     state: controller.venteChartList,
                                     monnaieStorage: monnaieStorage)
                                    
-                                ]),
+                                ])) ,
                           )),
                     ))
               ],
-            )));
+            ));
   }
 }

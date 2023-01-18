@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart'; 
+import 'package:wm_solution/src/models/charts/courbe_budget_model.dart';
+import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 
 class CourbeLignBudgetaire extends StatefulWidget {
-  const CourbeLignBudgetaire({super.key, required this.ligneBudgetaireList});
-  final List<LigneBudgetaireModel> ligneBudgetaireList;
+  const CourbeLignBudgetaire(
+      {super.key,
+      required this.controller,
+      required this.monnaieStorage});
+  final DashboardBudgetController controller;
+  final MonnaieStorage monnaieStorage;
 
   @override
   State<CourbeLignBudgetaire> createState() => _CourbeLignBudgetaireState();
@@ -24,101 +31,156 @@ class _CourbeLignBudgetaireState extends State<CourbeLignBudgetaire> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 10.0,
-      child: SfCartesianChart(
-        title: ChartTitle(
-            text: 'Lignes Budgetaires',
-            textStyle:
-                const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-        legend: Legend(
-            position: Responsive.isDesktop(context)
-                ? LegendPosition.right
-                : LegendPosition.bottom,
-            isVisible: true),
-        tooltipBehavior: _tooltipBehavior,
-        series: <ChartSeries>[
-          ColumnSeries<LigneBudgetaireModel, String>(
-              name: 'Caisse',
-              dataSource: widget.ligneBudgetaireList,
-              sortingOrder: SortingOrder.descending,
-              xValueMapper: (LigneBudgetaireModel gdp, _) =>
-                  gdp.nomLigneBudgetaire,
-              yValueMapper: (LigneBudgetaireModel gdp, _) =>
-                  double.parse(gdp.caisseSortie.toStringAsFixed(2)),
-              dataLabelSettings: const DataLabelSettings(isVisible: true),
-              enableTooltip: true),
-          ColumnSeries<LigneBudgetaireModel, String>(
-              name: 'Banque',
-              dataSource: widget.ligneBudgetaireList,
-              sortingOrder: SortingOrder.descending,
-              xValueMapper: (LigneBudgetaireModel gdp, _) =>
-                  gdp.nomLigneBudgetaire,
-              yValueMapper: (LigneBudgetaireModel gdp, _) =>
-                  double.parse(gdp.banqueSortie.toStringAsFixed(2)),
-              dataLabelSettings: const DataLabelSettings(isVisible: true),
-              enableTooltip: true),
-          ColumnSeries<LigneBudgetaireModel, String>(
-              name: 'Fin. Exterieur',
-              dataSource: widget.ligneBudgetaireList,
-              sortingOrder: SortingOrder.descending,
-              xValueMapper: (LigneBudgetaireModel gdp, _) =>
-                  gdp.nomLigneBudgetaire,
-              yValueMapper: (LigneBudgetaireModel gdp, _) =>
-                  double.parse(gdp.finExterieurSortie.toStringAsFixed(2)),
-              dataLabelSettings: const DataLabelSettings(isVisible: true),
-              enableTooltip: true)
-        ],
-        primaryXAxis: CategoryAxis(isVisible: false),
-        primaryYAxis: NumericAxis(
-          edgeLabelPlacement: EdgeLabelPlacement.shift,
-          title: AxisTitle(text: 'Budgets'),
-          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(p8),
+        child: SfCartesianChart(
+            primaryXAxis: CategoryAxis(),
+            // Chart title
+            title: ChartTitle(
+                text: 'Courbe de dépenses annuelle',
+                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+            // Enable legend
+            legend: Legend(
+                position: Responsive.isDesktop(context)
+                    ? LegendPosition.right
+                    : LegendPosition.bottom,
+                isVisible: true),
+            // Enable tooltip
+            palette: const [
+              Color.fromRGBO(73, 76, 162, 1),
+              Color.fromRGBO(51, 173, 127, 1),
+              Color.fromRGBO(244, 67, 54, 1)
+            ],
+            tooltipBehavior: _tooltipBehavior,
+            primaryYAxis: NumericAxis(
+              edgeLabelPlacement: EdgeLabelPlacement.shift,
+              title:
+                  AxisTitle(text: DateFormat("MM-yyyy").format(DateTime.now())),
+              numberFormat: NumberFormat.currency(
+                  symbol: '${widget.monnaieStorage.monney} ', decimalDigits: 1),
+            ),
+            series: <LineSeries>[
+              LineSeries<CourbeBudgetModel, String>(
+                name: 'Banque',
+                dataSource: widget.controller.courbeBanqueList,
+                sortingOrder: SortingOrder.ascending,
+                markerSettings: const MarkerSettings(isVisible: true),
+                xValueMapper: (CourbeBudgetModel ventes, _) {
+                  String date = '';
+                  if (ventes.created == '1') {
+                    date = 'Janvier';
+                  } else if (ventes.created == '2') {
+                    date = 'Fevrier';
+                  } else if (ventes.created == '3') {
+                    date = 'Mars';
+                  } else if (ventes.created == '4') {
+                    date = 'Avril';
+                  } else if (ventes.created == '5') {
+                    date = 'Mai';
+                  } else if (ventes.created == '6') {
+                    date = 'Juin';
+                  } else if (ventes.created == '7') {
+                    date = 'Juillet';
+                  } else if (ventes.created == '8') {
+                    date = 'Août';
+                  } else if (ventes.created == '9') {
+                    date = 'Septembre';
+                  } else if (ventes.created == '10') {
+                    date = 'Octobre';
+                  } else if (ventes.created == '11') {
+                    date = 'Novembre';
+                  } else if (ventes.created == '12') {
+                    date = 'Décembre';
+                  }
+                  return date;
+                },
+                yValueMapper: (CourbeBudgetModel ventes, _) =>
+                    double.parse(ventes.sum.toStringAsFixed(2)),
+                // Enable data label
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+              LineSeries<CourbeBudgetModel, String>(
+                name: 'Caisse',
+                dataSource: widget.controller.courbeCaisseList,
+                sortingOrder: SortingOrder.ascending,
+                markerSettings: const MarkerSettings(isVisible: true),
+                xValueMapper: (CourbeBudgetModel ventes, _) {
+                  String date = '';
+                  if (ventes.created == '1') {
+                    date = 'Janvier';
+                  } else if (ventes.created == '2') {
+                    date = 'Fevrier';
+                  } else if (ventes.created == '3') {
+                    date = 'Mars';
+                  } else if (ventes.created == '4') {
+                    date = 'Avril';
+                  } else if (ventes.created == '5') {
+                    date = 'Mai';
+                  } else if (ventes.created == '6') {
+                    date = 'Juin';
+                  } else if (ventes.created == '7') {
+                    date = 'Juillet';
+                  } else if (ventes.created == '8') {
+                    date = 'Août';
+                  } else if (ventes.created == '9') {
+                    date = 'Septembre';
+                  } else if (ventes.created == '10') {
+                    date = 'Octobre';
+                  } else if (ventes.created == '11') {
+                    date = 'Novembre';
+                  } else if (ventes.created == '12') {
+                    date = 'Décembre';
+                  }
+                  return date;
+                },
+                yValueMapper: (CourbeBudgetModel ventes, _) =>
+                    double.parse(ventes.sum.toStringAsFixed(2)),
+                // Enable data label
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+              LineSeries<CourbeBudgetModel, String>(
+                name: 'Fin. Exterieur',
+                dataSource: widget.controller.courbeFinExterieurList,
+                sortingOrder: SortingOrder.ascending,
+                markerSettings: const MarkerSettings(isVisible: true),
+                xValueMapper: (CourbeBudgetModel ventes, _) {
+                  String date = '';
+                  if (ventes.created == '1') {
+                    date = 'Janvier';
+                  } else if (ventes.created == '2') {
+                    date = 'Fevrier';
+                  } else if (ventes.created == '3') {
+                    date = 'Mars';
+                  } else if (ventes.created == '4') {
+                    date = 'Avril';
+                  } else if (ventes.created == '5') {
+                    date = 'Mai';
+                  } else if (ventes.created == '6') {
+                    date = 'Juin';
+                  } else if (ventes.created == '7') {
+                    date = 'Juillet';
+                  } else if (ventes.created == '8') {
+                    date = 'Août';
+                  } else if (ventes.created == '9') {
+                    date = 'Septembre';
+                  } else if (ventes.created == '10') {
+                    date = 'Octobre';
+                  } else if (ventes.created == '11') {
+                    date = 'Novembre';
+                  } else if (ventes.created == '12') {
+                    date = 'Décembre';
+                  }
+                  return date;
+                },
+                yValueMapper: (CourbeBudgetModel ventes, _) =>
+                    double.parse(ventes.sum.toStringAsFixed(2)),
+                // Enable data label
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+              ),
+            ]),
       ),
-    );
-
-    //   SfCartesianChart(
-    //       primaryXAxis: CategoryAxis(),
-    //       // Chart title
-    //       title: ChartTitle(
-    //           text: 'Courbe balance',
-    //           textStyle: const TextStyle(fontWeight: FontWeight.bold)),
-    //       // Enable legend
-    //       legend: Legend(
-    //           position: Responsive.isDesktop(context)
-    //               ? LegendPosition.right
-    //               : LegendPosition.bottom,
-    //           isVisible: true),
-    //       // Enable tooltip
-    //       palette: const [
-    //         Color.fromRGBO(73, 76, 162, 1),
-    //         Color.fromRGBO(51, 173, 127, 1),
-    //         Color.fromRGBO(244, 67, 54, 1)
-    //       ],
-    //       tooltipBehavior: _tooltipBehavior,
-    //       series: <LineSeries>[
-    //         LineSeries<BalanceChartModel, String>(
-    //           name: 'Debit',
-    //           dataSource: widget.balanceSumList,
-    //           sortingOrder: SortingOrder.ascending,
-    //           markerSettings: const MarkerSettings(isVisible: true),
-    //           xValueMapper: (BalanceChartModel item, _) => DateFormat("dd-MM-yyyy").format(item.created),
-    //           yValueMapper: (BalanceChartModel item, _) =>
-    //               double.parse(item.debit.toStringAsFixed(2)),
-    //           // Enable data label
-    //           dataLabelSettings: const DataLabelSettings(isVisible: true),
-    //         ),
-    //         LineSeries<BalanceChartModel, String>(
-    //           name: 'Credit',
-    //           dataSource: widget.balanceSumList,
-    //           sortingOrder: SortingOrder.ascending,
-    //           markerSettings: const MarkerSettings(isVisible: true),
-    //           xValueMapper: (BalanceChartModel item, _) => DateFormat("dd-MM-yyyy").format(item.created),
-    //           yValueMapper: (BalanceChartModel item, _) =>
-    //               double.parse(item.credit.toStringAsFixed(2)),
-    //           // Enable data label
-    //           dataLabelSettings: const DataLabelSettings(isVisible: true),
-    //         ),
-    //       ]);
+    ); 
   }
+
+  
 }

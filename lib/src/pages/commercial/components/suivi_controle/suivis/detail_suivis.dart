@@ -127,7 +127,7 @@ class _DetailSuivisState extends State<DetailSuivis> {
   }
 
   Widget nomSocialWidget() {
-    var dataList = entrepriseInfosController.entrepriseInfosList
+    var dataList = entrepriseInfosController.nomSocialList
         .map((e) => e.nomSocial)
         .toList();
     return Container(

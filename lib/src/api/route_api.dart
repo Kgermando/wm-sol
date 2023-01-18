@@ -188,6 +188,10 @@ var addBudgetDepartementsUrl =
 var ligneBudgetairesUrl = Uri.parse("$mainUrl/budgets/ligne-budgetaires/");
 var addbudgetLigneBudgetairesUrl =
     Uri.parse("$mainUrl/budgets/ligne-budgetaires/insert-new-ligne-budgetaire");
+    
+var ligneBudgetaireBanqueUrl = Uri.parse("$mainUrl/budgets/ligne-budgetaires/banque-chart/");
+var ligneBudgetaireCaisseUrl = Uri.parse("$mainUrl/budgets/ligne-budgetaires/caisse-chart/");
+var ligneBudgetaireFinExterieurUrl = Uri.parse("$mainUrl/budgets/ligne-budgetaires/fin-exterieur-chart/");
 
 // Logistiques
 var materielsUrl = Uri.parse("$mainUrl/materiels/");

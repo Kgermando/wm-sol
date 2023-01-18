@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
+import 'package:wm_solution/src/pages/administration/controller/admin_dashboard_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class AdministrationNav extends StatefulWidget {
@@ -12,7 +13,8 @@ class AdministrationNav extends StatefulWidget {
       {super.key,
       required this.currentRoute,
       required this.user,
-      required this.departementList, required this.controller});
+      required this.departementList,
+      required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
@@ -23,7 +25,7 @@ class AdministrationNav extends StatefulWidget {
 }
 
 class _AdministrationNavState extends State<AdministrationNav> {
-  
+  final AdminDashboardController adminDashboardController = Get.find();
   bool isOpen = false;
 
   @override
@@ -52,6 +54,7 @@ class _AdministrationNavState extends State<AdministrationNav> {
             title: 'Dashboard',
             style: bodyText1!,
             onTap: () {
+              adminDashboardController.getData();
               Get.toNamed(AdminRoutes.adminDashboard);
             }),
         DrawerWidget(
@@ -109,9 +112,11 @@ class _AdministrationNavState extends State<AdministrationNav> {
             title: 'Exploitations',
             style: bodyText1,
             badge: Badge(
-              showBadge: (widget.controller.exploitationCount >= 1) ? true : false,
+              showBadge:
+                  (widget.controller.exploitationCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Obx(() => Text('${widget.controller.exploitationCount}',
+              badgeContent: Obx(() => Text(
+                  '${widget.controller.exploitationCount}',
                   style: const TextStyle(fontSize: 10.0, color: Colors.white))),
               child: const Icon(Icons.notifications),
             ),
@@ -127,7 +132,8 @@ class _AdministrationNavState extends State<AdministrationNav> {
             badge: Badge(
               showBadge: (widget.controller.marketingCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Obx(() => Text('${widget.controller.marketingCount}',
+              badgeContent: Obx(() => Text(
+                  '${widget.controller.marketingCount}',
                   style: const TextStyle(fontSize: 10.0, color: Colors.white))),
               child: const Icon(Icons.notifications),
             ),
@@ -157,9 +163,11 @@ class _AdministrationNavState extends State<AdministrationNav> {
             title: 'Logistiques',
             style: bodyText1,
             badge: Badge(
-              showBadge: (widget.controller.logistiqueCount >= 1) ? true : false,
+              showBadge:
+                  (widget.controller.logistiqueCount >= 1) ? true : false,
               badgeColor: Colors.teal,
-              badgeContent: Obx(() => Text('${widget.controller.logistiqueCount}',
+              badgeContent: Obx(() => Text(
+                  '${widget.controller.logistiqueCount}',
                   style: const TextStyle(fontSize: 10.0, color: Colors.white))),
               child: const Icon(Icons.notifications),
             ),

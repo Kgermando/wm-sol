@@ -2,12 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class ActionnaireNav extends StatefulWidget {
   const ActionnaireNav(
       {super.key, required this.currentRoute, required this.departementList});
-  final String currentRoute; 
+  final String currentRoute;
   final List<dynamic> departementList;
 
   @override
@@ -15,6 +16,7 @@ class ActionnaireNav extends StatefulWidget {
 }
 
 class _ActionnaireNavState extends State<ActionnaireNav> {
+  final ActionnaireController actionnaireController = Get.find();
   bool isOpen = false;
 
   @override
@@ -37,26 +39,28 @@ class _ActionnaireNavState extends State<ActionnaireNav> {
       trailing: const Icon(Icons.arrow_drop_down),
       children: [
         DrawerWidget(
-          selected: widget.currentRoute == ActionnaireRoute.actionnaireDashboard,
-          icon: Icons.dashboard,
-          sizeIcon: 20.0,
-          title: 'Dashboard',
-          style: bodyText1!,
-          onTap: () {
-            Get.toNamed(ActionnaireRoute.actionnaireDashboard);
-          }
-        ),
+            selected:
+                widget.currentRoute == ActionnaireRoute.actionnaireDashboard,
+            icon: Icons.dashboard,
+            sizeIcon: 20.0,
+            title: 'Dashboard',
+            style: bodyText1!,
+            onTap: () {
+              actionnaireController.getList();
+              Get.toNamed(ActionnaireRoute.actionnaireDashboard);
+            }),
         DrawerWidget(
-          selected: widget.currentRoute == ActionnaireRoute.actionnairePage,
-          icon: Icons.money_rounded,
-          sizeIcon: 20.0,
-          title: 'Actions',
-          style: bodyText1, 
-          onTap: () {
-            Get.toNamed(ActionnaireRoute.actionnairePage);
-          }),
+            selected: widget.currentRoute == ActionnaireRoute.actionnairePage,
+            icon: Icons.money_rounded,
+            sizeIcon: 20.0,
+            title: 'Actions',
+            style: bodyText1,
+            onTap: () {
+              Get.toNamed(ActionnaireRoute.actionnairePage);
+            }),
         DrawerWidget(
-            selected: widget.currentRoute == ActionnaireRoute.actionnaireCotisation,
+            selected:
+                widget.currentRoute == ActionnaireRoute.actionnaireCotisation,
             icon: Icons.money_rounded,
             sizeIcon: 20.0,
             title: 'Cotisations',

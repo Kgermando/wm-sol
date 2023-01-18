@@ -1,18 +1,23 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/users/user_model.dart';
-import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart'; 
+import 'package:wm_solution/src/navigation/drawer/drawer_widget.dart';
 import 'package:wm_solution/src/pages/finances/controller/banques/banque_name_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/caisses/caisse_name_controller.dart';
+import 'package:wm_solution/src/pages/finances/controller/dahboard/dashboard_finance_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/fin_exterieur/fin_exterieur_name_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 
 class FinanceNav extends StatefulWidget {
-  const FinanceNav({super.key, required this.currentRoute, required this.user, required this.departementList, required this.controller});
+  const FinanceNav(
+      {super.key,
+      required this.currentRoute,
+      required this.user,
+      required this.departementList,
+      required this.controller});
   final String currentRoute;
   final UserModel user;
   final List<dynamic> departementList;
@@ -23,9 +28,13 @@ class FinanceNav extends StatefulWidget {
 }
 
 class _FinanceNavState extends State<FinanceNav> {
-  final BanqueNameController banqueNameController = Get.put(BanqueNameController());
-  final CaisseNameController caisseNameController = Get.put(CaisseNameController());
-  final FinExterieurNameController finExterieurNameController = Get.put(FinExterieurNameController());
+  final DashboardFinanceController dashboardFinanceController = Get.find();
+  final BanqueNameController banqueNameController =
+      Get.put(BanqueNameController());
+  final CaisseNameController caisseNameController =
+      Get.put(CaisseNameController());
+  final FinExterieurNameController finExterieurNameController =
+      Get.put(FinExterieurNameController());
   bool isOpen = false;
   bool isOpenBanque = false;
   bool isOpenCaisse = false;
@@ -33,15 +42,14 @@ class _FinanceNavState extends State<FinanceNav> {
 
   @override
   Widget build(BuildContext context) {
-
-   final bodyMedium = Theme.of(context).textTheme.bodyLarge;
-    final bodyText1 = Theme.of(context).textTheme.bodyMedium; 
+    final bodyMedium = Theme.of(context).textTheme.bodyLarge;
+    final bodyText1 = Theme.of(context).textTheme.bodyMedium;
     int userRole = int.parse(widget.user.role);
     return ExpansionTile(
       leading: const Icon(Icons.account_balance, size: 30.0),
       title: AutoSizeText('Finances', maxLines: 1, style: bodyMedium),
       initiallyExpanded:
-        widget.departementList.contains('Finances') ? true : false,
+          widget.departementList.contains('Finances') ? true : false,
       onExpansionChanged: (val) {
         setState(() {
           isOpen = !val;
@@ -57,8 +65,8 @@ class _FinanceNavState extends State<FinanceNav> {
               title: 'Dashboard',
               style: bodyText1!,
               onTap: () {
+                dashboardFinanceController.getData();
                 Get.toNamed(FinanceRoutes.financeDashboard);
-                // Navigator.of(context).pop();
               }),
         if (widget.departementList.contains('Finances') && userRole <= 2)
           DrawerWidget(
@@ -72,9 +80,9 @@ class _FinanceNavState extends State<FinanceNav> {
                     ? true
                     : false,
                 badgeColor: Colors.teal,
-                badgeContent:Obx(() => Text(widget.controller.itemFinanceCount,
+                badgeContent: Obx(() => Text(widget.controller.itemFinanceCount,
                     style:
-                        const TextStyle(fontSize: 10.0, color: Colors.white))) ,
+                        const TextStyle(fontSize: 10.0, color: Colors.white))),
                 child: const Icon(Icons.notifications),
               ),
               onTap: () {
@@ -92,8 +100,9 @@ class _FinanceNavState extends State<FinanceNav> {
                   ? true
                   : false,
               badgeColor: Colors.purple,
-              badgeContent:Obx(() => Text(widget.controller.itemFinanceCountObs,
-                  style: const TextStyle(fontSize: 10.0, color: Colors.white))) ,
+              badgeContent: Obx(() => Text(
+                  widget.controller.itemFinanceCountObs,
+                  style: const TextStyle(fontSize: 10.0, color: Colors.white))),
               child: const Icon(Icons.notifications),
             ),
             onTap: () {
@@ -135,7 +144,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 sizeIcon: 15.0,
                 title: element.nomComplet.toUpperCase(),
                 style: bodyText1,
-                onTap: () { 
+                onTap: () {
                   Get.toNamed('/transactions-banque/${element.id}',
                       arguments: element);
                 });
@@ -158,7 +167,7 @@ class _FinanceNavState extends State<FinanceNav> {
                 sizeIcon: 15.0,
                 title: element.nomComplet.toUpperCase(),
                 style: bodyText1,
-                onTap: () { 
+                onTap: () {
                   Get.toNamed('/transactions-caisse/${element.id!}',
                       arguments: element);
                 });
@@ -182,14 +191,12 @@ class _FinanceNavState extends State<FinanceNav> {
                 sizeIcon: 15.0,
                 title: element.nomComplet.toUpperCase(),
                 style: bodyText1,
-                onTap: () { 
-                  Get.toNamed(
-                    '/transactions-financement-externe/${element.id}',
-                    arguments: element);
+                onTap: () {
+                  Get.toNamed('/transactions-financement-externe/${element.id}',
+                      arguments: element);
                 });
           }).toList(),
         ),
-        
       ],
     );
   }

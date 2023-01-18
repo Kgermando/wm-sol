@@ -10,6 +10,7 @@ class EntrepriseInfosController extends GetxController
   final ProfilController profilController = Get.find();
 
   List<EntrepriseInfoModel> entrepriseInfosList = [];
+  List<EntrepriseInfoModel> nomSocialList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -71,8 +72,10 @@ class EntrepriseInfosController extends GetxController
   void getList() async {
     await entrepriseInfoApi.getAllData().then((response) {
       entrepriseInfosList.clear();
-      getList();
+      nomSocialList.clear();
       entrepriseInfosList.addAll(response);
+      nomSocialList.addAll(response
+          .where((element) => DateTime.now().isBefore(element.dateFinContrat)));
       change(entrepriseInfosList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -111,26 +114,34 @@ class EntrepriseInfosController extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = EntrepriseInfoModel(
-        nomSocial: (nomSocialController.text == '') ? '-' : nomSocialController.text,
-        nomGerant: (nomGerantController.text == '') ? '-' : nomGerantController.text,
+        nomSocial:
+            (nomSocialController.text == '') ? '-' : nomSocialController.text,
+        nomGerant:
+            (nomGerantController.text == '') ? '-' : nomGerantController.text,
         emailEntreprise: (emailEntrepriseController.text == '')
             ? '-'
-            :  emailEntrepriseController.text,
-        emailGerant:
-            (emailGerantController.text == '') ? '-' :  emailGerantController.text,
-        telephone1:(telephone1Controller.text == '') ? '-' :  telephone1Controller.text,
-        telephone2:(telephone2Controller.text == '') ? '-' :  telephone2Controller.text,
-        rccm:(rccmController.text == '') ? '-' :  rccmController.text,
-        identificationNationale:(identificationNationaleController.text == '') ? '-' :  identificationNationaleController.text,
+            : emailEntrepriseController.text,
+        emailGerant: (emailGerantController.text == '')
+            ? '-'
+            : emailGerantController.text,
+        telephone1:
+            (telephone1Controller.text == '') ? '-' : telephone1Controller.text,
+        telephone2:
+            (telephone2Controller.text == '') ? '-' : telephone2Controller.text,
+        rccm: (rccmController.text == '') ? '-' : rccmController.text,
+        identificationNationale: (identificationNationaleController.text == '')
+            ? '-'
+            : identificationNationaleController.text,
         numerosImpot: (numerosImpotController.text == '')
             ? '-'
-            :  numerosImpotController.text,
+            : numerosImpotController.text,
         secteurActivite: (secteurActiviteController.text == '')
             ? '-'
-            :  secteurActiviteController.text,
-        adressePhysiqueEntreprise: (adressePhysiqueEntrepriseController.text == '')
-            ? '-'
-            :  adressePhysiqueEntrepriseController.text,
+            : secteurActiviteController.text,
+        adressePhysiqueEntreprise:
+            (adressePhysiqueEntrepriseController.text == '')
+                ? '-'
+                : adressePhysiqueEntrepriseController.text,
         signature: profilController.user.matricule,
         created: DateTime.now(),
         dateFinContrat: DateTime.parse("2100-12-31 00:00:00.000000"),
@@ -163,20 +174,24 @@ class EntrepriseInfosController extends GetxController
       _isLoading.value = true;
       final dataItem = EntrepriseInfoModel(
         id: data.id,
-        nomSocial:
-            (nomSocialController.text == '') ? data.nomSocial : nomSocialController.text,
-        nomGerant:
-            (nomGerantController.text == '') ? data.nomGerant : nomGerantController.text,
+        nomSocial: (nomSocialController.text == '')
+            ? data.nomSocial
+            : nomSocialController.text,
+        nomGerant: (nomGerantController.text == '')
+            ? data.nomGerant
+            : nomGerantController.text,
         emailEntreprise: (emailEntrepriseController.text == '')
             ? data.emailEntreprise
             : emailEntrepriseController.text,
         emailGerant: (emailGerantController.text == '')
             ? data.emailGerant
             : emailGerantController.text,
-        telephone1:
-            (telephone1Controller.text == '') ? data.telephone1 : telephone1Controller.text,
-        telephone2:
-            (telephone2Controller.text == '') ? data.telephone2 : telephone2Controller.text,
+        telephone1: (telephone1Controller.text == '')
+            ? data.telephone1
+            : telephone1Controller.text,
+        telephone2: (telephone2Controller.text == '')
+            ? data.telephone2
+            : telephone2Controller.text,
         rccm: (rccmController.text == '') ? data.rccm : rccmController.text,
         identificationNationale: (identificationNationaleController.text == '')
             ? data.identificationNationale

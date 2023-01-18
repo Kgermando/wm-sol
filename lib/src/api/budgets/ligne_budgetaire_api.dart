@@ -7,6 +7,7 @@ import 'package:wm_solution/src/api/header_http.dart';
 import 'package:wm_solution/src/api/route_api.dart';
 import 'package:wm_solution/src/models/budgets/ligne_budgetaire_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:wm_solution/src/models/charts/courbe_budget_model.dart';
 
 class LIgneBudgetaireApi extends GetConnect {
   var client = http.Client();
@@ -25,6 +26,58 @@ class LIgneBudgetaireApi extends GetConnect {
       return data;
     } else {
       throw Exception(jsonDecode(resp.body)['message']);
+    }
+  }
+
+  
+  Future<List<CourbeBudgetModel>> getAllDataBanqueMouth() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(ligneBudgetaireBanqueUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<CourbeBudgetModel> data = [];
+      for (var u in bodyList) {
+        data.add(CourbeBudgetModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(resp.statusCode);
+    }
+  }
+
+  Future<List<CourbeBudgetModel>> getAllDataCaisseMouth() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(ligneBudgetaireCaisseUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<CourbeBudgetModel> data = [];
+      for (var u in bodyList) {
+        data.add(CourbeBudgetModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(resp.statusCode);
+    }
+  }
+
+  Future<List<CourbeBudgetModel>> getAllDataFinExterieurMouth() async {
+    Map<String, String> header = headers;
+
+    var resp = await client.get(ligneBudgetaireFinExterieurUrl, headers: header);
+
+    if (resp.statusCode == 200) {
+      List<dynamic> bodyList = json.decode(resp.body);
+      List<CourbeBudgetModel> data = [];
+      for (var u in bodyList) {
+        data.add(CourbeBudgetModel.fromJson(u));
+      }
+      return data;
+    } else {
+      throw Exception(resp.statusCode);
     }
   }
 
