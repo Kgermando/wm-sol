@@ -19,6 +19,7 @@ Widget loadingPage(BuildContext context) => Center(
 
  
 Widget loadingError(BuildContext context, String error) => Column(
+  mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           "assets/images/error.png",
@@ -30,7 +31,8 @@ Widget loadingError(BuildContext context, String error) => Column(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Text("Une erreur s'est produite $error. Merçi.", textAlign: TextAlign.center,)), 
+            Expanded(child: Text("Une erreur s'est produite $error. Merçi.", textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline6)), 
           ],
         ),
         const SizedBox(
@@ -39,7 +41,7 @@ Widget loadingError(BuildContext context, String error) => Column(
         ElevatedButton(
             onPressed: () => Phoenix.rebirth(context),
             child: Text("Revenir en arrière.", textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium))
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)))
       ],
     );
  

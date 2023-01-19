@@ -22,6 +22,7 @@ class _DashRHPieWidgetState extends State<DashRHPieWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return SizedBox(
       width: MediaQuery.maybeOf(context)!.size.width / 1.1,
       child: Card(
@@ -30,7 +31,7 @@ class _DashRHPieWidgetState extends State<DashRHPieWidget> {
             enableMultiSelection: true,
             title: ChartTitle(
                 text: 'Sexe',
-                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+                textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
             legend: Legend(isVisible: true, isResponsive: true),
             tooltipBehavior: _tooltipBehavior,
             series: <CircularSeries>[

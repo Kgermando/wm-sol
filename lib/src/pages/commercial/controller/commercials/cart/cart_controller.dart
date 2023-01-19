@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'dart:convert'; 
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/commerciale/commercial/cart_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/helpers/pdf_api.dart';
+import 'package:wm_solution/src/helpers/secure_storage.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';
 import 'package:wm_solution/src/models/commercial/creance_cart_model.dart';
@@ -18,6 +19,7 @@ import 'package:wm_solution/src/models/commercial/vente_cart_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/creance_cart_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf/facture_cart_pdf.dart';
+import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf_a6/creance_cart_a6_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/components/commercial/factures/pdf_a6/facture_cart_a6_pdf.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/factures/facture_controller.dart';
@@ -223,19 +225,13 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
         facture = item;
       }
 
-      GetStorage box = GetStorage();
-      final printer = box.read("printer"); 
-      if (printer == 'A4') {
-        // final  pdfFile =
-            await FactureCartPDF.generate(facture!, monnaieStorage.monney);
-        // PdfApi.openFile(pdfFile);
+      String? printer = await SecureStorage().getData();
+      if (printer == 'A4') { 
+        await FactureCartPDF.generate(facture!, monnaieStorage.monney); 
       }
-      if (printer == 'A6') {
-      //  final pdfFile =
-            await FactureCartPDFA6.generate(facture!, monnaieStorage);
-        // PdfApi.openFile(pdfFile);
+      if (printer == 'A6') { 
+        await FactureCartPDFA6.generate(facture!, monnaieStorage); 
       }
-      
     } catch (e) {
       _isLoading.value = false;
       _isLoading.value = false;
@@ -276,7 +272,7 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
           _isLoading.value = false;
         });
       });
-    } catch (e) { 
+    } catch (e) {
       _isLoading.value = false;
       Get.snackbar("Erreur lors de la soumission", "$e",
           backgroundColor: Colors.red,
@@ -305,9 +301,13 @@ class CartController extends GetxController with StateMixin<List<CartModel>> {
       for (var item in creanceList) {
         creance = item;
       }
-      final pdfFile =
-          await CreanceCartPDF.generate(creance!, monnaieStorage.monney);
-      PdfApi.openFile(pdfFile);
+      String? printer = await SecureStorage().getData();
+      if (printer == 'A4') {
+        await CreanceCartPDF.generate(creance!, monnaieStorage.monney);
+      }
+      if (printer == 'A6') {
+        await CreanceCartPDFA6.generate(creance!, monnaieStorage);
+      }
     } catch (e) {
       _isLoading.value = false;
       _isLoading.value = false;

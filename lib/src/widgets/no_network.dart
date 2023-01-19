@@ -21,7 +21,11 @@ Widget noNetworkWidget(BuildContext context) => Center(
               onPressed: () {
                 Phoenix.rebirth(context);
               },
-              child: const Text("Reessayer"))
+              child: Text("Reessayer",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white)))
         ],
       ),
     );

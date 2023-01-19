@@ -24,14 +24,14 @@ class _ChartBudgetaireState extends State<ChartBudgetaire> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(p8),
         child: SfCartesianChart(
           title: ChartTitle(
               text: 'Lignes Budgetaires',
-              textStyle:
-                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+              textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
           legend: Legend(
               position: Responsive.isDesktop(context)
                   ? LegendPosition.right

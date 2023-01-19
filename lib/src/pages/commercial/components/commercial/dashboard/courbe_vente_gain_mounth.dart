@@ -30,6 +30,7 @@ class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(p8),
@@ -37,8 +38,8 @@ class _CourbeVenteGainMounthState extends State<CourbeVenteGainMounth> {
             primaryXAxis: CategoryAxis(),
             // Chart title
             title: ChartTitle(
-                text: 'Courbe de Ventes par Mois',
-                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+                text: 'Courbe de Ventes mensuelles',
+                textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
             // Enable legend
             legend: Legend(
                 position: Responsive.isDesktop(context)

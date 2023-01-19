@@ -32,6 +32,7 @@ class _EtatMaterielPieState extends State<EtatMaterielPie> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Padding(
       padding: const EdgeInsets.all(p8),
       child: Material(
@@ -40,7 +41,7 @@ class _EtatMaterielPieState extends State<EtatMaterielPie> {
           palette: _lightColors,
             title: ChartTitle(
                 text: 'Statut materiels',
-                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+                textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
             legend: Legend(isVisible: true, isResponsive: true),
             series: <CircularSeries>[
               // Render pie chart

@@ -24,13 +24,12 @@ class _CourbeBalanceState extends State<CourbeBalance> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Card(
-      elevation: 10.0,
       child: SfCartesianChart(
         title: ChartTitle(
             text: 'Balance',
-            textStyle:
-                const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+            textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
         legend: Legend(
             position: Responsive.isDesktop(context)
                 ? LegendPosition.right
@@ -57,7 +56,7 @@ class _CourbeBalanceState extends State<CourbeBalance> {
               dataLabelSettings: const DataLabelSettings(isVisible: true),
               enableTooltip: true)
         ],
-        primaryXAxis: CategoryAxis(isVisible: false),
+        primaryXAxis: CategoryAxis(isVisible: true),
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Balance'),

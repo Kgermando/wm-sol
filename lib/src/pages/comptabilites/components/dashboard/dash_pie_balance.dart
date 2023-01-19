@@ -22,29 +22,25 @@ class _ChartPieBalanceState extends State<ChartPieBalance> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      // width: Responsive.isDesktop(context) ? 400 : double.infinity,
-      width: MediaQuery.maybeOf(context)!.size.width / 1.1,
-      child: Card(
-        elevation: 10.0,
-        child: SfCircularChart(
-            enableMultiSelection: true,
-            title: ChartTitle(
-                text: 'Comptes',
-                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
-            legend: Legend(isVisible: true, isResponsive: true),
-            tooltipBehavior: _tooltipBehavior,
-            series: <CircularSeries>[
-              // Render pie chart
-              PieSeries<BalancePieChartModel, String>(
-                  dataSource: widget.balanceChartPieList,
-                  // pointColorMapper: (ChartData data, _) => data.color,
-                  xValueMapper: (BalancePieChartModel data, _) => data.comptes,
-                  yValueMapper: (BalancePieChartModel data, _) => data.count)
-            ],
-            palette : listColors
-          ),
-      ),
+    final headline6 = Theme.of(context).textTheme.headline6;
+    return Card(
+      child: SfCircularChart(
+          enableMultiSelection: true,
+          title: ChartTitle(
+              text: 'Comptes',
+              textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
+          legend: Legend(isVisible: true, isResponsive: true),
+          tooltipBehavior: _tooltipBehavior,
+          series: <CircularSeries>[
+            // Render pie chart
+            PieSeries<BalancePieChartModel, String>(
+                dataSource: widget.balanceChartPieList,
+                // pointColorMapper: (ChartData data, _) => data.color,
+                xValueMapper: (BalancePieChartModel data, _) => data.comptes,
+                yValueMapper: (BalancePieChartModel data, _) => data.count)
+          ],
+          palette : listColors
+        ),
     );
   }
 }

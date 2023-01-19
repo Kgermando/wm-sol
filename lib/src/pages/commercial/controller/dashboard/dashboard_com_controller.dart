@@ -103,6 +103,14 @@ class DashboardComController extends GetxController {
         .where((element) => element.typeEntreprise == 'ONG & ASBL')
         .length;
 
+    venteChartList.clear();
+    venteDayList.clear();
+    gainDayList.clear();
+    gainMouthList.clear();
+    gainMouthList.clear();
+    venteYearList.clear();
+    gainYearList.clear();
+ 
     venteChartList.addAll(getVenteChart);
     venteDayList.addAll(getAllDataVenteDay);
     gainDayList.addAll(getAllDataGainDay);

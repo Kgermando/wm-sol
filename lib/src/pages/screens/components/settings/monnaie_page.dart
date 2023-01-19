@@ -5,9 +5,11 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
-import 'package:wm_solution/src/widgets/btn_widget.dart'; 
+import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class MonnaiePage extends StatefulWidget {
   const MonnaiePage({super.key});
@@ -26,19 +28,20 @@ class _MonnaiePageState extends State<MonnaiePage> {
 
   @override
   Widget build(BuildContext context) {
+    final bodyLarge = Theme.of(context).textTheme.bodyLarge;
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text("nouveau projet"),
-        tooltip: "Ajouter nouveau projet",
+        label: const Text("Nouveau monnaie"),
+        tooltip: "Ajouter nouveau monnaie",
         icon: const Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet<void>(
               context: context,
               isScrollControlled: true,
-              builder: (BuildContext context) { 
+              builder: (BuildContext context) {
                 return Padding(
                   padding: const EdgeInsets.all(p20),
                   child: Form(
@@ -50,7 +53,7 @@ class _MonnaiePageState extends State<MonnaiePage> {
                         Row(
                           children: [
                             Expanded(
-                                child: Text("New Projet",
+                                child: Text("Ajout monnaie",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall)),
@@ -60,8 +63,8 @@ class _MonnaiePageState extends State<MonnaiePage> {
                           height: p20,
                         ),
                         ResponsiveChildWidget(
-                          child1: symbolWidget(),
-                          child2: monnaieEnLettreWidget()),
+                            child1: symbolWidget(),
+                            child2: monnaieEnLettreWidget()),
                         const SizedBox(
                           height: p20,
                         ),
@@ -95,10 +98,6 @@ class _MonnaiePageState extends State<MonnaiePage> {
                   onLoading: loadingPage(context),
                   onEmpty: const Text('Aucune donnée'),
                   onError: (error) => loadingError(context, error!), (state) {
-                var isMonnaieActiveList = state!
-                    .where((element) => element.monnaie == 'true')
-                    .toList();
-
                 return SingleChildScrollView(
                     controller: ScrollController(),
                     physics: const ScrollPhysics(),
@@ -109,36 +108,93 @@ class _MonnaiePageState extends State<MonnaiePage> {
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Column(
                         children: [
-                          Card(
-                            elevation: 3,
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: p20),
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    final monnaie = state[index];
-                                    bool isActive = false;
-                                    if (monnaie.isActive == 'true') {
-                                      isActive == true;
-                                    } else if (monnaie.isActive == 'false') {
-                                      isActive == false;
-                                    }
-                                    return Obx(() => controller.isLoading
-                                        ? loading()
-                                        : SwitchListTile(
-                                            focusNode: focusNode,
-                                            title: Text(monnaie.monnaie),
-                                            subtitle:
-                                                Text(monnaie.monnaieEnlettre),
-                                            value: isActive,
-                                            onChanged: (value) {
-                                              if (isMonnaieActiveList.isEmpty) {
-                                                controller
-                                                    .activeMonnaie(monnaie);
-                                              }
-                                            }));
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const TitleWidget(title: 'Devise'),
+                              IconButton(
+                                  onPressed: () {
+                                    controller.getList();
+                                    Navigator.of(context).popAndPushNamed(
+                                        SettingsRoutes.monnaiePage);
                                   },
-                                )),
+                                  icon: const Icon(Icons.refresh,
+                                      color: Colors.green))
+                            ],
+                          ),
+                          const SizedBox(height: p20),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: state!.length,
+                            itemBuilder: (context, index) {
+                              final monnaie = state[index];
+                              bool isActive = false;
+                              if (monnaie.isActive == 'true') {
+                                isActive = true;
+                              } else if (monnaie.isActive == 'false') {
+                                isActive = false;
+                              }
+                              print("${monnaie.monnaie} $isActive");
+                              return Card(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(p8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.monetization_on,
+                                            size: p40),
+                                        const SizedBox(width: p5),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            RichText(
+                                              text: TextSpan(
+                                                text: 'Symbol: ',
+                                                style: bodyLarge,
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: monnaie.monnaie,
+                                                      style: bodyLarge!
+                                                          .copyWith(
+                                                              color:
+                                                                  mainColor)),
+                                                ],
+                                              ),
+                                            ),
+                                            Text(monnaie.monnaieEnlettre),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Obx(
+                                      () => controller.isLoading
+                                          ? loadingMini()
+                                          : Switch(
+                                              value: isActive,
+                                              onChanged: (value) {
+                                                if (controller.monnaieActiveList
+                                                    .isEmpty) {
+
+                                                  controller
+                                                      .activeMonnaie(monnaie, 'true');
+                                                }
+                                                if (monnaie.isActive ==
+                                                    'true') {
+                                                  controller
+                                                      .activeMonnaie(monnaie, 'false');
+                                                }
+                                              }),
+                                    )
+                                  ],
+                                ),
+                              ));
+                            },
                           )
                         ],
                       ),
@@ -149,71 +205,50 @@ class _MonnaiePageState extends State<MonnaiePage> {
     );
   }
 
-Widget symbolWidget() {
+  Widget symbolWidget() {
     return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: TextFormField(
-        controller: controller.monnaieEnLettreController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Symbol',
-          hintText: 'CDF',
-        ),
-        keyboardType: TextInputType.text,
-        style: const TextStyle(),
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
-}
-
-Widget monnaieEnLettreWidget() {
-  return Container(
-      margin: const EdgeInsets.only(bottom: p20),
-      child: TextFormField(
-        controller: controller.monnaieEnLettreController,
-        decoration: InputDecoration(
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-          labelText: 'Monnaie En Lettre',
-          hintText: 'Francs Congolais',
-        ),
-        keyboardType: TextInputType.text,
-        style: const TextStyle(),
-        validator: (value) {
-          if (value != null && value.isEmpty) {
-            return 'Ce champs est obligatoire';
-          } else {
-            return null;
-          }
-        },
-      ));
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.symbolController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Symbol',
+            hintText: 'CDF',
+          ),
+          keyboardType: TextInputType.text,
+          maxLength: 4,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
   }
 
-  // Widget deviseWidget() {
-  //   return DropdownButtonFormField<String>(
-  //       decoration: const InputDecoration(
-  //         labelText: 'Devise',
-  //         labelStyle: TextStyle(),
-  //         contentPadding: EdgeInsets.only(left: 5.0),
-  //       ),
-  //       value: controller.symbol,
-  //       isExpanded: true,
-  //       items: deviseList.map((String value) {
-  //         return DropdownMenuItem<String>(
-  //           value: value,
-  //           child: Text(value),
-  //         );
-  //       }).toList(),
-  //       onChanged: (value) {
-  //         setState(() {
-  //           controller.symbol = value;
-  //         });
-  //       });
-  // }
+  Widget monnaieEnLettreWidget() {
+    return Container(
+        margin: const EdgeInsets.only(bottom: p20),
+        child: TextFormField(
+          controller: controller.monnaieEnLettreController,
+          decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            labelText: 'Monnaie En Lettre',
+            hintText: 'Francs Congolais',
+          ),
+          keyboardType: TextInputType.text,
+          style: const TextStyle(),
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return 'Ce champs est obligatoire';
+            } else {
+              return null;
+            }
+          },
+        ));
+  }
 }

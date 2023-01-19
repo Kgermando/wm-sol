@@ -31,6 +31,7 @@ class _CourbeVenteGainYearState extends State<CourbeVenteGainYear> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(p8),
@@ -38,8 +39,8 @@ class _CourbeVenteGainYearState extends State<CourbeVenteGainYear> {
             primaryXAxis: CategoryAxis(),
             // Chart title
             title: ChartTitle(
-                text: 'Courbe de Ventes par AN',
-                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+                text: 'Courbe de Ventes annuelle',
+                textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
             // Enable legend
             legend: Legend(
                 position: Responsive.isDesktop(context)

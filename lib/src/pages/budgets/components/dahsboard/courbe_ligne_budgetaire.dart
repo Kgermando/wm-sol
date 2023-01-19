@@ -30,6 +30,7 @@ class _CourbeLignBudgetaireState extends State<CourbeLignBudgetaire> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(p8),
@@ -38,7 +39,7 @@ class _CourbeLignBudgetaireState extends State<CourbeLignBudgetaire> {
             // Chart title
             title: ChartTitle(
                 text: 'Courbe de dépenses annuelle',
-                textStyle: const TextStyle(fontWeight: FontWeight.bold)),
+                textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
             // Enable legend
             legend: Legend(
                 position: Responsive.isDesktop(context)

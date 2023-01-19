@@ -27,14 +27,14 @@ class _ArticlePlusVendusState extends State<ArticlePlusVendus> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return SizedBox(
       height: MediaQuery.of(context).size.height / 4,
       child: Card(
         child: SfCartesianChart(
           title: ChartTitle(
               text: 'Produits les plus vendus',
-              textStyle:
-                  const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+              textStyle: headline6!.copyWith(fontWeight: FontWeight.bold)),
           legend: Legend(
               position: Responsive.isDesktop(context)
                   ? LegendPosition.right

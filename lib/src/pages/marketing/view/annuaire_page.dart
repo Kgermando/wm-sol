@@ -12,14 +12,7 @@ import 'package:wm_solution/src/utils/list_colors.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart'; 
 import 'package:wm_solution/src/widgets/title_widget.dart';
-
-// final _lightColors = [
-//   Colors.pinkAccent.shade700,
-//   Colors.tealAccent.shade700,
-//   Colors.lightGreen.shade700,
-//   Colors.lightBlue.shade700,
-//   Colors.orange.shade700,
-// ];
+ 
 
 class AnnuairePage extends StatefulWidget {
   const AnnuairePage({super.key});
@@ -61,99 +54,97 @@ class _AnnuairePageState extends State<AnnuairePage> {
           onEmpty: const Text('Aucune donnée'),
           onError: (error) => loadingError(context, error!),
           (state) => SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const TitleWidget(title: "Annuaire"),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                            onPressed: () {
-                                              controller.getList();
-                                            },
-                                            icon: Icon(Icons.refresh,
-                                                color: Colors.green.shade700)),
-                                        PrintWidget(onPressed: () {
-                                          AnnuaireXlsx().exportToExcel(
-                                              controller.annuaireList);
-                                          if (!mounted) return;
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                            content: const Text(
-                                                "Exportation effectué!"),
-                                            backgroundColor: Colors.green[700],
-                                          ));
-                                        }),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  color: Theme.of(context).primaryColor,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ListTile(
-                                      leading: const Icon(Icons.search),
-                                      title: TextField(
-                                        controller:
-                                            controller.filterController,
-                                        decoration: InputDecoration(
-                                          hintText: 'Search',
-                                          border: InputBorder.none,
-                                          suffixIcon: controller
-                                                  .filterController
-                                                  .text
-                                                  .isNotEmpty
-                                              ? GestureDetector(
-                                                  child: const Icon(
-                                                      Icons.close,
-                                                      color: Colors.red),
-                                                  onTap: () {
-                                                    controller
-                                                        .filterController
-                                                        .clear();
-                                                    controller
-                                                        .onSearchText('');
-                                                    FocusScope.of(context)
-                                                        .requestFocus(
-                                                            FocusNode());
-                                                  },
-                                                )
-                                              : null,
-                                        ),
-                                        onChanged: (value) =>
-                                            controller.onSearchText(value),
-                                      ),
-                                    ),
-                                  ),
-                                ), 
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: controller.annuaireFilterList.length,
-                            itemBuilder: (context, index) {
-                              final annuaireModel =
-                                  controller.annuaireFilterList[index];
-                              return buildAnnuaire(
-                                  annuaireModel, index);
-                            }),
+                controller: ScrollController(),
+                physics: const ScrollPhysics(),
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      top: p20, bottom: p8, right: p20, left: p20),
+                  decoration: const BoxDecoration(
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(20))),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                        children: [
+                          const TitleWidget(title: "Annuaire"),
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    controller.getList();
+                                  },
+                                  icon: Icon(Icons.refresh,
+                                      color: Colors.green.shade700)),
+                              PrintWidget(onPressed: () {
+                                AnnuaireXlsx().exportToExcel(
+                                    controller.annuaireList);
+                                if (!mounted) return;
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: const Text(
+                                      "Exportation effectué!"),
+                                  backgroundColor: Colors.green[700],
+                                ));
+                              }),
+                            ],
+                          ),
                         ],
                       ),
-                    ))) )
-                ],
-              )
-      
-     ,
+                      Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            leading: const Icon(Icons.search),
+                            title: TextField(
+                              controller:
+                                  controller.filterController,
+                              decoration: InputDecoration(
+                                hintText: 'Search',
+                                border: InputBorder.none,
+                                suffixIcon: controller
+                                        .filterController
+                                        .text
+                                        .isNotEmpty
+                                    ? GestureDetector(
+                                        child: const Icon(
+                                            Icons.close,
+                                            color: Colors.red),
+                                        onTap: () {
+                                          controller
+                                              .filterController
+                                              .clear();
+                                          controller
+                                              .onSearchText('');
+                                          FocusScope.of(context)
+                                              .requestFocus(
+                                                  FocusNode());
+                                        },
+                                      )
+                                    : null,
+                              ),
+                              onChanged: (value) =>
+                                  controller.onSearchText(value),
+                            ),
+                          ),
+                        ),
+                      ), 
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.annuaireFilterList.length,
+                  itemBuilder: (context, index) {
+                    final annuaireModel =
+                        controller.annuaireFilterList[index];
+                    return buildAnnuaire(
+                        annuaireModel, index);
+                  }),
+              ],
+            ),
+          ))) )
+      ],
+    ) 
     );
   }
 

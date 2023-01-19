@@ -4,15 +4,15 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/models/settings/monnaie_model.dart';
+import 'package:wm_solution/src/helpers/secure_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/licence_wm.dart';
 import 'package:wm_solution/src/utils/monnaie_dropdown.dart';
 import 'package:wm_solution/src/widgets/change_theme_button_widget.dart';
-import 'package:wm_solution/src/widgets/loading.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -45,6 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final headline6 = Theme.of(context).textTheme.headline6;
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
@@ -96,26 +97,24 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         Card(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: monnaieStorage.obx(
-                              onLoading: loadingPage(context),
-                                onEmpty: const Text('Aucune donnée'),
-                                onError: (error) =>
-                                    loadingError(context, error!),
-                              (state) {
-                              MonnaieModel monnaie = state!
-                                  .where(
-                                      (element) => element.isActive == 'true')
-                                  .first;
-                              return ListSettings(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListSettings(
                                   icon: Icons.monetization_on,
                                   title: 'Devise',
-                                  options: Text(monnaie.monnaie,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6));
-                            }),
-                          ),
+                                  options: TextButton(
+                                    onPressed: () {
+                                      Get.toNamed(SettingsRoutes.monnaiePage);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(monnaieStorage.monney,
+                                            style: headline6),
+                                        const Icon(Icons.arrow_right)
+                                      ],
+                                    ),
+                                  ))),
                         ),
                         const SizedBox(
                           height: 20.0,
@@ -187,17 +186,9 @@ class _SettingsPageState extends State<SettingsPage> {
         }).toList(),
         onChanged: (value) {
           setState(() {
-            formatImprimante = value;
-            GetStorage box = GetStorage();
-
-            if (formatImprimante == 'A4') {
-              box.remove("printer");
-              box.write("printer", formatImprimante);
-            }
-            if (formatImprimante == 'A6') {
-              box.remove("printer");
-              box.write("printer", formatImprimante);
-            }
+            formatImprimante = value;  
+            SecureStorage().remove();
+            SecureStorage().save(formatImprimante); 
           });
         });
   }

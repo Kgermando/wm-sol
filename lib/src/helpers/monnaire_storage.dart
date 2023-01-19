@@ -1,22 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart'; 
 import 'package:wm_solution/src/api/settings/monnaie_api.dart';
 import 'package:wm_solution/src/models/settings/monnaie_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
+import 'package:wm_solution/src/routes/routes.dart';
 
 class MonnaieStorage extends GetxController
     with StateMixin<List<MonnaieModel>> {
   final MonnaieApi monnaieApi = MonnaieApi();
   final ProfilController profilController = Get.find();
 
-  static const _keyMonnaie = 'monnaie';
-  GetStorage box = GetStorage();
-
 
   List<MonnaieModel> monnaieList = [];
+  List<MonnaieModel> monnaieActiveList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _isLoading = false.obs;
@@ -52,16 +48,14 @@ class MonnaieStorage extends GetxController
   void getList() async {
     await monnaieApi.getAllData().then((response) {
       monnaieList.clear();
+      monnaieActiveList.clear();
       monnaieList.addAll(response);
-      if (monnaieList.isEmpty) {
-        final data = box.read(_keyMonnaie);
-        _monney.value = json.decode(data);
-      } else {
-        _monney.value = monnaieList
-          .where((element) => element.isActive == 'true')
-          .first
-          .monnaie;
-      } 
+      monnaieActiveList.addAll(
+        response
+          .where((element) => element.isActive == 'true').toList());
+      if (monnaieActiveList.isNotEmpty) {
+        _monney.value = monnaieActiveList.first.monnaie;
+      }
       change(monnaieList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -93,7 +87,7 @@ class MonnaieStorage extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = MonnaieModel(
-          monnaie: symbolController.text,
+          monnaie: symbolController.text.toUpperCase(),
           monnaieEnlettre: monnaieEnLettreController.text,
           signature: profilController.user.matricule,
           created: DateTime.now(),
@@ -101,7 +95,7 @@ class MonnaieStorage extends GetxController
       await monnaieApi.insertData(dataItem).then((value) {
         // clear();
         getList();
-        Get.back();
+        Get.toNamed(SettingsRoutes.monnaiePage);
         Get.snackbar("Monnaie effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
@@ -122,16 +116,17 @@ class MonnaieStorage extends GetxController
     try {
       _isLoading.value = true;
       final dataItem = MonnaieModel(
-          monnaie: symbolController.text,
-          monnaieEnlettre: monnaieEnLettreController.text,
-          signature: profilController.user.matricule,
-          created: DateTime.now(),
-          isActive: 'false'
+        id: data.id,
+        monnaie: symbolController.text.toUpperCase(),
+        monnaieEnlettre: monnaieEnLettreController.text,
+        signature: profilController.user.matricule,
+        created: data.created,
+        isActive: data.isActive,
       );
       await monnaieApi.updateData(dataItem).then((value) {
         clear();
         getList();
-        Get.back();
+        Get.toNamed(SettingsRoutes.monnaiePage);
         Get.snackbar("Modification effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,
@@ -148,20 +143,21 @@ class MonnaieStorage extends GetxController
     }
   }
 
-  void activeMonnaie(MonnaieModel data) async {
+  void activeMonnaie(MonnaieModel data, String bool) async {
     try {
       _isLoading.value = true;
       final dataItem = MonnaieModel(
+        id: data.id,
         monnaie: data.monnaie,
         monnaieEnlettre: data.monnaieEnlettre,
         signature: data.signature,
         created: data.created,
-        isActive: 'true'
+        isActive: bool
       );
       await monnaieApi.updateData(dataItem).then((value) {
         clear();
         getList();
-        Get.back();
+        Get.toNamed(SettingsRoutes.monnaiePage);
         Get.snackbar("Modification effectuée avec succès!",
             "Le document a bien été sauvegadé",
             backgroundColor: Colors.green,

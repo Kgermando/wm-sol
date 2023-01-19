@@ -352,7 +352,7 @@ List<GetPage<dynamic>>? getPages = [
       name: SettingsRoutes.monnaiePage,
       binding: SettingsBinding(),
       page: () => const MonnaiePage(),
-      transition: Transition.leftToRight,
+      transition: Transition.rightToLeft,
       transitionDuration: const Duration(seconds: 1)),
 
 

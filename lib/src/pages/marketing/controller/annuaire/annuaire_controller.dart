@@ -45,6 +45,7 @@ class AnnuaireController extends GetxController
   void onInit() {
     super.onInit();
     getList();
+    onSearchText('');
   }
 
   @override
@@ -61,8 +62,7 @@ class AnnuaireController extends GetxController
     super.dispose();
   }
 
-  void clear() {
-    filterController.clear();
+  void clear() { 
     categorie = null;
     nomPostnomPrenomController.clear();
     emailController.clear();
@@ -86,8 +86,7 @@ class AnnuaireController extends GetxController
   void getList() async {
     await annuaireApi.getAllData().then((response) {
       annuaireList.clear();
-      annuaireList.addAll(response);
-      onSearchText('');
+      annuaireList.addAll(response); 
       change(annuaireList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));

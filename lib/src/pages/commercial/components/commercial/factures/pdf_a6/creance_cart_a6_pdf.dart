@@ -18,7 +18,7 @@ import 'package:pdf/widgets.dart';
 // import 'package:wm_solution/src/helpers/save_file_mobile_pdf.dart'
 //     if (dart.library.html) 'src/helpers/save_file_web.dart' as helper;
 
-class CreanceCartPDF {
+class CreanceCartPDFA6 {
   static Future<File> generate(
       CreanceCartModel factureCartModel, MonnaieStorage monnaieStorage) async {
     final pdf = Document();
