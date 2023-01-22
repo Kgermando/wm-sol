@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart'; 
-import 'package:wm_solution/src/constants/app_theme.dart'; 
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:wm_solution/src/constants/app_theme.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
@@ -12,14 +12,14 @@ Widget loadingPage(BuildContext context) => Center(
           SizedBox(
             height: p20,
           ),
-          Text('Patientez svp...', textAlign: TextAlign.center, style: TextStyle())
+          Text('Patientez svp...',
+              textAlign: TextAlign.center, style: TextStyle())
         ],
       ),
     );
 
- 
 Widget loadingError(BuildContext context, String error) => Column(
-  mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           "assets/images/error.png",
@@ -31,22 +31,30 @@ Widget loadingError(BuildContext context, String error) => Column(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Text("Une erreur s'est produite $error. Merçi.", textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6)), 
+            Expanded(
+                child: Text("$error. Merçi.",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline6)),
           ],
         ),
         const SizedBox(
           height: 10,
         ),
         ElevatedButton(
-            onPressed: () => Phoenix.rebirth(context),
-            child: Text("Revenir en arrière.", textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)))
+            onPressed: () {
+              Navigator.of(context).pop();
+              Phoenix.rebirth(context);
+            },
+            child: Text("Revenir en arrière.",
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.white)))
       ],
     );
- 
 
-  Widget loadingMega() => Scaffold(
+Widget loadingMega() => Scaffold(
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

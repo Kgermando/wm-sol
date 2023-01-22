@@ -3,13 +3,18 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/charts/chart_multi.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exterieur_controller.dart';
 
 class ChartFinExterieur extends StatefulWidget {
-  const ChartFinExterieur({Key? key, required this.chartFinExterieurController})
+  const ChartFinExterieur(
+      {Key? key,
+      required this.chartFinExterieurController,
+      required this.monnaieStorage})
       : super(key: key);
   final ChartFinExterieurController chartFinExterieurController;
+  final MonnaieStorage monnaieStorage;
 
   @override
   State<ChartFinExterieur> createState() => _ChartFinExterieurState();
@@ -51,7 +56,7 @@ class _ChartFinExterieurState extends State<ChartFinExterieur> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Transations 3'),
-          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(symbol: '${widget.monnaieStorage.monney} ', decimalDigits: 1),
         ),
         series: <ChartSeries<ChartFinanceModel, String>>[
           ColumnSeries<ChartFinanceModel, String>(

@@ -3,13 +3,18 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/charts/chart_multi.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_caisse_controller.dart';
 
 class ChartCaisse extends StatefulWidget {
-  const ChartCaisse({Key? key, required this.chartCaisseController})
+  const ChartCaisse(
+      {Key? key,
+      required this.chartCaisseController,
+      required this.monnaieStorage})
       : super(key: key);
   final ChartCaisseController chartCaisseController;
+  final MonnaieStorage monnaieStorage;
 
   @override
   State<ChartCaisse> createState() => _ChartCaisseState();
@@ -51,7 +56,8 @@ class _ChartCaisseState extends State<ChartCaisse> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Transations 2'),
-          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(
+              symbol: '${widget.monnaieStorage.monney} ', decimalDigits: 1),
         ),
         series: <ChartSeries<ChartFinanceModel, String>>[
           ColumnSeries<ChartFinanceModel, String>(

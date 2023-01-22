@@ -7,6 +7,7 @@ import 'package:wm_solution/src/models/marketing/campaign_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/campaigns/compaign_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -372,7 +373,9 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
 
   Widget approbationDGWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -398,7 +401,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDGWidget(CampaignController controller) {
@@ -440,7 +443,9 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
 
   Widget approbationDDWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -466,7 +471,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(CampaignController controller) {
@@ -508,7 +513,9 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
 
   Widget approbationBudgetWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -537,7 +544,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifBudgetWidget(CampaignController controller) {
@@ -579,7 +586,9 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
 
   Widget approbationFinWidget(CampaignController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -605,7 +614,7 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifFinWidget(CampaignController controller) {

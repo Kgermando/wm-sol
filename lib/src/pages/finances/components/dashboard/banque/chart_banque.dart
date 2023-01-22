@@ -3,13 +3,18 @@ import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/charts/chart_multi.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_banque_controller.dart';
 
 class ChartBanque extends StatefulWidget {
-  const ChartBanque({Key? key, required this.chartBanqueController})
+  const ChartBanque(
+      {Key? key,
+      required this.chartBanqueController,
+      required this.monnaieStorage})
       : super(key: key);
   final ChartBanqueController chartBanqueController;
+  final MonnaieStorage monnaieStorage;
 
   @override
   State<ChartBanque> createState() => _ChartBanqueState();
@@ -51,7 +56,8 @@ class _ChartBanqueState extends State<ChartBanque> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Transations 1'),
-          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(
+              symbol: '${widget.monnaieStorage.monney} ', decimalDigits: 1),
         ),
         series: <ChartSeries<ChartFinanceModel, String>>[
           ColumnSeries<ChartFinanceModel, String>(
@@ -68,7 +74,7 @@ class _ChartBanqueState extends State<ChartBanque> {
             yValueMapper: (ChartFinanceModel data, _) => data.retrait,
             name: 'Retrait',
             color: const Color.fromARGB(255, 255, 107, 8),
-            dataLabelSettings: const DataLabelSettings(isVisible: true), 
+            dataLabelSettings: const DataLabelSettings(isVisible: true),
           ),
         ]);
   }

@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/devis/devis_models.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/logistique/controller/devis/devis_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -367,7 +368,9 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
 
   Widget approbationDGWidget(DevisController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -393,7 +396,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDGWidget(DevisController controller) {
@@ -435,7 +438,9 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
 
   Widget approbationDDWidget(DevisController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -461,7 +466,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(DevisController controller) {
@@ -503,7 +508,9 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
 
   Widget approbationBudgetWidget(DevisController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -532,7 +539,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifBudgetWidget(DevisController controller) {
@@ -574,7 +581,9 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
 
   Widget approbationFinWidget(DevisController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -600,7 +609,7 @@ class _ApprobationDevisState extends State<ApprobationDevis> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifFinWidget(DevisController controller) {

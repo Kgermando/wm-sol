@@ -62,7 +62,7 @@ class _AnnuairePageState extends State<AnnuairePage> {
                   decoration: const BoxDecoration(
                       borderRadius:
                           BorderRadius.all(Radius.circular(20))),
-                  child: Column(
+                  child: Obx(() => Column(
                     children: [
                       Row(
                         mainAxisAlignment:
@@ -141,7 +141,7 @@ class _AnnuairePageState extends State<AnnuairePage> {
                         annuaireModel, index);
                   }),
               ],
-            ),
+            )) ,
           ))) )
       ],
     ) 

@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart'; 
 import 'package:wm_solution/src/models/commercial/succursale_model.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -175,7 +177,7 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
                           Padding(
                               padding: const EdgeInsets.all(p10),
                               child: ResponsiveChildWidget(
-                                  child1: approbationDDWidget(widget.controller),
+                                  child1: approbationDDWidget(),
                                   child2: (widget.controller.approbationDD ==
                                           "Unapproved")
                                       ? motifDDWidget(widget.controller)
@@ -193,7 +195,9 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
 
   Widget approbationDGWidget() {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -219,7 +223,7 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDGWidget() {
@@ -260,9 +264,11 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
   }
 
 
-  Widget approbationDDWidget(SuccursaleController controller) {
+  Widget approbationDDWidget() {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -271,7 +277,7 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
           contentPadding: const EdgeInsets.only(left: 5.0),
         ),
-        value: controller.approbationDD,
+        value: widget.controller.approbationDD,
         isExpanded: true,
         items: approbationList.map((String value) {
           return DropdownMenuItem<String>(
@@ -281,14 +287,14 @@ class _ApprobationSuccursaleState extends State<ApprobationSuccursale> {
         }).toList(),
         onChanged: (value) {
           setState(() {
-            controller.approbationDD = value!;
-            if (controller.approbationDD == "Approved") {
-              controller.submitDD(widget.data);
+            widget.controller.approbationDD = value!;
+            if (widget.controller.approbationDD == "Approved") {
+              widget.controller.submitDD(widget.data);
             }
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(SuccursaleController controller) {

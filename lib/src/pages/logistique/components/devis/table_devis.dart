@@ -53,7 +53,7 @@ class _TableDevisState extends State<TableDevis> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const TitleWidget(title: "Devis"),
+            const TitleWidget(title: "Devis ou Etats de besoin"),
             IconButton(
                 onPressed: () {
                   Navigator.pushNamed(context, DevisRoutes.devis);

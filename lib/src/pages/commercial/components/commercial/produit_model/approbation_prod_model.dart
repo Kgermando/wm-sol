@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/commercial/prod_model.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart'; 
+import 'package:wm_solution/src/pages/commercial/controller/commercials/produit_model/produit_model_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -136,7 +138,9 @@ class _ApprobationProdModelState extends State<ApprobationProdModel> {
 
   Widget approbationDDWidget(ProduitModelController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -162,7 +166,7 @@ class _ApprobationProdModelState extends State<ApprobationProdModel> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(ProduitModelController controller) {

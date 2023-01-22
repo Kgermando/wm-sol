@@ -430,14 +430,14 @@ class _DetailDevisState extends State<DetailDevis> {
               onPressed: () => Navigator.pop(context),
               child: const Text('Annuler'),
             ),
-            TextButton(
+           Obx(() => TextButton(
               onPressed: () {
                 devisListObjetController.submitObjet(widget.devisModel);
               },
               child: devisListObjetController.isLoading
                   ? loadingMini()
                   : const Text('OK'),
-            ),
+            ),)  
           ],
         ),
       ),
@@ -515,11 +515,13 @@ class _DetailDevisState extends State<DetailDevis> {
         if (widget.devisModel.isSubmit == 'false')
           Container(
             padding: const EdgeInsets.all(16.0 * 0.75),
-            child: IconButton(
+            child: Obx(() => controller.isLoading
+                ? loadingMini()
+                : IconButton(
                 onPressed: () {
                   devisListObjetController.deleteData(devisListObjetsModel.id!);
                 },
-                icon: const Icon(Icons.delete, color: Colors.red)),
+                icon: const Icon(Icons.delete, color: Colors.red))),
           ),
         if (widget.devisModel.isSubmit == 'true')
           Container(

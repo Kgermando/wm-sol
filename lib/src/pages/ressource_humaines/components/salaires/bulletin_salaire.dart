@@ -1228,7 +1228,9 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   Widget approbationDDWidget(SalaireController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1254,7 +1256,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(SalaireController controller) {
@@ -1296,7 +1298,9 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   Widget approbationBudgetWidget(SalaireController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1325,7 +1329,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifBudgetWidget(SalaireController controller) {
@@ -1367,7 +1371,9 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
 
   Widget approbationFinWidget(SalaireController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1393,7 +1399,7 @@ class _BulletinSalaireState extends State<BulletinSalaire> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifFinWidget(SalaireController controller) {

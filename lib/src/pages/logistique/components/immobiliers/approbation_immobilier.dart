@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';   
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';  
+import 'package:wm_solution/src/pages/logistique/controller/immobiliers/immobilier_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart';  
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -194,7 +196,9 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
 
   Widget approbationDGWidget() {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -220,7 +224,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDGWidget() {
@@ -263,7 +267,9 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
 
   Widget approbationDDWidget(ImmobilierController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => widget.controller.isLoading
+        ? loading()
+        :  Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -289,7 +295,7 @@ class _ApprobationImmobilierState extends State<ApprobationImmobilier> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(ImmobilierController controller) {

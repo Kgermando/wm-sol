@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/budgets/departement_budget_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
+import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -203,7 +205,9 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
 
   Widget approbationDGWidget(BudgetPrevisionnelController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -229,7 +233,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDGWidget(BudgetPrevisionnelController controller) {
@@ -271,7 +275,9 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
 
   Widget approbationDDWidget(BudgetPrevisionnelController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -297,7 +303,7 @@ class _ApprobationBudgetPrevisionnelState extends State<ApprobationBudgetPrevisi
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(BudgetPrevisionnelController controller) {

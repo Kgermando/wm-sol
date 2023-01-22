@@ -1019,7 +1019,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   Widget approbationDGWidget(TransportRestController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1045,7 +1047,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDGWidget(TransportRestController controller) {
@@ -1087,7 +1089,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   Widget approbationDDWidget(TransportRestController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1113,7 +1117,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifDDWidget(TransportRestController controller) {
@@ -1155,7 +1159,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   Widget approbationBudgetWidget(TransportRestController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1184,7 +1190,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifBudgetWidget(TransportRestController controller) {
@@ -1226,7 +1232,9 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
 
   Widget approbationFinWidget(TransportRestController controller) {
     List<String> approbationList = ['Approved', 'Unapproved', '-'];
-    return Container(
+    return Obx(() => controller.isLoading
+        ? loading()
+        : Container(
       margin: const EdgeInsets.only(bottom: p10),
       child: DropdownButtonFormField<String>(
         decoration: InputDecoration(
@@ -1252,7 +1260,7 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
           });
         },
       ),
-    );
+    )) ;
   }
 
   Widget motifFinWidget(TransportRestController controller) {

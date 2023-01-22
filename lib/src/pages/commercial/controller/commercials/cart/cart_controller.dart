@@ -4,10 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/commerciale/commercial/cart_api.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
-import 'package:wm_solution/src/helpers/pdf_api.dart';
 import 'package:wm_solution/src/helpers/secure_storage.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
 import 'package:wm_solution/src/models/commercial/cart_model.dart';

@@ -11,6 +11,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   final ProfilController profilController = Get.find();
 
   List<AchatModel> achatList = [];
+  List<AchatModel> venteFilterQtyList = [];
 
   final Rx<List<AchatModel>> _venteList = Rx<List<AchatModel>>([]);
   List<AchatModel> get venteList => _venteList.value; // For filter
@@ -37,7 +38,11 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   void getList() async {
     await achatApi.getAllData().then((response) {
       achatList.clear();
+      venteFilterQtyList.clear();
       achatList.addAll(response);
+      venteFilterQtyList.addAll(response
+          .where((element) => double.parse(element.quantity) > 0)
+          .toList());
       change(achatList, status: RxStatus.success());
     }, onError: (err) {
       change(null, status: RxStatus.error(err.toString()));
@@ -47,9 +52,9 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   void onSearchText(String text) async {
     List<AchatModel> results = [];
     if (text.isEmpty) {
-      results = achatList;
+      results = venteFilterQtyList;
     } else {
-      results = achatList
+      results = venteFilterQtyList
           .where((element) => element.idProduct
               .toString()
               .toLowerCase()
@@ -134,7 +139,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
   //     });
   //   } catch (e) {
   //     _isLoading.value = false;
-      // Get.snackbar("Erreur de soumission", "$e",
+  // Get.snackbar("Erreur de soumission", "$e",
   //         backgroundColor: Colors.red,
   //         icon: const Icon(Icons.check),
   //         snackPosition: SnackPosition.TOP);

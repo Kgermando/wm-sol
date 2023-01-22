@@ -143,16 +143,16 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
                                                 children: [
                                                   IconButton(
                                                       onPressed: controller
-                                                              .hasCallSupport
-                                                          ? () => setState(() {
-                                                                controller
-                                                                        .launched =
-                                                                    controller.makePhoneCall(widget
-                                                                        .annuaireColor
-                                                                        .annuaireModel
-                                                                        .mobile1);
+                                                        .hasCallSupport
+                                                    ? () => setState(() {
+                                                      controller
+                                                              .launched =
+                                                          controller.makePhoneCall(widget
+                                                              .annuaireColor
+                                                              .annuaireModel
+                                                              .mobile1);
                                                               })
-                                                          : null,
+                                                      : null,
                                                       icon: const Icon(
                                                         Icons.call,
                                                         size: 40.0,
@@ -350,7 +350,7 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de supprimé ceci?'),
+          title: const Text('Etes-vous sûr de supprimé ceci?', style: TextStyle(color: Colors.red)),
           content: const Text(
               'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
@@ -362,7 +362,7 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
               onPressed: () {
                 controller.deleteData(widget.annuaireColor.annuaireModel.id!);
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
