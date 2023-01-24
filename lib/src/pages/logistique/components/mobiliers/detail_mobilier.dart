@@ -38,123 +38,117 @@ class _DetailMobilerState extends State<DetailMobiler> {
     }
 
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.mobilierModel.nom),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, widget.mobilierModel.nom),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        const TitleWidget(title: "Mobilier"),
+                                        Column(
                                           children: [
-                                            const TitleWidget(
-                                                title: "Mobilier"),
-                                            Column(
-                                              children: [ 
-                                                  Row(
-                                                    children: [
-                                                    IconButton(
-                                                        tooltip: 'Actualiser',
-                                                        onPressed: () async {
-                                                          refresh().then((value) =>
-                                                              Navigator.pushNamed(
-                                                                  context,
-                                                                  ActionnaireRoute
-                                                                      .actionnaireDetail,
-                                                                  arguments:
-                                                                      value));
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.refresh,
-                                                            color:
-                                                                Colors.green)),
-                                                   if (widget.mobilierModel.approbationDD != "Approved")    
-                                                    IconButton(
-                                                          tooltip: 'Modifier',
-                                                          onPressed: () {
-                                                            Get.toNamed(
-                                                                LogistiqueRoutes
-                                                                    .logMobilierMaterielUpdate,
-                                                                arguments: widget
-                                                                    .mobilierModel);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.edit)),
-                                                    if (widget.mobilierModel
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              ActionnaireRoute
+                                                                  .actionnaireDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                if (widget.mobilierModel
                                                         .approbationDD !=
-                                                    "Approved")     IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog(
-                                                                controller);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color: Colors
-                                                              .red.shade700),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .mobilierModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Modifier',
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            LogistiqueRoutes
+                                                                .logMobilierMaterielUpdate,
+                                                            arguments: widget
+                                                                .mobilierModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.edit)),
+                                                if (widget.mobilierModel
+                                                        .approbationDD !=
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Supprimer',
+                                                      onPressed: () async {
+                                                        alertDeleteDialog(
+                                                            controller);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color:
+                                                          Colors.red.shade700),
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy HH:mm")
+                                                    .format(widget
+                                                        .mobilierModel.created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        dataWidget()
+                                        )
                                       ],
                                     ),
-                                  ),
+                                    dataWidget()
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                ApprobationMobilier(
-                                    data: widget.mobilierModel,
-                                    controller: controller,
-                                    profilController: profilController)
-                              ],
+                              ),
                             ),
-                          ))) )
-                ],
-              ),
-            )
-    
-    
-    ;
+                            const SizedBox(height: p20),
+                            ApprobationMobilier(
+                                data: widget.mobilierModel,
+                                controller: controller,
+                                profilController: profilController)
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   alertDeleteDialog(MobilierController controller) {
@@ -179,8 +173,11 @@ class _DetailMobilerState extends State<DetailMobiler> {
                 TextButton(
                   onPressed: () {
                     controller.deleteData(widget.mobilierModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );

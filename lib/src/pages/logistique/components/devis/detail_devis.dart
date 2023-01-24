@@ -116,8 +116,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                                     widget.devisModel
                                                             .approbationDG ==
                                                         "Unapproved" ||
-                                                    widget
-                                                            .devisModel
+                                                    widget.devisModel
                                                             .approbationDD ==
                                                         "Unapproved" ||
                                                     widget.devisModel
@@ -143,8 +142,7 @@ class _DetailDevisState extends State<DetailDevis> {
                                                     widget.devisModel
                                                             .approbationDG ==
                                                         "Unapproved" ||
-                                                    widget
-                                                            .devisModel
+                                                    widget.devisModel
                                                             .approbationDD ==
                                                         "Unapproved" ||
                                                     widget.devisModel
@@ -177,12 +175,13 @@ class _DetailDevisState extends State<DetailDevis> {
                               ),
                             ),
                             const SizedBox(height: p20),
-                            ApprobationDevis(
-                              devisModel: widget.devisModel,
-                              controller: controller,
-                              profilController: profilController,
-                              state: state!,
-                            )
+                            if (widget.devisModel.isSubmit == 'true')
+                              ApprobationDevis(
+                                devisModel: widget.devisModel,
+                                controller: controller,
+                                profilController: profilController,
+                                state: state!,
+                              )
                           ],
                         ),
                       ))))
@@ -297,20 +296,23 @@ class _DetailDevisState extends State<DetailDevis> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de faire cette action ?'),
+          title: const Text('Etes-vous sûr de faire cette action ?',
+              style: TextStyle(color: Colors.red)),
           content: const Text(
               'Cette action permet de permet de mettre ce fichier en corbeille.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () {
                 controller.devisAPi.deleteData(widget.devisModel.id!);
                 Navigator.pop(context);
               },
-              child: const Text('OK'),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),
@@ -430,14 +432,155 @@ class _DetailDevisState extends State<DetailDevis> {
               onPressed: () => Navigator.pop(context),
               child: const Text('Annuler'),
             ),
-           Obx(() => TextButton(
-              onPressed: () {
-                devisListObjetController.submitObjet(widget.devisModel);
-              },
+            Obx(
+              () => TextButton(
+                onPressed: () {
+                  devisListObjetController.submitObjet(widget.devisModel);
+                  Navigator.pop(context, 'ok');
+                },
+                child: devisListObjetController.isLoading
+                    ? loadingMini()
+                    : const Text('OK'),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget editObjetDevis(DevisListObjetsModel devisListObjetsModel) {
+    return IconButton(
+      tooltip: "Modification objet",
+      icon: const Icon(
+        Icons.edit,
+        color: Colors.purple,
+      ),
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Modification', style: TextStyle(color: mainColor)),
+          content: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            devisListObjetController.quantity =
+                double.parse(devisListObjetsModel.quantity);
+            devisListObjetController.designationController =
+                TextEditingController(text: devisListObjetsModel.designation);
+            devisListObjetController.montantUnitaire =
+                double.parse(devisListObjetsModel.montantUnitaire);
+
+            devisListObjetController.montantGlobal =
+                devisListObjetController.quantity *
+                    devisListObjetController.montantUnitaire;
+            return SizedBox(
+              height: 200,
+              width: 500,
               child: devisListObjetController.isLoading
-                  ? loadingMini()
-                  : const Text('OK'),
-            ),)  
+                  ? loading()
+                  : Form(
+                      key: devisListObjetController.formKey,
+                      child: Column(
+                        children: [
+                          ResponsiveChildWidget(
+                              flex1: 1,
+                              flex2: 3,
+                              child1: Container(
+                                  margin: const EdgeInsets.only(
+                                      bottom: p20, left: p20),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      labelText: 'Quantité',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        devisListObjetController.quantity =
+                                            (value == "")
+                                                ? 1
+                                                : double.parse(value);
+                                      });
+                                    },
+                                  )),
+                              child2: Container(
+                                  margin: const EdgeInsets.only(
+                                      bottom: p20, left: p20),
+                                  child: TextFormField(
+                                    controller: devisListObjetController
+                                        .designationController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      labelText: 'Désignation',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                  ))),
+                          ResponsiveChildWidget(
+                              child1: Container(
+                                  margin: const EdgeInsets.only(
+                                      bottom: p20, left: p20),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      labelText: 'Montant unitaire',
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        devisListObjetController
+                                                .montantUnitaire =
+                                            (value == "")
+                                                ? 1
+                                                : double.parse(value);
+                                      });
+                                    },
+                                  )),
+                              child2: Container(
+                                  margin: const EdgeInsets.only(
+                                      bottom: p20, left: p20),
+                                  child: Column(
+                                    children: [
+                                      Text("Montant global",
+                                          style: TextStyle(
+                                              color: Colors.red.shade700)),
+                                      Text(
+                                          "${NumberFormat.decimalPattern('fr').format(double.parse(devisListObjetController.montantGlobal.toStringAsFixed(2)))} ${monnaieStorage.monney}",
+                                          style: TextStyle(
+                                              color: Colors.red.shade700)),
+                                    ],
+                                  )))
+                        ],
+                      ),
+                    ),
+            );
+          }),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler'),
+            ),
+            Obx(
+              () => TextButton(
+                onPressed: () {
+                  devisListObjetController
+                      .submitUpdateObjet(devisListObjetsModel);
+                },
+                child: devisListObjetController.isLoading
+                    ? loadingMini()
+                    : const Text('OK'),
+              ),
+            )
           ],
         ),
       ),
@@ -450,10 +593,11 @@ class _DetailDevisState extends State<DetailDevis> {
       border: TableBorder.all(color: mainColor),
       columnWidths: const {
         0: FixedColumnWidth(50.0), // fixed to 100 width
-        1: FlexColumnWidth(300.0),
+        1: FlexColumnWidth(200.0),
         2: FixedColumnWidth(150.0), //fixed to 100 width
         3: FixedColumnWidth(150.0),
         4: FixedColumnWidth(50.0),
+        5: FixedColumnWidth(50.0)
       },
       children: [
         tableDevisHeader(),
@@ -514,14 +658,30 @@ class _DetailDevisState extends State<DetailDevis> {
         ),
         if (widget.devisModel.isSubmit == 'false')
           Container(
+              padding: const EdgeInsets.all(16.0 * 0.75),
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: mainColor)),
+              child: editObjetDevis(devisListObjetsModel)),
+        if (widget.devisModel.isSubmit == 'false')
+          Container(
             padding: const EdgeInsets.all(16.0 * 0.75),
-            child: Obx(() => controller.isLoading
+            child: Obx(() => devisListObjetController.isLoading
                 ? loadingMini()
                 : IconButton(
-                onPressed: () {
-                  devisListObjetController.deleteData(devisListObjetsModel.id!);
-                },
-                icon: const Icon(Icons.delete, color: Colors.red))),
+                    onPressed: () {
+                      devisListObjetController
+                          .deleteData(devisListObjetsModel.id!);
+                      print("id ${devisListObjetsModel.id!} ");
+                    },
+                    icon: const Icon(Icons.delete, color: Colors.red))),
+          ),
+        if (widget.devisModel.isSubmit == 'true')
+          Container(
+            padding: const EdgeInsets.all(16.0 * 0.75),
+            child: const Icon(
+              Icons.indeterminate_check_box,
+              color: Colors.green,
+            ),
           ),
         if (widget.devisModel.isSubmit == 'true')
           Container(
@@ -577,6 +737,15 @@ class _DetailDevisState extends State<DetailDevis> {
         //     BoxDecoration(border: Border.all(color: mainColor)),
         child: AutoSizeText(
           "Montant global".toUpperCase(),
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          style: bodyMedium.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(16.0 * 0.75),
+        child: AutoSizeText(
+          "Edit",
           maxLines: 1,
           textAlign: TextAlign.center,
           style: bodyMedium.copyWith(fontWeight: FontWeight.bold),

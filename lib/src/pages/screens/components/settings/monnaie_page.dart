@@ -134,7 +134,6 @@ class _MonnaiePageState extends State<MonnaiePage> {
                               } else if (monnaie.isActive == 'false') {
                                 isActive = false;
                               }
-                              print("${monnaie.monnaie} $isActive");
                               return Card(
                                   child: Padding(
                                 padding: const EdgeInsets.all(p8),

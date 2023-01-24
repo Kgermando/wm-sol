@@ -8,6 +8,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/marketing/controller/agenda/agenda_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/models/marketing/agenda_model.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class DetailAgenda extends StatefulWidget {
@@ -143,18 +144,19 @@ class _DetailAgendaState extends State<DetailAgenda> {
         context: context,
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Etes-vous sûr de supprimé ceci?'),
-          content: const Text(
-              'Cette action permet de supprimer définitivement ce document.'),
+          content: Obx(() => controller.isLoading ? loading() : const Text(
+              'Cette action permet de supprimer définitivement ce document.')) ,
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Annuler'),
+              child: const Text('Annuler', style: TextStyle(color: Colors.red)),
             ),
             TextButton(
               onPressed: () async {
                 controller.deleteData(widget.agendaColor.agendaModel.id!);
+                Navigator.pop(context, 'ok');
               },
-              child: const Text('OK'),
+              child: const Text('OK', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),

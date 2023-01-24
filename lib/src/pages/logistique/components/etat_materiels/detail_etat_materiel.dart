@@ -37,136 +37,124 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.etatMaterielModel.nom),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+      key: scaffoldKey,
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.etatMaterielModel.nom),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        const TitleWidget(
+                                            title: "Etat Materiel"),
+                                        Column(
                                           children: [
-                                            const TitleWidget(
-                                                title: "Etat Materiel"),
                                             Column(
                                               children: [
-                                                Column(
-                                                  children: [ 
-                                                      Row(
-                                                        children: [
-                                                          IconButton(
-                                                            tooltip:
-                                                                'Actualiser',
-                                                            onPressed:
-                                                                () async {
-                                                              refresh().then((value) =>
-                                                                  Navigator.pushNamed(
-                                                                      context,
-                                                                      LogistiqueRoutes
-                                                                          .logEtatMaterielDetail,
-                                                                      arguments:
-                                                                          value));
-                                                            },
-                                                            icon: const Icon(
-                                                                Icons.refresh,
-                                                                color: Colors
-                                                                    .green)),
-                                                       if (widget.etatMaterielModel
+                                                Row(
+                                                  children: [
+                                                    IconButton(
+                                                        tooltip: 'Actualiser',
+                                                        onPressed: () async {
+                                                          refresh().then((value) =>
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  LogistiqueRoutes
+                                                                      .logEtatMaterielDetail,
+                                                                  arguments:
+                                                                      value));
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.refresh,
+                                                            color:
+                                                                Colors.green)),
+                                                    if (widget.etatMaterielModel
                                                             .approbationDD !=
                                                         "Approved")
-                                                          IconButton(
-                                                              tooltip:
-                                                                  'Modifier',
-                                                              onPressed: () {
-                                                                Get.toNamed(
-                                                                    LogistiqueRoutes
-                                                                        .logEtatMaterielUpdate,
-                                                                    arguments:
-                                                                        widget
-                                                                            .etatMaterielModel);
-                                                              },
-                                                              icon: const Icon(
-                                                                  Icons.edit)),
-                                                          if (widget.etatMaterielModel
+                                                      IconButton(
+                                                          tooltip: 'Modifier',
+                                                          onPressed: () {
+                                                            Get.toNamed(
+                                                                LogistiqueRoutes
+                                                                    .logEtatMaterielUpdate,
+                                                                arguments: widget
+                                                                    .etatMaterielModel);
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.edit)),
+                                                    if (widget.etatMaterielModel
                                                             .approbationDD !=
                                                         "Approved")
-                                                          IconButton(
-                                                              tooltip:
-                                                                  'Supprimer',
-                                                              onPressed:
-                                                                  () async {
-                                                                alertDeleteDialog();
-                                                              },
-                                                              icon: const Icon(
-                                                                  Icons.delete),
-                                                              color: Colors.red
-                                                                  .shade700),
-                                                        ],
-                                                      ),
-                                                    SelectableText(
-                                                        DateFormat(
-                                                                "dd-MM-yy HH:mm")
-                                                            .format(widget
-                                                                .etatMaterielModel
-                                                                .created),
-                                                        textAlign:
-                                                            TextAlign.start),
+                                                      IconButton(
+                                                          tooltip: 'Supprimer',
+                                                          onPressed: () async {
+                                                            alertDeleteDialog();
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.delete),
+                                                          color: Colors
+                                                              .red.shade700),
                                                   ],
                                                 ),
+                                                SelectableText(
+                                                    DateFormat("dd-MM-yy HH:mm")
+                                                        .format(widget
+                                                            .etatMaterielModel
+                                                            .created),
+                                                    textAlign: TextAlign.start),
                                               ],
-                                            )
+                                            ),
                                           ],
-                                        ),
-                                        dataWidget(),
-                                        const SizedBox(height: p20),
-                                        ApprobationEtatMateriel(
-                                            data: widget.etatMaterielModel,
-                                            controller: controller,
-                                            profilController: profilController)
+                                        )
                                       ],
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ))) )
-                ],
-              ),
-            )
-    
-    
-    ;
+                                    dataWidget(),
+                                    const SizedBox(height: p20),
+                                    ApprobationEtatMateriel(
+                                        data: widget.etatMaterielModel,
+                                        controller: controller,
+                                        profilController: profilController)
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   alertDeleteDialog() {
@@ -192,8 +180,11 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
                   onPressed: () {
                     controller.etatMaterielApi
                         .deleteData(widget.etatMaterielModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );
@@ -244,7 +235,8 @@ class _DetailEtatMaterielState extends State<DetailEtatMateriel> {
             color: mainColor,
           ),
           if (profilController.user.fonctionOccupe ==
-              "Directeur de departement" && widget.etatMaterielModel.approbationDD == "Approved")
+                  "Directeur de departement" &&
+              widget.etatMaterielModel.approbationDD == "Approved")
             ResponsiveChildWidget(
                 child1: Text('Changez Statut :',
                     textAlign: TextAlign.start,

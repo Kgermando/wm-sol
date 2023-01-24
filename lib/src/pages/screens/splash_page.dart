@@ -10,7 +10,8 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     final sized = MediaQuery.of(context).size;
     return Scaffold(
-      body: (controller.networkController.connectionStatus == 1) ? Center(
+      body: (controller.networkController.connectionStatus == 0) ? noNetworkWidget(context)
+            : (controller.networkController.connectionStatus == 1) ? Center(
         child: Column(
           children: [
             Expanded(
@@ -24,3 +25,4 @@ class SplashView extends GetView<SplashController> {
     );
   }
 }
+

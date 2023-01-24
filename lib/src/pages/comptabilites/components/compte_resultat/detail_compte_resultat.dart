@@ -13,6 +13,7 @@ import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/a
 import 'package:wm_solution/src/pages/comptabilites/components/compte_resultat/compte_resultat_pdf.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/compte_resultat/compte_resultat_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -45,7 +46,6 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
         await controller.detailView(widget.compteResulatsModel.id!);
     return dataItem;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,9 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                           IconButton(
                               onPressed: () async {
                                 refresh().then((value) => Navigator.pushNamed(
-                                    context, ComptabiliteRoutes.comptabiliteCompteResultatDetail,
+                                    context,
+                                    ComptabiliteRoutes
+                                        .comptabiliteCompteResultatDetail,
                                     arguments: value));
                               },
                               icon: const Icon(Icons.refresh,
@@ -126,7 +128,8 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                                     totalGeneralCharges,
                                     totalProduits1,
                                     totalProduits123,
-                                    totalGeneralProduits, monnaieStorage);
+                                    totalGeneralProduits,
+                                    monnaieStorage);
                               }),
                         ],
                       ),
@@ -199,7 +202,9 @@ class _DetailCompteResultatState extends State<DetailCompteResultat> {
                     .then((value) => Navigator.of(context).pop());
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

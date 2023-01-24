@@ -39,143 +39,138 @@ class _DetailMaterielState extends State<DetailMateriel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.materielModel.identifiant),
-              drawer: const DrawerMenu(),
-              floatingActionButton: (widget.materielModel.typeMateriel == 'Materiel roulant') 
-                  ? FloatingActionButton.extended(
-                      label: const Text("Ajouter un trajet"),
-                      tooltip: "Ajouter un nouveau trajet",
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        Get.toNamed(LogistiqueRoutes.logAddTrajetAuto,
-                            arguments: widget.materielModel);
-                      },
-                    ) 
-                : Container(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) =>  SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.materielModel.identifiant),
+      drawer: const DrawerMenu(),
+      floatingActionButton:
+          (widget.materielModel.typeMateriel == 'Materiel roulant')
+              ? FloatingActionButton.extended(
+                  label: const Text("Ajouter un trajet"),
+                  tooltip: "Ajouter un nouveau trajet",
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    Get.toNamed(LogistiqueRoutes.logAddTrajetAuto,
+                        arguments: widget.materielModel);
+                  },
+                )
+              : Container(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        if (!Responsive.isMobile(context))
+                                          const TitleWidget(title: "Materiel"),
+                                        Column(
                                           children: [
-                                            if(!Responsive.isMobile(context))
-                                            const TitleWidget(title: "Materiel"),
-                                            Column(
+                                            Row(
                                               children: [
-                                               
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          tooltip: 'Actualiser',
-                                                          onPressed: () async {
-                                                            refresh().then((value) =>
-                                                                Navigator.pushNamed(
-                                                                    context,
-                                                                    LogistiqueRoutes
-                                                                        .logMaterielDetail,
-                                                                    arguments:
-                                                                        value));
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.refresh,
-                                                              color: Colors
-                                                                  .green)),
-                                                      if (widget.materielModel
-                                                        .approbationDD !=
-                                                    "Approved")     IconButton(
-                                                          tooltip: 'Modifier',
-                                                          onPressed: () {
-                                                            Get.toNamed(
-                                                                LogistiqueRoutes
-                                                                    .logMaterielUpdate,
-                                                                arguments: widget
-                                                                    .materielModel);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.edit)),
-                                                      if (widget.materielModel
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              LogistiqueRoutes
+                                                                  .logMaterielDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                if (widget.materielModel
                                                         .approbationDD !=
                                                     "Approved")
                                                   IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog();
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color: Colors
-                                                              .red.shade700),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .materielModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                      tooltip: 'Modifier',
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            LogistiqueRoutes
+                                                                .logMaterielUpdate,
+                                                            arguments: widget
+                                                                .materielModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.edit)),
+                                                if (widget.materielModel
+                                                        .approbationDD !=
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Supprimer',
+                                                      onPressed: () async {
+                                                        alertDeleteDialog();
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color:
+                                                          Colors.red.shade700),
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy HH:mm")
+                                                    .format(widget
+                                                        .materielModel.created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        dataWidget()
+                                        )
                                       ],
                                     ),
-                                  ),
+                                    dataWidget()
+                                  ],
                                 ),
-                                if (widget.materielModel.typeMateriel ==
-                                    'Materiel roulant')
-                                const SizedBox(height: p20),
-                                if (widget.materielModel.typeMateriel ==
-                                    'Materiel roulant')
-                                TableTrajetRoulant(controller: trajetController, materielModel: widget.materielModel),
-                                const SizedBox(height: p20),
-                                ApprobationMateriel(
-                                    data: widget.materielModel,
-                                    controller: controller,
-                                    profilController: profilController)
-                              ],
+                              ),
                             ),
-                          ))))
-                ],
-              ),
-            )
-    
-    
-    
-    ;
+                            if (widget.materielModel.typeMateriel ==
+                                'Materiel roulant')
+                              const SizedBox(height: p20),
+                            if (widget.materielModel.typeMateriel ==
+                                'Materiel roulant')
+                              TableTrajetRoulant(
+                                  controller: trajetController,
+                                  materielModel: widget.materielModel),
+                            const SizedBox(height: p20),
+                            ApprobationMateriel(
+                                data: widget.materielModel,
+                                controller: controller,
+                                profilController: profilController)
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   alertDeleteDialog() {
@@ -198,10 +193,13 @@ class _DetailMaterielState extends State<DetailMateriel> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.materielsApi
+                    controller
                         .deleteData(widget.materielModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );

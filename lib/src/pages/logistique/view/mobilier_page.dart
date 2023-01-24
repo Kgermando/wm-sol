@@ -72,7 +72,7 @@ class _MobilierPageState extends State<MobilierPage> {
               content: SizedBox(
                   height: Responsive.isDesktop(context) ? 350 : 550,
                   width: 500,
-                  child: controller.isLoading
+                  child: Obx(() => controller.isLoading
                       ? loading()
                       : Form(
                           key: controller.formKey,
@@ -89,13 +89,13 @@ class _MobilierPageState extends State<MobilierPage> {
                                 height: p20,
                               ),
                             ],
-                          ))),
+                          ))) ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
                   child: const Text('Annuler'),
                 ),
-                TextButton(
+               TextButton(
                   onPressed: () {
                     final form = controller.formKey.currentState!;
                     if (form.validate()) {
@@ -105,7 +105,7 @@ class _MobilierPageState extends State<MobilierPage> {
                     }
                   },
                   child: const Text('OK'),
-                ),
+                ) ,
               ],
             );
           });

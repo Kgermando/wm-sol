@@ -115,7 +115,7 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.entretienController.entretienList
-        .where((element) => element.approbationDD == '-')
+        .where((element) => element.approbationDD == '-' && element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
     for (var item in dataList) {

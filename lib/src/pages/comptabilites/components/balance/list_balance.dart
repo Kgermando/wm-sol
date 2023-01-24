@@ -19,7 +19,7 @@ class ListBalance extends StatefulWidget {
 
 class _ListBalanceState extends State<ListBalance> {
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -271,7 +271,7 @@ class _ListBalanceState extends State<ListBalance> {
   //               widget.controller.deleteData(id);
   //               Navigator.pop(context, 'ok');
   //             },
-  //             child: const Text('OK', style: TextStyle(color: Colors.red)),
+  //             child: Obx(() => controller.isLoading ? loading() : const Text('OK', style: TextStyle(color: Colors.red))),
   //           ),
   //         ],
   //       ),

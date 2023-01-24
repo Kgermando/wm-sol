@@ -297,7 +297,9 @@ class _DetailTacheState extends State<DetailTache> {
               onPressed: () {
                 controller.deleteData(widget.tacheModel.id!);
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

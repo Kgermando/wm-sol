@@ -193,7 +193,9 @@ class _ViewCampaignState extends State<ViewCampaign> {
               onPressed: () {
                 controller.deleteData(widget.campaignModel.id!);
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

@@ -97,7 +97,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(controller.soldeDette)} ${monnaieStorage.monney}",
-                                      title: 'Dette',
+                                      title: 'Dettes',
                                       icon: Icons.blur_linear_rounded,
                                       color: Colors.red.shade700),
                                   DashNumberWidget(
@@ -107,7 +107,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       },
                                       number:
                                           "${NumberFormat.decimalPattern('fr').format(controller.soldeCreance)} ${monnaieStorage.monney}",
-                                      title: 'Créance',
+                                      title: 'Créances',
                                       icon: Icons.money_off_csred,
                                       color: Colors.deepOrange.shade700),
                                   DashNumberWidget(

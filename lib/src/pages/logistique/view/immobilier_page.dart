@@ -74,7 +74,9 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
               content: SizedBox(
                   height: Responsive.isDesktop(context) ? 350 : 600,
                   width: 500,
-                  child: Form(
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : Form(
                       key: controller.formKey,
                       child: Column(
                         children: [
@@ -90,7 +92,7 @@ class _ImmobilierPageState extends State<ImmobilierPage> {
                             height: p20,
                           ),
                         ],
-                      ))),
+                      )))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),

@@ -302,6 +302,7 @@ class _DetailApprovisionnementState extends State<DetailApprovisionnement> {
                           .submitRavitaillement(widget.approvisionnementModel);
                       form.reset();
                     }
+                    Navigator.pop(context, 'ok');
                   },
                   child: const Text('OK'),
                 ),

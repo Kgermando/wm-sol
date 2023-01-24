@@ -15,7 +15,7 @@ class DevisListObjetController extends GetxController
   bool get isLoading => _isLoading.value;
 
   double quantity = 0.0;
-  final TextEditingController designationController = TextEditingController();
+  TextEditingController designationController = TextEditingController();
   double montantUnitaire = 0.0;
   double montantGlobal = 0.0;
 
@@ -37,6 +37,7 @@ class DevisListObjetController extends GetxController
 
   void getList() async {
     devisListObjetsApi.getAllData().then((response) {
+      devisListObjetList.clear();
       devisListObjetList.assignAll(response);
       change(response, status: RxStatus.success());
     }, onError: (err) {
@@ -55,7 +56,6 @@ class DevisListObjetController extends GetxController
       await devisListObjetsApi.deleteData(id).then((value) {
         devisListObjetList.clear();
         getList();
-        // Get.back();
         Get.snackbar("Supprimé avec succès!", "Cet élément a bien été supprimé",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
@@ -73,11 +73,12 @@ class DevisListObjetController extends GetxController
 
   Future<void> submitObjet(DevisModel data) async {
     try {
-      montantGlobal = quantity * montantUnitaire;
+      double qty = (quantity == 0) ? 1 : quantity;
+      montantGlobal = qty * montantUnitaire;
       final devisListObjetsModel = DevisListObjetsModel(
         reference: data.id!,
         title: data.title,
-        quantity: quantity.toString(),
+        quantity: qty.toString(),
         designation: designationController.text,
         montantUnitaire: montantUnitaire.toString(),
         montantGlobal: montantGlobal.toString(),
@@ -105,11 +106,13 @@ class DevisListObjetController extends GetxController
 
   Future<void> submitUpdateObjet(DevisListObjetsModel data) async {
     try {
-      montantGlobal = quantity * montantUnitaire;
+      double qty = (quantity == 0) ? 1 : quantity;
+      montantGlobal = qty * montantUnitaire;
       final devisListObjetsModel = DevisListObjetsModel(
+        id: data.id,
         reference: data.reference,
         title: data.title,
-        quantity: quantity.toString(),
+        quantity: qty.toString(),
         designation: designationController.text,
         montantUnitaire: montantUnitaire.toString(),
         montantGlobal: montantGlobal.toString(),
@@ -120,7 +123,7 @@ class DevisListObjetController extends GetxController
         getList();
         Get.back();
         Get.snackbar(
-            "objet Modifié avec succès!", "Le document a bien été soumis",
+            "Objet Modifié avec succès!", "Le document a bien été soumis",
             backgroundColor: Colors.green,
             icon: const Icon(Icons.check),
             snackPosition: SnackPosition.TOP);

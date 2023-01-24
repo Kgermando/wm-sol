@@ -12,6 +12,7 @@ import 'package:wm_solution/src/pages/commercial/components/commercial/succursal
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/succursale/succursale_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
@@ -174,7 +175,9 @@ class _DetailSuccursaleState extends State<DetailSuccursale> {
                 controller.deleteData(widget.succursaleModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

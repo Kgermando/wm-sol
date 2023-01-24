@@ -23,139 +23,132 @@ class DetailImmobilier extends StatefulWidget {
 }
 
 class _DetailImmobilierState extends State<DetailImmobilier> {
-    final ImmobilierController controller = Get.put(ImmobilierController());
+  final ImmobilierController controller = Get.put(ImmobilierController());
   final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
-    Future<ImmobilierModel> refresh() async {
+  Future<ImmobilierModel> refresh() async {
     final ImmobilierModel dataItem =
         await controller.detailView(widget.immobilierModel.id!);
     return dataItem;
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.immobilierModel.typeAllocation),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.immobilierModel.typeAllocation),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        const TitleWidget(title: "Immobilier"),
+                                        Column(
                                           children: [
-                                            const TitleWidget(
-                                                title: "Immobilier"),
-                                            Column(
+                                            Row(
                                               children: [
-                                                
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          tooltip: 'Actualiser',
-                                                          onPressed: () async {
-                                                            refresh().then((value) =>
-                                                                Navigator.pushNamed(
-                                                                    context,
-                                                                    LogistiqueRoutes
-                                                                        .logImmobilierMaterielDetail,
-                                                                    arguments:
-                                                                        value));
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.refresh,
-                                                              color: Colors
-                                                                  .green)),
-                                                    if (widget.immobilierModel
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              LogistiqueRoutes
+                                                                  .logImmobilierMaterielDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                if (widget.immobilierModel
                                                         .approbationDD !=
-                                                    "Approved") IconButton(
-                                                          tooltip: 'Modifier',
-                                                          onPressed: () {
-                                                            Get.toNamed(
-                                                                LogistiqueRoutes
-                                                                    .logImmobilierMaterielUpdate,
-                                                                arguments: widget
-                                                                    .immobilierModel);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.edit)),
-                                                    if (widget.immobilierModel
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Modifier',
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            LogistiqueRoutes
+                                                                .logImmobilierMaterielUpdate,
+                                                            arguments: widget
+                                                                .immobilierModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.edit)),
+                                                if (widget.immobilierModel
                                                         .approbationDD !=
-                                                    "Approved") IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog(
-                                                                controller);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color: Colors
-                                                              .red.shade700),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yyyy")
-                                                        .format(widget
-                                                            .immobilierModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Supprimer',
+                                                      onPressed: () async {
+                                                        alertDeleteDialog(
+                                                            controller);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color:
+                                                          Colors.red.shade700),
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy").format(
+                                                    widget.immobilierModel
+                                                        .created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        dataWidget()
+                                        )
                                       ],
                                     ),
-                                  ),
+                                    dataWidget()
+                                  ],
                                 ),
-                                const SizedBox(height: p20),
-                                ApprobationImmobilier(
-                                    data: widget.immobilierModel,
-                                    controller: controller,
-                                    profilController: profilController)
-                              ],
+                              ),
                             ),
-                          ))) )
-                ],
-              ),
-            )
-    
-    
-    
-    ;
+                            const SizedBox(height: p20),
+                            ApprobationImmobilier(
+                                data: widget.immobilierModel,
+                                controller: controller,
+                                profilController: profilController)
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   alertDeleteDialog(ImmobilierController controller) {
@@ -170,7 +163,7 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
               content: const SizedBox(
                   height: 100,
                   width: 100,
-                  child: Text("Cette action permet de supprimer le document")),
+                  child: Text("Cette action permet de supprimer le document.")),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -179,10 +172,12 @@ class _DetailImmobilierState extends State<DetailImmobilier> {
                 ),
                 TextButton(
                   onPressed: () {
-                    controller.immobilierApi
-                        .deleteData(widget.immobilierModel.id!);
+                    controller.deleteData(widget.immobilierModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );

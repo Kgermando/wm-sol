@@ -660,7 +660,11 @@ class _ApprobationCampaignState extends State<ApprobationCampaign> {
         Get.put(LignBudgetaireController());
     List<String> dataList = [];
 
-    return lignBudgetaireController.obx((ligne) {
+    return lignBudgetaireController.obx(
+      onLoading: loadingPage(context),
+      onEmpty: const Text('Aucune donnée'),
+      onError: (error) => loadingError(context, error!),
+      (ligne) {
       dataList = ligne!
           .where((p0) {
             double sortieTotal =

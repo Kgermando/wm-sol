@@ -11,6 +11,7 @@ import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/personnels_roles/components/personnels_roles_xlsx.dart';
 import 'package:wm_solution/src/pages/personnels_roles/controller/personnels_roles_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/print_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -23,7 +24,8 @@ class TablePersonnelsRolesFilter extends StatefulWidget {
       required this.departement,
       required this.id,
       required this.route,
-       this.argument1, this.argument2});
+      this.argument1,
+      this.argument2});
   final List<AgentRoleModel> state;
   final PersonnelsController personnelsController;
   final PersonnelsRolesController personnelsRolesController;
@@ -80,13 +82,12 @@ class _TablePersonnelsRolesFilterState
                             widget.personnelsRolesController.getList();
                             if (widget.departement == 'Exploitations') {
                               Navigator.pushNamed(context, widget.route,
-                                arguments: widget.argument1);
+                                  arguments: widget.argument1);
                             }
                             if (widget.departement == 'Marketing') {
                               Navigator.pushNamed(context, widget.route,
                                   arguments: widget.argument2);
                             }
-                            
                           });
                         },
                         icon: const Icon(Icons.refresh, color: Colors.green)),
@@ -233,7 +234,9 @@ class _TablePersonnelsRolesFilterState
                 widget.personnelsRolesController.deleteData(id);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => widget.personnelsRolesController.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
+import 'package:wm_solution/src/controllers/network_controller.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
 // import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 // import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
@@ -92,7 +93,8 @@ import 'package:wm_solution/src/pages/screens/controller/splash_controller.dart'
 
 class WMBindings extends Bindings {
   @override
-  void dependencies() async {
+  void dependencies() async { 
+    Get.put<NetworkController>(NetworkController());
     Get.put<SplashController>(SplashController());
     // Get.put<ProfilController>(ProfilController());
     // Get.put<UsersController>(UsersController());

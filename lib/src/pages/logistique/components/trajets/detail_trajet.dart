@@ -39,10 +39,12 @@ class _DetailTrajetState extends State<DetailTrajet> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: headerBar(
-          context, scaffoldKey, title, widget.trajetModel.conducteur),
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.trajetModel.conducteur),
       drawer: const DrawerMenu(),
-      floatingActionButton: (widget.trajetModel.approbationDD == "Approved") ? addKMRetourButton() : Container(),
+      floatingActionButton: (widget.trajetModel.approbationDD == "Approved")
+          ? addKMRetourButton()
+          : Container(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,95 +54,90 @@ class _DetailTrajetState extends State<DetailTrajet> {
           Expanded(
               flex: 5,
               child: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: p20),
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const TitleWidget(title: "Trajet"),
-                                    Column(
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        
-                                          Row(
-                                            children: [
-                                              IconButton(
-                                                  tooltip: 'Actualiser',
-                                                  onPressed: () async {
-                                                    refresh().then((value) =>
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            LogistiqueRoutes
-                                                                .logTrajetAutoDetail,
-                                                            arguments:
-                                                                value));
-                                                  },
-                                                  icon: const Icon(
-                                                      Icons.refresh,
-                                                      color: Colors
-                                                          .green)),
-                                              if (widget.trajetModel
-                                                .approbationDD !=
-                                            "Approved") IconButton(
-                                                  tooltip: 'Supprimer',
-                                                  onPressed: () async {
-                                                    alertDeleteDialog();
-                                                  },
-                                                  icon: const Icon(
-                                                      Icons.delete),
-                                                  color:
-                                                      Colors.red.shade700),
-                                            ],
-                                          ),
-                                        SelectableText(
-                                            DateFormat("dd-MM-yy HH:mm")
-                                                .format(widget
-                                                    .trajetModel
-                                                    .created),
-                                            textAlign: TextAlign.start),
+                                        const TitleWidget(title: "Trajet"),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    onPressed: () async {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              LogistiqueRoutes
+                                                                  .logTrajetAutoDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh,
+                                                        color: Colors.green)),
+                                                if (widget.trajetModel
+                                                        .approbationDD !=
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Supprimer',
+                                                      onPressed: () async {
+                                                        alertDeleteDialog();
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color:
+                                                          Colors.red.shade700),
+                                              ],
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yy HH:mm")
+                                                    .format(widget
+                                                        .trajetModel.created),
+                                                textAlign: TextAlign.start),
+                                          ],
+                                        )
                                       ],
-                                    )
+                                    ),
+                                    dataWidget()
                                   ],
                                 ),
-                                dataWidget()
-                              ],
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: p20),
+                            ApprobationTrajet(
+                                data: widget.trajetModel,
+                                controller: controller,
+                                profilController: profilController)
+                          ],
                         ),
-                        const SizedBox(height: p20),
-                        ApprobationTrajet(
-                            data: widget.trajetModel,
-                            controller: controller,
-                            profilController: profilController)
-                      ],
-                    ),
-                  ))) )
+                      ))))
         ],
       ),
-    )
-    
-    ;
+    );
   }
 
   alertDeleteDialog() {
@@ -164,9 +161,12 @@ class _DetailTrajetState extends State<DetailTrajet> {
                 ),
                 TextButton(
                   onPressed: () async {
-                    controller.trajetApi.deleteData(widget.trajetModel.id!);
+                    controller.deleteData(widget.trajetModel.id!);
+                    Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );
@@ -267,8 +267,8 @@ class _DetailTrajetState extends State<DetailTrajet> {
               child: TextFormField(
                 controller: controller.kilometrageRetourController,
                 decoration: InputDecoration(
-                  border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
                   labelText: 'kilometrage retour',
                 ),
                 keyboardType: TextInputType.number,

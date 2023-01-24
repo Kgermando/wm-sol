@@ -9,6 +9,7 @@ import 'package:wm_solution/src/pages/archives/controller/archive_controller.dar
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class TableArchive extends StatefulWidget {
@@ -246,7 +247,9 @@ class _TableArchiveState extends State<TableArchive> {
                     .deleteData(widget.archiveFolderModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => widget.controllerFolder.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

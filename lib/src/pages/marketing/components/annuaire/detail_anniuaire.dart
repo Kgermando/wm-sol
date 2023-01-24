@@ -11,6 +11,7 @@ import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 
 class DetailAnnuaire extends StatefulWidget {
   const DetailAnnuaire({super.key, required this.annuaireColor});
@@ -143,16 +144,16 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
                                                 children: [
                                                   IconButton(
                                                       onPressed: controller
-                                                        .hasCallSupport
-                                                    ? () => setState(() {
-                                                      controller
-                                                              .launched =
-                                                          controller.makePhoneCall(widget
-                                                              .annuaireColor
-                                                              .annuaireModel
-                                                              .mobile1);
+                                                              .hasCallSupport
+                                                          ? () => setState(() {
+                                                                controller
+                                                                        .launched =
+                                                                    controller.makePhoneCall(widget
+                                                                        .annuaireColor
+                                                                        .annuaireModel
+                                                                        .mobile1);
                                                               })
-                                                      : null,
+                                                          : null,
                                                       icon: const Icon(
                                                         Icons.call,
                                                         size: 40.0,
@@ -350,7 +351,8 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Etes-vous sûr de supprimé ceci?', style: TextStyle(color: Colors.red)),
+          title: const Text('Etes-vous sûr de supprimé ceci?',
+              style: TextStyle(color: Colors.red)),
           content: const Text(
               'Cette action permet de supprimer définitivement ce document.'),
           actions: <Widget>[
@@ -361,8 +363,11 @@ class _DetailAnnuaireState extends State<DetailAnnuaire> {
             TextButton(
               onPressed: () {
                 controller.deleteData(widget.annuaireColor.annuaireModel.id!);
+                Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

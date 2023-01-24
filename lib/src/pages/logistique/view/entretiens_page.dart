@@ -227,6 +227,7 @@ class _EntretiensPageState extends State<EntretiensPage> {
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
             labelText: 'Durée Travaux',
+            hintText: '3 jours'
           ),
           keyboardType: TextInputType.text,
           style: const TextStyle(),

@@ -36,7 +36,6 @@ class _DetailEntretienState extends State<DetailEntretien> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
-  
   Future<EntretienModel> refresh() async {
     final EntretienModel dataItem =
         await controller.detailView(widget.entretienModel.id!);
@@ -46,144 +45,136 @@ class _DetailEntretienState extends State<DetailEntretien> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(
-                  context, scaffoldKey, title, widget.entretienModel.nom),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: objetRemplaceController.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, widget.entretienModel.nom),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: objetRemplaceController.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        const TitleWidget(
+                                            title: "Fiche d'entretien"),
+                                        Column(
                                           children: [
-                                            const TitleWidget(
-                                                title: "Fiche d'entretien"),
-                                            Column(
-                                              children: [ 
-                                                  Row(
-                                                    children: [
-                                                      IconButton(
-                                                          tooltip: 'Actualiser',
-                                                          color: Colors
-                                                              .green.shade700,
-                                                          onPressed: () {
-                                                            refresh().then((value) =>
-                                                                Navigator.pushNamed(
-                                                                    context,
-                                                                    LogistiqueRoutes
-                                                                        .logEntretienDetail,
-                                                                    arguments:
-                                                                        value)); 
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.refresh)),
-                                                      if (widget.entretienModel
-                                                              .isSubmit ==
-                                                          'false')
-                                                        IconButton(
-                                                            tooltip:
-                                                                'Soumettre chez le DD',
-                                                            color: Colors
-                                                                .teal.shade700,
-                                                            onPressed: () {
-                                                              controller.sendDD(
-                                                                  widget
-                                                                      .entretienModel);
-                                                            },
-                                                            icon: const Icon(
-                                                                Icons.send)),
-                                                      if (widget.entretienModel
-                                                        .approbationDD !=
-                                                    "Approved")        
-                                                      IconButton(
-                                                          tooltip: 'Modifier',
-                                                          onPressed: () {
-                                                            Get.toNamed(
-                                                                LogistiqueRoutes
-                                                                    .logEntretienUpdate,
-                                                                arguments: widget
-                                                                    .entretienModel);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.edit)),
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    tooltip: 'Actualiser',
+                                                    color:
+                                                        Colors.green.shade700,
+                                                    onPressed: () {
+                                                      refresh().then((value) =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              LogistiqueRoutes
+                                                                  .logEntretienDetail,
+                                                              arguments:
+                                                                  value));
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.refresh)),
+                                                if (widget.entretienModel
+                                                        .isSubmit ==
+                                                    'false')
+                                                  IconButton(
+                                                      tooltip:
+                                                          'Soumettre chez le DD',
+                                                      color:
+                                                          Colors.teal.shade700,
+                                                      onPressed: () {
+                                                        controller.sendDD(widget
+                                                            .entretienModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.send)),
                                                 if (widget.entretienModel
                                                         .approbationDD !=
-                                                    "Approved") 
-                                                      IconButton(
-                                                          tooltip: 'Supprimer',
-                                                          onPressed: () async {
-                                                            alertDeleteDialog(
-                                                                controller);
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.delete),
-                                                          color: Colors
-                                                              .red.shade700),
-                                                    ],
-                                                  ),
-                                                SelectableText(
-                                                    DateFormat("dd-MM-yyyy")
-                                                        .format(widget
-                                                            .entretienModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Modifier',
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            LogistiqueRoutes
+                                                                .logEntretienUpdate,
+                                                            arguments: widget
+                                                                .entretienModel);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.edit)),
+                                                if (widget.entretienModel
+                                                        .approbationDD !=
+                                                    "Approved")
+                                                  IconButton(
+                                                      tooltip: 'Supprimer',
+                                                      onPressed: () async {
+                                                        alertDeleteDialog(
+                                                            controller);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete),
+                                                      color:
+                                                          Colors.red.shade700),
                                               ],
-                                            )
+                                            ),
+                                            SelectableText(
+                                                DateFormat("dd-MM-yyyy").format(
+                                                    widget.entretienModel
+                                                        .created),
+                                                textAlign: TextAlign.start),
                                           ],
-                                        ),
-                                        dataWidget()
+                                        )
                                       ],
                                     ),
-                                  ),
+                                    dataWidget()
+                                  ],
                                 ),
-                                const SizedBox(height: p20), 
-
-                                objetRemplaceWidget(objetRemplaceController),
-                                const SizedBox(height: p20),
-                                if (widget.entretienModel.isSubmit == 'true')
-                                  ApprobationEntretien(
-                                      data: widget.entretienModel,
-                                      controller: controller,
-                                      profilController: profilController)
-                              ],
+                              ),
                             ),
-                          ))) )
-                ],
-              ),
-            )
-    
-    
-    ;
+                            const SizedBox(height: p20),
+                            objetRemplaceWidget(objetRemplaceController),
+                            const SizedBox(height: p20),
+                            if (widget.entretienModel.isSubmit == 'true')
+                              ApprobationEntretien(
+                                  data: widget.entretienModel,
+                                  controller: controller,
+                                  profilController: profilController)
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   alertDeleteDialog(EntretienController controller) {
@@ -196,9 +187,10 @@ class _DetailEntretienState extends State<DetailEntretien> {
               title: const Text('Etes-vous sûr de vouloir faire ceci ?',
                   style: TextStyle(color: Colors.red)),
               content: const SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: Text("Cette action permet de supprimer le document")),
+                height: 100,
+                width: 100,
+                child:  Text("Cette action permet de supprimer le document")
+              ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -211,7 +203,9 @@ class _DetailEntretienState extends State<DetailEntretien> {
                         .deleteData(widget.entretienModel.id!);
                     Navigator.pop(context, 'ok');
                   },
-                  child: const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );
@@ -351,7 +345,8 @@ class _DetailEntretienState extends State<DetailEntretien> {
           TableRow(children: [
             Container(
               padding: const EdgeInsets.all(p10),
-              child: Text("Titre", textAlign: TextAlign.start, style: bodyMedium),
+              child:
+                  Text("Titre", textAlign: TextAlign.start, style: bodyMedium),
             ),
             Container(
               padding: const EdgeInsets.all(p10),
@@ -403,8 +398,8 @@ class _DetailEntretienState extends State<DetailEntretien> {
             TableRow(children: [
               Container(
                 padding: const EdgeInsets.all(p10),
-                child:
-                    Text("Titre", textAlign: TextAlign.start, style: bodyMedium),
+                child: Text("Titre",
+                    textAlign: TextAlign.start, style: bodyMedium),
               ),
               Container(
                 padding: const EdgeInsets.all(p10),

@@ -47,34 +47,34 @@ class _DetailBilanState extends State<DetailBilan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: headerBar(
-            context, scaffoldKey, title, widget.bilanModel.titleBilan),
-        drawer: const DrawerMenu(),
-        floatingActionButton: (widget.bilanModel.isSubmit == 'false' &&
-                widget.bilanModel.approbationDD == '-')
-            ? FloatingActionButton.extended(
-                label: const Text("Ajouter une écriture"),
-                tooltip: "Ecriture sur la feuille bilan",
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  newEcritureDialog(controller);
-                },
-              )
-            : Container(),
-        body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                  visible: !Responsive.isMobile(context),
-                  child: const Expanded(flex: 1, child: DrawerMenu())),
-              Expanded(
-                  flex: 5,
-                  child:  controller.obx(
-          onLoading: loadingPage(context),
-          onEmpty: const Text('Aucune donnée'),
-          onError: (error) => loadingError(context, error!),
-          (state) => SingleChildScrollView(
+      key: scaffoldKey,
+      appBar:
+          headerBar(context, scaffoldKey, title, widget.bilanModel.titleBilan),
+      drawer: const DrawerMenu(),
+      floatingActionButton: (widget.bilanModel.isSubmit == 'false' &&
+              widget.bilanModel.approbationDD == '-')
+          ? FloatingActionButton.extended(
+              label: const Text("Ajouter une écriture"),
+              tooltip: "Ecriture sur la feuille bilan",
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                newEcritureDialog(controller);
+              },
+            )
+          : Container(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
                       controller: ScrollController(),
                       physics: const ScrollPhysics(),
                       child: Container(
@@ -104,23 +104,19 @@ class _DetailBilanState extends State<DetailBilan> {
                                                           context,
                                                           ComptabiliteRoutes
                                                               .comptabiliteBilanDetail,
-                                                          arguments:
-                                                              value));
+                                                          arguments: value));
                                                 },
-                                                icon: const Icon(
-                                                    Icons.refresh,
+                                                icon: const Icon(Icons.refresh,
                                                     color: Colors.green)),
-                                            if (widget
-                                                    .bilanModel.isSubmit ==
+                                            if (widget.bilanModel.isSubmit ==
                                                 'false') // Uniqyement celui a remplit le document
                                               sendButton(),
-                                            if (widget.bilanModel
-                                                    .approbationDD ==
+                                            if (widget
+                                                    .bilanModel.approbationDD ==
                                                 "Unapproved")
                                               deleteButton(),
                                             PrintWidget(
-                                                tooltip:
-                                                    'Imprimer le document',
+                                                tooltip: 'Imprimer le document',
                                                 onPressed: () async {
                                                   await BilanPdf.generate(
                                                       widget.bilanModel,
@@ -134,8 +130,8 @@ class _DetailBilanState extends State<DetailBilan> {
                                         ),
                                         Text(
                                             DateFormat("dd-MM-yyyy HH:mm")
-                                                .format(widget
-                                                    .bilanModel.created),
+                                                .format(
+                                                    widget.bilanModel.created),
                                             textAlign: TextAlign.start),
                                       ],
                                     )
@@ -153,14 +149,10 @@ class _DetailBilanState extends State<DetailBilan> {
                                   profilController: profilController)
                           ],
                         ),
-                      ))
-        ) )
-            ],
-          ),
-        
-        
-        
-       );
+                      ))))
+        ],
+      ),
+    );
   }
 
   Widget dataWidget(List<CompteBilanRefModel> state) {
@@ -762,7 +754,9 @@ class _DetailBilanState extends State<DetailBilan> {
                 bilanController.deleteData(widget.bilanModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),

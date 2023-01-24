@@ -184,7 +184,9 @@ class _DetailPresenceState extends State<DetailPresence> {
                 controller.deleteData(widget.presenceModel.id!);
                 Navigator.pop(context, 'ok');
               },
-              child: const Text('OK', style: TextStyle(color: Colors.red)),
+              child: Obx(() => controller.isLoading
+                  ? loading()
+                  : const Text('OK', style: TextStyle(color: Colors.red))),
             ),
           ],
         ),
@@ -313,12 +315,12 @@ class _DetailPresenceState extends State<DetailPresence> {
                       "Arrivé à ${DateFormat("HH:mm").format(personne.created)}"),
                   trailing: IconButton(
                       tooltip: (personne.sortie == 'true')
-                              ?  "Sortie agent."
-                              : "Déjà sortie.",
+                          ? "Sortie agent."
+                          : "Déjà sortie.",
                       onPressed: () {
-                        if(personne.sortie == 'false') {
+                        if (personne.sortie == 'false') {
                           sortiePresenceDialog(
-                            controllerPresencePersonne, personne);
+                              controllerPresencePersonne, personne);
                         }
                       },
                       icon: Icon(Icons.logout,
@@ -455,7 +457,8 @@ class _DetailPresenceState extends State<DetailPresence> {
               content: const SizedBox(
                   height: 100,
                   width: 300,
-                  child: Text("Cette action indique que l'individu est sortie.")),
+                  child:
+                      Text("Cette action indique que l'individu est sortie.")),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -467,8 +470,9 @@ class _DetailPresenceState extends State<DetailPresence> {
                     controllerPresencePersonne.submitSortie(personne);
                     Navigator.pop(context, 'ok');
                   },
-                  child:
-                      const Text('OK', style: TextStyle(color: Colors.red)),
+                  child: Obx(() => controller.isLoading
+                      ? loading()
+                      : const Text('OK', style: TextStyle(color: Colors.red))),
                 ),
               ],
             );

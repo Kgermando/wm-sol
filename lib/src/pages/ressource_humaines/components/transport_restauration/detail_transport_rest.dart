@@ -1315,7 +1315,11 @@ class _DetailTransportRestState extends State<DetailTransportRest> {
       totalMontant += double.parse(element.montant);
     }
 
-    return lignBudgetaireController.obx((ligne) {
+    return lignBudgetaireController.obx(
+      onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+        (ligne) {
       dataList = ligne!
           .where((p0) {
             // Check somme total depenses
