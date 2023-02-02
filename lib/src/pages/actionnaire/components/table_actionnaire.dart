@@ -113,29 +113,30 @@ class _TableActionnaireState extends State<TableActionnaire> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.actionnaireList.toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'matricule': PlutoCell(value: item.matricule),
-          'cotisations': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(item.cotisations)} ${monnaieStorage.monney}"),
-          'nom': PlutoCell(value: item.nom),
-          'postNom': PlutoCell(value: item.postNom),
-          'prenom': PlutoCell(value: item.prenom),
-          'email': PlutoCell(value: item.email),
-          'telephone': PlutoCell(value: item.telephone),
-          'sexe': PlutoCell(value: item.sexe),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'matricule': PlutoCell(value: item.matricule),
+        'cotisations': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(item.cotisations)} ${monnaieStorage.monney}"),
+        'nom': PlutoCell(value: item.nom),
+        'postNom': PlutoCell(value: item.postNom),
+        'prenom': PlutoCell(value: item.prenom),
+        'email': PlutoCell(value: item.email),
+        'telephone': PlutoCell(value: item.telephone),
+        'sexe': PlutoCell(value: item.sexe),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+
+  
 
   void agentsColumn() {
     columns = [

@@ -88,22 +88,23 @@ class _TableTransfertPartsState extends State<TableTransfertParts> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.state.toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'matriculeEnvoi': PlutoCell(value: item.matriculeEnvoi),
-          'matriculeRecu': PlutoCell(value: item.matriculeRecu),
-          'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'matriculeEnvoi': PlutoCell(value: item.matriculeEnvoi),
+        'matriculeRecu': PlutoCell(value: item.matriculeRecu),
+        'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+
+   
 
   void agentsColumn() {
     columns = [

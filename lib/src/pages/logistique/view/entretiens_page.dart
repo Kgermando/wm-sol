@@ -32,7 +32,13 @@ class _EntretiensPageState extends State<EntretiensPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Ajouter une fiche d'entretien",
+        child: const Icon(Icons.add),
+        onPressed: () {
+          newFicheDialog();
+        },
+      ) : FloatingActionButton.extended(
         label: const Text("Fiche d'entretien"),
         tooltip: "Ajouter une fiche d'entretien",
         icon: const Icon(Icons.add),

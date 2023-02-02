@@ -133,26 +133,25 @@ class _TablePerformenceUserState extends State<TablePerformenceUser> {
             e.nom == widget.personne.nom)
         .toList();
     var i = dataList.length;
-
-    for (var item in dataList) {
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
       List<dynamic> depList = jsonDecode(item.departement);
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'departement': PlutoCell(value: depList.first),
-          'agent': PlutoCell(value: item.agent),
-          'nom': PlutoCell(value: item.nom),
-          'postnom': PlutoCell(value: item.postnom),
-          'prenom': PlutoCell(value: item.prenom),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'departement': PlutoCell(value: depList.first),
+        'agent': PlutoCell(value: item.agent),
+        'nom': PlutoCell(value: item.nom),
+        'postnom': PlutoCell(value: item.postnom),
+        'prenom': PlutoCell(value: item.prenom),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+ 
 
   void agentsColumn() {
     columns = [

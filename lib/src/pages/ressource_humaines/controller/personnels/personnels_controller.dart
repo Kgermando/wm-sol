@@ -167,6 +167,7 @@ class PersonnelsController extends GetxController
 
   void agentPieChart() async {
     personnelsApi.getChartPieSexe().then((response) {
+      agentPieChartList.clear();
       agentPieChartList.addAll(response);
       change(personnelsList, status: RxStatus.success());
     }, onError: (err) {

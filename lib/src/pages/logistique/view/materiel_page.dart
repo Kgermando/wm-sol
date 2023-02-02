@@ -28,7 +28,13 @@ class _MaterielPageState extends State<MaterielPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+                tooltip: "Ajouter un nouveau materiel",
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  Get.toNamed(LogistiqueRoutes.logMaterielAdd);
+                },
+              ) :  FloatingActionButton.extended(
           label: const Text("Nouveau materiel"),
           tooltip: "Ajouter un nouveau materiel",
           icon: const Icon(Icons.add),

@@ -136,7 +136,7 @@ class _SearchGrandLivreState extends State<SearchGrandLivre> {
                             child: EasyTable<BalanceModel>(
                               _model,
                               multiSort: true,
-                              // onRowTap: (row) {},
+                              columnsFit: true,
                             ),
                           ),
                           totalWidget()

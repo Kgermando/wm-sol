@@ -127,26 +127,39 @@ class _TableHistoryRavitaillementState
         .toSet()
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'idProduct': PlutoCell(value: item.idProduct),
-          'quantity': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.quantity))} ${item.unite}"),
-          'quantityAchat': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.quantityAchat))} ${item.unite}"),
-          'priceAchatUnit': PlutoCell(value: '${NumberFormat.decimalPattern('fr').format(double.parse(item.priceAchatUnit))} ${monnaieStorage.monney}'), 
-          'prixVenteUnit': PlutoCell(value: '${NumberFormat.decimalPattern('fr').format(double.parse(item.prixVenteUnit))} ${monnaieStorage.monney}'),
-          'margeBen': PlutoCell(value: '${NumberFormat.decimalPattern('fr').format(double.parse(item.margeBen))} ${monnaieStorage.monney}'),
-          'tva': PlutoCell(value: "${item.tva} %"),
-          'qtyRavitailler': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.qtyRavitailler))} ${item.unite}"),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'idProduct': PlutoCell(value: item.idProduct),
+        'quantity': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.quantity))} ${item.unite}"),
+        'quantityAchat': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.quantityAchat))} ${item.unite}"),
+        'priceAchatUnit': PlutoCell(
+            value:
+                '${NumberFormat.decimalPattern('fr').format(double.parse(item.priceAchatUnit))} ${monnaieStorage.monney}'),
+        'prixVenteUnit': PlutoCell(
+            value:
+                '${NumberFormat.decimalPattern('fr').format(double.parse(item.prixVenteUnit))} ${monnaieStorage.monney}'),
+        'margeBen': PlutoCell(
+            value:
+                '${NumberFormat.decimalPattern('fr').format(double.parse(item.margeBen))} ${monnaieStorage.monney}'),
+        'tva': PlutoCell(value: "${item.tva} %"),
+        'qtyRavitailler': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.qtyRavitailler))} ${item.unite}"),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

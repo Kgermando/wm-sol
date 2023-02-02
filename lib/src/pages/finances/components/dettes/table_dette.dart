@@ -140,27 +140,29 @@ class _TableDetteState extends State<TableDette> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.detteList.length;
-    for (var item in widget.detteList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nomComplet': PlutoCell(value: item.nomComplet),
-          'pieceJustificative': PlutoCell(value: item.pieceJustificative),
-          'libelle': PlutoCell(value: item.libelle),
-          'montant': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
-          'numeroOperation': PlutoCell(value: item.numeroOperation),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+
+    List.generate(widget.detteList.length, (index) {
+      var item = widget.detteList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nomComplet': PlutoCell(value: item.nomComplet),
+        'pieceJustificative': PlutoCell(value: item.pieceJustificative),
+        'libelle': PlutoCell(value: item.libelle),
+        'montant': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
+        'numeroOperation': PlutoCell(value: item.numeroOperation),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

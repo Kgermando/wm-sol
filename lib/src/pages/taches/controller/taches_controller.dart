@@ -34,8 +34,7 @@ class TachesController extends GetxController
 
   @override
   void dispose() {
-    jalonController.dispose();
-    // tacheController.dispose();
+    jalonController.dispose(); 
     quillController.dispose();
 
     super.dispose();

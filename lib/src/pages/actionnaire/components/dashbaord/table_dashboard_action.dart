@@ -43,7 +43,7 @@ class _TableDahboardActionState extends State<TableDahboardAction> {
               "${NumberFormat.decimalPattern('fr').format(row.cotisations)} ${monnaieStorage.monney}"),
       EasyTableColumn(
           headerAlignment: Alignment.center,
-          cellAlignment: Alignment.center,
+          cellAlignment: Alignment.centerLeft,
           name: 'Temps écouler',
           width: 300,
           stringValue: (row) => timeago.format(row.created, locale: 'fr')),
@@ -61,7 +61,10 @@ class _TableDahboardActionState extends State<TableDahboardAction> {
               children: [
                 const TitleWidget(title: "Recents cotisations"),
                 Expanded(
-                  child: EasyTable<ActionnaireModel>(_model, multiSort: true),
+                  child: EasyTable<ActionnaireModel>(_model, 
+                  multiSort: true,
+                    columnsFit: true,
+                  ),
                 ),
               ],
             )),

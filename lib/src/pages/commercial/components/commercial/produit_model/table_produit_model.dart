@@ -119,25 +119,25 @@ class _TableProduitModelState extends State<TableProduitModel> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.produitModelList.length;
-    for (var item in widget.produitModelList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'idProduct': PlutoCell(value: item.idProduct),
-          'categorie': PlutoCell(value: item.categorie),
-          'sousCategorie1': PlutoCell(value: item.sousCategorie1),
-          'sousCategorie2': PlutoCell(value: item.sousCategorie2),
-          'sousCategorie3': PlutoCell(value: item.sousCategorie3),
-          'sousCategorie4': PlutoCell(value: item.sousCategorie4),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.produitModelList.length, (index) {
+      var item = widget.produitModelList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'idProduct': PlutoCell(value: item.idProduct),
+        'categorie': PlutoCell(value: item.categorie),
+        'sousCategorie1': PlutoCell(value: item.sousCategorie1),
+        'sousCategorie2': PlutoCell(value: item.sousCategorie2),
+        'sousCategorie3': PlutoCell(value: item.sousCategorie3),
+        'sousCategorie4': PlutoCell(value: item.sousCategorie4),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [

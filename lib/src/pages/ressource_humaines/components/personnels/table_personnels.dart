@@ -125,30 +125,30 @@ class _TablePersonnelsState extends State<TablePersonnels> {
     );
   }
 
-  Future agentsRow() async {
+  Future<List<PlutoRow>> agentsRow() async {
     var i = widget.personnelList.length;
-    for (var item in widget.personnelList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'statutAgent': PlutoCell(value: item.statutAgent),
-          'matricule': PlutoCell(value: item.matricule),
-          'nom': PlutoCell(value: item.nom),
-          'postNom': PlutoCell(value: item.postNom),
-          'prenom': PlutoCell(value: item.prenom),
-          'email': PlutoCell(value: item.email),
-          'telephone': PlutoCell(value: item.telephone),
-          'sexe': PlutoCell(value: item.sexe),
-          'role': PlutoCell(value: "Niveau ${item.role}"),
-          'createdAt':
-              PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
-          'departement': PlutoCell(value: item.departement),
-          'servicesAffectation': PlutoCell(value: item.servicesAffectation),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
-  }
+    List.generate(widget.personnelList.length, (index) {
+      var item = widget.personnelList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'statutAgent': PlutoCell(value: item.statutAgent),
+        'matricule': PlutoCell(value: item.matricule),
+        'nom': PlutoCell(value: item.nom),
+        'postNom': PlutoCell(value: item.postNom),
+        'prenom': PlutoCell(value: item.prenom),
+        'email': PlutoCell(value: item.email),
+        'telephone': PlutoCell(value: item.telephone),
+        'sexe': PlutoCell(value: item.sexe),
+        'role': PlutoCell(value: "Niveau ${item.role}"),
+        'createdAt':
+            PlutoCell(value: DateFormat("dd-MM-yyyy").format(item.createdAt)),
+        'departement': PlutoCell(value: item.departement),
+        'servicesAffectation': PlutoCell(value: item.servicesAffectation),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
+    return rows;
+  } 
 
   void agentsColumn() {
     columns = [

@@ -84,26 +84,28 @@ class _TableObjetRemplaceState extends State<TableObjetRemplace> {
     );
   }
 
+
   Future<List<PlutoRow>> agentsRow() async {
     var dataLIst = widget.objetRemplaceList
         .where((element) => element.reference == widget.entretienModel.id)
         .toList();
 
     var i = dataLIst.length;
-    for (var item in dataLIst) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'cout': PlutoCell(value: item.cout),
-          'caracteristique': PlutoCell(value: item.caracteristique),
-          'observation': PlutoCell(value: item.observation),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataLIst.length, (index) {
+      var item = dataLIst[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'cout': PlutoCell(value: item.cout),
+        'caracteristique': PlutoCell(value: item.caracteristique),
+        'observation': PlutoCell(value: item.observation),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

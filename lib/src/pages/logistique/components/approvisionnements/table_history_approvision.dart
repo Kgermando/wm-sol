@@ -95,6 +95,7 @@ class _TableHistoryApprovisionState extends State<TableHistoryApprovision> {
                 child: EasyTable<ApprovisionnementModel>(
                   _model,
                   multiSort: true,
+                  columnsFit: true,
                 )),
           ],
         ),

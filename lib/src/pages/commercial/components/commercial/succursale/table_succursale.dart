@@ -111,22 +111,23 @@ class _TableSuccursaleState extends State<TableSuccursale> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.succursaleList.length;
-    for (var item in widget.succursaleList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'name': PlutoCell(value: item.name),
-          'province': PlutoCell(value: item.province),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.succursaleList.length, (index) {
+      var item = widget.succursaleList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'name': PlutoCell(value: item.name),
+        'province': PlutoCell(value: item.province),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

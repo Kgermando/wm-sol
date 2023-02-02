@@ -119,7 +119,9 @@ class AuthApi extends GetConnect {
     if (resp.statusCode == 200) {
       return UserModel.fromJson(json.decode(resp.body));
     } else if(resp.statusCode == 404) {
-      GetStorage box = GetStorage();
+      box.erase();
+      return Get.offAllNamed(UserRoutes.login);
+    } else if (resp.statusCode == 403) {
       box.erase();
       return Get.offAllNamed(UserRoutes.login);
     } else {

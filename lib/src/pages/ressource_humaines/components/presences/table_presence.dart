@@ -101,20 +101,21 @@ class _TablePresenceState extends State<TablePresence> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.presenceList.length;
-    for (var item in widget.presenceList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'title': PlutoCell(value: item.title),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: (DateFormat("dd-MM-yyyy HH:mm").format(item.created))),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.presenceList.length, (index) {
+      var item = widget.presenceList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'title': PlutoCell(value: item.title),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: (DateFormat("dd-MM-yyyy HH:mm").format(item.created))),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
+
 
   void agentsColumn() {
     columns = [

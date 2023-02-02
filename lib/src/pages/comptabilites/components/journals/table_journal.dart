@@ -33,74 +33,9 @@ class _TableJournalState extends State<TableJournal> {
   initState() {
     agentsColumn();
     agentsRow().then((value) => stateManager.setShowLoading(false));
-    // fetchRows().then((fetchedRows) {
-    //   print("fetchedRows $fetchedRows");
-    //   PlutoGridStateManager.initializeRowsAsync(
-    //     columns,
-    //     fetchedRows,
-    //   ).then((value) {
-    //     stateManager.refRows.addAll(value);
-    //     stateManager.setShowLoading(false);
-    //   });
-    // });
 
     super.initState();
   }
-
-  // Future<List<PlutoRow>> fetchRows() {
-  //   final Completer<List<PlutoRow>> completer = Completer();
-
-  //   final List<PlutoRow> _rows = [];
-
-  //   int count = 0;
-
-  //   int max = widget.journalList.length;
-
-  //   int totalRows = max;
-  //   print("totalRows $totalRows");
-
-  //   Timer.periodic(const Duration(milliseconds: 1), (timer) {
-  //     if (count == max) {
-  //       return;
-  //     }
-
-  //     ++count;
-
-  //     print("count $count");
-
-  //     Future(() {
-  //       var i = widget.journalList.length;
-  //       for (var item in widget.journalList) {
-  //         _rows.add(PlutoRow(cells: {
-  //           'numero': PlutoCell(value: i--),
-  //           'numeroOperation': PlutoCell(value: item.numeroOperation),
-  //           'libele': PlutoCell(value: item.libele),
-  //           'compteDebit': PlutoCell(value: item.compteDebit),
-  //           'montantDebit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} ${monnaieStorage.monney}"),
-  //           'compteCredit': PlutoCell(value: item.compteCredit),
-  //           'montantCredit': PlutoCell(value: "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} ${monnaieStorage.monney}"),
-  //           'signature': PlutoCell(value: item.signature),
-  //           'created': PlutoCell(
-  //               value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-  //           'locker': PlutoCell(value: item.locker),
-  //           'id': PlutoCell(value: item.id)
-  //         }));
-  //       }
-  //       return _rows;
-  //     }).then((value) {
-  //       // _rows.addAll(value);
-  //       print("length ${value.length}");
-  //       print("value $value");
-
-  //       if (value.length == totalRows) {
-  //         completer.complete(value);
-
-  //         timer.cancel();
-  //       }
-  //     });
-  //   });
-  //   return completer.future;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -190,30 +125,31 @@ class _TableJournalState extends State<TableJournal> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.journalList.length;
-    for (var item in widget.journalList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'numeroOperation': PlutoCell(value: item.numeroOperation),
-          'libele': PlutoCell(value: item.libele),
-          'compteDebit': PlutoCell(value: item.compteDebit),
-          'montantDebit': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} ${monnaieStorage.monney}"),
-          'compteCredit': PlutoCell(value: item.compteCredit),
-          'montantCredit': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} ${monnaieStorage.monney}"),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          // 'locker': PlutoCell(value: item.locker),
-          // 'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.journalList.length, (index) {
+      var item = widget.journalList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'numeroOperation': PlutoCell(value: item.numeroOperation),
+        'libele': PlutoCell(value: item.libele),
+        'compteDebit': PlutoCell(value: item.compteDebit),
+        'montantDebit': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDebit))} ${monnaieStorage.monney}"),
+        'compteCredit': PlutoCell(value: item.compteCredit),
+        'montantCredit': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantCredit))} ${monnaieStorage.monney}"),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        // 'locker': PlutoCell(value: item.locker),
+        // 'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+   
 
   void agentsColumn() {
     columns = [

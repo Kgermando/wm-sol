@@ -53,7 +53,14 @@ class _DetailDetteState extends State<DetailDette> {
         appBar: headerBar(
             context, scaffoldKey, title, widget.detteModel.numeroOperation),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) 
+          ? FloatingActionButton( 
+              tooltip: "Ajout le paiement", 
+              onPressed: () {
+                dialongCreancePaiement(creanceDetteController);
+              },
+            )
+          : FloatingActionButton.extended(
           label: const Text("Ajouter le paiement"),
           tooltip: "Ajout le paiement",
           icon: const Icon(Icons.add_card),

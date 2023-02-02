@@ -117,7 +117,7 @@ class _LogistiqueNavState extends State<LogistiqueNav> {
                 widget.currentRoute == LogistiqueRoutes.logMaterielRoulant,
             icon: Icons.fire_truck,
             sizeIcon: 20.0,
-            title: 'Engins',
+            title: 'Matieriels roulant',
             style: bodyText1,
             onTap: () {
               Navigator.pushNamed(context, LogistiqueRoutes.logMaterielRoulant);

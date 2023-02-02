@@ -29,7 +29,13 @@ class _EntrepriseInfoPageState extends State<EntrepriseInfoPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+          tooltip: "Ajouter une entreprise",
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Get.toNamed(ComRoutes.comEntrepriseAdd);
+          },
+        ) : FloatingActionButton.extended(
           label: const Text("Nouvel entreprise"),
           tooltip: "Ajouter une entreprise",
           icon: const Icon(Icons.add),

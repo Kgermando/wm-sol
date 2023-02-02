@@ -80,7 +80,9 @@ class _TableCotisationPersonneState extends State<TableCotisationPersonne> {
                 const TitleWidget(title: "Historique de Cotisations"),
                 Expanded(
                   child: EasyTable<ActionnaireCotisationModel>(_model,
-                      multiSort: true),
+                      multiSort: true,
+                    columnsFit: true,
+                  ),
                 ),
               ],
             )),

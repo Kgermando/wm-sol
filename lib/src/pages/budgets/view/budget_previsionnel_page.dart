@@ -30,7 +30,13 @@ class _BudgetPrevisionnelPageState extends State<BudgetPrevisionnelPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+            tooltip: "Générer un nouveau budget",
+            child: const Icon(Icons.add),
+            onPressed: () {
+              newFicheDialog();
+            },
+          ) : FloatingActionButton.extended(
           label: const Text("Nouveau budget"),
           tooltip: "Générer un nouveau budget",
           icon: const Icon(Icons.add),

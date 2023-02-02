@@ -85,7 +85,9 @@ class _TableFactureCartState extends State<TableFactureCart> {
         padding: const EdgeInsets.all(p10),
         child: SizedBox(
             height: MediaQuery.of(context).size.height / 2,
-            child: EasyTable<CartModel>(_model, multiSort: true)),
+            child: EasyTable<CartModel>(_model, multiSort: true,
+              columnsFit: true,
+            )),
       ),
     );
   }

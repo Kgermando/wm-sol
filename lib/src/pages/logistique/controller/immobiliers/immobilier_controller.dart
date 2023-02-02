@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:wm_solution/src/api/logistiques/immobiler_api.dart';
+import 'package:get/get.dart';  
+import 'package:wm_solution/src/api/logistiques/immobiler_api.dart'; 
 import 'package:wm_solution/src/models/logistiques/immobilier_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 
@@ -26,7 +26,7 @@ class ImmobilierController extends GetxController
   TextEditingController numeroCertificatController = TextEditingController();
   TextEditingController superficieController = TextEditingController();
   TextEditingController dateAcquisitionController = TextEditingController();
-
+ 
   @override
   void onInit() {
     super.onInit();
@@ -251,4 +251,6 @@ class ImmobilierController extends GetxController
           snackPosition: SnackPosition.TOP);
     }
   }
+
+  
 }

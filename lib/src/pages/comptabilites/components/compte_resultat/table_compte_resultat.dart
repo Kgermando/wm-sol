@@ -110,21 +110,22 @@ class _TableCompteResultatState extends State<TableCompteResultat> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.compteResultatList.length;
-    for (var item in widget.compteResultatList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'intitule': PlutoCell(value: item.intitule),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.compteResultatList.length, (index) {
+      var item = widget.compteResultatList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'intitule': PlutoCell(value: item.intitule),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

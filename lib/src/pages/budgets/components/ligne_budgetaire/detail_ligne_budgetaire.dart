@@ -38,99 +38,102 @@ class _DetailLigneBudgetaireState extends State<DetailLigneBudgetaire> {
   Widget build(BuildContext context) {
     final LignBudgetaireController controller = Get.find();
 
-    return controller.obx(
+    return Scaffold(
+        key: scaffoldKey,
+        appBar: headerBar(context, scaffoldKey, title,
+            widget.ligneBudgetaireModel.nomLigneBudgetaire),
+        drawer: const DrawerMenu(),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+                visible: !Responsive.isMobile(context),
+                child: const Expanded(flex: 1, child: DrawerMenu())),
+            Expanded(
+                flex: 5,
+                child: controller.obx(
         onLoading: loadingPage(context),
         onEmpty: const Text('Aucune donnée'),
         onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title,
-                  widget.ligneBudgetaireModel.nomLigneBudgetaire),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              (Responsive.isDesktop(context))
-                                                  ? MainAxisAlignment
-                                                      .spaceBetween
-                                                  : MainAxisAlignment.end,
-                                          children: [
-                                            if (Responsive.isDesktop(context))
-                                              TitleWidget(
-                                                  title: widget
+        (state) => SingleChildScrollView(
+                    controller: ScrollController(),
+                    physics: const ScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: p20),
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        (Responsive.isDesktop(context))
+                                            ? MainAxisAlignment
+                                                .spaceBetween
+                                            : MainAxisAlignment.end,
+                                    children: [
+                                      if (Responsive.isDesktop(context))
+                                        TitleWidget(
+                                            title: widget
+                                                .ligneBudgetaireModel
+                                                .nomLigneBudgetaire),
+                                      Column(
+                                        children: [
+                                          IconButton(
+                                              onPressed: () async {
+                                                refresh().then((value) =>
+                                                    Navigator.pushNamed(
+                                                        context,
+                                                        BudgetRoutes
+                                                            .budgetLignebudgetaireDetail,
+                                                        arguments:
+                                                            value));
+                                              },
+                                              icon: const Icon(
+                                                  Icons.refresh,
+                                                  color: Colors.green)),
+                                          SelectableText(
+                                              DateFormat(
+                                                      "dd-MM-yyyy HH:mm")
+                                                  .format(widget
                                                       .ligneBudgetaireModel
-                                                      .nomLigneBudgetaire),
-                                            Column(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () async {
-                                                      refresh().then((value) =>
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              BudgetRoutes
-                                                                  .budgetLignebudgetaireDetail,
-                                                              arguments:
-                                                                  value));
-                                                    },
-                                                    icon: const Icon(
-                                                        Icons.refresh,
-                                                        color: Colors.green)),
-                                                SelectableText(
-                                                    DateFormat(
-                                                            "dd-MM-yyyy HH:mm")
-                                                        .format(widget
-                                                            .ligneBudgetaireModel
-                                                            .created),
-                                                    textAlign: TextAlign.start),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: p30,
-                                        ),
-                                        dataWidget(),
-                                        soldeBudgets(controller),
-                                        const SizedBox(
-                                          height: p20,
-                                        ),
-                                      ],
-                                    ),
+                                                      .created),
+                                              textAlign: TextAlign.start),
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    height: p30,
+                                  ),
+                                  dataWidget(),
+                                  soldeBudgets(controller),
+                                  const SizedBox(
+                                    height: p20,
+                                  ),
+                                ],
+                              ),
                             ),
-                          )))
-                ],
-              ),
-            ));
+                          )
+                        ],
+                      ),
+                    ))
+        
+        
+        )  )
+          ],
+        ),
+      ); 
   }
 
   Widget dataWidget() {

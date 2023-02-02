@@ -33,11 +33,7 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
     final BudgetPrevisionnelController controller = Get.find();
     final LignBudgetaireController lignBudgetaireController = Get.find();
 
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
+    return Scaffold(
               key: scaffoldKey,
               appBar: headerBar(context, scaffoldKey, title,
                   widget.departementBudgetModel.title),
@@ -50,7 +46,11 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                       child: const Expanded(flex: 1, child: DrawerMenu())),
                   Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
+                      child: controller.obx(
+        onLoading: loadingPage(context),
+        onEmpty: const Text('Aucune donnée'),
+        onError: (error) => loadingError(context, error!),
+        (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -128,10 +128,14 @@ class _AjoutLigneBudgetaireState extends State<AjoutLigneBudgetaire> {
                                 )
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
               ),
-            ));
+            )
+    
+    
+    
+    ;
   }
 
   Widget nomLigneBudgetaireWidget(

@@ -122,7 +122,7 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
     );
   }
 
-  Future agentsRow() async {
+  Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.salaireController.paiementSalaireList
         .where((element) =>
             element.createdAt.month == DateTime.now().month &&
@@ -132,8 +132,9 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
             element.approbationBudget == '-')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      rows.add(PlutoRow(cells: {
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
         'numero': PlutoCell(value: i--),
         'prenom': PlutoCell(value: item.prenom),
         'nom': PlutoCell(value: item.nom),
@@ -149,8 +150,11 @@ class _TableSalaireBudgetState extends State<TableSalaireBudget> {
         'approbationFin': PlutoCell(value: item.approbationFin),
         'id': PlutoCell(value: item.id)
       }));
-    }
+    });
+    return rows;
   }
+
+   
 
   void agentsColumn() {
     columns = [

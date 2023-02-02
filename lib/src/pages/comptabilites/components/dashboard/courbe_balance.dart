@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/comptabilites/balance_model.dart';
 
 class CourbeBalance extends StatefulWidget {
@@ -14,6 +15,7 @@ class CourbeBalance extends StatefulWidget {
 }
 
 class _CourbeBalanceState extends State<CourbeBalance> {
+  final MonnaieStorage monnaieStorage = MonnaieStorage();
   TooltipBehavior? _tooltipBehavior;
 
   @override
@@ -60,53 +62,9 @@ class _CourbeBalanceState extends State<CourbeBalance> {
         primaryYAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
           title: AxisTitle(text: 'Balance'),
-          numberFormat: NumberFormat.currency(symbol: '\$ ', decimalDigits: 1),
+          numberFormat: NumberFormat.currency(symbol: '${monnaieStorage.monney} ', decimalDigits: 1),
         ),
       ),
     );
-
-    //   SfCartesianChart(
-    //       primaryXAxis: CategoryAxis(),
-    //       // Chart title
-    //       title: ChartTitle(
-    //           text: 'Courbe balance',
-    //           textStyle: const TextStyle(fontWeight: FontWeight.bold)),
-    //       // Enable legend
-    //       legend: Legend(
-    //           position: Responsive.isDesktop(context)
-    //               ? LegendPosition.right
-    //               : LegendPosition.bottom,
-    //           isVisible: true),
-    //       // Enable tooltip
-    //       palette: const [
-    //         Color.fromRGBO(73, 76, 162, 1),
-    //         Color.fromRGBO(51, 173, 127, 1),
-    //         Color.fromRGBO(244, 67, 54, 1)
-    //       ],
-    //       tooltipBehavior: _tooltipBehavior,
-    //       series: <LineSeries>[
-    //         LineSeries<BalanceChartModel, String>(
-    //           name: 'Debit',
-    //           dataSource: widget.balanceSumList,
-    //           sortingOrder: SortingOrder.ascending,
-    //           markerSettings: const MarkerSettings(isVisible: true),
-    //           xValueMapper: (BalanceChartModel item, _) => DateFormat("dd-MM-yyyy").format(item.created),
-    //           yValueMapper: (BalanceChartModel item, _) =>
-    //               double.parse(item.debit.toStringAsFixed(2)),
-    //           // Enable data label
-    //           dataLabelSettings: const DataLabelSettings(isVisible: true),
-    //         ),
-    //         LineSeries<BalanceChartModel, String>(
-    //           name: 'Credit',
-    //           dataSource: widget.balanceSumList,
-    //           sortingOrder: SortingOrder.ascending,
-    //           markerSettings: const MarkerSettings(isVisible: true),
-    //           xValueMapper: (BalanceChartModel item, _) => DateFormat("dd-MM-yyyy").format(item.created),
-    //           yValueMapper: (BalanceChartModel item, _) =>
-    //               double.parse(item.credit.toStringAsFixed(2)),
-    //           // Enable data label
-    //           dataLabelSettings: const DataLabelSettings(isVisible: true),
-    //         ),
-    //       ]);
   }
 }

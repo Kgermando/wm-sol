@@ -33,7 +33,14 @@ class _DettePageState extends State<DettePage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) 
+          ? FloatingActionButton( 
+                tooltip: "Ajouter la nouvelle dette",
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  transactionsDialogDette(controller);
+                })
+          : FloatingActionButton.extended(
             label: const Text("Nouvelle dette"),
             tooltip: "Ajouter la nouvelle dette",
             icon: const Icon(Icons.add),

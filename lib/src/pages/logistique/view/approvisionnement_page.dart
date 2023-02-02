@@ -34,7 +34,15 @@ class _ApprovisionnementPageState extends State<ApprovisionnementPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) 
+        ? FloatingActionButton( 
+              tooltip: "Ajout la provision",
+              child: const Icon(Icons.add),
+              onPressed: () {
+                newDialog();
+              },
+            )
+        : FloatingActionButton.extended(
         label: const Text("Ajouter de la provision"),
         tooltip: "Ajout la provision",
         icon: const Icon(Icons.add),

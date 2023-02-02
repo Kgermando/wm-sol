@@ -28,8 +28,7 @@ class _AbonnementClientPageState extends State<AbonnementClientPage> {
     return Scaffold(
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
-        drawer: const DrawerMenu(),
-        
+        drawer: const DrawerMenu(), 
         body: Row(
           children: [
             Visibility(

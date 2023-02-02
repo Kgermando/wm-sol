@@ -33,7 +33,14 @@ class _DetailPerformenceState extends State<DetailPerformence> {
           appBar: headerBar(context, scaffoldKey, title,
               "${widget.performenceModel.prenom} ${widget.performenceModel.nom}"),
           drawer: const DrawerMenu(),
-          floatingActionButton: FloatingActionButton.extended(
+          floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton(
+            tooltip: "Donnez une note de performence",
+            child: const Icon(Icons.add_task),
+            onPressed: () {
+              Get.toNamed(RhRoutes.rhPerformenceAddNote,
+                  arguments: widget.performenceModel);
+            },
+          ) :  FloatingActionButton.extended(
             label: const Text("Donnez une note"),
             tooltip: "Donnez une note de performence",
             icon: const Icon(Icons.add_task),

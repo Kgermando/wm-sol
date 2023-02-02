@@ -110,36 +110,7 @@ class _UpdatePageState extends State<UpdatePage> {
                                 BorderRadius.all(Radius.circular(20))),
                         child: TableUpdate(
                             updateList: state!, controller: controller)
-
-                        // Column(
-                        //   children: [
-                        //     const TitleWidget(title: "Mise à jour"),
-                        //     const SizedBox(height: p20),
-                        //     Expanded(
-                        //       child: ListView.builder(
-                        //           itemCount: state!.length,
-                        //           itemBuilder: (context, index) {
-                        //             UpdateModel version = state[index];
-                        //             return Card(
-                        //               child: ListTile(
-                        //                 title: Text(version.version),
-                        //                 subtitle: Text(version.motif),
-                        //                 trailing: (controller.isDownloading)
-                        //       ? (controller.progressString == "100%")
-                        //         ? const Icon(Icons.check)
-                        //         : Obx(() => AutoSizeText(controller.progressString,
-                        //              maxLines: 1, style: const TextStyle(fontSize: 12.0)))
-                        //       : IconButton(onPressed: () {
-                        //                    controller.downloadNetworkSoftware(
-                        //                           url: version.urlUpdate);
-                        //                 }, icon: const Icon(Icons.download, color: Colors.orange)),
-
-                        //               ),
-                        //             );
-                        //       }),
-                        //     ),
-                        //   ],
-                        // )
+ 
                         ))),
           ],
         ));

@@ -69,7 +69,7 @@ class _CourbeVenteGainDayState extends State<CourbeVenteGainDay> {
                 sortingOrder: SortingOrder.ascending,
                 markerSettings: const MarkerSettings(isVisible: true),
                 xValueMapper: (CourbeVenteModel ventes, _) =>
-                    "${ventes.created} H",
+                    "${ventes.created}:00",
                 yValueMapper: (CourbeVenteModel ventes, _) =>
                     double.parse(ventes.sum.toStringAsFixed(2)),
                 // Enable data label
@@ -81,7 +81,7 @@ class _CourbeVenteGainDayState extends State<CourbeVenteGainDay> {
                 sortingOrder: SortingOrder.ascending,
                 markerSettings: const MarkerSettings(isVisible: true),
                 xValueMapper: (CourbeGainModel ventes, _) =>
-                    "${ventes.created} H",
+                  "${ventes.created}:00",
                 yValueMapper: (CourbeGainModel ventes, _) =>
                     double.parse(ventes.sum.toStringAsFixed(2)),
                 // Enable data label

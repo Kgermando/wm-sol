@@ -16,7 +16,7 @@ class TacheXlsx {
       "Personne",
       "Jalon",
       "Tache",
-      "signature Responsable", 
+      "Signature Responsable", 
       "Date"
     ], 0);
 

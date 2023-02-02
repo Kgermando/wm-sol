@@ -25,11 +25,11 @@ class UpdateController extends GetxController
 
   String isUpdateLocalVersion = InfoSystem().version();
 
-  final _sumLocalVersion = 0.0.obs; // Local
-  double get sumLocalVersion => _sumLocalVersion.value;
+  final _sumLocalVersion = 0.obs; // Local
+  int get sumLocalVersion => _sumLocalVersion.value;
 
-  final _sumVersionCloud = 0.0.obs; // Version mis en ligne
-  double get sumVersionCloud => _sumVersionCloud.value;
+  final _sumVersionCloud = 0.obs; // Version mis en ligne
+  int get sumVersionCloud => _sumVersionCloud.value;
 
   final _progressString = '0'.obs;
   String get progressString => _progressString.value;
@@ -108,15 +108,17 @@ class UpdateController extends GetxController
       if (updateVersionList.isNotEmpty) {
         // // Version actuel
         var isVersion = isUpdateLocalVersion.split('.');
-        for (var e in isVersion) {
-          _sumLocalVersion.value += double.parse(e);
-        }
+        _sumLocalVersion.value = int.parse(isVersion.join());
+        // for (var e in isVersion) {
+        //   _sumLocalVersion.value += double.parse(e);
+        // }
 
         // Version Cloud
         var isVersionCloud = updateVersionList.first.version.split('.');
-        for (var e in isVersionCloud) {
-          _sumVersionCloud.value += double.parse(e);
-        }
+        _sumVersionCloud.value = int.parse(isVersionCloud.join());
+        // for (var e in isVersionCloud) {
+        //   _sumVersionCloud.value += double.parse(e);
+        // }
       }
       change(updateVersionList, status: RxStatus.success());
     }, onError: (err) {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +8,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/models/commercial/achat_model.dart';
+import 'package:wm_solution/src/models/users/user_model.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/achats/achat_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/cart/cart_controller.dart';
@@ -31,6 +34,8 @@ class VenteItemWidget extends StatefulWidget {
 }
 
 class _VenteItemWidgetState extends State<VenteItemWidget> {
+  final ProfilController profilController = Get.find();
+
   final MonnaieStorage monnaieStorage = Get.put(MonnaieStorage());
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -43,6 +48,10 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    UserModel? user = profilController.user;
+    List<dynamic> departementList = jsonDecode(user.departement);
+    bool isVisible = user.succursale == widget.achat.succursale;
+
     return Visibility(
       visible: isActive,
       child: Responsive.isDesktop(context)
@@ -84,18 +93,19 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                         ],
                       ),
                     ),
-                    Container(
-                        constraints: const BoxConstraints(maxWidth: 200),
-                        child: Form(
-                          key: formKey,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Expanded(child: qtyField()),
-                              Expanded(child: onChanged())
-                            ],
-                          ),
-                        ))
+                    if (departementList.contains('Commercial') && isVisible)
+                      Container(
+                          constraints: const BoxConstraints(maxWidth: 200),
+                          child: Form(
+                            key: formKey,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Expanded(child: qtyField()),
+                                Expanded(child: onChanged())
+                              ],
+                            ),
+                          ))
                   ],
                 ),
               ))
@@ -143,19 +153,19 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
                       ],
                     ),
                   ),
+                  if (departementList.contains('Commercial') && isVisible)
                   Container(
-                    constraints: const BoxConstraints(maxWidth: 100),
-                    child: Form(
-                      key: formKey,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(child: qtyField()),
-                          Expanded(child: onChanged())
-                        ],
-                      ),
-                    )
-                  )
+                      constraints: const BoxConstraints(maxWidth: 100),
+                      child: Form(
+                        key: formKey,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(child: qtyField()),
+                            Expanded(child: onChanged())
+                          ],
+                        ),
+                      ))
                 ],
               ),
             ),
@@ -202,29 +212,30 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
           });
         },
         // onSaved: (value) => widget.cartController.controllerQuantityCart,
-        
       ),
     );
   }
 
   Widget onChanged() {
-    return Obx(() => (widget.cartController.isLoading) ? loadingMini() : IconButton(
-        tooltip: 'Ajoutez au panier',
-        iconSize: Responsive.isDesktop(context) ? 24.0 : 18.0,
-        onPressed: () {
-          final form = formKey.currentState!;
-          if (form.validate()) {
-            widget.cartController.addCart(widget.achat);
-            setState(() {
-              isActive = !isActive;
-            });
-          }
-        },
-        icon:
-            Icon(Icons.add_shopping_cart_sharp, color: Colors.green.shade700))) ;
+    return Obx(() => (widget.cartController.isLoading)
+        ? loadingMini()
+        : IconButton(
+            tooltip: 'Ajoutez au panier',
+            iconSize: Responsive.isDesktop(context) ? 24.0 : 18.0,
+            onPressed: () {
+              final form = formKey.currentState!;
+              if (form.validate()) {
+                widget.cartController.addCart(widget.achat);
+                setState(() {
+                  isActive = !isActive;
+                });
+              }
+            },
+            icon: Icon(Icons.add_shopping_cart_sharp,
+                color: Colors.green.shade700)));
   }
 
-   alertDialog(String text) {
+  alertDialog(String text) {
     return IconButton(
       icon: const Icon(Icons.assistant_direction),
       tooltip: 'Restitution de la quantité en stocks',
@@ -244,8 +255,4 @@ class _VenteItemWidgetState extends State<VenteItemWidget> {
       ),
     );
   }
-
-
- 
-
 }

@@ -670,8 +670,7 @@ class _DetailDevisState extends State<DetailDevis> {
                 : IconButton(
                     onPressed: () {
                       devisListObjetController
-                          .deleteData(devisListObjetsModel.id!);
-                      print("id ${devisListObjetsModel.id!} ");
+                          .deleteData(devisListObjetsModel.id!); 
                     },
                     icon: const Icon(Icons.delete, color: Colors.red))),
           ),

@@ -140,31 +140,32 @@ class _TableDetteDDState extends State<TableDetteDD> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.detteController.detteList
+     var dataList = widget.detteController.detteList
         .where((element) => element.approbationDD == "-")
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nomComplet': PlutoCell(value: item.nomComplet),
-          'pieceJustificative': PlutoCell(value: item.pieceJustificative),
-          'libelle': PlutoCell(value: item.libelle),
-          'montant': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
-          'numeroOperation': PlutoCell(value: item.numeroOperation),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nomComplet': PlutoCell(value: item.nomComplet),
+        'pieceJustificative': PlutoCell(value: item.pieceJustificative),
+        'libelle': PlutoCell(value: item.libelle),
+        'montant': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.montant))} ${monnaieStorage.monney}"),
+        'numeroOperation': PlutoCell(value: item.numeroOperation),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

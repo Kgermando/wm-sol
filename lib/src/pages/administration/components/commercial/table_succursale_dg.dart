@@ -118,22 +118,23 @@ class _TableSuccursaleDGState extends State<TableSuccursaleDG> {
             element.approbationDG == '-' && element.approbationDD == 'Approved')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'name': PlutoCell(value: item.name),
-          'province': PlutoCell(value: item.province),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'name': PlutoCell(value: item.name),
+        'province': PlutoCell(value: item.province),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+
+ 
 
   void agentsColumn() {
     columns = [

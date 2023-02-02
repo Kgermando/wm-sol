@@ -116,22 +116,22 @@ class _TableEtatMaterielDDState extends State<TableEtatMaterielDD> {
         .where((element) => element.approbationDD == '-')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'typeObjet': PlutoCell(value: item.typeObjet),
-          'statut': PlutoCell(value: item.statut),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'typeObjet': PlutoCell(value: item.typeObjet),
+        'statut': PlutoCell(value: item.statut),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [

@@ -11,7 +11,7 @@ import 'package:wm_solution/src/constants/reponsiveness.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
-import 'package:wm_solution/src/models/menu_item.dart'; 
+import 'package:wm_solution/src/models/menu_item.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -19,29 +19,19 @@ import 'package:wm_solution/src/utils/info_system.dart';
 import 'package:wm_solution/src/utils/menu_items.dart';
 import 'package:wm_solution/src/utils/menu_options.dart';
 import 'package:wm_solution/src/widgets/bread_crumb_widget.dart';
-
-
-//  UserModel user = await AuthApi().getUserId();
-//     List<dynamic> departement = (user.departement == '-')
-//         ? ["Support"]
-//         : jsonDecode(profilController.user.departement);
+import 'package:wm_solution/src/widgets/loading.dart'; 
 
 AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
     String title, String subTitle) {
   final ProfilController profilController = Get.put(ProfilController());
-  final UpdateController updateController = Get.put(UpdateController()); 
-  final DepartementNotifyCOntroller departementNotifyCOntroller = Get.put(DepartementNotifyCOntroller()); 
+  final UpdateController updateController = Get.put(UpdateController());
+  final DepartementNotifyCOntroller departementNotifyCOntroller =
+      Get.put(DepartementNotifyCOntroller());
 
- 
-  List<dynamic> departementList = (profilController.user.departement =='-')
-      ? ["Support"]
-      : jsonDecode(profilController.user.departement);
+
 
   final bodyLarge = Theme.of(context).textTheme.bodyLarge;
- 
 
-  final String firstLettter = profilController.user.prenom[0];
-  final String firstLettter2 = profilController.user.nom[0];
   return AppBar(
     leadingWidth: 100,
     leading: !ResponsiveWidget.isSmallScreen(context)
@@ -92,10 +82,9 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
             ),
           ),
     actions: [
-      
       if (Platform.isWindows &&
           updateController.updateVersionList.isNotEmpty &&
-          updateController.sumVersionCloud > updateController.sumLocalVersion) 
+          updateController.sumVersionCloud > updateController.sumLocalVersion)
         Obx(() => IconButton(
             iconSize: 40,
             tooltip: 'Téléchargement',
@@ -109,123 +98,135 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
                     ? const Icon(Icons.check)
                     : Obx(() => AutoSizeText(updateController.progressString,
                         maxLines: 1, style: const TextStyle(fontSize: 12.0)))
-                : Icon(Icons.download, color: Colors.red.shade700))) ,
-      if (departementList.contains('Exploitations') || departementList.contains('Marketing'))
-        IconButton(
-            tooltip: 'Tâches',
-            onPressed: () {
-              Get.toNamed(TacheRoutes.tachePage);
-            },
-            icon: Obx(() => Badge(
-              showBadge:
-                  (departementNotifyCOntroller.tacheItemCount >= 1) 
-                    ? true : false,
-              badgeContent:  Text(
-                  departementNotifyCOntroller.tacheItemCount.toString(),
-                  style: const TextStyle(color: Colors.white)),
-              child: const Icon(Icons.work_outline),
-            )) ),
-      if (departementList.contains('Exploitations') ||
-          departementList.contains('Marketing'))
-        IconButton(
-            tooltip: 'Rapports reçus',
-            onPressed: () {
-              Get.toNamed(TacheRoutes.tachePage);
-            },
-            icon: Obx(() => Badge(
-                  showBadge: (departementNotifyCOntroller.tacheRapportItemCount >= 1)
-                      ? true
-                      : false,
-                  badgeContent: Text(
-                      departementNotifyCOntroller.tacheRapportItemCount
-                          .toString(),
-                      style: const TextStyle(color: Colors.white)),
-                  child: const Icon(Icons.article_outlined),
-                ))),
-      if (departementList.contains('Commercial'))
-        IconButton(
-            tooltip: 'Panier',
-            onPressed: () {
-              Get.toNamed(ComRoutes.comCart);
-            },
-            icon: Obx(() => Badge(
-              showBadge:
-                  (departementNotifyCOntroller.cartItemCount >= 1) ? true : false,
-              badgeContent: Text(
-                  departementNotifyCOntroller.cartItemCount.toString(),
-                  style: const TextStyle(color: Colors.white)),
-              child: const Icon(Icons.shopping_cart_outlined),
-            )) ),
-      IconButton(
-          tooltip: 'Agenda',
-          onPressed: () {
-            Get.toNamed(MarketingRoutes.marketingAgenda);
-          },
-          icon: Obx(() => Badge(
-            showBadge:
-                (departementNotifyCOntroller.agendaItemCount >= 1) ? true : false,
-            badgeContent: Text(
-                departementNotifyCOntroller.agendaItemCount.toString(),
-                style: const TextStyle(color: Colors.white)),
-            child: Icon(Icons.note_alt_outlined,
-                size: (Responsive.isDesktop(context) ? 25 : 20)),
-          )) ),
-      IconButton(
-          tooltip: 'Mailling',
-          onPressed: () {
-            Get.toNamed(MailRoutes.mails);
-          },
-          icon: Obx(() => Badge(
-            showBadge:
-                (departementNotifyCOntroller.mailsItemCount >= 1) ? true : false,
-            badgeContent: Text(
-                    departementNotifyCOntroller.mailsItemCount.toString(),
-                style: const TextStyle(color: Colors.white)),
-            child: Icon(Icons.mail_outline_outlined,
-                size: (Responsive.isDesktop(context) ? 25 : 20)),
-          )) ),
-      if (!Responsive.isMobile(context))
-        const SizedBox(
-          width: p10,
-        ),
-      Container(
-        width: 1,
-        height: 22,
-        color: lightGrey,
-      ),
-      if (!Responsive.isMobile(context))
-      const SizedBox(
-        width: p20,
-      ),
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        padding: const EdgeInsets.all(2),
-        margin: const EdgeInsets.all(2),
-        child: CircleAvatar( 
-          child: AutoSizeText(
-            '$firstLettter$firstLettter2'.toUpperCase(),
-            maxLines: 1,
-          ),
-        ) 
-      ),
-      const SizedBox(width: p8),
-      if (Responsive.isDesktop(context))
-      Row(
-        children: [
-          Obx(() =>  InkWell(
-            onTap: () {
-              Get.toNamed(UserRoutes.profil);
-            },
-            child: AutoSizeText(
-              "${profilController.user.prenom} ${profilController.user.nom}",
-              maxLines: 1,
-              style: bodyLarge,
+                : Icon(Icons.download, color: Colors.red.shade700))),
+      profilController.obx(
+        onLoading: loadingMini(),  
+        (state) {
+          List<dynamic> departementList = jsonDecode(state!.departement);
+        final String firstLettter = state.prenom[0];
+        final String firstLettter2 = state.nom[0];
+        return Row(
+          children: [
+                if (departementList.contains('Exploitations') ||
+              departementList.contains('Marketing'))
+            IconButton(
+                tooltip: 'Tâches',
+                onPressed: () {
+                  Get.toNamed(TacheRoutes.tachePage);
+                },
+                icon: Obx(() => Badge(
+                      showBadge: (departementNotifyCOntroller.tacheItemCount >= 1)
+                          ? true
+                          : false,
+                      badgeContent: Text(
+                          departementNotifyCOntroller.tacheItemCount.toString(),
+                          style: const TextStyle(color: Colors.white)),
+                      child: const Icon(Icons.work_outline),
+                    ))),
+          if (departementList.contains('Exploitations') ||
+              departementList.contains('Marketing'))
+            IconButton(
+                tooltip: 'Rapports reçus',
+                onPressed: () {
+                  Get.toNamed(TacheRoutes.tachePage);
+                },
+                icon: Obx(() => Badge(
+                      showBadge:
+                          (departementNotifyCOntroller.tacheRapportItemCount >= 1)
+                              ? true
+                              : false,
+                      badgeContent: Text(
+                          departementNotifyCOntroller.tacheRapportItemCount
+                              .toString(),
+                          style: const TextStyle(color: Colors.white)),
+                      child: const Icon(Icons.article_outlined),
+                    ))),
+          if (departementList.contains('Commercial'))
+            IconButton(
+                tooltip: 'Panier',
+                onPressed: () {
+                  Get.toNamed(ComRoutes.comCart);
+                },
+                icon: Obx(() => Badge(
+                      showBadge: (departementNotifyCOntroller.cartItemCount >= 1)
+                          ? true
+                          : false,
+                      badgeContent: Text(
+                          departementNotifyCOntroller.cartItemCount.toString(),
+                          style: const TextStyle(color: Colors.white)),
+                      child: const Icon(Icons.shopping_cart_outlined),
+                    ))),
+          IconButton(
+              tooltip: 'Agenda',
+              onPressed: () {
+                Get.toNamed(MarketingRoutes.marketingAgenda);
+              },
+              icon: Obx(() => Badge(
+                    showBadge: (departementNotifyCOntroller.agendaItemCount >= 1)
+                        ? true
+                        : false,
+                    badgeContent: Text(
+                        departementNotifyCOntroller.agendaItemCount.toString(),
+                        style: const TextStyle(color: Colors.white)),
+                    child: Icon(Icons.note_alt_outlined,
+                        size: (Responsive.isDesktop(context) ? 25 : 20)),
+                  ))),
+          IconButton(
+              tooltip: 'Mailling',
+              onPressed: () {
+                Get.toNamed(MailRoutes.mails);
+              },
+              icon: Obx(() => Badge(
+                    showBadge: (departementNotifyCOntroller.mailsItemCount >= 1)
+                        ? true
+                        : false,
+                    badgeContent: Text(
+                        departementNotifyCOntroller.mailsItemCount.toString(),
+                        style: const TextStyle(color: Colors.white)),
+                    child: Icon(Icons.mail_outline_outlined,
+                        size: (Responsive.isDesktop(context) ? 25 : 20)),
+                  ))),
+          if (!Responsive.isMobile(context))
+            const SizedBox(
+              width: p10,
             ),
-          )) ,
-        ],
-      ),
+          Container(
+            width: 1,
+            height: 22,
+            color: lightGrey,
+          ),
+          if (!Responsive.isMobile(context))
+            const SizedBox(
+              width: p20,
+            ),
+
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                padding: const EdgeInsets.all(2),
+                margin: const EdgeInsets.all(2),
+                child: CircleAvatar(
+                  child: AutoSizeText(
+                    '$firstLettter$firstLettter2'.toUpperCase(),
+                    maxLines: 1,
+                  ),
+                )),
+            const SizedBox(width: p8),
+            if (Responsive.isDesktop(context))
+              InkWell(
+                onTap: () {
+                  Get.toNamed(UserRoutes.profil);
+                },
+                child: AutoSizeText(
+                  "${profilController.user.prenom} ${profilController.user.nom}",
+                  maxLines: 1,
+                  style: bodyLarge,
+                ),
+              ),
+          ],
+        );
+      }),
       PopupMenuButton<MenuItemModel>(
         onSelected: (item) => MenuOptions().onSelected(context, item),
         itemBuilder: (context) => [

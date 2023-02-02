@@ -6,6 +6,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/models/commercial/bon_livraison.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/commercials/bon_livraison/bon_livraison_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -18,6 +19,7 @@ class BonLivraisonPage extends StatefulWidget {
 }
 
 class _BonLivraisonPageState extends State<BonLivraisonPage> {
+  final ProfilController profilController = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Commercial";
   String subTitle = "Bon de livraison";
@@ -39,45 +41,47 @@ class _BonLivraisonPageState extends State<BonLivraisonPage> {
           Expanded(
               flex: 5,
               child: controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) =>SingleChildScrollView(
-                  controller: ScrollController(),
-                  physics: const ScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                        top: p20, bottom: p8, right: p20, left: p20),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  controller.getList();
-                                },
-                                icon: const Icon(Icons.refresh,
-                                    color: Colors.green))
-                          ],
-                        ),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: controller.bonLivraisonList.length,
-                            itemBuilder: (context, index) {
-                              final data = controller.bonLivraisonList[index];
-                              return bonLivraisonItemWidget(data);
-                            }),
-                      ],
-                    ),
-                  ))) )
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!), (state) {
+                List<BonLivraisonModel> bonLivraisonList = state!
+                    .where((element) =>
+                        element.succursale == profilController.user.succursale)
+                    .toList();
+                return SingleChildScrollView(
+                    controller: ScrollController(),
+                    physics: const ScrollPhysics(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          top: p20, bottom: p8, right: p20, left: p20),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    controller.getList();
+                                  },
+                                  icon: const Icon(Icons.refresh,
+                                      color: Colors.green))
+                            ],
+                          ),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: bonLivraisonList.length,
+                              itemBuilder: (context, index) {
+                                final data = bonLivraisonList[index];
+                                return bonLivraisonItemWidget(data);
+                              }),
+                        ],
+                      ),
+                    ));
+              }))
         ],
-      )
-      
-      
-       ,
+      ),
     );
   }
 

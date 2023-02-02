@@ -33,7 +33,13 @@ class _AnnuairePageState extends State<AnnuairePage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+                tooltip: "Ajout un nouveau contact",
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  Get.toNamed(MarketingRoutes.marketingAnnuaireAdd);
+                },
+              ) :  FloatingActionButton.extended(
         label: const Text("Ajouter contact"),
         tooltip: "Ajout un nouveau contact",
         icon: const Icon(Icons.add),

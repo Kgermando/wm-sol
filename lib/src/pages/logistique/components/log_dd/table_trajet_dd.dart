@@ -122,28 +122,26 @@ class _TableTrajetDDState extends State<TableTrajetDD> {
         .where((element) => element.approbationDD == '-')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nomeroEntreprise': PlutoCell(value: item.nomeroEntreprise),
-          'conducteur': PlutoCell(value: item.conducteur),
-          'trajetDe': PlutoCell(value: item.trajetDe),
-          'trajetA': PlutoCell(value: item.trajetA),
-          'mission': PlutoCell(value: item.mission),
-          'kilometrageSorite':
-              PlutoCell(value: "${item.kilometrageSorite} km/h"),
-          'kilometrageRetour':
-              PlutoCell(value: "${item.kilometrageRetour} km/h"),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nomeroEntreprise': PlutoCell(value: item.nomeroEntreprise),
+        'conducteur': PlutoCell(value: item.conducteur),
+        'trajetDe': PlutoCell(value: item.trajetDe),
+        'trajetA': PlutoCell(value: item.trajetA),
+        'mission': PlutoCell(value: item.mission),
+        'kilometrageSorite': PlutoCell(value: "${item.kilometrageSorite} km/h"),
+        'kilometrageRetour': PlutoCell(value: "${item.kilometrageRetour} km/h"),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+  
 
   void agentsColumn() {
     columns = [

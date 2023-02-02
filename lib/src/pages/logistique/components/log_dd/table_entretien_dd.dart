@@ -115,27 +115,29 @@ class _TableEntretienDDState extends State<TableEntretienDD> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.entretienController.entretienList
-        .where((element) => element.approbationDD == '-' && element.isSubmit == 'true')
+        .where((element) =>
+            element.approbationDD == '-' && element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'typeObjet': PlutoCell(value: item.typeObjet),
-          'typeMaintenance': PlutoCell(value: item.typeMaintenance),
-          'dureeTravaux': PlutoCell(value: item.dureeTravaux),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'typeObjet': PlutoCell(value: item.typeObjet),
+        'typeMaintenance': PlutoCell(value: item.typeMaintenance),
+        'dureeTravaux': PlutoCell(value: item.dureeTravaux),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
+ 
   void agentsColumn() {
     columns = [
       PlutoColumn(

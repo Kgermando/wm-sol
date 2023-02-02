@@ -122,10 +122,11 @@ class _TableSalaireState extends State<TableSalaire> {
     );
   }
 
-  Future agentsRow() async {
+  Future<List<PlutoRow>> agentsRow() async {
     var i = widget.salairesList.length;
-    for (var item in widget.salairesList) {
-      rows.add(PlutoRow(cells: {
+    List.generate(widget.salairesList.length, (index) {
+      var item = widget.salairesList[index];
+      return rows.add(PlutoRow(cells: {
         'numero': PlutoCell(value: i--),
         'prenom': PlutoCell(value: item.prenom),
         'nom': PlutoCell(value: item.nom),
@@ -141,8 +142,10 @@ class _TableSalaireState extends State<TableSalaire> {
         'approbationFin': PlutoCell(value: item.approbationFin),
         'id': PlutoCell(value: item.id)
       }));
-    }
+    });
+    return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [

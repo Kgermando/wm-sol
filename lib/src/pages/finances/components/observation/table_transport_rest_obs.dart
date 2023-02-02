@@ -133,30 +133,31 @@ class _TableTransportRestObsState extends State<TableTransportRestObs> {
             element.approbationDD == 'Approved' &&
             element.approbationBudget == 'Approved' &&
             element.approbationFin == 'Approved' &&
-            element.observation == "false" && 
+            element.observation == "false" &&
             element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'title': PlutoCell(value: item.title),
-          'observation': PlutoCell(
-              value: (item.observation == 'true') ? "Payé" : "Non payé"),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'approbationBudget': PlutoCell(value: item.approbationBudget),
-          'approbationFin': PlutoCell(value: item.approbationFin),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'title': PlutoCell(value: item.title),
+        'observation': PlutoCell(
+            value: (item.observation == 'true') ? "Payé" : "Non payé"),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'approbationBudget': PlutoCell(value: item.approbationBudget),
+        'approbationFin': PlutoCell(value: item.approbationFin),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+   
 
   void agentsColumn() {
     columns = [

@@ -155,29 +155,30 @@ class _TableBanqueState extends State<TableBanque> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.banqueList.length;
-    for (var item in widget.banqueList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nomComplet': PlutoCell(value: item.nomComplet),
-          'pieceJustificative': PlutoCell(value: item.pieceJustificative),
-          'libelle': PlutoCell(value: item.libelle),
-          'typeOperation': PlutoCell(value: item.typeOperation),
-          'montantDepot': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDepot))} ${monnaieStorage.monney}"),
-          'montantRetrait': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantRetrait))} ${monnaieStorage.monney}"),
-          'numeroOperation': PlutoCell(value: item.numeroOperation),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy H:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.banqueList.length, (index) {
+      var item = widget.banqueList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nomComplet': PlutoCell(value: item.nomComplet),
+        'pieceJustificative': PlutoCell(value: item.pieceJustificative),
+        'libelle': PlutoCell(value: item.libelle),
+        'typeOperation': PlutoCell(value: item.typeOperation),
+        'montantDepot': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantDepot))} ${monnaieStorage.monney}"),
+        'montantRetrait': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.montantRetrait))} ${monnaieStorage.monney}"),
+        'numeroOperation': PlutoCell(value: item.numeroOperation),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy H:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

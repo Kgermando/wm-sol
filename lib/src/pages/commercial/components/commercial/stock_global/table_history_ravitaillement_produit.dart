@@ -144,6 +144,34 @@ class _TableHistoryRavitaillementProduitState
     );
   }
 
+  Future<List<PlutoRow>> agentsRow() async {
+    var dataList = historyRavitaillementController.historyRavitaillementList
+        .where((element) =>
+            element.succursale == profilController.user.succursale &&
+            element.idProduct == widget.stocksGlobalMOdel.idProduct)
+        .toSet()
+        .toList();
+    var i = dataList.length;
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'idProduct': PlutoCell(value: item.idProduct),
+        'quantity': PlutoCell(value: '${item.quantity} ${item.unite}'),
+        'quantityAchat': PlutoCell(value: item.quantityAchat),
+        'priceAchatUnit': PlutoCell(value: item.priceAchatUnit),
+        'prixVenteUnit': PlutoCell(value: item.prixVenteUnit),
+        'margeBen': PlutoCell(value: item.margeBen),
+        'tva': PlutoCell(value: item.tva),
+        'qtyRavitailler': PlutoCell(value: item.qtyRavitailler),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
+    return rows;
+  }
+
   void agentsColumn() {
     columns = [
       PlutoColumn(
@@ -293,35 +321,6 @@ class _TableHistoryRavitaillementProduitState
     ];
   }
 
-  Future agentsRow() async {
-    // List<HistoryRavitaillementModel> historyRavitaillements =
-    //     await HistoryRavitaillementApi().getAllData();
-    var dataList = historyRavitaillementController.historyRavitaillementList
-        .where((element) =>
-            element.succursale == profilController.user.succursale &&
-            element.idProduct == widget.stocksGlobalMOdel.idProduct)
-        .toSet()
-        .toList();
-    var i = dataList.length;
-    if (mounted) {
-      setState(() {
-        for (var item in dataList) {
-          rows.add(PlutoRow(cells: {
-            'numero': PlutoCell(value: i--),
-            'idProduct': PlutoCell(value: item.idProduct),
-            'quantity': PlutoCell(value: '${item.quantity} ${item.unite}'),
-            'quantityAchat': PlutoCell(value: item.quantityAchat),
-            'priceAchatUnit': PlutoCell(value: item.priceAchatUnit),
-            'prixVenteUnit': PlutoCell(value: item.prixVenteUnit),
-            'margeBen': PlutoCell(value: item.margeBen),
-            'tva': PlutoCell(value: item.tva),
-            'qtyRavitailler': PlutoCell(value: item.qtyRavitailler),
-            'created': PlutoCell(
-                value: DateFormat("dd-MM-yy H:mm").format(item.created)),
-            'id': PlutoCell(value: item.id)
-          }));
-        }
-      });
-    }
-  }
+
+ 
 }

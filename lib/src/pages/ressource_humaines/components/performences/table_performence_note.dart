@@ -83,7 +83,7 @@ class _TablePerformenceNoteState extends State<TablePerformenceNote> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const TitleWidget(title: 'Cotations'),
+                  const TitleWidget(title: 'Note de performence'),
                   IconButton(
                       onPressed: () {
                         setState(() {
@@ -97,6 +97,7 @@ class _TablePerformenceNoteState extends State<TablePerformenceNote> {
                 child: EasyTable<PerformenceNoteModel>(
                   _model,
                   multiSort: true,
+                  columnsFit: true,
                 ),
               ),
             ],

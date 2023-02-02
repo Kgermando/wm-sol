@@ -129,23 +129,23 @@ class _TableTachesState extends State<TableTaches> {
         .toList();
 
     var i = dataList.length;
-    for (var item in dataList) { 
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'readResponsable': PlutoCell(value: item.readResponsable),
-          'nom': PlutoCell(value: item.nom),
-          'numeroTache': PlutoCell(value: item.numeroTache),
-          'agent': PlutoCell(value: item.agent),
-          'jalon': PlutoCell(value: item.jalon),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'readResponsable': PlutoCell(value: item.readResponsable),
+        'nom': PlutoCell(value: item.nom),
+        'numeroTache': PlutoCell(value: item.numeroTache),
+        'agent': PlutoCell(value: item.agent),
+        'jalon': PlutoCell(value: item.jalon),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+ 
 
   void agentsColumn() {
     columns = [

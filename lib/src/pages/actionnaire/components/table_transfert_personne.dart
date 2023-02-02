@@ -70,10 +70,12 @@ class _TableTransfertPersonneState extends State<TableTransfertPersonne> {
             height: 400,
             child: Column(
               children: [
-                const TitleWidget(title: "Historique de Transfert"),
+                const TitleWidget(title: "Historique de Transferts"),
                 Expanded(
                   child: EasyTable<ActionnaireTransfertModel>(_model,
-                      multiSort: true),
+                      multiSort: true,
+                    columnsFit: true,
+                  ),
                 ),
               ],
             )),

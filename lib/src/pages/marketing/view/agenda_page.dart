@@ -45,7 +45,13 @@ class _AgendaPageState extends State<AgendaPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Ajout un rappel",
+        child: const Icon(Icons.add),
+        onPressed: () {
+          newFicheDialog();
+        },
+      ) :  FloatingActionButton.extended(
         label: const Text("Ajouter rappel"),
         tooltip: "Ajout un rappel",
         icon: const Icon(Icons.add),

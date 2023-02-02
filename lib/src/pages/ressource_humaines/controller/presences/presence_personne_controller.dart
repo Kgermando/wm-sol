@@ -55,6 +55,7 @@ class PresencePersonneController extends GetxController
     motifController.clear();
   }
 
+
   void getList() async {
     await presencePersonnelApi.getAllData().then((response) {
       presencePersonneList.assignAll(response);

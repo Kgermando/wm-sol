@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/controllers/network_controller.dart'; 
 import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 // import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 // import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
 // import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
@@ -92,13 +95,22 @@ import 'package:wm_solution/src/pages/screens/controller/splash_controller.dart'
 
 
 class WMBindings extends Bindings {
+  final getStorge = GetStorage();
   @override
   void dependencies() async { 
+
+    String? idToken = getStorge.read('idToken'); 
+    if (idToken != null) {
+      Get.put<ProfilController>(ProfilController());
+      Get.lazyPut(() => DepartementNotifyCOntroller()); 
+    }
+    Get.put<LoginController>(LoginController());
     Get.put<NetworkController>(NetworkController());
     Get.put<SplashController>(SplashController());
-    // Get.put<ProfilController>(ProfilController());
+
+    
     // Get.put<UsersController>(UsersController());
-    Get.put<LoginController>(LoginController());
+    
     // // Get.put<DepartementNotifyCOntroller>(DepartementNotifyCOntroller());
     
     // // Mail

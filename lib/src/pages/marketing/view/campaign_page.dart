@@ -28,7 +28,12 @@ class _CampaignPageState extends State<CampaignPage> {
     key: scaffoldKey,
     appBar: headerBar(context, scaffoldKey, title, subTitle),
     drawer: const DrawerMenu(),
-    floatingActionButton: FloatingActionButton.extended(
+    floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Créer une campagne",
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(MarketingRoutes.marketingCampaignAdd);
+        }) : FloatingActionButton.extended(
         label: const Text("Créer une campagne"),
         tooltip: "Créer une campagne",
         icon: const Icon(Icons.add),

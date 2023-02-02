@@ -101,29 +101,30 @@ class _TableHistoriqueBudgetState extends State<TableHistoriqueBudget> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.departementBudgetList
+     var dataList = widget.departementBudgetList
         .where((element) => DateTime.now().isAfter(element.periodeFin))
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'title': PlutoCell(value: item.title),
-          'departement': PlutoCell(value: item.departement),
-          'periodeBudget': PlutoCell(
-              value:
-                  "${DateFormat("dd-MM-yyyy").format(item.periodeDebut)} - ${DateFormat("dd-MM-yyyy").format(item.periodeFin)}"),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'title': PlutoCell(value: item.title),
+        'departement': PlutoCell(value: item.departement),
+        'periodeBudget': PlutoCell(
+            value:
+                "${DateFormat("dd-MM-yyyy").format(item.periodeDebut)} - ${DateFormat("dd-MM-yyyy").format(item.periodeFin)}"),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      })); 
+    });
     return rows;
   }
+
+  
 
   void agentsColumn() {
     columns = [

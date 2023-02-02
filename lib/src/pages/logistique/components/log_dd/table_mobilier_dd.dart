@@ -111,28 +111,29 @@ class _TableMobilierDDState extends State<TableMobilierDD> {
     );
   }
 
+
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.mobilierController.mobilierList
         .where((element) => element.approbationDD == '-')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'modele': PlutoCell(value: item.modele),
-          'marque': PlutoCell(value: item.marque),
-          'nombre': PlutoCell(value: item.nombre),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'modele': PlutoCell(value: item.modele),
+        'marque': PlutoCell(value: item.marque),
+        'nombre': PlutoCell(value: item.nombre),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
 
   void agentsColumn() {
     columns = [

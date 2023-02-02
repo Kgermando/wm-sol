@@ -80,6 +80,7 @@ class _TableDahboardTrajetState extends State<TableDahboardTrajet> {
                 Expanded(
                   child: EasyTable<TrajetModel>(
                     _model, multiSort: true,
+                    columnsFit: true,
                     onRowTap: (row) async {
                       final TrajetModel trajetModel =
                         await widget.controller.detailView(row.id!);

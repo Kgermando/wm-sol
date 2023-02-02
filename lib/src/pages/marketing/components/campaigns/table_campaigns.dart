@@ -127,31 +127,31 @@ class _TableCampaignState extends State<TableCampaign> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.campaignList.length;
-    for (var item in widget.campaignList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'typeProduit': PlutoCell(value: item.typeProduit),
-          'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
-          'coutCampaign': PlutoCell(
-              value:
-                  "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutCampaign))} ${monnaieStorage.monney}"),
-          'lieuCible': PlutoCell(value: item.lieuCible),
-          'promotion': PlutoCell(value: item.promotion),
-          'objectifs': PlutoCell(value: item.objectifs),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'approbationBudget': PlutoCell(value: item.approbationBudget),
-          'approbationFin': PlutoCell(value: item.approbationFin),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.campaignList.length, (index) {
+      var item = widget.campaignList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'typeProduit': PlutoCell(value: item.typeProduit),
+        'dateDebutEtFin': PlutoCell(value: item.dateDebutEtFin),
+        'coutCampaign': PlutoCell(
+            value:
+                "${NumberFormat.decimalPattern('fr').format(double.parse(item.coutCampaign))} ${monnaieStorage.monney}"),
+        'lieuCible': PlutoCell(value: item.lieuCible),
+        'promotion': PlutoCell(value: item.promotion),
+        'objectifs': PlutoCell(value: item.objectifs),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'approbationBudget': PlutoCell(value: item.approbationBudget),
+        'approbationFin': PlutoCell(value: item.approbationFin),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
 
+   
   void agentsColumn() {
     columns = [
       PlutoColumn(

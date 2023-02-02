@@ -28,7 +28,12 @@ class _ProduitModelPageState extends State<ProduitModelPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Nouveau produit modèle",
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(ComRoutes.comProduitModelAdd);
+        }) : FloatingActionButton.extended(
           label: const Text("Ajout produit modèle"),
           tooltip: "Nouveau produit modèle",
           icon: const Icon(Icons.add),

@@ -28,7 +28,14 @@ class _EtatMaterielPageState extends State<EtatMaterielPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Ajouter le statut de materiel",
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(LogistiqueRoutes.logAddEtatMateriel);
+        },
+      ) :
+         FloatingActionButton.extended(
         label: const Text("Statut du materiel"),
         tooltip: "Ajouter le statut de materiel",
         icon: const Icon(Icons.add),

@@ -133,14 +133,14 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
         .where((element) =>
             element.approbationDG == 'Approved' &&
             element.approbationDD == 'Approved' &&
-            element.approbationBudget == '-' && 
+            element.approbationBudget == '-' &&
             element.observation == 'false' &&
             element.isSubmit == 'true')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
           'numero': PlutoCell(value: i--),
           'title': PlutoCell(value: item.title),
           'observation': PlutoCell(
@@ -154,10 +154,11 @@ class _TableTransportRestBudgetState extends State<TableTransportRestBudget> {
           'approbationFin': PlutoCell(value: item.approbationFin),
           'id': PlutoCell(value: item.id)
         }));
-      });
-    }
+    });
     return rows;
   }
+
+  
 
   void agentsColumn() {
     columns = [

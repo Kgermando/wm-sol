@@ -113,23 +113,23 @@ class _TableEtatMaterielState extends State<TableEtatMateriel> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.etatMaterielList.length;
-    for (var item in widget.etatMaterielList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'typeObjet': PlutoCell(value: item.typeObjet),
-          'statut': PlutoCell(value: item.statut),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.etatMaterielList.length, (index) {
+      var item = widget.etatMaterielList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'typeObjet': PlutoCell(value: item.typeObjet),
+        'statut': PlutoCell(value: item.statut),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
 
+ 
   void agentsColumn() {
     columns = [
       PlutoColumn(

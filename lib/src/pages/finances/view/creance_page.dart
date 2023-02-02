@@ -34,7 +34,14 @@ class _CreancePageState extends State<CreancePage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) 
+          ? FloatingActionButton( 
+              tooltip: "Ajouter la nouvelle créance", 
+              child: const Icon(Icons.add),
+              onPressed: () {
+                transactionsDialogCreance(controller);
+              }) 
+          : FloatingActionButton.extended(
             label: const Text("Nouvelle créance"),
             tooltip: "Ajouter la nouvelle créance",
             icon: const Icon(Icons.add),

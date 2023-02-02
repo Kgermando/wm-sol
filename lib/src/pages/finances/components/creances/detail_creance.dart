@@ -51,7 +51,15 @@ class _DetailCreanceState extends State<DetailCreance> {
         appBar: headerBar(
             context, scaffoldKey, title, widget.creanceModel.numeroOperation),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) 
+          ? FloatingActionButton( 
+              tooltip: "Ajout le Remboursement",
+              child: const Icon(Icons.add_card),
+              onPressed: () {
+                dialongCreancePaiement(creanceDetteController);
+              },
+            )
+          : FloatingActionButton.extended(
           label: const Text("Ajouter le Remboursement"),
           tooltip: "Ajout le Remboursement",
           icon: const Icon(Icons.add_card),

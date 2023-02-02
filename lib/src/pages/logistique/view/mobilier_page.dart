@@ -28,7 +28,13 @@ class _MobilierPageState extends State<MobilierPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+            tooltip: "Ajouter un nouveau mobilier",
+            child: const Icon(Icons.add),
+            onPressed: () {
+              newFicheDialog();
+            },
+          ) : FloatingActionButton.extended(
           label: const Text("Ajouter un mobilier"),
           tooltip: "Ajouter un nouveau mobilier",
           icon: const Icon(Icons.add),

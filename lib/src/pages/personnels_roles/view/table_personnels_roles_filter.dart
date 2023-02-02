@@ -117,6 +117,7 @@ class _TablePersonnelsRolesFilterState
                 child: EasyTable<AgentRoleModel>(
                   _model,
                   multiSort: true,
+                  columnsFit: true,
                   onRowDoubleTap: (row) => deleteButton(row.id!),
                 )),
           ],

@@ -23,118 +23,126 @@ class UpdateMateriel extends StatefulWidget {
 }
 
 class _UpdateMaterielState extends State<UpdateMateriel> {
- final MaterielController controller = Get.find();
+  final MaterielController controller = Get.find();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Logistique";
 
   @override
   void initState() {
-    controller.marqueController = TextEditingController(text: widget.materielModel.marque);
-    controller.modeleController = TextEditingController(text: widget.materielModel.modele);
-    controller.numeroRefController = TextEditingController(text: widget.materielModel.numeroRef);
-    controller.couleurController = TextEditingController(text: widget.materielModel.couleur);
+    controller.marqueController =
+        TextEditingController(text: widget.materielModel.marque);
+    controller.modeleController =
+        TextEditingController(text: widget.materielModel.modele);
+    controller.numeroRefController =
+        TextEditingController(text: widget.materielModel.numeroRef);
+    controller.couleurController =
+        TextEditingController(text: widget.materielModel.couleur);
     controller.genreController = widget.materielModel.genre;
-    controller.qtyMaxReservoirController = TextEditingController(text: widget.materielModel.qtyMaxReservoir);
-    controller.numeroPLaqueController = TextEditingController(text: widget.materielModel.numeroPLaque);
-    controller.kilometrageInitialeController =TextEditingController(text: widget.materielModel.kilometrageInitiale);
-    controller.fournisseurController = TextEditingController(text: widget.materielModel.fournisseur);  
+    controller.qtyMaxReservoirController =
+        TextEditingController(text: widget.materielModel.qtyMaxReservoir);
+    controller.numeroPLaqueController =
+        TextEditingController(text: widget.materielModel.numeroPLaque);
+    controller.kilometrageInitialeController =
+        TextEditingController(text: widget.materielModel.kilometrageInitiale);
+    controller.fournisseurController =
+        TextEditingController(text: widget.materielModel.fournisseur);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, widget.materielModel.identifiant),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
-                          controller: ScrollController(),
-                          physics: const ScrollPhysics(),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                top: p20, bottom: p8, right: p20, left: p20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                              children: [
-                                Card(
-                                  elevation: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: p20),
-                                    child: Form(
-                                      key: controller.formKey,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const TitleWidget(
-                                              title: "Nouvel Fiche technique"),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          typeMaterielWidget(),
-                                          ResponsiveChildWidget(
-                                              child1: marqueWidget(),
-                                              child2: modeleWidget()),
-                                          ResponsiveChildWidget(
-                                              child1: numeroRefWidget(),
-                                              child2: couleurNomWidget()),
-                                          ResponsiveChildWidget(
-                                              child1: genreWidget(),
-                                              child2: qtyMaxReservoirWidget()),
-                                           ResponsiveChildWidget(
-                                              child1: dateFabricationWidget(),
-                                              child2:
-                                                  (controller.typeMateriel ==
-                                                          'Materiel roulant')
-                                                      ? numeroPLaqueWidget()
-                                                      : Container()),
-                                          ResponsiveChildWidget(
-                                              child1: identifiantWidget(),
-                                              child2:
-                                                  kilometrageInitialeWidget()),
-                                          ResponsiveChildWidget(
-                                              child1: fournisseurWidget(),
-                                              child2: alimentationWidget()),
-                                          const SizedBox(
-                                            height: p20,
-                                          ),
-                                          Obx(() => BtnWidget(
-                                              title: 'Soumettre',
-                                              isLoading: controller.isLoading,
-                                              press: () {
-                                                final form = controller
-                                                    .formKey.currentState!;
-                                                if (form.validate()) {
-                                                  controller.submitUpdate(widget.materielModel);
-                                                  form.reset();
-                                                }
-                                              })) 
-                                        ],
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(
+          context, scaffoldKey, title, widget.materielModel.identifiant),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child: controller.obx(
+                  onLoading: loadingPage(context),
+                  onEmpty: const Text('Aucune donnée'),
+                  onError: (error) => loadingError(context, error!),
+                  (state) => SingleChildScrollView(
+                      controller: ScrollController(),
+                      physics: const ScrollPhysics(),
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            top: p20, bottom: p8, right: p20, left: p20),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 3,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: p20),
+                                child: Form(
+                                  key: controller.formKey,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const TitleWidget(
+                                          title: "Nouvel Fiche technique"),
+                                      const SizedBox(
+                                        height: p20,
                                       ),
-                                    ),
+                                      typeMaterielWidget(),
+                                      ResponsiveChildWidget(
+                                          child1: marqueWidget(),
+                                          child2: modeleWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: numeroRefWidget(),
+                                          child2: couleurNomWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: genreWidget(),
+                                          child2: qtyMaxReservoirWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: dateFabricationWidget(),
+                                          child2: (controller.typeMateriel ==
+                                                  'Materiel roulant')
+                                              ? numeroPLaqueWidget()
+                                              : Container()),
+                                      ResponsiveChildWidget(
+                                          child1: identifiantWidget(),
+                                          child2: kilometrageInitialeWidget()),
+                                      ResponsiveChildWidget(
+                                          child1: fournisseurWidget(),
+                                          child2: alimentationWidget()),
+                                      const SizedBox(
+                                        height: p20,
+                                      ),
+                                      Obx(() => BtnWidget(
+                                          title: 'Soumettre',
+                                          isLoading: controller.isLoading,
+                                          press: () {
+                                            final form = controller
+                                                .formKey.currentState!;
+                                            if (form.validate()) {
+                                              controller.submitUpdate(
+                                                  widget.materielModel);
+                                              form.reset();
+                                            }
+                                          }))
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          )))
-                ],
-              ),
-            ));
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ))))
+        ],
+      ),
+    );
   }
 
   Widget typeMaterielWidget() {
@@ -166,8 +174,7 @@ class _UpdateMaterielState extends State<UpdateMateriel> {
     );
   }
 
-
-Widget marqueWidget() {
+  Widget marqueWidget() {
     return Container(
         margin: const EdgeInsets.only(bottom: p20),
         child: TextFormField(
@@ -257,7 +264,7 @@ Widget marqueWidget() {
         ));
   }
 
-   Widget genreWidget() {
+  Widget genreWidget() {
     List<String> suggestionList = controller.materielList
         .where((p0) => p0.typeMateriel == 'Materiel roulant')
         .map((e) => e.genre)

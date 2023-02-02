@@ -16,9 +16,8 @@ class ServiceAffectation {
     'Administration',
     'Secretariat',
     'Reception',
-    'Consultant(e)',
-    'Aucun poste occupé',
-    'Autre'
+    'Consultant(e)', 
+    'Audit'
   ];
 
   List<String> rhDropdown = [

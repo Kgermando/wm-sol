@@ -29,7 +29,14 @@ class _PersonnelsPageState extends State<PersonnelsPage> {
     key: scaffoldKey,
     appBar: headerBar(context, scaffoldKey, title, subTitle),
     drawer: const DrawerMenu(),
-    floatingActionButton: FloatingActionButton.extended(
+    floatingActionButton: Responsive.isMobile(context) ?  FloatingActionButton( 
+      tooltip: "Nouveau profil",
+      child: const Icon(Icons.person_add),
+      onPressed: () {
+        Get.toNamed(RhRoutes.rhPersonnelsAdd,
+            arguments: controller.personnelsList);
+      },
+    ) :  FloatingActionButton.extended(
       label: const Text("Nouveau profil"),
       tooltip: "Nouveau profil",
       icon: const Icon(Icons.person_add),

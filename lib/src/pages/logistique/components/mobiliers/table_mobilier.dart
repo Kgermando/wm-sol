@@ -112,23 +112,23 @@ class _TableMobilierState extends State<TableMobilier> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.mobilierList.length;
-    for (var item in widget.mobilierList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'modele': PlutoCell(value: item.modele),
-          'marque': PlutoCell(value: item.marque),
-          'nombre': PlutoCell(value: item.nombre),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.mobilierList.length, (index) {
+      var item = widget.mobilierList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'modele': PlutoCell(value: item.modele),
+        'marque': PlutoCell(value: item.marque),
+        'nombre': PlutoCell(value: item.nombre),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [

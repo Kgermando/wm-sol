@@ -37,8 +37,7 @@ class _DashRHPieWidgetState extends State<DashRHPieWidget> {
             series: <CircularSeries>[
               // Render pie chart
               PieSeries<AgentPieChartModel, String>(
-                  dataSource: widget.controller.agentPieChartList,
-                  // pointColorMapper: (ChartData data, _) => data.color,
+                  dataSource: widget.controller.agentPieChartList, 
                   xValueMapper: (AgentPieChartModel data, _) => data.sexe,
                   yValueMapper: (AgentPieChartModel data, _) => data.count)
             ]),

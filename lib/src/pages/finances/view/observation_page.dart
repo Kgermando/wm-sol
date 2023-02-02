@@ -109,7 +109,7 @@ class _ObservationPageState extends State<ObservationPage> {
                                         style: headline6.copyWith(
                                             color: Colors.white)),
                                     subtitle: Text(
-                                        "Vous ${controller.itemCountTransRestObs} dossiers necessitent votre approbation",
+                                        "Vous avez ${controller.itemCountTransRestObs} dossiers necessitent votre approbation",
                                         style: bodyMedium.copyWith(
                                             color: Colors.white70)),
                                     initiallyExpanded: false,

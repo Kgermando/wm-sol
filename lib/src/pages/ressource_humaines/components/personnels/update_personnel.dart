@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:file_picker/file_picker.dart';
@@ -18,6 +19,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/u
 import 'package:wm_solution/src/utils/dropdown.dart';
 import 'package:wm_solution/src/utils/regex.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
+import 'package:wm_solution/src/widgets/loading.dart';
 import 'package:wm_solution/src/widgets/responsive_child_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -197,9 +199,24 @@ class _UpdatePersonnelState extends State<UpdatePersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: CircleAvatar(
-                          child: (controller.uploadedFileUrl == '')
-                              ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(controller.uploadedFileUrl)),
+                          child: CachedNetworkImageBuilder(
+                        url: widget.personne.photo!,
+                        builder: (image) {
+                          return Center(
+                              child: Image.file(
+                            image,
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          ));
+                        },
+                        // Optional Placeholder widget until image loaded from url
+                        placeHolder: loadingMini(),
+                        // Optional error widget
+                        errorWidget: Image.asset('assets/images/avatar.jpg'),
+                        // Optional describe your image extensions default values are; jpg, jpeg, gif and png
+                        imageExtensions: const ['jpg', 'png'],
+                      )),
                     ),
                   ),
                   Positioned(

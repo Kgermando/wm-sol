@@ -28,23 +28,23 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-        onLoading: loadingPage(context),
-        onEmpty: const Text('Aucune donnée'),
-        onError: (error) => loadingError(context, error!),
-        (state) => Scaffold(
-              key: scaffoldKey,
-              appBar: headerBar(context, scaffoldKey, title, widget.etatMaterielModel.nom),
-              drawer: const DrawerMenu(),
-              body: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Visibility(
-                      visible: !Responsive.isMobile(context),
-                      child: const Expanded(flex: 1, child: DrawerMenu())),
-                  Expanded(
-                      flex: 5,
-                      child: SingleChildScrollView(
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: headerBar(context, scaffoldKey, title, widget.etatMaterielModel.nom),
+      drawer: const DrawerMenu(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+              visible: !Responsive.isMobile(context),
+              child: const Expanded(flex: 1, child: DrawerMenu())),
+          Expanded(
+              flex: 5,
+              child:  controller.obx(
+          onLoading: loadingPage(context),
+          onEmpty: const Text('Aucune donnée'),
+          onError: (error) => loadingError(context, error!),
+          (state) => SingleChildScrollView(
                           controller: ScrollController(),
                           physics: const ScrollPhysics(),
                           child: Container(
@@ -99,10 +99,13 @@ class _UpdateEtatMaterielState extends State<UpdateEtatMateriel> {
                                 )
                               ],
                             ),
-                          )))
+                          ))) )
                 ],
               ),
-            ));
+            )
+    
+    
+   ;
   }
 
 

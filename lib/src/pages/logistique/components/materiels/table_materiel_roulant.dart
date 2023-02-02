@@ -348,7 +348,7 @@ class _TableMaterielRoulantState extends State<TableMaterielRoulant> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Approbation DD',
+        title: 'Approbation DG',
         field: 'approbationDG',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

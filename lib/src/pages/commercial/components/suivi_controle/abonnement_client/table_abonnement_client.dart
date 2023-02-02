@@ -97,24 +97,23 @@ class _TableAbonnementClientState extends State<TableAbonnementClient> {
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.state.length;
-    for (var item in widget.state) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'typeContrat': PlutoCell(value: item.typeContrat),
-          'nomSocial': PlutoCell(value: item.nomSocial),
-          'dateDebutEtFinContrat': PlutoCell(value: item.dateDebutEtFinContrat),
-          'signataireContrat': PlutoCell(value: item.signataireContrat),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+        var i = widget.state.length; 
+    List.generate(widget.state.length, (index) {
+      var item = widget.state[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'typeContrat': PlutoCell(value: item.typeContrat),
+        'nomSocial': PlutoCell(value: item.nomSocial),
+        'dateDebutEtFinContrat': PlutoCell(value: item.dateDebutEtFinContrat),
+        'signataireContrat': PlutoCell(value: item.signataireContrat),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
 
   void agentsColumn() {
     columns = [

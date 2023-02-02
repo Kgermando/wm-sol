@@ -74,7 +74,7 @@ class _DetailRapportState extends State<DetailRapport> {
                                         children: [
                                           PrintWidget(
                                             tooltip: 'Imprimer le document',
-                                            onPressed: () {},
+                                            onPressed: () { },
                                           ),
                                           SelectableText(
                                               DateFormat("dd-MM-yyyy HH:mm")
@@ -158,12 +158,12 @@ class _DetailRapportState extends State<DetailRapport> {
               onPressed: () => Navigator.pop(context, 'Cancel'),
               child: const Text('Annuler'),
             ),
-            TextButton(
+            Obx(() => controller.isLoading ? loading() : TextButton(
               onPressed: () {
                 controller.deleteData(widget.rapportModel.id!);
               },
               child: const Text('OK'),
-            ),
+            )) ,
           ],
         ),
       ),

@@ -1,7 +1,8 @@
+import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:pluto_grid/pluto_grid.dart';
+import 'package:get/get.dart'; 
+import 'package:intl/intl.dart'; 
+import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -18,173 +19,68 @@ class TableUpdate extends StatefulWidget {
 }
 
 class _TableUpdateState extends State<TableUpdate> {
-  List<PlutoColumn> columns = [];
-  List<PlutoRow> rows = [];
-  PlutoGridStateManager? stateManager;
-  PlutoGridSelectingMode gridSelectingMode = PlutoGridSelectingMode.row;
+  EasyTableModel<UpdateModel>? _model;
 
   @override
-  initState() {
-    agentsColumn();
-    agentsRow().then((value) => stateManager!.setShowLoading(false));
+  void initState() {
     super.initState();
+    List<UpdateModel> rows = List.generate(widget.updateList.length,
+        (index) => widget.updateList[index]);
+    _model = EasyTableModel<UpdateModel>(rows: rows, columns: [
+      EasyTableColumn(
+          name: 'Ajouté le',
+          width: 200,
+          stringValue: (row) =>
+              DateFormat("dd-MM-yy HH:mm").format(row.created)),
+      EasyTableColumn(
+          name: 'Version',
+          width: 150,
+          stringValue: (row) => row.version),
+      EasyTableColumn(
+          name: 'Rapport de mise à jour',
+          width: 300,
+          stringValue: (row) => row.motif), 
+      
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return PlutoGrid(
-      columns: columns,
-      rows: rows,
-      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
-        final dataId = tapEvent.row.cells.values;
-        final idPlutoRow = dataId.last;
-
-        final UpdateModel updateModel =
-            await widget.controller.detailView(idPlutoRow.value);
-
-        Get.toNamed(UpdateRoutes.updateDetail, arguments: updateModel);
-      },
-      onLoaded: (PlutoGridOnLoadedEvent event) {
-        stateManager = event.stateManager;
-        stateManager!.setShowColumnFilter(true);
-        stateManager!.setShowLoading(true);
-      },
-      createHeader: (PlutoGridStateManager header) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(p10),
+        child: Column(
           children: [
-            const TitleWidget(title: "Mise à jours"),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const TitleWidget(title: 'Mise à jours'),
                 IconButton(
                     onPressed: () {
-                      widget.controller.getList();
-                      Navigator.pushNamed(context, UpdateRoutes.updatePage);
+                      setState(() {
+                        widget.controller.getList();
+                      });
                     },
-                    icon: Icon(Icons.refresh, color: Colors.green.shade700)),
+                    icon: const Icon(Icons.refresh, color: Colors.green))
               ],
             ),
+            const SizedBox(height: p10),
+            Expanded( 
+              child: EasyTable<UpdateModel>( 
+                _model,
+                multiSort: true, 
+                columnsFit: true,
+                onRowDoubleTap: (row) async {
+                  final UpdateModel updateModel =
+                      await widget.controller.detailView(row.id!);
+                  Get.toNamed(UpdateRoutes.updateDetail,
+                      arguments: updateModel);
+                },
+              ),
+            ),
           ],
-        );
-      },
-      configuration: PlutoGridConfiguration(
-        columnFilter: PlutoGridColumnFilterConfig(
-          filters: const [
-            ...FilterHelper.defaultFilters,
-          ],
-          resolveDefaultColumnFilter: (column, resolver) {
-            if (column.field == 'numero') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'created') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'version') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'motif') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            } else if (column.field == 'id') {
-              return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-            }
-            return resolver<PlutoFilterTypeContains>() as PlutoFilterType;
-          },
         ),
       ),
-      createFooter: (stateManager) {
-        stateManager.setPageSize(20, notify: true); // default 40
-        return PlutoPagination(stateManager);
-      },
     );
-  }
-
-  Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.updateList.length;
-    for (var item in widget.updateList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'version': PlutoCell(value: item.version),
-          'motif': PlutoCell(value: item.motif),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
-    return rows;
-  }
-
-  void agentsColumn() {
-    columns = [
-      PlutoColumn(
-        readOnly: true,
-        title: 'N°',
-        field: 'numero',
-        type: PlutoColumnType.number(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 100,
-        minWidth: 80,
-        renderer: (rendererContext) {
-          return Text(
-            rendererContext.cell.value.toString(),
-            textAlign: TextAlign.center,
-          );
-        },
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Date',
-        field: 'created',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Version',
-        field: 'version',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Rapport update',
-        field: 'motif',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        width: 200,
-        minWidth: 150,
-      ),
-      PlutoColumn(
-        readOnly: true,
-        title: 'Id',
-        field: 'id',
-        type: PlutoColumnType.text(),
-        enableRowDrag: true,
-        enableContextMenu: false,
-        enableDropToResize: true,
-        titleTextAlign: PlutoColumnTextAlign.left,
-        minWidth: 80,
-        renderer: (rendererContext) {
-          return Text(
-            rendererContext.cell.value.toString(),
-            textAlign: TextAlign.center,
-          );
-        },
-      ),
-    ];
   }
 }

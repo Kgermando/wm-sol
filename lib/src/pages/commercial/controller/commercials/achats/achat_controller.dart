@@ -41,7 +41,7 @@ class AchatController extends GetxController with StateMixin<List<AchatModel>> {
       venteFilterQtyList.clear();
       achatList.addAll(response);
       venteFilterQtyList.addAll(response
-          .where((element) => double.parse(element.quantity) > 0)
+          .where((element) => double.parse(element.quantity) > 0 && element.succursale == profilController.user.succursale)
           .toList());
       change(achatList, status: RxStatus.success());
     }, onError: (err) {

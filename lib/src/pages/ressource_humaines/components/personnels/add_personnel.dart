@@ -1,3 +1,4 @@
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
 import 'package:file_picker/file_picker.dart';
@@ -157,9 +158,24 @@ class _AddPersonnelState extends State<AddPersonnel> {
                       height: 100.0,
                       width: 100.0,
                       child: CircleAvatar(
-                          child: (controller.uploadedFileUrl == '')
-                              ? Image.asset('assets/images/avatar.jpg')
-                              : Image.network(controller.uploadedFileUrl)),
+                          child: CachedNetworkImageBuilder(
+                        url: controller.uploadedFileUrl,
+                        builder: (image) {
+                          return Center(
+                              child: Image.file(
+                            image,
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          ));
+                        },
+                        // Optional Placeholder widget until image loaded from url
+                        placeHolder: loadingMini(),
+                        // Optional error widget
+                        errorWidget: Image.asset('assets/images/avatar.jpg'),
+                        // Optional describe your image extensions default values are; jpg, jpeg, gif and png
+                        imageExtensions: const ['jpg', 'png'],
+                      ) ),
                     ),
                   ),
                   Positioned(

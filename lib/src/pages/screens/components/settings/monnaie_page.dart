@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
@@ -5,6 +8,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/helpers/monnaire_storage.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
 import 'package:wm_solution/src/widgets/btn_widget.dart';
 import 'package:wm_solution/src/widgets/loading.dart';
@@ -19,6 +23,7 @@ class MonnaiePage extends StatefulWidget {
 }
 
 class _MonnaiePageState extends State<MonnaiePage> {
+  final ProfilController profilController = Get.find();
   final MonnaieStorage controller = Get.put(MonnaieStorage());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   String title = "Settings";
@@ -29,11 +34,23 @@ class _MonnaiePageState extends State<MonnaiePage> {
   @override
   Widget build(BuildContext context) {
     final bodyLarge = Theme.of(context).textTheme.bodyLarge;
+    List<dynamic> departementList = jsonDecode(profilController.user.departement);
     return Scaffold(
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: 
+          (departementList.contains('Administration') && 
+            profilController.user.fonctionOccupe == "Directeur générale" ||
+            departementList.contains('Budgets') && 
+            profilController.user.fonctionOccupe == "Directeur de budget" ||
+            departementList.contains('Finances') && 
+            profilController.user.fonctionOccupe == "Directeur de finance"||
+            departementList.contains('Budgets') && 
+            profilController.user.fonctionOccupe == "Directeur de departement"||
+            departementList.contains('Finances') && 
+            profilController.user.fonctionOccupe == "Directeur de departement")
+          ? FloatingActionButton.extended(
         label: const Text("Nouveau monnaie"),
         tooltip: "Ajouter nouveau monnaie",
         icon: const Icon(Icons.add),
@@ -85,7 +102,7 @@ class _MonnaiePageState extends State<MonnaiePage> {
                 );
               });
         },
-      ),
+      ) : Container(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -145,8 +162,23 @@ class _MonnaiePageState extends State<MonnaiePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const Icon(Icons.monetization_on,
-                                            size: p40),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          padding: const EdgeInsets.all(2),
+                                          margin: const EdgeInsets.all(2),
+                                          child: CircleAvatar( 
+                                            child: AutoSizeText(
+                                              monnaie.monnaie
+                                                  .toUpperCase(),
+                                              maxLines: 1,
+                                              style: const TextStyle(fontSize: p10),
+                                            ),
+                                          )),
+                                        // const Icon(Icons.monetization_on,
+                                        //     size: p40),
                                         const SizedBox(width: p5),
                                         Column(
                                           crossAxisAlignment:
@@ -177,18 +209,39 @@ class _MonnaiePageState extends State<MonnaiePage> {
                                           : Switch(
                                               value: isActive,
                                               onChanged: (value) {
-                                                if (controller.monnaieActiveList
-                                                    .isEmpty) {
+                                            if (departementList.contains(
+                                                  'Administration') &&
+                                              profilController.user
+                                                      .fonctionOccupe ==
+                                                  "Directeur générale" ||
+                                          departementList.contains('Budgets') &&
+                                              profilController.user
+                                                      .fonctionOccupe ==
+                                                  "Directeur de budget" ||
+                                          departementList.contains('Finances') &&
+                                              profilController.user
+                                                      .fonctionOccupe ==
+                                                  "Directeur de finance" ||
+                                          departementList.contains('Budgets') &&
+                                              profilController.user
+                                                      .fonctionOccupe ==
+                                                  "Directeur de departement" ||
+                                          departementList.contains(
+                                                  'Finances') &&
+                                              profilController.user
+                                                      .fonctionOccupe ==
+                                                  "Directeur de departement") {
 
-                                                  controller
-                                                      .activeMonnaie(monnaie, 'true');
-                                                }
-                                                if (monnaie.isActive ==
-                                                    'true') {
-                                                  controller
-                                                      .activeMonnaie(monnaie, 'false');
-                                                }
-                                              }),
+                                      if (controller.monnaieActiveList.isEmpty) {
+                                        controller.activeMonnaie( monnaie, 'true');
+                                      }
+                                      if (monnaie.isActive == 'true') {
+                                        controller.activeMonnaie(monnaie, 'false');
+                                        }
+                                      }
+                                                
+                                      }
+                                    ),
                                     )
                                   ],
                                 ),

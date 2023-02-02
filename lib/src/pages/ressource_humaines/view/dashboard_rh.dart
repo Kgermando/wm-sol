@@ -145,7 +145,7 @@ class _DashboardRHState extends State<DashboardRH> {
                                 ],
                               ),
                               const SizedBox(height: p20),
-                              ResponsiveChildWidget(
+                                ResponsiveChildWidget(
                                   child1: DashRHPieWidget(
                                       controller:
                                           controller.personnelsController),

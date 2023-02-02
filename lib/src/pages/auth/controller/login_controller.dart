@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wm_solution/src/api/auth/auth_api.dart';
 import 'package:wm_solution/src/api/user/user_api.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/abonnement_client_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/entreprise_infos_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/suivis_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/creances/creance_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/dettes/dette_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -141,7 +144,7 @@ class LoginController extends GetxController {
             .then((value) async {
           clear();
           _loadingLogin.value = false;
-          if (value) { 
+          if (value) {
             Get.lazyPut(() => ProfilController(), fenix: true);
             Get.lazyPut(() => UsersController());
             Get.lazyPut(() => DepartementNotifyCOntroller());
@@ -194,6 +197,9 @@ class LoginController extends GetxController {
             Get.lazyPut(() => StockGlobalController());
             Get.lazyPut(() => SuccursaleController());
             Get.lazyPut(() => VenteEffectueController());
+            Get.lazyPut(() => EntrepriseInfosController ());
+            Get.lazyPut(() => AbonnementClientController());
+            Get.lazyPut(() => SuivisController());
 
             // // Comptabilites
             Get.lazyPut(() => DashboardComptabiliteController());
@@ -272,7 +278,13 @@ class LoginController extends GetxController {
                 box.write('userModel', json.encode(userData));
                 var departement = jsonDecode(userData.departement);
 
-                if (departement.first == "Administration") { 
+                if (departement.first == "Actionnaire") { 
+                  if (int.parse(userData.role) <= 2) {
+                    Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
+                  } else {
+                    Get.offAndToNamed(ActionnaireRoute.actionnairePage);
+                  }
+                } else if (departement.first == "Administration") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(AdminRoutes.adminDashboard);
                   } else {
@@ -363,8 +375,8 @@ class LoginController extends GetxController {
     try {
       _loadingLogin.value = true;
       await authApi.logout().then((value) {
-        Get.deleteAll();
         GetStorage box = GetStorage();
+        Get.deleteAll(); 
         box.erase();
         Get.offAllNamed(UserRoutes.logout);
         Get.snackbar("Déconnexion réussie!", "",

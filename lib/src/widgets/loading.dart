@@ -71,18 +71,30 @@ Widget loadingMega() => Scaffold(
       ),
     );
 
-Widget loading() => Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          CircularProgressIndicator(),
-          SizedBox(
+Widget loadingDrawer() => Center(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        SizedBox(
             width: 20.0,
           ),
-          Text('Patientez svp...', style: TextStyle())
-        ],
+        CircularProgressIndicator(), 
+      ],
+    ),
+  );
+
+Widget loading() => Center(
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: const [
+      CircularProgressIndicator(),
+      SizedBox(
+        width: 20.0,
       ),
-    );
+      Text('Patientez svp...', style: TextStyle())
+    ],
+  ),
+);
 
 Widget loadingWhite() => Center(
       child: Row(

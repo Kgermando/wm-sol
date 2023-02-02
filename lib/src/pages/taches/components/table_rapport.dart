@@ -115,22 +115,21 @@ class _TableRapportState extends State<TableRapport> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.state.length;
-    for (var item in widget.state) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'readRapport': PlutoCell(value: item.readRapport),
-          'nom': PlutoCell(value: item.nom),
-          'numeroTache': PlutoCell(value: item.numeroTache),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.state.length, (index) {
+      var item = widget.state[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'readRapport': PlutoCell(value: item.readRapport),
+        'nom': PlutoCell(value: item.nom),
+        'numeroTache': PlutoCell(value: item.numeroTache),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
-
+  } 
+ 
   void agentsColumn() {
     columns = [
       PlutoColumn(

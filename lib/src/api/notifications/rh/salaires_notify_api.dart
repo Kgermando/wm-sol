@@ -14,7 +14,7 @@ class SalaireNotifyApi extends GetConnect {
   var getDDUrl = Uri.parse("$salairesNotifyUrl/get-count-dd/");
   var getBudgetUrl = Uri.parse("$salairesNotifyUrl/get-count-budget/");
   var getFinUrl = Uri.parse("$salairesNotifyUrl/get-count-fin/");
-  var getObsUrl = Uri.parse("$salairesNotifyUrl/get-count-obs/");
+  var getObsUrl = Uri.parse("$salairesNotifyUrl/get-count-obs/"); 
 
   Future<NotifyModel> getCountDD() async {
     Map<String, String> header = headers;

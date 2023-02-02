@@ -100,28 +100,28 @@ class _TableDevisState extends State<TableDevis> {
     );
   }
 
+  
   Future<List<PlutoRow>> agentsRow() async {
-    var i = widget.devisList.length;
-    for (var item in widget.devisList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'title': PlutoCell(value: item.title),
-          'priority': PlutoCell(value: item.priority),
-          'departement': PlutoCell(value: item.departement),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'approbationBudget': PlutoCell(value: item.approbationBudget),
-          'approbationFin': PlutoCell(value: item.approbationFin),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+   var i = widget.devisList.length;
+    List.generate(widget.devisList.length, (index) {
+      var item = widget.devisList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'title': PlutoCell(value: item.title),
+        'priority': PlutoCell(value: item.priority),
+        'departement': PlutoCell(value: item.departement),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'approbationBudget': PlutoCell(value: item.approbationBudget),
+        'approbationFin': PlutoCell(value: item.approbationFin),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
-
+ 
   void agentsColumn() {
     columns = [
       PlutoColumn(

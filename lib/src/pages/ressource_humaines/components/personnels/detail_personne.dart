@@ -8,6 +8,7 @@ import 'package:wm_solution/src/models/rh/agent_model.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
+import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/infos_personne.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/components/personnels/view_personne.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/personnels/personnels_controller.dart';
@@ -91,7 +92,8 @@ class _DetailPersonneState extends State<DetailPersonne> {
     );
   }
 
-  Widget speedialWidget() {
+  Widget speedialWidget() { 
+    final ProfilController profilController = Get.find();
     final SalaireController salaireController = Get.put(SalaireController());
     final ActionnaireController actionnaireController =
         Get.put(ActionnaireController());
@@ -120,6 +122,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
           closedBackgroundColor: themeColor,
           openBackgroundColor: themeColor,
           speedDialChildren: <SpeedDialChild>[
+            if(widget.personne.matricule != profilController.user.matricule)
             SpeedDialChild(
               child: const Icon(
                 Icons.content_paste_sharp,
@@ -133,7 +136,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                       arguments: widget.personne);
               }
             ),
-            // if (int.parse(user.role) <= 2)
+            if (int.parse(profilController.user.role) <= 3)
             SpeedDialChild(
               child: const Icon(Icons.safety_divider, size: 15.0),
               foregroundColor: Colors.white,
@@ -156,7 +159,7 @@ class _DetailPersonneState extends State<DetailPersonne> {
                         arguments: widget.personne);
                   }
                 }),
-            if (userRole <= 1)
+            if (userRole <= 2)
               SpeedDialChild(
                   child: const Icon(Icons.sensor_occupied),
                   foregroundColor: Colors.white,
@@ -203,40 +206,42 @@ class _DetailPersonneState extends State<DetailPersonne> {
                                                 .textTheme
                                                 .headlineSmall)),
                                     Expanded(
-                                      child: FlutterSwitch(
-                                        width: 225.0,
-                                        height: 50.0,
-                                        activeColor: Colors.green,
-                                        inactiveColor: Colors.red,
-                                        valueFontSize: 25.0,
-                                        toggleSize: 45.0,
-                                        value: isActionnaireActif.isNotEmpty,
-                                        borderRadius: 30.0,
-                                        padding: 8.0,
-                                        showOnOff: true,
-                                        activeText: 'Retiré',
-                                        inactiveText: 'Ajouté',
-                                        onToggle: (val) {
-                                          setState(() { 
-                                            if (isActionnaireActif.isNotEmpty) {
-                                              var actionnaire = actionnaires
-                                                  .where((element) =>
-                                                      element.matricule ==
-                                                      widget.personne.matricule)
-                                                  .first;
-                                              if(actionnaire.cotisations ==0) {
+                                      child:Obx(() => actionnaireController.isLoading 
+                                        ? loading() 
+                                        : FlutterSwitch(
+                                          width: 225.0,
+                                          height: 50.0,
+                                          activeColor: Colors.green,
+                                          inactiveColor: Colors.red,
+                                          valueFontSize: 25.0,
+                                          toggleSize: 45.0,
+                                          value: isActionnaireActif.isNotEmpty,
+                                          borderRadius: 30.0,
+                                          padding: 8.0,
+                                          showOnOff: true,
+                                          activeText: 'Retiré',
+                                          inactiveText: 'Ajouté',
+                                          onToggle: (val) {
+                                            setState(() { 
+                                              if (isActionnaireActif.isNotEmpty) {
+                                                var actionnaire = actionnaires
+                                                    .where((element) =>
+                                                        element.matricule ==
+                                                        widget.personne.matricule)
+                                                    .first;
+                                                if(actionnaire.cotisations ==0) {
+                                                  actionnaireController
+                                                      .deleteData(
+                                                          actionnaire.id!); 
+                                                } 
+                                              } else {
                                                 actionnaireController
-                                                    .deleteData(
-                                                        actionnaire.id!); 
-                                              } 
-                                            } else {
-                                              actionnaireController
-                                                  .submit(widget.personne);
-                                            }
-                                          });
-                                        },
+                                                    .submit(widget.personne);
+                                              }
+                                            });
+                                          },
+                                        )) ,
                                       ),
-                                    ),
                                   ],
                                 ),
                                 const SizedBox(

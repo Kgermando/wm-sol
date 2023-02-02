@@ -121,24 +121,25 @@ class _TablePersonnelsRolesCampaignState
   }
 
   Future<List<PlutoRow>> agentsRow() async {
-    var dataList = widget.personnelsRolesController.personnelsRoleList
+     var dataList = widget.personnelsRolesController.personnelsRoleList
         .where((element) =>
             element.reference == widget.id &&
             element.departement == widget.departement)
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'agent': PlutoCell(value: item.agent),
-          'role': PlutoCell(value: item.role),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'agent': PlutoCell(value: item.agent),
+        'role': PlutoCell(value: item.role),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
+
+ 
 
   void agentsColumn() {
     columns = [

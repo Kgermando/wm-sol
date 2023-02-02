@@ -30,18 +30,7 @@ class _TableImmobilierState extends State<TableImmobilier> {
   @override
   initState() {
     agentsColumn();
-    // agentsRow().then((value) => stateManager!.setShowLoading(false));
-    setState(() {
-      agentsRow().then((fetchedRows) {
-        PlutoGridStateManager.initializeRowsAsync(
-          columns,
-          fetchedRows,
-        ).then((value) {
-          stateManager!.refRows.addAll(value);
-          stateManager!.setShowLoading(false);
-        });
-      });
-    });
+    agentsRow().then((value) => stateManager!.setShowLoading(false));
     super.initState();
   }
 
@@ -53,6 +42,8 @@ class _TableImmobilierState extends State<TableImmobilier> {
       onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent tapEvent) async {
         final dataId = tapEvent.row.cells.values;
         final idPlutoRow = dataId.last;
+        // final productId = tapEvent.row.cells['id']!.value.toString();
+        // print("id $productId");
 
         final ImmobilierModel immobilierModel =
             await widget.controller.detailView(idPlutoRow.value);
@@ -127,83 +118,25 @@ class _TableImmobilierState extends State<TableImmobilier> {
     );
   }
 
-  // Future<List<PlutoRow>> agentsRow() async {
-  //   var i = widget.immobilierList.length;
-  //   for (var item in widget.immobilierList) {
-  //     setState(() {
-  //       rows.add(PlutoRow(cells: {
-  //         'numero': PlutoCell(value: i--),
-  //         'typeAllocation': PlutoCell(value: item.typeAllocation),
-  //         'numeroCertificat': PlutoCell(value: item.numeroCertificat),
-  //         'superficie': PlutoCell(value: item.superficie),
-  //         'dateAcquisition': PlutoCell(
-  //             value: DateFormat("dd-MM-yy HH:mm").format(item.dateAcquisition)),
-  //         'created': PlutoCell(
-  //             value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-  //         'approbationDG': PlutoCell(value: item.approbationDG),
-  //         'approbationDD': PlutoCell(value: item.approbationDD),
-  //         'id': PlutoCell(value: item.id)
-  //       }));
-  //     });
-  //   }
-  //   return rows;
-  // }
-
-  Future<List<PlutoRow>> agentsRow() {
-    final Completer<List<PlutoRow>> completer = Completer();
-
+  Future<List<PlutoRow>> agentsRow() async {
     var i = widget.immobilierList.length;
-
-    int count = 0;
-
-    int max = widget.immobilierList.length;
-    print("max $max");
-    // int chunkSize = widget.immobilierList.length;
-
-    // int totalRows = max;
-
-    Timer.periodic(const Duration(milliseconds: 1), (timer) {
-      if (count == max) {
-        return;
-      }
-      final List<PlutoRow> rowItem = [];
-      ++count;
-
-      print("count $count");
-
-      Future(() {
-        for (var item in widget.immobilierList) {
-          setState(() {
-            rowItem.add(PlutoRow(cells: {
-              'numero': PlutoCell(value: i--),
-              'typeAllocation': PlutoCell(value: item.typeAllocation),
-              'numeroCertificat': PlutoCell(value: item.numeroCertificat),
-              'superficie': PlutoCell(value: item.superficie),
-              'dateAcquisition': PlutoCell(
-                  value: DateFormat("dd-MM-yy HH:mm")
-                      .format(item.dateAcquisition)),
-              'created': PlutoCell(
-                  value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
-              'approbationDG': PlutoCell(value: item.approbationDG),
-              'approbationDD': PlutoCell(value: item.approbationDD),
-              'id': PlutoCell(value: item.id)
-            }));
-          });
-        }
-        return rowItem;
-      }).then((value) {
-        print("row $value");
-        rows.addAll(value);
-
-        if (rows.length == max) {
-          completer.complete(rows);
-
-          timer.cancel();
-        }
-      });
+    List.generate(widget.immobilierList.length, (index) {
+      var item = widget.immobilierList[index]; 
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'typeAllocation': PlutoCell(value: item.typeAllocation),
+        'numeroCertificat': PlutoCell(value: item.numeroCertificat),
+        'superficie': PlutoCell(value: item.superficie),
+        'dateAcquisition': PlutoCell(
+            value: DateFormat("dd-MM-yy HH:mm").format(item.dateAcquisition)),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
     });
-
-    return completer.future;
+    return rows;
   }
 
   void agentsColumn() {
@@ -235,7 +168,7 @@ class _TableImmobilierState extends State<TableImmobilier> {
         enableContextMenu: false,
         enableDropToResize: true,
         titleTextAlign: PlutoColumnTextAlign.left,
-        width: 150,
+        width: 200,
         minWidth: 150,
       ),
       PlutoColumn(

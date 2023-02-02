@@ -29,7 +29,13 @@ class _PresenceRHState extends State<PresenceRH> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Nouvelle Liste de présence",
+        child: const Icon(Icons.group_add),
+        onPressed: () {
+          newFicheDialog(controller);
+        },
+      ) : FloatingActionButton.extended(
         label: const Text("Liste de présence"),
         tooltip: "Nouvelle Liste de présence",
         icon: const Icon(Icons.group_add),

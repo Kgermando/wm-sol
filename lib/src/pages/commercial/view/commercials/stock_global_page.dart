@@ -31,7 +31,13 @@ class _StockGlobalPageState extends State<StockGlobalPage> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+        tooltip: "Ajout le stock global",
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Get.toNamed(ComRoutes.comStockGlobalAdd);
+        },
+      ) : FloatingActionButton.extended(
         label: const Text("Ajouter stock"),
         tooltip: "Ajout le stock global",
         icon: const Icon(Icons.add),

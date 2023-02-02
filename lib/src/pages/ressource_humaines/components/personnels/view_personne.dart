@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as flutter_quill;
@@ -105,9 +106,9 @@ class _ViewPersonneState extends State<ViewPersonne> {
                   widget.controller.deleteData(widget.personne.id!);
                   Navigator.pop(context, 'ok');
                 },
-                child: widget.controller
-                  .isLoading ? loadingMini() 
-                  : Text('OK', style: TextStyle(color: Colors.red.shade700)),
+                child: widget.controller.isLoading
+                    ? loadingMini()
+                    : Text('OK', style: TextStyle(color: Colors.red.shade700)),
               ),
             )
           ],
@@ -188,33 +189,25 @@ class _ViewPersonneState extends State<ViewPersonne> {
                           radius: 55,
                           backgroundColor: mainColor,
                           child: ClipOval(
-                              child: (widget.personne.photo == '-')
-                                  ? Image.asset(
-                                      'assets/images/avatar.jpg',
-                                      fit: BoxFit.cover,
-                                      width: 100,
-                                      height: 100,
-                                    )
-                                  : Image.network(
-                                      width: 150,
-                                      height: 150,
-                                      widget.personne.photo!,
-                                      fit: BoxFit.cover, loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(child: loadingMini());
-                                    }, errorBuilder:
-                                          (context, error, stackTrace) {
-                                      if (kDebugMode) {
-                                        print("error $error");
-                                      }
-                                      return Image.asset(
-                                        'assets/images/avatar.jpg',
-                                        fit: BoxFit.cover,
-                                        width: 100,
-                                        height: 100,
-                                      );
-                                    })),
+                              child: CachedNetworkImageBuilder(
+                                url: widget.personne.photo!,
+                                builder: (image) {
+                                  return Center(
+                                      child: Image.file(
+                                    image,
+                                    width: 150,
+                                    height: 150,
+                                    fit: BoxFit.cover,
+                                  ));
+                                },
+                                // Optional Placeholder widget until image loaded from url
+                                placeHolder: Center(child: loading()),
+                                // Optional error widget
+                                errorWidget:
+                                    Image.asset('assets/images/avatar.jpg'),
+                                // Optional describe your image extensions default values are; jpg, jpeg, gif and png
+                                imageExtensions: const ['jpg', 'png'],
+                              ), ),
                         ),
                       ],
                     ),

@@ -90,7 +90,7 @@ class _DetailPresenceState extends State<DetailPresence> {
                                           children: [
                                             TitleWidget(
                                                 title:
-                                                    widget.presenceModel.title),
+                                                    "Fiche de ${widget.presenceModel.title}"),
                                             Row(
                                               children: [
                                                 deleteDialog(controller),
@@ -144,7 +144,6 @@ class _DetailPresenceState extends State<DetailPresence> {
                                           ],
                                         ),
                                         Divider(color: mainColor),
-                                        const SizedBox(height: p20),
                                         presencePersonnelWidget(
                                             controllerPresencePersonne,
                                             controllerPersonnels)
@@ -241,23 +240,23 @@ class _DetailPresenceState extends State<DetailPresence> {
                   height: 250,
                   width: 300,
                   child: controllerPresencePersonne.isLoading
-                      ? loading()
-                      : Form(
-                          key: controllerPresencePersonne.formKey,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              identifiantWidget(controllerPresencePersonne),
-                              const SizedBox(height: 20),
-                              motifWidget(controllerPresencePersonne),
-                            ],
-                          ))),
+                ? loading()
+                : Form(
+                    key: controllerPresencePersonne.formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        identifiantWidget(controllerPresencePersonne),
+                        const SizedBox(height: 20),
+                        motifWidget(controllerPresencePersonne),
+                      ],
+                    ))),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
                   child: const Text('Annuler'),
                 ),
-                TextButton(
+                Obx(() => TextButton(
                   onPressed: () {
                     final form =
                         controllerPresencePersonne.formKey.currentState!;
@@ -267,7 +266,7 @@ class _DetailPresenceState extends State<DetailPresence> {
                     }
                   },
                   child: const Text('OK'),
-                ),
+                )) ,
               ],
             );
           });
@@ -291,48 +290,49 @@ class _DetailPresenceState extends State<DetailPresence> {
     suggestionList =
         agentsFilter.toSet().difference(presencePersonnelList.toSet()).toList();
 
-    return Container(
-        margin: const EdgeInsets.only(bottom: 20.0),
-        height: MediaQuery.of(context).size.height / 2,
-        child: ListView.builder(
-            itemCount: dataList.length,
-            itemBuilder: (BuildContext context, index) {
-              final personne = dataList[index];
-              if (personne.sortie == 'true') {
-                isSortie = true;
-              } else if (personne.sortie == 'false') {
-                isSortie = false;
-              }
-              return Card(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    size: 40.0,
-                    color: mainColor,
-                  ),
-                  title: Text(personne.identifiant),
-                  subtitle: Text(
-                      "Arrivé à ${DateFormat("HH:mm").format(personne.created)}"),
-                  trailing: IconButton(
-                      tooltip: (personne.sortie == 'true')
-                          ? "Sortie agent."
-                          : "Déjà sortie.",
-                      onPressed: () {
-                        if (personne.sortie == 'false') {
-                          sortiePresenceDialog(
-                              controllerPresencePersonne, personne);
-                        }
-                      },
-                      icon: Icon(Icons.logout,
-                          color: (personne.sortie == 'true')
-                              ? Colors.red
-                              : Colors.green)),
-                  onLongPress: () {
-                    detailAgentDialog(personne);
+    return ListView.builder(
+      shrinkWrap: true,
+        itemCount: dataList.length,
+        itemBuilder: (BuildContext context, index) {
+          final personne = dataList[index];
+          if (personne.sortie == 'true') {
+            isSortie = true;
+          } else if (personne.sortie == 'false') {
+            isSortie = false;
+          }
+          return Card(
+            child: ListTile(
+              leading: Icon(
+                Icons.person,
+                size: 40.0,
+                color: (personne.sortie == 'true')
+                  ? Colors.red
+                  : Colors.green
+              ),
+              title: Text(personne.identifiant),
+              subtitle: Text(
+                  "Arrivé à ${DateFormat("HH:mm").format(personne.created)}"),
+              trailing: IconButton(
+                  tooltip: (personne.sortie == 'true')
+                      ? "Sortie agent."
+                      : "Déjà sortie.",
+                  onPressed: () {
+                    if (personne.sortie == 'false') {
+                      sortiePresenceDialog(
+                          controllerPresencePersonne, personne);
+                    }
                   },
-                ),
-              );
-            }));
+                  icon: Icon(Icons.logout,
+                      color: (personne.sortie == 'true')
+                      ? Colors.red
+                      : Colors.green)
+                  ),
+              onLongPress: () {
+                detailAgentDialog(personne);
+              },
+            ),
+          );
+        });
   }
 
   detailAgentDialog(PresencePersonnelModel personne) {
@@ -344,7 +344,7 @@ class _DetailPresenceState extends State<DetailPresence> {
             return AlertDialog(
               title: Text('Infos detail', style: TextStyle(color: mainColor)),
               content: SizedBox(
-                  height: 500,
+                  height: 400,
                   width: 300,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -31,7 +31,56 @@ class _DevisPageState extends State<DevisPage> {
         key: scaffoldKey,
         appBar: headerBar(context, scaffoldKey, title, subTitle),
         drawer: const DrawerMenu(),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: Responsive.isMobile(context) 
+          ? FloatingActionButton( 
+                tooltip: "Devis",
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    constraints: BoxConstraints(
+                      maxWidth: sized.width / 1.5,
+                    ),
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: sized.height / 2,
+                        color: Colors.amber.shade100,
+                        padding: const EdgeInsets.all(p20),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const TitleWidget(title: "Création du devis"),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              ResponsiveChildWidget(
+                                  child1: titleWidget(),
+                                  child2: priorityWidget()),
+                              const SizedBox(
+                                height: p20,
+                              ),
+                              Obx(() => BtnWidget(
+                                  title: 'Crée maintenant',
+                                  press: () {
+                                    final form =
+                                        controller.formKey.currentState!;
+                                    if (form.validate()) {
+                                      controller.submit();
+                                      form.reset();
+                                    }
+                                  },
+                                  isLoading: controller.isLoading))
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                })
+        
+          : FloatingActionButton.extended(
             label: const Text("Nouveau devis"),
             tooltip: "Devis",
             icon: const Icon(Icons.add),

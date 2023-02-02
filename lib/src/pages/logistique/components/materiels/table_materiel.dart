@@ -130,36 +130,37 @@ class _TableMaterielState extends State<TableMateriel> {
     );
   }
 
+
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.materielList.length;
-    for (var item in widget.materielList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'identifiant': PlutoCell(value: item.identifiant),
-          'marque': PlutoCell(value: item.marque),
-          'modele': PlutoCell(value: item.modele),
-          'couleur': PlutoCell(value: item.couleur),
-          'numeroRef': PlutoCell(value: item.numeroRef),
-          'numeroPLaque': PlutoCell(value: item.numeroPLaque),
-          'genre': PlutoCell(value: item.genre),
-          'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
-          'dateFabrication': PlutoCell(
-              value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
-          'kilometrageInitiale':
-              PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
-          'fournisseur': PlutoCell(value: item.fournisseur),
-          'alimentation': PlutoCell(value: item.alimentation),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(widget.materielList.length, (index) {
+      var item = widget.materielList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'identifiant': PlutoCell(value: item.identifiant),
+        'marque': PlutoCell(value: item.marque),
+        'modele': PlutoCell(value: item.modele),
+        'couleur': PlutoCell(value: item.couleur),
+        'numeroRef': PlutoCell(value: item.numeroRef),
+        'numeroPLaque': PlutoCell(value: item.numeroPLaque),
+        'genre': PlutoCell(value: item.genre),
+        'qtyMaxReservoir': PlutoCell(value: "${item.qtyMaxReservoir} L"),
+        'dateFabrication': PlutoCell(
+            value: DateFormat("dd-MM-yyyy").format(item.dateFabrication)),
+        'kilometrageInitiale':
+            PlutoCell(value: "${item.kilometrageInitiale} KM/H"),
+        'fournisseur': PlutoCell(value: item.fournisseur),
+        'alimentation': PlutoCell(value: item.alimentation),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [
@@ -348,7 +349,7 @@ class _TableMaterielState extends State<TableMateriel> {
       ),
       PlutoColumn(
         readOnly: true,
-        title: 'Approbation DD',
+        title: 'Approbation DG',
         field: 'approbationDG',
         type: PlutoColumnType.text(),
         enableRowDrag: true,

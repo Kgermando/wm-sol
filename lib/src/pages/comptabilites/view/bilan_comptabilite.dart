@@ -27,7 +27,12 @@ class _BilanComptabiliteState extends State<BilanComptabilite> {
       key: scaffoldKey,
       appBar: headerBar(context, scaffoldKey, title, subTitle),
       drawer: const DrawerMenu(),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: Responsive.isMobile(context) ? FloatingActionButton( 
+          tooltip: "Ajpouter le Bilan",
+          child: const Icon(Icons.add),
+          onPressed: () {
+            newFicheDialog(context, controller);
+          }) :  FloatingActionButton.extended(
           label: const Text("Feuille Bilan"),
           tooltip: "Ajpouter le Bilan",
           icon: const Icon(Icons.add),

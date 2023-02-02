@@ -113,50 +113,49 @@ class _TableEntrepriseInfosState extends State<TableEntrepriseInfos> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var i = widget.state.length;
-    for (var item in widget.state) {
-      setState(() {
-        String colors = '-';
-        var isDate = item.dateFinContrat.difference(DateTime.now());
+    List.generate(widget.state.length, (index) {
+      var item = widget.state[index];
+      String colors = '-';
+      var isDate = item.dateFinContrat.difference(DateTime.now());
 
-        if (item.dateFinContrat.year ==
-            DateTime.parse("2100-12-31 00:00:00").year) {
-          colors = 'Pas de contrat';
-        } else if (isDate.inDays >= 11) {
-          colors = 'Bon';
-        } else if (isDate.inDays == 0) {
-          colors = "Expire aujourd'hui"; 
-        } else if (isDate.inDays < 0) {
-          colors = 'Expirer';
-        } else if (isDate.inDays <= 1) {
-          colors = "Expire demain"; 
-        } else if (isDate.inDays <= 5) {
-          colors = 'Expirer dans moins de 5 jours';
-        } else if (isDate.inDays <= 10) {
-          colors = 'Expirer dans moins de 10 jours';
-        }
- 
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'dateFinContrat': PlutoCell(value: colors),
-          'typeContrat': PlutoCell(value: item.typeContrat),
-          'typeEntreprise': PlutoCell(value: item.typeEntreprise),
-          'nomSocial': PlutoCell(value: item.nomSocial),
-          'emailEntreprise': PlutoCell(value: item.emailEntreprise),
-          'telephone1': PlutoCell(value: item.telephone1),
-          'rccm': PlutoCell(value: item.rccm),
-          'identificationNationale':
-              PlutoCell(value: item.identificationNationale),
-          'numerosImpot': PlutoCell(value: item.numerosImpot),
-          'secteurActivite': PlutoCell(value: item.secteurActivite),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+      if (item.dateFinContrat.year ==
+          DateTime.parse("2100-12-31 00:00:00").year) {
+        colors = 'Pas de contrat';
+      } else if (isDate.inDays >= 11) {
+        colors = 'Bon';
+      } else if (isDate.inDays == 0) {
+        colors = "Expire aujourd'hui";
+      } else if (isDate.inDays < 0) {
+        colors = 'Expirer';
+      } else if (isDate.inDays <= 1) {
+        colors = "Expire demain";
+      } else if (isDate.inDays <= 5) {
+        colors = 'Expirer dans moins de 5 jours';
+      } else if (isDate.inDays <= 10) {
+        colors = 'Expirer dans moins de 10 jours';
+      }
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'dateFinContrat': PlutoCell(value: colors),
+        'typeContrat': PlutoCell(value: item.typeContrat),
+        'typeEntreprise': PlutoCell(value: item.typeEntreprise),
+        'nomSocial': PlutoCell(value: item.nomSocial),
+        'emailEntreprise': PlutoCell(value: item.emailEntreprise),
+        'telephone1': PlutoCell(value: item.telephone1),
+        'rccm': PlutoCell(value: item.rccm),
+        'identificationNationale':
+            PlutoCell(value: item.identificationNationale),
+        'numerosImpot': PlutoCell(value: item.numerosImpot),
+        'secteurActivite': PlutoCell(value: item.secteurActivite),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [

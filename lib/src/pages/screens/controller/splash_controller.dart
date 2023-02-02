@@ -15,6 +15,9 @@ import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_con
 import 'package:wm_solution/src/pages/budgets/controller/dashboard_budget_controller.dart';
 import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/commercial/controller/dashboard/dashboard_com_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/abonnement_client_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/entreprise_infos_controller.dart';
+import 'package:wm_solution/src/pages/commercial/controller/suivi_controle/suivis_controller.dart';
 import 'package:wm_solution/src/pages/comptabilites/controller/dahsboard/dashboard_comptabilite_controller.dart';
 import 'package:wm_solution/src/pages/exploitations/controller/dashboard/dashboard_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_banque_controller.dart';
@@ -99,7 +102,7 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_re
 
 class SplashController extends GetxController {
   final LoginController loginController = Get.put(LoginController());
-  final NetworkController networkController = Get.put(NetworkController()); 
+  final NetworkController networkController = Get.put(NetworkController());
 
   final getStorge = GetStorage();
 
@@ -116,6 +119,7 @@ class SplashController extends GetxController {
       Get.lazyPut(() => ProfilController(), fenix: true);
       Get.lazyPut(() => UsersController());
       Get.lazyPut(() => DepartementNotifyCOntroller());
+      Get.lazyPut(() => ProfilController(), fenix: true);
 
       // Mail
       Get.lazyPut(() => MaillingController());
@@ -165,6 +169,9 @@ class SplashController extends GetxController {
       Get.lazyPut(() => StockGlobalController());
       Get.lazyPut(() => SuccursaleController());
       Get.lazyPut(() => VenteEffectueController());
+      Get.lazyPut(() => EntrepriseInfosController());
+      Get.lazyPut(() => AbonnementClientController());
+      Get.lazyPut(() => SuivisController());
 
       // // Comptabilites
       Get.lazyPut(() => DashboardComptabiliteController());
@@ -244,7 +251,13 @@ class SplashController extends GetxController {
   void isLoggIn() async {
     await loginController.authApi.getUserId().then((userData) async {
       var departement = jsonDecode(userData.departement);
-      if (departement.first == "Administration") {
+      if (departement.first == "Actionnaire") {
+        if (int.parse(userData.role) <= 2) {
+          Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
+        } else {
+          Get.offAndToNamed(ActionnaireRoute.actionnairePage);
+        }
+      } else if (departement.first == "Administration") {
         if (int.parse(userData.role) <= 2) {
           Get.offAndToNamed(AdminRoutes.adminDashboard);
         } else {
@@ -299,8 +312,6 @@ class SplashController extends GetxController {
         } else {
           Get.offAndToNamed(LogistiqueRoutes.logMateriel);
         }
-      } else if (departement.first == "Actionnaire") {
-        Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
       } else if (departement.first == "Support") {
         Get.offAndToNamed(AdminRoutes.adminDashboard);
       }

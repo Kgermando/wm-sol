@@ -68,11 +68,7 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                     onLoading: loadingPage(context),
                     onEmpty: const Text('Aucune donnée'),
                     onError: (error) => loadingError(context, error!),
-                    (transfertList) => controller.obx(
-                        onLoading: loadingPage(context),
-                        onEmpty: const Text('Aucune donnée'),
-                        onError: (error) => loadingError(context, error!),
-                        (state) => SingleChildScrollView(
+                    (transfertList) => SingleChildScrollView(
                             controller: ScrollController(),
                             physics: const ScrollPhysics(),
                             child: Container(
@@ -137,12 +133,17 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                                     ),
                                   ),
                                   const SizedBox(height: p20),
-                                  TableCotisationPersonne(
-                                      state: state!
-                                          .where((element) =>
-                                              element.reference ==
-                                              widget.actionnaireModel.id!)
-                                          .toList()),
+                          controller.obx(
+                            onLoading: loadingPage(context),
+                            onEmpty: const Text('Aucune donnée'),
+                            onError: (error) => loadingError(context, error!),
+                            (state) => TableCotisationPersonne(
+                                state: state!
+                                    .where((element) =>
+                                        element.reference ==
+                                        widget.actionnaireModel.id!)
+                                    .toList())),
+                                  
                                   const SizedBox(height: p20),
                                   TableTransfertPersonne(
                                       state: transfertList
@@ -156,7 +157,12 @@ class _DetailActionnaireState extends State<DetailActionnaire> {
                                           .toList())
                                 ],
                               ),
-                            )))))
+                            )))) 
+                
+                
+                
+
+
           ],
         ));
   }

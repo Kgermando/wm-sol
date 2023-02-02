@@ -98,31 +98,32 @@ class _TableCotisationState extends State<TableCotisation> {
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.state.toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nom': PlutoCell(value: item.nom),
-          'postNom': PlutoCell(value: item.postNom),
-          'prenom': PlutoCell(value: item.prenom),
-          'matricule': PlutoCell(value: item.matricule),
-          'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
-          // 'montant': PlutoCell(
-          //     value:
-          //         "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
-          'note': PlutoCell(value: item.note),
-          'moyenPaiement': PlutoCell(value: item.moyenPaiement),
-          'numeroTransaction': PlutoCell(value: item.numeroTransaction),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nom': PlutoCell(value: item.nom),
+        'postNom': PlutoCell(value: item.postNom),
+        'prenom': PlutoCell(value: item.prenom),
+        'matricule': PlutoCell(value: item.matricule),
+        'montant': PlutoCell(value: "${item.montant} ${widget.monnaie}"),
+        // 'montant': PlutoCell(
+        //     value:
+        //         "${NumberFormat.decimalPattern('fr').format(item.montant)} ${widget.monnaie}"),
+        'note': PlutoCell(value: item.note),
+        'moyenPaiement': PlutoCell(value: item.moyenPaiement),
+        'numeroTransaction': PlutoCell(value: item.numeroTransaction),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
-  }
+  } 
 
+
+   
   void agentsColumn() {
     columns = [
       PlutoColumn(

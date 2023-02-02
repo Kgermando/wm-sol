@@ -115,30 +115,32 @@ class _TableImmobilierDDState extends State<TableImmobilierDD> {
     );
   }
 
+
   Future<List<PlutoRow>> agentsRow() async {
     var dataList = widget.immobilierController.immobilierList
         .where((element) => element.approbationDD == '-')
         .toList();
     var i = dataList.length;
-    for (var item in dataList) {
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'typeAllocation': PlutoCell(value: item.typeAllocation),
-          'numeroCertificat': PlutoCell(value: item.numeroCertificat),
-          'superficie': PlutoCell(value: item.superficie),
-          'dateAcquisition': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.dateAcquisition)),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yy H:mm").format(item.created)),
-          'approbationDG': PlutoCell(value: item.approbationDG),
-          'approbationDD': PlutoCell(value: item.approbationDD),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+    List.generate(dataList.length, (index) {
+      var item = dataList[index];
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'typeAllocation': PlutoCell(value: item.typeAllocation),
+        'numeroCertificat': PlutoCell(value: item.numeroCertificat),
+        'superficie': PlutoCell(value: item.superficie),
+        'dateAcquisition': PlutoCell(
+            value: DateFormat("dd-MM-yy H:mm").format(item.dateAcquisition)),
+        'created':
+            PlutoCell(value: DateFormat("dd-MM-yy H:mm").format(item.created)),
+        'approbationDG': PlutoCell(value: item.approbationDG),
+        'approbationDD': PlutoCell(value: item.approbationDD),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+
+ 
 
   void agentsColumn() {
     columns = [

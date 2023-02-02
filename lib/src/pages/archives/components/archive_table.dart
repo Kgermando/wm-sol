@@ -112,27 +112,27 @@ class _TableArchiveState extends State<TableArchive> {
 
   Future<List<PlutoRow>> agentsRow() async {
     var dataItemList = widget.controller.archiveList
-        .where((element) => element.reference == widget.archiveFolderModel.id);
+        .where((element) => element.reference == widget.archiveFolderModel.id).toList();
 
     var i = dataItemList.length;
-    for (var item in dataItemList) {
+    List.generate(dataItemList.length, (index) {
+      var item = dataItemList[index];
       var departementList = jsonDecode(item.departement);
       String departement = departementList.first;
-      setState(() {
-        rows.add(PlutoRow(cells: {
-          'numero': PlutoCell(value: i--),
-          'nomDocument': PlutoCell(value: item.nomDocument),
-          'level': PlutoCell(value: item.level),
-          'departement': PlutoCell(value: departement),
-          'signature': PlutoCell(value: item.signature),
-          'created': PlutoCell(
-              value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
-          'id': PlutoCell(value: item.id)
-        }));
-      });
-    }
+      return rows.add(PlutoRow(cells: {
+        'numero': PlutoCell(value: i--),
+        'nomDocument': PlutoCell(value: item.nomDocument),
+        'level': PlutoCell(value: item.level),
+        'departement': PlutoCell(value: departement),
+        'signature': PlutoCell(value: item.signature),
+        'created': PlutoCell(
+            value: DateFormat("dd-MM-yyyy HH:mm").format(item.created)),
+        'id': PlutoCell(value: item.id)
+      }));
+    });
     return rows;
   }
+ 
 
   void agentsColumn() {
     columns = [

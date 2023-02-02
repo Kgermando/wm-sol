@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/rh/agent_model.dart';
-import 'package:wm_solution/src/models/rh/presence_personnel_model.dart'; 
+import 'package:wm_solution/src/models/rh/presence_personnel_model.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/components/salaires/table_salaire_user.dart'; 
 import 'package:wm_solution/src/pages/ressource_humaines/controller/performences/performence_note_controller.dart';
-import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_personne_controller.dart'; 
+import 'package:wm_solution/src/pages/ressource_humaines/controller/presences/presence_personne_controller.dart';
+import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/salaire_controller.dart'; 
 import 'package:wm_solution/src/widgets/responsive_child3_widget.dart';
 import 'package:wm_solution/src/widgets/title_widget.dart';
 
@@ -18,6 +20,7 @@ class InfosPersonne extends StatelessWidget {
   Widget build(BuildContext context) {
     final PerformenceNoteController controllerNote = Get.find();
     final PresencePersonneController presencePersonneController = Get.find();
+    final SalaireController salaireController = Get.find(); 
     return Column(
       children: [
         performenceWideget(context, controllerNote),
@@ -37,8 +40,17 @@ class InfosPersonne extends StatelessWidget {
               tableListAgents(presencePersonneController),
             ],
           ),
-        ), 
-        // TableSalaireUser(personne: personne, controller: salaireController),
+        ),  
+        const SizedBox(height: p20),
+        TableSalaireUser(
+          personne: personne,
+          salaireController: salaireController,
+          salaireList: salaireController.paiementSalaireList
+              .where((e) =>
+                  e.matricule == personne.matricule &&
+                  e.prenom == personne.prenom &&
+                  e.nom == personne.nom)
+              .toList())
       ],
     );
   }
