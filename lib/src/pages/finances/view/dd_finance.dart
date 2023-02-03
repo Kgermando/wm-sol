@@ -159,7 +159,7 @@ class _DDFinanceState extends State<DDFinance> {
                               child: ExpansionTile(
                                 leading: const Icon(Icons.folder,
                                     color: Colors.white),
-                                title: Text('Dossier Campaigns',
+                                title: Text('Dossier Campagnes',
                                     style: (Responsive.isDesktop(context))
                                         ? headline6!
                                             .copyWith(color: Colors.white)
@@ -252,7 +252,7 @@ class _DDFinanceState extends State<DDFinance> {
                               child: ExpansionTile(
                                 leading: const Icon(Icons.folder,
                                     color: Colors.white),
-                                title: Text('Dossier Dette',
+                                title: Text('Dossier Dettes',
                                     style: (Responsive.isDesktop(context))
                                         ? headline6!
                                             .copyWith(color: Colors.white)

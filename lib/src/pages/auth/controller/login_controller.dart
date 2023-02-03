@@ -27,15 +27,15 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/notify/dashb
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_controller.dart';
 import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_cotisation_controller.dart';
-import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart'; 
+import 'package:wm_solution/src/pages/actionnaire/controller/actionnaire_transfert_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
-import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart'; 
-import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart'; 
+import 'package:wm_solution/src/pages/budgets/controller/budget_previsionnel_controller.dart';
+import 'package:wm_solution/src/pages/budgets/controller/ligne_budgetaire_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_banque_controller.dart';
 import 'package:wm_solution/src/pages/finances/controller/charts/chart_caisse_controller.dart';
-import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exterieur_controller.dart'; 
-import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_pie_controller.dart'; 
-import 'package:wm_solution/src/pages/update/controller/update_controller.dart'; 
+import 'package:wm_solution/src/pages/finances/controller/charts/chart_fin_exterieur_controller.dart';
+import 'package:wm_solution/src/pages/marketing/controller/annuaire/annuaire_pie_controller.dart';
+import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_controller.dart';
 import 'package:wm_solution/src/pages/archives/controller/archive_folder_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/change_password_controller.dart';
@@ -101,14 +101,17 @@ import 'package:wm_solution/src/pages/ressource_humaines/controller/salaires/sal
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_controller.dart';
 import 'package:wm_solution/src/pages/ressource_humaines/controller/transport_rest/transport_rest_person_controller.dart';
 
-
-
 class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
   final UserApi userApi = UserApi();
 
+  GetStorage box = GetStorage();
+
   final _loadingLogin = false.obs;
   bool get isLoadingLogin => _loadingLogin.value;
+
+  final _loadingLogOut = false.obs;
+  bool get loadingLogOut => _loadingLogOut.value;
 
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
@@ -145,7 +148,7 @@ class LoginController extends GetxController {
           clear();
           _loadingLogin.value = false;
           if (value) {
-            Get.lazyPut(() => ProfilController(), fenix: true);
+            Get.lazyPut(() => ProfilController());
             Get.lazyPut(() => UsersController());
             Get.lazyPut(() => DepartementNotifyCOntroller());
 
@@ -197,7 +200,7 @@ class LoginController extends GetxController {
             Get.lazyPut(() => StockGlobalController());
             Get.lazyPut(() => SuccursaleController());
             Get.lazyPut(() => VenteEffectueController());
-            Get.lazyPut(() => EntrepriseInfosController ());
+            Get.lazyPut(() => EntrepriseInfosController());
             Get.lazyPut(() => AbonnementClientController());
             Get.lazyPut(() => SuivisController());
 
@@ -278,7 +281,7 @@ class LoginController extends GetxController {
                 box.write('userModel', json.encode(userData));
                 var departement = jsonDecode(userData.departement);
 
-                if (departement.first == "Actionnaire") { 
+                if (departement.first == "Actionnaire") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(ActionnaireRoute.actionnaireDashboard);
                   } else {
@@ -290,56 +293,56 @@ class LoginController extends GetxController {
                   } else {
                     Get.offAndToNamed(AdminRoutes.adminComptabilite);
                   }
-                } else if (departement.first == "Finances") { 
+                } else if (departement.first == "Finances") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(FinanceRoutes.financeDashboard);
                   } else {
                     Get.offAndToNamed(FinanceRoutes.transactionsDettes);
                   }
-                } else if (departement.first == "Comptabilites") { 
+                } else if (departement.first == "Comptabilites") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(ComptabiliteRoutes.comptabiliteDashboard);
                   } else {
                     Get.offAndToNamed(
                         ComptabiliteRoutes.comptabiliteJournalLivre);
                   }
-                } else if (departement.first == "Budgets") { 
+                } else if (departement.first == "Budgets") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   } else {
                     Get.offAndToNamed(BudgetRoutes.budgetBudgetPrevisionel);
                   }
-                } else if (departement.first == "Ressources Humaines") { 
+                } else if (departement.first == "Ressources Humaines") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(RhRoutes.rhDashboard);
                   } else {
                     Get.offAndToNamed(RhRoutes.rhPresence);
                   }
-                } else if (departement.first == "Exploitations") { 
+                } else if (departement.first == "Exploitations") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(ExploitationRoutes.expDashboard);
                   } else {
                     Get.offAndToNamed(TacheRoutes.tachePage);
                   }
-                } else if (departement.first == "Marketing") { 
+                } else if (departement.first == "Marketing") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(MarketingRoutes.marketingDashboard);
                   } else {
                     Get.offAndToNamed(MarketingRoutes.marketingAnnuaire);
                   }
-                } else if (departement.first == "Commercial") { 
+                } else if (departement.first == "Commercial") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(ComRoutes.comDashboard);
                   } else {
                     Get.offAndToNamed(ComRoutes.comVente);
                   }
-                } else if (departement.first == "Logistique") { 
+                } else if (departement.first == "Logistique") {
                   if (int.parse(userData.role) <= 2) {
                     Get.offAndToNamed(LogistiqueRoutes.logDashboard);
                   } else {
                     Get.offAndToNamed(LogistiqueRoutes.logMateriel);
                   }
-                } else if (departement.first == "Support") { 
+                } else if (departement.first == "Support") {
                   Get.offAndToNamed(AdminRoutes.adminDashboard);
                 }
 
@@ -373,20 +376,17 @@ class LoginController extends GetxController {
 
   Future<void> logout() async {
     try {
-      _loadingLogin.value = true;
-      await authApi.logout().then((value) {
-        GetStorage box = GetStorage();
-        Get.deleteAll(); 
-        box.erase();
-        Get.offAllNamed(UserRoutes.logout);
-        Get.snackbar("Déconnexion réussie!", "",
-            backgroundColor: Colors.green,
-            icon: const Icon(Icons.check),
-            snackPosition: SnackPosition.TOP);
-        _loadingLogin.value = false;
-      });
+      _loadingLogOut.value = true;
+      await authApi.logout();
+      box.erase();
+      Get.offAllNamed(UserRoutes.logout);
+      Get.snackbar("Déconnexion réussie!", "",
+          backgroundColor: Colors.green,
+          icon: const Icon(Icons.check),
+          snackPosition: SnackPosition.TOP);
+      _loadingLogOut.value = false; 
     } catch (e) {
-      _loadingLogin.value = false;
+      _loadingLogOut.value = false;
       Get.snackbar("Erreur lors de la connection", "$e",
           backgroundColor: Colors.red,
           icon: const Icon(Icons.close),

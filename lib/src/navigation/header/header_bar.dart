@@ -12,6 +12,7 @@ import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/constants/style.dart';
 import 'package:wm_solution/src/controllers/departement_notify_controller.dart';
 import 'package:wm_solution/src/models/menu_item.dart';
+import 'package:wm_solution/src/pages/auth/controller/login_controller.dart';
 import 'package:wm_solution/src/pages/auth/controller/profil_controller.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
 import 'package:wm_solution/src/routes/routes.dart';
@@ -227,6 +228,13 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           ],
         );
       }),
+      Obx(() =>  Get.find<LoginController>().loadingLogOut ? Row(
+        children: [
+          const SizedBox(width: p10),
+          loadingMini(),
+          const SizedBox(width: p10),
+        ],
+      ) :
       PopupMenuButton<MenuItemModel>(
         onSelected: (item) => MenuOptions().onSelected(context, item),
         itemBuilder: (context) => [
@@ -234,10 +242,11 @@ AppBar headerBar(BuildContext context, GlobalKey<ScaffoldState> scaffoldKey,
           const PopupMenuDivider(),
           ...MenuItems.itemsSecond.map(MenuOptions().buildItem).toList(),
         ],
-      )
+      ))
+     
     ],
     iconTheme: IconThemeData(color: dark),
     elevation: 0,
-    backgroundColor: Colors.transparent,
+    // backgroundColor: Colors.transparent,
   );
 }

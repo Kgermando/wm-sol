@@ -116,10 +116,9 @@ class SplashController extends GetxController {
       print("splash idToken $idToken");
     }
     if (idToken != null) {
-      Get.lazyPut(() => ProfilController(), fenix: true);
+      Get.lazyPut(() => ProfilController());
       Get.lazyPut(() => UsersController());
       Get.lazyPut(() => DepartementNotifyCOntroller());
-      Get.lazyPut(() => ProfilController(), fenix: true);
 
       // Mail
       Get.lazyPut(() => MaillingController());

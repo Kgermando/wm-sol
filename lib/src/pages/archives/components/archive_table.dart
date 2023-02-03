@@ -64,7 +64,7 @@ class _TableArchiveState extends State<TableArchive> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TitleWidget(title: widget.archiveFolderModel.folderName),
+            TitleWidget(title: widget.archiveFolderModel.folderName.toUpperCase()),
             Row(
               children: [
                 deleteButton(),

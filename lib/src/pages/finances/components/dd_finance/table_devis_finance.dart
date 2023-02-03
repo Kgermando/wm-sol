@@ -53,7 +53,7 @@ class _TableDevisFinanceState extends State<TableDevisFinance> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const TitleWidget(title: "Devis"),
+              const TitleWidget(title: "Etat de besoins"),
               IconButton(
                   onPressed: () {
                     Navigator.pushNamed(context, FinanceRoutes.finDD);

@@ -3,6 +3,7 @@ import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/constants/responsive.dart';
 import 'package:wm_solution/src/navigation/drawer/drawer_menu.dart';
 import 'package:wm_solution/src/navigation/header/header_bar.dart';
+import 'package:wm_solution/src/widgets/title_widget.dart';
 
 class HelpPage extends StatefulWidget {
   const HelpPage({super.key});
@@ -47,7 +48,11 @@ class _HelpPageState extends State<HelpPage> {
                                 const EdgeInsets.symmetric(horizontal: p20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [],
+                              children: [
+                                const TitleWidget(title: "Aide"),
+                                const SizedBox(height: p20),
+                                Text("Redaction en cours...", style: Theme.of(context).textTheme.headline5)
+                              ],
                             ),
                           ),
                         )

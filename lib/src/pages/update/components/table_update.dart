@@ -1,7 +1,7 @@
 import 'package:easy_table/easy_table.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
-import 'package:intl/intl.dart'; 
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wm_solution/src/constants/app_theme.dart';
 import 'package:wm_solution/src/models/update/update_model.dart';
 import 'package:wm_solution/src/pages/update/controller/update_controller.dart';
@@ -24,8 +24,8 @@ class _TableUpdateState extends State<TableUpdate> {
   @override
   void initState() {
     super.initState();
-    List<UpdateModel> rows = List.generate(widget.updateList.length,
-        (index) => widget.updateList[index]);
+    List<UpdateModel> rows = List.generate(
+        widget.updateList.length, (index) => widget.updateList[index]);
     _model = EasyTableModel<UpdateModel>(rows: rows, columns: [
       EasyTableColumn(
           name: 'Ajouté le',
@@ -33,14 +33,11 @@ class _TableUpdateState extends State<TableUpdate> {
           stringValue: (row) =>
               DateFormat("dd-MM-yy HH:mm").format(row.created)),
       EasyTableColumn(
-          name: 'Version',
-          width: 150,
-          stringValue: (row) => row.version),
+          name: 'Version', width: 150, stringValue: (row) => row.version),
       EasyTableColumn(
           name: 'Rapport de mise à jour',
           width: 300,
-          stringValue: (row) => row.motif), 
-      
+          stringValue: (row) => row.motif),
     ]);
   }
 
@@ -65,15 +62,16 @@ class _TableUpdateState extends State<TableUpdate> {
               ],
             ),
             const SizedBox(height: p10),
-            Expanded( 
-              child: EasyTable<UpdateModel>( 
+            Expanded(
+              child: EasyTable<UpdateModel>(
                 _model,
-                multiSort: true, 
+                multiSort: true,
                 columnsFit: true,
                 onRowDoubleTap: (row) async {
                   final UpdateModel updateModel =
                       await widget.controller.detailView(row.id!);
-                  Get.toNamed(UpdateRoutes.updateDetail,
+                  // ignore: use_build_context_synchronously
+                  Navigator.popAndPushNamed(context, UpdateRoutes.updateDetail,
                       arguments: updateModel);
                 },
               ),
